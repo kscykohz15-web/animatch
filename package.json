@@ -1,0 +1,30 @@
+{
+  "name": "animatch",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "sync:all": "node scripts/fill-anilist-id.mjs && node scripts/fill-anilist-meta.mjs && node scripts/sync-anilist-popularity-force.mjs && node scripts/recalc-popularity-10.mjs",
+    "sync:full": "node scripts/fill-anilist-id.mjs && node scripts/fill-anilist-meta.mjs && node scripts/sync-anilist-popularity-force.mjs && node scripts/recalc-popularity-10.mjs && node scripts/embed-anime.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.91.0",
+    "dotenv": "^17.2.3",
+    "next": "16.1.1",
+    "openai": "^6.15.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,37 @@
+===== START step6-score-fill 2026/01/21 22:47:52.08 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step6-score-fill.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ step6-score-fill start {
+  LIMIT: 200,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1200,
+  FILL_ZERO: false
+}
+✅ updated id=2736 title=悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします。Season2 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2737 title=彼女、お借りします 第5期 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2738 title=リィンカーネーションの花弁 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2739 title=春夏秋冬代行者 春の舞 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2740 title=最終楽章 響け！ユーフォニアム 前編 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2741 title=ニワトリ・ファイター fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2742 title=オタクに優しいギャルはいない!? fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2743 title=上伊那ぼたん、酔へる姿は百合の花 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2744 title=ダイヤのA actII -Second Season- fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2745 title=モノノ怪 蛇神 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2746 title=氷の城壁 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2747 title=よわよわ先生 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2748 title=ふつつかな悪女ではございますが ~雛宮蝶鼠とりかえ伝~ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2749 title=転生した大聖女は、聖女であることをひた隠す fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2750 title=黒猫と魔女の教室 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2751 title=MAO fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2752 title=淡島百景 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2753 title=最強の職業は勇者でも賢者でもなく鑑定士（仮）らしいですよ？ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2754 title=ここは俺に任せて先に行けと言ってから１０年がたったら伝説になっていた。 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2755 title=ラブライブ！蓮ノ空女学院スクールアイドルクラブ Bloom Garden Party fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2756 title=神の庭付き楠木邸 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2757 title=キルアオ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2758 title=逃がした魚は大きかったが釣りあげた魚が大きすぎた件 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2759 title=メイドさんは食べるだけ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=2760 title=灰原くんの強くて青春ニューゲーム fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+^C

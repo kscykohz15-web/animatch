@@ -1,0 +1,270 @@
+===== START step3-facts 2026/01/20 23:05:23.25 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ step3-anilist-facts start { LIMIT: 5000, OFFSET: 0, FORCE: false, MIN_INTERVAL: 900 }
+targets=388 / rows=1000
+✅ updated id=38 title=D.C.～ダ・カーポ～ anilist_id=62
+✅ updated id=39 title=君が望む永遠 anilist_id=147
+✅ updated id=43 title=サムライチャンプルー anilist_id=205
+✅ updated id=44 title=MONSTER anilist_id=19
+✅ updated id=45 title=エルフェンリート anilist_id=226
+✅ updated id=46 title=蒼穹のファフナー anilist_id=75
+✅ updated id=49 title=BLEACH anilist_id=269
+✅ updated id=51 title=焼きたて!! ジャぱん anilist_id=28
+✅ updated id=52 title=AIR anilist_id=101
+✅ updated id=54 title=アイシールド21 anilist_id=15
+✅ updated id=57 title=ハチミツとクローバー anilist_id=16
+✅ updated id=58 title=フタコイ オルタナティブ anilist_id=126
+✅ updated id=59 title=SHUFFLE! anilist_id=79
+✅ updated id=61 title=ソルティレイ anilist_id=152
+✅ updated id=63 title=BLOOD+ anilist_id=150
+✅ updated id=64 title=ブラックキャット anilist_id=68
+✅ updated id=66 title=ラムネ anilist_id=670
+✅ updated id=67 title=Ergo Proxy anilist_id=790
+✅ updated id=73 title=銀魂 anilist_id=918
+✅ updated id=80 title=カノン anilist_id=144
+✅ updated id=82 title=コードギアス 反逆のルルーシュ anilist_id=1575
+✅ updated id=84 title=人造昆虫カブトボーグ V×V anilist_id=17291
+✅ updated id=86 title=DEATH NOTE anilist_id=1535
+✅ updated id=89 title=NARUTO -ナルト- 疾風伝 anilist_id=1735
+✅ updated id=91 title=のだめカンタービレ anilist_id=1698
+✅ updated id=94 title=風のスティグマ（風の聖痕） anilist_id=1691
+✅ updated id=97 title=DARKER THAN BLACK -黒の契約者- anilist_id=2025
+✅ updated id=100 title=電脳コイル anilist_id=2164
+✅ updated id=101 title=ハヤテのごとく! anilist_id=2026
+✅ updated id=103 title=ロミオ×ジュリエット anilist_id=1699
+❌ failed id=109 title=キミキス pure rouge anilist_id=4205 -> AniList HTTP 429 (retry over): {"data":null,"errors":[{"message":"Too Many Requests.","status":429}]}
+✅ updated id=111 title=魔人探偵脳噛ネウロ anilist_id=2985
+✅ updated id=112 title=みなみけ anilist_id=2963
+✅ updated id=115 title=true tears（トゥルーティアーズ） anilist_id=2129
+✅ updated id=118 title=かのこん anilist_id=4760
+✅ updated id=119 title=ソウルイーター anilist_id=3588
+✅ updated id=121 title=To Loveる -とらぶる- anilist_id=3455
+❌ failed id=124 title=夏目友人帳 anilist_id=4081 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=126 title=イヴの時間 anilist_id=3167 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=129 title=喰霊-零- anilist_id=4725
+✅ updated id=130 title=CHAOS;HEAD anilist_id=4975
+✅ updated id=132 title=とらドラ！ anilist_id=4224
+✅ updated id=135 title=鋼殻のレギオス anilist_id=4186
+✅ updated id=137 title=WHITE ALBUM（第1期） anilist_id=4720
+✅ updated id=142 title=鋼の錬金術師 FULLMETAL ALCHEMIST anilist_id=5114
+✅ updated id=146 title=東京マグニチュード8.0 anilist_id=6211
+✅ updated id=147 title=プリンセスラバー! anilist_id=7468
+✅ updated id=148 title=怪談レストラン anilist_id=6980
+✅ updated id=150 title=けんぷファー anilist_id=6205
+✅ updated id=151 title=生徒会の一存 anilist_id=5909
+✅ updated id=152 title=そらのおとしもの anilist_id=5958
+✅ updated id=154 title=にゃんこい! anilist_id=6512
+✅ updated id=155 title=FAIRY TAIL anilist_id=6702
+✅ updated id=157 title=荒川アンダー ザ ブリッジ anilist_id=7647
+❌ failed id=158 title=えむえむっ! anilist_id=8424 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=163 title=刀語 anilist_id=6594 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=164 title=神のみぞ知るセカイ anilist_id=8525
+✅ updated id=165 title=kiss×sis anilist_id=5042
+✅ updated id=168 title=侵略!イカ娘 anilist_id=8557
+✅ updated id=171 title=セキレイ anilist_id=4063
+✅ updated id=175 title=バクマン。 anilist_id=102608
+✅ updated id=176 title=B型H系 anilist_id=7817
+✅ updated id=177 title=まじっく快斗 anilist_id=8310
+✅ updated id=178 title=迷い猫オーバーラン! anilist_id=7590
+✅ updated id=179 title=四畳半神話大系 anilist_id=7785
+✅ updated id=181 title=れでぃ×ばと! anilist_id=7148
+✅ updated id=186 title=UN-GO anilist_id=10798
+✅ updated id=190 title=境界線上のホライゾン anilist_id=104211
+✅ updated id=194 title=C anilist_id=10163
+✅ updated id=195 title=シュタインズ・ゲート anilist_id=9253
+✅ updated id=200 title=トリコ anilist_id=6941
+✅ updated id=204 title=HUNTER×HUNTER anilist_id=136
+✅ updated id=213 title=魔乳秘剣帖 anilist_id=10465
+✅ updated id=216 title=輪るピングドラム anilist_id=132232
+❌ failed id=220 title=+チック姉さん anilist_id=10711 -> AniList HTTP 429 (retry over): {"data":null,"errors":[{"message":"Too Many Requests.","status":429}]}
+❌ failed id=229 title=お兄ちゃんだけど愛さえあれば関係ないよねっ anilist_id=15881 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=264 title=惡の華 anilist_id=16201 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=265 title=犬とハサミは使いよう anilist_id=17831
+✅ updated id=266 title=有頂天家族 anilist_id=17909
+✅ updated id=269 title=革命機ヴァルヴレイヴ anilist_id=16668
+✅ updated id=271 title=君のいる町 anilist_id=17741
+✅ updated id=273 title=キルラキル anilist_id=18679
+✅ updated id=283 title=東京レイヴンズ anilist_id=16011
+✅ updated id=299 title=ワルキューレ ロマンツェ anilist_id=19151
+✅ updated id=300 title=いなり、こんこん、恋いろは。 anilist_id=20488
+✅ updated id=303 title=最近、妹のようすがちょっとおかしいんだが。 anilist_id=17777
+✅ updated id=304 title=GJ部 anilist_id=14811
+✅ updated id=310 title=ノラガミ anilist_id=20447
+✅ updated id=311 title=バディ・コンプレックス anilist_id=20533
+✅ updated id=314 title=魔法戦争 anilist_id=19769
+✅ updated id=322 title=シドニアの騎士 anilist_id=19775
+✅ updated id=324 title=selector infected WIXOSS anilist_id=20615
+✅ updated id=326 title=ノーゲーム・ノーライフ anilist_id=19815
+✅ updated id=327 title=ハイキュー!! anilist_id=20464
+✅ updated id=338 title=アオハライド anilist_id=20596
+✅ updated id=339 title=アカメが斬る！ anilist_id=20613
+✅ updated id=345 title=東京喰種 トーキョーグール anilist_id=20605
+✅ updated id=346 title=東京ESP anilist_id=19199
+✅ updated id=351 title=六畳間の侵略者!? anilist_id=20638
+✅ updated id=357 title=俺、ツインテールになります。 anilist_id=20565
+✅ updated id=359 title=寄生獣 セイの格率 anilist_id=20623
+✅ updated id=362 title=四月は君の嘘 anilist_id=20665
+✅ updated id=372 title=ワールドトリガー（1stシーズン） anilist_id=20729
+✅ updated id=375 title=暗殺教室（第1期） anilist_id=19759
+✅ updated id=377 title=幸腹グラフィティ anilist_id=20744
+✅ updated id=379 title=銃皇無尽のファフニール anilist_id=20758
+✅ updated id=380 title=純潔のマリア anilist_id=20840
+❌ failed id=382 title=聖剣使いの禁呪詠唱＜ワールドブレイク＞ anilist_id=20627 -> AniList HTTP 429 (retry over): {"data":null,"errors":[{"message":"Too Many Requests.","status":429}]}
+✅ updated id=385 title=食戟のソーマ（第1期） anilist_id=20923
+✅ updated id=386 title=終わりのセラフ（第1期） anilist_id=20829
+✅ updated id=387 title=ガンスリンガー ストラトス -THE ANIMATION- anilist_id=20979
+✅ updated id=388 title=境界のRINNE（第1シリーズ） anilist_id=20953
+✅ updated id=390 title=ダンジョンに出会いを求めるのは間違っているだろうか（第1期） anilist_id=20920
+✅ updated id=392 title=トリアージX anilist_id=20839
+✅ updated id=394 title=響け！ユーフォニアム（第1期） anilist_id=20912
+✅ updated id=395 title=プラスティック・メモリーズ anilist_id=20872
+✅ updated id=398 title=青春×機関銃 anilist_id=21078
+❌ failed id=399 title=赤髪の白雪姫（第1期） anilist_id=21058 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=400 title=うしおととら（第1期） anilist_id=842 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=401 title=オーバーロード（第1期） anilist_id=20832
+✅ updated id=403 title=がっこうぐらし！ anilist_id=20754
+✅ updated id=406 title=GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり anilist_id=20994
+✅ updated id=410 title=Charlotte(シャーロット) anilist_id=20997
+✅ updated id=412 title=ビキニ・ウォリアーズ anilist_id=87480
+✅ updated id=414 title=監獄学園(プリズンスクール) anilist_id=21565
+✅ updated id=416 title=乱歩奇譚 Game of Laplace anilist_id=21189
+✅ updated id=421 title=学戦都市アスタリスク（第1期） anilist_id=21131
+✅ updated id=422 title=機動戦士ガンダム 鉄血のオルフェンズ（第1期） anilist_id=21268
+✅ updated id=423 title=コメット・ルシファー anilist_id=21275
+✅ updated id=429 title=ワンパンマン anilist_id=21087
+✅ updated id=430 title=蒼の彼方のフォーリズム anilist_id=21319
+✅ updated id=431 title=亜人（TVシリーズ） anilist_id=21341
+✅ updated id=433 title=この素晴らしい世界に祝福を！ anilist_id=21202
+✅ updated id=434 title=最弱無敗の神装機竜《バハムート》 anilist_id=21188
+✅ updated id=435 title=シュヴァルツェスマーケン anilist_id=21201
+✅ updated id=436 title=少女たちは荒野を目指す anilist_id=21444
+✅ updated id=437 title=昭和元禄落語心中（第1期） anilist_id=20972
+✅ updated id=442 title=僕だけがいない街 anilist_id=21234
+✅ updated id=443 title=無彩限のファントム・ワールド anilist_id=21306
+✅ updated id=444 title=ラクエンロジック anilist_id=21482
+✅ updated id=445 title=キズナイーバー anilist_id=21421
+✅ updated id=446 title=クロムクロ anilist_id=21516
+✅ updated id=456 title=文豪ストレイドッグス（第1シーズン） anilist_id=21311
+✅ updated id=457 title=僕のヒーローアカデミア anilist_id=21459
+✅ updated id=460 title=Re:ゼロから始める異世界生活 anilist_id=21355
+✅ updated id=466 title=斉木楠雄のΨ難（第1期） anilist_id=21804
+✅ updated id=468 title=DAYS anilist_id=21578
+✅ updated id=469 title=91Days anilist_id=21711
+✅ updated id=474 title=ベルセルク（2016） anilist_id=21560
+❌ failed id=476 title=Rewrite（第1期） anilist_id=21382 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=478 title=planetarian ～ちいさなほしのゆめ～ anilist_id=21732 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=480 title=ガーリッシュ ナンバー anilist_id=21627
+✅ updated id=483 title=終末のイゼッタ anilist_id=21838
+✅ updated id=484 title=ドリフターズ anilist_id=16932
+✅ updated id=485 title=舟を編む anilist_id=21703
+✅ updated id=487 title=ユーリ!!! on ICE anilist_id=21709
+✅ updated id=494 title=クズの本懐 anilist_id=21701
+✅ updated id=498 title=ハンドシェイカー anilist_id=21731
+✅ updated id=504 title=One Room anilist_id=97857
+✅ updated id=505 title=エロマンガ先生 anilist_id=21685
+✅ updated id=511 title=正解するカド anilist_id=21452
+✅ updated id=516 title=BORUTO -ボルト- NARUTO NEXT GENERATIONS anilist_id=97938
+✅ updated id=523 title=賭ケグルイ anilist_id=98314
+✅ updated id=529 title=ナイツ＆マジック anilist_id=97663
+✅ updated id=535 title=ようこそ実力至上主義の教室へ anilist_id=98659
+✅ updated id=536 title=アニメガタリズ anilist_id=98607
+✅ updated id=537 title=いつだって僕らの恋は10センチだった。 anilist_id=98977
+✅ updated id=538 title=いぬやしき anilist_id=97922
+✅ updated id=543 title=Just Because！ anilist_id=98820
+✅ updated id=548 title=ブラッククローバー anilist_id=97940
+✅ updated id=553 title=ヴァイオレット・エヴァーガーデン anilist_id=21827
+✅ updated id=558 title=ダーリン・イン・ザ・フランキス anilist_id=99423
+✅ updated id=568 title=DEVILMAN crybaby anilist_id=98460
+✅ updated id=573 title=デビルズライン anilist_id=99531
+✅ updated id=578 title=メジャー セカンド anilist_id=100306
+✅ updated id=579 title=3D彼女 リアルガール anilist_id=100526
+✅ updated id=581 title=ISLAND anilist_id=21712
+✅ updated id=584 title=ぐらんぶる anilist_id=100922
+✅ updated id=585 title=殺戮の天使 anilist_id=99629
+✅ updated id=586 title=七星のスバル anilist_id=100085
+✅ updated id=587 title=じょしおちっ！～2階から女の子が…降ってきた!?～ anilist_id=101981
+✅ updated id=588 title=すのはら荘の管理人さん anilist_id=100556
+✅ updated id=589 title=ちおちゃんの通学路 anilist_id=99366
+✅ updated id=590 title=ハイスコアガール anilist_id=20574
+✅ updated id=592 title=バキ anilist_id=97888
+✅ updated id=593 title=ハッピーシュガーライフ anilist_id=101351
+✅ updated id=595 title=はねバド！ anilist_id=101045
+✅ updated id=596 title=百錬の覇王と聖約の戦乙女 anilist_id=101289
+✅ updated id=611 title=中卒労働者から始める高校生活 anilist_id=106438
+✅ updated id=621 title=私に天使が舞い降りた！ anilist_id=102680
+✅ updated id=622 title=鬼滅の刃 anilist_id=101922
+✅ updated id=623 title=異世界かるてっと anilist_id=104454
+✅ updated id=628 title=フルーツバスケット anilist_id=120
+✅ updated id=629 title=ぼくたちは勉強ができない anilist_id=103900
+✅ updated id=634 title=炎炎ノ消防隊 anilist_id=105310
+✅ updated id=641 title=とある科学の一方通行 anilist_id=104463
+✅ updated id=642 title=手品先輩 anilist_id=105074
+✅ updated id=643 title=Dr.STONE anilist_id=105333
+✅ updated id=646 title=魔王様、リトライ！ anilist_id=104252
+✅ updated id=647 title=ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- anilist_id=136344
+✅ updated id=658 title=異種族レビュアーズ anilist_id=110270
+✅ updated id=666 title=地縛少年花子くん anilist_id=108463
+✅ updated id=671 title=ランウェイで笑って anilist_id=111501
+✅ updated id=677 title=神之塔 -Tower of God- anilist_id=115230
+✅ updated id=681 title=彼女、お借りします anilist_id=113813
+✅ updated id=682 title=GREAT PRETENDER anilist_id=110349
+✅ updated id=685 title=魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ anilist_id=112301
+✅ updated id=686 title=日本沈没2020 anilist_id=112357
+✅ updated id=687 title=アクダマドライブ anilist_id=116566
+✅ updated id=688 title=神様になった日 anilist_id=118419
+✅ updated id=693 title=トニカクカワイイ anilist_id=116267
+❌ failed id=699 title=IDOLY PRIDE anilist_id=113814 -> AniList HTTP 429 (retry over): {"data":null,"errors":[{"message":"Too Many Requests.","status":429}]}
+✅ updated id=702 title=俺だけ入れる隠しダンジョン anilist_id=118375
+✅ updated id=704 title=蜘蛛ですが、なにか？ anilist_id=103632
+✅ updated id=706 title=弱キャラ友崎くん anilist_id=112443
+✅ updated id=710 title=イジらないで、長瀞さん anilist_id=120697
+✅ updated id=722 title=東京リベンジャーズ anilist_id=120120
+✅ updated id=725 title=不滅のあなたへ anilist_id=114535
+✅ updated id=728 title=Sonny Boy anilist_id=132126
+✅ updated id=732 title=白い砂のアクアトープ anilist_id=128545
+✅ updated id=738 title=明日ちゃんのセーラー服 anilist_id=131548
+✅ updated id=745 title=その着せ替え人形は恋をする anilist_id=132405
+✅ updated id=747 title=ハコヅメ～交番女子の逆襲～ anilist_id=137312
+✅ updated id=756 title=可愛いだけじゃない式守さん anilist_id=127911
+✅ updated id=757 title=サマータイムレンダ anilist_id=129201
+✅ updated id=759 title=処刑少女の生きる道（バージンロード） anilist_id=129193
+✅ updated id=761 title=トモダチゲーム anilist_id=141014
+✅ updated id=769 title=Engage Kiss anilist_id=146625
+✅ updated id=770 title=黒の召喚士 anilist_id=145260
+✅ updated id=777 title=よふかしのうた anilist_id=141391
+✅ updated id=778 title=サイバーパンク エッジランナーズ anilist_id=120377
+❌ failed id=781 title=ある朝ダミーヘッドマイクになっていた俺クンの人生 anilist_id=152207 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=782 title=陰の実力者になりたくて！ anilist_id=130298 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=784 title=機動戦士ガンダム 水星の魔女 anilist_id=139274
+✅ updated id=785 title=新米錬金術師の店舗経営 anilist_id=139369
+✅ updated id=789 title=ブルーロック anilist_id=137822
+✅ updated id=790 title=ぼっち・ざ・ろっく！ anilist_id=130003
+✅ updated id=796 title=英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ anilist_id=142193
+✅ updated id=798 title=お隣の天使様にいつの間にか駄目人間にされていた件 anilist_id=143338
+✅ updated id=801 title=最強陰陽師の異世界転生記 anilist_id=144553
+✅ updated id=802 title=スパイ教室 anilist_id=146323
+✅ updated id=804 title=転生王女と天才令嬢の魔法革命 anilist_id=153629
+✅ updated id=805 title=トモちゃんは女の子！ anilist_id=151806
+✅ updated id=810 title=Buddy Daddies anilist_id=155907
+✅ updated id=814 title=スキップとローファー anilist_id=141911
+✅ updated id=818 title=天国大魔境 anilist_id=155783
+✅ updated id=820 title=マッシュル-MASHLE- anilist_id=151801
+✅ updated id=821 title=僕の心のヤバイやつ anilist_id=153152
+✅ updated id=822 title=ゾン100～ゾンビになるまでにしたい100のこと～ anilist_id=159831
+✅ updated id=826 title=【推しの子】 anilist_id=150672
+✅ updated id=831 title=山田くんとLv999の恋をする anilist_id=154965
+✅ updated id=844 title=悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします anilist_id=156040
+✅ updated id=848 title=わたしの幸せな結婚 anilist_id=147103
+✅ updated id=849 title=アンデッドアンラック anilist_id=154116
+✅ updated id=853 title=君のことが大大大大大好きな100人の彼女 anilist_id=162694
+✅ updated id=857 title=シャングリラ・フロンティア anilist_id=151970
+✅ updated id=867 title=豚のレバーは加熱しろ anilist_id=142599
+✅ updated id=870 title=ミギとダリ anilist_id=142666
+✅ updated id=871 title=ラグナクリムゾン anilist_id=146493
+✅ updated id=872 title=私の推しは悪役令嬢。 anilist_id=158704
+✅ updated id=886 title=悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ anilist_id=163076
+✅ updated id=889 title=ダンジョン飯 anilist_id=153518
+✅ updated id=891 title=望まぬ不死の冒険者 anilist_id=147642
+❌ failed id=893 title=悶えてよ、アダムくん anilist_id=170913 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+^C

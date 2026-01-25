@@ -1,0 +1,8 @@
+===== START step3-facts 2026/01/20  7:07:11.09 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ enqueue-facts-meta start { LIMIT: 5000, OFFSET: 0, REGION: 'JP' }
+✅ queued=349
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ resolve-official-url v2 start { LIMIT: 5000, OFFSET: 0 }
+🎉 done { updated: 0, skipped: 64 }
+===== END step3-facts 2026/01/20  7:07:27.35 ===== 

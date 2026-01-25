@@ -1,0 +1,18 @@
+===== START step4-official-url 2026/01/21 22:34:08.43 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ fill official_url (AniList only / skip-unresolved / cursor mode)
+   dry-run: false
+   page: 60
+   limit: ∞
+   state: C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json
+   cursorId: 3659
+   skipped: 640
+- updated: id=3822 title=葬送のフリーレン ～●●の魔法～ 3クール -> https://frieren-anime.jp/special/dchara/
+- updated: id=3902 title=神の雫 -> https://dropsofgod-anime.com/
+- no official (skip): id=3914 title=おねがいアイプリ
+—
+🎉 終了：cursor以降の official_url=NULL がありません
+—
+📌 summary: scanned=3 updated=2 skipped=1 failed=0
+📝 状態は C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json に保存されています（次回は続きから再開します）
+===== END step4-official-url 2026/01/21 22:34:12.54 ===== 

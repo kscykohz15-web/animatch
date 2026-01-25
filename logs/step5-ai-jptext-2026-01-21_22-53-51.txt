@@ -1,0 +1,30 @@
+===== START step5-ai-jptext 2026/01/21 22:53:51.30 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step5-ai-jptext-fill-empty.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ step5-ai-generate-jptext-fill-empty start {
+  LIMIT: 500,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1500
+}
+targets=500
+✅ updated id=307 title=ニセコイ fields=[description_long,embedding_source_text]
+✅ updated id=308 title=となりの関くん fields=[description_long,embedding_source_text]
+✅ updated id=309 title=のうりん fields=[description_long,embedding_source_text]
+✅ updated id=310 title=ノラガミ fields=[description_long,embedding_source_text]
+✅ updated id=311 title=バディ・コンプレックス fields=[description_long,embedding_source_text]
+✅ updated id=312 title=ハマトラ fields=[description_long,embedding_source_text]
+✅ updated id=313 title=鬼灯の冷徹 fields=[description_long,embedding_source_text]
+✅ updated id=314 title=魔法戦争 fields=[description_long,embedding_source_text]
+✅ updated id=315 title=未確認で進行形 fields=[description_long,embedding_source_text]
+✅ updated id=316 title=悪魔のリドル fields=[description_long,embedding_source_text]
+✅ updated id=317 title=一週間フレンズ。 fields=[description_long,embedding_source_text]
+✅ updated id=318 title=彼女がフラグをおられたら fields=[description_long,embedding_source_text]
+✅ updated id=319 title=極黒のブリュンヒルデ fields=[description_long,embedding_source_text]
+✅ updated id=320 title=健全ロボ ダイミダラー fields=[description_long,embedding_source_text]
+✅ updated id=321 title=ご注文はうさぎですか？ fields=[description_long,embedding_source_text]
+✅ updated id=322 title=シドニアの騎士 fields=[description_long,embedding_source_text]
+✅ updated id=323 title=星刻の竜騎士 fields=[description_long,embedding_source_text]
+✅ updated id=324 title=selector infected WIXOSS fields=[description_long,embedding_source_text]
+^C

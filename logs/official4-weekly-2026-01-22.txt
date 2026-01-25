@@ -1,0 +1,3236 @@
+===== START official4 2026/01/22  6:45:13.42 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3184 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+✅ 賢者の弟子を名乗る賢者 / animehodai -> ❌なし
+✅ 賢者の弟子を名乗る賢者 / bandai -> ❌なし
+✅ 賢者の弟子を名乗る賢者 / lemino -> ❌なし
+✅ 賢者の弟子を名乗る賢者 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i65/
+✅ 見える子ちゃん / animehodai -> ❌なし
+✅ 見える子ちゃん / bandai -> ❌なし
+✅ 見える子ちゃん / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWlwaGIwa2I=
+✅ 見える子ちゃん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i13/
+✅ ブルーピリオド / animehodai -> ❌なし
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / bandai -> ❌なし
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAzZjU=
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0bk/
+✅ 異世界召喚は二度目です / animehodai -> ❌なし
+✅ 異世界召喚は二度目です / bandai -> ❌なし
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / fod -> ❌なし
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0079585
+✅ 異世界召喚は二度目です / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAyMmM=
+✅ 異世界召喚は二度目です / fod -> ❌なし
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / animehodai -> ❌なし
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / bandai -> ❌なし
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / lemino -> ❌なし
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / fod -> ❌なし
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / bandai -> ❌なし
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / lemino -> ❌なし
+✅ 僕の心のヤバイやつ / animehodai -> ❌なし
+✅ 僕の心のヤバイやつ / bandai -> ❌なし
+✅ 僕の心のヤバイやつ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA0NWU=
+✅ 僕の心のヤバイやつ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9ke/
+✅ マッシュル-MASHLE- / animehodai -> ❌なし
+✅ マッシュル-MASHLE- / bandai -> ❌なし
+✅ 【推しの子】 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xn/
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / animehodai -> ❌なし
+✅ マッシュル-MASHLE- / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAyNTk=
+✅ マッシュル-MASHLE- / fod -> ⭕あり https://fod.fujitv.co.jp/title/90cf/
+✅ デッドマウント・デスプレイ / animehodai -> ❌なし
+✅ デッドマウント・デスプレイ / bandai -> ❌なし
+✅ デッドマウント・デスプレイ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAzMDk=
+✅ デッドマウント・デスプレイ / fod -> ❌なし
+✅ 【推しの子】 / bandai -> ❌なし
+✅ 【推しの子】 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0Zjg=
+✅ 天国大魔境 / animehodai -> ❌なし
+✅ 天国大魔境 / bandai -> ❌なし
+✅ 天国大魔境 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDEzYWI=
+✅ 天国大魔境 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2m3/
+✅ この素晴らしい世界に爆焔を！ / animehodai -> ❌なし
+✅ この素晴らしい世界に爆焔を！ / bandai -> ❌なし
+✅ 地獄楽 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f4hc/
+✅ 【推しの子】 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251565
+✅ この素晴らしい世界に爆焔を！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAyNjY=
+✅ この素晴らしい世界に爆焔を！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0a8/
+✅ 久保さんは僕を許さない / animehodai -> ❌なし
+✅ 久保さんは僕を許さない / bandai -> ❌なし
+✅ 久保さんは僕を許さない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQyMWU=
+✅ 久保さんは僕を許さない / fod -> ⭕あり https://fod.fujitv.co.jp/title/7089/
+✅ 地獄楽 / bandai -> ❌なし
+✅ 地獄楽 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAwMTI=
+✅ 君は放課後インソムニア / animehodai -> ❌なし
+✅ 君は放課後インソムニア / bandai -> ❌なし
+✅ 君は放課後インソムニア / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbHR3dWdtN3I=
+✅ 君は放課後インソムニア / fod -> ⭕あり https://fod.fujitv.co.jp/title/90ch/
+✅ スキップとローファー / animehodai -> ❌なし
+✅ スキップとローファー / bandai -> ❌なし
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / fod -> ❌なし
+✅ 地獄楽 / animehodai -> ❌なし
+✅ スキップとローファー / lemino -> ❌なし
+✅ スキップとローファー / fod -> ⭕あり https://fod.fujitv.co.jp/title/70bd/
+✅ 青のオーケストラ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0232901
+✅ 青のオーケストラ / bandai -> ❌なし
+✅ 青のオーケストラ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNmYzg=
+✅ 青のオーケストラ / fod -> ⭕あり https://fod.fujitv.co.jp/title/914w/
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / bandai -> ❌なし
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / lemino -> ❌なし
+✅ もういっぽん！ / animehodai -> ❌なし
+✅ もういっぽん！ / bandai -> ❌なし
+✅ もういっぽん！ / lemino -> ❌なし
+✅ もういっぽん！ / fod -> ❌なし
+✅ 便利屋斎藤さん、異世界に行く / animehodai -> ❌なし
+✅ 便利屋斎藤さん、異世界に行く / bandai -> ❌なし
+✅ マイホームヒーロー / fod -> ⭕あり https://fod.fujitv.co.jp/title/70c5/
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / animehodai -> ❌なし
+✅ 便利屋斎藤さん、異世界に行く / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQyMmE=
+✅ 便利屋斎藤さん、異世界に行く / fod -> ⭕あり https://fod.fujitv.co.jp/title/115r/
+✅ Buddy Daddies / animehodai -> ❌なし
+✅ Buddy Daddies / bandai -> ❌なし
+✅ Buddy Daddies / lemino -> ❌なし
+✅ Buddy Daddies / fod -> ⭕あり https://fod.fujitv.co.jp/title/116b/
+✅ マイホームヒーロー / bandai -> ❌なし
+✅ マイホームヒーロー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAyZjU=
+✅ 冰剣の魔術師が世界を統べる / animehodai -> ❌なし
+✅ 冰剣の魔術師が世界を統べる / bandai -> ❌なし
+✅ 冰剣の魔術師が世界を統べる / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2ZTU=
+✅ 冰剣の魔術師が世界を統べる / fod -> ⭕あり https://fod.fujitv.co.jp/title/b04m/
+✅ HIGH CARD / animehodai -> ❌なし
+✅ HIGH CARD / bandai -> ❌なし
+✅ 女神のカフェテラス / fod -> ⭕あり https://fod.fujitv.co.jp/title/d2vz/
+✅ マイホームヒーロー / animehodai -> ❌なし
+✅ HIGH CARD / lemino -> ❌なし
+✅ HIGH CARD / fod -> ❌なし
+✅ NieR:Automata Ver1.1a / animehodai -> ❌なし
+✅ NieR:Automata Ver1.1a / bandai -> ❌なし
+✅ NieR:Automata Ver1.1a / lemino -> ❌なし
+✅ NieR:Automata Ver1.1a / fod -> ⭕あり https://fod.fujitv.co.jp/title/708k/
+✅ 女神のカフェテラス / bandai -> ❌なし
+✅ 女神のカフェテラス / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAzMGQ=
+✅ とんでもスキルで異世界放浪メシ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0234939
+✅ とんでもスキルで異世界放浪メシ / bandai -> ❌なし
+✅ とんでもスキルで異世界放浪メシ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNkZTI=
+✅ とんでもスキルで異世界放浪メシ / fod -> ⭕あり https://fod.fujitv.co.jp/title/10c4/
+✅ トモちゃんは女の子！ / animehodai -> ❌なし
+✅ トモちゃんは女の子！ / bandai -> ❌なし
+✅ 山田くんとLv999の恋をする / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0c2/
+✅ 女神のカフェテラス / animehodai -> ❌なし
+✅ トモちゃんは女の子！ / lemino -> ❌なし
+✅ トモちゃんは女の子！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/708a/
+✅ 転生王女と天才令嬢の魔法革命 / animehodai -> ❌なし
+✅ 転生王女と天才令嬢の魔法革命 / bandai -> ❌なし
+✅ 転生王女と天才令嬢の魔法革命 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQyMjI=
+✅ 転生王女と天才令嬢の魔法革命 / fod -> ⭕あり https://fod.fujitv.co.jp/title/908c/
+✅ 山田くんとLv999の恋をする / bandai -> ❌なし
+✅ 山田くんとLv999の恋をする / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWh4NjU2NDQ=
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / animehodai -> ❌なし
+✅ 惡の華 / lemino -> ❌なし
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / bandai -> ❌なし
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / lemino -> ❌なし
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/707a/
+✅ スパイ教室 / animehodai -> ❌なし
+✅ 勇者が死んだ！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9lc/
+✅ 山田くんとLv999の恋をする / animehodai -> ❌なし
+✅ スパイ教室 / bandai -> ❌なし
+✅ スパイ教室 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQyMTg=
+✅ スパイ教室 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1lf/
+✅ 最強陰陽師の異世界転生記 / animehodai -> ❌なし
+✅ 最強陰陽師の異世界転生記 / bandai -> ❌なし
+✅ 最強陰陽師の異世界転生記 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFlMDA=
+✅ 勇者が死んだ！ / bandai -> ❌なし
+✅ 勇者が死んだ！ / lemino -> ❌なし
+✅ 最強陰陽師の異世界転生記 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b06b/
+✅ 氷属性男子とクールな同僚女子 / animehodai -> ❌なし
+✅ 氷属性男子とクールな同僚女子 / bandai -> ❌なし
+✅ 氷属性男子とクールな同僚女子 / lemino -> ❌なし
+✅ 氷属性男子とクールな同僚女子 / fod -> ❌なし
+✅ お兄ちゃんはおしまい！ / animehodai -> ❌なし
+✅ あやかしトライアングル / fod -> ⭕あり https://fod.fujitv.co.jp/title/908n/
+✅ 勇者が死んだ！ / animehodai -> ❌なし
+✅ お兄ちゃんはおしまい！ / bandai -> ❌なし
+✅ お兄ちゃんはおしまい！ / lemino -> ❌なし
+✅ お兄ちゃんはおしまい！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/114o/
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / animehodai -> ❌なし
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / bandai -> ❌なし
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / lemino -> ❌なし
+✅ あやかしトライアングル / bandai -> ❌なし
+✅ あやかしトライアングル / lemino -> ❌なし
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f07z/
+✅ 犬になったら好きな人に拾われた。 / animehodai -> ❌なし
+✅ 犬になったら好きな人に拾われた。 / bandai -> ❌なし
+✅ 犬になったら好きな人に拾われた。 / lemino -> ❌なし
+✅ 犬になったら好きな人に拾われた。 / fod -> ❌なし
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / animehodai -> ❌なし
+✅ アンデッドガール・マーダーファルス / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0ea/
+✅ あやかしトライアングル / animehodai -> ❌なし
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / bandai -> ❌なし
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / lemino -> ❌なし
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / fod -> ❌なし
+✅ 異世界のんびり農家 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0077287
+✅ 異世界のんびり農家 / bandai -> ❌なし
+✅ 異世界のんびり農家 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhOGI=
+✅ アンデッドガール・マーダーファルス / bandai -> ❌なし
+✅ アンデッドガール・マーダーファルス / lemino -> ❌なし
+✅ 異世界のんびり農家 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f07u/
+✅ アルスの巨獣 / animehodai -> ❌なし
+✅ アルスの巨獣 / bandai -> ❌なし
+✅ アルスの巨獣 / lemino -> ❌なし
+✅ アルスの巨獣 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9go/
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / animehodai -> ❌なし
+✅ うちの会社の小さい先輩の話 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0dn/
+✅ アンデッドガール・マーダーファルス / animehodai -> ❌なし
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / bandai -> ❌なし
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / lemino -> ❌なし
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / fod -> ⭕あり https://fod.fujitv.co.jp/title/111h/
+✅ 僕とロボコ / animehodai -> ❌なし
+✅ 僕とロボコ / bandai -> ❌なし
+✅ 僕とロボコ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQwY2U=
+✅ うちの会社の小さい先輩の話 / bandai -> ❌なし
+✅ うちの会社の小さい先輩の話 / lemino -> ❌なし
+✅ 僕とロボコ / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1u4/
+✅ 名探偵コナン 犯人の犯沢さん / animehodai -> ❌なし
+✅ 名探偵コナン 犯人の犯沢さん / bandai -> ❌なし
+✅ 名探偵コナン 犯人の犯沢さん / lemino -> ❌なし
+✅ 名探偵コナン 犯人の犯沢さん / fod -> ❌なし
+✅ ぼっち・ざ・ろっく！ / animehodai -> ❌なし
+✅ 英雄教室 / fod -> ❌なし
+✅ うちの会社の小さい先輩の話 / animehodai -> ❌なし
+✅ ぼっち・ざ・ろっく！ / bandai -> ❌なし
+✅ ぼっち・ざ・ろっく！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGNiNWM=
+✅ ぼっち・ざ・ろっく！ / fod -> ❌なし
+✅ ブルーロック / animehodai -> ❌なし
+✅ ブルーロック / bandai -> ❌なし
+✅ ブルーロック / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2NjE=
+✅ 英雄教室 / bandai -> ❌なし
+✅ 英雄教室 / lemino -> ❌なし
+✅ ブルーロック / fod -> ⭕あり https://fod.fujitv.co.jp/title/g40l/
+✅ 夫婦以上、恋人未満。 / animehodai -> ❌なし
+✅ 夫婦以上、恋人未満。 / bandai -> ❌なし
+✅ 夫婦以上、恋人未満。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGNiZjQ=
+✅ 夫婦以上、恋人未満。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9dw/
+✅ 転生したら剣でした / animehodai -> ❌なし
+✅ おかしな転生 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9ob/
+✅ 英雄教室 / animehodai -> ❌なし
+✅ 転生したら剣でした / bandai -> ❌なし
+✅ 転生したら剣でした / lemino -> ❌なし
+✅ 転生したら剣でした / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9e3/
+✅ チェンソーマン / animehodai -> ❌なし
+✅ チェンソーマン / bandai -> ❌なし
+✅ チェンソーマン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGNiNTA=
+✅ おかしな転生 / bandai -> ❌なし
+✅ おかしな転生 / lemino -> ❌なし
+✅ チェンソーマン / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9dl/
+✅ 新米錬金術師の店舗経営 / animehodai -> ❌なし
+✅ 新米錬金術師の店舗経営 / bandai -> ❌なし
+✅ 新米錬金術師の店舗経営 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGNiZTc=
+✅ 新米錬金術師の店舗経営 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1lw/
+✅ 機動戦士ガンダム 水星の魔女 / animehodai -> ❌なし
+✅ 実は俺、最強でした？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9op/
+✅ おかしな転生 / animehodai -> ❌なし
+✅ 機動戦士ガンダム 水星の魔女 / bandai -> ❌なし
+✅ 機動戦士ガンダム 水星の魔女 / lemino -> ❌なし
+✅ 機動戦士ガンダム 水星の魔女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3xu/
+✅ 後宮の烏 / animehodai -> ❌なし
+✅ 後宮の烏 / bandai -> ❌なし
+✅ 後宮の烏 / lemino -> ❌なし
+✅ 実は俺、最強でした？ / bandai -> ❌なし
+✅ 実は俺、最強でした？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA4ZTU=
+✅ 後宮の烏 / fod -> ⭕あり https://fod.fujitv.co.jp/title/904v/
+✅ 陰の実力者になりたくて！ / animehodai -> ❌なし
+✅ 陰の実力者になりたくて！ / bandai -> ❌なし
+✅ 陰の実力者になりたくて！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGNiZGI=
+✅ 陰の実力者になりたくて！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/110q/
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / animehodai -> ❌なし
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / fod -> ⭕あり https://fod.fujitv.co.jp/title/80l1/
+✅ 実は俺、最強でした？ / animehodai -> ❌なし
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / bandai -> ❌なし
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / lemino -> ❌なし
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / fod -> ❌なし
+✅ 悪役令嬢なのでラスボスを飼ってみました / animehodai -> ❌なし
+✅ 悪役令嬢なのでラスボスを飼ってみました / bandai -> ❌なし
+✅ 悪役令嬢なのでラスボスを飼ってみました / lemino -> ❌なし
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / bandai -> ❌なし
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNhOTY=
+✅ 悪役令嬢なのでラスボスを飼ってみました / fod -> ⭕あり https://fod.fujitv.co.jp/title/f04r/
+✅ アキバ冥途戦争 / animehodai -> ❌なし
+✅ アキバ冥途戦争 / bandai -> ❌なし
+✅ アキバ冥途戦争 / lemino -> ❌なし
+✅ アキバ冥途戦争 / fod -> ⭕あり https://fod.fujitv.co.jp/title/d2rt/
+✅ サイバーパンク エッジランナーズ / animehodai -> ❌なし
+✅ 好きな子がめがねを忘れた / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0f1/
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / animehodai -> ❌なし
+✅ サイバーパンク エッジランナーズ / bandai -> ❌なし
+✅ サイバーパンク エッジランナーズ / lemino -> ❌なし
+✅ サイバーパンク エッジランナーズ / fod -> ❌なし
+✅ よふかしのうた / animehodai -> ❌なし
+✅ よふかしのうた / bandai -> ❌なし
+✅ よふかしのうた / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNmOTE=
+✅ 好きな子がめがねを忘れた / bandai -> ❌なし
+✅ 好きな子がめがねを忘れた / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA4NTY=
+✅ よふかしのうた / fod -> ❌なし
+✅ 継母の連れ子が元カノだった / animehodai -> ❌なし
+✅ 継母の連れ子が元カノだった / bandai -> ❌なし
+✅ 継母の連れ子が元カノだった / lemino -> ❌なし
+✅ 継母の連れ子が元カノだった / fod -> ⭕あり https://fod.fujitv.co.jp/title/0008/
+✅ プリマドール / animehodai -> ❌なし
+✅ スプリガン / fod -> ❌なし
+✅ 好きな子がめがねを忘れた / animehodai -> ❌なし
+✅ プリマドール / bandai -> ❌なし
+✅ プリマドール / lemino -> ❌なし
+✅ プリマドール / fod -> ⭕あり https://fod.fujitv.co.jp/title/f2ln/
+✅ 風都探偵 / animehodai -> ❌なし
+✅ 風都探偵 / bandai -> ❌なし
+✅ 風都探偵 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0OTY=
+✅ スプリガン / bandai -> ❌なし
+✅ スプリガン / lemino -> ❌なし
+✅ 風都探偵 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f4t5/
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / animehodai -> ❌なし
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / bandai -> ❌なし
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / lemino -> ❌なし
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5k18/
+✅ それでも歩は寄せてくる / animehodai -> ❌なし
+✅ ダークギャザリング / fod -> ⭕あり https://fod.fujitv.co.jp/title/11e3/
+✅ スプリガン / animehodai -> ❌なし
+✅ それでも歩は寄せてくる / bandai -> ❌なし
+✅ それでも歩は寄せてくる / lemino -> ❌なし
+✅ それでも歩は寄せてくる / fod -> ⭕あり https://fod.fujitv.co.jp/title/5k28/
+✅ 最近雇ったメイドが怪しい / animehodai -> ❌なし
+✅ 最近雇ったメイドが怪しい / bandai -> ❌なし
+✅ 最近雇ったメイドが怪しい / lemino -> ❌なし
+✅ ダークギャザリング / bandai -> ❌なし
+✅ ダークギャザリング / lemino -> ❌なし
+✅ 最近雇ったメイドが怪しい / fod -> ❌なし
+✅ 黒の召喚士 / animehodai -> ❌なし
+✅ 黒の召喚士 / bandai -> ❌なし
+✅ 黒の召喚士 / lemino -> ❌なし
+✅ 黒の召喚士 / fod -> ⭕あり https://fod.fujitv.co.jp/title/0040/
+✅ Engage Kiss / animehodai -> ❌なし
+✅ 七つの魔剣が支配する / fod -> ⭕あり https://fod.fujitv.co.jp/title/e20r/
+✅ ダークギャザリング / animehodai -> ❌なし
+✅ Engage Kiss / bandai -> ❌なし
+✅ Engage Kiss / lemino -> ❌なし
+✅ Engage Kiss / fod -> ⭕あり https://fod.fujitv.co.jp/title/5k16/
+✅ 異世界薬局 / animehodai -> ❌なし
+✅ 異世界薬局 / bandai -> ❌なし
+✅ 異世界薬局 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM3NzU=
+✅ 七つの魔剣が支配する / bandai -> ❌なし
+✅ 七つの魔剣が支配する / lemino -> ❌なし
+✅ 異世界薬局 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5k26/
+✅ 異世界迷宮でハーレムを / animehodai -> ❌なし
+✅ 異世界迷宮でハーレムを / bandai -> ❌なし
+✅ 異世界迷宮でハーレムを / lemino -> ❌なし
+✅ 異世界迷宮でハーレムを / fod -> ⭕あり https://fod.fujitv.co.jp/title/0041/
+✅ 異世界おじさん / animehodai -> ❌なし
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / fod -> ⭕あり https://fod.fujitv.co.jp/title/90f5/
+✅ 七つの魔剣が支配する / animehodai -> ❌なし
+✅ 異世界おじさん / bandai -> ❌なし
+✅ 異世界おじさん / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM3YjE=
+✅ 異世界おじさん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5k25/
+✅ 勇者、辞めます / animehodai -> ❌なし
+✅ 勇者、辞めます / bandai -> ❌なし
+✅ 勇者、辞めます / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGMxNGI=
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / bandai -> ❌なし
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / lemino -> ❌なし
+✅ 勇者、辞めます / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j52/
+✅ 名探偵コナン ゼロの日常 / animehodai -> ❌なし
+✅ 名探偵コナン ゼロの日常 / bandai -> ❌なし
+✅ 名探偵コナン ゼロの日常 / lemino -> ❌なし
+✅ 名探偵コナン ゼロの日常 / fod -> ❌なし
+✅ 魔法使い黎明期 / animehodai -> ❌なし
+✅ Helck / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0fm/
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / animehodai -> ❌なし
+✅ 魔法使い黎明期 / bandai -> ❌なし
+✅ 魔法使い黎明期 / lemino -> ❌なし
+✅ 魔法使い黎明期 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j27/
+✅ パリピ孔明 / animehodai -> ❌なし
+✅ パリピ孔明 / bandai -> ❌なし
+✅ パリピ孔明 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbTBiemFocGE=
+✅ Helck / bandai -> ❌なし
+✅ Helck / lemino -> ❌なし
+✅ パリピ孔明 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0ik/
+✅ トモダチゲーム / animehodai -> ❌なし
+✅ トモダチゲーム / bandai -> ❌なし
+✅ トモダチゲーム / lemino -> ❌なし
+✅ トモダチゲーム / fod -> ⭕あり https://fod.fujitv.co.jp/title/4d67/
+✅ SPY×FAMILY / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0232885
+✅ 夢見る男子は現実主義者 / fod -> ⭕あり https://fod.fujitv.co.jp/title/90fl/
+✅ Helck / animehodai -> ❌なし
+✅ SPY×FAMILY / bandai -> ❌なし
+✅ SPY×FAMILY / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNmNGI=
+✅ SPY×FAMILY / fod -> ⭕あり https://fod.fujitv.co.jp/title/20b9/
+✅ 処刑少女の生きる道（バージンロード） / animehodai -> ❌なし
+✅ 処刑少女の生きる道（バージンロード） / bandai -> ❌なし
+✅ 処刑少女の生きる道（バージンロード） / lemino -> ❌なし
+✅ 夢見る男子は現実主義者 / bandai -> ❌なし
+✅ 夢見る男子は現実主義者 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhOGM=
+✅ 処刑少女の生きる道（バージンロード） / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j58/
+✅ 史上最強の大魔王、村人Aに転生する / animehodai -> ❌なし
+✅ 史上最強の大魔王、村人Aに転生する / bandai -> ❌なし
+✅ 史上最強の大魔王、村人Aに転生する / lemino -> ❌なし
+✅ 史上最強の大魔王、村人Aに転生する / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j76/
+✅ サマータイムレンダ / animehodai -> ❌なし
+✅ レベル1だけどユニークスキルで最強です / fod -> ⭕あり https://fod.fujitv.co.jp/title/90f2/
+✅ 夢見る男子は現実主義者 / animehodai -> ❌なし
+✅ サマータイムレンダ / bandai -> ❌なし
+✅ サマータイムレンダ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQxNWY=
+✅ サマータイムレンダ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b4ha/
+✅ 可愛いだけじゃない式守さん / animehodai -> ❌なし
+✅ 可愛いだけじゃない式守さん / bandai -> ❌なし
+✅ 可愛いだけじゃない式守さん / lemino -> ❌なし
+✅ レベル1だけどユニークスキルで最強です / bandai -> ❌なし
+✅ レベル1だけどユニークスキルで最強です / lemino -> ❌なし
+✅ 可愛いだけじゃない式守さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j66/
+✅ カッコウの許嫁 / animehodai -> ❌なし
+✅ カッコウの許嫁 / bandai -> ❌なし
+✅ カッコウの許嫁 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGMxNDc=
+✅ カッコウの許嫁 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80q7/
+✅ 骸骨騎士様、只今異世界へお出掛け中 / animehodai -> ❌なし
+✅ わたしの幸せな結婚 / fod -> ⭕あり https://fod.fujitv.co.jp/title/00dp/
+✅ レベル1だけどユニークスキルで最強です / animehodai -> ❌なし
+✅ 骸骨騎士様、只今異世界へお出掛け中 / bandai -> ❌なし
+✅ 骸骨騎士様、只今異世界へお出掛け中 / lemino -> ❌なし
+✅ 骸骨騎士様、只今異世界へお出掛け中 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j69/
+✅ 乙女ゲー世界はモブに厳しい世界です / animehodai -> ❌なし
+✅ 乙女ゲー世界はモブに厳しい世界です / bandai -> ❌なし
+✅ 乙女ゲー世界はモブに厳しい世界です / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGMxNGQ=
+✅ わたしの幸せな結婚 / bandai -> ❌なし
+✅ わたしの幸せな結婚 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJiYzI=
+✅ 乙女ゲー世界はモブに厳しい世界です / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j51/
+✅ 阿波連さんははかれない / animehodai -> ❌なし
+✅ 阿波連さんははかれない / bandai -> ❌なし
+✅ 阿波連さんははかれない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2YzI=
+✅ 阿波連さんははかれない / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j64/
+✅ アオアシ / animehodai -> ❌なし
+✅ アンデッドアンラック / fod -> ⭕あり https://fod.fujitv.co.jp/title/00cl/
+✅ わたしの幸せな結婚 / animehodai -> ❌なし
+✅ アオアシ / bandai -> ❌なし
+✅ アオアシ / lemino -> ❌なし
+✅ アオアシ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j19/
+✅ リアデイルの大地にて / animehodai -> ❌なし
+✅ リアデイルの大地にて / bandai -> ❌なし
+✅ リアデイルの大地にて / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGMxNWE=
+✅ アンデッドアンラック / bandai -> ❌なし
+✅ アンデッドアンラック / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBkZDM=
+✅ リアデイルの大地にて / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i66/
+✅ 平家物語 / animehodai -> ❌なし
+✅ 平家物語 / bandai -> ❌なし
+✅ 平家物語 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbHc0YmgweDg=
+✅ 平家物語 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h19/
+✅ 異世界美少女受肉おじさんと / animehodai -> ❌なし
+✅ アンダーニンジャ / fod -> ⭕あり https://fod.fujitv.co.jp/title/80bo/
+✅ アンデッドアンラック / animehodai -> ❌なし
+✅ 異世界美少女受肉おじさんと / bandai -> ❌なし
+✅ 異世界美少女受肉おじさんと / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGMxMzQ=
+✅ 異世界美少女受肉おじさんと / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i78/
+✅ ハコヅメ～交番女子の逆襲～ / animehodai -> ❌なし
+✅ ハコヅメ～交番女子の逆襲～ / bandai -> ❌なし
+✅ ハコヅメ～交番女子の逆襲～ / lemino -> ❌なし
+✅ アンダーニンジャ / bandai -> ❌なし
+✅ アンダーニンジャ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWFsd21kbTg=
+✅ ハコヅメ～交番女子の逆襲～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i82/
+✅ 天才王子の赤字国家再生術 / animehodai -> ❌なし
+✅ 天才王子の赤字国家再生術 / bandai -> ❌なし
+✅ 天才王子の赤字国家再生術 / lemino -> ❌なし
+✅ 天才王子の赤字国家再生術 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i70/
+✅ その着せ替え人形は恋をする / animehodai -> ❌なし
+✅ 鴨乃橋ロンの禁断推理 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1id/
+✅ アンダーニンジャ / animehodai -> ❌なし
+✅ その着せ替え人形は恋をする / bandai -> ❌なし
+✅ その着せ替え人形は恋をする / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGJjZjU=
+✅ その着せ替え人形は恋をする / fod -> ⭕あり https://fod.fujitv.co.jp/title/203p/
+✅ 終末のハーレム / animehodai -> ❌なし
+✅ 終末のハーレム / bandai -> ❌なし
+✅ 終末のハーレム / lemino -> ❌なし
+✅ 鴨乃橋ロンの禁断推理 / bandai -> ❌なし
+✅ 鴨乃橋ロンの禁断推理 / lemino -> ❌なし
+✅ 終末のハーレム / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i24/
+✅ 失格紋の最強賢者 / animehodai -> ❌なし
+✅ 失格紋の最強賢者 / bandai -> ❌なし
+✅ 失格紋の最強賢者 / lemino -> ❌なし
+✅ 失格紋の最強賢者 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i71/
+✅ 時光代理人 -LINK CLICK- / animehodai -> ❌なし
+✅ 帰還者の魔法は特別です / fod -> ⭕あり https://fod.fujitv.co.jp/title/70ir/
+✅ 鴨乃橋ロンの禁断推理 / animehodai -> ❌なし
+✅ 時光代理人 -LINK CLICK- / bandai -> ❌なし
+✅ 時光代理人 -LINK CLICK- / lemino -> ❌なし
+✅ 時光代理人 -LINK CLICK- / fod -> ⭕あり https://fod.fujitv.co.jp/title/70pa/
+✅ 錆喰いビスコ / animehodai -> ❌なし
+✅ 錆喰いビスコ / bandai -> ❌なし
+✅ 錆喰いビスコ / lemino -> ❌なし
+✅ 帰還者の魔法は特別です / bandai -> ❌なし
+✅ 帰還者の魔法は特別です / lemino -> ❌なし
+✅ 錆喰いビスコ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1ky/
+✅ 殺し愛 / animehodai -> ❌なし
+✅ 殺し愛 / bandai -> ❌なし
+✅ 殺し愛 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIxODY=
+✅ 殺し愛 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i63/
+✅ オリエント / animehodai -> ❌なし
+✅ 君のことが大大大大大好きな100人の彼女 / fod -> ❌なし
+✅ 帰還者の魔法は特別です / animehodai -> ❌なし
+✅ オリエント / bandai -> ❌なし
+✅ オリエント / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDZhNGQ=
+✅ オリエント / fod -> ⭕あり https://fod.fujitv.co.jp/title/4624/
+✅ 明日ちゃんのセーラー服 / animehodai -> ❌なし
+✅ 明日ちゃんのセーラー服 / bandai -> ❌なし
+✅ 明日ちゃんのセーラー服 / lemino -> ❌なし
+✅ 君のことが大大大大大好きな100人の彼女 / bandai -> ❌なし
+✅ 君のことが大大大大大好きな100人の彼女 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJjMzU=
+✅ 明日ちゃんのセーラー服 / fod -> ❌なし
+✅ 海賊王女 / animehodai -> ❌なし
+✅ 海賊王女 / bandai -> ❌なし
+✅ 海賊王女 / lemino -> ❌なし
+✅ 海賊王女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h72/
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / animehodai -> ❌なし
+✅ 薬屋のひとりごと / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0i0/
+✅ 君のことが大大大大大好きな100人の彼女 / animehodai -> ❌なし
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / bandai -> ❌なし
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / lemino -> ❌なし
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / fod -> ❌なし
+✅ 出会って5秒でバトル / animehodai -> ❌なし
+✅ 出会って5秒でバトル / bandai -> ❌なし
+✅ 出会って5秒でバトル / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNjOTg=
+✅ 薬屋のひとりごと / bandai -> ❌なし
+✅ 薬屋のひとりごと / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBkMzE=
+✅ 出会って5秒でバトル / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h30/
+✅ 探偵はもう、死んでいる。 / animehodai -> ❌なし
+✅ 探偵はもう、死んでいる。 / bandai -> ❌なし
+✅ 探偵はもう、死んでいる。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGIyMDE=
+✅ 探偵はもう、死んでいる。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h33/
+✅ 月が導く異世界道中 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0096006
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/e48r/
+✅ 薬屋のひとりごと / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0163357
+✅ 月が導く異世界道中 / bandai -> ❌なし
+✅ 月が導く異世界道中 / lemino -> ❌なし
+✅ 月が導く異世界道中 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h47/
+✅ 白い砂のアクアトープ / animehodai -> ❌なし
+✅ 白い砂のアクアトープ / bandai -> ❌なし
+✅ 白い砂のアクアトープ / lemino -> ❌なし
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / bandai -> ❌なし
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / lemino -> ❌なし
+✅ 白い砂のアクアトープ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h26/
+✅ 精霊幻想記 / animehodai -> ❌なし
+✅ 精霊幻想記 / bandai -> ❌なし
+✅ 精霊幻想記 / lemino -> ❌なし
+✅ 精霊幻想記 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h23/
+✅ 死神坊ちゃんと黒メイド / animehodai -> ❌なし
+✅ SHY / fod -> ⭕あり https://fod.fujitv.co.jp/title/d2s0/
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / animehodai -> ❌なし
+✅ 死神坊ちゃんと黒メイド / bandai -> ❌なし
+✅ 死神坊ちゃんと黒メイド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFiMWM=
+✅ 死神坊ちゃんと黒メイド / fod -> ⭕あり https://fod.fujitv.co.jp/title/316p/
+✅ 現実主義勇者の王国再建記 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0058459
+✅ 現実主義勇者の王国再建記 / bandai -> ❌なし
+✅ 現実主義勇者の王国再建記 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGI4NWU=
+✅ SHY / bandai -> ❌なし
+✅ SHY / lemino -> ❌なし
+✅ 現実主義勇者の王国再建記 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i50/
+✅ Sonny Boy / animehodai -> ❌なし
+✅ Sonny Boy / bandai -> ❌なし
+✅ Sonny Boy / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGIxOTk=
+✅ Sonny Boy / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h39/
+✅ カノジョも彼女 / animehodai -> ❌なし
+✅ シャングリラ・フロンティア / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0hn/
+✅ SHY / animehodai -> ❌なし
+✅ カノジョも彼女 / bandai -> ❌なし
+✅ カノジョも彼女 / lemino -> ❌なし
+✅ カノジョも彼女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/e27r/
+✅ かげきしょうじょ!! / animehodai -> ❌なし
+✅ かげきしょうじょ!! / bandai -> ❌なし
+✅ かげきしょうじょ!! / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbHI4aDNkdXQ=
+✅ シャングリラ・フロンティア / bandai -> ❌なし
+✅ シャングリラ・フロンティア / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBlMDc=
+✅ かげきしょうじょ!! / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h28/
+✅ 不滅のあなたへ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0232902
+✅ 不滅のあなたへ / bandai -> ❌なし
+✅ 不滅のあなたへ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNmYzQ=
+✅ 不滅のあなたへ / fod -> ⭕あり https://fod.fujitv.co.jp/title/00yu/
+✅ ひげを剃る。そして女子高生を拾う。 / animehodai -> ❌なし
+✅ 聖剣学院の魔剣使い / fod -> ⭕あり https://fod.fujitv.co.jp/title/90jc/
+✅ シャングリラ・フロンティア / animehodai -> ❌なし
+✅ ひげを剃る。そして女子高生を拾う。 / bandai -> ❌なし
+✅ ひげを剃る。そして女子高生を拾う。 / lemino -> ❌なし
+✅ ひげを剃る。そして女子高生を拾う。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g70/
+✅ 東京リベンジャーズ / animehodai -> ❌なし
+✅ 東京リベンジャーズ / bandai -> ❌なし
+✅ 東京リベンジャーズ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWF1aHpiOW4=
+✅ 聖剣学院の魔剣使い / bandai -> ❌なし
+✅ 聖剣学院の魔剣使い / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJmOGE=
+✅ 東京リベンジャーズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/70kq/
+✅ SSSS.DYNAZENON / animehodai -> ❌なし
+✅ SSSS.DYNAZENON / bandai -> ❌なし
+✅ SSSS.DYNAZENON / lemino -> ❌なし
+✅ SSSS.DYNAZENON / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g93/
+✅ 戦闘員、派遣します！ / animehodai -> ❌なし
+✅ PLUTO / fod -> ❌なし
+✅ 聖剣学院の魔剣使い / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0091735
+✅ 戦闘員、派遣します！ / bandai -> ❌なし
+✅ 戦闘員、派遣します！ / lemino -> ❌なし
+✅ 戦闘員、派遣します！ / fod -> ❌なし
+✅ 聖女の魔力は万能です / animehodai -> ❌なし
+✅ 聖女の魔力は万能です / bandai -> ❌なし
+✅ 聖女の魔力は万能です / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGFiMjU=
+✅ PLUTO / bandai -> ❌なし
+✅ PLUTO / lemino -> ❌なし
+✅ 聖女の魔力は万能です / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g74/
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / animehodai -> ❌なし
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / bandai -> ❌なし
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDMxMDU=
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g69/
+✅ シャドーハウス / animehodai -> ❌なし
+✅ 俺だけレベルアップな件 / fod -> ⭕あり https://fod.fujitv.co.jp/title/90lx/
+✅ PLUTO / animehodai -> ❌なし
+✅ シャドーハウス / bandai -> ❌なし
+✅ シャドーハウス / lemino -> ❌なし
+✅ シャドーハウス / fod -> ❌なし
+✅ 灼熱カバディ / animehodai -> ❌なし
+✅ 灼熱カバディ / bandai -> ❌なし
+✅ 灼熱カバディ / lemino -> ❌なし
+✅ 俺だけレベルアップな件 / bandai -> ❌なし
+✅ 俺だけレベルアップな件 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDE1MzE=
+✅ 灼熱カバディ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1u2/
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / animehodai -> ❌なし
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / bandai -> ❌なし
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGFkODY=
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / fod -> ⭕あり https://fod.fujitv.co.jp/title/f257/
+✅ 幼なじみが絶対に負けないラブコメ / animehodai -> ❌なし
+✅ 愚かな天使は悪魔と踊る / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1m1/
+✅ 俺だけレベルアップな件 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0163351
+✅ 幼なじみが絶対に負けないラブコメ / bandai -> ❌なし
+✅ 幼なじみが絶対に負けないラブコメ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGFkODc=
+✅ 幼なじみが絶対に負けないラブコメ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g72/
+✅ EDENS ZERO / animehodai -> ❌なし
+✅ EDENS ZERO / bandai -> ❌なし
+✅ EDENS ZERO / lemino -> ❌なし
+✅ 愚かな天使は悪魔と踊る / bandai -> ❌なし
+✅ 愚かな天使は悪魔と踊る / lemino -> ❌なし
+✅ EDENS ZERO / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g81/
+✅ イジらないで、長瀞さん / animehodai -> ❌なし
+✅ イジらないで、長瀞さん / bandai -> ❌なし
+✅ イジらないで、長瀞さん / lemino -> ❌なし
+✅ イジらないで、長瀞さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g61/
+✅ 天空侵犯 / animehodai -> ❌なし
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/90ix/
+✅ 愚かな天使は悪魔と踊る / animehodai -> ❌なし
+✅ 天空侵犯 / bandai -> ❌なし
+✅ 天空侵犯 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBiZjI=
+✅ 天空侵犯 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3q3/
+✅ ホリミヤ / animehodai -> ❌なし
+✅ ホリミヤ / bandai -> ❌なし
+✅ ホリミヤ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwa3Rub2RkZjg=
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / bandai -> ❌なし
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBmMWM=
+✅ ホリミヤ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g03/
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / animehodai -> ❌なし
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / bandai -> ❌なし
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / lemino -> ❌なし
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f96/
+✅ 弱キャラ友崎くん / animehodai -> ❌なし
+✅ 七つの大罪 黙示録の四騎士 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0ho/
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / animehodai -> ❌なし
+✅ 弱キャラ友崎くん / bandai -> ❌なし
+✅ 弱キャラ友崎くん / lemino -> ❌なし
+✅ 弱キャラ友崎くん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g34/
+✅ 怪物事変 / animehodai -> ❌なし
+✅ 怪物事変 / bandai -> ❌なし
+✅ 怪物事変 / lemino -> ❌なし
+✅ 七つの大罪 黙示録の四騎士 / bandai -> ❌なし
+✅ 七つの大罪 黙示録の四騎士 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBmMWY=
+✅ 怪物事変 / fod -> ❌なし
+✅ 蜘蛛ですが、なにか？ / animehodai -> ❌なし
+✅ 蜘蛛ですが、なにか？ / bandai -> ❌なし
+✅ 蜘蛛ですが、なにか？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGE1Y2Q=
+✅ 蜘蛛ですが、なにか？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f89/
+✅ 回復術士のやり直し / animehodai -> ❌なし
+✅ はめつのおうこく / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0hz/
+✅ 七つの大罪 黙示録の四騎士 / animehodai -> ❌なし
+✅ 回復術士のやり直し / bandai -> ❌なし
+✅ 回復術士のやり直し / lemino -> ❌なし
+✅ 回復術士のやり直し / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g29/
+✅ 俺だけ入れる隠しダンジョン / animehodai -> ❌なし
+✅ 俺だけ入れる隠しダンジョン / bandai -> ❌なし
+✅ 俺だけ入れる隠しダンジョン / lemino -> ❌なし
+✅ はめつのおうこく / bandai -> ❌なし
+✅ はめつのおうこく / lemino -> ❌なし
+✅ 俺だけ入れる隠しダンジョン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f83/
+✅ オルタンシア・サーガ / animehodai -> ❌なし
+✅ オルタンシア・サーガ / bandai -> ❌なし
+✅ オルタンシア・サーガ / lemino -> ❌なし
+✅ オルタンシア・サーガ / fod -> ❌なし
+✅ EX-ARM エクスアーム / animehodai -> ❌なし
+✅ ひきこまり吸血姫の悶々 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0ix/
+✅ はめつのおうこく / animehodai -> ❌なし
+✅ EX-ARM エクスアーム / bandai -> ❌なし
+✅ EX-ARM エクスアーム / lemino -> ❌なし
+✅ EX-ARM エクスアーム / fod -> ⭕あり https://fod.fujitv.co.jp/title/c37s/
+✅ IDOLY PRIDE / animehodai -> ❌なし
+✅ IDOLY PRIDE / bandai -> ❌なし
+✅ IDOLY PRIDE / lemino -> ❌なし
+✅ ひきこまり吸血姫の悶々 / bandai -> ❌なし
+✅ ひきこまり吸血姫の悶々 / lemino -> ❌なし
+✅ IDOLY PRIDE / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g21/
+✅ 憂国のモリアーティ / animehodai -> ❌なし
+✅ 憂国のモリアーティ / bandai -> ❌なし
+✅ 憂国のモリアーティ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2NjY=
+✅ 憂国のモリアーティ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2jl/
+✅ 無能なナナ / animehodai -> ❌なし
+✅ 豚のレバーは加熱しろ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f25o/
+✅ ひきこまり吸血姫の悶々 / animehodai -> ❌なし
+✅ 無能なナナ / bandai -> ❌なし
+✅ 無能なナナ / lemino -> ❌なし
+✅ 無能なナナ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1jg/
+✅ 魔女の旅々 / animehodai -> ❌なし
+✅ 魔女の旅々 / bandai -> ❌なし
+✅ 魔女の旅々 / lemino -> ❌なし
+✅ 豚のレバーは加熱しろ / bandai -> ❌なし
+✅ 豚のレバーは加熱しろ / lemino -> ❌なし
+✅ 魔女の旅々 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d98/
+✅ 魔王城でおやすみ / animehodai -> ❌なし
+✅ 魔王城でおやすみ / bandai -> ❌なし
+✅ 魔王城でおやすみ / lemino -> ❌なし
+✅ 魔王城でおやすみ / fod -> ❌なし
+✅ 100万の命の上に俺は立っている / animehodai -> ❌なし
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / fod -> ⭕あり https://fod.fujitv.co.jp/title/70j9/
+✅ 豚のレバーは加熱しろ / animehodai -> ❌なし
+✅ 100万の命の上に俺は立っている / bandai -> ❌なし
+✅ 100万の命の上に俺は立っている / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBhZTQ=
+✅ 100万の命の上に俺は立っている / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f13/
+✅ トニカクカワイイ / animehodai -> ❌なし
+✅ トニカクカワイイ / bandai -> ❌なし
+✅ トニカクカワイイ / lemino -> ❌なし
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / bandai -> ❌なし
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJmOGQ=
+✅ トニカクカワイイ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2dv/
+✅ 呪術廻戦 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249078
+✅ 呪術廻戦 / bandai -> ❌なし
+✅ 呪術廻戦 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1NzI=
+✅ 呪術廻戦 / fod -> ⭕あり https://fod.fujitv.co.jp/title/011p/
+✅ くまクマ熊ベアー / animehodai -> ❌なし
+✅ 暴食のベルセルク / fod -> ⭕あり https://fod.fujitv.co.jp/title/00d8/
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / animehodai -> ❌なし
+✅ くまクマ熊ベアー / bandai -> ❌なし
+✅ くまクマ熊ベアー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAyNjg=
+✅ くまクマ熊ベアー / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f06/
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / animehodai -> ❌なし
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / bandai -> ❌なし
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIwM2M=
+✅ 暴食のベルセルク / bandai -> ❌なし
+✅ 暴食のベルセルク / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBlZWM=
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / fod -> ⭕あり https://fod.fujitv.co.jp/title/70to/
+✅ 神達に拾われた男 / animehodai -> ❌なし
+✅ 神達に拾われた男 / bandai -> ❌なし
+✅ 神達に拾われた男 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBhZTA=
+✅ 神達に拾われた男 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f14/
+✅ 神様になった日 / animehodai -> ❌なし
+✅ ミギとダリ / fod -> ❌なし
+✅ 暴食のベルセルク / animehodai -> ❌なし
+✅ 神様になった日 / bandai -> ❌なし
+✅ 神様になった日 / lemino -> ❌なし
+✅ 神様になった日 / fod -> ❌なし
+✅ アクダマドライブ / animehodai -> ❌なし
+✅ アクダマドライブ / bandai -> ❌なし
+✅ アクダマドライブ / lemino -> ❌なし
+✅ ミギとダリ / bandai -> ❌なし
+✅ ミギとダリ / lemino -> ❌なし
+✅ アクダマドライブ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d92/
+✅ 日本沈没2020 / animehodai -> ❌なし
+✅ 日本沈没2020 / bandai -> ❌なし
+✅ 日本沈没2020 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBhNDY=
+✅ 日本沈没2020 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3vq/
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / animehodai -> ❌なし
+✅ ラグナクリムゾン / fod -> ⭕あり https://fod.fujitv.co.jp/title/11hd/
+✅ ミギとダリ / animehodai -> ❌なし
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / bandai -> ❌なし
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / lemino -> ❌なし
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d57/
+✅ ド級編隊エグゼロス / animehodai -> ❌なし
+✅ ド級編隊エグゼロス / bandai -> ❌なし
+✅ ド級編隊エグゼロス / lemino -> ❌なし
+✅ ラグナクリムゾン / bandai -> ❌なし
+✅ ラグナクリムゾン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBlOTE=
+✅ ド級編隊エグゼロス / fod -> ❌なし
+✅ デカダンス / animehodai -> ❌なし
+✅ デカダンス / bandai -> ❌なし
+✅ デカダンス / lemino -> ❌なし
+✅ デカダンス / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1le/
+✅ GREAT PRETENDER / animehodai -> ❌なし
+✅ 私の推しは悪役令嬢。 / fod -> ❌なし
+✅ ラグナクリムゾン / animehodai -> ❌なし
+✅ GREAT PRETENDER / bandai -> ❌なし
+✅ GREAT PRETENDER / lemino -> ❌なし
+✅ GREAT PRETENDER / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f65/
+✅ 彼女、お借りします / animehodai -> ❌なし
+✅ 彼女、お借りします / bandai -> ❌なし
+✅ 彼女、お借りします / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNhNzk=
+✅ 私の推しは悪役令嬢。 / bandai -> ❌なし
+✅ 私の推しは悪役令嬢。 / lemino -> ❌なし
+✅ 彼女、お借りします / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0iq/
+✅ 宇崎ちゃんは遊びたい！ / animehodai -> ❌なし
+✅ 宇崎ちゃんは遊びたい！ / bandai -> ❌なし
+✅ 宇崎ちゃんは遊びたい！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGNiZTE=
+✅ 宇崎ちゃんは遊びたい！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d56/
+✅ 八男って、それはないでしょう！ / animehodai -> ❌なし
+✅ グッド・ナイト・ワールド / fod -> ❌なし
+✅ 私の推しは悪役令嬢。 / animehodai -> ❌なし
+✅ 八男って、それはないでしょう！ / bandai -> ❌なし
+✅ 八男って、それはないでしょう！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDk3ZGY=
+✅ 八男って、それはないでしょう！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c64/?division=home&shelf=category_H00139
+✅ 球詠 / animehodai -> ❌なし
+✅ 球詠 / bandai -> ❌なし
+✅ 球詠 / lemino -> ❌なし
+✅ グッド・ナイト・ワールド / bandai -> ❌なし
+✅ グッド・ナイト・ワールド / lemino -> ❌なし
+✅ 球詠 / fod -> ❌なし
+✅ 神之塔 -Tower of God- / animehodai -> ❌なし
+✅ 神之塔 -Tower of God- / bandai -> ❌なし
+✅ 神之塔 -Tower of God- / lemino -> ❌なし
+✅ 神之塔 -Tower of God- / fod -> ❌なし
+✅ グレイプニル / animehodai -> ❌なし
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0lo/
+✅ グッド・ナイト・ワールド / animehodai -> ❌なし
+✅ グレイプニル / bandai -> ❌なし
+✅ グレイプニル / lemino -> ❌なし
+✅ グレイプニル / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d08/
+✅ かくしごと / animehodai -> ❌なし
+✅ かくしごと / bandai -> ❌なし
+✅ かくしごと / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDk4ZGU=
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / bandai -> ❌なし
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / lemino -> ❌なし
+✅ かくしごと / fod -> ⭕あり https://fod.fujitv.co.jp/title/d978/
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / animehodai -> ❌なし
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / bandai -> ❌なし
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBkZmY=
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h24/
+✅ イエスタデイをうたって / animehodai -> ❌なし
+✅ 結婚指輪物語 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b4rf/
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / animehodai -> ❌なし
+✅ イエスタデイをうたって / bandai -> ❌なし
+✅ イエスタデイをうたって / lemino -> ❌なし
+✅ イエスタデイをうたって / fod -> ⭕あり https://fod.fujitv.co.jp/title/g3dt/
+✅ 理系が恋に落ちたので証明してみた。 / animehodai -> ❌なし
+✅ 理系が恋に落ちたので証明してみた。 / bandai -> ❌なし
+✅ 理系が恋に落ちたので証明してみた。 / lemino -> ❌なし
+✅ 結婚指輪物語 / bandai -> ❌なし
+✅ 結婚指輪物語 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNmNDU=
+✅ 理系が恋に落ちたので証明してみた。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g43/
+✅ ランウェイで笑って / animehodai -> ❌なし
+✅ ランウェイで笑って / bandai -> ❌なし
+✅ ランウェイで笑って / lemino -> ❌なし
+✅ ランウェイで笑って / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2hu/
+✅ 魔術士オーフェン はぐれ旅 / animehodai -> ❌なし
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9ur/
+✅ 結婚指輪物語 / animehodai -> ❌なし
+✅ 魔術士オーフェン はぐれ旅 / bandai -> ❌なし
+✅ 魔術士オーフェン はぐれ旅 / lemino -> ❌なし
+✅ 魔術士オーフェン はぐれ旅 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c01/
+✅ プランダラ / animehodai -> ❌なし
+✅ プランダラ / bandai -> ❌なし
+✅ プランダラ / lemino -> ❌なし
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / bandai -> ❌なし
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDE0Yzk=
+✅ プランダラ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c17/
+✅ ドロヘドロ / animehodai -> ❌なし
+✅ ドロヘドロ / bandai -> ❌なし
+✅ ドロヘドロ / lemino -> ❌なし
+✅ ドロヘドロ / fod -> ❌なし
+✅ ダーウィンズゲーム / animehodai -> ❌なし
+✅ 残響のテロル / bandai -> ❌なし
+✅ 残響のテロル / animehodai -> ❌なし
+✅ まじっく快斗1412 / fod -> ❌なし
+✅ まじっく快斗1412 / lemino -> ❌なし
+✅ まじっく快斗1412 / bandai -> ❌なし
+✅ まじっく快斗1412 / animehodai -> ❌なし
+✅ 魔弾の王と戦姫 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2n4/
+✅ 魔弾の王と戦姫 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM0NWM=
+✅ 残響のテロル / fod -> ⭕あり https://fod.fujitv.co.jp/title/5237/
+✅ 残響のテロル / lemino -> ❌なし
+✅ 魔弾の王と戦姫 / bandai -> ❌なし
+✅ 魔弾の王と戦姫 / animehodai -> ❌なし
+✅ 結城友奈は勇者である / fod -> ⭕あり https://fod.fujitv.co.jp/title/5408/
+✅ 結城友奈は勇者である / lemino -> ❌なし
+✅ 結城友奈は勇者である / bandai -> ❌なし
+✅ 結城友奈は勇者である / animehodai -> ❌なし
+✅ Fate/stay night [Unlimited Blade Works] / bandai -> ❌なし
+✅ Fate/stay night [Unlimited Blade Works] / animehodai -> ❌なし
+✅ ワールドトリガー（1stシーズン） / fod -> ❌なし
+✅ ワールドトリガー（1stシーズン） / lemino -> ❌なし
+✅ ワールドトリガー（1stシーズン） / bandai -> ❌なし
+✅ ワールドトリガー（1stシーズン） / animehodai -> ❌なし
+✅ アイドルマスター シンデレラガールズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g3rm/
+✅ アイドルマスター シンデレラガールズ / lemino -> ❌なし
+✅ Fate/stay night [Unlimited Blade Works] / fod -> ⭕あり https://fod.fujitv.co.jp/title/c930/
+✅ Fate/stay night [Unlimited Blade Works] / lemino -> ❌なし
+✅ アイドルマスター シンデレラガールズ / bandai -> ❌なし
+✅ アイドルマスター シンデレラガールズ / animehodai -> ❌なし
+✅ アブソリュート・デュオ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d21f/
+✅ アブソリュート・デュオ / lemino -> ❌なし
+✅ アブソリュート・デュオ / bandai -> ❌なし
+✅ アブソリュート・デュオ / animehodai -> ❌なし
+✅ トリニティセブン / bandai -> ❌なし
+✅ トリニティセブン / animehodai -> ❌なし
+✅ 暗殺教室（第1期） / fod -> ❌なし
+✅ 暗殺教室（第1期） / lemino -> ❌なし
+✅ 暗殺教室（第1期） / bandai -> ❌なし
+✅ 暗殺教室（第1期） / animehodai -> ❌なし
+✅ 艦隊これくしょん -艦これ- / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1kn/
+✅ 艦隊これくしょん -艦これ- / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDM1Nzg=
+✅ トリニティセブン / fod -> ⭕あり https://fod.fujitv.co.jp/title/c40f/
+✅ トリニティセブン / lemino -> ❌なし
+✅ 艦隊これくしょん -艦これ- / bandai -> ❌なし
+✅ 艦隊これくしょん -艦これ- / animehodai -> ❌なし
+✅ 幸腹グラフィティ / fod -> ❌なし
+✅ 幸腹グラフィティ / lemino -> ❌なし
+✅ 幸腹グラフィティ / bandai -> ❌なし
+✅ 幸腹グラフィティ / animehodai -> ❌なし
+✅ 旦那が何を言っているかわからない件 / bandai -> ❌なし
+✅ 旦那が何を言っているかわからない件 / animehodai -> ❌なし
+✅ 冴えない彼女の育てかた / fod -> ⭕あり https://fod.fujitv.co.jp/title/5247/
+✅ 冴えない彼女の育てかた / lemino -> ❌なし
+✅ 冴えない彼女の育てかた / bandai -> ❌なし
+✅ 冴えない彼女の育てかた / animehodai -> ❌なし
+✅ 銃皇無尽のファフニール / fod -> ❌なし
+✅ 銃皇無尽のファフニール / lemino -> ❌なし
+✅ 旦那が何を言っているかわからない件 / fod -> ❌なし
+✅ 旦那が何を言っているかわからない件 / lemino -> ❌なし
+✅ 銃皇無尽のファフニール / bandai -> ❌なし
+✅ 銃皇無尽のファフニール / animehodai -> ❌なし
+✅ 純潔のマリア / fod -> ❌なし
+✅ 純潔のマリア / lemino -> ❌なし
+✅ 純潔のマリア / bandai -> ❌なし
+✅ 純潔のマリア / animehodai -> ❌なし
+✅ 天体のメソッド / bandai -> ❌なし
+✅ 天体のメソッド / animehodai -> ❌なし
+✅ 新妹魔王の契約者 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d22/
+✅ 新妹魔王の契約者 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDM1Nzk=
+✅ 新妹魔王の契約者 / bandai -> ❌なし
+✅ 新妹魔王の契約者 / animehodai -> ❌なし
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / fod -> ❌なし
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / lemino -> ❌なし
+✅ 天体のメソッド / fod -> ❌なし
+✅ 天体のメソッド / lemino -> ❌なし
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / bandai -> ❌なし
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / animehodai -> ❌なし
+✅ 夜ノヤッターマン / fod -> ❌なし
+✅ 夜ノヤッターマン / lemino -> ❌なし
+✅ 夜ノヤッターマン / bandai -> ❌なし
+✅ 夜ノヤッターマン / animehodai -> ❌なし
+✅ SHIROBAKO / bandai -> ❌なし
+✅ SHIROBAKO / animehodai -> ❌なし
+✅ 食戟のソーマ（第1期） / fod -> ❌なし
+✅ 食戟のソーマ（第1期） / lemino -> ❌なし
+✅ 食戟のソーマ（第1期） / bandai -> ❌なし
+✅ 食戟のソーマ（第1期） / animehodai -> ❌なし
+✅ 終わりのセラフ（第1期） / fod -> ❌なし
+✅ 終わりのセラフ（第1期） / lemino -> ❌なし
+✅ SHIROBAKO / fod -> ⭕あり https://fod.fujitv.co.jp/title/e48v/
+✅ SHIROBAKO / lemino -> ❌なし
+✅ 終わりのセラフ（第1期） / bandai -> ❌なし
+✅ 終わりのセラフ（第1期） / animehodai -> ❌なし
+✅ ガンスリンガー ストラトス -THE ANIMATION- / fod -> ❌なし
+✅ ガンスリンガー ストラトス -THE ANIMATION- / lemino -> ❌なし
+✅ ガンスリンガー ストラトス -THE ANIMATION- / bandai -> ❌なし
+✅ ガンスリンガー ストラトス -THE ANIMATION- / animehodai -> ❌なし
+✅ 四月は君の嘘 / bandai -> ❌なし
+✅ 四月は君の嘘 / animehodai -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / fod -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / lemino -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / bandai -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / animehodai -> ❌なし
+✅ 血界戦線 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c42v/
+✅ 血界戦線 / lemino -> ❌なし
+✅ 四月は君の嘘 / fod -> ⭕あり https://fod.fujitv.co.jp/title/6o09/
+✅ 四月は君の嘘 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwaXlqdTRndnE=
+✅ 血界戦線 / bandai -> ❌なし
+✅ 血界戦線 / animehodai -> ❌なし
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / fod -> ❌なし
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / lemino -> ❌なし
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / bandai -> ❌なし
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / animehodai -> ❌なし
+✅ クロスアンジュ 天使と竜の輪舞 / bandai -> ❌なし
+✅ クロスアンジュ 天使と竜の輪舞 / animehodai -> ❌なし
+✅ 電波教師 / fod -> ❌なし
+✅ 電波教師 / lemino -> ❌なし
+✅ 電波教師 / bandai -> ❌なし
+✅ 電波教師 / animehodai -> ❌なし
+✅ トリアージX / fod -> ⭕あり https://fod.fujitv.co.jp/title/b28v/
+✅ トリアージX / lemino -> ❌なし
+✅ クロスアンジュ 天使と竜の輪舞 / fod -> ⭕あり https://fod.fujitv.co.jp/title/e44t/
+✅ クロスアンジュ 天使と竜の輪舞 / lemino -> ❌なし
+✅ トリアージX / bandai -> ❌なし
+✅ トリアージX / animehodai -> ❌なし
+✅ パンチライン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5253/
+✅ パンチライン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbTcxYzJmemo=
+✅ パンチライン / bandai -> ❌なし
+✅ パンチライン / animehodai -> ❌なし
+✅ グリザイアの果実 / bandai -> ❌なし
+✅ グリザイアの果実 / animehodai -> ❌なし
+✅ 響け！ユーフォニアム（第1期） / fod -> ❌なし
+✅ 響け！ユーフォニアム（第1期） / lemino -> ❌なし
+✅ 響け！ユーフォニアム（第1期） / bandai -> ❌なし
+✅ 響け！ユーフォニアム（第1期） / animehodai -> ❌なし
+✅ プラスティック・メモリーズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5499/
+✅ プラスティック・メモリーズ / lemino -> ❌なし
+✅ グリザイアの果実 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d35/
+✅ グリザイアの果実 / lemino -> ❌なし
+✅ プラスティック・メモリーズ / bandai -> ❌なし
+✅ プラスティック・メモリーズ / animehodai -> ❌なし
+✅ 山田くんと7人の魔女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/4509/
+✅ 山田くんと7人の魔女 / lemino -> ❌なし
+✅ 山田くんと7人の魔女 / bandai -> ❌なし
+✅ 山田くんと7人の魔女 / animehodai -> ❌なし
+✅ 寄生獣 セイの格率 / bandai -> ❌なし
+✅ 寄生獣 セイの格率 / animehodai -> ❌なし
+✅ 青春×機関銃 / fod -> ❌なし
+✅ 青春×機関銃 / lemino -> ❌なし
+✅ 青春×機関銃 / bandai -> ❌なし
+✅ 青春×機関銃 / animehodai -> ❌なし
+✅ 赤髪の白雪姫（第1期） / fod -> ❌なし
+✅ 赤髪の白雪姫（第1期） / lemino -> ❌なし
+✅ 寄生獣 セイの格率 / fod -> ❌なし
+✅ 寄生獣 セイの格率 / lemino -> ❌なし
+✅ 赤髪の白雪姫（第1期） / bandai -> ❌なし
+✅ 赤髪の白雪姫（第1期） / animehodai -> ❌なし
+✅ うしおととら（第1期） / fod -> ❌なし
+✅ うしおととら（第1期） / lemino -> ❌なし
+✅ うしおととら（第1期） / bandai -> ❌なし
+✅ うしおととら（第1期） / animehodai -> ❌なし
+✅ ガールフレンド(仮) / bandai -> ❌なし
+✅ ガールフレンド(仮) / animehodai -> ❌なし
+✅ オーバーロード（第1期） / fod -> ❌なし
+✅ オーバーロード（第1期） / lemino -> ❌なし
+✅ オーバーロード（第1期） / bandai -> ❌なし
+✅ オーバーロード（第1期） / animehodai -> ❌なし
+✅ おくさまが生徒会長！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3es/
+✅ おくさまが生徒会長！ / lemino -> ❌なし
+✅ ガールフレンド(仮) / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1vi/
+✅ ガールフレンド(仮) / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbGthbGhsaTg=
+✅ おくさまが生徒会長！ / bandai -> ❌なし
+✅ おくさまが生徒会長！ / animehodai -> ❌なし
+✅ がっこうぐらし！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5719/
+✅ がっこうぐらし！ / lemino -> ❌なし
+✅ がっこうぐらし！ / bandai -> ❌なし
+✅ がっこうぐらし！ / animehodai -> ❌なし
+✅ 俺、ツインテールになります。 / bandai -> ❌なし
+✅ 俺、ツインテールになります。 / animehodai -> ❌なし
+✅ GANGSTA. / fod -> ❌なし
+✅ GANGSTA. / lemino -> ❌なし
+✅ GANGSTA. / bandai -> ❌なし
+✅ GANGSTA. / animehodai -> ❌なし
+✅ 空戦魔導士候補生の教官 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1l2/
+✅ 空戦魔導士候補生の教官 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDFlNmQ=
+✅ 俺、ツインテールになります。 / fod -> ❌なし
+✅ 俺、ツインテールになります。 / lemino -> ❌なし
+✅ 空戦魔導士候補生の教官 / bandai -> ❌なし
+✅ 空戦魔導士候補生の教官 / animehodai -> ❌なし
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / fod -> ⭕あり https://fod.fujitv.co.jp/title/5377/
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / lemino -> ❌なし
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / bandai -> ❌なし
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / animehodai -> ❌なし
+✅ オオカミ少女と黒王子 / bandai -> ❌なし
+✅ オオカミ少女と黒王子 / animehodai -> ❌なし
+✅ ケイオスドラゴン 赤竜戦役 / fod -> ❌なし
+✅ ケイオスドラゴン 赤竜戦役 / lemino -> ❌なし
+✅ ケイオスドラゴン 赤竜戦役 / bandai -> ❌なし
+✅ ケイオスドラゴン 赤竜戦役 / animehodai -> ❌なし
+✅ 実は私は / fod -> ❌なし
+✅ 実は私は / lemino -> ❌なし
+✅ オオカミ少女と黒王子 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5833/
+✅ オオカミ少女と黒王子 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQ2YjQ=
+✅ 実は私は / bandai -> ❌なし
+✅ 実は私は / animehodai -> ❌なし
+✅ 下ネタという概念が存在しない退屈な世界 / fod -> ❌なし
+✅ 下ネタという概念が存在しない退屈な世界 / lemino -> ❌なし
+✅ 下ネタという概念が存在しない退屈な世界 / bandai -> ❌なし
+✅ 下ネタという概念が存在しない退屈な世界 / animehodai -> ❌なし
+✅ 失われた未来を求めて / bandai -> ❌なし
+✅ 失われた未来を求めて / animehodai -> ❌なし
+✅ Charlotte(シャーロット) / fod -> ❌なし
+✅ Charlotte(シャーロット) / lemino -> ❌なし
+✅ Charlotte(シャーロット) / bandai -> ❌なし
+✅ Charlotte(シャーロット) / animehodai -> ❌なし
+✅ 城下町のダンデライオン / fod -> ⭕あり https://fod.fujitv.co.jp/title/d40d/
+✅ 城下町のダンデライオン / lemino -> ❌なし
+✅ 失われた未来を求めて / fod -> ❌なし
+✅ 失われた未来を求めて / lemino -> ❌なし
+✅ 城下町のダンデライオン / bandai -> ❌なし
+✅ 城下町のダンデライオン / animehodai -> ❌なし
+✅ ビキニ・ウォリアーズ / fod -> ❌なし
+✅ ビキニ・ウォリアーズ / lemino -> ❌なし
+✅ ビキニ・ウォリアーズ / bandai -> ❌なし
+✅ ビキニ・ウォリアーズ / animehodai -> ❌なし
+✅ 異能バトルは日常系のなかで / bandai -> ❌なし
+✅ 異能バトルは日常系のなかで / animehodai -> ❌なし
+✅ 干物妹！うまるちゃん / fod -> ⭕あり https://fod.fujitv.co.jp/title/e29h/
+✅ 干物妹！うまるちゃん / lemino -> ❌なし
+✅ 干物妹！うまるちゃん / bandai -> ❌なし
+✅ 干物妹！うまるちゃん / animehodai -> ❌なし
+✅ 監獄学園(プリズンスクール) / fod -> ⭕あり https://fod.fujitv.co.jp/title/5370/
+✅ 監獄学園(プリズンスクール) / lemino -> ❌なし
+✅ 異能バトルは日常系のなかで / fod -> ⭕あり https://fod.fujitv.co.jp/title/b3c3/
+✅ 異能バトルは日常系のなかで / lemino -> ❌なし
+✅ 監獄学園(プリズンスクール) / bandai -> ❌なし
+✅ 監獄学園(プリズンスクール) / animehodai -> ❌なし
+✅ モンスター娘のいる日常 / fod -> ❌なし
+✅ モンスター娘のいる日常 / lemino -> ❌なし
+✅ モンスター娘のいる日常 / bandai -> ❌なし
+✅ モンスター娘のいる日常 / animehodai -> ❌なし
+✅ 甘城ブリリアントパーク / bandai -> ❌なし
+✅ 甘城ブリリアントパーク / animehodai -> ❌なし
+✅ 乱歩奇譚 Game of Laplace / fod -> ⭕あり https://fod.fujitv.co.jp/title/5261/
+✅ 乱歩奇譚 Game of Laplace / lemino -> ❌なし
+✅ 乱歩奇譚 Game of Laplace / bandai -> ❌なし
+✅ 乱歩奇譚 Game of Laplace / animehodai -> ❌なし
+✅ 六花の勇者 / fod -> ❌なし
+✅ 六花の勇者 / lemino -> ❌なし
+✅ 甘城ブリリアントパーク / fod -> ❌なし
+✅ 甘城ブリリアントパーク / lemino -> ❌なし
+✅ 六花の勇者 / bandai -> ❌なし
+✅ 六花の勇者 / animehodai -> ❌なし
+✅ VALKYRIE DRIVE -MERMAID- / fod -> ❌なし
+✅ VALKYRIE DRIVE -MERMAID- / lemino -> ❌なし
+✅ VALKYRIE DRIVE -MERMAID- / bandai -> ❌なし
+✅ VALKYRIE DRIVE -MERMAID- / animehodai -> ❌なし
+✅ 暁のヨナ / bandai -> ❌なし
+✅ 暁のヨナ / animehodai -> ❌なし
+✅ うたわれるもの 偽りの仮面 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j43/
+✅ うたわれるもの 偽りの仮面 / lemino -> ❌なし
+✅ うたわれるもの 偽りの仮面 / bandai -> ❌なし
+✅ うたわれるもの 偽りの仮面 / animehodai -> ❌なし
+✅ 神さまのいない日曜日 / lemino -> ❌なし
+✅ 神さまのいない日曜日 / bandai -> ❌なし
+✅ 神さまのいない日曜日 / animehodai -> ❌なし
+✅ 君のいる町 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5388/
+✅ 君のいる町 / lemino -> ❌なし
+✅ 君のいる町 / bandai -> ❌なし
+✅ 君のいる町 / animehodai -> ❌なし
+✅ 境界の彼方 / fod -> ⭕あり https://fod.fujitv.co.jp/title/002d/
+✅ 境界の彼方 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwaWpwZnNwNmg=
+✅ 境界の彼方 / bandai -> ❌なし
+✅ 境界の彼方 / animehodai -> ❌なし
+✅ キルラキル / fod -> ⭕あり https://fod.fujitv.co.jp/title/5364/
+✅ キルラキル / lemino -> ❌なし
+✅ キルラキル / bandai -> ❌なし
+✅ キルラキル / animehodai -> ❌なし
+✅ 銀の匙 Silver Spoon / fod -> ⭕あり https://fod.fujitv.co.jp/title/5203/
+✅ 銀の匙 Silver Spoon / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwa3Rub2QzenY=
+✅ 銀の匙 Silver Spoon / bandai -> ❌なし
+✅ 銀の匙 Silver Spoon / animehodai -> ❌なし
+✅ ゴールデンタイム / fod -> ⭕あり https://fod.fujitv.co.jp/title/b263/
+✅ ゴールデンタイム / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAwOTU=
+✅ ゴールデンタイム / bandai -> ❌なし
+✅ ゴールデンタイム / animehodai -> ❌なし
+✅ 琴浦さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/g2qz/
+✅ 琴浦さん / lemino -> ❌なし
+✅ 琴浦さん / bandai -> ❌なし
+✅ 琴浦さん / animehodai -> ❌なし
+✅ サーバント×サービス / fod -> ❌なし
+✅ サーバント×サービス / lemino -> ❌なし
+✅ サーバント×サービス / bandai -> ❌なし
+✅ サーバント×サービス / animehodai -> ❌なし
+✅ ストライク・ザ・ブラッド / fod -> ⭕あり https://fod.fujitv.co.jp/title/0072/
+✅ ストライク・ザ・ブラッド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM1MGU=
+✅ ストライク・ザ・ブラッド / bandai -> ❌なし
+✅ ストライク・ザ・ブラッド / animehodai -> ❌なし
+✅ ダイヤのA / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h61/
+✅ ダイヤのA / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2NTM=
+✅ ダイヤのA / bandai -> ❌なし
+✅ ダイヤのA / animehodai -> ❌なし
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / fod -> ❌なし
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / lemino -> ❌なし
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / bandai -> ❌なし
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / animehodai -> ❌なし
+✅ デート・ア・ライブ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f4gu/
+✅ デート・ア・ライブ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDdmOWI=
+✅ デート・ア・ライブ / bandai -> ❌なし
+✅ デート・ア・ライブ / animehodai -> ❌なし
+✅ 東京レイヴンズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f2kn/
+✅ 東京レイヴンズ / lemino -> ❌なし
+✅ 東京レイヴンズ / bandai -> ❌なし
+✅ 東京レイヴンズ / animehodai -> ❌なし
+✅ 凪のあすから / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1gs/
+✅ 凪のあすから / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDBjMjI=
+✅ 凪のあすから / bandai -> ❌なし
+✅ 凪のあすから / animehodai -> ❌なし
+✅ はたらく魔王さま！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f3qv/
+✅ はたらく魔王さま！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDBjYTQ=
+✅ はたらく魔王さま！ / bandai -> ❌なし
+✅ はたらく魔王さま！ / animehodai -> ❌なし
+✅ Fate/kaleid liner プリズマ☆イリヤ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b4gs/
+✅ Fate/kaleid liner プリズマ☆イリヤ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDFjZWQ=
+✅ Fate/kaleid liner プリズマ☆イリヤ / bandai -> ❌なし
+✅ Fate/kaleid liner プリズマ☆イリヤ / animehodai -> ❌なし
+✅ フォトカノ / fod -> ❌なし
+✅ フォトカノ / lemino -> ❌なし
+✅ フォトカノ / bandai -> ❌なし
+✅ フォトカノ / animehodai -> ❌なし
+✅ 変態王子と笑わない猫。 / fod -> ❌なし
+✅ 変態王子と笑わない猫。 / lemino -> ❌なし
+✅ 変態王子と笑わない猫。 / bandai -> ❌なし
+✅ 変態王子と笑わない猫。 / animehodai -> ❌なし
+✅ まおゆう魔王勇者 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5462/
+✅ まおゆう魔王勇者 / lemino -> ❌なし
+✅ まおゆう魔王勇者 / bandai -> ❌なし
+✅ まおゆう魔王勇者 / animehodai -> ❌なし
+✅ 機巧少女は傷つかない / fod -> ⭕あり https://fod.fujitv.co.jp/title/e29m/
+✅ 機巧少女は傷つかない / lemino -> ❌なし
+✅ 機巧少女は傷つかない / bandai -> ❌なし
+✅ 機巧少女は傷つかない / animehodai -> ❌なし
+✅ 問題児たちが異世界から来るそうですよ？ / fod -> ❌なし
+✅ 問題児たちが異世界から来るそうですよ？ / lemino -> ❌なし
+✅ 問題児たちが異世界から来るそうですよ？ / bandai -> ❌なし
+✅ 問題児たちが異世界から来るそうですよ？ / animehodai -> ❌なし
+✅ やはり俺の青春ラブコメはまちがっている。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c20j/
+✅ やはり俺の青春ラブコメはまちがっている。 / lemino -> ❌なし
+✅ やはり俺の青春ラブコメはまちがっている。 / bandai -> ❌なし
+✅ やはり俺の青春ラブコメはまちがっている。 / animehodai -> ❌なし
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5484/
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / lemino -> ❌なし
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / bandai -> ❌なし
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / animehodai -> ❌なし
+✅ 恋愛ラボ / fod -> ❌なし
+✅ 恋愛ラボ / lemino -> ❌なし
+✅ 恋愛ラボ / bandai -> ❌なし
+✅ 恋愛ラボ / animehodai -> ❌なし
+✅ ラブライブ！ School idol project / fod -> ❌なし
+✅ ラブライブ！ School idol project / lemino -> ❌なし
+✅ ラブライブ！ School idol project / bandai -> ❌なし
+✅ ラブライブ！ School idol project / animehodai -> ❌なし
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / fod -> ❌なし
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / lemino -> ❌なし
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / bandai -> ❌なし
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / animehodai -> ❌なし
+✅ ログ・ホライズン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5548/
+✅ ログ・ホライズン / lemino -> ❌なし
+✅ ログ・ホライズン / bandai -> ❌なし
+✅ ログ・ホライズン / animehodai -> ❌なし
+✅ 私がモテないのはどう考えてもお前らが悪い! / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2mu/
+✅ 私がモテないのはどう考えてもお前らが悪い! / lemino -> ❌なし
+✅ 私がモテないのはどう考えてもお前らが悪い! / bandai -> ❌なし
+✅ 私がモテないのはどう考えてもお前らが悪い! / animehodai -> ❌なし
+✅ ワルキューレ ロマンツェ / fod -> ❌なし
+✅ ワルキューレ ロマンツェ / lemino -> ❌なし
+✅ ワルキューレ ロマンツェ / bandai -> ❌なし
+✅ ワルキューレ ロマンツェ / animehodai -> ❌なし
+✅ いなり、こんこん、恋いろは。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5488/
+✅ いなり、こんこん、恋いろは。 / lemino -> ❌なし
+✅ いなり、こんこん、恋いろは。 / bandai -> ❌なし
+✅ いなり、こんこん、恋いろは。 / animehodai -> ❌なし
+✅ ウィッチクラフトワークス / fod -> ❌なし
+✅ ウィッチクラフトワークス / lemino -> ❌なし
+✅ ウィッチクラフトワークス / bandai -> ❌なし
+✅ ウィッチクラフトワークス / animehodai -> ❌なし
+✅ Wake Up, Girls! / fod -> ❌なし
+✅ Wake Up, Girls! / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwaHFuNTNydmc=
+✅ Wake Up, Girls! / bandai -> ❌なし
+✅ Wake Up, Girls! / animehodai -> ❌なし
+✅ 最近、妹のようすがちょっとおかしいんだが。 / fod -> ❌なし
+✅ 最近、妹のようすがちょっとおかしいんだが。 / lemino -> ❌なし
+✅ 最近、妹のようすがちょっとおかしいんだが。 / bandai -> ❌なし
+✅ 最近、妹のようすがちょっとおかしいんだが。 / animehodai -> ❌なし
+✅ GJ部 / fod -> ❌なし
+✅ GJ部 / lemino -> ❌なし
+✅ GJ部 / bandai -> ❌なし
+✅ GJ部 / animehodai -> ❌なし
+✅ 桜Trick / fod -> ❌なし
+✅ 桜Trick / lemino -> ❌なし
+✅ 桜Trick / bandai -> ❌なし
+✅ 桜Trick / animehodai -> ❌なし
+✅ ディーふらぐ！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f2n1/
+✅ ディーふらぐ！ / lemino -> ❌なし
+✅ ディーふらぐ！ / bandai -> ❌なし
+✅ ディーふらぐ！ / animehodai -> ❌なし
+✅ ニセコイ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5391/
+✅ ニセコイ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM2OTQ=
+✅ ニセコイ / bandai -> ❌なし
+✅ ニセコイ / animehodai -> ❌なし
+✅ となりの関くん / fod -> ⭕あり https://fod.fujitv.co.jp/title/f37t/
+✅ となりの関くん / lemino -> ❌なし
+✅ となりの関くん / bandai -> ❌なし
+✅ となりの関くん / animehodai -> ❌なし
+✅ のうりん / fod -> ⭕あり https://fod.fujitv.co.jp/title/b3c6/
+✅ のうりん / lemino -> ❌なし
+✅ のうりん / bandai -> ❌なし
+✅ のうりん / animehodai -> ❌なし
+✅ ノラガミ / fod -> ❌なし
+✅ ノラガミ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDBjMTQ=
+✅ ノラガミ / bandai -> ❌なし
+✅ ノラガミ / animehodai -> ❌なし
+✅ バディ・コンプレックス / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3wv/
+✅ バディ・コンプレックス / lemino -> ❌なし
+✅ バディ・コンプレックス / bandai -> ❌なし
+✅ バディ・コンプレックス / animehodai -> ❌なし
+✅ ハマトラ / fod -> ❌なし
+✅ ハマトラ / lemino -> ❌なし
+✅ ハマトラ / bandai -> ❌なし
+✅ ハマトラ / animehodai -> ❌なし
+✅ 鬼灯の冷徹 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5837/
+✅ 鬼灯の冷徹 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDBiMWY=
+✅ 鬼灯の冷徹 / bandai -> ❌なし
+✅ 鬼灯の冷徹 / animehodai -> ❌なし
+✅ 魔法戦争 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c21f/
+✅ 魔法戦争 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM0NWI=
+✅ 魔法戦争 / bandai -> ❌なし
+✅ 魔法戦争 / animehodai -> ❌なし
+✅ 未確認で進行形 / fod -> ❌なし
+✅ 未確認で進行形 / lemino -> ❌なし
+✅ 未確認で進行形 / bandai -> ❌なし
+✅ 未確認で進行形 / animehodai -> ❌なし
+✅ 悪魔のリドル / fod -> ⭕あり https://fod.fujitv.co.jp/title/b4gu/
+✅ 悪魔のリドル / lemino -> ❌なし
+✅ 悪魔のリドル / bandai -> ❌なし
+✅ 悪魔のリドル / animehodai -> ❌なし
+✅ 一週間フレンズ。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/6v01/
+✅ 一週間フレンズ。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwajJ6aDVnd3E=
+✅ 一週間フレンズ。 / bandai -> ❌なし
+✅ 一週間フレンズ。 / animehodai -> ❌なし
+✅ 彼女がフラグをおられたら / fod -> ❌なし
+✅ 彼女がフラグをおられたら / lemino -> ❌なし
+✅ 彼女がフラグをおられたら / bandai -> ❌なし
+✅ 彼女がフラグをおられたら / animehodai -> ❌なし
+✅ 極黒のブリュンヒルデ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5859/
+✅ 極黒のブリュンヒルデ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2YzU=
+✅ 極黒のブリュンヒルデ / bandai -> ❌なし
+✅ 極黒のブリュンヒルデ / animehodai -> ❌なし
+✅ 健全ロボ ダイミダラー / fod -> ⭕あり https://fod.fujitv.co.jp/title/e29n/
+✅ 健全ロボ ダイミダラー / lemino -> ❌なし
+✅ 健全ロボ ダイミダラー / bandai -> ❌なし
+✅ 健全ロボ ダイミダラー / animehodai -> ❌なし
+✅ ご注文はうさぎですか？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c69/
+✅ ご注文はうさぎですか？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwamozbzJmemk=
+✅ ご注文はうさぎですか？ / bandai -> ❌なし
+✅ ご注文はうさぎですか？ / animehodai -> ❌なし
+✅ シドニアの騎士 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5835/
+✅ シドニアの騎士 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbGpzcXV1M2c=
+✅ シドニアの騎士 / bandai -> ❌なし
+✅ シドニアの騎士 / animehodai -> ❌なし
+✅ 星刻の竜騎士 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2mz/
+✅ 星刻の竜騎士 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM0NjQ=
+✅ 星刻の竜騎士 / bandai -> ❌なし
+✅ 星刻の竜騎士 / animehodai -> ❌なし
+✅ selector infected WIXOSS / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1ob/
+✅ selector infected WIXOSS / lemino -> ❌なし
+✅ selector infected WIXOSS / bandai -> ❌なし
+✅ selector infected WIXOSS / animehodai -> ❌なし
+✅ それでも世界は美しい / fod -> ❌なし
+✅ それでも世界は美しい / lemino -> ❌なし
+✅ それでも世界は美しい / bandai -> ❌なし
+✅ それでも世界は美しい / animehodai -> ❌なし
+✅ ノーゲーム・ノーライフ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d21/
+✅ ノーゲーム・ノーライフ / lemino -> ❌なし
+✅ ノーゲーム・ノーライフ / bandai -> ❌なし
+✅ ノーゲーム・ノーライフ / animehodai -> ❌なし
+✅ ハイキュー!! / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c26/
+✅ ハイキュー!! / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDE3ZDc=
+✅ ハイキュー!! / bandai -> ❌なし
+✅ ハイキュー!! / animehodai -> ❌なし
+✅ 棺姫のチャイカ / fod -> ⭕あり https://fod.fujitv.co.jp/title/c40e/
+✅ 棺姫のチャイカ / lemino -> ❌なし
+✅ 棺姫のチャイカ / bandai -> ❌なし
+✅ 棺姫のチャイカ / animehodai -> ❌なし
+✅ ピンポン THE ANIMATION / fod -> ❌なし
+✅ ピンポン THE ANIMATION / lemino -> ❌なし
+✅ ピンポン THE ANIMATION / bandai -> ❌なし
+✅ ピンポン THE ANIMATION / animehodai -> ❌なし
+✅ ブラック・ブレット / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1hq/
+✅ ブラック・ブレット / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDBkMzE=
+✅ ブラック・ブレット / bandai -> ❌なし
+✅ ブラック・ブレット / animehodai -> ❌なし
+✅ ブレイドアンドソウル / fod -> ❌なし
+✅ ブレイドアンドソウル / lemino -> ❌なし
+✅ ブレイドアンドソウル / bandai -> ❌なし
+✅ ブレイドアンドソウル / animehodai -> ❌なし
+✅ ベイビーステップ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5551/
+✅ ベイビーステップ / lemino -> ❌なし
+✅ ベイビーステップ / bandai -> ❌なし
+✅ ベイビーステップ / animehodai -> ❌なし
+✅ 僕らはみんな河合荘 / fod -> ❌なし
+✅ 僕らはみんな河合荘 / lemino -> ❌なし
+✅ 僕らはみんな河合荘 / bandai -> ❌なし
+✅ 僕らはみんな河合荘 / animehodai -> ❌なし
+✅ 魔法科高校の劣等生 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f04/
+✅ 魔法科高校の劣等生 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDBkMmQ=
+✅ 魔法科高校の劣等生 / bandai -> ❌なし
+✅ 魔法科高校の劣等生 / animehodai -> ❌なし
+✅ マンガ家さんとアシスタントさんと / fod -> ⭕あり https://fod.fujitv.co.jp/title/5470/
+✅ マンガ家さんとアシスタントさんと / lemino -> ❌なし
+✅ マンガ家さんとアシスタントさんと / bandai -> ❌なし
+✅ マンガ家さんとアシスタントさんと / animehodai -> ❌なし
+✅ メカクシティアクターズ / fod -> ❌なし
+✅ メカクシティアクターズ / lemino -> ❌なし
+✅ メカクシティアクターズ / bandai -> ❌なし
+✅ メカクシティアクターズ / animehodai -> ❌なし
+✅ 龍ヶ嬢七々々の埋蔵金 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5222/
+✅ 龍ヶ嬢七々々の埋蔵金 / lemino -> ❌なし
+✅ 龍ヶ嬢七々々の埋蔵金 / bandai -> ❌なし
+✅ 龍ヶ嬢七々々の埋蔵金 / animehodai -> ❌なし
+✅ アオハライド / fod -> ⭕あり https://fod.fujitv.co.jp/title/b0he/
+✅ アオハライド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJlNjk=
+✅ アオハライド / bandai -> ❌なし
+✅ アオハライド / animehodai -> ❌なし
+✅ アカメが斬る！ / fod -> ❌なし
+✅ アカメが斬る！ / lemino -> ❌なし
+✅ アカメが斬る！ / bandai -> ❌なし
+✅ アカメが斬る！ / animehodai -> ❌なし
+✅ アルドノア・ゼロ / fod -> ❌なし
+✅ アルドノア・ゼロ / lemino -> ❌なし
+✅ アルドノア・ゼロ / bandai -> ❌なし
+✅ アルドノア・ゼロ / animehodai -> ❌なし
+✅ グラスリップ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b1vx/
+✅ グラスリップ / lemino -> ❌なし
+✅ グラスリップ / bandai -> ❌なし
+✅ グラスリップ / animehodai -> ❌なし
+✅ 月刊少女野崎くん / fod -> ⭕あり https://fod.fujitv.co.jp/title/e29t/
+✅ 月刊少女野崎くん / lemino -> ❌なし
+✅ 月刊少女野崎くん / bandai -> ❌なし
+✅ 月刊少女野崎くん / animehodai -> ❌なし
+✅ さばげぶっ! / fod -> ❌なし
+✅ さばげぶっ! / lemino -> ❌なし
+✅ さばげぶっ! / bandai -> ❌なし
+✅ さばげぶっ! / animehodai -> ❌なし
+✅ 精霊使いの剣舞 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g204/
+✅ 精霊使いの剣舞 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM1Nzk=
+✅ 精霊使いの剣舞 / bandai -> ❌なし
+✅ 精霊使いの剣舞 / animehodai -> ❌なし
+✅ 東京喰種 トーキョーグール / fod -> ⭕あり https://fod.fujitv.co.jp/title/6u03/
+✅ 東京喰種 トーキョーグール / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDc5ODA=
+✅ 東京喰種 トーキョーグール / bandai -> ❌なし
+✅ 東京喰種 トーキョーグール / animehodai -> ❌なし
+✅ 東京ESP / fod -> ❌なし
+✅ 東京ESP / lemino -> ❌なし
+✅ 東京ESP / bandai -> ❌なし
+✅ 東京ESP / animehodai -> ❌なし
+✅ ばらかもん / fod -> ⭕あり https://fod.fujitv.co.jp/title/70fu/
+✅ ばらかもん / lemino -> ❌なし
+✅ ばらかもん / bandai -> ❌なし
+✅ ばらかもん / animehodai -> ❌なし
+✅ Fate/kaleid liner プリズマ☆イリヤ ツヴァイ! / fod -> ⭕あり https://fod.fujitv.co.jp/title/e1oi/
+✅ Fate/kaleid liner プリズマ☆イリヤ ツヴァイ! / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDFjZWQ=
+✅ Fate/kaleid liner プリズマ☆イリヤ ツヴァイ! / bandai -> ❌なし
+✅ Fate/kaleid liner プリズマ☆イリヤ ツヴァイ! / animehodai -> ❌なし
+✅ 普通の女子校生が【ろこどる】やってみた。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/d40h/
+✅ 普通の女子校生が【ろこどる】やってみた。 / lemino -> ❌なし
+✅ 普通の女子校生が【ろこどる】やってみた。 / bandai -> ❌なし
+✅ 普通の女子校生が【ろこどる】やってみた。 / animehodai -> ❌なし
+✅ RAIL WARS! / fod -> ⭕あり https://fod.fujitv.co.jp/title/e48s/
+✅ RAIL WARS! / lemino -> ❌なし
+✅ RAIL WARS! / bandai -> ❌なし
+✅ RAIL WARS! / animehodai -> ❌なし
+✅ 六畳間の侵略者!? / fod -> ⭕あり https://fod.fujitv.co.jp/title/g191/
+✅ 六畳間の侵略者!? / lemino -> ❌なし
+✅ 六畳間の侵略者!? / bandai -> ❌なし
+✅ 六畳間の侵略者!? / animehodai -> ❌なし
+✅ 暁のヨナ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d20o/
+✅ 暁のヨナ / lemino -> ❌なし
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / fod -> ❌なし
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / lemino -> ❌なし
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / bandai -> ❌なし
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / animehodai -> ❌なし
+✅ 学戦都市アスタリスク（第1期） / fod -> ❌なし
+✅ 学戦都市アスタリスク（第1期） / lemino -> ❌なし
+✅ 学戦都市アスタリスク（第1期） / bandai -> ❌なし
+✅ 学戦都市アスタリスク（第1期） / animehodai -> ❌なし
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / fod -> ❌なし
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / lemino -> ❌なし
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / bandai -> ❌なし
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / animehodai -> ❌なし
+✅ コメット・ルシファー / fod -> ❌なし
+✅ コメット・ルシファー / lemino -> ❌なし
+✅ コメット・ルシファー / bandai -> ❌なし
+✅ コメット・ルシファー / animehodai -> ❌なし
+✅ 櫻子さんの足下には死体が埋まっている / fod -> ⭕あり https://fod.fujitv.co.jp/title/4a57/
+✅ 櫻子さんの足下には死体が埋まっている / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDM1MTA=
+✅ 櫻子さんの足下には死体が埋まっている / bandai -> ❌なし
+✅ 櫻子さんの足下には死体が埋まっている / animehodai -> ❌なし
+✅ すべてがFになる THE PERFECT INSIDER / fod -> ⭕あり https://fod.fujitv.co.jp/title/5324/
+✅ すべてがFになる THE PERFECT INSIDER / lemino -> ❌なし
+✅ すべてがFになる THE PERFECT INSIDER / bandai -> ❌なし
+✅ すべてがFになる THE PERFECT INSIDER / animehodai -> ❌なし
+✅ 対魔導学園35試験小隊 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b245/
+✅ 対魔導学園35試験小隊 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDM1MGY=
+✅ 対魔導学園35試験小隊 / bandai -> ❌なし
+✅ 対魔導学園35試験小隊 / animehodai -> ❌なし
+✅ ヘヴィーオブジェクト / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1mp/
+✅ ヘヴィーオブジェクト / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDM1MTE=
+✅ ヘヴィーオブジェクト / bandai -> ❌なし
+✅ ヘヴィーオブジェクト / animehodai -> ❌なし
+✅ 落第騎士の英雄譚 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c2sv/
+✅ 落第騎士の英雄譚 / lemino -> ❌なし
+✅ 落第騎士の英雄譚 / bandai -> ❌なし
+✅ 落第騎士の英雄譚 / animehodai -> ❌なし
+✅ ワンパンマン / fod -> ⭕あり https://fod.fujitv.co.jp/title/d4fs/
+✅ ワンパンマン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNmNDQ=
+✅ ワンパンマン / bandai -> ❌なし
+✅ ワンパンマン / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0234952
+✅ 蒼の彼方のフォーリズム / fod -> ❌なし
+✅ 蒼の彼方のフォーリズム / lemino -> ❌なし
+✅ 蒼の彼方のフォーリズム / bandai -> ❌なし
+✅ 蒼の彼方のフォーリズム / animehodai -> ❌なし
+✅ 亜人（TVシリーズ） / fod -> ❌なし
+✅ 亜人（TVシリーズ） / lemino -> ❌なし
+✅ 亜人（TVシリーズ） / bandai -> ❌なし
+✅ 亜人（TVシリーズ） / animehodai -> ❌なし
+✅ おしえて！ギャル子ちゃん / fod -> ❌なし
+✅ おしえて！ギャル子ちゃん / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDNhOWU=
+✅ おしえて！ギャル子ちゃん / bandai -> ❌なし
+✅ おしえて！ギャル子ちゃん / animehodai -> ❌なし
+✅ この素晴らしい世界に祝福を！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5474/
+✅ この素晴らしい世界に祝福を！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDNhOWY=
+✅ この素晴らしい世界に祝福を！ / bandai -> ❌なし
+✅ この素晴らしい世界に祝福を！ / animehodai -> ❌なし
+✅ 最弱無敗の神装機竜《バハムート》 / fod -> ❌なし
+✅ 最弱無敗の神装機竜《バハムート》 / lemino -> ❌なし
+✅ 最弱無敗の神装機竜《バハムート》 / bandai -> ❌なし
+✅ 最弱無敗の神装機竜《バハムート》 / animehodai -> ❌なし
+✅ シュヴァルツェスマーケン / fod -> ❌なし
+✅ シュヴァルツェスマーケン / lemino -> ❌なし
+✅ シュヴァルツェスマーケン / bandai -> ❌なし
+✅ シュヴァルツェスマーケン / animehodai -> ❌なし
+✅ 少女たちは荒野を目指す / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1q4/
+✅ 少女たちは荒野を目指す / lemino -> ❌なし
+✅ 少女たちは荒野を目指す / bandai -> ❌なし
+✅ 少女たちは荒野を目指す / animehodai -> ❌なし
+✅ 昭和元禄落語心中（第1期） / fod -> ❌なし
+✅ 昭和元禄落語心中（第1期） / lemino -> ❌なし
+✅ 昭和元禄落語心中（第1期） / bandai -> ❌なし
+✅ 昭和元禄落語心中（第1期） / animehodai -> ❌なし
+✅ だがしかし / fod -> ❌なし
+✅ だがしかし / lemino -> ❌なし
+✅ だがしかし / bandai -> ❌なし
+✅ だがしかし / animehodai -> ❌なし
+✅ 虹色デイズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/6z77/
+✅ 虹色デイズ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDdjOTM=
+✅ 虹色デイズ / bandai -> ❌なし
+✅ 虹色デイズ / animehodai -> ❌なし
+✅ ハルチカ ～ハルタとチカは青春する～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b29v/
+✅ ハルチカ ～ハルタとチカは青春する～ / lemino -> ❌なし
+✅ ハルチカ ～ハルタとチカは青春する～ / bandai -> ❌なし
+✅ ハルチカ ～ハルタとチカは青春する～ / animehodai -> ❌なし
+✅ 僕だけがいない街 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5352/
+✅ 僕だけがいない街 / lemino -> ❌なし
+✅ 僕だけがいない街 / bandai -> ❌なし
+✅ 僕だけがいない街 / animehodai -> ❌なし
+✅ 無彩限のファントム・ワールド / fod -> ❌なし
+✅ 無彩限のファントム・ワールド / lemino -> ❌なし
+✅ 無彩限のファントム・ワールド / bandai -> ❌なし
+✅ 無彩限のファントム・ワールド / animehodai -> ❌なし
+✅ ラクエンロジック / fod -> ❌なし
+✅ ラクエンロジック / lemino -> ❌なし
+✅ ラクエンロジック / bandai -> ❌なし
+✅ ラクエンロジック / animehodai -> ❌なし
+✅ キズナイーバー / fod -> ❌なし
+✅ キズナイーバー / lemino -> ❌なし
+✅ キズナイーバー / bandai -> ❌なし
+✅ キズナイーバー / animehodai -> ❌なし
+✅ クロムクロ / fod -> ❌なし
+✅ クロムクロ / lemino -> ❌なし
+✅ クロムクロ / bandai -> ❌なし
+✅ クロムクロ / animehodai -> ❌なし
+✅ 甲鉄城のカバネリ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5533/
+✅ 甲鉄城のカバネリ / lemino -> ❌なし
+✅ 甲鉄城のカバネリ / bandai -> ❌なし
+✅ 甲鉄城のカバネリ / animehodai -> ❌なし
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / fod -> ❌なし
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / lemino -> ❌なし
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / bandai -> ❌なし
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / animehodai -> ❌なし
+✅ 坂本ですが？ / fod -> ❌なし
+✅ 坂本ですが？ / lemino -> ❌なし
+✅ 坂本ですが？ / bandai -> ❌なし
+✅ 坂本ですが？ / animehodai -> ❌なし
+✅ ジョーカー・ゲーム / fod -> ⭕あり https://fod.fujitv.co.jp/title/c419/
+✅ ジョーカー・ゲーム / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwa2RqcGF2eno=
+✅ ジョーカー・ゲーム / bandai -> ❌なし
+✅ ジョーカー・ゲーム / animehodai -> ❌なし
+✅ 田中くんはいつもけだるげ / fod -> ❌なし
+✅ 田中くんはいつもけだるげ / lemino -> ❌なし
+✅ 田中くんはいつもけだるげ / bandai -> ❌なし
+✅ 田中くんはいつもけだるげ / animehodai -> ❌なし
+✅ 双星の陰陽師 / fod -> ❌なし
+✅ 双星の陰陽師 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQxMzQ=
+✅ 双星の陰陽師 / bandai -> ❌なし
+✅ 双星の陰陽師 / animehodai -> ❌なし
+✅ ネトゲの嫁は女の子じゃないと思った？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1lb/
+✅ ネトゲの嫁は女の子じゃないと思った？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQxNGI=
+✅ ネトゲの嫁は女の子じゃないと思った？ / bandai -> ❌なし
+✅ ネトゲの嫁は女の子じゃないと思った？ / animehodai -> ❌なし
+✅ ハイスクール・フリート / fod -> ⭕あり https://fod.fujitv.co.jp/title/d323/
+✅ ハイスクール・フリート / lemino -> ❌なし
+✅ ハイスクール・フリート / bandai -> ❌なし
+✅ ハイスクール・フリート / animehodai -> ❌なし
+✅ ハンドレッド / fod -> ⭕あり https://fod.fujitv.co.jp/title/e2yw/
+✅ ハンドレッド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQ5ZGU=
+✅ ハンドレッド / bandai -> ❌なし
+✅ ハンドレッド / animehodai -> ❌なし
+✅ 文豪ストレイドッグス（第1シーズン） / fod -> ❌なし
+✅ 文豪ストレイドッグス（第1シーズン） / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQxNDU=
+✅ 文豪ストレイドッグス（第1シーズン） / bandai -> ❌なし
+✅ 文豪ストレイドッグス（第1シーズン） / animehodai -> ❌なし
+✅ 僕のヒーローアカデミア / fod -> ⭕あり https://fod.fujitv.co.jp/title/914v/
+✅ 僕のヒーローアカデミア / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA4ZjU=
+✅ 僕のヒーローアカデミア / bandai -> ❌なし
+✅ 僕のヒーローアカデミア / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0181018
+✅ ふらいんぐうぃっち / fod -> ❌なし
+✅ ふらいんぐうぃっち / lemino -> ❌なし
+✅ ふらいんぐうぃっち / bandai -> ❌なし
+✅ ふらいんぐうぃっち / animehodai -> ❌なし
+✅ マギ シンドバッドの冒険 / fod -> ❌なし
+✅ マギ シンドバッドの冒険 / lemino -> ❌なし
+✅ マギ シンドバッドの冒険 / bandai -> ❌なし
+✅ マギ シンドバッドの冒険 / animehodai -> ❌なし
+✅ Re:ゼロから始める異世界生活 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c22/
+✅ Re:ゼロから始める異世界生活 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDkzYzU=
+✅ Re:ゼロから始める異世界生活 / bandai -> ❌なし
+✅ Re:ゼロから始める異世界生活 / animehodai -> ❌なし
+✅ 迷家-マヨイガ- / fod -> ❌なし
+✅ 迷家-マヨイガ- / lemino -> ❌なし
+✅ 迷家-マヨイガ- / bandai -> ❌なし
+✅ 迷家-マヨイガ- / animehodai -> ❌なし
+✅ 甘々と稲妻 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5395/
+✅ 甘々と稲妻 / lemino -> ❌なし
+✅ 甘々と稲妻 / bandai -> ❌なし
+✅ 甘々と稲妻 / animehodai -> ❌なし
+✅ orange / fod -> ⭕あり https://fod.fujitv.co.jp/title/90tx/
+✅ orange / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJlNmU=
+✅ orange / bandai -> ❌なし
+✅ orange / animehodai -> ❌なし
+✅ クオリディア・コード / fod -> ⭕あり https://fod.fujitv.co.jp/title/d20m/
+✅ クオリディア・コード / lemino -> ❌なし
+✅ クオリディア・コード / bandai -> ❌なし
+✅ クオリディア・コード / animehodai -> ❌なし
+✅ この美術部には問題がある！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1h3/
+✅ この美術部には問題がある！ / lemino -> ❌なし
+✅ この美術部には問題がある！ / bandai -> ❌なし
+✅ この美術部には問題がある！ / animehodai -> ❌なし
+✅ 斉木楠雄のΨ難（第1期） / fod -> ❌なし
+✅ 斉木楠雄のΨ難（第1期） / lemino -> ❌なし
+✅ 斉木楠雄のΨ難（第1期） / bandai -> ❌なし
+✅ 斉木楠雄のΨ難（第1期） / animehodai -> ❌なし
+✅ タブー・タトゥー / fod -> ❌なし
+✅ タブー・タトゥー / lemino -> ❌なし
+✅ タブー・タトゥー / bandai -> ❌なし
+✅ タブー・タトゥー / animehodai -> ❌なし
+✅ DAYS / fod -> ⭕あり https://fod.fujitv.co.jp/title/310o/
+✅ DAYS / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJiMzc=
+✅ DAYS / bandai -> ❌なし
+✅ DAYS / animehodai -> ❌なし
+✅ 91Days / fod -> ⭕あり https://fod.fujitv.co.jp/title/d20s/
+✅ 91Days / lemino -> ❌なし
+✅ 91Days / bandai -> ❌なし
+✅ 91Days / animehodai -> ❌なし
+✅ NEW GAME！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1j6/
+✅ NEW GAME！ / lemino -> ❌なし
+✅ NEW GAME！ / bandai -> ❌なし
+✅ NEW GAME！ / animehodai -> ❌なし
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / fod -> ⭕あり https://fod.fujitv.co.jp/title/b29c/
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQ2YTA=
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / bandai -> ❌なし
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / animehodai -> ❌なし
+✅ バッテリー / fod -> ⭕あり https://fod.fujitv.co.jp/title/5567/
+✅ バッテリー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL3MxMDQxYWQ=
+✅ バッテリー / bandai -> ❌なし
+✅ バッテリー / animehodai -> ❌なし
+✅ はんだくん / fod -> ❌なし
+✅ はんだくん / lemino -> ❌なし
+✅ はんだくん / bandai -> ❌なし
+✅ はんだくん / animehodai -> ❌なし
+✅ ベルセルク（2016） / fod -> ❌なし
+✅ ベルセルク（2016） / lemino -> ❌なし
+✅ ベルセルク（2016） / bandai -> ❌なし
+✅ ベルセルク（2016） / animehodai -> ❌なし
+✅ 魔装学園H×H / fod -> ⭕あり https://fod.fujitv.co.jp/title/e1pi/
+✅ 魔装学園H×H / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDQ2OWU=
+✅ 魔装学園H×H / bandai -> ❌なし
+✅ 魔装学園H×H / animehodai -> ❌なし
+✅ Rewrite（第1期） / fod -> ❌なし
+✅ Rewrite（第1期） / lemino -> ❌なし
+✅ Rewrite（第1期） / bandai -> ❌なし
+✅ Rewrite（第1期） / animehodai -> ❌なし
+✅ ReLIFE / fod -> ⭕あり https://fod.fujitv.co.jp/title/6q46/
+✅ ReLIFE / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJlNmY=
+✅ ReLIFE / bandai -> ❌なし
+✅ ReLIFE / animehodai -> ❌なし
+✅ planetarian ～ちいさなほしのゆめ～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5401/
+✅ planetarian ～ちいさなほしのゆめ～ / lemino -> ❌なし
+✅ planetarian ～ちいさなほしのゆめ～ / bandai -> ❌なし
+✅ planetarian ～ちいさなほしのゆめ～ / animehodai -> ❌なし
+✅ Occultic;Nine -オカルティック・ナイン- / fod -> ❌なし
+✅ Occultic;Nine -オカルティック・ナイン- / lemino -> ❌なし
+✅ Occultic;Nine -オカルティック・ナイン- / bandai -> ❌なし
+✅ Occultic;Nine -オカルティック・ナイン- / animehodai -> ❌なし
+✅ ガーリッシュ ナンバー / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1yp/
+✅ ガーリッシュ ナンバー / lemino -> ❌なし
+✅ ガーリッシュ ナンバー / bandai -> ❌なし
+✅ ガーリッシュ ナンバー / animehodai -> ❌なし
+✅ 競女!!!!!!!! / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2d0/
+✅ 競女!!!!!!!! / lemino -> ❌なし
+✅ 競女!!!!!!!! / bandai -> ❌なし
+✅ 競女!!!!!!!! / animehodai -> ❌なし
+✅ 3月のライオン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5493/
+✅ 3月のライオン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwajVodmd5bjI=
+✅ 3月のライオン / bandai -> ❌なし
+✅ 3月のライオン / animehodai -> ❌なし
+✅ 終末のイゼッタ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5426/
+✅ 終末のイゼッタ / lemino -> ❌なし
+✅ 終末のイゼッタ / bandai -> ❌なし
+✅ 終末のイゼッタ / animehodai -> ❌なし
+✅ ドリフターズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d306/
+✅ ドリフターズ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwa2U5czNnazk=
+✅ ドリフターズ / bandai -> ❌なし
+✅ ドリフターズ / animehodai -> ❌なし
+✅ 舟を編む / fod -> ⭕あり https://fod.fujitv.co.jp/title/5568/
+✅ 舟を編む / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwaG43enRjbGw=
+✅ 舟を編む / bandai -> ❌なし
+✅ 舟を編む / animehodai -> ❌なし
+✅ 魔法少女育成計画 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2mo/
+✅ 魔法少女育成計画 / lemino -> ❌なし
+✅ 魔法少女育成計画 / bandai -> ❌なし
+✅ 魔法少女育成計画 / animehodai -> ❌なし
+✅ ユーリ!!! on ICE / fod -> ❌なし
+✅ ユーリ!!! on ICE / lemino -> ❌なし
+✅ ユーリ!!! on ICE / bandai -> ❌なし
+✅ ユーリ!!! on ICE / animehodai -> ❌なし
+✅ 私がモテてどうすんだ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d451/
+✅ 私がモテてどうすんだ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGE1N2E=
+✅ 私がモテてどうすんだ / bandai -> ❌なし
+✅ 私がモテてどうすんだ / animehodai -> ❌なし
+✅ 月曜日のたわわ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5584/
+✅ 月曜日のたわわ / lemino -> ❌なし
+✅ 月曜日のたわわ / bandai -> ❌なし
+✅ 月曜日のたわわ / animehodai -> ❌なし
+✅ ACCA13区監察課 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1uc/
+✅ ACCA13区監察課 / lemino -> ❌なし
+✅ ACCA13区監察課 / bandai -> ❌なし
+✅ ACCA13区監察課 / animehodai -> ❌なし
+✅ エルドライブ【ēlDLIVE】 / fod -> ❌なし
+✅ エルドライブ【ēlDLIVE】 / lemino -> ❌なし
+✅ エルドライブ【ēlDLIVE】 / bandai -> ❌なし
+✅ エルドライブ【ēlDLIVE】 / animehodai -> ❌なし
+✅ ガヴリールドロップアウト / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1ht/
+✅ ガヴリールドロップアウト / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDUwZDM=
+✅ ガヴリールドロップアウト / bandai -> ❌なし
+✅ ガヴリールドロップアウト / animehodai -> ❌なし
+✅ CHAOS;CHILD / fod -> ⭕あり https://fod.fujitv.co.jp/title/f253/
+✅ CHAOS;CHILD / lemino -> ❌なし
+✅ CHAOS;CHILD / bandai -> ❌なし
+✅ CHAOS;CHILD / animehodai -> ❌なし
+✅ クズの本懐 / fod -> ⭕あり https://fod.fujitv.co.jp/title/4a11/
+✅ クズの本懐 / lemino -> ❌なし
+✅ クズの本懐 / bandai -> ❌なし
+✅ クズの本懐 / animehodai -> ❌なし
+✅ 小林さんちのメイドラゴン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5476/
+✅ 小林さんちのメイドラゴン / lemino -> ❌なし
+✅ 小林さんちのメイドラゴン / bandai -> ❌なし
+✅ 小林さんちのメイドラゴン / animehodai -> ❌なし
+✅ セイレン / fod -> ⭕あり https://fod.fujitv.co.jp/title/d20p/
+✅ セイレン / lemino -> ❌なし
+✅ セイレン / bandai -> ❌なし
+✅ セイレン / animehodai -> ❌なし
+✅ 亜人ちゃんは語りたい / fod -> ⭕あり https://fod.fujitv.co.jp/title/11fa/
+✅ 亜人ちゃんは語りたい / lemino -> ❌なし
+✅ 亜人ちゃんは語りたい / bandai -> ❌なし
+✅ 亜人ちゃんは語りたい / animehodai -> ❌なし
+✅ ハンドシェイカー / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1lm/
+✅ ハンドシェイカー / lemino -> ❌なし
+✅ ハンドシェイカー / bandai -> ❌なし
+✅ ハンドシェイカー / animehodai -> ❌なし
+✅ BanG Dream! / fod -> ⭕あり https://fod.fujitv.co.jp/title/5473/
+✅ BanG Dream! / lemino -> ❌なし
+✅ BanG Dream! / bandai -> ❌なし
+✅ BanG Dream! / animehodai -> ❌なし
+✅ 風夏 / fod -> ⭕あり https://fod.fujitv.co.jp/title/e1wz/
+✅ 風夏 / lemino -> ❌なし
+✅ 風夏 / bandai -> ❌なし
+✅ 風夏 / animehodai -> ❌なし
+✅ 政宗くんのリベンジ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5461/
+✅ 政宗くんのリベンジ / lemino -> ❌なし
+✅ 政宗くんのリベンジ / bandai -> ❌なし
+✅ 政宗くんのリベンジ / animehodai -> ❌なし
+✅ 幼女戦記 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5496/
+✅ 幼女戦記 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDUwN2Y=
+✅ 幼女戦記 / bandai -> ❌なし
+✅ 幼女戦記 / animehodai -> ❌なし
+✅ 龍の歯医者 / fod -> ❌なし
+✅ 龍の歯医者 / lemino -> ❌なし
+✅ 龍の歯医者 / bandai -> ❌なし
+✅ 龍の歯医者 / animehodai -> ❌なし
+✅ One Room / fod -> ⭕あり https://fod.fujitv.co.jp/title/c0ex/
+✅ One Room / lemino -> ❌なし
+✅ One Room / bandai -> ❌なし
+✅ One Room / animehodai -> ❌なし
+✅ エロマンガ先生 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f28x/
+✅ エロマンガ先生 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDU1ZTQ=
+✅ エロマンガ先生 / bandai -> ❌なし
+✅ エロマンガ先生 / animehodai -> ❌なし
+✅ 銀の墓守り / fod -> ❌なし
+✅ 銀の墓守り / lemino -> ❌なし
+✅ 銀の墓守り / bandai -> ❌なし
+✅ 銀の墓守り / animehodai -> ❌なし
+✅ クロックワーク・プラネット / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1y1/
+✅ クロックワーク・プラネット / lemino -> ❌なし
+✅ クロックワーク・プラネット / bandai -> ❌なし
+✅ クロックワーク・プラネット / animehodai -> ❌なし
+✅ サクラダリセット / fod -> ⭕あり https://fod.fujitv.co.jp/title/6v04/
+✅ サクラダリセット / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwajVodmd3a3E=
+✅ サクラダリセット / bandai -> ❌なし
+✅ サクラダリセット / animehodai -> ❌なし
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/e1nx/
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDU1ZWI=
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / bandai -> ❌なし
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / animehodai -> ❌なし
+✅ sin 七つの大罪 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f2kw/
+✅ sin 七つの大罪 / lemino -> ❌なし
+✅ sin 七つの大罪 / bandai -> ❌なし
+✅ sin 七つの大罪 / animehodai -> ❌なし
+✅ 正解するカド / fod -> ⭕あり https://fod.fujitv.co.jp/title/b13y/
+✅ 正解するカド / lemino -> ❌なし
+✅ 正解するカド / bandai -> ❌なし
+✅ 正解するカド / animehodai -> ❌なし
+✅ ゼロから始める魔法の書 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b287/
+✅ ゼロから始める魔法の書 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDU1ZTg=
+✅ ゼロから始める魔法の書 / bandai -> ❌なし
+✅ ゼロから始める魔法の書 / animehodai -> ❌なし
+✅ ソード・オラトリア / fod -> ⭕あり https://fod.fujitv.co.jp/title/5535/
+✅ ソード・オラトリア / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJhNDU=
+✅ ソード・オラトリア / bandai -> ❌なし
+✅ ソード・オラトリア / animehodai -> ❌なし
+✅ 月がきれい / fod -> ❌なし
+✅ 月がきれい / lemino -> ❌なし
+✅ 月がきれい / bandai -> ❌なし
+✅ 月がきれい / animehodai -> ❌なし
+✅ 武装少女マキャヴェリズム / fod -> ⭕あり https://fod.fujitv.co.jp/title/e1pm/
+✅ 武装少女マキャヴェリズム / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDU1ZWE=
+✅ 武装少女マキャヴェリズム / bandai -> ❌なし
+✅ 武装少女マキャヴェリズム / animehodai -> ❌なし
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / fod -> ❌なし
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / lemino -> ❌なし
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / bandai -> ❌なし
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / animehodai -> ❌なし
+✅ Re:CREATORS / fod -> ❌なし
+✅ Re:CREATORS / lemino -> ❌なし
+✅ Re:CREATORS / bandai -> ❌なし
+✅ Re:CREATORS / animehodai -> ❌なし
+✅ 恋愛暴君 / fod -> ❌なし
+✅ 恋愛暴君 / lemino -> ❌なし
+✅ 恋愛暴君 / bandai -> ❌なし
+✅ 恋愛暴君 / animehodai -> ❌なし
+✅ ロクでなし魔術講師と禁忌教典 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1ge/
+✅ ロクでなし魔術講師と禁忌教典 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDU1ZTY=
+✅ ロクでなし魔術講師と禁忌教典 / bandai -> ❌なし
+✅ ロクでなし魔術講師と禁忌教典 / animehodai -> ❌なし
+✅ アホガール / fod -> ❌なし
+✅ アホガール / lemino -> ❌なし
+✅ アホガール / bandai -> ❌なし
+✅ アホガール / animehodai -> ❌なし
+✅ 異世界食堂 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i21/
+✅ 異世界食堂 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDU5ZDk=
+✅ 異世界食堂 / bandai -> ❌なし
+✅ 異世界食堂 / animehodai -> ❌なし
+✅ 異世界はスマートフォンとともに。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5543/
+✅ 異世界はスマートフォンとともに。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFmMDk=
+✅ 異世界はスマートフォンとともに。 / bandai -> ❌なし
+✅ 異世界はスマートフォンとともに。 / animehodai -> ❌なし
+✅ 賭ケグルイ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f04l/
+✅ 賭ケグルイ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBiZjM=
+✅ 賭ケグルイ / bandai -> ❌なし
+✅ 賭ケグルイ / animehodai -> ❌なし
+✅ ゲーマーズ！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5556/
+✅ ゲーマーズ！ / lemino -> ❌なし
+✅ ゲーマーズ！ / bandai -> ❌なし
+✅ ゲーマーズ！ / animehodai -> ❌なし
+✅ 潔癖男子！青山くん / fod -> ❌なし
+✅ 潔癖男子！青山くん / lemino -> ❌なし
+✅ 潔癖男子！青山くん / bandai -> ❌なし
+✅ 潔癖男子！青山くん / animehodai -> ❌なし
+✅ 恋と嘘 / fod -> ❌なし
+✅ 恋と嘘 / lemino -> ❌なし
+✅ 恋と嘘 / bandai -> ❌なし
+✅ 恋と嘘 / animehodai -> ❌なし
+✅ 将国のアルタイル / fod -> ❌なし
+✅ 将国のアルタイル / lemino -> ❌なし
+✅ 将国のアルタイル / bandai -> ❌なし
+✅ 将国のアルタイル / animehodai -> ❌なし
+✅ 徒然チルドレン / fod -> ❌なし
+✅ 徒然チルドレン / lemino -> ❌なし
+✅ 徒然チルドレン / bandai -> ❌なし
+✅ 徒然チルドレン / animehodai -> ❌なし
+✅ ナイツ＆マジック / fod -> ❌なし
+✅ ナイツ＆マジック / lemino -> ❌なし
+✅ ナイツ＆マジック / bandai -> ❌なし
+✅ ナイツ＆マジック / animehodai -> ❌なし
+✅ はじめてのギャル / fod -> ⭕あり https://fod.fujitv.co.jp/title/5562/
+✅ はじめてのギャル / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDVjZjU=
+✅ はじめてのギャル / bandai -> ❌なし
+✅ はじめてのギャル / animehodai -> ❌なし
+✅ Fate/Apocrypha / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j02/
+✅ Fate/Apocrypha / lemino -> ❌なし
+✅ Fate/Apocrypha / bandai -> ❌なし
+✅ Fate/Apocrypha / animehodai -> ❌なし
+✅ プリンセス・プリンシパル / fod -> ❌なし
+✅ プリンセス・プリンシパル / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWQ4bmVkcjc=
+✅ プリンセス・プリンシパル / bandai -> ❌なし
+✅ プリンセス・プリンシパル / animehodai -> ❌なし
+✅ ボールルームへようこそ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5793/
+✅ ボールルームへようこそ / lemino -> ❌なし
+✅ ボールルームへようこそ / bandai -> ❌なし
+✅ ボールルームへようこそ / animehodai -> ❌なし
+✅ ようこそ実力至上主義の教室へ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5560/
+✅ ようこそ実力至上主義の教室へ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGM2ZTE=
+✅ ようこそ実力至上主義の教室へ / bandai -> ❌なし
+✅ ようこそ実力至上主義の教室へ / animehodai -> ❌なし
+✅ アニメガタリズ / fod -> ❌なし
+✅ アニメガタリズ / lemino -> ❌なし
+✅ アニメガタリズ / bandai -> ❌なし
+✅ アニメガタリズ / animehodai -> ❌なし
+✅ いつだって僕らの恋は10センチだった。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5711/
+✅ いつだって僕らの恋は10センチだった。 / lemino -> ❌なし
+✅ いつだって僕らの恋は10センチだった。 / bandai -> ❌なし
+✅ いつだって僕らの恋は10センチだった。 / animehodai -> ❌なし
+✅ いぬやしき / fod -> ⭕あり https://fod.fujitv.co.jp/title/6x67/
+✅ いぬやしき / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwam1saGJlamU=
+✅ いぬやしき / bandai -> ❌なし
+✅ いぬやしき / animehodai -> ❌なし
+✅ 妹さえいればいい。 / fod -> ❌なし
+✅ 妹さえいればいい。 / lemino -> ❌なし
+✅ 妹さえいればいい。 / bandai -> ❌なし
+✅ 妹さえいればいい。 / animehodai -> ❌なし
+✅ 王様ゲーム The Animation / fod -> ❌なし
+✅ 王様ゲーム The Animation / lemino -> ❌なし
+✅ 王様ゲーム The Animation / bandai -> ❌なし
+✅ 王様ゲーム The Animation / animehodai -> ❌なし
+✅ クジラの子らは砂上に歌う / fod -> ❌なし
+✅ クジラの子らは砂上に歌う / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDdmZDQ=
+✅ クジラの子らは砂上に歌う / bandai -> ❌なし
+✅ クジラの子らは砂上に歌う / animehodai -> ❌なし
+✅ このはな綺譚 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f236/
+✅ このはな綺譚 / lemino -> ❌なし
+✅ このはな綺譚 / bandai -> ❌なし
+✅ このはな綺譚 / animehodai -> ❌なし
+✅ Just Because！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2l0/
+✅ Just Because！ / lemino -> ❌なし
+✅ Just Because！ / bandai -> ❌なし
+✅ Just Because！ / animehodai -> ❌なし
+✅ 十二大戦 / fod -> ❌なし
+✅ 十二大戦 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwamh1MDRibjM=
+✅ 十二大戦 / bandai -> ❌なし
+✅ 十二大戦 / animehodai -> ❌なし
+✅ Dies irae / fod -> ❌なし
+✅ Dies irae / lemino -> ❌なし
+✅ Dies irae / bandai -> ❌なし
+✅ Dies irae / animehodai -> ❌なし
+✅ ネト充のススメ / fod -> ❌なし
+✅ ネト充のススメ / lemino -> ❌なし
+✅ ネト充のススメ / bandai -> ❌なし
+✅ ネト充のススメ / animehodai -> ❌なし
+✅ ブラッククローバー / fod -> ⭕あり https://fod.fujitv.co.jp/title/e3xb/
+✅ ブラッククローバー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDYzOGU=
+✅ ブラッククローバー / bandai -> ❌なし
+✅ ブラッククローバー / animehodai -> ❌なし
+✅ ブレンド・S / fod -> ❌なし
+✅ ブレンド・S / lemino -> ❌なし
+✅ ブレンド・S / bandai -> ❌なし
+✅ ブレンド・S / animehodai -> ❌なし
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1ku/
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDYyOTk=
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / bandai -> ❌なし
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / animehodai -> ❌なし
+✅ 宝石の国 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f2mo/
+✅ 宝石の国 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbDI5dDI0M20=
+✅ 宝石の国 / bandai -> ❌なし
+✅ 宝石の国 / animehodai -> ❌なし
+✅ 魔法使いの嫁 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3rq/
+✅ 魔法使いの嫁 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAwMTk=
+✅ 魔法使いの嫁 / bandai -> ❌なし
+✅ 魔法使いの嫁 / animehodai -> ❌なし
+✅ ヴァイオレット・エヴァーガーデン / fod -> ❌なし
+✅ ヴァイオレット・エヴァーガーデン / lemino -> ❌なし
+✅ ヴァイオレット・エヴァーガーデン / bandai -> ❌なし
+✅ ヴァイオレット・エヴァーガーデン / animehodai -> ❌なし
+✅ からかい上手の高木さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5861/
+✅ からかい上手の高木さん / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFkZmU=
+✅ からかい上手の高木さん / bandai -> ❌なし
+✅ からかい上手の高木さん / animehodai -> ❌なし
+✅ 恋は雨上がりのように / fod -> ⭕あり https://fod.fujitv.co.jp/title/5694/
+✅ 恋は雨上がりのように / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwam1saG85ZGw=
+✅ 恋は雨上がりのように / bandai -> ❌なし
+✅ 恋は雨上がりのように / animehodai -> ❌なし
+✅ citrus / fod -> ⭕あり https://fod.fujitv.co.jp/title/5622/
+✅ citrus / lemino -> ❌なし
+✅ citrus / bandai -> ❌なし
+✅ citrus / animehodai -> ❌なし
+✅ 宇宙よりも遠い場所 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5617/
+✅ 宇宙よりも遠い場所 / lemino -> ❌なし
+✅ 宇宙よりも遠い場所 / bandai -> ❌なし
+✅ 宇宙よりも遠い場所 / animehodai -> ❌なし
+✅ ダーリン・イン・ザ・フランキス / fod -> ⭕あり https://fod.fujitv.co.jp/title/5616/
+✅ ダーリン・イン・ザ・フランキス / lemino -> ❌なし
+✅ ダーリン・イン・ザ・フランキス / bandai -> ❌なし
+✅ ダーリン・イン・ザ・フランキス / animehodai -> ❌なし
+✅ デスマーチからはじまる異世界狂想曲 / fod -> ❌なし
+✅ デスマーチからはじまる異世界狂想曲 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDY4M2U=
+✅ デスマーチからはじまる異世界狂想曲 / bandai -> ❌なし
+✅ デスマーチからはじまる異世界狂想曲 / animehodai -> ❌なし
+✅ 博多豚骨ラーメンズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/e1rc/
+✅ 博多豚骨ラーメンズ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDY4ZjQ=
+✅ 博多豚骨ラーメンズ / bandai -> ❌なし
+✅ 博多豚骨ラーメンズ / animehodai -> ❌なし
+✅ BEATLESS / fod -> ❌なし
+✅ BEATLESS / lemino -> ❌なし
+✅ BEATLESS / bandai -> ❌なし
+✅ BEATLESS / animehodai -> ❌なし
+✅ バジリスク ～桜花忍法帖～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5620/
+✅ バジリスク ～桜花忍法帖～ / lemino -> ❌なし
+✅ バジリスク ～桜花忍法帖～ / bandai -> ❌なし
+✅ バジリスク ～桜花忍法帖～ / animehodai -> ❌なし
+✅ ポプテピピック / fod -> ⭕あり https://fod.fujitv.co.jp/title/5621/
+✅ ポプテピピック / lemino -> ❌なし
+✅ ポプテピピック / bandai -> ❌なし
+✅ ポプテピピック / animehodai -> ❌なし
+✅ ゆるキャン△ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5625/
+✅ ゆるキャン△ / lemino -> ❌なし
+✅ ゆるキャン△ / bandai -> ❌なし
+✅ ゆるキャン△ / animehodai -> ❌なし
+✅ ラーメン大好き小泉さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/4678/
+✅ ラーメン大好き小泉さん / lemino -> ❌なし
+✅ ラーメン大好き小泉さん / bandai -> ❌なし
+✅ ラーメン大好き小泉さん / animehodai -> ❌なし
+✅ りゅうおうのおしごと！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5618/
+✅ りゅうおうのおしごと！ / lemino -> ❌なし
+✅ りゅうおうのおしごと！ / bandai -> ❌なし
+✅ りゅうおうのおしごと！ / animehodai -> ❌なし
+✅ 衛宮さんちの今日のごはん / fod -> ⭕あり https://fod.fujitv.co.jp/title/g9pf/
+✅ 衛宮さんちの今日のごはん / lemino -> ❌なし
+✅ 衛宮さんちの今日のごはん / bandai -> ❌なし
+✅ 衛宮さんちの今日のごはん / animehodai -> ❌なし
+✅ DEVILMAN crybaby / fod -> ❌なし
+✅ DEVILMAN crybaby / lemino -> ❌なし
+✅ DEVILMAN crybaby / bandai -> ❌なし
+✅ DEVILMAN crybaby / animehodai -> ❌なし
+✅ ウマ娘 プリティーダービー / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g05/
+✅ ウマ娘 プリティーダービー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBlMTY=
+✅ ウマ娘 プリティーダービー / bandai -> ❌なし
+✅ ウマ娘 プリティーダービー / animehodai -> ❌なし
+✅ ゴールデンカムイ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5614/
+✅ ゴールデンカムイ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGE2YjM=
+✅ ゴールデンカムイ / bandai -> ❌なし
+✅ ゴールデンカムイ / animehodai -> ❌なし
+✅ シュタインズ・ゲート ゼロ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5658/
+✅ シュタインズ・ゲート ゼロ / lemino -> ❌なし
+✅ シュタインズ・ゲート ゼロ / bandai -> ❌なし
+✅ シュタインズ・ゲート ゼロ / animehodai -> ❌なし
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5640/
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDZjZDI=
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / bandai -> ❌なし
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / animehodai -> ❌なし
+✅ デビルズライン / fod -> ⭕あり https://fod.fujitv.co.jp/title/5660/
+✅ デビルズライン / lemino -> ❌なし
+✅ デビルズライン / bandai -> ❌なし
+✅ デビルズライン / animehodai -> ❌なし
+✅ 奴隷区 The Animation / fod -> ⭕あり https://fod.fujitv.co.jp/title/5998/
+✅ 奴隷区 The Animation / lemino -> ❌なし
+✅ 奴隷区 The Animation / bandai -> ❌なし
+✅ 奴隷区 The Animation / animehodai -> ❌なし
+✅ ピアノの森 / fod -> ⭕あり https://fod.fujitv.co.jp/title/6h85/
+✅ ピアノの森 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwajc3YWNmdXc=
+✅ ピアノの森 / bandai -> ❌なし
+✅ ピアノの森 / animehodai -> ❌なし
+✅ ヒナまつり / fod -> ⭕あり https://fod.fujitv.co.jp/title/5656/
+✅ ヒナまつり / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDZiMzI=
+✅ ヒナまつり / bandai -> ❌なし
+✅ ヒナまつり / animehodai -> ❌なし
+✅ 魔法少女サイト / fod -> ❌なし
+✅ 魔法少女サイト / lemino -> ❌なし
+✅ 魔法少女サイト / bandai -> ❌なし
+✅ 魔法少女サイト / animehodai -> ❌なし
+✅ メジャー セカンド / fod -> ❌なし
+✅ メジャー セカンド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIxNGU=
+✅ メジャー セカンド / bandai -> ❌なし
+✅ メジャー セカンド / animehodai -> ❌なし
+✅ 3D彼女 リアルガール / fod -> ⭕あり https://fod.fujitv.co.jp/title/701g/
+✅ 3D彼女 リアルガール / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwanJyaHVqNno=
+✅ 3D彼女 リアルガール / bandai -> ❌なし
+✅ 3D彼女 リアルガール / animehodai -> ❌なし
+✅ ヲタクに恋は難しい / fod -> ⭕あり https://fod.fujitv.co.jp/title/c959/
+✅ ヲタクに恋は難しい / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwa2J1bm5tc3M=
+✅ ヲタクに恋は難しい / bandai -> ❌なし
+✅ ヲタクに恋は難しい / animehodai -> ❌なし
+✅ ISLAND / fod -> ⭕あり https://fod.fujitv.co.jp/title/4981/
+✅ ISLAND / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ1MjU=
+✅ ISLAND / bandai -> ❌なし
+✅ ISLAND / animehodai -> ❌なし
+✅ あそびあそばせ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5718/
+✅ あそびあそばせ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDc0NzQ=
+✅ あそびあそばせ / bandai -> ❌なし
+✅ あそびあそばせ / animehodai -> ❌なし
+✅ 異世界魔王と召喚少女の奴隷魔術 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5944/
+✅ 異世界魔王と召喚少女の奴隷魔術 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGFjNzQ=
+✅ 異世界魔王と召喚少女の奴隷魔術 / bandai -> ❌なし
+✅ 異世界魔王と召喚少女の奴隷魔術 / animehodai -> ❌なし
+✅ ぐらんぶる / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a34/
+✅ ぐらんぶる / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNhNjE=
+✅ ぐらんぶる / bandai -> ❌なし
+✅ ぐらんぶる / animehodai -> ❌なし
+✅ 殺戮の天使 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c09/
+✅ 殺戮の天使 / lemino -> ❌なし
+✅ 殺戮の天使 / bandai -> ❌なし
+✅ 殺戮の天使 / animehodai -> ❌なし
+✅ 七星のスバル / fod -> ❌なし
+✅ 七星のスバル / lemino -> ❌なし
+✅ 七星のスバル / bandai -> ❌なし
+✅ 七星のスバル / animehodai -> ❌なし
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / fod -> ❌なし
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / lemino -> ❌なし
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / bandai -> ❌なし
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / animehodai -> ❌なし
+✅ すのはら荘の管理人さん / fod -> ⭕あり https://fod.fujitv.co.jp/title/5707/
+✅ すのはら荘の管理人さん / lemino -> ❌なし
+✅ すのはら荘の管理人さん / bandai -> ❌なし
+✅ すのはら荘の管理人さん / animehodai -> ❌なし
+✅ ちおちゃんの通学路 / fod -> ⭕あり https://fod.fujitv.co.jp/title/f265/
+✅ ちおちゃんの通学路 / lemino -> ❌なし
+✅ ちおちゃんの通学路 / bandai -> ❌なし
+✅ ちおちゃんの通学路 / animehodai -> ❌なし
+✅ ハイスコアガール / fod -> ⭕あり https://fod.fujitv.co.jp/title/20a9/
+✅ ハイスコアガール / lemino -> ❌なし
+✅ ハイスコアガール / bandai -> ❌なし
+✅ ハイスコアガール / animehodai -> ❌なし
+✅ はたらく細胞 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5695/
+✅ はたらく細胞 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA3Njc=
+✅ はたらく細胞 / bandai -> ❌なし
+✅ はたらく細胞 / animehodai -> ❌なし
+✅ バキ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d2n9/
+✅ バキ / lemino -> ❌なし
+✅ バキ / bandai -> ❌なし
+✅ バキ / animehodai -> ❌なし
+✅ ハッピーシュガーライフ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5965/
+✅ ハッピーシュガーライフ / lemino -> ❌なし
+✅ ハッピーシュガーライフ / bandai -> ❌なし
+✅ ハッピーシュガーライフ / animehodai -> ❌なし
+✅ BANANA FISH / fod -> ⭕あり https://fod.fujitv.co.jp/title/5792/
+✅ BANANA FISH / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbGpzcXZiMWo=
+✅ BANANA FISH / bandai -> ❌なし
+✅ BANANA FISH / animehodai -> ❌なし
+✅ はねバド！ / fod -> ❌なし
+✅ はねバド！ / lemino -> ❌なし
+✅ はねバド！ / bandai -> ❌なし
+✅ はねバド！ / animehodai -> ❌なし
+✅ 百錬の覇王と聖約の戦乙女 / fod -> ❌なし
+✅ 百錬の覇王と聖約の戦乙女 / lemino -> ❌なし
+✅ 百錬の覇王と聖約の戦乙女 / bandai -> ❌なし
+✅ 百錬の覇王と聖約の戦乙女 / animehodai -> ❌なし
+✅ 嫌な顔されながらおパンツ見せてもらいたい / fod -> ⭕あり https://fod.fujitv.co.jp/title/5953/
+✅ 嫌な顔されながらおパンツ見せてもらいたい / lemino -> ❌なし
+✅ 嫌な顔されながらおパンツ見せてもらいたい / bandai -> ❌なし
+✅ 嫌な顔されながらおパンツ見せてもらいたい / animehodai -> ❌なし
+✅ 色づく世界の明日から / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f77/
+✅ 色づく世界の明日から / lemino -> ❌なし
+✅ 色づく世界の明日から / bandai -> ❌なし
+✅ 色づく世界の明日から / animehodai -> ❌なし
+✅ うちのメイドがウザすぎる！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1gw/
+✅ うちのメイドがウザすぎる！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDc4OTg=
+✅ うちのメイドがウザすぎる！ / bandai -> ❌なし
+✅ うちのメイドがウザすぎる！ / animehodai -> ❌なし
+✅ 俺が好きなのは妹だけど妹じゃない / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1hl/
+✅ 俺が好きなのは妹だけど妹じゃない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDdhODQ=
+✅ 俺が好きなのは妹だけど妹じゃない / bandai -> ❌なし
+✅ 俺が好きなのは妹だけど妹じゃない / animehodai -> ❌なし
+✅ からくりサーカス / fod -> ⭕あり https://fod.fujitv.co.jp/title/5f75/
+✅ からくりサーカス / lemino -> ❌なし
+✅ からくりサーカス / bandai -> ❌なし
+✅ からくりサーカス / animehodai -> ❌なし
+✅ 寄宿学校のジュリエット / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a78/
+✅ 寄宿学校のジュリエット / lemino -> ❌なし
+✅ 寄宿学校のジュリエット / bandai -> ❌なし
+✅ 寄宿学校のジュリエット / animehodai -> ❌なし
+✅ SSSS.GRIDMAN / fod -> ⭕あり https://fod.fujitv.co.jp/title/201e/
+✅ SSSS.GRIDMAN / lemino -> ❌なし
+✅ SSSS.GRIDMAN / bandai -> ❌なし
+✅ SSSS.GRIDMAN / animehodai -> ❌なし
+✅ ゴブリンスレイヤー / fod -> ⭕あり https://fod.fujitv.co.jp/title/5737/
+✅ ゴブリンスレイヤー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDBjZTk=
+✅ ゴブリンスレイヤー / bandai -> ❌なし
+✅ ゴブリンスレイヤー / animehodai -> ❌なし
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / fod -> ⭕あり https://fod.fujitv.co.jp/title/5747/
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA3Njg=
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / bandai -> ❌なし
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / animehodai -> ❌なし
+✅ ゾンビランドサガ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5765/
+✅ ゾンビランドサガ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQ2NGY=
+✅ ゾンビランドサガ / bandai -> ❌なし
+✅ ゾンビランドサガ / animehodai -> ❌なし
+✅ ツルネ ―風舞高校弓道部― / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g41/
+✅ ツルネ ―風舞高校弓道部― / lemino -> ❌なし
+✅ ツルネ ―風舞高校弓道部― / bandai -> ❌なし
+✅ ツルネ ―風舞高校弓道部― / animehodai -> ❌なし
+✅ 転生したらスライムだった件 / fod -> ❌なし
+✅ 転生したらスライムだった件 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhNzA=
+✅ 転生したらスライムだった件 / bandai -> ❌なし
+✅ 転生したらスライムだった件 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0100095
+✅ 火ノ丸相撲 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5757/
+✅ 火ノ丸相撲 / lemino -> ❌なし
+✅ 火ノ丸相撲 / bandai -> ❌なし
+✅ 火ノ丸相撲 / animehodai -> ❌なし
+✅ やがて君になる / fod -> ⭕あり https://fod.fujitv.co.jp/title/5753/
+✅ やがて君になる / lemino -> ❌なし
+✅ やがて君になる / bandai -> ❌なし
+✅ やがて君になる / animehodai -> ❌なし
+✅ 中卒労働者から始める高校生活 / fod -> ❌なし
+✅ 中卒労働者から始める高校生活 / lemino -> ❌なし
+✅ 中卒労働者から始める高校生活 / bandai -> ❌なし
+✅ 中卒労働者から始める高校生活 / animehodai -> ❌なし
+✅ W’z / fod -> ⭕あり https://fod.fujitv.co.jp/title/5811/
+✅ W’z / lemino -> ❌なし
+✅ W’z / bandai -> ❌なし
+✅ W’z / animehodai -> ❌なし
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5808/
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / lemino -> ❌なし
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / bandai -> ❌なし
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / animehodai -> ❌なし
+✅ ケムリクサ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c91/
+✅ ケムリクサ / lemino -> ❌なし
+✅ ケムリクサ / bandai -> ❌なし
+✅ ケムリクサ / animehodai -> ❌なし
+✅ 五等分の花嫁 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5805/
+✅ 五等分の花嫁 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGE3MTI=
+✅ 五等分の花嫁 / bandai -> ❌なし
+✅ 五等分の花嫁 / animehodai -> ❌なし
+✅ 盾の勇者の成り上がり / fod -> ⭕あり https://fod.fujitv.co.jp/title/80q6/
+✅ 盾の勇者の成り上がり / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNhNTQ=
+✅ 盾の勇者の成り上がり / bandai -> ❌なし
+✅ 盾の勇者の成り上がり / animehodai -> ❌なし
+✅ ドメスティックな彼女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5d89/
+✅ ドメスティックな彼女 / lemino -> ❌なし
+✅ ドメスティックな彼女 / bandai -> ❌なし
+✅ ドメスティックな彼女 / animehodai -> ❌なし
+✅ どろろ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5g42/
+✅ どろろ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNkYTA=
+✅ どろろ / bandai -> ❌なし
+✅ どろろ / animehodai -> ❌なし
+✅ ブギーポップは笑わない / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1j2/
+✅ ブギーポップは笑わない / lemino -> ❌なし
+✅ ブギーポップは笑わない / bandai -> ❌なし
+✅ ブギーポップは笑わない / animehodai -> ❌なし
+✅ 約束のネバーランド / fod -> ⭕あり https://fod.fujitv.co.jp/title/d826/
+✅ 約束のネバーランド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA3Njk=
+✅ 約束のネバーランド / bandai -> ❌なし
+✅ 約束のネバーランド / animehodai -> ❌なし
+✅ 私に天使が舞い降りた！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5801/
+✅ 私に天使が舞い降りた！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDdmYjE=
+✅ 私に天使が舞い降りた！ / bandai -> ❌なし
+✅ 私に天使が舞い降りた！ / animehodai -> ❌なし
+✅ 鬼滅の刃 / fod -> ⭕あり https://fod.fujitv.co.jp/title/90pr/
+✅ 鬼滅の刃 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhODQ=
+✅ 鬼滅の刃 / bandai -> ❌なし
+✅ 鬼滅の刃 / animehodai -> ❌なし
+✅ 異世界かるてっと / fod -> ⭕あり https://fod.fujitv.co.jp/title/10db/
+✅ 異世界かるてっと / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDg0YTg=
+✅ 異世界かるてっと / bandai -> ❌なし
+✅ 異世界かるてっと / animehodai -> ❌なし
+✅ 賢者の孫 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5866/
+✅ 賢者の孫 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDg0YWE=
+✅ 賢者の孫 / bandai -> ❌なし
+✅ 賢者の孫 / animehodai -> ❌なし
+✅ この音とまれ！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a24/
+✅ この音とまれ！ / lemino -> ❌なし
+✅ この音とまれ！ / bandai -> ❌なし
+✅ この音とまれ！ / animehodai -> ❌なし
+✅ 川柳少女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/e22m/
+✅ 川柳少女 / lemino -> ❌なし
+✅ 川柳少女 / bandai -> ❌なし
+✅ 川柳少女 / animehodai -> ❌なし
+✅ なんでここに先生が!? / fod -> ⭕あり https://fod.fujitv.co.jp/title/5858/
+✅ なんでここに先生が!? / lemino -> ❌なし
+✅ なんでここに先生が!? / bandai -> ❌なし
+✅ なんでここに先生が!? / animehodai -> ❌なし
+✅ フルーツバスケット / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h08/
+✅ フルーツバスケット / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWN3cTBrc28=
+✅ フルーツバスケット / bandai -> ❌なし
+✅ フルーツバスケット / animehodai -> ❌なし
+✅ ぼくたちは勉強ができない / fod -> ❌なし
+✅ ぼくたちは勉強ができない / lemino -> ❌なし
+✅ ぼくたちは勉強ができない / bandai -> ❌なし
+✅ ぼくたちは勉強ができない / animehodai -> ❌なし
+✅ みだらな青ちゃんは勉強ができない / fod -> ⭕あり https://fod.fujitv.co.jp/title/5871/
+✅ みだらな青ちゃんは勉強ができない / lemino -> ❌なし
+✅ みだらな青ちゃんは勉強ができない / bandai -> ❌なし
+✅ みだらな青ちゃんは勉強ができない / animehodai -> ❌なし
+✅ 荒ぶる季節の乙女どもよ。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1uw/
+✅ 荒ぶる季節の乙女どもよ。 / lemino -> ❌なし
+✅ 荒ぶる季節の乙女どもよ。 / bandai -> ❌なし
+✅ 荒ぶる季節の乙女どもよ。 / animehodai -> ❌なし
+✅ ありふれた職業で世界最強 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5935/
+✅ ありふれた職業で世界最強 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGJjYjM=
+✅ ありふれた職業で世界最強 / bandai -> ❌なし
+✅ ありふれた職業で世界最強 / animehodai -> ❌なし
+✅ 異世界チート魔術師 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5923/
+✅ 異世界チート魔術師 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDg4NmU=
+✅ 異世界チート魔術師 / bandai -> ❌なし
+✅ 異世界チート魔術師 / animehodai -> ❌なし
+✅ 炎炎ノ消防隊 / fod -> ⭕あり https://fod.fujitv.co.jp/title/20a3/
+✅ 炎炎ノ消防隊 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNlMjc=
+✅ 炎炎ノ消防隊 / bandai -> ❌なし
+✅ 炎炎ノ消防隊 / animehodai -> ❌なし
+✅ 彼方のアストラ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5932/
+✅ 彼方のアストラ / lemino -> ❌なし
+✅ 彼方のアストラ / bandai -> ❌なし
+✅ 彼方のアストラ / animehodai -> ❌なし
+✅ 可愛ければ変態でも好きになってくれますか？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5924/
+✅ 可愛ければ変態でも好きになってくれますか？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDg4NzA=
+✅ 可愛ければ変態でも好きになってくれますか？ / bandai -> ❌なし
+✅ 可愛ければ変態でも好きになってくれますか？ / animehodai -> ❌なし
+✅ 女子高生の無駄づかい / fod -> ⭕あり https://fod.fujitv.co.jp/title/5925/
+✅ 女子高生の無駄づかい / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDg4NmY=
+✅ 女子高生の無駄づかい / bandai -> ❌なし
+✅ 女子高生の無駄づかい / animehodai -> ❌なし
+✅ ソウナンですか？ / fod -> ❌なし
+✅ ソウナンですか？ / lemino -> ❌なし
+✅ ソウナンですか？ / bandai -> ❌なし
+✅ ソウナンですか？ / animehodai -> ❌なし
+✅ ダンベル何キロ持てる？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1h5/
+✅ ダンベル何キロ持てる？ / lemino -> ❌なし
+✅ ダンベル何キロ持てる？ / bandai -> ❌なし
+✅ ダンベル何キロ持てる？ / animehodai -> ❌なし
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5927/
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / lemino -> ❌なし
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / bandai -> ❌なし
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / animehodai -> ❌なし
+✅ とある科学の一方通行 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5955/
+✅ とある科学の一方通行 / lemino -> ❌なし
+✅ とある科学の一方通行 / bandai -> ❌なし
+✅ とある科学の一方通行 / animehodai -> ❌なし
+✅ 手品先輩 / fod -> ❌なし
+✅ 手品先輩 / lemino -> ❌なし
+✅ 手品先輩 / bandai -> ❌なし
+✅ 手品先輩 / animehodai -> ❌なし
+✅ Dr.STONE / fod -> ⭕あり https://fod.fujitv.co.jp/title/205y/
+✅ Dr.STONE / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDA4ZmI=
+✅ Dr.STONE / bandai -> ❌なし
+✅ Dr.STONE / animehodai -> ❌なし
+✅ ナカノヒトゲノム【実況中】 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1mv/
+✅ ナカノヒトゲノム【実況中】 / lemino -> ❌なし
+✅ ナカノヒトゲノム【実況中】 / bandai -> ❌なし
+✅ ナカノヒトゲノム【実況中】 / animehodai -> ❌なし
+✅ 魔王様、リトライ！ / fod -> ❌なし
+✅ 魔王様、リトライ！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI2ODI=
+✅ 魔王様、リトライ！ / bandai -> ❌なし
+✅ 魔王様、リトライ！ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0254843
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / fod -> ❌なし
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / lemino -> ❌なし
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / bandai -> ❌なし
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / animehodai -> ❌なし
+✅ ケンガンアシュラ / fod -> ❌なし
+✅ ケンガンアシュラ / lemino -> ❌なし
+✅ ケンガンアシュラ / bandai -> ❌なし
+✅ ケンガンアシュラ / animehodai -> ❌なし
+✅ アサシンズプライド / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c39/
+✅ アサシンズプライド / lemino -> ❌なし
+✅ アサシンズプライド / bandai -> ❌なし
+✅ アサシンズプライド / animehodai -> ❌なし
+✅ あひるの空 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a65/
+✅ あひるの空 / lemino -> ❌なし
+✅ あひるの空 / bandai -> ❌なし
+✅ あひるの空 / animehodai -> ❌なし
+✅ 俺を好きなのはお前だけかよ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a50/
+✅ 俺を好きなのはお前だけかよ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGMwY2U=
+✅ 俺を好きなのはお前だけかよ / bandai -> ❌なし
+✅ 俺を好きなのはお前だけかよ / animehodai -> ❌なし
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / fod -> ❌なし
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMDhlM2Y=
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / bandai -> ❌なし
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / animehodai -> ❌なし
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a38/
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / lemino -> ❌なし
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / bandai -> ❌なし
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / animehodai -> ❌なし
+✅ バビロン / fod -> ⭕あり https://fod.fujitv.co.jp/title/30d9/
+✅ バビロン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWFkbzRmcGg=
+✅ バビロン / bandai -> ❌なし
+✅ バビロン / animehodai -> ❌なし
+✅ BEASTARS / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c52/
+✅ BEASTARS / lemino -> ❌なし
+✅ BEASTARS / bandai -> ❌なし
+✅ BEASTARS / animehodai -> ❌なし
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / fod -> ⭕あり https://fod.fujitv.co.jp/title/5j22/
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / lemino -> ❌なし
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / bandai -> ❌なし
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / animehodai -> ❌なし
+✅ 私、能力は平均値でって言ったよね！ / fod -> ❌なし
+✅ 私、能力は平均値でって言ったよね！ / lemino -> ❌なし
+✅ 私、能力は平均値でって言ったよね！ / bandai -> ❌なし
+✅ 私、能力は平均値でって言ったよね！ / animehodai -> ❌なし
+✅ 異種族レビュアーズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/d1iv/
+✅ 異種族レビュアーズ / lemino -> ❌なし
+✅ 異種族レビュアーズ / bandai -> ❌なし
+✅ 異種族レビュアーズ / animehodai -> ❌なし
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c19/
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / lemino -> ❌なし
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / bandai -> ❌なし
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / animehodai -> ❌なし
+✅ インフィニット・デンドログラム / fod -> ⭕あり https://fod.fujitv.co.jp/title/f2jl/
+✅ インフィニット・デンドログラム / lemino -> ❌なし
+✅ インフィニット・デンドログラム / bandai -> ❌なし
+✅ インフィニット・デンドログラム / animehodai -> ❌なし
+✅ 映像研には手を出すな！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/5a86/
+✅ 映像研には手を出すな！ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGFhYjc=
+✅ 映像研には手を出すな！ / bandai -> ❌なし
+✅ 映像研には手を出すな！ / animehodai -> ❌なし
+✅ 推しが武道館いってくれたら死ぬ / fod -> ⭕あり https://fod.fujitv.co.jp/title/11ki/
+✅ 推しが武道館いってくれたら死ぬ / lemino -> ❌なし
+✅ 推しが武道館いってくれたら死ぬ / bandai -> ❌なし
+✅ 推しが武道館いってくれたら死ぬ / animehodai -> ❌なし
+✅ おーばーふろぉ～ / fod -> ❌なし
+✅ おーばーふろぉ～ / lemino -> ❌なし
+✅ おーばーふろぉ～ / bandai -> ❌なし
+✅ おーばーふろぉ～ / animehodai -> ❌なし
+✅ 虚構推理 / fod -> ❌なし
+✅ 虚構推理 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQxZDg=
+✅ 虚構推理 / bandai -> ❌なし
+✅ 虚構推理 / animehodai -> ❌なし
+✅ 地縛少年花子くん / fod -> ⭕あり https://fod.fujitv.co.jp/title/00tx/
+✅ 地縛少年花子くん / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJjYjM=
+✅ 地縛少年花子くん / bandai -> ❌なし
+✅ 地縛少年花子くん / animehodai -> ❌なし
+✅ ダーウィンズゲーム / fod -> ⭕あり https://fod.fujitv.co.jp/title/5c00/
+✅ ダーウィンズゲーム / lemino -> ❌なし
+✅ ダーウィンズゲーム / bandai -> ❌なし
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / animehodai -> ❌なし
+✅ ダンジョン飯 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1mm/
+✅ ダンジョン飯 / lemino -> ❌なし
+✅ ダンジョン飯 / bandai -> ❌なし
+✅ ダンジョン飯 / animehodai -> ❌なし
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / fod -> ❌なし
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / lemino -> ❌なし
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / bandai -> ❌なし
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / animehodai -> ❌なし
+✅ 望まぬ不死の冒険者 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g1zc/
+✅ 望まぬ不死の冒険者 / lemino -> ❌なし
+✅ 望まぬ不死の冒険者 / bandai -> ❌なし
+✅ 望まぬ不死の冒険者 / animehodai -> ❌なし
+✅ 姫様“拷問”の時間です / fod -> ❌なし
+✅ 姫様“拷問”の時間です / lemino -> ❌なし
+✅ 姫様“拷問”の時間です / bandai -> ❌なし
+✅ 姫様“拷問”の時間です / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251578
+✅ 悶えてよ、アダムくん / fod -> ⭕あり https://fod.fujitv.co.jp/title/e3td/
+✅ 悶えてよ、アダムくん / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDE0YmU=
+✅ 悶えてよ、アダムくん / bandai -> ❌なし
+✅ 悶えてよ、アダムくん / animehodai -> ❌なし
+✅ ゆびさきと恋々 / fod -> ⭕あり https://fod.fujitv.co.jp/title/00fh/
+✅ ゆびさきと恋々 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDE0Y2Y=
+✅ ゆびさきと恋々 / bandai -> ❌なし
+✅ ゆびさきと恋々 / animehodai -> ❌なし
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / fod -> ⭕あり https://fod.fujitv.co.jp/title/e00f/
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / lemino -> ❌なし
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / bandai -> ❌なし
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / animehodai -> ❌なし
+✅ Unnamed Memory / fod -> ⭕あり https://fod.fujitv.co.jp/title/316m/
+✅ Unnamed Memory / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFjZDg=
+✅ Unnamed Memory / bandai -> ❌なし
+✅ Unnamed Memory / animehodai -> ❌なし
+✅ WIND BREAKER / fod -> ⭕あり https://fod.fujitv.co.jp/title/90p9/
+✅ WIND BREAKER / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFjYWI=
+✅ WIND BREAKER / bandai -> ❌なし
+✅ WIND BREAKER / animehodai -> ❌なし
+✅ 怪獣8号 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80no/
+✅ 怪獣8号 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNhNGM=
+✅ 怪獣8号 / bandai -> ❌なし
+✅ 怪獣8号 / animehodai -> ❌なし
+✅ ガールズバンドクライ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f33p/
+✅ ガールズバンドクライ / lemino -> ❌なし
+✅ ガールズバンドクライ / bandai -> ❌なし
+✅ ガールズバンドクライ / animehodai -> ❌なし
+✅ 狼と香辛料 merchant meets the wise wolf / fod -> ⭕あり https://fod.fujitv.co.jp/title/f27n/
+✅ 狼と香辛料 merchant meets the wise wolf / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFjYjE=
+✅ 狼と香辛料 merchant meets the wise wolf / bandai -> ❌なし
+✅ 狼と香辛料 merchant meets the wise wolf / animehodai -> ❌なし
+✅ 烏は主を選ばない / fod -> ⭕あり https://fod.fujitv.co.jp/title/00iw/
+✅ 烏は主を選ばない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhODg=
+✅ 烏は主を選ばない / bandai -> ❌なし
+✅ 烏は主を選ばない / animehodai -> ❌なし
+✅ 喧嘩独学 / fod -> ⭕あり https://fod.fujitv.co.jp/title/90pk/
+✅ 喧嘩独学 / lemino -> ❌なし
+✅ 喧嘩独学 / bandai -> ❌なし
+✅ 喧嘩独学 / animehodai -> ❌なし
+✅ THE NEW GATE / fod -> ⭕あり https://fod.fujitv.co.jp/title/90p5/
+✅ THE NEW GATE / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhODI=
+✅ THE NEW GATE / bandai -> ❌なし
+✅ THE NEW GATE / animehodai -> ❌なし
+✅ ザ・ファブル / fod -> ⭕あり https://fod.fujitv.co.jp/title/70p5/
+✅ ザ・ファブル / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFlZWU=
+✅ ザ・ファブル / bandai -> ❌なし
+✅ ザ・ファブル / animehodai -> ❌なし
+✅ 戦隊大失格 / fod -> ⭕あり https://fod.fujitv.co.jp/title/d2k9/
+✅ 戦隊大失格 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFiYmE=
+✅ 戦隊大失格 / bandai -> ❌なし
+✅ 戦隊大失格 / animehodai -> ❌なし
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / fod -> ⭕あり https://fod.fujitv.co.jp/title/11nj/
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / lemino -> ❌なし
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / bandai -> ❌なし
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / animehodai -> ❌なし
+✅ 転生貴族、鑑定スキルで成り上がる / fod -> ❌なし
+✅ 転生貴族、鑑定スキルで成り上がる / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI2MGU=
+✅ 転生貴族、鑑定スキルで成り上がる / bandai -> ❌なし
+✅ 転生貴族、鑑定スキルで成り上がる / animehodai -> ❌なし
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / fod -> ⭕あり https://fod.fujitv.co.jp/title/f4p1/
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDNhN2Q=
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / bandai -> ❌なし
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / animehodai -> ❌なし
+✅ バーテンダー 神のグラス / fod -> ⭕あり https://fod.fujitv.co.jp/title/70pb/
+✅ バーテンダー 神のグラス / lemino -> ❌なし
+✅ バーテンダー 神のグラス / bandai -> ❌なし
+✅ バーテンダー 神のグラス / animehodai -> ❌なし
+✅ 変人のサラダボウル / fod -> ⭕あり https://fod.fujitv.co.jp/title/00j8/
+✅ 変人のサラダボウル / lemino -> ❌なし
+✅ 変人のサラダボウル / bandai -> ❌なし
+✅ 変人のサラダボウル / animehodai -> ❌なし
+✅ しかのこのこのここしたんたん / fod -> ⭕あり https://fod.fujitv.co.jp/title/90tr/
+✅ しかのこのこのここしたんたん / lemino -> ❌なし
+✅ しかのこのこのここしたんたん / bandai -> ❌なし
+✅ しかのこのこのここしたんたん / animehodai -> ❌なし
+✅ 義妹生活 / fod -> ⭕あり https://fod.fujitv.co.jp/title/00nl/
+✅ 義妹生活 / lemino -> ❌なし
+✅ 義妹生活 / bandai -> ❌なし
+✅ 義妹生活 / animehodai -> ❌なし
+✅ チ。―地球の運動について― / fod -> ⭕あり https://fod.fujitv.co.jp/title/90yw/
+✅ チ。―地球の運動について― / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDJiODY=
+✅ チ。―地球の運動について― / bandai -> ❌なし
+✅ チ。―地球の運動について― / animehodai -> ❌なし
+✅ 忘却バッテリー / fod -> ⭕あり https://fod.fujitv.co.jp/title/70oy/
+✅ 忘却バッテリー / lemino -> ❌なし
+✅ 忘却バッテリー / bandai -> ❌なし
+✅ 忘却バッテリー / animehodai -> ❌なし
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/90p6/
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFiMWI=
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / bandai -> ❌なし
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / animehodai -> ❌なし
+✅ Re:Monster / fod -> ⭕あり https://fod.fujitv.co.jp/title/11mz/
+✅ Re:Monster / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhODE=
+✅ Re:Monster / bandai -> ❌なし
+✅ Re:Monster / animehodai -> ❌なし
+✅ 夜桜さんちの大作戦 / fod -> ⭕あり https://fod.fujitv.co.jp/title/70p2/
+✅ 夜桜さんちの大作戦 / lemino -> ❌なし
+✅ 夜桜さんちの大作戦 / bandai -> ❌なし
+✅ 夜桜さんちの大作戦 / animehodai -> ❌なし
+✅ 夜のクラゲは泳げない / fod -> ⭕あり https://fod.fujitv.co.jp/title/00iz/
+✅ 夜のクラゲは泳げない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFhNzY=
+✅ 夜のクラゲは泳げない / bandai -> ❌なし
+✅ 夜のクラゲは泳げない / animehodai -> ❌なし
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / fod -> ⭕あり https://fod.fujitv.co.jp/title/90p4/
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFiMTg=
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / bandai -> ❌なし
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / animehodai -> ❌なし
+✅ T・Pぼん シーズン1 / fod -> ❌なし
+✅ T・Pぼん シーズン1 / lemino -> ❌なし
+✅ T・Pぼん シーズン1 / bandai -> ❌なし
+✅ T・Pぼん シーズン1 / animehodai -> ❌なし
+✅ 異世界スーサイド・スクワッド / fod -> ⭕あり https://fod.fujitv.co.jp/title/f3fd/
+✅ 異世界スーサイド・スクワッド / lemino -> ❌なし
+✅ 異世界スーサイド・スクワッド / bandai -> ❌なし
+✅ 異世界スーサイド・スクワッド / animehodai -> ❌なし
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/101l/
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / lemino -> ❌なし
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / bandai -> ❌なし
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / animehodai -> ❌なし
+✅ かつて魔法少女と悪は敵対していた。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/70ty/
+✅ かつて魔法少女と悪は敵対していた。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIwY2Y=
+✅ かつて魔法少女と悪は敵対していた。 / bandai -> ❌なし
+✅ かつて魔法少女と悪は敵対していた。 / animehodai -> ❌なし
+✅ 「小市民」シリーズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/1020/
+✅ 「小市民」シリーズ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIwZDM=
+✅ 「小市民」シリーズ / bandai -> ❌なし
+✅ 「小市民」シリーズ / animehodai -> ❌なし
+✅ 杖と剣のウィストリア / fod -> ❌なし
+✅ 杖と剣のウィストリア / lemino -> ❌なし
+✅ 杖と剣のウィストリア / bandai -> ❌なし
+✅ 杖と剣のウィストリア / animehodai -> ❌なし
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / fod -> ⭕あり https://fod.fujitv.co.jp/title/d2kd/
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / lemino -> ❌なし
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / bandai -> ❌なし
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / animehodai -> ❌なし
+✅ なぜ僕の世界を誰も覚えていないのか？ / fod -> ❌なし
+✅ なぜ僕の世界を誰も覚えていないのか？ / lemino -> ❌なし
+✅ なぜ僕の世界を誰も覚えていないのか？ / bandai -> ❌なし
+✅ なぜ僕の世界を誰も覚えていないのか？ / animehodai -> ❌なし
+✅ 逃げ上手の若君 / fod -> ⭕あり https://fod.fujitv.co.jp/title/00nf/
+✅ 逃げ上手の若君 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIwNTY=
+✅ 逃げ上手の若君 / bandai -> ❌なし
+✅ 逃げ上手の若君 / animehodai -> ❌なし
+✅ 2.5次元の誘惑 / fod -> ❌なし
+✅ 2.5次元の誘惑 / lemino -> ❌なし
+✅ 2.5次元の誘惑 / bandai -> ❌なし
+✅ 2.5次元の誘惑 / animehodai -> ❌なし
+✅ NINJA KAMUI / fod -> ⭕あり https://fod.fujitv.co.jp/title/90t2/
+✅ NINJA KAMUI / lemino -> ❌なし
+✅ NINJA KAMUI / bandai -> ❌なし
+✅ NINJA KAMUI / animehodai -> ❌なし
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / fod -> ⭕あり https://fod.fujitv.co.jp/title/101t/
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIwYjI=
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / bandai -> ❌なし
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / animehodai -> ❌なし
+✅ FAIRY TAIL 100年クエスト / fod -> ⭕あり https://fod.fujitv.co.jp/title/e48p/
+✅ FAIRY TAIL 100年クエスト / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDIwNWM=
+✅ FAIRY TAIL 100年クエスト / bandai -> ❌なし
+✅ FAIRY TAIL 100年クエスト / animehodai -> ❌なし
+✅ 負けヒロインが多すぎる！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/00n1/
+✅ 負けヒロインが多すぎる！ / lemino -> ❌なし
+✅ 負けヒロインが多すぎる！ / bandai -> ❌なし
+✅ 負けヒロインが多すぎる！ / animehodai -> ❌なし
+✅ モブから始まる探索英雄譚 / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3ab/
+✅ モブから始まる探索英雄譚 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFmODE=
+✅ モブから始まる探索英雄譚 / bandai -> ❌なし
+✅ モブから始まる探索英雄譚 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0104156
+✅ よあそびぐらしっ！ / fod -> ⭕あり https://fod.fujitv.co.jp/title/b47e/
+✅ よあそびぐらしっ！ / lemino -> ❌なし
+✅ よあそびぐらしっ！ / bandai -> ❌なし
+✅ よあそびぐらしっ！ / animehodai -> ❌なし
+✅ アオのハコ / fod -> ⭕あり https://fod.fujitv.co.jp/title/202c/
+✅ アオのハコ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI2MGI=
+✅ アオのハコ / bandai -> ❌なし
+✅ アオのハコ / animehodai -> ❌なし
+✅ 甘神さんちの縁結び / fod -> ⭕あり https://fod.fujitv.co.jp/title/2039/
+✅ 甘神さんちの縁結び / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI2OWI=
+✅ 甘神さんちの縁結び / bandai -> ❌なし
+✅ 甘神さんちの縁結び / animehodai -> ❌なし
+✅ 株式会社マジルミエ / fod -> ❌なし
+✅ 株式会社マジルミエ / lemino -> ❌なし
+✅ 株式会社マジルミエ / bandai -> ❌なし
+✅ 株式会社マジルミエ / animehodai -> ❌なし
+✅ 君は冥土様。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/305a/
+✅ 君は冥土様。 / lemino -> ❌なし
+✅ 君は冥土様。 / bandai -> ❌なし
+✅ 君は冥土様。 / animehodai -> ❌なし
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / fod -> ⭕あり https://fod.fujitv.co.jp/title/20bc/
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / lemino -> ❌なし
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / bandai -> ❌なし
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / animehodai -> ❌なし
+✅ ダンダダン / fod -> ⭕あり https://fod.fujitv.co.jp/title/80h7/
+✅ ダンダダン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDM5OGQ=
+✅ ダンダダン / bandai -> ❌なし
+✅ ダンダダン / animehodai -> ❌なし
+✅ 妻、小学生になる。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/1056/
+✅ 妻、小学生になる。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGQxYjU=
+✅ 妻、小学生になる。 / bandai -> ❌なし
+✅ 妻、小学生になる。 / animehodai -> ❌なし
+✅ トリリオンゲーム / fod -> ⭕あり https://fod.fujitv.co.jp/title/202w/
+✅ トリリオンゲーム / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQzMWE=
+✅ トリリオンゲーム / bandai -> ❌なし
+✅ トリリオンゲーム / animehodai -> ❌なし
+✅ パーティーから追放されたその治癒師、実は最強につき / fod -> ⭕あり https://fod.fujitv.co.jp/title/c3uz/
+✅ パーティーから追放されたその治癒師、実は最強につき / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI2NGM=
+✅ パーティーから追放されたその治癒師、実は最強につき / bandai -> ❌なし
+✅ パーティーから追放されたその治癒師、実は最強につき / animehodai -> ❌なし
+✅ ひとりぼっちの異世界攻略 / fod -> ⭕あり https://fod.fujitv.co.jp/title/3051/
+✅ ひとりぼっちの異世界攻略 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI2NjY=
+✅ ひとりぼっちの異世界攻略 / bandai -> ❌なし
+✅ ひとりぼっちの異世界攻略 / animehodai -> ❌なし
+✅ 魔王2099 / fod -> ⭕あり https://fod.fujitv.co.jp/title/e42f/
+✅ 魔王2099 / lemino -> ❌なし
+✅ 魔王2099 / bandai -> ❌なし
+✅ 魔王2099 / animehodai -> ❌なし
+✅ やり直し令嬢は竜帝陛下を攻略中 / fod -> ⭕あり https://fod.fujitv.co.jp/title/305b/
+✅ やり直し令嬢は竜帝陛下を攻略中 / lemino -> ❌なし
+✅ やり直し令嬢は竜帝陛下を攻略中 / bandai -> ❌なし
+✅ やり直し令嬢は竜帝陛下を攻略中 / animehodai -> ❌なし
+✅ 来世は他人がいい / fod -> ⭕あり https://fod.fujitv.co.jp/title/70wk/
+✅ 来世は他人がいい / lemino -> ❌なし
+✅ 来世は他人がいい / bandai -> ❌なし
+✅ 来世は他人がいい / animehodai -> ❌なし
+✅ 歴史に残る悪女になるぞ / fod -> ⭕あり https://fod.fujitv.co.jp/title/90wo/
+✅ 歴史に残る悪女になるぞ / lemino -> ❌なし
+✅ 歴史に残る悪女になるぞ / bandai -> ❌なし
+✅ 歴史に残る悪女になるぞ / animehodai -> ❌なし
+✅ ぼくたちのリメイク / fod -> ⭕あり https://fod.fujitv.co.jp/title/b4gt/
+✅ ぼくたちのリメイク / lemino -> ❌なし
+✅ ぼくたちのリメイク / bandai -> ❌なし
+✅ ぼくたちのリメイク / animehodai -> ❌なし
+✅ 女神寮の寮母くん。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h32/
+✅ 女神寮の寮母くん。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGIxZmY=
+✅ 女神寮の寮母くん。 / bandai -> ❌なし
+✅ 女神寮の寮母くん。 / animehodai -> ❌なし
+✅ 王様ランキング / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i04/
+✅ 王様ランキング / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGJhMmQ=
+✅ 王様ランキング / bandai -> ❌なし
+✅ 王様ランキング / animehodai -> ❌なし
+✅ 古見さんは、コミュ症です。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/b2mq/
+✅ 古見さんは、コミュ症です。 / lemino -> ❌なし
+✅ 古見さんは、コミュ症です。 / bandai -> ❌なし
+✅ 古見さんは、コミュ症です。 / animehodai -> ❌なし
+✅ 最果てのパラディン / fod -> ❌なし
+✅ 最果てのパラディン / lemino -> ❌なし
+✅ 最果てのパラディン / bandai -> ❌なし
+✅ 最果てのパラディン / animehodai -> ❌なし
+✅ しょうたいむ！～歌のお姉さんだってしたい / fod -> ❌なし
+✅ しょうたいむ！～歌のお姉さんだってしたい / lemino -> ❌なし
+✅ しょうたいむ！～歌のお姉さんだってしたい / bandai -> ❌なし
+✅ しょうたいむ！～歌のお姉さんだってしたい / animehodai -> ❌なし
+✅ 進化の実～知らないうちに勝ち組人生～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/708h/
+✅ 進化の実～知らないうちに勝ち組人生～ / lemino -> ❌なし
+✅ 進化の実～知らないうちに勝ち組人生～ / bandai -> ❌なし
+✅ 進化の実～知らないうちに勝ち組人生～ / animehodai -> ❌なし
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / fod -> ⭕あり https://fod.fujitv.co.jp/title/5i69/
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDFlMWY=
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / bandai -> ❌なし
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / animehodai -> ❌なし
+✅ 世界最高の暗殺者、異世界貴族に転生する / fod -> ⭕あり https://fod.fujitv.co.jp/title/5h83/
+✅ 世界最高の暗殺者、異世界貴族に転生する / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IwMGI4NGU=
+✅ 世界最高の暗殺者、異世界貴族に転生する / bandai -> ❌なし
+✅ 世界最高の暗殺者、異世界貴族に転生する / animehodai -> ❌なし
+✅ takt op.Destiny / fod -> ⭕あり https://fod.fujitv.co.jp/title/d37w/
+✅ takt op.Destiny / lemino -> ❌なし
+✅ takt op.Destiny / bandai -> ❌なし
+✅ takt op.Destiny / animehodai -> ❌なし
+✅ プラチナエンド / fod -> ⭕あり https://fod.fujitv.co.jp/title/d20t/
+✅ プラチナエンド / lemino -> ❌なし
+✅ プラチナエンド / bandai -> ❌なし
+✅ プラチナエンド / animehodai -> ❌なし
+✅ ブルーピリオド / fod -> ⭕あり https://fod.fujitv.co.jp/title/f4fd/
+✅ ブルーピリオド / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDI1MWY=
+✅ ブルーピリオド / bandai -> ❌なし
+✅ 俺の脳内選択肢が、学園ラブコメを全力で邪魔している / bandai -> ❌なし
+✅ 俺の脳内選択肢が、学園ラブコメを全力で邪魔している / animehodai -> ❌なし
+✅ 俺の彼女と幼なじみが修羅場すぎる / fod -> ⭕あり https://fod.fujitv.co.jp/title/g2p8/
+✅ 俺の彼女と幼なじみが修羅場すぎる / lemino -> ❌なし
+✅ 俺の彼女と幼なじみが修羅場すぎる / bandai -> ❌なし
+✅ 革命機ヴァルヴレイヴ / lemino -> ❌なし
+✅ 革命機ヴァルヴレイヴ / bandai -> ❌なし
+✅ 革命機ヴァルヴレイヴ / animehodai -> ❌なし
+✅ 神さまのいない日曜日 / fod -> ⭕あり https://fod.fujitv.co.jp/title/g3tu/
+✅ 呪術廻戦 死滅回游 前編 / fod -> ⭕あり https://fod.fujitv.co.jp/title/011p/
+✅ 呪術廻戦 死滅回游 前編 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1NzI=
+✅ 呪術廻戦 死滅回游 前編 / bandai -> ❌なし
+✅ 呪術廻戦 死滅回游 前編 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249078
+✅ 葬送のフリーレン 第2期 / fod -> ⭕あり https://fod.fujitv.co.jp/title/011q/
+✅ 葬送のフリーレン 第2期 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1Nzc=
+✅ 葬送のフリーレン 第2期 / bandai -> ❌なし
+✅ 葬送のフリーレン 第2期 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251484
+✅ 地獄楽 第二期 / fod -> ❌なし
+✅ 地獄楽 第二期 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAwMTI=
+✅ 地獄楽 第二期 / bandai -> ❌なし
+✅ 地獄楽 第二期 / animehodai -> ❌なし
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / fod -> ⭕あり https://fod.fujitv.co.jp/title/7178/
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0ZWQ=
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / bandai -> ❌なし
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251560
+✅ 【推しの子】第3期 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xn/?division=home&shelf=category_H00393
+✅ 【推しの子】第3期 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0Zjg=
+✅ 【推しの子】第3期 / bandai -> ❌なし
+✅ 【推しの子】第3期 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251565
+✅ 炎炎ノ消防隊 参ノ章 第2クール / fod -> ❌なし
+✅ 炎炎ノ消防隊 参ノ章 第2クール / lemino -> ❌なし
+✅ 炎炎ノ消防隊 参ノ章 第2クール / bandai -> ❌なし
+✅ 炎炎ノ消防隊 参ノ章 第2クール / animehodai -> ❌なし
+✅ Fate/strange Fake / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0fs/
+✅ Fate/strange Fake / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MjU=
+✅ Fate/strange Fake / bandai -> ❌なし
+✅ Fate/strange Fake / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251572
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / fod -> ❌なし
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / lemino -> ❌なし
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / bandai -> ❌なし
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / animehodai -> ❌なし
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / fod -> ❌なし
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / lemino -> ❌なし
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / bandai -> ❌なし
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / animehodai -> ❌なし
+✅ 正反対な君と僕 / fod -> ⭕あり https://fod.fujitv.co.jp/title/010w/
+✅ 正反対な君と僕 / lemino -> ❌なし
+✅ 正反対な君と僕 / bandai -> ❌なし
+✅ 正反対な君と僕 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0252773
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / fod -> ❌なし
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / lemino -> ❌なし
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / bandai -> ❌なし
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / animehodai -> ❌なし
+✅ 魔都精兵のスレイブ2 / fod -> ⭕あり https://fod.fujitv.co.jp/title/012e/
+✅ 魔都精兵のスレイブ2 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MjA=
+✅ 魔都精兵のスレイブ2 / bandai -> ❌なし
+✅ 魔都精兵のスレイブ2 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251559
+✅ 死亡遊戯で飯を食う。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/9179/
+✅ 死亡遊戯で飯を食う。 / lemino -> ❌なし
+✅ 死亡遊戯で飯を食う。 / bandai -> ❌なし
+✅ 死亡遊戯で飯を食う。 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251567
+✅ 勇者パーティを追い出された器用貧乏 / fod -> ⭕あり https://fod.fujitv.co.jp/title/d4fr/
+✅ 勇者パーティを追い出された器用貧乏 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MzA=
+✅ 勇者パーティを追い出された器用貧乏 / bandai -> ❌なし
+✅ 勇者パーティを追い出された器用貧乏 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0252774
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / fod -> ❌なし
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / lemino -> ❌なし
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / bandai -> ❌なし
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / animehodai -> ❌なし
+✅ TRIGUN STARGAZE / fod -> ⭕あり https://fod.fujitv.co.jp/title/717d/
+✅ TRIGUN STARGAZE / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MzI=
+✅ TRIGUN STARGAZE / bandai -> ❌なし
+✅ TRIGUN STARGAZE / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251554
+✅ 多聞くん今どっち！？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/917j/
+✅ 多聞くん今どっち！？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MGI=
+✅ 多聞くん今どっち！？ / bandai -> ❌なし
+✅ 多聞くん今どっち！？ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0252770
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/7172/
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / lemino -> ❌なし
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / bandai -> ❌なし
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251571
+✅ 劇場版 僕の心のヤバイやつ / fod -> ❌なし
+✅ 劇場版 僕の心のヤバイやつ / lemino -> ❌なし
+✅ 劇場版 僕の心のヤバイやつ / bandai -> ❌なし
+✅ 劇場版 僕の心のヤバイやつ / animehodai -> ❌なし
+✅ 真夜中ハートチューン / fod -> ⭕あり https://fod.fujitv.co.jp/title/10g1/
+✅ 真夜中ハートチューン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1ZGU=
+✅ 真夜中ハートチューン / bandai -> ❌なし
+✅ 真夜中ハートチューン / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249080
+✅ 違国日記 / fod -> ⭕あり https://fod.fujitv.co.jp/title/917c/
+✅ 違国日記 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MWY=
+✅ 違国日記 / bandai -> ❌なし
+✅ 違国日記 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251558
+✅ うるわしの宵の月 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xr/
+✅ うるわしの宵の月 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MWQ=
+✅ うるわしの宵の月 / bandai -> ❌なし
+✅ うるわしの宵の月 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251568
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/20ds/
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MWM=
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / bandai -> ❌なし
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249082
+✅ 魔術師クノンは見えている / fod -> ❌なし
+✅ 魔術師クノンは見えている / lemino -> ❌なし
+✅ 魔術師クノンは見えている / bandai -> ❌なし
+✅ 魔術師クノンは見えている / animehodai -> ❌なし
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/f0bk/
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDAzZjU=
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / bandai -> ❌なし
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / animehodai -> ❌なし
+✅ ゴールデンカムイ 最終章 / fod -> ❌なし
+✅ ゴールデンカムイ 最終章 / lemino -> ❌なし
+✅ ゴールデンカムイ 最終章 / bandai -> ❌なし
+✅ ゴールデンカムイ 最終章 / animehodai -> ❌なし
+✅ ダーウィン事変 / fod -> ❌なし
+✅ ダーウィン事変 / lemino -> ❌なし
+✅ ダーウィン事変 / bandai -> ❌なし
+✅ ダーウィン事変 / animehodai -> ❌なし
+✅ ALL YOU NEED IS KILL / fod -> ❌なし
+✅ ALL YOU NEED IS KILL / lemino -> ❌なし
+✅ ALL YOU NEED IS KILL / bandai -> ❌なし
+✅ ALL YOU NEED IS KILL / animehodai -> ❌なし
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/20d4/
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0ZTg=
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / bandai -> ❌なし
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0252769
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / fod -> ❌なし
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / lemino -> ❌なし
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / bandai -> ❌なし
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / animehodai -> ❌なし
+✅ エリスの聖杯 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xh/
+✅ エリスの聖杯 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MGM=
+✅ エリスの聖杯 / bandai -> ❌なし
+✅ エリスの聖杯 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249089
+✅ お気楽領主の楽しい領地防衛 / fod -> ⭕あり https://fod.fujitv.co.jp/title/20dr/
+✅ お気楽領主の楽しい領地防衛 / lemino -> ❌なし
+✅ お気楽領主の楽しい領地防衛 / bandai -> ❌なし
+✅ お気楽領主の楽しい領地防衛 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249079
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xz/
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1NzY=
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / bandai -> ❌なし
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / animehodai -> ❌なし
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / fod -> ⭕あり https://fod.fujitv.co.jp/title/011r/
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / lemino -> ❌なし
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / bandai -> ❌なし
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249090
+✅ デッドアカウント / fod -> ⭕あり https://fod.fujitv.co.jp/title/9177/
+✅ デッドアカウント / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MGQ=
+✅ デッドアカウント / bandai -> ❌なし
+✅ デッドアカウント / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251275
+✅ 綺麗にしてもらえますか。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/011t/
+✅ 綺麗にしてもらえますか。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1NTY=
+✅ 綺麗にしてもらえますか。 / bandai -> ❌なし
+✅ 綺麗にしてもらえますか。 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0255299
+✅ 異世界の沙汰は社畜次第 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xo/
+✅ 異世界の沙汰は社畜次第 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0ZjY=
+✅ 異世界の沙汰は社畜次第 / bandai -> ❌なし
+✅ 異世界の沙汰は社畜次第 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251561
+✅ 幼馴染とはラブコメにならない / fod -> ⭕あり https://fod.fujitv.co.jp/title/30fl/
+✅ 幼馴染とはラブコメにならない / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MWI=
+✅ 幼馴染とはラブコメにならない / bandai -> ❌なし
+✅ 幼馴染とはラブコメにならない / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249087
+✅ シャンピニオンの魔女 / fod -> ⭕あり https://fod.fujitv.co.jp/title/011c/
+✅ シャンピニオンの魔女 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MTY=
+✅ シャンピニオンの魔女 / bandai -> ❌なし
+✅ シャンピニオンの魔女 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251569
+✅ BEASTARS FINAL SEASON Part 2 / fod -> ❌なし
+✅ BEASTARS FINAL SEASON Part 2 / lemino -> ❌なし
+✅ BEASTARS FINAL SEASON Part 2 / bandai -> ❌なし
+✅ BEASTARS FINAL SEASON Part 2 / animehodai -> ❌なし
+✅ 悪役令嬢は隣国の王太子に溺愛される / fod -> ⭕あり https://fod.fujitv.co.jp/title/917k/
+✅ 悪役令嬢は隣国の王太子に溺愛される / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MjQ=
+✅ 悪役令嬢は隣国の王太子に溺愛される / bandai -> ❌なし
+✅ 悪役令嬢は隣国の王太子に溺愛される / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249083
+✅ メダリスト 第2期 / fod -> ❌なし
+✅ メダリスト 第2期 / lemino -> ❌なし
+✅ メダリスト 第2期 / bandai -> ❌なし
+✅ メダリスト 第2期 / animehodai -> ❌なし
+✅ 魔王の娘は優しすぎる!! / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xs/
+✅ 魔王の娘は優しすぎる!! / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MGY=
+✅ 魔王の娘は優しすぎる!! / bandai -> ❌なし
+✅ 魔王の娘は優しすぎる!! / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251570
+✅ 超かぐや姫！ / fod -> ❌なし
+✅ 超かぐや姫！ / lemino -> ❌なし
+✅ 超かぐや姫！ / bandai -> ❌なし
+✅ 超かぐや姫！ / animehodai -> ❌なし
+✅ カヤちゃんはコワくない / fod -> ❌なし
+✅ カヤちゃんはコワくない / lemino -> ❌なし
+✅ カヤちゃんはコワくない / bandai -> ❌なし
+✅ カヤちゃんはコワくない / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249086
+✅ 花ざかりの君たちへ / fod -> ⭕あり https://fod.fujitv.co.jp/title/4w95/
+✅ 花ざかりの君たちへ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MjY=
+✅ 花ざかりの君たちへ / bandai -> ❌なし
+✅ 花ざかりの君たちへ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251573
+✅ 29歳独身中堅冒険者の日常 / fod -> ⭕あり https://fod.fujitv.co.jp/title/9178/
+✅ 29歳独身中堅冒険者の日常 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0ZjU=
+✅ 29歳独身中堅冒険者の日常 / bandai -> ❌なし
+✅ 29歳独身中堅冒険者の日常 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251562
+✅ 転生したらドラゴンの卵だった / fod -> ⭕あり https://fod.fujitv.co.jp/title/30g1/
+✅ 転生したらドラゴンの卵だった / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1ZDY=
+✅ 転生したらドラゴンの卵だった / bandai -> ❌なし
+✅ 転生したらドラゴンの卵だった / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249081
+✅ 姫様“拷問”の時間です 第2期 / fod -> ❌なし
+✅ 姫様“拷問”の時間です 第2期 / lemino -> ❌なし
+✅ 姫様“拷問”の時間です 第2期 / bandai -> ❌なし
+✅ 姫様“拷問”の時間です 第2期 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251578
+✅ アンドロイドは経験人数に入りますか？？ / fod -> ⭕あり https://fod.fujitv.co.jp/title/717a/
+✅ アンドロイドは経験人数に入りますか？？ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1NDU=
+✅ アンドロイドは経験人数に入りますか？？ / bandai -> ❌なし
+✅ アンドロイドは経験人数に入りますか？？ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251552
+✅ 暗殺教室 みんなの時間 / fod -> ❌なし
+✅ 暗殺教室 みんなの時間 / lemino -> ❌なし
+✅ 暗殺教室 みんなの時間 / bandai -> ❌なし
+✅ 暗殺教室 みんなの時間 / animehodai -> ❌なし
+✅ 勇者のクズ / fod -> ⭕あり https://fod.fujitv.co.jp/title/30fy/
+✅ 勇者のクズ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0Zjc=
+✅ 勇者のクズ / bandai -> ❌なし
+✅ 勇者のクズ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251566
+✅ MFゴースト 3rd Season / fod -> ⭕あり https://fod.fujitv.co.jp/title/30g3/
+✅ MFゴースト 3rd Season / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MzE=
+✅ MFゴースト 3rd Season / bandai -> ❌なし
+✅ MFゴースト 3rd Season / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0249085
+✅ 穏やか貴族の休暇のすすめ。 / fod -> ⭕あり https://fod.fujitv.co.jp/title/80xm/
+✅ 穏やか貴族の休暇のすすめ。 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MTk=
+✅ 穏やか貴族の休暇のすすめ。 / bandai -> ❌なし
+✅ 穏やか貴族の休暇のすすめ。 / animehodai -> ❌なし
+✅ DARK MOON　-黒の月: 月の祭壇- / fod -> ⭕あり https://fod.fujitv.co.jp/title/011z/
+✅ DARK MOON　-黒の月: 月の祭壇- / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1ZDQ=
+✅ DARK MOON　-黒の月: 月の祭壇- / bandai -> ❌なし
+✅ DARK MOON　-黒の月: 月の祭壇- / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251574
+✅ プリズム輪舞曲 / fod -> ❌なし
+✅ プリズム輪舞曲 / lemino -> ❌なし
+✅ プリズム輪舞曲 / bandai -> ❌なし
+✅ プリズム輪舞曲 / animehodai -> ❌なし
+✅ 人外教室の人間嫌い教師 / fod -> ⭕あり https://fod.fujitv.co.jp/title/011l/
+✅ 人外教室の人間嫌い教師 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0Zjk=
+✅ 人外教室の人間嫌い教師 / bandai -> ❌なし
+✅ 人外教室の人間嫌い教師 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251564
+✅ アルネの事件簿 / fod -> ⭕あり https://fod.fujitv.co.jp/title/917m/
+✅ アルネの事件簿 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1ZDM=
+✅ アルネの事件簿 / bandai -> ❌なし
+✅ アルネの事件簿 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0252771
+✅ 拷問バイトくんの日常 / fod -> ⭕あり https://fod.fujitv.co.jp/title/7179/
+✅ 拷問バイトくんの日常 / lemino -> ❌なし
+✅ 拷問バイトくんの日常 / bandai -> ❌なし
+✅ 拷問バイトくんの日常 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251563
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / fod -> ❌なし
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / lemino -> ❌なし
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / bandai -> ❌なし
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / animehodai -> ❌なし
+✅ 花緑青が明ける日に / fod -> ❌なし
+✅ 花緑青が明ける日に / lemino -> ❌なし
+✅ 花緑青が明ける日に / bandai -> ❌なし
+✅ 花緑青が明ける日に / animehodai -> ❌なし
+✅ どうせ、恋してしまうんだ。Season 2 / fod -> ❌なし
+✅ どうせ、恋してしまうんだ。Season 2 / lemino -> ❌なし
+✅ どうせ、恋してしまうんだ。Season 2 / bandai -> ❌なし
+✅ どうせ、恋してしまうんだ。Season 2 / animehodai -> ❌なし
+✅ 火喰鳥 / fod -> ⭕あり https://fod.fujitv.co.jp/title/30fn/
+✅ 火喰鳥 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MjM=
+✅ 火喰鳥 / bandai -> ❌なし
+✅ 火喰鳥 / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251276
+✅ 新劇場版 銀魂 -吉原大炎上- / fod -> ❌なし
+✅ 新劇場版 銀魂 -吉原大炎上- / lemino -> ❌なし
+✅ 新劇場版 銀魂 -吉原大炎上- / bandai -> ❌なし
+✅ 新劇場版 銀魂 -吉原大炎上- / animehodai -> ❌なし
+✅ パリに咲くエトワール / fod -> ❌なし
+✅ パリに咲くエトワール / lemino -> ❌なし
+✅ パリに咲くエトワール / bandai -> ❌なし
+✅ パリに咲くエトワール / animehodai -> ❌なし
+✅ 鎧真伝サムライトルーパー / fod -> ⭕あり https://fod.fujitv.co.jp/title/20df/
+✅ 鎧真伝サムライトルーパー / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1ZDk=
+✅ 鎧真伝サムライトルーパー / bandai -> ❌なし
+✅ 鎧真伝サムライトルーパー / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251577
+✅ クスノキの番人 / fod -> ❌なし
+✅ クスノキの番人 / lemino -> ❌なし
+✅ クスノキの番人 / bandai -> ❌なし
+✅ クスノキの番人 / animehodai -> ❌なし
+✅ 青のミブロ 芹沢暗殺編 / fod -> ❌なし
+✅ 青のミブロ 芹沢暗殺編 / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ0ZjE=
+✅ 青のミブロ 芹沢暗殺編 / bandai -> ❌なし
+✅ 青のミブロ 芹沢暗殺編 / animehodai -> ❌なし
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / fod -> ❌なし
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / lemino -> ❌なし
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / bandai -> ❌なし
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / animehodai -> ❌なし
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / fod -> ❌なし
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / lemino -> ❌なし
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / bandai -> ❌なし
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / animehodai -> ❌なし
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / fod -> ❌なし
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL2dyb3VwL2IxMDQ1MzQ=
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / bandai -> ❌なし
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / animehodai -> ⭕あり https://www.animehodai.jp/title/SID0251553
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / fod -> ❌なし
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / lemino -> ❌なし
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / bandai -> ❌なし
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / animehodai -> ❌なし
+✅ 迷宮のしおり / fod -> ⭕あり https://fod.fujitv.co.jp/title/011s/
+✅ 迷宮のしおり / lemino -> ❌なし
+✅ 迷宮のしおり / bandai -> ❌なし
+✅ 迷宮のしおり / animehodai -> ❌なし
+✅ デスパレード / lemino -> ❌なし
+✅ 灰と幻想のグリムガル / lemino -> ❌なし
+✅ Angel Beats! / lemino -> ❌なし
+✅ 新世界より / fod -> ❌なし
+✅ 新世界より / lemino -> ❌なし
+✅ Vivy -Fluorite Eye’s Song- / fod -> ❌なし
+✅ Vivy -Fluorite Eye’s Song- / lemino -> ❌なし
+✅ グラップラー刃牙 / fod -> ❌なし
+✅ スクライド / lemino -> ❌なし
+✅ フルメタル・パニック！ / lemino -> ❌なし
+✅ 最終兵器彼女 / fod -> ❌なし
+✅ 最終兵器彼女 / lemino -> ❌なし
+✅ 灰羽連盟 / lemino -> ❌なし
+✅ 金色のガッシュベル!! / lemino -> ❌なし
+✅ 探偵学園Q / fod -> ❌なし
+✅ 探偵学園Q / lemino -> ❌なし
+✅ D.C.～ダ・カーポ～ / lemino -> ❌なし
+✅ 君が望む永遠 / fod -> ❌なし
+✅ 君が望む永遠 / lemino -> ❌なし
+✅ かいけつゾロリ / lemino -> ❌なし
+✅ 妄想代理人 / lemino -> ❌なし
+✅ サムライチャンプルー / lemino -> ❌なし
+✅ 巌窟王 / lemino -> ❌なし
+✅ 焼きたて!! ジャぱん / fod -> ❌なし
+✅ 焼きたて!! ジャぱん / lemino -> ❌なし
+✅ いちご100% / lemino -> ❌なし
+✅ アイシールド21 / fod -> ❌なし
+✅ アイシールド21 / lemino -> ❌なし
+✅ 交響詩篇エウレカセブン / fod -> ❌なし
+✅ 交響詩篇エウレカセブン / lemino -> ❌なし
+✅ 創聖のアクエリオン / lemino -> ❌なし
+✅ フタコイ オルタナティブ / lemino -> ❌なし
+✅ SHUFFLE! / lemino -> ❌なし
+✅ 涼風 / lemino -> ❌なし
+✅ ソルティレイ / lemino -> ❌なし
+✅ 灼眼のシャナ / lemino -> ❌なし
+✅ BLOOD+ / fod -> ❌なし
+✅ BLOOD+ / lemino -> ❌なし
+✅ ブラックキャット / lemino -> ❌なし
+✅ Ergo Proxy / lemino -> ❌なし
+✅ ARIA The NATURAL / lemino -> ❌なし
+✅ 牙-KIBA- / fod -> ❌なし
+✅ 牙-KIBA- / lemino -> ❌なし
+✅ 神様家族 / fod -> ❌なし
+✅ 神様家族 / lemino -> ❌なし
+✅ ゼーガペイン / lemino -> ❌なし
+✅ BLACK LAGOON / lemino -> ❌なし
+✅ N・H・Kにようこそ! / lemino -> ❌なし
+✅ ゼロの使い魔 / lemino -> ❌なし
+✅ カノン / fod -> ⭕あり https://fod.fujitv.co.jp/title/c1ly/
+✅ カノン / lemino -> ⭕あり https://lemino.docomo.ne.jp/contents/Y3JpZDovL3BsYWxhLmlwdHZmLmpwL3ZvZC8wMDAwMDAwMDAwXzAwbWhscDZ3Yjc=
+✅ 家庭教師ヒットマンREBORN! / lemino -> ❌なし
+✅ コードギアス 反逆のルルーシュ / lemino -> ❌なし
+✅ 攻殻機動隊 S.A.C. Solid State Society / fod -> ❌なし
+✅ 攻殻機動隊 S.A.C. Solid State Society / lemino -> ❌なし
+✅ 人造昆虫カブトボーグ V×V / fod -> ❌なし
+✅ 人造昆虫カブトボーグ V×V / lemino -> ❌なし
+✅ D.Gray-man / fod -> ❌なし
+✅ D.Gray-man / lemino -> ❌なし
+✅ ネギま!? / lemino -> ❌なし
+✅ 一騎当千 Dragon Destiny / lemino -> ❌なし
+✅ ひだまりスケッチ / fod -> ❌なし
+✅ ひだまりスケッチ / lemino -> ❌なし
+✅ ローゼンメイデン・オーベルテューレ / fod -> ❌なし
+✅ ローゼンメイデン・オーベルテューレ / lemino -> ❌なし
+✅ 風のスティグマ（風の聖痕） / fod -> ❌なし
+✅ 風のスティグマ（風の聖痕） / lemino -> ❌なし
+✅ 瀬戸の花嫁 / lemino -> ❌なし
+✅ sola / fod -> ❌なし
+✅ sola / lemino -> ❌なし
+✅ DARKER THAN BLACK -黒の契約者- / lemino -> ❌なし
+✅ 天元突破グレンラガン / lemino -> ❌なし
+✅ 電脳コイル / lemino -> ❌なし
+✅ ハヤテのごとく! / lemino -> ❌なし
+✅ ロミオ×ジュリエット / lemino -> ❌なし
+✅ さよなら絶望先生 / fod -> ❌なし
+✅ さよなら絶望先生 / lemino -> ❌なし
+✅ School Days / lemino -> ❌なし
+✅ バッカーノ! / fod -> ❌なし
+✅ バッカーノ! / lemino -> ❌なし
+✅ モノノ怪 / lemino -> ❌なし
+✅ ef - a tale of memories. / lemino -> ❌なし
+✅ キミキス pure rouge / fod -> ❌なし
+✅ キミキス pure rouge / lemino -> ❌なし
+✅ CLANNAD / fod -> ❌なし
+✅ CLANNAD / lemino -> ❌なし
+✅ 魔人探偵脳噛ネウロ / fod -> ❌なし
+✅ 魔人探偵脳噛ネウロ / lemino -> ❌なし
+✅ みなみけ / lemino -> ❌なし
+✅ 君が主で執事が俺で / fod -> ❌なし
+✅ 君が主で執事が俺で / lemino -> ❌なし
+✅ true tears（トゥルーティアーズ） / fod -> ❌なし
+✅ true tears（トゥルーティアーズ） / lemino -> ❌なし
+✅ ロザリオとバンパイア / lemino -> ❌なし
+✅ ヤッターマン / lemino -> ❌なし
+✅ かのこん / fod -> ❌なし
+✅ かのこん / lemino -> ❌なし
+✅ ソウルイーター / lemino -> ❌なし
+✅ To Loveる -とらぶる- / lemino -> ❌なし
+✅ 恋姫†無双 / lemino -> ❌なし
+✅ 乃木坂春香の秘密 / lemino -> ❌なし
+✅ イヴの時間 / fod -> ❌なし
+✅ イヴの時間 / lemino -> ❌なし
+✅ あかね色に染まる坂 / lemino -> ❌なし
+✅ CHAOS;HEAD / fod -> ❌なし
+✅ CHAOS;HEAD / lemino -> ❌なし
+✅ ONE OUTS－ワンナウツ－ / fod -> ❌なし
+✅ ONE OUTS－ワンナウツ－ / lemino -> ❌なし
+✅ 獣の奏者エリン / fod -> ❌なし
+✅ 獣の奏者エリン / lemino -> ❌なし
+✅ スレイヤーズEVOLUTION-R / lemino -> ❌なし
+✅ WHITE ALBUM（第1期） / fod -> ❌なし
+✅ WHITE ALBUM（第1期） / lemino -> ❌なし
+✅ まりあ†ほりっく / lemino -> ❌なし
+✅ アスラクライン / fod -> ❌なし
+✅ アスラクライン / lemino -> ❌なし
+✅ 咲-Saki- / lemino -> ❌なし
+✅ 鋼の錬金術師 FULLMETAL ALCHEMIST / lemino -> ❌なし
+✅ 東のエデン / lemino -> ❌なし
+✅ 宙のまにまに / fod -> ❌なし
+✅ 宙のまにまに / lemino -> ❌なし
+✅ 東京マグニチュード8.0 / lemino -> ❌なし
+✅ プリンセスラバー! / lemino -> ❌なし
+✅ 怪談レストラン / fod -> ❌なし
+✅ 怪談レストラン / lemino -> ❌なし
+✅ けんぷファー / fod -> ❌なし
+✅ けんぷファー / lemino -> ❌なし
+✅ 生徒会の一存 / lemino -> ❌なし
+✅ にゃんこい! / fod -> ❌なし
+✅ にゃんこい! / lemino -> ❌なし
+✅ アマガミSS / fod -> ❌なし
+✅ アマガミSS / lemino -> ❌なし
+✅ 荒川アンダー ザ ブリッジ / lemino -> ❌なし
+✅ えむえむっ! / lemino -> ❌なし
+✅ おまもりひまり / lemino -> ❌なし
+✅ 学園黙示録 HIGHSCHOOL OF THE DEAD / lemino -> ❌なし
+✅ 刀語 / lemino -> ❌なし
+✅ 神のみぞ知るセカイ / lemino -> ❌なし
+✅ 神のみぞ知るセカイ / bandai -> ❌なし
+✅ kiss×sis / fod -> ❌なし
+✅ kiss×sis / lemino -> ❌なし
+✅ けいおん!! / lemino -> ❌なし
+✅ 侵略!イカ娘 / lemino -> ❌なし
+✅ 聖痕のクェイサー / lemino -> ❌なし
+✅ 生徒会役員共 / lemino -> ❌なし
+✅ セキレイ / fod -> ❌なし
+✅ セキレイ / lemino -> ❌なし
+✅ 伝説の勇者の伝説 / lemino -> ❌なし
+✅ デュラララ!! / lemino -> ❌なし
+✅ バカとテストと召喚獣 / lemino -> ❌なし
+✅ バクマン。 / bandai -> ❌なし
+✅ B型H系 / fod -> ❌なし
+✅ B型H系 / lemino -> ❌なし
+✅ まじっく快斗 / fod -> ❌なし
+✅ 迷い猫オーバーラン! / fod -> ❌なし
+✅ 迷い猫オーバーラン! / lemino -> ❌なし
+✅ 四畳半神話大系 / lemino -> ❌なし
+✅ ヨスガノソラ / lemino -> ❌なし
+✅ れでぃ×ばと! / lemino -> ❌なし
+✅ WORKING!! / lemino -> ❌なし
+✅ THE IDOLM@STER / fod -> ❌なし
+✅ THE IDOLM@STER / lemino -> ❌なし
+✅ UN-GO / lemino -> ❌なし
+✅ いつか天魔の黒ウサギ / lemino -> ❌なし
+✅ IS＜インフィニット・ストラトス＞ / lemino -> ❌なし
+✅ 境界線上のホライゾン / lemino -> ❌なし
+✅ ギルティクラウン / lemino -> ❌なし
+✅ これはゾンビですか? / fod -> ❌なし
+✅ TIGER & BUNNY / lemino -> ❌なし
+✅ 電波女と青春男 / fod -> ❌なし
+✅ 電波女と青春男 / lemino -> ❌なし
+✅ デッドマン・ワンダーランド / lemino -> ❌なし
+✅ 花咲くいろは / fod -> ❌なし
+✅ 花咲くいろは / lemino -> ❌なし
+✅ 緋弾のアリア / lemino -> ❌なし
+✅ BLOOD-C / lemino -> ❌なし
+✅ べるぜバブ / fod -> ❌なし
+✅ べるぜバブ / lemino -> ❌なし
+✅ ベン・トー / lemino -> ❌なし
+✅ 僕は友達が少ない / lemino -> ❌なし
+✅ 真剣で私に恋しなさい!! / fod -> ❌なし
+✅ 真剣で私に恋しなさい!! / lemino -> ❌なし
+✅ 輪るピングドラム / lemino -> ❌なし
+✅ カンピオーネ! / lemino -> ❌なし
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 3165 }
+===== END official4 2026/01/22 19:47:54.33 ===== 
+===== START official4 2026/01/22 21:27:39.92 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/22 21:27:46.92 ===== 
+===== START official4 2026/01/22 22:15:18.35 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  enable debug logging with { debug: true }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+^C===== START official4 2026/01/22 22:15:26.48 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/22 22:15:30.05 ===== 
+===== END step7-vod 2026/01/22 22:15:30.05 =====
+===== START official4 2026/01/22 23:01:38.52 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/22 23:01:42.13 ===== 
+===== END step7-vod 2026/01/22 23:01:42.14 =====

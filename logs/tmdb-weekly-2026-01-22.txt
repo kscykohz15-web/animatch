@@ -1,0 +1,977 @@
+===== START 2026/01/22  6:45:11.75 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  enable debug logging with { debug: true }
+✅ enqueue-embedding start { LIMIT: 5000, OFFSET: 0 }
+✅ queued=73
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+✅ ヨルムンガンド -> hulu:見放題, prime:見放題
+✅ リトルバスターズ! -> danime:見放題, prime:見放題
+✅ 男子高校生の日常 -> danime:見放題, prime:レンタル
+✅ 中二病でも恋がしたい！ -> danime:見放題, prime:見放題
+✅ アウトブレイク・カンパニー 萌える侵略者 -> TMDB未検出（score=0.00）
+✅ 惡の華 -> danime:見放題, prime:見放題
+✅ 犬とハサミは使いよう -> danime:見放題, prime:見放題
+✅ 有頂天家族 -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 俺の脳内選択肢が、学園ラブコメを全力で邪魔している -> danime:見放題
+✅ 俺の彼女と幼なじみが修羅場すぎる -> danime:見放題, hulu:見放題, prime:見放題
+✅ TARI TARI -> danime:見放題, prime:見放題
+✅ 黄昏乙女×アムネジア -> danime:見放題, prime:見放題
+✅ 革命機ヴァルヴレイヴ -> danime:見放題, prime:レンタル
+✅ 神さまのいない日曜日 -> danime:見放題
+✅ 君のいる町 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 境界の彼方 -> danime:見放題, prime:見放題
+✅ キルラキル -> danime:見放題, prime:見放題
+✅ 銀の匙 Silver Spoon -> hulu:見放題, prime:見放題
+✅ 戦姫絶唱シンフォギア -> danime:見放題, hulu:見放題, prime:見放題
+✅ だから僕は、Hができない。 -> danime:見放題, prime:見放題
+✅ ゴールデンタイム -> danime:見放題, prime:見放題
+✅ 琴浦さん -> danime:見放題, hulu:見放題
+✅ サーバント×サービス -> prime:レンタル
+✅ ストライク・ザ・ブラッド -> danime:見放題, prime:見放題
+✅ ダイヤのA -> danime:見放題, hulu:見放題, prime:見放題
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation -> danime:見放題, hulu:見放題, prime:見放題
+✅ 絶園のテンペスト -> danime:見放題, prime:レンタル
+✅ ソードアート・オンライン -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ デート・ア・ライブ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 東京レイヴンズ -> danime:見放題, prime:レンタル
+✅ 凪のあすから -> danime:見放題, prime:見放題
+✅ はたらく魔王さま！ -> TMDB未検出（score=0.00）
+✅ Fate/kaleid liner プリズマ☆イリヤ -> danime:見放題, prime:見放題
+✅ フォトカノ -> danime:見放題, prime:レンタル
+✅ 人類は衰退しました -> prime:見放題
+✅ 好きっていいなよ。 -> danime:見放題, prime:見放題
+✅ 変態王子と笑わない猫。 -> danime:見放題, prime:見放題
+✅ まおゆう魔王勇者 -> danime:見放題, hulu:見放題
+✅ 機巧少女は傷つかない -> danime:見放題, prime:レンタル
+✅ 問題児たちが異世界から来るそうですよ？ -> danime:見放題, hulu:見放題
+✅ やはり俺の青春ラブコメはまちがっている。 -> hulu:見放題, prime:見放題
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 -> danime:見放題, hulu:見放題
+✅ 黒子のバスケ -> netflix:見放題, prime:見放題
+✅ K -> danime:見放題, hulu:見放題
+✅ 恋愛ラボ -> danime:見放題, prime:レンタル
+✅ ラブライブ！ School idol project -> danime:見放題, prime:レンタル
+✅ 夜桜四重奏 ～ヨザクラカルテット～ -> 全滅（JP）
+✅ ログ・ホライズン -> danime:見放題, hulu:見放題, prime:見放題
+✅ 私がモテないのはどう考えてもお前らが悪い! -> danime:見放題, prime:見放題
+✅ ワルキューレ ロマンツェ -> danime:見放題
+✅ 銀河へキックオフ!! -> prime:見放題
+✅ 神様のメモ帳 -> danime:見放題, prime:見放題
+✅ ギルティクラウン -> danime:見放題, hulu:見放題, prime:レンタル
+✅ GOSICK -ゴシック- -> danime:見放題, prime:見放題
+✅ シュタインズ・ゲート -> TMDB未検出（score=0.08）
+✅ TIGER & BUNNY -> danime:見放題, netflix:見放題, prime:見放題
+✅ デッドマン・ワンダーランド -> danime:見放題, prime:レンタル
+✅ NO.6 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 花咲くいろは -> danime:見放題
+✅ 緋弾のアリア -> danime:見放題, hulu:見放題, prime:見放題
+✅ べるぜバブ -> hulu:見放題, prime:見放題
+✅ 僕は友達が少ない -> danime:見放題, prime:見放題
+✅ 真剣で私に恋しなさい!! -> danime:見放題, prime:見放題
+✅ 魔法少女まどか☆マギカ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 輪るピングドラム -> TMDB未検出（score=0.00）
+✅ 夢喰いメリー -> danime:見放題, prime:レンタル
+✅ +チック姉さん -> 全滅（JP）
+✅ アクセル・ワールド -> danime:見放題, hulu:見放題, prime:見放題
+✅ あの夏で待ってる -> danime:見放題, prime:レンタル
+✅ 宇宙兄弟 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 織田信奈の野望 -> danime:見放題, prime:見放題
+✅ ガールズ&パンツァー -> danime:見放題, hulu:見放題, prime:レンタル
+✅ キルミーベイベー -> danime:見放題, prime:見放題
+✅ ウィッチクラフトワークス -> prime:レンタル
+✅ 最近、妹のようすがちょっとおかしいんだが。 -> danime:見放題
+✅ 桜Trick -> danime:見放題, prime:レンタル
+✅ ニセコイ -> hulu:見放題, prime:見放題
+✅ のうりん -> danime:見放題, hulu:見放題, prime:見放題
+✅ バディ・コンプレックス -> TMDB未検出（score=0.00）
+✅ 鬼灯の冷徹 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 未確認で進行形 -> danime:見放題, prime:レンタル
+✅ 一週間フレンズ。 -> danime:見放題, prime:レンタル
+✅ 極黒のブリュンヒルデ -> danime:見放題, prime:見放題
+✅ ご注文はうさぎですか？ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 星刻の竜騎士 -> danime:見放題, prime:見放題
+✅ それでも世界は美しい -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ハイキュー!! -> disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ピンポン THE ANIMATION -> hulu:見放題, netflix:見放題
+✅ ブレイドアンドソウル -> danime:見放題, prime:レンタル
+✅ 僕らはみんな河合荘 -> danime:見放題, prime:レンタル
+✅ マンガ家さんとアシスタントさんと -> 全滅（JP）
+✅ 龍ヶ嬢七々々の埋蔵金 -> danime:見放題, hulu:見放題, prime:レンタル
+✅ アカメが斬る！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ グラスリップ -> danime:見放題, hulu:見放題, prime:見放題
+✅ さばげぶっ! -> prime:レンタル
+✅ 東京喰種 トーキョーグール -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ばらかもん -> danime:見放題, hulu:見放題, prime:見放題
+✅ 普通の女子校生が【ろこどる】やってみた。 -> danime:見放題
+✅ 六畳間の侵略者!? -> danime:見放題, hulu:見放題, prime:見放題
+✅ 甘城ブリリアントパーク -> danime:見放題, prime:レンタル
+✅ 失われた未来を求めて -> danime:見放題
+✅ 俺、ツインテールになります。 -> 全滅（JP）
+✅ 寄生獣 セイの格率 -> danime:見放題, netflix:見放題, prime:見放題
+✅ クロスアンジュ 天使と竜の輪舞 -> danime:見放題, prime:レンタル
+✅ SHIROBAKO -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 旦那が何を言っているかわからない件 -> danime:見放題, prime:レンタル
+✅ Fate/stay night [Unlimited Blade Works] -> prime:レンタル
+✅ まじっく快斗1412 -> prime:見放題
+✅ 結城友奈は勇者である -> danime:見放題, hulu:見放題, prime:見放題
+✅ アイドルマスター シンデレラガールズ -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 暗殺教室（第1期） -> TMDB未検出（score=0.00）
+✅ 幸腹グラフィティ -> danime:見放題, prime:レンタル
+✅ 銃皇無尽のファフニール -> danime:見放題, prime:レンタル
+✅ 新妹魔王の契約者 -> danime:見放題, prime:見放題
+✅ 夜ノヤッターマン -> danime:見放題, prime:見放題
+✅ 終わりのセラフ（第1期） -> TMDB未検出（score=0.00）
+✅ 境界のRINNE（第1シリーズ） -> TMDB未検出（score=0.00）
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） -> TMDB未検出（score=0.00）
+✅ トリアージX -> danime:見放題, prime:レンタル
+✅ 響け！ユーフォニアム（第1期） -> TMDB未検出（score=0.00）
+✅ 山田くんと7人の魔女 -> hulu:見放題
+✅ 赤髪の白雪姫（第1期） -> TMDB未検出（score=0.00）
+✅ オーバーロード（第1期） -> TMDB未検出（score=0.00）
+✅ がっこうぐらし！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 空戦魔導士候補生の教官 -> danime:見放題, prime:見放題
+✅ ケイオスドラゴン 赤竜戦役 -> danime:見放題, prime:レンタル
+✅ 下ネタという概念が存在しない退屈な世界 -> hulu:見放題, prime:見放題
+✅ 城下町のダンデライオン -> danime:見放題
+✅ 干物妹！うまるちゃん -> danime:見放題, prime:見放題
+✅ モンスター娘のいる日常 -> danime:見放題, prime:見放題
+✅ 六花の勇者 -> danime:見放題, prime:見放題
+✅ うたわれるもの 偽りの仮面 -> TMDB未検出（score=0.00）
+✅ 学戦都市アスタリスク（第1期） -> TMDB未検出（score=0.00）
+✅ コメット・ルシファー -> prime:レンタル
+✅ すべてがFになる THE PERFECT INSIDER -> hulu:見放題
+✅ ヘヴィーオブジェクト -> 全滅（JP）
+✅ ワンパンマン -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 亜人（TVシリーズ） -> TMDB未検出（score=0.00）
+✅ この素晴らしい世界に祝福を！ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ シュヴァルツェスマーケン -> danime:見放題, prime:見放題
+✅ 昭和元禄落語心中（第1期） -> TMDB未検出（score=0.00）
+✅ 虹色デイズ -> prime:見放題
+✅ 僕だけがいない街 -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ラクエンロジック -> danime:見放題, prime:レンタル
+✅ クロムクロ -> netflix:見放題
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG -> TMDB未検出（score=0.00）
+✅ ジョーカー・ゲーム -> hulu:見放題
+✅ 双星の陰陽師 -> hulu:見放題, prime:見放題
+✅ ハイスクール・フリート -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 文豪ストレイドッグス（第1シーズン） -> TMDB未検出（score=0.00）
+✅ ふらいんぐうぃっち -> danime:見放題, hulu:見放題, prime:見放題
+✅ Re:ゼロから始める異世界生活 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 甘々と稲妻 -> danime:見放題, prime:見放題
+✅ クオリディア・コード -> danime:見放題, hulu:見放題, prime:見放題
+✅ 斉木楠雄のΨ難（第1期） -> TMDB未検出（score=0.00）
+✅ DAYS -> danime:見放題, hulu:見放題, prime:見放題
+✅ NEW GAME！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ バッテリー -> danime:見放題, hulu:見放題, prime:見放題
+✅ ベルセルク（2016） -> danime:見放題, prime:見放題
+✅ Rewrite（第1期） -> TMDB未検出（score=0.00）
+✅ planetarian ～ちいさなほしのゆめ～ -> danime:見放題, prime:レンタル
+✅ ガーリッシュ ナンバー -> danime:見放題, prime:レンタル
+✅ 3月のライオン -> danime:見放題, prime:見放題
+✅ ドリフターズ -> TMDB未検出（score=0.00）
+✅ 魔法少女育成計画 -> danime:見放題
+✅ 私がモテてどうすんだ -> danime:見放題, prime:見放題
+✅ ACCA13区監察課 -> prime:レンタル
+✅ ガヴリールドロップアウト -> danime:見放題, hulu:見放題, prime:見放題
+✅ クズの本懐 -> danime:見放題, hulu:見放題, prime:見放題
+✅ セイレン -> danime:見放題, prime:レンタル
+✅ ハンドシェイカー -> danime:見放題, prime:レンタル
+✅ 風夏 -> prime:レンタル
+✅ 幼女戦記 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ One Room -> danime:見放題, prime:見放題
+✅ 銀の墓守り -> 全滅（JP）
+✅ サクラダリセット -> danime:見放題, prime:見放題
+✅ sin 七つの大罪 -> 全滅（JP）
+✅ ゼロから始める魔法の書 -> danime:見放題, prime:見放題
+✅ 月がきれい -> danime:見放題, hulu:見放題, prime:レンタル
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ロミオ×ジュリエット -> danime:見放題, hulu:見放題, prime:見放題
+✅ バッカーノ! -> TMDB未検出（score=0.00）
+✅ キミキス pure rouge -> TMDB未検出（score=0.00）
+✅ みなみけ -> danime:見放題, prime:見放題
+✅ true tears（トゥルーティアーズ） -> TMDB未検出（score=0.00）
+✅ かのこん -> 全滅（JP）
+✅ To Loveる -とらぶる- -> hulu:見放題, prime:見放題
+✅ 乃木坂春香の秘密 -> danime:見放題
+✅ イナズマイレブン -> danime:見放題, hulu:見放題, prime:見放題
+✅ とある魔術の禁書目録 -> danime:見放題, prime:見放題
+✅ 獣の奏者エリン -> danime:見放題, hulu:見放題, prime:見放題
+✅ WHITE ALBUM（第1期） -> TMDB未検出（score=0.00）
+✅ けいおん! -> danime:見放題, prime:見放題
+✅ 東のエデン -> danime:見放題, hulu:見放題, prime:見放題
+✅ 東京マグニチュード8.0 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 君に届け -> hulu:見放題, netflix:見放題, prime:見放題
+✅ そらのおとしもの -> danime:見放題, prime:見放題
+✅ FAIRY TAIL -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ えむえむっ! -> danime:見放題, prime:レンタル
+✅ 学園黙示録 HIGHSCHOOL OF THE DEAD -> danime:見放題, hulu:見放題, prime:見放題
+✅ kiss×sis -> 全滅（JP）
+✅ 侵略!イカ娘 -> danime:見放題, prime:見放題
+✅ セキレイ -> danime:見放題, prime:レンタル
+✅ バカとテストと召喚獣 -> danime:見放題, hulu:見放題, prime:見放題
+✅ まじっく快斗 -> hulu:見放題, prime:見放題
+✅ ヨスガノソラ -> danime:見放題, prime:見放題
+✅ THE IDOLM@STER -> 全滅（JP）
+✅ UN-GO -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 境界線上のホライゾン -> TMDB未検出（score=0.00）
+✅ SKET DANCE -> TMDB未検出（score=0.08）
+✅ 日常 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ベン・トー -> 全滅（JP）
+✅ まよチキ! -> danime:見放題, prime:レンタル
+✅ 放課後のプレアデス -> prime:レンタル
+✅ エリアの騎士 -> danime:見放題, prime:レンタル
+✅ いなり、こんこん、恋いろは。 -> danime:見放題
+✅ ディーふらぐ！ -> danime:見放題, prime:レンタル
+✅ ハマトラ -> danime:見放題, prime:見放題
+✅ 彼女がフラグをおられたら -> danime:見放題
+✅ selector infected WIXOSS -> prime:レンタル
+✅ ブラック・ブレット -> danime:見放題, prime:レンタル
+✅ メカクシティアクターズ -> danime:見放題, prime:レンタル
+✅ 月刊少女野崎くん -> prime:レンタル
+✅ Fate/kaleid liner プリズマ☆イリヤ ツヴァイ! -> TMDB未検出（score=0.00）
+✅ 異能バトルは日常系のなかで -> danime:見放題, hulu:見放題, prime:見放題
+✅ グリザイアの果実 -> danime:見放題, hulu:見放題, prime:見放題
+✅ トリニティセブン -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ワールドトリガー（1stシーズン） -> TMDB未検出（score=0.00）
+✅ 冴えない彼女の育てかた -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 食戟のソーマ（第1期） -> TMDB未検出（score=0.00）
+✅ 電波教師 -> hulu:見放題, prime:見放題
+✅ 青春×機関銃 -> prime:レンタル
+✅ GANGSTA. -> danime:見放題, prime:レンタル
+✅ Charlotte(シャーロット) -> danime:見放題, hulu:見放題, prime:見放題
+✅ 乱歩奇譚 Game of Laplace -> danime:見放題, hulu:見放題
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） -> TMDB未検出（score=0.00）
+✅ 落第騎士の英雄譚 -> hulu:見放題
+✅ 最弱無敗の神装機竜《バハムート》 -> hulu:見放題
+✅ ハルチカ ～ハルタとチカは青春する～ -> danime:見放題
+✅ 甲鉄城のカバネリ -> danime:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ ネトゲの嫁は女の子じゃないと思った？ -> danime:見放題, prime:見放題
+✅ マギ シンドバッドの冒険 -> hulu:見放題, prime:見放題
+✅ この美術部には問題がある！ -> danime:見放題, prime:見放題
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン -> danime:見放題, prime:見放題
+✅ ReLIFE -> danime:見放題, prime:見放題
+✅ 終末のイゼッタ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 月曜日のたわわ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 小林さんちのメイドラゴン -> danime:見放題, hulu:見放題, netflix:見放題
+✅ 政宗くんのリベンジ -> danime:見放題, hulu:見放題, prime:見放題
+✅ クロックワーク・プラネット -> danime:見放題, prime:レンタル
+✅ ソード・オラトリア -> TMDB未検出（score=0.39）
+✅ さよなら絶望先生 -> danime:見放題, hulu:見放題, prime:見放題
+✅ CLANNAD -> danime:見放題, prime:レンタル
+✅ ロザリオとバンパイア -> danime:見放題, hulu:見放題, prime:見放題
+✅ 恋姫†無双 -> danime:見放題, prime:見放題
+✅ 喰霊-零- -> danime:見放題, prime:見放題
+✅ 鋼殻のレギオス -> danime:見放題, prime:レンタル
+✅ 咲-Saki- -> danime:見放題
+✅ プリンセスラバー! -> danime:見放題
+✅ とある科学の超電磁砲 -> danime:見放題, prime:見放題
+✅ おまもりひまり -> danime:見放題, prime:レンタル
+✅ けいおん!! -> TMDB未検出（score=0.40）
+✅ 伝説の勇者の伝説 -> 全滅（JP）
+✅ 迷い猫オーバーラン! -> 全滅（JP）
+✅ 青の祓魔師 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ これはゾンビですか? -> danime:見放題, prime:見放題
+✅ HUNTER×HUNTER -> 全滅（JP）
+✅ 未来日記 -> TMDB未検出（score=0.00）
+✅ お兄ちゃんだけど愛さえあれば関係ないよねっ -> danime:見放題, prime:見放題
+✅ となりの関くん -> danime:見放題, hulu:見放題, prime:見放題
+✅ 健全ロボ ダイミダラー -> danime:見放題, prime:レンタル
+✅ ベイビーステップ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 精霊使いの剣舞 -> danime:見放題, prime:見放題
+✅ オオカミ少女と黒王子 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 残響のテロル -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 純潔のマリア -> prime:レンタル
+✅ パンチライン -> danime:見放題, hulu:見放題
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり -> prime:レンタル
+✅ VALKYRIE DRIVE -MERMAID- -> danime:見放題
+✅ 蒼の彼方のフォーリズム -> danime:見放題
+✅ 無彩限のファントム・ワールド -> danime:見放題
+✅ ハンドレッド -> danime:見放題, hulu:見放題, prime:見放題
+✅ タブー・タトゥー -> 全滅（JP）
+✅ Occultic;Nine -オカルティック・ナイン- -> danime:見放題, hulu:見放題, prime:レンタル
+✅ エルドライブ【ēlDLIVE】 -> hulu:見放題, prime:見放題
+✅ 龍の歯医者 -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 武装少女マキャヴェリズム -> danime:見放題, hulu:見放題
+✅ ef - a tale of memories. -> danime:見放題, prime:レンタル
+✅ ソウルイーター -> danime:見放題, netflix:見放題, prime:見放題
+✅ CHAOS;HEAD -> danime:見放題, prime:見放題
+✅ アスラクライン -> danime:見放題, prime:見放題
+✅ けんぷファー -> danime:見放題, prime:レンタル
+✅ 俺の妹がこんなに可愛いわけがない -> TMDB未検出（score=0.00）
+✅ 生徒会役員共 -> danime:見放題, hulu:見放題, prime:見放題
+✅ れでぃ×ばと! -> 全滅（JP）
+✅ C -> TMDB未検出（score=0.08）
+✅ 魔乳秘剣帖 -> danime:見放題, prime:レンタル
+✅ Wake Up, Girls! -> danime:見放題, prime:見放題
+✅ シドニアの騎士 -> danime:見放題, hulu:見放題, prime:見放題
+✅ アルドノア・ゼロ -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 四月は君の嘘 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ -> hulu:見放題
+✅ おくさまが生徒会長！ -> danime:見放題
+✅ 櫻子さんの足下には死体が埋まっている -> danime:見放題, prime:見放題
+✅ キズナイーバー -> danime:見放題, prime:レンタル
+✅ orange -> danime:見放題, prime:見放題
+✅ 舟を編む -> danime:見放題, hulu:見放題, prime:レンタル
+✅ エロマンガ先生 -> danime:見放題, prime:見放題
+✅ モノノ怪 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 夏目友人帳 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ まりあ†ほりっく -> danime:見放題, prime:レンタル
+✅ にゃんこい! -> danime:見放題
+✅ 聖痕のクェイサー -> danime:見放題
+✅ あの日見た花の名前を僕達はまだ知らない。 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ マケン姫っ！ -> danime:見放題, prime:レンタル
+✅ ノラガミ -> danime:見放題, hulu:見放題, prime:見放題
+✅ アオハライド -> prime:見放題
+✅ 魔弾の王と戦姫 -> danime:見放題, hulu:見放題, prime:レンタル
+✅ うしおととら（第1期） -> TMDB未検出（score=0.00）
+✅ おしえて！ギャル子ちゃん -> 全滅（JP）
+✅ 迷家-マヨイガ- -> danime:見放題, prime:見放題
+✅ CHAOS;CHILD -> 全滅（JP）
+✅ School Days -> 全滅（JP）
+✅ あかね色に染まる坂 -> danime:見放題, prime:見放題
+✅ 怪談レストラン -> 全滅（JP）
+✅ デュラララ!! -> danime:見放題, prime:見放題
+✅ 電波女と青春男 -> danime:見放題, prime:レンタル
+✅ GJ部 -> hulu:見放題, prime:見放題
+✅ RAIL WARS! -> danime:見放題, prime:レンタル
+✅ 血界戦線 -> prime:見放題
+✅ 少女たちは荒野を目指す -> prime:レンタル
+✅ 魔装学園H×H -> danime:見放題, prime:見放題
+✅ ぼくらの -> hulu:見放題, prime:見放題
+✅ ONE OUTS－ワンナウツ－ -> hulu:見放題, netflix:見放題, prime:見放題
+✅ 刀語 -> danime:見放題, hulu:見放題, prime:見放題
+✅ IS＜インフィニット・ストラトス＞ -> danime:見放題, prime:見放題
+✅ 悪魔のリドル -> danime:見放題
+✅ アブソリュート・デュオ -> danime:見放題
+✅ 対魔導学園35試験小隊 -> danime:見放題, prime:見放題
+✅ ユーリ!!! on ICE -> danime:見放題, disney:見放題, prime:見放題
+✅ ヤッターマン -> hulu:見放題
+✅ アマガミSS -> danime:見放題, prime:レンタル
+✅ トリコ -> 全滅（JP）
+✅ 魔法科高校の劣等生 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ビキニ・ウォリアーズ -> TMDB未検出（score=0.00）
+✅ 競女!!!!!!!! -> prime:レンタル
+✅ イヴの時間 -> danime:見放題
+✅ バクマン。 -> TMDB未検出（score=0.00）
+✅ 魔法戦争 -> danime:見放題, prime:見放題
+✅ 実は私は -> prime:レンタル
+✅ BanG Dream! -> danime:見放題, hulu:見放題, prime:見放題
+✅ 宙のまにまに -> danime:見放題
+✅ ゆるゆり -> danime:見放題, hulu:見放題, prime:見放題
+✅ ガンスリンガー ストラトス -THE ANIMATION- -> danime:見放題, prime:レンタル
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ -> danime:見放題, prime:見放題
+✅ 荒川アンダー ザ ブリッジ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 棺姫のチャイカ -> danime:見放題
+✅ 僕のヒーローアカデミア -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 化物語 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 東京ESP -> danime:見放題
+✅ 亜人ちゃんは語りたい -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 四畳半神話大系 -> danime:見放題, disney:見放題, hulu:見放題, prime:レンタル
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 -> 全滅（JP）
+✅ 生徒会の一存 -> danime:見放題, prime:見放題
+✅ プラスティック・メモリーズ -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 神のみぞ知るセカイ -> prime:見放題
+✅ 坂本ですが？ -> danime:見放題, hulu:見放題, prime:見放題
+✅ BLOOD-C -> danime:見放題, prime:レンタル
+✅ 君が主で執事が俺で -> 全滅（JP）
+✅ だがしかし -> 全滅（JP）
+✅ ノーゲーム・ノーライフ -> hulu:見放題
+✅ いつか天魔の黒ウサギ -> danime:見放題, prime:レンタル
+✅ B型H系 -> 全滅（JP）
+✅ WORKING!! -> 全滅（JP）
+✅ カンピオーネ! -> TMDB未検出（score=0.41）
+✅ 監獄学園(プリズンスクール) -> TMDB未検出（score=0.00）
+✅ 図書館戦争 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 艦隊これくしょん -艦これ- -> danime:見放題, prime:見放題
+✅ 妖狐×僕SS -> danime:見放題, prime:見放題
+✅ 暁のヨナ -> danime:見放題, prime:見放題
+✅ はんだくん -> 全滅（JP）
+✅ ガールフレンド(仮) -> danime:見放題, prime:レンタル
+✅ 91Days -> danime:見放題, prime:レンタル
+✅ 天体のメソッド -> danime:見放題, prime:レンタル
+✅ 鋼の錬金術師 FULLMETAL ALCHEMIST -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ スレイヤーズEVOLUTION-R -> TMDB未検出（score=0.00）
+✅ 魔人探偵脳噛ネウロ -> hulu:見放題, prime:見放題
+✅ とらドラ！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ Another -> danime:見放題, hulu:見放題, prime:見放題
+✅ 正解するカド -> prime:見放題
+✅ 屍鬼 -> hulu:見放題, prime:見放題
+✅ 田中くんはいつもけだるげ -> danime:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ 狼と香辛料 -> danime:見放題, prime:見放題
+✅ 進撃の巨人 -> danime:見放題, disney:見放題, netflix:見放題, prime:見放題
+✅ 86 ―エイティシックス― -> danime:見放題, hulu:見放題, prime:見放題
+✅ プラネテス -> danime:見放題, prime:レンタル
+✅ Fate/Zero -> danime:見放題, prime:見放題
+✅ ヴィンランド・サガ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ID:INVADED -> danime:見放題, hulu:見放題, prime:レンタル
+✅ PSYCHO-PASS -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ メイドインアビス -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 少女終末旅行 -> danime:見放題, hulu:見放題, prime:見放題
+✅ オッドタクシー -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 蟲師 -> danime:見放題, hulu:見放題, prime:見放題
+✅ デスパレード -> TMDB未検出（score=0.00）
+✅ 灰と幻想のグリムガル -> danime:見放題, prime:見放題
+✅ Angel Beats! -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 新世界より -> danime:見放題, prime:レンタル
+✅ 葬送のフリーレン -> disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ Vivy -Fluorite Eye’s Song- -> danime:見放題, prime:レンタル
+✅ グラップラー刃牙 -> 全滅（JP）
+✅ スクライド -> danime:見放題, prime:レンタル
+✅ テニスの王子様 -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ヒカルの碁 -> hulu:見放題, prime:見放題
+✅ フルメタル・パニック！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 十二国記 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 最終兵器彼女 -> prime:見放題
+✅ 機動戦士ガンダムSEED -> netflix:見放題, prime:見放題
+✅ NARUTO -ナルト- -> 全滅（JP）
+✅ 灰羽連盟 -> danime:見放題
+✅ 金色のガッシュベル!! -> hulu:見放題, prime:見放題
+✅ キノの旅 -the Beautiful World- -> danime:見放題, hulu:見放題, prime:見放題
+✅ 探偵学園Q -> danime:見放題, hulu:見放題
+✅ 一騎当千 -> danime:見放題, hulu:見放題, prime:見放題
+✅ D.C.～ダ・カーポ～ -> danime:見放題, prime:見放題
+✅ 君が望む永遠 -> 全滅（JP）
+✅ かいけつゾロリ -> TMDB未検出（score=0.00）
+✅ 妄想代理人 -> danime:見放題, hulu:見放題
+✅ サムライチャンプルー -> danime:見放題, prime:レンタル
+✅ MONSTER -> hulu:見放題, netflix:見放題, prime:見放題
+✅ エルフェンリート -> prime:見放題
+✅ 蒼穹のファフナー -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 巌窟王 -> danime:見放題, prime:レンタル
+✅ ブラック・ジャック -> danime:見放題, prime:見放題
+✅ BLEACH -> disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ メジャー -> hulu:見放題, prime:見放題
+✅ 焼きたて!! ジャぱん -> netflix:見放題, prime:見放題
+✅ AIR -> danime:見放題
+✅ いちご100% -> prime:見放題
+✅ アイシールド21 -> hulu:見放題
+✅ 交響詩篇エウレカセブン -> danime:見放題, hulu:見放題, prime:見放題
+✅ 創聖のアクエリオン -> danime:見放題, prime:見放題
+✅ ハチミツとクローバー -> danime:見放題, prime:見放題
+✅ フタコイ オルタナティブ -> danime:見放題
+✅ SHUFFLE! -> danime:見放題, prime:レンタル
+✅ 涼風 -> danime:見放題, prime:見放題
+✅ ソルティレイ -> danime:見放題, prime:見放題
+✅ 灼眼のシャナ -> danime:見放題, hulu:見放題, prime:見放題
+✅ BLOOD+ -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ブラックキャット -> TMDB未検出（score=0.08）
+✅ ラムネ -> danime:見放題
+✅ Ergo Proxy -> TMDB未検出（score=0.08）
+✅ Fate/stay night -> danime:見放題, hulu:見放題, prime:見放題
+✅ ARIA The NATURAL -> TMDB未検出（score=0.00）
+✅ 桜蘭高校ホスト部 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 牙-KIBA- -> prime:レンタル
+✅ 神様家族 -> 全滅（JP）
+✅ 銀魂 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 涼宮ハルヒの憂鬱 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ゼーガペイン -> danime:見放題, prime:レンタル
+✅ NANA -> hulu:見放題, netflix:見放題, prime:見放題
+✅ BLACK LAGOON -> hulu:見放題, prime:見放題
+✅ N・H・Kにようこそ! -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ゼロの使い魔 -> danime:見放題, prime:見放題
+✅ カノン -> 全滅（JP）
+✅ 家庭教師ヒットマンREBORN! -> prime:見放題
+✅ コードギアス 反逆のルルーシュ -> danime:見放題, netflix:見放題, prime:レンタル
+✅ 攻殻機動隊 S.A.C. Solid State Society -> hulu:見放題, netflix:見放題, prime:見放題
+✅ 人造昆虫カブトボーグ V×V -> TMDB未検出（score=0.00）
+✅ D.Gray-man -> danime:見放題, hulu:見放題, prime:見放題
+✅ DEATH NOTE -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ネギま!? -> danime:見放題, prime:レンタル
+✅ 一騎当千 Dragon Destiny -> TMDB未検出（score=0.00）
+✅ NARUTO -ナルト- 疾風伝 -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ひだまりスケッチ -> danime:見放題, prime:レンタル
+✅ のだめカンタービレ -> danime:見放題, hulu:見放題, prime:見放題
+✅ ローゼンメイデン・オーベルテューレ -> TMDB未検出（score=0.00）
+✅ 風のスティグマ（風の聖痕） -> danime:見放題, prime:レンタル
+✅ Re:CREATORS -> hulu:見放題, prime:レンタル
+✅ 恋愛暴君 -> 全滅（JP）
+✅ ロクでなし魔術講師と禁忌教典 -> danime:見放題, hulu:見放題, prime:見放題
+✅ アホガール -> danime:見放題, prime:見放題
+✅ 異世界食堂 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 異世界はスマートフォンとともに。 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 賭ケグルイ -> danime:見放題, netflix:見放題, prime:見放題
+✅ ゲーマーズ！ -> danime:見放題
+✅ 潔癖男子！青山くん -> prime:レンタル
+✅ 恋と嘘 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 将国のアルタイル -> prime:レンタル
+✅ 徒然チルドレン -> danime:見放題, prime:見放題
+✅ ナイツ＆マジック -> prime:レンタル
+✅ はじめてのギャル -> danime:見放題, prime:見放題
+✅ Fate/Apocrypha -> danime:見放題, prime:見放題
+✅ プリンセス・プリンシパル -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ボールルームへようこそ -> danime:見放題, hulu:見放題, prime:見放題
+✅ ようこそ実力至上主義の教室へ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ アニメガタリズ -> danime:見放題, hulu:見放題, prime:見放題
+✅ いつだって僕らの恋は10センチだった。 -> prime:レンタル
+✅ いぬやしき -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 妹さえいればいい。 -> prime:レンタル
+✅ 王様ゲーム The Animation -> danime:見放題, hulu:見放題, prime:見放題
+✅ クジラの子らは砂上に歌う -> netflix:見放題, prime:レンタル
+✅ このはな綺譚 -> danime:見放題, hulu:見放題, prime:見放題
+✅ Just Because！ -> danime:見放題, prime:見放題
+✅ 十二大戦 -> prime:見放題
+✅ Dies irae -> TMDB未検出（score=0.08）
+✅ ネト充のススメ -> danime:見放題, prime:レンタル
+✅ ブラッククローバー -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ブレンド・S -> danime:見放題, hulu:見放題, prime:見放題
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 -> TMDB未検出（score=0.00）
+✅ 宝石の国 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 魔法使いの嫁 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ヴァイオレット・エヴァーガーデン -> netflix:見放題
+✅ からかい上手の高木さん -> netflix:見放題, prime:見放題
+✅ 恋は雨上がりのように -> hulu:見放題, netflix:見放題, prime:見放題
+✅ citrus -> danime:見放題, prime:見放題
+✅ 宇宙よりも遠い場所 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ダーリン・イン・ザ・フランキス -> danime:見放題, prime:レンタル
+✅ デスマーチからはじまる異世界狂想曲 -> danime:見放題, prime:見放題
+✅ 博多豚骨ラーメンズ -> danime:見放題, prime:見放題
+✅ BEATLESS -> TMDB未検出（score=0.08）
+✅ バジリスク ～桜花忍法帖～ -> TMDB未検出（score=0.00）
+✅ ポプテピピック -> danime:見放題, hulu:見放題, prime:見放題
+✅ ゆるキャン△ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ラーメン大好き小泉さん -> danime:見放題, prime:見放題
+✅ りゅうおうのおしごと！ -> danime:見放題, prime:見放題
+✅ 衛宮さんちの今日のごはん -> TMDB未検出（score=0.00）
+✅ DEVILMAN crybaby -> netflix:見放題
+✅ ウマ娘 プリティーダービー -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ゴールデンカムイ -> hulu:見放題, netflix:見放題, prime:見放題
+✅ シュタインズ・ゲート ゼロ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ デビルズライン -> danime:見放題, hulu:見放題, prime:見放題
+✅ 奴隷区 The Animation -> danime:見放題, hulu:見放題, prime:見放題
+✅ ピアノの森 -> hulu:見放題, prime:見放題
+✅ ヒナまつり -> danime:見放題, hulu:見放題, prime:見放題
+✅ 魔法少女サイト -> danime:見放題, prime:見放題
+✅ メジャー セカンド -> TMDB未検出（score=0.00）
+✅ 3D彼女 リアルガール -> danime:見放題, hulu:見放題, prime:見放題
+✅ ヲタクに恋は難しい -> danime:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ ISLAND -> danime:見放題
+✅ あそびあそばせ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 異世界魔王と召喚少女の奴隷魔術 -> danime:見放題, prime:見放題
+✅ ぐらんぶる -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ 殺戮の天使 -> danime:見放題, prime:見放題
+✅ 七星のスバル -> prime:見放題
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ -> danime:見放題, prime:見放題
+✅ すのはら荘の管理人さん -> danime:見放題, prime:見放題
+✅ ちおちゃんの通学路 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ハイスコアガール -> hulu:見放題, netflix:見放題, prime:レンタル
+✅ はたらく細胞 -> danime:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ バキ -> netflix:見放題
+✅ ハッピーシュガーライフ -> danime:見放題, prime:見放題
+✅ BANANA FISH -> hulu:見放題, netflix:見放題, prime:見放題
+✅ はねバド！ -> danime:見放題, prime:見放題
+✅ 百錬の覇王と聖約の戦乙女 -> danime:見放題, prime:見放題
+✅ 嫌な顔されながらおパンツ見せてもらいたい -> prime:見放題
+✅ 色づく世界の明日から -> danime:見放題
+✅ うちのメイドがウザすぎる！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 俺が好きなのは妹だけど妹じゃない -> danime:見放題, hulu:見放題, prime:見放題
+✅ からくりサーカス -> prime:見放題
+✅ 寄宿学校のジュリエット -> danime:見放題, hulu:見放題, prime:見放題
+✅ SSSS.GRIDMAN -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ゴブリンスレイヤー -> hulu:見放題
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない -> danime:見放題, disney:見放題, netflix:見放題, prime:見放題
+✅ ゾンビランドサガ -> danime:見放題, hulu:見放題, prime:見放題
+✅ ツルネ ―風舞高校弓道部― -> TMDB未検出（score=0.44）
+✅ 転生したらスライムだった件 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 火ノ丸相撲 -> hulu:見放題, prime:見放題
+✅ やがて君になる -> danime:見放題, hulu:見放題, prime:見放題
+✅ 中卒労働者から始める高校生活 -> TMDB未検出（score=0.00）
+✅ W’z -> hulu:見放題
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ -> hulu:見放題, netflix:見放題, prime:見放題
+✅ ケムリクサ -> danime:見放題, prime:見放題
+✅ 五等分の花嫁 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 盾の勇者の成り上がり -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ドメスティックな彼女 -> danime:見放題, prime:見放題
+✅ どろろ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ブギーポップは笑わない -> danime:見放題, prime:見放題
+✅ 約束のネバーランド -> netflix:見放題, prime:見放題
+✅ 私に天使が舞い降りた！ -> danime:見放題, prime:見放題
+✅ 鬼滅の刃 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 異世界かるてっと -> danime:見放題, disney:見放題, hulu:見放題, prime:見放題
+✅ 賢者の孫 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ この音とまれ！ -> hulu:見放題, prime:見放題
+✅ 川柳少女 -> danime:見放題
+✅ なんでここに先生が!? -> danime:見放題, prime:見放題
+✅ フルーツバスケット -> danime:見放題, prime:見放題
+✅ ぼくたちは勉強ができない -> prime:見放題
+✅ みだらな青ちゃんは勉強ができない -> danime:見放題, prime:見放題
+✅ 荒ぶる季節の乙女どもよ。 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ありふれた職業で世界最強 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 異世界チート魔術師 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 炎炎ノ消防隊 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 彼方のアストラ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 可愛ければ変態でも好きになってくれますか？ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 女子高生の無駄づかい -> danime:見放題, hulu:見放題, prime:見放題
+✅ ソウナンですか？ -> danime:見放題, prime:見放題
+✅ ダンベル何キロ持てる？ -> prime:レンタル
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ -> danime:見放題, prime:見放題
+✅ とある科学の一方通行 -> prime:レンタル
+✅ 手品先輩 -> danime:見放題, prime:見放題
+✅ Dr.STONE -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ナカノヒトゲノム【実況中】 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 魔王様、リトライ！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- -> TMDB未検出（score=0.00）
+✅ ケンガンアシュラ -> netflix:見放題
+✅ アサシンズプライド -> hulu:見放題
+✅ あひるの空 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 俺を好きなのはお前だけかよ -> danime:見放題, prime:見放題
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ -> hulu:見放題
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ バビロン -> danime:見放題, hulu:見放題, prime:見放題
+✅ BEASTARS -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません -> danime:見放題, hulu:見放題, prime:見放題
+✅ 私、能力は平均値でって言ったよね！ -> danime:見放題, prime:見放題
+✅ 異種族レビュアーズ -> prime:見放題
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ インフィニット・デンドログラム -> danime:見放題, hulu:見放題, prime:見放題
+✅ 映像研には手を出すな！ -> netflix:見放題, prime:レンタル
+✅ 推しが武道館いってくれたら死ぬ -> danime:見放題, hulu:見放題, prime:見放題
+✅ おーばーふろぉ～ -> prime:見放題
+✅ 虚構推理 -> danime:見放題, prime:見放題
+✅ 地縛少年花子くん -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ダーウィンズゲーム -> danime:見放題, hulu:見放題, prime:見放題
+✅ ドロヘドロ -> netflix:見放題, prime:レンタル
+✅ プランダラ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 魔術士オーフェン はぐれ旅 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ランウェイで笑って -> danime:見放題, hulu:見放題, prime:見放題
+✅ 理系が恋に落ちたので証明してみた。 -> danime:見放題, hulu:見放題, prime:見放題
+✅ イエスタデイをうたって -> prime:見放題
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ かくしごと -> danime:見放題, prime:見放題
+✅ グレイプニル -> danime:見放題, hulu:見放題, prime:見放題
+✅ 神之塔 -Tower of God- -> danime:見放題, netflix:見放題, prime:レンタル
+✅ 球詠 -> 全滅（JP）
+✅ 八男って、それはないでしょう！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 宇崎ちゃんは遊びたい！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 彼女、お借りします -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ GREAT PRETENDER -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ デカダンス -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ド級編隊エグゼロス -> danime:見放題, prime:レンタル
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 日本沈没2020 -> netflix:見放題
+✅ アクダマドライブ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 神様になった日 -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 神達に拾われた男 -> danime:見放題, hulu:見放題, prime:見放題
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 -> danime:見放題, hulu:見放題, prime:見放題
+✅ くまクマ熊ベアー -> danime:見放題, hulu:見放題, prime:見放題
+✅ 呪術廻戦 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ トニカクカワイイ -> prime:レンタル
+✅ 100万の命の上に俺は立っている -> danime:見放題, prime:見放題
+✅ 魔王城でおやすみ -> hulu:見放題, prime:見放題
+✅ 魔女の旅々 -> hulu:見放題
+✅ 無能なナナ -> danime:見放題, prime:見放題
+✅ 憂国のモリアーティ -> prime:見放題
+✅ IDOLY PRIDE -> 全滅（JP）
+✅ EX-ARM エクスアーム -> danime:見放題, prime:見放題
+✅ オルタンシア・サーガ -> danime:見放題, prime:レンタル
+✅ 俺だけ入れる隠しダンジョン -> danime:見放題, hulu:見放題, prime:見放題
+✅ 回復術士のやり直し -> danime:見放題, hulu:見放題, prime:見放題
+✅ 蜘蛛ですが、なにか？ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 怪物事変 -> hulu:見放題, prime:レンタル
+✅ 弱キャラ友崎くん -> prime:見放題
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ホリミヤ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 天空侵犯 -> netflix:見放題
+✅ イジらないで、長瀞さん -> danime:見放題, hulu:見放題, prime:見放題
+✅ EDENS ZERO -> danime:見放題, hulu:見放題, netflix:見放題
+✅ 幼なじみが絶対に負けないラブコメ -> danime:見放題, prime:レンタル
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら -> danime:見放題, hulu:見放題, prime:見放題
+✅ 灼熱カバディ -> hulu:見放題, prime:見放題
+✅ シャドーハウス -> danime:見放題, hulu:見放題, prime:レンタル
+✅ スライム倒して300年、知らないうちにレベルMAXになってました -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 聖女の魔力は万能です -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 戦闘員、派遣します！ -> danime:見放題, prime:見放題
+✅ SSSS.DYNAZENON -> danime:見放題, hulu:見放題, prime:見放題
+✅ 東京リベンジャーズ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ひげを剃る。そして女子高生を拾う。 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 不滅のあなたへ -> danime:見放題, disney:見放題, hulu:見放題, prime:見放題
+✅ かげきしょうじょ!! -> danime:見放題, hulu:見放題, prime:見放題
+✅ カノジョも彼女 -> danime:見放題, hulu:見放題, prime:見放題
+✅ Sonny Boy -> danime:見放題, hulu:見放題, prime:見放題
+✅ 現実主義勇者の王国再建記 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 死神坊ちゃんと黒メイド -> danime:見放題, prime:見放題
+✅ 精霊幻想記 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 白い砂のアクアトープ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 月が導く異世界道中 -> danime:見放題, hulu:見放題, netflix:見放題
+✅ 探偵はもう、死んでいる。 -> danime:見放題, prime:見放題
+✅ 出会って5秒でバトル -> hulu:見放題, prime:見放題
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 -> hulu:見放題, prime:見放題
+✅ 海賊王女 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 明日ちゃんのセーラー服 -> danime:見放題, hulu:見放題, prime:見放題
+✅ オリエント -> 全滅（JP）
+✅ 殺し愛 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 錆喰いビスコ -> danime:見放題, prime:見放題
+✅ 時光代理人 -LINK CLICK- -> TMDB未検出（score=0.43）
+✅ 失格紋の最強賢者 -> hulu:見放題
+✅ 終末のハーレム -> hulu:見放題, prime:見放題
+✅ その着せ替え人形は恋をする -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 天才王子の赤字国家再生術 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ハコヅメ～交番女子の逆襲～ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 異世界美少女受肉おじさんと -> danime:見放題, prime:見放題
+✅ 平家物語 -> TMDB未検出（score=0.00）
+✅ リアデイルの大地にて -> danime:見放題, hulu:見放題, prime:見放題
+✅ アオアシ -> hulu:見放題, netflix:見放題, prime:見放題
+✅ 阿波連さんははかれない -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 乙女ゲー世界はモブに厳しい世界です -> danime:見放題, hulu:見放題, prime:見放題
+✅ 骸骨騎士様、只今異世界へお出掛け中 -> danime:見放題, hulu:見放題
+✅ カッコウの許嫁 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 可愛いだけじゃない式守さん -> danime:見放題, hulu:見放題, prime:見放題
+✅ サマータイムレンダ -> disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 史上最強の大魔王、村人Aに転生する -> danime:見放題, hulu:見放題, prime:見放題
+✅ 処刑少女の生きる道（バージンロード） -> danime:見放題, hulu:見放題, prime:見放題
+✅ SPY×FAMILY -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ トモダチゲーム -> danime:見放題, prime:見放題
+✅ パリピ孔明 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 魔法使い黎明期 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 名探偵コナン ゼロの日常 -> netflix:見放題
+✅ 勇者、辞めます -> danime:見放題, hulu:見放題, prime:見放題
+✅ 異世界おじさん -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 異世界迷宮でハーレムを -> danime:見放題, hulu:見放題
+✅ 異世界薬局 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ Engage Kiss -> danime:見放題, hulu:見放題, prime:レンタル
+✅ 黒の召喚士 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 最近雇ったメイドが怪しい -> danime:見放題
+✅ それでも歩は寄せてくる -> danime:見放題, prime:見放題
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 風都探偵 -> hulu:見放題, prime:見放題
+✅ プリマドール -> danime:見放題, prime:レンタル
+✅ 継母の連れ子が元カノだった -> danime:見放題, netflix:見放題, prime:見放題
+✅ よふかしのうた -> hulu:見放題, netflix:見放題, prime:見放題
+✅ サイバーパンク エッジランナーズ -> netflix:見放題
+✅ アキバ冥途戦争 -> danime:見放題, prime:見放題
+✅ 悪役令嬢なのでラスボスを飼ってみました -> danime:見放題, hulu:見放題, prime:見放題
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 -> danime:見放題, prime:見放題
+✅ 陰の実力者になりたくて！ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 後宮の烏 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 機動戦士ガンダム 水星の魔女 -> disney:見放題, prime:見放題
+✅ 新米錬金術師の店舗経営 -> danime:見放題, hulu:見放題, prime:見放題
+✅ チェンソーマン -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 転生したら剣でした -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 夫婦以上、恋人未満。 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ブルーロック -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ぼっち・ざ・ろっく！ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 名探偵コナン 犯人の犯沢さん -> netflix:見放題
+✅ 僕とロボコ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う -> danime:見放題, hulu:見放題, prime:見放題
+✅ アルスの巨獣 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 異世界のんびり農家 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 犬になったら好きな人に拾われた。 -> danime:見放題, prime:見放題
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 -> hulu:見放題, netflix:見放題, prime:見放題
+✅ お兄ちゃんはおしまい！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 氷属性男子とクールな同僚女子 -> danime:見放題
+✅ 最強陰陽師の異世界転生記 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ スパイ教室 -> danime:見放題, hulu:見放題, prime:見放題
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん -> danime:見放題, hulu:見放題, prime:見放題
+✅ 転生王女と天才令嬢の魔法革命 -> danime:見放題, hulu:見放題, prime:見放題
+✅ トモちゃんは女の子！ -> danime:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ とんでもスキルで異世界放浪メシ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ NieR:Automata Ver1.1a -> danime:見放題, hulu:見放題, prime:レンタル
+✅ HIGH CARD -> danime:見放題, hulu:見放題, prime:見放題
+✅ 冰剣の魔術師が世界を統べる -> danime:見放題, hulu:見放題, prime:見放題
+✅ Buddy Daddies -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 便利屋斎藤さん、異世界に行く -> danime:見放題, hulu:見放題, prime:見放題
+✅ もういっぽん！ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 青のオーケストラ -> disney:見放題, hulu:見放題, prime:見放題
+✅ スキップとローファー -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 君は放課後インソムニア -> 全滅（JP）
+✅ 久保さんは僕を許さない -> danime:見放題, hulu:見放題, prime:見放題
+✅ この素晴らしい世界に爆焔を！ -> danime:見放題, disney:見放題, hulu:見放題, prime:見放題
+✅ 天国大魔境 -> disney:見放題, prime:レンタル
+✅ デッドマウント・デスプレイ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ マッシュル-MASHLE- -> disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 僕の心のヤバイやつ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ -> hulu:見放題, netflix:見放題, prime:レンタル
+✅ 異世界召喚は二度目です -> danime:見放題, hulu:見放題
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する -> hulu:見放題, netflix:見放題, prime:レンタル
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ -> hulu:見放題, prime:見放題
+✅ 【推しの子】 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 地獄楽 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 -> danime:見放題, hulu:見放題, netflix:見放題
+✅ マイホームヒーロー -> danime:見放題, disney:見放題, netflix:見放題, prime:見放題
+✅ 女神のカフェテラス -> danime:見放題, hulu:見放題, prime:見放題
+✅ 山田くんとLv999の恋をする -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 勇者が死んだ！ -> hulu:見放題, prime:見放題
+✅ あやかしトライアングル -> danime:見放題, prime:見放題
+✅ アンデッドガール・マーダーファルス -> danime:見放題, hulu:見放題, prime:見放題
+✅ うちの会社の小さい先輩の話 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 英雄教室 -> danime:見放題, prime:レンタル
+✅ おかしな転生 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 実は俺、最強でした？ -> hulu:見放題, prime:見放題
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 好きな子がめがねを忘れた -> danime:見放題, hulu:見放題, prime:見放題
+✅ スプリガン -> 全滅（JP）
+✅ ダークギャザリング -> netflix:見放題, prime:見放題
+✅ 七つの魔剣が支配する -> netflix:見放題, prime:レンタル
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします -> danime:見放題, hulu:見放題, prime:見放題
+✅ Helck -> hulu:見放題, prime:見放題
+✅ 夢見る男子は現実主義者 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ レベル1だけどユニークスキルで最強です -> hulu:見放題, netflix:見放題, prime:見放題
+✅ わたしの幸せな結婚 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ アンデッドアンラック -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ アンダーニンジャ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 鴨乃橋ロンの禁断推理 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 帰還者の魔法は特別です -> danime:見放題, prime:見放題
+✅ 君のことが大大大大大好きな100人の彼女 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 薬屋のひとりごと -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 -> danime:見放題, hulu:見放題
+✅ SHY -> danime:見放題, prime:レンタル
+✅ シャングリラ・フロンティア -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 聖剣学院の魔剣使い -> danime:見放題, hulu:見放題, prime:見放題
+✅ PLUTO -> netflix:見放題
+✅ 俺だけレベルアップな件 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 愚かな天使は悪魔と踊る -> danime:見放題, prime:見放題
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 七つの大罪 黙示録の四騎士 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ はめつのおうこく -> danime:見放題, hulu:見放題, prime:見放題
+✅ ひきこまり吸血姫の悶々 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 豚のレバーは加熱しろ -> danime:見放題, prime:見放題
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 暴食のベルセルク -> danime:見放題, hulu:見放題, prime:見放題
+✅ ミギとダリ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ラグナクリムゾン -> danime:見放題, hulu:見放題, prime:見放題
+✅ 私の推しは悪役令嬢。 -> danime:見放題, prime:見放題
+✅ グッド・ナイト・ワールド -> netflix:見放題
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ -> danime:見放題, hulu:見放題, prime:見放題
+✅ 結婚指輪物語 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ダンジョン飯 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 望まぬ不死の冒険者 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 姫様“拷問”の時間です -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 悶えてよ、アダムくん -> prime:見放題
+✅ ゆびさきと恋々 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する -> danime:見放題, hulu:見放題, netflix:見放題
+✅ Unnamed Memory -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ WIND BREAKER -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 怪獣8号 -> 全滅（JP）
+✅ ガールズバンドクライ -> hulu:見放題, prime:見放題
+✅ 狼と香辛料 merchant meets the wise wolf -> danime:見放題, netflix:見放題, prime:見放題
+✅ 烏は主を選ばない -> danime:見放題, hulu:見放題, prime:見放題
+✅ 喧嘩独学 -> danime:見放題, netflix:見放題, prime:レンタル
+✅ THE NEW GATE -> danime:見放題, hulu:見放題, prime:見放題
+✅ ザ・ファブル -> disney:見放題, prime:レンタル
+✅ 戦隊大失格 -> disney:見放題, prime:レンタル
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 転生貴族、鑑定スキルで成り上がる -> danime:見放題, hulu:見放題, prime:見放題
+✅ 転生したら第七王子だったので、気ままに魔術を極めます -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ バーテンダー 神のグラス -> danime:見放題, hulu:見放題, prime:見放題
+✅ 変人のサラダボウル -> hulu:見放題, prime:レンタル
+✅ しかのこのこのここしたんたん -> danime:見放題, hulu:見放題, prime:見放題
+✅ 義妹生活 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ チ。―地球の運動について― -> hulu:見放題, netflix:見放題, prime:見放題
+✅ 忘却バッテリー -> 全滅（JP）
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ Re:Monster -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 夜桜さんちの大作戦 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 夜のクラゲは泳げない -> danime:見放題, prime:見放題
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ -> danime:見放題, hulu:見放題, netflix:見放題
+✅ T・Pぼん シーズン1 -> TMDB未検出（score=0.00）
+✅ 異世界スーサイド・スクワッド -> prime:レンタル
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ かつて魔法少女と悪は敵対していた。 -> netflix:見放題, prime:見放題
+✅ 「小市民」シリーズ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 杖と剣のウィストリア -> danime:見放題, disney:見放題, hulu:見放題, prime:レンタル
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ なぜ僕の世界を誰も覚えていないのか？ -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 逃げ上手の若君 -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 2.5次元の誘惑 -> danime:見放題, hulu:見放題, prime:見放題
+✅ NINJA KAMUI -> danime:見放題, disney:見放題, hulu:見放題, prime:レンタル
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ FAIRY TAIL 100年クエスト -> hulu:見放題, netflix:見放題, prime:見放題
+✅ 負けヒロインが多すぎる！ -> hulu:見放題, netflix:見放題, prime:レンタル
+✅ モブから始まる探索英雄譚 -> danime:見放題, hulu:見放題, prime:見放題
+✅ よあそびぐらしっ！ -> prime:見放題
+✅ アオのハコ -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 甘神さんちの縁結び -> danime:見放題, hulu:見放題, prime:見放題
+✅ 株式会社マジルミエ -> disney:見放題, hulu:見放題, prime:見放題
+✅ 君は冥土様。 -> hulu:見放題, netflix:見放題, prime:見放題
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える -> danime:見放題, hulu:見放題, prime:見放題
+✅ ダンダダン -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 妻、小学生になる。 -> danime:見放題, prime:見放題
+✅ トリリオンゲーム -> disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ パーティーから追放されたその治癒師、実は最強につき -> prime:レンタル
+✅ ひとりぼっちの異世界攻略 -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 魔王2099 -> danime:見放題, hulu:見放題, netflix:見放題, prime:レンタル
+✅ やり直し令嬢は竜帝陛下を攻略中 -> danime:見放題, hulu:見放題, netflix:見放題
+✅ 来世は他人がいい -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 歴史に残る悪女になるぞ -> danime:見放題, hulu:見放題, prime:レンタル
+✅ ぼくたちのリメイク -> danime:見放題, prime:見放題
+✅ 女神寮の寮母くん。 -> danime:見放題, hulu:見放題, prime:見放題
+✅ 王様ランキング -> danime:見放題, disney:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 古見さんは、コミュ症です。 -> netflix:見放題, prime:レンタル
+✅ 最果てのパラディン -> danime:見放題, hulu:見放題
+✅ しょうたいむ！～歌のお姉さんだってしたい -> 全滅（JP）
+✅ 進化の実～知らないうちに勝ち組人生～ -> danime:見放題
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました -> danime:見放題, hulu:見放題, netflix:見放題, prime:見放題
+✅ 世界最高の暗殺者、異世界貴族に転生する -> danime:見放題, netflix:見放題, prime:見放題
+✅ takt op.Destiny -> danime:見放題, hulu:見放題, prime:見放題
+✅ プラチナエンド -> prime:レンタル
+✅ ブルーピリオド -> netflix:見放題
+✅ 見える子ちゃん -> danime:見放題, hulu:見放題, prime:見放題
+✅ 賢者の弟子を名乗る賢者 -> danime:見放題, hulu:見放題, prime:見放題
+🟡 queue empty (tmdb_vod)
+🎉 worker tmdb end { processed: 905 }
+===== END 2026/01/22  7:02:45.35 ===== 
+===== START 2026/01/22 21:27:43.81 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ enqueue-embedding start { LIMIT: 5000, OFFSET: 0 }
+✅ queued=73
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod)
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/22 21:27:48.37 ===== 
+===== START 2026/01/22 22:07:11.09 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/22 22:07:13.02 ===== 
+===== START 2026/01/22 22:15:25.30 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/22 22:15:26.46 ===== 
+--- RUN: run-weekly-official4.bat --- 
+===== START 2026/01/22 23:01:37.52 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/22 23:01:38.51 ===== 
+--- RUN: run-weekly-official4.bat --- 

@@ -1,0 +1,18 @@
+===== START official4 2026/01/25  3:02:16.29 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  enable debug logging with { debug: true }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3003 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+✅ プラネテス / lemino -> ❌なし
+✅ 蟲師 / lemino -> ❌なし
+✅ デスパレード / fod -> ❌なし
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 3 }
+===== END official4 2026/01/25  5:54:43.95 ===== 

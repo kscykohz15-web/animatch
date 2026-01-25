@@ -1,0 +1,162 @@
+===== START 2026/01/22  6:42:33.65 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22  6:42:37.73 ===== 
+===== END step7-vod-3only 2026/01/22  6:42:37.74 ===== 
+===== START 2026/01/22  6:44:10.94 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22  6:44:14.23 ===== 
+===== START 2026/01/22  6:45:14.72 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22  6:45:16.44 ===== 
+===== START 2026/01/22  6:55:19.75 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22  6:55:21.83 ===== 
+--- RUN: run-weekly-tmdb.bat --- 
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+===== START 2026/01/22 21:27:47.71 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22 21:27:49.66 ===== 
+===== START 2026/01/22 22:15:21.66 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22 22:15:25.29 ===== 
+--- RUN: run-weekly-tmdb.bat --- 
+===== START 2026/01/22 23:01:34.93 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 2000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/01/22 23:01:37.50 ===== 
+--- RUN: run-weekly-tmdb.bat --- 

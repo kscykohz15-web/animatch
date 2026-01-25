@@ -1,0 +1,15 @@
+===== START step4-official-url 2026/01/25  5:51:11.91 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ fill official_url (AniList only / skip-unresolved / cursor mode)
+   dry-run: false
+   page: 60
+   limit: ∞
+   state: C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json
+   cursorId: 3914
+   skipped: 641
+—
+🎉 終了：cursor以降の official_url=NULL がありません
+—
+📌 summary: scanned=0 updated=0 skipped=0 failed=0
+📝 状態は C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json に保存されています（次回は続きから再開します）
+===== END step4-official-url 2026/01/25  5:51:13.51 ===== 

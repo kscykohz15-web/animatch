@@ -1,0 +1,55 @@
+===== START step5-ai-jptext 2026/01/21 21:21:21.75 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ step5-ai-generate-jptext start {
+  LIMIT: 120,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1200
+}
+targets=120
+✅ updated id=2 title=進撃の巨人 fields=[description_long,embedding_source_text]
+✅ updated id=3 title=86 ―エイティシックス― fields=[description_long,ai_score_note,embedding_source_text]
+❌ failed id=4 title=プラネテス -> AI JSON parse failed: ```json
+{
+  "summary": "宇宙でのデブリ除去作業を描いたSFアニメ。人間の成長や人間関係、宇宙での生活の厳しさがテーマ。",
+  "themes": "宇宙/成長/人間関係",
+  "genre": ["SF", "ロマン", "アドベンチャー", "ドラマ", "コミック原作", "制作: サンライズ"],
+  "keywords": "プラネテス 宇宙 デブリ サンライズ...
+❌ failed id=5 title=Fate/Zero -> AI JSON parse failed: ```json
+{
+  "summary": "「Fate/Zero」は、聖杯戦争を描いた物語で、魔術師たちが召喚した英霊と共に争う様子を描くダークファンタジー作品です。全13話で構成され、ufotable制作の美しい作画と緊迫したストーリーが特徴です。",
+  "themes": "戦争/裏切り/英雄の葛藤",
+  "genre": ["アクション", "ファンタジー", "ドラマ", "バトル...
+✅ updated id=6 title=ヴィンランド・サガ fields=[description_long,embedding_source_text]
+❌ failed id=7 title=ID:INVADED -> AI JSON parse failed: ```json
+{
+  "summary": "『ID:INVADED』は、犯罪者の心理を探るために開発された技術を使って、異なる意識の世界に入る捜査官たちの物語です。彼らは、意識の中に潜む真実を追い求めるが、その過程で様々な謎や葛藤に直面します。",
+  "themes": "犯罪/心理/探偵",
+  "genre": ["アクション", "サスペンス", "SF", "ミステリー", "ドラマ...
+✅ updated id=8 title=PSYCHO-PASS fields=[description_long,ai_score_note,embedding_source_text]
+❌ failed id=9 title=メイドインアビス -> AI JSON parse failed: ```json
+{
+  "summary": "深い穴「アビス」を探索する少女の冒険を描いたダークファンタジー作品。",
+  "themes": "冒険/友情/生死",
+  "genre": ["アドベンチャー", "ファンタジー", "ダークファンタジー", "ミステリー", "青春", "感動"],
+  "keywords": "アビス 冒険 少女 探索 ダークファンタジー 絆 生死 謎 原作...
+✅ updated id=15 title=少女終末旅行 fields=[description_long,ai_score_note,embedding_source_text]
+✅ updated id=16 title=オッドタクシー fields=[description_long,ai_score_note,embedding_source_text]
+❌ failed id=17 title=蟲師 -> AI JSON parse failed: ```json
+{
+  "summary": "綱に沿いる不思議な生物、蟲の存在を探求する「蟲師」は、自然と人間の関係を描いた幻想的な物語です。",
+  "themes": "自然/神秘/人間関係",
+  "genre": ["ファンタジー", "アドベンチャー", "ドラマ", "SF", "スリラー"],
+  "keywords": "蟲師 蟲 アートランド 幻想 自然 神秘 人間 講談社 2...
+✅ updated id=18 title=デスパレード fields=[description_long,ai_score_note,embedding_source_text]
+✅ updated id=19 title=灰と幻想のグリムガル fields=[description_long,ai_score_note,embedding_source_text]
+✅ updated id=20 title=Angel Beats! fields=[description_long,ai_score_note,embedding_source_text]
+✅ updated id=21 title=新世界より fields=[description_long,ai_score_note,embedding_source_text]
+✅ updated id=22 title=葬送のフリーレン fields=[description_long,embedding_source_text]
+❌ failed id=23 title=Vivy -Fluorite Eye’s Song- -> AI JSON parse failed: {
+  "summary": "『Vivy -Fluorite Eye’s Song-』は、AIが人間と共存する未来を舞台に、歌姫AIのVivyが歴史を変えるために奮闘する物語です。",
+  "themes": "友情/AI/戦い/未来",
+  "genre": ["アクション", "SF", "ファンタジー", "ドラマ", "冒険", "音楽"],
+  "keywords": "Vivy AI...
+^C

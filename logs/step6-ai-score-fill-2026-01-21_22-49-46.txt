@@ -1,0 +1,13 @@
+===== START step6-ai-score-fill 2026/01/21 22:49:46.65 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ step6-ai-score-fill start {
+  LIMIT: 200,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1300,
+  FORCE: false,
+  FORCE_ZERO_AS_EMPTY: false
+}
+targets=0
+===== END step6-ai-score-fill 2026/01/21 22:49:47.14 ===== 

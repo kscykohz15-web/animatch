@@ -1,0 +1,13 @@
+===== START step6-score-fill 2026/01/21 22:47:44.22 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step6-score-fill.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ step6-score-fill start {
+  LIMIT: 200,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1200,
+  FILL_ZERO: false
+}
+✅ updated id=2735 title=NEEDY GIRL OVERDOSE fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+^C

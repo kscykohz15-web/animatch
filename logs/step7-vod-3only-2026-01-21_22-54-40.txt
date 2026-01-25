@@ -1,0 +1,3 @@
+===== START step7-vod-3only 2026/01/21 22:54:40.21 ===== 
+❌ not found: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\run-weekly-official3.bat 
+===== END step7-vod-3only 2026/01/21 22:54:40.23 ===== 

@@ -1,0 +1,19 @@
+===== START step5-ai-jptext 2026/01/21 22:47:53.56 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step5-ai-jptext-fill-empty.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ step5-ai-generate-jptext-fill-empty start {
+  LIMIT: 200,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1500
+}
+targets=200
+✅ updated id=275 title=ゴールデンタイム fields=[description_long,embedding_source_text]
+✅ updated id=276 title=琴浦さん fields=[description_long,embedding_source_text]
+✅ updated id=277 title=サーバント×サービス fields=[description_long,embedding_source_text]
+✅ updated id=279 title=ストライク・ザ・ブラッド fields=[description_long,embedding_source_text]
+✅ updated id=280 title=ダイヤのA fields=[description_long,embedding_source_text]
+✅ updated id=281 title=ダンガンロンパ 希望の学園と絶望の高校生 The Animation fields=[description_long,embedding_source_text]
+✅ updated id=282 title=デート・ア・ライブ fields=[description_long,embedding_source_text]
+^C

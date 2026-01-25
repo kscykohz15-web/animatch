@@ -1,0 +1,3032 @@
+===== START 2026/01/21 22:56:51.06 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+✅ プリマドール / abema -> ❌なし
+✅ 風都探偵 / unext -> ⭕あり https://video.unext.jp/title/SID0069660
+✅ 風都探偵 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 風都探偵 / abema -> ❌なし
+✅ プリマドール / unext -> ⭕あり https://video.unext.jp/title/SID0069665
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 継母の連れ子が元カノだった / unext -> ⭕あり https://video.unext.jp/title/SID0071111
+✅ プリマドール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / abema -> ⭕あり https://abema.tv/video/title/174-26
+✅ 転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～ / unext -> ⭕あり https://video.unext.jp/title/SID0069695
+✅ それでも歩は寄せてくる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ それでも歩は寄せてくる / abema -> ❌なし
+✅ それでも歩は寄せてくる / unext -> ❌なし
+✅ 最近雇ったメイドが怪しい / dmmtv -> ❌なし
+✅ 継母の連れ子が元カノだった / dmmtv -> ❌なし
+✅ 継母の連れ子が元カノだった / abema -> ❌なし
+✅ 最近雇ったメイドが怪しい / abema -> ❌なし
+^C===== START 2026/01/21 22:59:08.82 ===== 
+[env] LIMIT= OFFSET= ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+✅ 最近雇ったメイドが怪しい / unext -> ⭕あり https://video.unext.jp/title/SID0069661
+✅ 黒の召喚士 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 黒の召喚士 / abema -> ⭕あり https://abema.tv/video/title/54-74
+✅ 黒の召喚士 / unext -> ⭕あり https://video.unext.jp/title/SID0069689
+✅ Engage Kiss / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ よふかしのうた / abema -> ⭕あり https://abema.tv/video/title/19-177
+✅ よふかしのうた / unext -> ⭕あり https://video.unext.jp/title/SID0069685
+✅ Engage Kiss / abema -> ❌なし
+✅ Engage Kiss / unext -> ⭕あり https://video.unext.jp/title/SID0069676
+✅ 異世界薬局 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界薬局 / abema -> ⭕あり https://abema.tv/video/title/25-210
+✅ 異世界薬局 / unext -> ⭕あり https://video.unext.jp/title/SID0069675
+✅ 異世界迷宮でハーレムを / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サイバーパンク エッジランナーズ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0001026412
+✅ よふかしのうた / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界迷宮でハーレムを / abema -> ❌なし
+✅ 異世界迷宮でハーレムを / unext -> ⭕あり https://video.unext.jp/title/SID0069687
+✅ 異世界おじさん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界おじさん / abema -> ❌なし
+✅ 異世界おじさん / unext -> ⭕あり https://video.unext.jp/title/SID0069672
+✅ 勇者、辞めます / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サイバーパンク エッジランナーズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サイバーパンク エッジランナーズ / abema -> ❌なし
+✅ 勇者、辞めます / abema -> ⭕あり https://abema.tv/video/title/25-194
+✅ 勇者、辞めます / unext -> ⭕あり https://video.unext.jp/title/SID0066881
+✅ 名探偵コナン ゼロの日常 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 名探偵コナン ゼロの日常 / abema -> ⭕あり https://abema.tv/video/title/415-5
+✅ 名探偵コナン ゼロの日常 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000218338
+✅ 魔法使い黎明期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アキバ冥途戦争 / abema -> ❌なし
+✅ アキバ冥途戦争 / unext -> ⭕あり https://video.unext.jp/title/SID0073133
+✅ 魔法使い黎明期 / abema -> ❌なし
+✅ 魔法使い黎明期 / unext -> ⭕あり https://video.unext.jp/title/SID0066839
+✅ パリピ孔明 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ パリピ孔明 / unext -> ⭕あり https://video.unext.jp/title/SID0066838
+✅ トモダチゲーム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ トモダチゲーム / abema -> ⭕あり https://abema.tv/video/title/337-21
+✅ 悪役令嬢なのでラスボスを飼ってみました / unext -> ⭕あり https://video.unext.jp/title/SID0073130
+✅ アキバ冥途戦争 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ トモダチゲーム / unext -> ⭕あり https://video.unext.jp/title/SID0029408
+✅ SPY×FAMILY / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SPY×FAMILY / abema -> ⭕あり https://abema.tv/video/title/19-86
+✅ SPY×FAMILY / unext -> ⭕あり https://video.unext.jp/title/SID0066846
+✅ 処刑少女の生きる道（バージンロード） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 処刑少女の生きる道（バージンロード） / abema -> ⭕あり https://abema.tv/video/title/174-25
+✅ 悪役令嬢なのでラスボスを飼ってみました / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悪役令嬢なのでラスボスを飼ってみました / abema -> ❌なし
+✅ 処刑少女の生きる道（バージンロード） / unext -> ⭕あり https://video.unext.jp/title/SID0067483
+✅ 史上最強の大魔王、村人Aに転生する / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 史上最強の大魔王、村人Aに転生する / abema -> ❌なし
+✅ 史上最強の大魔王、村人Aに転生する / unext -> ⭕あり https://video.unext.jp/title/SID0066849
+✅ サマータイムレンダ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サマータイムレンダ / abema -> ❌なし
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / abema -> ❌なし
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / unext -> ❌なし
+✅ サマータイムレンダ / unext -> ⭕あり https://video.unext.jp/title/SID0075204
+✅ 可愛いだけじゃない式守さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 可愛いだけじゃない式守さん / abema -> ❌なし
+✅ 可愛いだけじゃない式守さん / unext -> ⭕あり https://video.unext.jp/title/SID0066872
+✅ カッコウの許嫁 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ カッコウの許嫁 / abema -> ⭕あり https://abema.tv/video/title/25-203
+✅ 陰の実力者になりたくて！ / unext -> ⭕あり https://video.unext.jp/title/SID0091728
+✅ ある朝ダミーヘッドマイクになっていた俺クンの人生 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ カッコウの許嫁 / unext -> ⭕あり https://video.unext.jp/title/SID0200140
+✅ 骸骨騎士様、只今異世界へお出掛け中 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 骸骨騎士様、只今異世界へお出掛け中 / abema -> ❌なし
+✅ 骸骨騎士様、只今異世界へお出掛け中 / unext -> ⭕あり https://video.unext.jp/title/SID0066850
+✅ 乙女ゲー世界はモブに厳しい世界です / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 乙女ゲー世界はモブに厳しい世界です / abema -> ⭕あり https://abema.tv/video/title/25-201
+✅ 陰の実力者になりたくて！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 陰の実力者になりたくて！ / abema -> ⭕あり https://abema.tv/video/title/25-221
+✅ 乙女ゲー世界はモブに厳しい世界です / unext -> ⭕あり https://video.unext.jp/title/SID0066877
+✅ 阿波連さんははかれない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 阿波連さんははかれない / abema -> ⭕あり https://abema.tv/video/title/593-1
+✅ 阿波連さんははかれない / unext -> ⭕あり https://video.unext.jp/title/SID0180795
+✅ アオアシ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アオアシ / abema -> ❌なし
+✅ 後宮の烏 / abema -> ❌なし
+✅ 後宮の烏 / unext -> ⭕あり https://video.unext.jp/title/SID0073146
+✅ アオアシ / unext -> ⭕あり https://video.unext.jp/title/SID0066842
+✅ リアデイルの大地にて / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ リアデイルの大地にて / abema -> ⭕あり https://abema.tv/video/title/25-202
+✅ リアデイルの大地にて / unext -> ⭕あり https://video.unext.jp/title/SID0063373
+✅ 平家物語 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 平家物語 / abema -> ❌なし
+✅ 機動戦士ガンダム 水星の魔女 / unext -> ⭕あり https://video.unext.jp/title/SID0072632
+✅ 後宮の烏 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 平家物語 / unext -> ⭕あり https://video.unext.jp/title/SID0063381
+✅ 異世界美少女受肉おじさんと / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界美少女受肉おじさんと / abema -> ❌なし
+✅ 異世界美少女受肉おじさんと / unext -> ⭕あり https://video.unext.jp/title/SID0063363
+✅ ハコヅメ～交番女子の逆襲～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハコヅメ～交番女子の逆襲～ / abema -> ❌なし
+✅ 機動戦士ガンダム 水星の魔女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 機動戦士ガンダム 水星の魔女 / abema -> ❌なし
+✅ ハコヅメ～交番女子の逆襲～ / unext -> ⭕あり https://video.unext.jp/title/SID0064437
+✅ 天才王子の赤字国家再生術 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 天才王子の赤字国家再生術 / abema -> ⭕あり https://abema.tv/video/title/174-23
+✅ 天才王子の赤字国家再生術 / unext -> ⭕あり https://video.unext.jp/title/SID0063379
+✅ その着せ替え人形は恋をする / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ その着せ替え人形は恋をする / abema -> ⭕あり https://abema.tv/video/title/26-156
+✅ 新米錬金術師の店舗経営 / abema -> ❌なし
+✅ 新米錬金術師の店舗経営 / unext -> ⭕あり https://video.unext.jp/title/SID0073142
+✅ その着せ替え人形は恋をする / unext -> ⭕あり https://video.unext.jp/title/SID0158809
+✅ 終末のハーレム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 終末のハーレム / abema -> ❌なし
+✅ 終末のハーレム / unext -> ⭕あり https://video.unext.jp/title/SID0061670
+✅ 失格紋の最強賢者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 失格紋の最強賢者 / abema -> ⭕あり https://abema.tv/video/title/174-24
+✅ チェンソーマン / unext -> ⭕あり https://video.unext.jp/title/SID0073134
+✅ 新米錬金術師の店舗経営 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 失格紋の最強賢者 / unext -> ⭕あり https://video.unext.jp/title/SID0063380
+✅ 時光代理人 -LINK CLICK- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 時光代理人 -LINK CLICK- / abema -> ⭕あり https://abema.tv/video/title/26-159
+✅ 時光代理人 -LINK CLICK- / unext -> ⭕あり https://video.unext.jp/title/SID0251575
+✅ 錆喰いビスコ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 錆喰いビスコ / abema -> ❌なし
+✅ チェンソーマン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ チェンソーマン / abema -> ⭕あり https://abema.tv/video/title/536-3
+✅ 錆喰いビスコ / unext -> ⭕あり https://video.unext.jp/title/SID0063375
+✅ 殺し愛 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 殺し愛 / abema -> ❌なし
+✅ 殺し愛 / unext -> ⭕あり https://video.unext.jp/title/SID0063374
+✅ オリエント / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オリエント / abema -> ⭕あり https://abema.tv/video/episode/203-2_s1_p302
+✅ 転生したら剣でした / abema -> ⭕あり https://abema.tv/video/title/11-46
+✅ 転生したら剣でした / unext -> ⭕あり https://video.unext.jp/title/SID0073132
+✅ オリエント / unext -> ⭕あり https://video.unext.jp/title/SID0070106
+✅ 明日ちゃんのセーラー服 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 明日ちゃんのセーラー服 / abema -> ❌なし
+✅ 明日ちゃんのセーラー服 / unext -> ⭕あり https://video.unext.jp/title/SID0063364
+✅ 海賊王女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 海賊王女 / abema -> ⭕あり https://abema.tv/video/episode/652-1_s30_p5005
+✅ 夫婦以上、恋人未満。 / unext -> ⭕あり https://video.unext.jp/title/SID0073145
+✅ 転生したら剣でした / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 海賊王女 / unext -> ⭕あり https://video.unext.jp/title/SID0061693
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / abema -> ❌なし
+✅ チート薬師のスローライフ〜異世界に作ろうドラッグストア〜 / unext -> ❌なし
+✅ 出会って5秒でバトル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 出会って5秒でバトル / abema -> ❌なし
+✅ 夫婦以上、恋人未満。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夫婦以上、恋人未満。 / abema -> ❌なし
+✅ 出会って5秒でバトル / unext -> ⭕あり https://video.unext.jp/title/SID0058824
+✅ 探偵はもう、死んでいる。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 探偵はもう、死んでいる。 / abema -> ❌なし
+✅ 探偵はもう、死んでいる。 / unext -> ⭕あり https://video.unext.jp/title/SID0058467
+✅ 月が導く異世界道中 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 月が導く異世界道中 / abema -> ⭕あり https://abema.tv/video/title/54-60
+✅ ブルーロック / abema -> ⭕あり https://abema.tv/video/title/420-57
+✅ ブルーロック / unext -> ⭕あり https://video.unext.jp/title/SID0096384
+✅ 月が導く異世界道中 / unext -> ⭕あり https://video.unext.jp/title/SID0096006
+✅ 白い砂のアクアトープ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 白い砂のアクアトープ / abema -> ❌なし
+✅ 白い砂のアクアトープ / unext -> ⭕あり https://video.unext.jp/title/SID0058462
+✅ 精霊幻想記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 精霊幻想記 / abema -> ⭕あり https://abema.tv/video/title/169-116
+✅ ぼっち・ざ・ろっく！ / unext -> ⭕あり https://video.unext.jp/title/SID0069678
+✅ ブルーロック / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 精霊幻想記 / unext -> ⭕あり https://video.unext.jp/title/SID0157090
+✅ 死神坊ちゃんと黒メイド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 死神坊ちゃんと黒メイド / abema -> ❌なし
+✅ 死神坊ちゃんと黒メイド / unext -> ⭕あり https://video.unext.jp/title/SID0100043
+✅ 現実主義勇者の王国再建記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 現実主義勇者の王国再建記 / abema -> ⭕あり https://abema.tv/video/title/115-99
+✅ ぼっち・ざ・ろっく！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ぼっち・ざ・ろっく！ / abema -> ❌なし
+✅ 現実主義勇者の王国再建記 / unext -> ⭕あり https://video.unext.jp/title/SID0058459
+✅ Sonny Boy / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Sonny Boy / abema -> ❌なし
+✅ Sonny Boy / unext -> ⭕あり https://video.unext.jp/title/SID0058497
+✅ カノジョも彼女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ カノジョも彼女 / abema -> ❌なし
+✅ 名探偵コナン 犯人の犯沢さん / abema -> ❌なし
+✅ 名探偵コナン 犯人の犯沢さん / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000199900
+✅ カノジョも彼女 / unext -> ⭕あり https://video.unext.jp/title/SID0058457
+✅ かげきしょうじょ!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かげきしょうじょ!! / abema -> ❌なし
+✅ かげきしょうじょ!! / unext -> ⭕あり https://video.unext.jp/title/SID0058456
+✅ 不滅のあなたへ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 不滅のあなたへ / abema -> ⭕あり https://abema.tv/video/title/142-7
+✅ 僕とロボコ / unext -> ⭕あり https://video.unext.jp/title/SID0075257
+✅ 名探偵コナン 犯人の犯沢さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 不滅のあなたへ / unext -> ⭕あり https://video.unext.jp/title/SID0232902
+✅ ひげを剃る。そして女子高生を拾う。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ひげを剃る。そして女子高生を拾う。 / abema -> ⭕あり https://abema.tv/video/title/149-13
+✅ ひげを剃る。そして女子高生を拾う。 / unext -> ⭕あり https://video.unext.jp/title/SID0056115
+✅ 東京リベンジャーズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 東京リベンジャーズ / abema -> ⭕あり https://abema.tv/video/title/189-30
+✅ 僕とロボコ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 僕とロボコ / abema -> ❌なし
+✅ 東京リベンジャーズ / unext -> ⭕あり https://video.unext.jp/title/SID0077103
+✅ SSSS.DYNAZENON / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SSSS.DYNAZENON / abema -> ❌なし
+✅ SSSS.DYNAZENON / unext -> ⭕あり https://video.unext.jp/title/SID0056126
+✅ 戦闘員、派遣します！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 戦闘員、派遣します！ / abema -> ❌なし
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / abema -> ❌なし
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / unext -> ⭕あり https://video.unext.jp/title/SID0073161
+✅ 戦闘員、派遣します！ / unext -> ⭕あり https://video.unext.jp/title/SID0056107
+✅ 聖女の魔力は万能です / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 聖女の魔力は万能です / abema -> ⭕あり https://abema.tv/video/title/25-167
+✅ 聖女の魔力は万能です / unext -> ⭕あり https://video.unext.jp/title/SID0091731
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / abema -> ⭕あり https://abema.tv/video/title/174-20
+✅ アルスの巨獣 / unext -> ⭕あり https://video.unext.jp/title/SID0076900
+✅ 勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スライム倒して300年、知らないうちにレベルMAXになってました / unext -> ⭕あり https://video.unext.jp/title/SID0056105
+✅ シャドーハウス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ シャドーハウス / abema -> ❌なし
+✅ シャドーハウス / unext -> ⭕あり https://video.unext.jp/title/SID0069677
+✅ 灼熱カバディ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 灼熱カバディ / abema -> ❌なし
+✅ アルスの巨獣 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アルスの巨獣 / abema -> ❌なし
+✅ 灼熱カバディ / unext -> ⭕あり https://video.unext.jp/title/SID0056102
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / abema -> ❌なし
+✅ 究極進化したフルダイブRPGが現実よりもクソゲーだったら / unext -> ⭕あり https://video.unext.jp/title/SID0056094
+✅ 幼なじみが絶対に負けないラブコメ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 幼なじみが絶対に負けないラブコメ / abema -> ❌なし
+✅ 異世界のんびり農家 / abema -> ⭕あり https://abema.tv/video/title/189-62
+✅ 異世界のんびり農家 / unext -> ⭕あり https://video.unext.jp/title/SID0077287
+✅ 幼なじみが絶対に負けないラブコメ / unext -> ⭕あり https://video.unext.jp/title/SID0056125
+✅ EDENS ZERO / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ EDENS ZERO / abema -> ❌なし
+✅ EDENS ZERO / unext -> ⭕あり https://video.unext.jp/title/SID0056092
+✅ イジらないで、長瀞さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ イジらないで、長瀞さん / abema -> ⭕あり https://abema.tv/video/title/115-91
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / unext -> ❌なし
+✅ 異世界のんびり農家 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ イジらないで、長瀞さん / unext -> ⭕あり https://video.unext.jp/title/SID0056085
+✅ 天空侵犯 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 天空侵犯 / abema -> ❌なし
+✅ 天空侵犯 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000084430
+✅ ホリミヤ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ホリミヤ / abema -> ❌なし
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀ / abema -> ❌なし
+✅ ホリミヤ / unext -> ⭕あり https://video.unext.jp/title/SID0052921
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / abema -> ⭕あり https://abema.tv/video/title/174-19
+✅ たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語 / unext -> ⭕あり https://video.unext.jp/title/SID0052895
+✅ 弱キャラ友崎くん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 弱キャラ友崎くん / abema -> ⭕あり https://abema.tv/video/title/169-111
+✅ 犬になったら好きな人に拾われた。 / abema -> ❌なし
+✅ 犬になったら好きな人に拾われた。 / unext -> ⭕あり https://video.unext.jp/title/SID0077102
+✅ 弱キャラ友崎くん / unext -> ⭕あり https://video.unext.jp/title/SID0052927
+✅ 怪物事変 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 怪物事変 / abema -> ⭕あり https://abema.tv/video/title/193-228
+✅ 怪物事変 / unext -> ⭕あり https://video.unext.jp/title/SID0052926
+✅ 蜘蛛ですが、なにか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 蜘蛛ですが、なにか？ / abema -> ❌なし
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / unext -> ⭕あり https://video.unext.jp/title/SID0076933
+✅ 犬になったら好きな人に拾われた。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 蜘蛛ですが、なにか？ / unext -> ⭕あり https://video.unext.jp/title/SID0047130
+✅ 回復術士のやり直し / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 回復術士のやり直し / abema -> ⭕あり https://abema.tv/video/title/25-257
+✅ 回復術士のやり直し / unext -> ⭕あり https://video.unext.jp/title/SID0053833
+✅ 俺だけ入れる隠しダンジョン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺だけ入れる隠しダンジョン / abema -> ❌なし
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ お隣の天使様にいつの間にか駄目人間にされていた件 / abema -> ⭕あり https://abema.tv/video/title/174-28
+✅ 俺だけ入れる隠しダンジョン / unext -> ⭕あり https://video.unext.jp/title/SID0052924
+✅ オルタンシア・サーガ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オルタンシア・サーガ / abema -> ❌なし
+✅ オルタンシア・サーガ / unext -> ⭕あり https://video.unext.jp/title/SID0052916
+✅ EX-ARM エクスアーム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ EX-ARM エクスアーム / abema -> ❌なし
+✅ お兄ちゃんはおしまい！ / abema -> ⭕あり https://abema.tv/video/title/19-149
+✅ お兄ちゃんはおしまい！ / unext -> ⭕あり https://video.unext.jp/title/SID0076925
+✅ EX-ARM エクスアーム / unext -> ⭕あり https://video.unext.jp/title/SID0047350
+✅ IDOLY PRIDE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ IDOLY PRIDE / abema -> ❌なし
+✅ IDOLY PRIDE / unext -> ⭕あり https://video.unext.jp/title/SID0052908
+✅ 憂国のモリアーティ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 憂国のモリアーティ / abema -> ❌なし
+✅ 氷属性男子とクールな同僚女子 / unext -> ⭕あり https://video.unext.jp/title/SID0076904
+✅ お兄ちゃんはおしまい！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 憂国のモリアーティ / unext -> ⭕あり https://video.unext.jp/title/SID0067790
+✅ 無能なナナ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 無能なナナ / abema -> ❌なし
+✅ 無能なナナ / unext -> ⭕あり https://video.unext.jp/title/SID0050909
+✅ 魔女の旅々 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔女の旅々 / abema -> ⭕あり https://abema.tv/video/title/174-18
+✅ 氷属性男子とクールな同僚女子 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 氷属性男子とクールな同僚女子 / abema -> ❌なし
+✅ 魔女の旅々 / unext -> ⭕あり https://video.unext.jp/title/SID0050931
+✅ 魔王城でおやすみ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王城でおやすみ / abema -> ❌なし
+✅ 魔王城でおやすみ / unext -> ⭕あり https://video.unext.jp/title/SID0050936
+✅ 100万の命の上に俺は立っている / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 100万の命の上に俺は立っている / abema -> ❌なし
+✅ 最強陰陽師の異世界転生記 / abema -> ❌なし
+✅ 最強陰陽師の異世界転生記 / unext -> ⭕あり https://video.unext.jp/title/SID0076937
+✅ 100万の命の上に俺は立っている / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000692071
+✅ トニカクカワイイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ トニカクカワイイ / abema -> ❌なし
+✅ トニカクカワイイ / unext -> ⭕あり https://video.unext.jp/title/SID0088442
+✅ 呪術廻戦 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 呪術廻戦 / abema -> ⭕あり https://abema.tv/video/title/536-1
+✅ スパイ教室 / unext -> ⭕あり https://video.unext.jp/title/SID0076916
+✅ 最強陰陽師の異世界転生記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 呪術廻戦 / unext -> ⭕あり https://video.unext.jp/title/SID0084678
+✅ くまクマ熊ベアー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ くまクマ熊ベアー / abema -> ❌なし
+✅ くまクマ熊ベアー / unext -> ⭕あり https://video.unext.jp/title/SID0079683
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / abema -> ⭕あり https://abema.tv/video/title/25-154
+✅ スパイ教室 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スパイ教室 / abema -> ❌なし
+✅ キミと僕の最後の戦場、あるいは世界が始まる聖戦 / unext -> ⭕あり https://video.unext.jp/title/SID0050911
+✅ 神達に拾われた男 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 神達に拾われた男 / abema -> ⭕あり https://abema.tv/video/title/169-132
+✅ 神達に拾われた男 / unext -> ⭕あり https://video.unext.jp/title/SID0050929
+✅ 神様になった日 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 神様になった日 / abema -> ❌なし
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / abema -> ⭕あり https://abema.tv/video/title/593-2
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / unext -> ⭕あり https://video.unext.jp/title/SID0076911
+✅ 神様になった日 / unext -> ⭕あり https://video.unext.jp/title/SID0050928
+✅ アクダマドライブ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アクダマドライブ / abema -> ❌なし
+✅ アクダマドライブ / unext -> ⭕あり https://video.unext.jp/title/SID0047347
+✅ 日本沈没2020 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 日本沈没2020 / abema -> ❌なし
+✅ 転生王女と天才令嬢の魔法革命 / unext -> ⭕あり https://video.unext.jp/title/SID0076917
+✅ ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 日本沈没2020 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000414048
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / abema -> ⭕あり https://abema.tv/video/title/25-147
+✅ 魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ / unext -> ⭕あり https://video.unext.jp/title/SID0047136
+✅ ド級編隊エグゼロス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ド級編隊エグゼロス / abema -> ❌なし
+✅ 転生王女と天才令嬢の魔法革命 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生王女と天才令嬢の魔法革命 / abema -> ❌なし
+✅ ド級編隊エグゼロス / unext -> ⭕あり https://video.unext.jp/title/SID0049161
+✅ デカダンス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ デカダンス / abema -> ❌なし
+✅ デカダンス / unext -> ⭕あり https://video.unext.jp/title/SID0047131
+✅ GREAT PRETENDER / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ GREAT PRETENDER / abema -> ⭕あり https://abema.tv/video/title/19-251
+✅ トモちゃんは女の子！ / abema -> ❌なし
+✅ トモちゃんは女の子！ / unext -> ⭕あり https://video.unext.jp/title/SID0076913
+✅ GREAT PRETENDER / unext -> ⭕あり https://video.unext.jp/title/SID0049159
+✅ 彼女、お借りします / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 彼女、お借りします / abema -> ⭕あり https://abema.tv/video/title/194-15
+✅ 彼女、お借りします / unext -> ⭕あり https://video.unext.jp/title/SID0094790
+✅ 宇崎ちゃんは遊びたい！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 宇崎ちゃんは遊びたい！ / abema -> ❌なし
+✅ とんでもスキルで異世界放浪メシ / unext -> ⭕あり https://video.unext.jp/title/SID0234939
+✅ トモちゃんは女の子！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 宇崎ちゃんは遊びたい！ / unext -> ⭕あり https://video.unext.jp/title/SID0047128
+✅ 八男って、それはないでしょう！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 八男って、それはないでしょう！ / abema -> ❌なし
+✅ 八男って、それはないでしょう！ / unext -> ⭕あり https://video.unext.jp/title/SID0047157
+✅ 球詠 / dmmtv -> ❌なし
+✅ 球詠 / abema -> ❌なし
+✅ とんでもスキルで異世界放浪メシ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ とんでもスキルで異世界放浪メシ / abema -> ⭕あり https://abema.tv/video/title/536-6
+✅ 球詠 / unext -> ⭕あり https://video.unext.jp/title/SID0047160
+✅ 神之塔 -Tower of God- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 神之塔 -Tower of God- / abema -> ❌なし
+✅ 神之塔 -Tower of God- / unext -> ⭕あり https://video.unext.jp/title/SID0104525
+✅ グレイプニル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ グレイプニル / abema -> ❌なし
+✅ NieR:Automata Ver1.1a / abema -> ❌なし
+✅ NieR:Automata Ver1.1a / unext -> ❌なし
+✅ グレイプニル / unext -> ⭕あり https://video.unext.jp/title/SID0047147
+✅ かくしごと / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かくしごと / abema -> ❌なし
+✅ かくしごと / unext -> ⭕あり https://video.unext.jp/title/SID0047163
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / abema -> ❌なし
+✅ HIGH CARD / unext -> ⭕あり https://video.unext.jp/title/SID0096695
+✅ NieR:Automata Ver1.1a / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった… / unext -> ⭕あり https://video.unext.jp/title/SID0101791
+✅ イエスタデイをうたって / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ イエスタデイをうたって / abema -> ❌なし
+✅ イエスタデイをうたって / unext -> ⭕あり https://video.unext.jp/title/SID0047143
+✅ 理系が恋に落ちたので証明してみた。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 理系が恋に落ちたので証明してみた。 / abema -> ❌なし
+✅ HIGH CARD / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ HIGH CARD / abema -> ❌なし
+✅ 理系が恋に落ちたので証明してみた。 / unext -> ⭕あり https://video.unext.jp/title/SID0056466
+✅ ランウェイで笑って / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ランウェイで笑って / abema -> ❌なし
+✅ ランウェイで笑って / unext -> ⭕あり https://video.unext.jp/title/SID0045118
+✅ 魔術士オーフェン はぐれ旅 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔術士オーフェン はぐれ旅 / abema -> ❌なし
+✅ 冰剣の魔術師が世界を統べる / abema -> ❌なし
+✅ 冰剣の魔術師が世界を統べる / unext -> ⭕あり https://video.unext.jp/title/SID0076899
+✅ 魔術士オーフェン はぐれ旅 / unext -> ⭕あり https://video.unext.jp/title/SID0045140
+✅ プランダラ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ プランダラ / abema -> ❌なし
+✅ プランダラ / unext -> ⭕あり https://video.unext.jp/title/SID0045275
+✅ ドロヘドロ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ドロヘドロ / abema -> ❌なし
+✅ Buddy Daddies / unext -> ⭕あり https://video.unext.jp/title/SID0077316
+✅ 冰剣の魔術師が世界を統べる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ドロヘドロ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000225104
+✅ ダーウィンズゲーム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダーウィンズゲーム / abema -> ❌なし
+✅ ダーウィンズゲーム / unext -> ⭕あり https://video.unext.jp/title/SID0045144
+✅ 地縛少年花子くん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 地縛少年花子くん / abema -> ⭕あり https://abema.tv/video/title/189-17
+✅ Buddy Daddies / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Buddy Daddies / abema -> ❌なし
+✅ 地縛少年花子くん / unext -> ⭕あり https://video.unext.jp/title/SID0163329
+✅ 虚構推理 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 虚構推理 / abema -> ❌なし
+✅ 虚構推理 / unext -> ⭕あり https://video.unext.jp/title/SID0076923
+✅ おーばーふろぉ～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ おーばーふろぉ～ / abema -> ❌なし
+✅ 便利屋斎藤さん、異世界に行く / abema -> ❌なし
+✅ 便利屋斎藤さん、異世界に行く / unext -> ⭕あり https://video.unext.jp/title/SID0076919
+✅ おーばーふろぉ～ / unext -> ❌なし
+✅ 推しが武道館いってくれたら死ぬ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 推しが武道館いってくれたら死ぬ / abema -> ❌なし
+✅ 推しが武道館いってくれたら死ぬ / unext -> ⭕あり https://video.unext.jp/title/SID0049300
+✅ 映像研には手を出すな！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 映像研には手を出すな！ / abema -> ❌なし
+✅ もういっぽん！ / unext -> ⭕あり https://video.unext.jp/title/SID0077290
+✅ 便利屋斎藤さん、異世界に行く / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 映像研には手を出すな！ / unext -> ⭕あり https://video.unext.jp/title/SID0047251
+✅ インフィニット・デンドログラム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ パリピ孔明 / abema -> ❌なし
+✅ はたらく細胞 / abema -> ❌なし
+✅ はたらく細胞 / unext -> ⭕あり https://video.unext.jp/title/SID0179483
+✅ ハイスコアガール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ もういっぽん！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ もういっぽん！ / abema -> ❌なし
+✅ ハイスコアガール / abema -> ❌なし
+✅ ハイスコアガール / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000159811
+✅ インフィニット・デンドログラム / abema -> ⭕あり https://abema.tv/video/title/149-7
+✅ インフィニット・デンドログラム / unext -> ⭕あり https://video.unext.jp/title/SID0045321
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / abema -> ⭕あり https://abema.tv/video/title/54-79
+✅ 青のオーケストラ / abema -> ⭕あり https://abema.tv/video/title/142-8
+✅ 青のオーケストラ / unext -> ⭕あり https://video.unext.jp/title/SID0232901
+✅ 痛いのは嫌なので防御力に極振りしたいと思います。 / unext -> ⭕あり https://video.unext.jp/title/SID0045499
+✅ 異種族レビュアーズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異種族レビュアーズ / abema -> ❌なし
+✅ 異種族レビュアーズ / unext -> ⭕あり https://video.unext.jp/title/SID0045276
+✅ 私、能力は平均値でって言ったよね！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 私、能力は平均値でって言ったよね！ / abema -> ⭕あり https://abema.tv/video/title/168-32
+✅ スキップとローファー / unext -> ⭕あり https://video.unext.jp/title/SID0079938
+✅ 青のオーケストラ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 私、能力は平均値でって言ったよね！ / unext -> ⭕あり https://video.unext.jp/title/SID0043584
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / abema -> ⭕あり https://abema.tv/video/title/413-2
+✅ 本好きの下剋上 司書になるためには手段を選んでいられません / unext -> ⭕あり https://video.unext.jp/title/SID0043287
+✅ BEASTARS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BEASTARS / abema -> ⭕あり https://abema.tv/video/title/19-257
+✅ スキップとローファー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スキップとローファー / abema -> ❌なし
+✅ BEASTARS / unext -> ⭕あり https://video.unext.jp/title/SID0052906
+✅ バビロン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バビロン / abema -> ⭕あり https://abema.tv/video/title/472-241
+✅ バビロン / unext -> ⭕あり https://video.unext.jp/title/SID0084898
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / abema -> ⭕あり https://abema.tv/video/title/174-13
+✅ 君は放課後インソムニア / abema -> ❌なし
+✅ 君は放課後インソムニア / unext -> ⭕あり https://video.unext.jp/title/SID0080285
+✅ 超人高校生たちは異世界でも余裕で生き抜くようです！ / unext -> ⭕あり https://video.unext.jp/title/SID0043303
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / abema -> ❌なし
+✅ 慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～ / unext -> ⭕あり https://video.unext.jp/title/SID0043527
+✅ 俺を好きなのはお前だけかよ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺を好きなのはお前だけかよ / abema -> ❌なし
+✅ 久保さんは僕を許さない / unext -> ⭕あり https://video.unext.jp/title/SID0076915
+✅ 君は放課後インソムニア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺を好きなのはお前だけかよ / unext -> ⭕あり https://video.unext.jp/title/SID0043526
+✅ あひるの空 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ あひるの空 / abema -> ❌なし
+✅ あひるの空 / unext -> ⭕あり https://video.unext.jp/title/SID0043840
+✅ アサシンズプライド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アサシンズプライド / abema -> ❌なし
+✅ 久保さんは僕を許さない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 久保さんは僕を許さない / abema -> ❌なし
+✅ アサシンズプライド / unext -> ⭕あり https://video.unext.jp/title/SID0043523
+✅ ケンガンアシュラ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ケンガンアシュラ / abema -> ❌なし
+✅ ケンガンアシュラ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000039883
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / abema -> ❌なし
+✅ この素晴らしい世界に爆焔を！ / abema -> ❌なし
+✅ この素晴らしい世界に爆焔を！ / unext -> ⭕あり https://video.unext.jp/title/SID0079684
+✅ ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note- / unext -> ⭕あり https://video.unext.jp/title/SID0039580
+✅ 魔王様、リトライ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王様、リトライ！ / abema -> ⭕あり https://abema.tv/video/title/656-2
+✅ 魔王様、リトライ！ / unext -> ⭕あり https://video.unext.jp/title/SID0254843
+✅ ナカノヒトゲノム【実況中】 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ナカノヒトゲノム【実況中】 / abema -> ❌なし
+✅ 天国大魔境 / unext -> ⭕あり https://video.unext.jp/title/SID0088254
+✅ この素晴らしい世界に爆焔を！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ナカノヒトゲノム【実況中】 / unext -> ⭕あり https://video.unext.jp/title/SID0042085
+✅ Dr.STONE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Dr.STONE / abema -> ⭕あり https://abema.tv/video/title/19-34
+✅ Dr.STONE / unext -> ⭕あり https://video.unext.jp/title/SID0071180
+✅ 手品先輩 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 手品先輩 / abema -> ❌なし
+✅ 天国大魔境 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 天国大魔境 / abema -> ❌なし
+✅ 手品先輩 / unext -> ⭕あり https://video.unext.jp/title/SID0042089
+✅ とある科学の一方通行 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ とある科学の一方通行 / abema -> ❌なし
+✅ とある科学の一方通行 / unext -> ⭕あり https://video.unext.jp/title/SID0041862
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / abema -> ❌なし
+✅ デッドマウント・デスプレイ / abema -> ❌なし
+✅ デッドマウント・デスプレイ / unext -> ⭕あり https://video.unext.jp/title/SID0079583
+✅ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ / unext -> ⭕あり https://video.unext.jp/title/SID0041990
+✅ ダンベル何キロ持てる？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダンベル何キロ持てる？ / abema -> ❌なし
+✅ ダンベル何キロ持てる？ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000849732
+✅ ソウナンですか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ソウナンですか？ / abema -> ❌なし
+✅ マッシュル-MASHLE- / unext -> ⭕あり https://video.unext.jp/title/SID0079685
+✅ デッドマウント・デスプレイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ソウナンですか？ / unext -> ⭕あり https://video.unext.jp/title/SID0042088
+✅ 女子高生の無駄づかい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 女子高生の無駄づかい / abema -> ⭕あり https://abema.tv/video/title/25-118
+✅ 女子高生の無駄づかい / unext -> ⭕あり https://video.unext.jp/title/SID0045864
+✅ 可愛ければ変態でも好きになってくれますか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 可愛ければ変態でも好きになってくれますか？ / abema -> ❌なし
+✅ マッシュル-MASHLE- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ マッシュル-MASHLE- / abema -> ❌なし
+✅ 可愛ければ変態でも好きになってくれますか？ / unext -> ⭕あり https://video.unext.jp/title/SID0041945
+✅ 彼方のアストラ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 彼方のアストラ / abema -> ❌なし
+✅ 彼方のアストラ / unext -> ⭕あり https://video.unext.jp/title/SID0042084
+✅ 炎炎ノ消防隊 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 炎炎ノ消防隊 / abema -> ❌なし
+✅ 僕の心のヤバイやつ / abema -> ❌なし
+✅ 僕の心のヤバイやつ / unext -> ⭕あり https://video.unext.jp/title/SID0097623
+✅ 炎炎ノ消防隊 / unext -> ⭕あり https://video.unext.jp/title/SID0233103
+✅ 異世界チート魔術師 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界チート魔術師 / abema -> ⭕あり https://abema.tv/video/title/25-119
+✅ 異世界チート魔術師 / unext -> ⭕あり https://video.unext.jp/title/SID0041946
+✅ ありふれた職業で世界最強 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ありふれた職業で世界最強 / abema -> ⭕あり https://abema.tv/video/title/149-4
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / unext -> ⭕あり https://video.unext.jp/title/SID0087149
+✅ 僕の心のヤバイやつ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ありふれた職業で世界最強 / unext -> ⭕あり https://video.unext.jp/title/SID0076941
+✅ 荒ぶる季節の乙女どもよ。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 荒ぶる季節の乙女どもよ。 / abema -> ❌なし
+✅ 荒ぶる季節の乙女どもよ。 / unext -> ⭕あり https://video.unext.jp/title/SID0041951
+✅ みだらな青ちゃんは勉強ができない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ みだらな青ちゃんは勉強ができない / abema -> ❌なし
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゾン100～ゾンビになるまでにしたい100のこと～ / abema -> ❌なし
+✅ みだらな青ちゃんは勉強ができない / unext -> ⭕あり https://video.unext.jp/title/SID0040733
+✅ ぼくたちは勉強ができない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ぼくたちは勉強ができない / abema -> ❌なし
+✅ ぼくたちは勉強ができない / unext -> ⭕あり https://video.unext.jp/title/SID0040910
+✅ フルーツバスケット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ フルーツバスケット / abema -> ❌なし
+✅ 異世界召喚は二度目です / abema -> ❌なし
+✅ 異世界召喚は二度目です / unext -> ⭕あり https://video.unext.jp/title/SID0088308
+✅ フルーツバスケット / unext -> ⭕あり https://video.unext.jp/title/SID0068694
+✅ なんでここに先生が!? / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ なんでここに先生が!? / abema -> ❌なし
+✅ なんでここに先生が!? / unext -> ⭕あり https://video.unext.jp/title/SID0040549
+✅ 川柳少女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 川柳少女 / abema -> ❌なし
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / unext -> ⭕あり https://video.unext.jp/title/SID0079585
+✅ 異世界召喚は二度目です / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 川柳少女 / unext -> ⭕あり https://video.unext.jp/title/SID0040732
+✅ この音とまれ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ この音とまれ！ / abema -> ❌なし
+✅ この音とまれ！ / unext -> ⭕あり https://video.unext.jp/title/SID0042238
+✅ 賢者の孫 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 賢者の孫 / abema -> ⭕あり https://abema.tv/video/title/25-170
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する / abema -> ⭕あり https://abema.tv/video/title/172-54
+✅ 賢者の孫 / unext -> ⭕あり https://video.unext.jp/title/SID0040907
+✅ 異世界かるてっと / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界かるてっと / abema -> ⭕あり https://abema.tv/video/title/25-138
+✅ 異世界かるてっと / unext -> ⭕あり https://video.unext.jp/title/SID0040906
+✅ 鬼滅の刃 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 鬼滅の刃 / abema -> ⭕あり https://abema.tv/video/title/26-247
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / abema -> ⭕あり https://abema.tv/video/title/564-4
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / unext -> ⭕あり https://video.unext.jp/title/SID0080181
+✅ 鬼滅の刃 / unext -> ⭕あり https://video.unext.jp/title/SID0050378
+✅ 私に天使が舞い降りた！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 私に天使が舞い降りた！ / abema -> ❌なし
+✅ 私に天使が舞い降りた！ / unext -> ⭕あり https://video.unext.jp/title/SID0039231
+✅ 約束のネバーランド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 約束のネバーランド / abema -> ❌なし
+✅ 【推しの子】 / unext -> ⭕あり https://video.unext.jp/title/SID0079682
+✅ 異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 約束のネバーランド / unext -> ⭕あり https://video.unext.jp/title/SID0057503
+✅ ブギーポップは笑わない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブギーポップは笑わない / abema -> ❌なし
+✅ ブギーポップは笑わない / unext -> ⭕あり https://video.unext.jp/title/SID0039230
+✅ どろろ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ どろろ / abema -> ⭕あり https://abema.tv/video/title/560-8
+✅ 【推しの子】 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 【推しの子】 / abema -> ⭕あり https://abema.tv/video/title/25-240
+✅ どろろ / unext -> ⭕あり https://video.unext.jp/title/SID0063715
+✅ ドメスティックな彼女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ドメスティックな彼女 / abema -> ❌なし
+✅ ドメスティックな彼女 / unext -> ⭕あり https://video.unext.jp/title/SID0039600
+✅ 盾の勇者の成り上がり / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 盾の勇者の成り上がり / abema -> ⭕あり https://abema.tv/video/title/25-109
+✅ 地獄楽 / abema -> ❌なし
+✅ 地獄楽 / unext -> ⭕あり https://video.unext.jp/title/SID0101002
+✅ 盾の勇者の成り上がり / unext -> ⭕あり https://video.unext.jp/title/SID0091730
+✅ 五等分の花嫁 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 五等分の花嫁 / abema -> ⭕あり https://abema.tv/video/title/189-11
+✅ 五等分の花嫁 / unext -> ⭕あり https://video.unext.jp/title/SID0074688
+✅ ケムリクサ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ケムリクサ / abema -> ❌なし
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / unext -> ❌なし
+✅ 地獄楽 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ケムリクサ / unext -> ⭕あり https://video.unext.jp/title/SID0047083
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / abema -> ❌なし
+✅ かぐや様は告らせたい～天才たちの恋愛頭脳戦～ / unext -> ⭕あり https://video.unext.jp/title/SID0039131
+✅ W’z / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ W’z / abema -> ❌なし
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生貴族の異世界冒険録 〜自重を知らない神々の使徒〜 / abema -> ❌なし
+✅ W’z / unext -> ⭕あり https://video.unext.jp/title/SID0039253
+✅ 中卒労働者から始める高校生活 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 中卒労働者から始める高校生活 / abema -> ❌なし
+✅ 中卒労働者から始める高校生活 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000215141
+✅ やがて君になる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ やがて君になる / abema -> ❌なし
+✅ マイホームヒーロー / abema -> ⭕あり https://abema.tv/video/title/734-1
+✅ マイホームヒーロー / unext -> ⭕あり https://video.unext.jp/title/SID0079588
+✅ やがて君になる / unext -> ⭕あり https://video.unext.jp/title/SID0037560
+✅ 火ノ丸相撲 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 火ノ丸相撲 / abema -> ❌なし
+✅ 火ノ丸相撲 / unext -> ⭕あり https://video.unext.jp/title/SID0037287
+✅ 転生したらスライムだった件 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生したらスライムだった件 / abema -> ⭕あり https://abema.tv/video/title/420-11
+✅ 女神のカフェテラス / unext -> ⭕あり https://video.unext.jp/title/SID0079589
+✅ マイホームヒーロー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生したらスライムだった件 / unext -> ⭕あり https://video.unext.jp/title/SID0100095
+✅ ツルネ ―風舞高校弓道部― / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ツルネ ―風舞高校弓道部― / abema -> ❌なし
+✅ ツルネ ―風舞高校弓道部― / unext -> ⭕あり https://video.unext.jp/title/SID0037861
+✅ ゾンビランドサガ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゾンビランドサガ / abema -> ⭕あり https://abema.tv/video/title/481-6
+✅ 女神のカフェテラス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 女神のカフェテラス / abema -> ❌なし
+✅ ゾンビランドサガ / unext -> ⭕あり https://video.unext.jp/title/SID0056108
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / abema -> ⭕あり https://abema.tv/video/title/26-59
+✅ 青春ブタ野郎はバニーガール先輩の夢を見ない / unext -> ⭕あり https://video.unext.jp/title/SID0037201
+✅ ゴブリンスレイヤー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゴブリンスレイヤー / abema -> ⭕あり https://abema.tv/video/title/174-10
+✅ 山田くんとLv999の恋をする / abema -> ❌なし
+✅ 山田くんとLv999の恋をする / unext -> ⭕あり https://video.unext.jp/title/SID0243044
+✅ ゴブリンスレイヤー / unext -> ⭕あり https://video.unext.jp/title/SID0051713
+✅ SSSS.GRIDMAN / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SSSS.GRIDMAN / abema -> ❌なし
+✅ SSSS.GRIDMAN / unext -> ⭕あり https://video.unext.jp/title/SID0037297
+✅ 寄宿学校のジュリエット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 寄宿学校のジュリエット / abema -> ❌なし
+✅ 勇者が死んだ！ / unext -> ⭕あり https://video.unext.jp/title/SID0080286
+✅ 山田くんとLv999の恋をする / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 寄宿学校のジュリエット / unext -> ⭕あり https://video.unext.jp/title/SID0038893
+✅ からくりサーカス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ からくりサーカス / abema -> ❌なし
+✅ からくりサーカス / unext -> ⭕あり https://video.unext.jp/title/SID0052578
+✅ 俺が好きなのは妹だけど妹じゃない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺が好きなのは妹だけど妹じゃない / abema -> ❌なし
+✅ 勇者が死んだ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 勇者が死んだ！ / abema -> ❌なし
+✅ 俺が好きなのは妹だけど妹じゃない / unext -> ⭕あり https://video.unext.jp/title/SID0037559
+✅ うちのメイドがウザすぎる！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ うちのメイドがウザすぎる！ / abema -> ❌なし
+✅ うちのメイドがウザすぎる！ / unext -> ⭕あり https://video.unext.jp/title/SID0037563
+✅ 色づく世界の明日から / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 色づく世界の明日から / abema -> ❌なし
+✅ あやかしトライアングル / abema -> ⭕あり https://abema.tv/video/title/193-281
+✅ あやかしトライアングル / unext -> ⭕あり https://video.unext.jp/title/SID0076912
+✅ 色づく世界の明日から / unext -> ⭕あり https://video.unext.jp/title/SID0047524
+✅ 嫌な顔されながらおパンツ見せてもらいたい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 嫌な顔されながらおパンツ見せてもらいたい / abema -> ❌なし
+✅ 嫌な顔されながらおパンツ見せてもらいたい / unext -> ⭕あり https://video.unext.jp/title/SID0041254
+✅ 百錬の覇王と聖約の戦乙女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 百錬の覇王と聖約の戦乙女 / abema -> ❌なし
+✅ アンデッドガール・マーダーファルス / unext -> ⭕あり https://video.unext.jp/title/SID0087155
+✅ あやかしトライアングル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 百錬の覇王と聖約の戦乙女 / unext -> ⭕あり https://video.unext.jp/title/SID0035555
+✅ はねバド！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ はねバド！ / abema -> ❌なし
+✅ はねバド！ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000072046
+✅ BANANA FISH / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BANANA FISH / abema -> ⭕あり https://abema.tv/video/title/19-144
+✅ アンデッドガール・マーダーファルス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アンデッドガール・マーダーファルス / abema -> ❌なし
+✅ BANANA FISH / unext -> ⭕あり https://video.unext.jp/title/SID0041833
+✅ ハッピーシュガーライフ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハッピーシュガーライフ / abema -> ❌なし
+✅ ハッピーシュガーライフ / unext -> ⭕あり https://video.unext.jp/title/SID0043095
+✅ バキ / dmmtv -> ❌なし
+✅ バキ / abema -> ⭕あり https://abema.tv/video/episode/89-116_s25_p13603
+✅ うちの会社の小さい先輩の話 / abema -> ❌なし
+✅ うちの会社の小さい先輩の話 / unext -> ⭕あり https://video.unext.jp/title/SID0087612
+✅ バキ / unext -> ⭕あり https://video.unext.jp/title/SID0088178
+✅ はたらく細胞 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ちおちゃんの通学路 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ちおちゃんの通学路 / abema -> ❌なし
+✅ ちおちゃんの通学路 / unext -> ⭕あり https://video.unext.jp/title/SID0035693
+✅ すのはら荘の管理人さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 英雄教室 / unext -> ⭕あり https://video.unext.jp/title/SID0087161
+✅ うちの会社の小さい先輩の話 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ すのはら荘の管理人さん / abema -> ❌なし
+✅ すのはら荘の管理人さん / unext -> ⭕あり https://video.unext.jp/title/SID0035684
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / abema -> ❌なし
+✅ じょしおちっ！～2階から女の子が…降ってきた!?～ / unext -> ⭕あり https://video.unext.jp/title/SID0041172
+✅ 七星のスバル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 英雄教室 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 英雄教室 / abema -> ❌なし
+✅ 七星のスバル / abema -> ❌なし
+✅ 七星のスバル / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000127638
+✅ 殺戮の天使 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 殺戮の天使 / abema -> ❌なし
+✅ 殺戮の天使 / unext -> ⭕あり https://video.unext.jp/title/SID0045260
+✅ ぐらんぶる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ おかしな転生 / abema -> ❌なし
+✅ おかしな転生 / unext -> ⭕あり https://video.unext.jp/title/SID0087157
+✅ ぐらんぶる / abema -> ⭕あり https://abema.tv/video/title/11-72
+✅ ぐらんぶる / unext -> ⭕あり https://video.unext.jp/title/SID0200153
+✅ 異世界魔王と召喚少女の奴隷魔術 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界魔王と召喚少女の奴隷魔術 / abema -> ❌なし
+✅ 異世界魔王と召喚少女の奴隷魔術 / unext -> ⭕あり https://video.unext.jp/title/SID0056086
+✅ あそびあそばせ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 実は俺、最強でした？ / unext -> ⭕あり https://video.unext.jp/title/SID0087598
+✅ おかしな転生 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ あそびあそばせ / abema -> ❌なし
+✅ あそびあそばせ / unext -> ⭕あり https://video.unext.jp/title/SID0035905
+✅ ISLAND / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ISLAND / abema -> ⭕あり https://abema.tv/video/title/193-305
+✅ ISLAND / unext -> ⭕あり https://video.unext.jp/title/SID0158399
+✅ ヲタクに恋は難しい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 実は俺、最強でした？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 実は俺、最強でした？ / abema -> ❌なし
+✅ ヲタクに恋は難しい / abema -> ⭕あり https://abema.tv/video/title/19-113
+✅ ヲタクに恋は難しい / unext -> ⭕あり https://video.unext.jp/title/SID0162702
+✅ 3D彼女 リアルガール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 3D彼女 リアルガール / abema -> ❌なし
+✅ 3D彼女 リアルガール / unext -> ⭕あり https://video.unext.jp/title/SID0039203
+✅ メジャー セカンド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / abema -> ⭕あり https://abema.tv/video/title/54-83
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / unext -> ⭕あり https://video.unext.jp/title/SID0200181
+✅ メジャー セカンド / abema -> ⭕あり https://abema.tv/video/title/2-2bxddsdhdiw
+✅ メジャー セカンド / unext -> ⭕あり https://video.unext.jp/title/SID0047154
+✅ 魔法少女サイト / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔法少女サイト / abema -> ❌なし
+✅ 魔法少女サイト / unext -> ⭕あり https://video.unext.jp/title/SID0040372
+✅ ヒナまつり / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 好きな子がめがねを忘れた / unext -> ⭕あり https://video.unext.jp/title/SID0087604
+✅ 自動販売機に生まれ変わった俺は迷宮を彷徨う / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヒナまつり / abema -> ⭕あり https://abema.tv/video/title/25-94
+✅ ヒナまつり / unext -> ⭕あり https://video.unext.jp/title/SID0034240
+✅ ピアノの森 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ピアノの森 / abema -> ❌なし
+✅ ピアノの森 / unext -> ⭕あり https://video.unext.jp/title/SID0034448
+✅ 奴隷区 The Animation / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 好きな子がめがねを忘れた / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 好きな子がめがねを忘れた / abema -> ❌なし
+✅ 奴隷区 The Animation / abema -> ❌なし
+✅ 奴隷区 The Animation / unext -> ⭕あり https://video.unext.jp/title/SID0043580
+✅ デビルズライン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ デビルズライン / abema -> ❌なし
+✅ デビルズライン / unext -> ⭕あり https://video.unext.jp/title/SID0034317
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スプリガン / abema -> ❌なし
+✅ スプリガン / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000076105
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / abema -> ⭕あり https://abema.tv/video/title/25-92
+✅ ソードアート・オンライン オルタナティブ ガンゲイル・オンライン / unext -> ⭕あり https://video.unext.jp/title/SID0157052
+✅ シュタインズ・ゲート ゼロ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ シュタインズ・ゲート ゼロ / abema -> ⭕あり https://abema.tv/video/title/25-93
+✅ シュタインズ・ゲート ゼロ / unext -> ⭕あり https://video.unext.jp/title/SID0034225
+✅ ゴールデンカムイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダークギャザリング / unext -> ⭕あり https://video.unext.jp/title/SID0087607
+✅ スプリガン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゴールデンカムイ / abema -> ⭕あり https://abema.tv/video/episode/89-98_s10_p1152
+✅ ゴールデンカムイ / unext -> ⭕あり https://video.unext.jp/title/SID0063521
+✅ ウマ娘 プリティーダービー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ウマ娘 プリティーダービー / abema -> ⭕あり https://abema.tv/video/episode/351-9_s190_p119
+✅ ウマ娘 プリティーダービー / unext -> ⭕あり https://video.unext.jp/title/SID0160058
+✅ DEVILMAN crybaby / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダークギャザリング / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダークギャザリング / abema -> ❌なし
+✅ DEVILMAN crybaby / abema -> ❌なし
+✅ DEVILMAN crybaby / unext -> ❌なし
+✅ 衛宮さんちの今日のごはん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 衛宮さんちの今日のごはん / abema -> ❌なし
+✅ 衛宮さんちの今日のごはん / unext -> ⭕あり https://video.unext.jp/title/SID0033245
+✅ りゅうおうのおしごと！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 七つの魔剣が支配する / abema -> ❌なし
+✅ 七つの魔剣が支配する / unext -> ⭕あり https://video.unext.jp/title/SID0087599
+✅ りゅうおうのおしごと！ / abema -> ⭕あり https://abema.tv/video/title/174-9
+✅ りゅうおうのおしごと！ / unext -> ⭕あり https://video.unext.jp/title/SID0032840
+✅ ラーメン大好き小泉さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ラーメン大好き小泉さん / abema -> ❌なし
+✅ ラーメン大好き小泉さん / unext -> ⭕あり https://video.unext.jp/title/SID0032826
+✅ ゆるキャン△ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / unext -> ⭕あり https://video.unext.jp/title/SID0087590
+✅ 七つの魔剣が支配する / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゆるキャン△ / abema -> ⭕あり https://abema.tv/video/title/247-5
+✅ ゆるキャン△ / unext -> ⭕あり https://video.unext.jp/title/SID0095777
+✅ ポプテピピック / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ポプテピピック / abema -> ❌なし
+✅ ポプテピピック / unext -> ⭕あり https://video.unext.jp/title/SID0032713
+✅ バジリスク ～桜花忍法帖～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします / abema -> ❌なし
+✅ バジリスク ～桜花忍法帖～ / abema -> ❌なし
+✅ バジリスク ～桜花忍法帖～ / unext -> ⭕あり https://video.unext.jp/title/SID0032812
+✅ BEATLESS / dmmtv -> ❌なし
+✅ BEATLESS / abema -> ❌なし
+✅ BEATLESS / unext -> ⭕あり https://video.unext.jp/title/SID0045258
+✅ 博多豚骨ラーメンズ / dmmtv -> ❌なし
+✅ Helck / abema -> ❌なし
+✅ Helck / unext -> ⭕あり https://video.unext.jp/title/SID0087616
+✅ 博多豚骨ラーメンズ / abema -> ❌なし
+✅ 博多豚骨ラーメンズ / unext -> ⭕あり https://video.unext.jp/title/SID0032750
+✅ デスマーチからはじまる異世界狂想曲 / dmmtv -> ❌なし
+✅ デスマーチからはじまる異世界狂想曲 / abema -> ❌なし
+✅ デスマーチからはじまる異世界狂想曲 / unext -> ⭕あり https://video.unext.jp/title/SID0032897
+✅ ダーリン・イン・ザ・フランキス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夢見る男子は現実主義者 / unext -> ⭕あり https://video.unext.jp/title/SID0087608
+✅ Helck / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダーリン・イン・ザ・フランキス / abema -> ❌なし
+✅ ダーリン・イン・ザ・フランキス / unext -> ⭕あり https://video.unext.jp/title/SID0032692
+✅ 宇宙よりも遠い場所 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 宇宙よりも遠い場所 / abema -> ❌なし
+✅ 宇宙よりも遠い場所 / unext -> ⭕あり https://video.unext.jp/title/SID0032770
+✅ citrus / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夢見る男子は現実主義者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夢見る男子は現実主義者 / abema -> ⭕あり https://abema.tv/video/title/189-53
+✅ citrus / abema -> ❌なし
+✅ citrus / unext -> ⭕あり https://video.unext.jp/title/SID0032811
+✅ 恋は雨上がりのように / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 恋は雨上がりのように / abema -> ❌なし
+✅ 恋は雨上がりのように / unext -> ⭕あり https://video.unext.jp/title/SID0038889
+✅ からかい上手の高木さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ レベル1だけどユニークスキルで最強です / abema -> ⭕あり https://abema.tv/video/title/177-228
+✅ レベル1だけどユニークスキルで最強です / unext -> ⭕あり https://video.unext.jp/title/SID0087606
+✅ からかい上手の高木さん / abema -> ❌なし
+✅ からかい上手の高木さん / unext -> ⭕あり https://video.unext.jp/title/SID0063359
+✅ ヴァイオレット・エヴァーガーデン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヴァイオレット・エヴァーガーデン / abema -> ❌なし
+✅ ヴァイオレット・エヴァーガーデン / unext -> ❌なし
+✅ 魔法使いの嫁 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ わたしの幸せな結婚 / unext -> ⭕あり https://video.unext.jp/title/SID0163337
+✅ レベル1だけどユニークスキルで最強です / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔法使いの嫁 / abema -> ⭕あり https://abema.tv/video/title/560-1
+✅ 魔法使いの嫁 / unext -> ⭕あり https://video.unext.jp/title/SID0148121
+✅ 宝石の国 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 宝石の国 / abema -> ❌なし
+✅ 宝石の国 / unext -> ⭕あり https://video.unext.jp/title/SID0031344
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ わたしの幸せな結婚 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ わたしの幸せな結婚 / abema -> ⭕あり https://abema.tv/video/title/25-244
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / abema -> ❌なし
+✅ 僕の彼女がマジメ過ぎるしょびっちな件 / unext -> ⭕あり https://video.unext.jp/title/SID0031289
+✅ ブレンド・S / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブレンド・S / abema -> ❌なし
+✅ ブレンド・S / unext -> ⭕あり https://video.unext.jp/title/SID0031253
+✅ ブラッククローバー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アンデッドアンラック / abema -> ⭕あり https://abema.tv/video/title/172-56
+✅ アンデッドアンラック / unext -> ⭕あり https://video.unext.jp/title/SID0250238
+✅ ブラッククローバー / abema -> ⭕あり https://abema.tv/video/title/134-9
+✅ ブラッククローバー / unext -> ⭕あり https://video.unext.jp/title/SID0031251
+✅ ネト充のススメ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ネト充のススメ / abema -> ❌なし
+✅ ネト充のススメ / unext -> ⭕あり https://video.unext.jp/title/SID0031346
+✅ Dies irae / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アンダーニンジャ / unext -> ⭕あり https://video.unext.jp/title/SID0091753
+✅ アンデッドアンラック / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Dies irae / abema -> ❌なし
+✅ Dies irae / unext -> ⭕あり https://video.unext.jp/title/SID0031325
+✅ 十二大戦 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 十二大戦 / abema -> ❌なし
+✅ 十二大戦 / unext -> ⭕あり https://video.unext.jp/title/SID0031307
+✅ Just Because！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アンダーニンジャ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アンダーニンジャ / abema -> ❌なし
+✅ Just Because！ / abema -> ❌なし
+✅ Just Because！ / unext -> ⭕あり https://video.unext.jp/title/SID0031308
+✅ このはな綺譚 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ このはな綺譚 / abema -> ❌なし
+✅ このはな綺譚 / unext -> ⭕あり https://video.unext.jp/title/SID0031287
+✅ クジラの子らは砂上に歌う / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 鴨乃橋ロンの禁断推理 / abema -> ❌なし
+✅ 鴨乃橋ロンの禁断推理 / unext -> ⭕あり https://video.unext.jp/title/SID0157055
+✅ クジラの子らは砂上に歌う / abema -> ❌なし
+✅ クジラの子らは砂上に歌う / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000193059
+✅ 王様ゲーム The Animation / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 王様ゲーム The Animation / abema -> ❌なし
+✅ 王様ゲーム The Animation / unext -> ⭕あり https://video.unext.jp/title/SID0031345
+✅ 妹さえいればいい。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 帰還者の魔法は特別です / unext -> ⭕あり https://video.unext.jp/title/SID0091741
+✅ 鴨乃橋ロンの禁断推理 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 妹さえいればいい。 / abema -> ❌なし
+✅ 妹さえいればいい。 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000183676
+✅ いぬやしき / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ いぬやしき / abema -> ❌なし
+✅ いぬやしき / unext -> ⭕あり https://video.unext.jp/title/SID0038407
+✅ いつだって僕らの恋は10センチだった。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 帰還者の魔法は特別です / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 帰還者の魔法は特別です / abema -> ❌なし
+✅ いつだって僕らの恋は10センチだった。 / abema -> ❌なし
+✅ いつだって僕らの恋は10センチだった。 / unext -> ⭕あり https://video.unext.jp/title/SID0038983
+✅ アニメガタリズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アニメガタリズ / abema -> ❌なし
+✅ アニメガタリズ / unext -> ⭕あり https://video.unext.jp/title/SID0031370
+✅ ようこそ実力至上主義の教室へ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 君のことが大大大大大好きな100人の彼女 / abema -> ⭕あり https://abema.tv/video/title/420-60
+✅ 君のことが大大大大大好きな100人の彼女 / unext -> ⭕あり https://video.unext.jp/title/SID0163368
+✅ ようこそ実力至上主義の教室へ / abema -> ⭕あり https://abema.tv/video/title/25-73
+✅ ようこそ実力至上主義の教室へ / unext -> ⭕あり https://video.unext.jp/title/SID0069674
+✅ ボールルームへようこそ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ボールルームへようこそ / abema -> ❌なし
+✅ ボールルームへようこそ / unext -> ⭕あり https://video.unext.jp/title/SID0039026
+✅ プリンセス・プリンシパル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 薬屋のひとりごと / unext -> ⭕あり https://video.unext.jp/title/SID0163357
+✅ 君のことが大大大大大好きな100人の彼女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ プリンセス・プリンシパル / abema -> ❌なし
+✅ プリンセス・プリンシパル / unext -> ⭕あり https://video.unext.jp/title/SID0029975
+✅ Fate/Apocrypha / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Fate/Apocrypha / abema -> ❌なし
+✅ Fate/Apocrypha / unext -> ⭕あり https://video.unext.jp/title/SID0066389
+✅ はじめてのギャル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 薬屋のひとりごと / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 薬屋のひとりごと / abema -> ⭕あり https://abema.tv/video/title/19-174
+✅ はじめてのギャル / abema -> ❌なし
+✅ はじめてのギャル / unext -> ⭕あり https://video.unext.jp/title/SID0030224
+✅ ナイツ＆マジック / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ナイツ＆マジック / abema -> ❌なし
+✅ ナイツ＆マジック / unext -> ⭕あり https://video.unext.jp/title/SID0029974
+✅ 徒然チルドレン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / abema -> ❌なし
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / unext -> ⭕あり https://video.unext.jp/title/SID0091756
+✅ 徒然チルドレン / abema -> ❌なし
+✅ 徒然チルドレン / unext -> ⭕あり https://video.unext.jp/title/SID0030105
+✅ 将国のアルタイル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 将国のアルタイル / abema -> ❌なし
+✅ 将国のアルタイル / unext -> ⭕あり https://video.unext.jp/title/SID0044763
+✅ 恋と嘘 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SHY / unext -> ⭕あり https://video.unext.jp/title/SID0091760
+✅ 経験済みなキミと、経験ゼロなオレが、お付き合いする話。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 恋と嘘 / abema -> ❌なし
+✅ 恋と嘘 / unext -> ⭕あり https://video.unext.jp/title/SID0029953
+✅ 潔癖男子！青山くん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 潔癖男子！青山くん / abema -> ❌なし
+✅ 潔癖男子！青山くん / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000107594
+✅ ゲーマーズ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SHY / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SHY / abema -> ❌なし
+✅ ゲーマーズ！ / abema -> ❌なし
+✅ ゲーマーズ！ / unext -> ⭕あり https://video.unext.jp/title/SID0030441
+✅ 賭ケグルイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 賭ケグルイ / abema -> ❌なし
+✅ 賭ケグルイ / unext -> ⭕あり https://video.unext.jp/title/SID0164444
+✅ 異世界はスマートフォンとともに。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ シャングリラ・フロンティア / abema -> ⭕あり https://abema.tv/video/title/632-3
+✅ シャングリラ・フロンティア / unext -> ❌なし
+✅ 異世界はスマートフォンとともに。 / abema -> ⭕あり https://abema.tv/video/title/169-47
+✅ 異世界はスマートフォンとともに。 / unext -> ⭕あり https://video.unext.jp/title/SID0080284
+✅ 異世界食堂 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界食堂 / abema -> ⭕あり https://abema.tv/video/title/194-25
+✅ 六畳間の侵略者!? / unext -> ⭕あり https://video.unext.jp/title/SID0017504
+✅ 暁のヨナ / unext -> ⭕あり https://video.unext.jp/title/SID0012513
+✅ 少女たちは荒野を目指す / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 昭和元禄落語心中（第1期） / unext -> ❌なし
+✅ 昭和元禄落語心中（第1期） / abema -> ❌なし
+✅ 昭和元禄落語心中（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ だがしかし / unext -> ⭕あり https://video.unext.jp/title/SID0020826
+✅ だがしかし / abema -> ❌なし
+✅ だがしかし / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 虹色デイズ / unext -> ⭕あり https://video.unext.jp/title/SID0037871
+✅ 少女たちは荒野を目指す / unext -> ⭕あり https://video.unext.jp/title/SID0020722
+✅ 少女たちは荒野を目指す / abema -> ❌なし
+✅ 虹色デイズ / abema -> ⭕あり https://abema.tv/video/title/319-27
+✅ 虹色デイズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハルチカ ～ハルタとチカは青春する～ / unext -> ⭕あり https://video.unext.jp/title/SID0021370
+✅ ハルチカ ～ハルタとチカは青春する～ / abema -> ❌なし
+✅ ハルチカ ～ハルタとチカは青春する～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 僕だけがいない街 / unext -> ⭕あり https://video.unext.jp/title/SID0021360
+✅ シュヴァルツェスマーケン / abema -> ❌なし
+✅ シュヴァルツェスマーケン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 僕だけがいない街 / abema -> ⭕あり https://abema.tv/video/title/19-148
+✅ 僕だけがいない街 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 無彩限のファントム・ワールド / unext -> ⭕あり https://video.unext.jp/title/SID0044382
+✅ 無彩限のファントム・ワールド / abema -> ❌なし
+✅ 無彩限のファントム・ワールド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ラクエンロジック / unext -> ⭕あり https://video.unext.jp/title/SID0021389
+✅ 最弱無敗の神装機竜《バハムート》 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ シュヴァルツェスマーケン / unext -> ⭕あり https://video.unext.jp/title/SID0025894
+✅ ラクエンロジック / abema -> ❌なし
+✅ ラクエンロジック / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ キズナイーバー / unext -> ⭕あり https://video.unext.jp/title/SID0023663
+✅ キズナイーバー / abema -> ❌なし
+✅ キズナイーバー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ クロムクロ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000287859
+✅ 最弱無敗の神装機竜《バハムート》 / unext -> ⭕あり https://video.unext.jp/title/SID0021298
+✅ 最弱無敗の神装機竜《バハムート》 / abema -> ⭕あり https://abema.tv/video/title/174-32
+✅ クロムクロ / abema -> ❌なし
+✅ クロムクロ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 甲鉄城のカバネリ / unext -> ⭕あり https://video.unext.jp/title/SID0047533
+✅ 甲鉄城のカバネリ / abema -> ⭕あり https://abema.tv/video/title/19-110
+✅ 甲鉄城のカバネリ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / unext -> ⭕あり https://video.unext.jp/title/SID0023860
+✅ この素晴らしい世界に祝福を！ / abema -> ⭕あり https://abema.tv/video/title/25-40xx2hk3u5ai
+✅ この素晴らしい世界に祝福を！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / abema -> ❌なし
+✅ コンクリート・レボルティオ～超人幻想～THE LAST SONG / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 坂本ですが？ / unext -> ⭕あり https://video.unext.jp/title/SID0023805
+✅ 坂本ですが？ / abema -> ❌なし
+✅ 坂本ですが？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ジョーカー・ゲーム / unext -> ⭕あり https://video.unext.jp/title/SID0023826
+✅ おしえて！ギャル子ちゃん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ この素晴らしい世界に祝福を！ / unext -> ⭕あり https://video.unext.jp/title/SID0027978
+✅ ジョーカー・ゲーム / abema -> ⭕あり https://abema.tv/video/title/177-85
+✅ ジョーカー・ゲーム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 田中くんはいつもけだるげ / unext -> ⭕あり https://video.unext.jp/title/SID0023856
+✅ 田中くんはいつもけだるげ / abema -> ❌なし
+✅ 田中くんはいつもけだるげ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 双星の陰陽師 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0001002663
+✅ おしえて！ギャル子ちゃん / unext -> ⭕あり https://video.unext.jp/title/SID0021376
+✅ おしえて！ギャル子ちゃん / abema -> ❌なし
+✅ 双星の陰陽師 / abema -> ❌なし
+✅ 双星の陰陽師 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ネトゲの嫁は女の子じゃないと思った？ / unext -> ⭕あり https://video.unext.jp/title/SID0023825
+✅ ネトゲの嫁は女の子じゃないと思った？ / abema -> ❌なし
+✅ ネトゲの嫁は女の子じゃないと思った？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハイスクール・フリート / unext -> ⭕あり https://video.unext.jp/title/SID0023666
+✅ 亜人（TVシリーズ） / abema -> ❌なし
+✅ 亜人（TVシリーズ） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハイスクール・フリート / abema -> ❌なし
+✅ ハイスクール・フリート / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハンドレッド / unext -> ⭕あり https://video.unext.jp/title/SID0018018
+✅ ハンドレッド / abema -> ❌なし
+✅ ハンドレッド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 文豪ストレイドッグス（第1シーズン） / unext -> ❌なし
+✅ 蒼の彼方のフォーリズム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 亜人（TVシリーズ） / unext -> ❌なし
+✅ 文豪ストレイドッグス（第1シーズン） / abema -> ❌なし
+✅ 文豪ストレイドッグス（第1シーズン） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 僕のヒーローアカデミア / unext -> ⭕あり https://video.unext.jp/title/SID0100079
+✅ 僕のヒーローアカデミア / abema -> ⭕あり https://abema.tv/video/title/19-253
+✅ 僕のヒーローアカデミア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ふらいんぐうぃっち / unext -> ⭕あり https://video.unext.jp/title/SID0023504
+✅ 蒼の彼方のフォーリズム / unext -> ⭕あり https://video.unext.jp/title/SID0021367
+✅ 蒼の彼方のフォーリズム / abema -> ❌なし
+✅ ふらいんぐうぃっち / abema -> ❌なし
+✅ ふらいんぐうぃっち / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ マギ シンドバッドの冒険 / unext -> ⭕あり https://video.unext.jp/title/SID0059745
+✅ マギ シンドバッドの冒険 / abema -> ❌なし
+✅ マギ シンドバッドの冒険 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Re:ゼロから始める異世界生活 / unext -> ⭕あり https://video.unext.jp/title/SID0044112
+✅ ワンパンマン / abema -> ⭕あり https://abema.tv/video/title/420-14
+✅ ワンパンマン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Re:ゼロから始める異世界生活 / abema -> ⭕あり https://abema.tv/video/title/25-139
+✅ Re:ゼロから始める異世界生活 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 迷家-マヨイガ- / unext -> ⭕あり https://video.unext.jp/title/SID0023815
+✅ 迷家-マヨイガ- / abema -> ❌なし
+✅ 迷家-マヨイガ- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 甘々と稲妻 / unext -> ⭕あり https://video.unext.jp/title/SID0025663
+✅ 落第騎士の英雄譚 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ワンパンマン / unext -> ⭕あり https://video.unext.jp/title/SID0040165
+✅ 甘々と稲妻 / abema -> ❌なし
+✅ 甘々と稲妻 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ orange / unext -> ⭕あり https://video.unext.jp/title/SID0024418
+✅ orange / abema -> ⭕あり https://abema.tv/video/title/90-1892?s=90-1892_s230
+✅ orange / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ クオリディア・コード / unext -> ⭕あり https://video.unext.jp/title/SID0025611
+✅ 落第騎士の英雄譚 / unext -> ⭕あり https://video.unext.jp/title/SID0019866
+✅ 落第騎士の英雄譚 / abema -> ⭕あり https://abema.tv/video/title/174-5
+✅ クオリディア・コード / abema -> ❌なし
+✅ クオリディア・コード / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ この美術部には問題がある！ / unext -> ⭕あり https://video.unext.jp/title/SID0025878
+✅ この美術部には問題がある！ / abema -> ❌なし
+✅ この美術部には問題がある！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 斉木楠雄のΨ難（第1期） / unext -> ❌なし
+✅ ヘヴィーオブジェクト / abema -> ❌なし
+✅ ヘヴィーオブジェクト / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 斉木楠雄のΨ難（第1期） / abema -> ❌なし
+✅ 斉木楠雄のΨ難（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ タブー・タトゥー / unext -> ⭕あり https://video.unext.jp/title/SID0025653
+✅ タブー・タトゥー / abema -> ❌なし
+✅ タブー・タトゥー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ DAYS / unext -> ⭕あり https://video.unext.jp/title/SID0170357
+✅ 対魔導学園35試験小隊 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヘヴィーオブジェクト / unext -> ⭕あり https://video.unext.jp/title/SID0020278
+✅ DAYS / abema -> ⭕あり https://abema.tv/video/title/172-61
+✅ DAYS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 91Days / unext -> ⭕あり https://video.unext.jp/title/SID0025755
+✅ 91Days / abema -> ❌なし
+✅ 91Days / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ NEW GAME！ / unext -> ⭕あり https://video.unext.jp/title/SID0025877
+✅ 対魔導学園35試験小隊 / unext -> ⭕あり https://video.unext.jp/title/SID0020231
+✅ 対魔導学園35試験小隊 / abema -> ❌なし
+✅ NEW GAME！ / abema -> ⭕あり https://abema.tv/video/episode/169-148_s1_p1
+✅ NEW GAME！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / unext -> ⭕あり https://video.unext.jp/title/SID0025876
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / abema -> ❌なし
+✅ ねじ巻き精霊戦記 天鏡のアルデラミン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バッテリー / unext -> ⭕あり https://video.unext.jp/title/SID0100046
+✅ すべてがFになる THE PERFECT INSIDER / abema -> ❌なし
+✅ すべてがFになる THE PERFECT INSIDER / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バッテリー / abema -> ⭕あり https://abema.tv/video/episode/89-93_s10_p52039
+✅ バッテリー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ はんだくん / unext -> ⭕あり https://video.unext.jp/title/SID0025602
+✅ はんだくん / abema -> ❌なし
+✅ はんだくん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ベルセルク（2016） / unext -> ❌なし
+✅ 櫻子さんの足下には死体が埋まっている / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ すべてがFになる THE PERFECT INSIDER / unext -> ⭕あり https://video.unext.jp/title/SID0020215
+✅ ベルセルク（2016） / abema -> ❌なし
+✅ ベルセルク（2016） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔装学園H×H / unext -> ⭕あり https://video.unext.jp/title/SID0025880
+✅ 魔装学園H×H / abema -> ❌なし
+✅ 魔装学園H×H / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Rewrite（第1期） / unext -> ❌なし
+✅ 櫻子さんの足下には死体が埋まっている / unext -> ⭕あり https://video.unext.jp/title/SID0020276
+✅ 櫻子さんの足下には死体が埋まっている / abema -> ❌なし
+✅ Rewrite（第1期） / abema -> ❌なし
+✅ Rewrite（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ReLIFE / unext -> ⭕あり https://video.unext.jp/title/SID0032579
+✅ ReLIFE / abema -> ❌なし
+✅ ReLIFE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ planetarian ～ちいさなほしのゆめ～ / unext -> ⭕あり https://video.unext.jp/title/SID0025724
+✅ コメット・ルシファー / abema -> ❌なし
+✅ コメット・ルシファー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ planetarian ～ちいさなほしのゆめ～ / abema -> ❌なし
+✅ planetarian ～ちいさなほしのゆめ～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Occultic;Nine -オカルティック・ナイン- / unext -> ❌なし
+✅ Occultic;Nine -オカルティック・ナイン- / abema -> ❌なし
+✅ Occultic;Nine -オカルティック・ナイン- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガーリッシュ ナンバー / unext -> ⭕あり https://video.unext.jp/title/SID0026764
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ コメット・ルシファー / unext -> ❌なし
+✅ ガーリッシュ ナンバー / abema -> ❌なし
+✅ ガーリッシュ ナンバー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 競女!!!!!!!! / unext -> ⭕あり https://video.unext.jp/title/SID0026528
+✅ 競女!!!!!!!! / abema -> ❌なし
+✅ 競女!!!!!!!! / dmmtv -> ❌なし
+✅ 3月のライオン / unext -> ⭕あり https://video.unext.jp/title/SID0039951
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / unext -> ❌なし
+✅ 機動戦士ガンダム 鉄血のオルフェンズ（第1期） / abema -> ❌なし
+✅ 3月のライオン / abema -> ❌なし
+✅ 3月のライオン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 終末のイゼッタ / unext -> ⭕あり https://video.unext.jp/title/SID0026799
+✅ 終末のイゼッタ / abema -> ❌なし
+✅ 終末のイゼッタ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ドリフターズ / unext -> ⭕あり https://video.unext.jp/title/SID0051133
+✅ 学戦都市アスタリスク（第1期） / abema -> ❌なし
+✅ 学戦都市アスタリスク（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ドリフターズ / abema -> ❌なし
+✅ ドリフターズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 舟を編む / unext -> ⭕あり https://video.unext.jp/title/SID0016633
+✅ 舟を編む / abema -> ❌なし
+✅ 舟を編む / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔法少女育成計画 / unext -> ⭕あり https://video.unext.jp/title/SID0026837
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 学戦都市アスタリスク（第1期） / unext -> ❌なし
+✅ 魔法少女育成計画 / abema -> ❌なし
+✅ 魔法少女育成計画 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ユーリ!!! on ICE / unext -> ⭕あり https://video.unext.jp/title/SID0026844
+✅ ユーリ!!! on ICE / abema -> ❌なし
+✅ ユーリ!!! on ICE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 私がモテてどうすんだ / unext -> ⭕あり https://video.unext.jp/title/SID0026839
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / unext -> ⭕あり https://video.unext.jp/title/SID0020081
+✅ 俺がお嬢様学校に「庶民サンプル」としてゲッツされた件 / abema -> ❌なし
+✅ 私がモテてどうすんだ / abema -> ⭕あり https://abema.tv/video/title/319-33
+✅ 私がモテてどうすんだ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 月曜日のたわわ / unext -> ⭕あり https://video.unext.jp/title/SID0067617
+✅ 月曜日のたわわ / abema -> ❌なし
+✅ 月曜日のたわわ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ACCA13区監察課 / unext -> ⭕あり https://video.unext.jp/title/SID0057460
+✅ うたわれるもの 偽りの仮面 / abema -> ❌なし
+✅ うたわれるもの 偽りの仮面 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ACCA13区監察課 / abema -> ❌なし
+✅ ACCA13区監察課 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ エルドライブ【ēlDLIVE】 / unext -> ❌なし
+✅ エルドライブ【ēlDLIVE】 / abema -> ❌なし
+✅ エルドライブ【ēlDLIVE】 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガヴリールドロップアウト / unext -> ⭕あり https://video.unext.jp/title/SID0027975
+✅ VALKYRIE DRIVE -MERMAID- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ うたわれるもの 偽りの仮面 / unext -> ⭕あり https://video.unext.jp/title/SID0020390
+✅ ガヴリールドロップアウト / abema -> ❌なし
+✅ ガヴリールドロップアウト / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ CHAOS;CHILD / unext -> ⭕あり https://video.unext.jp/title/SID0027976
+✅ CHAOS;CHILD / abema -> ❌なし
+✅ CHAOS;CHILD / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ クズの本懐 / unext -> ⭕あり https://video.unext.jp/title/SID0038408
+✅ VALKYRIE DRIVE -MERMAID- / unext -> ❌なし
+✅ VALKYRIE DRIVE -MERMAID- / abema -> ❌なし
+✅ クズの本懐 / abema -> ⭕あり https://abema.tv/video/title/19-164
+✅ クズの本懐 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 小林さんちのメイドラゴン / unext -> ⭕あり https://video.unext.jp/title/SID0027929
+✅ 小林さんちのメイドラゴン / abema -> ⭕あり https://abema.tv/video/episode/218-706_s1_p2154
+✅ 小林さんちのメイドラゴン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ セイレン / unext -> ⭕あり https://video.unext.jp/title/SID0027991
+✅ 六花の勇者 / abema -> ❌なし
+✅ 六花の勇者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ セイレン / abema -> ❌なし
+✅ セイレン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 亜人ちゃんは語りたい / unext -> ⭕あり https://video.unext.jp/title/SID0029194
+✅ 亜人ちゃんは語りたい / abema -> ❌なし
+✅ 亜人ちゃんは語りたい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハンドシェイカー / unext -> ⭕あり https://video.unext.jp/title/SID0027974
+✅ 乱歩奇譚 Game of Laplace / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 六花の勇者 / unext -> ⭕あり https://video.unext.jp/title/SID0018869
+✅ ハンドシェイカー / abema -> ❌なし
+✅ ハンドシェイカー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BanG Dream! / unext -> ⭕あり https://video.unext.jp/title/SID0255959
+✅ BanG Dream! / abema -> ⭕あり https://abema.tv/video/title/283-26
+✅ BanG Dream! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 風夏 / unext -> ⭕あり https://video.unext.jp/title/SID0027704
+✅ 乱歩奇譚 Game of Laplace / unext -> ⭕あり https://video.unext.jp/title/SID0018892
+✅ 乱歩奇譚 Game of Laplace / abema -> ❌なし
+✅ 風夏 / abema -> ❌なし
+✅ 風夏 / dmmtv -> ❌なし
+✅ 政宗くんのリベンジ / unext -> ⭕あり https://video.unext.jp/title/SID0087160
+✅ 政宗くんのリベンジ / abema -> ⭕あり https://abema.tv/video/title/247-18
+✅ 政宗くんのリベンジ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 幼女戦記 / unext -> ⭕あり https://video.unext.jp/title/SID0027973
+✅ モンスター娘のいる日常 / abema -> ❌なし
+✅ モンスター娘のいる日常 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 幼女戦記 / abema -> ⭕あり https://abema.tv/video/title/25-46
+✅ 幼女戦記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 龍の歯医者 / unext -> ⭕あり https://video.unext.jp/title/SID0028480
+✅ 龍の歯医者 / abema -> ❌なし
+✅ 龍の歯医者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ One Room / unext -> ⭕あり https://video.unext.jp/title/SID0027872
+✅ 監獄学園(プリズンスクール) / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ モンスター娘のいる日常 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000132273
+✅ One Room / abema -> ❌なし
+✅ One Room / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ エロマンガ先生 / unext -> ⭕あり https://video.unext.jp/title/SID0028964
+✅ エロマンガ先生 / abema -> ❌なし
+✅ エロマンガ先生 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 銀の墓守り / unext -> ❌なし
+✅ 監獄学園(プリズンスクール) / unext -> ⭕あり https://video.unext.jp/title/SID0021215
+✅ 監獄学園(プリズンスクール) / abema -> ❌なし
+✅ 銀の墓守り / abema -> ❌なし
+✅ 銀の墓守り / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ クロックワーク・プラネット / unext -> ⭕あり https://video.unext.jp/title/SID0028847
+✅ クロックワーク・プラネット / abema -> ❌なし
+✅ クロックワーク・プラネット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サクラダリセット / unext -> ⭕あり https://video.unext.jp/title/SID0030099
+✅ 干物妹！うまるちゃん / abema -> ❌なし
+✅ 干物妹！うまるちゃん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サクラダリセット / abema -> ❌なし
+✅ サクラダリセット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / unext -> ⭕あり https://video.unext.jp/title/SID0028965
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / abema -> ❌なし
+✅ 終末なにしてますか？ 忙しいですか？ 救ってもらっていいですか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ sin 七つの大罪 / unext -> ⭕あり https://video.unext.jp/title/SID0028845
+✅ ビキニ・ウォリアーズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 干物妹！うまるちゃん / unext -> ⭕あり https://video.unext.jp/title/SID0031395
+✅ sin 七つの大罪 / abema -> ❌なし
+✅ sin 七つの大罪 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 正解するカド / unext -> ⭕あり https://video.unext.jp/title/SID0029041
+✅ 正解するカド / abema -> ❌なし
+✅ 正解するカド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゼロから始める魔法の書 / unext -> ⭕あり https://video.unext.jp/title/SID0028969
+✅ ビキニ・ウォリアーズ / unext -> ⭕あり https://video.unext.jp/title/SID0018986
+✅ ビキニ・ウォリアーズ / abema -> ❌なし
+✅ ゼロから始める魔法の書 / abema -> ❌なし
+✅ ゼロから始める魔法の書 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ソード・オラトリア / unext -> ⭕あり https://video.unext.jp/title/SID0028848
+✅ ソード・オラトリア / abema -> ⭕あり https://abema.tv/video/title/174-7
+✅ ソード・オラトリア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 月がきれい / unext -> ⭕あり https://video.unext.jp/title/SID0029348
+✅ 城下町のダンデライオン / abema -> ❌なし
+✅ 城下町のダンデライオン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 月がきれい / abema -> ❌なし
+✅ 月がきれい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 武装少女マキャヴェリズム / unext -> ⭕あり https://video.unext.jp/title/SID0028963
+✅ 武装少女マキャヴェリズム / abema -> ❌なし
+✅ 武装少女マキャヴェリズム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / unext -> ⭕あり https://video.unext.jp/title/SID0029042
+✅ Charlotte(シャーロット) / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 城下町のダンデライオン / unext -> ⭕あり https://video.unext.jp/title/SID0019041
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / abema -> ❌なし
+✅ BORUTO -ボルト- NARUTO NEXT GENERATIONS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Re:CREATORS / unext -> ⭕あり https://video.unext.jp/title/SID0031331
+✅ Re:CREATORS / abema -> ❌なし
+✅ Re:CREATORS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 恋愛暴君 / unext -> ⭕あり https://video.unext.jp/title/SID0028850
+✅ Charlotte(シャーロット) / unext -> ❌なし
+✅ Charlotte(シャーロット) / abema -> ❌なし
+✅ 恋愛暴君 / abema -> ❌なし
+✅ 恋愛暴君 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ロクでなし魔術講師と禁忌教典 / unext -> ⭕あり https://video.unext.jp/title/SID0028966
+✅ ロクでなし魔術講師と禁忌教典 / abema -> ❌なし
+✅ ロクでなし魔術講師と禁忌教典 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アホガール / unext -> ⭕あり https://video.unext.jp/title/SID0030106
+✅ 下ネタという概念が存在しない退屈な世界 / abema -> ❌なし
+✅ 下ネタという概念が存在しない退屈な世界 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アホガール / abema -> ❌なし
+✅ アホガール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界食堂 / unext -> ⭕あり https://video.unext.jp/title/SID0030180
+✅ シャングリラ・フロンティア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 聖剣学院の魔剣使い / unext -> ⭕あり https://video.unext.jp/title/SID0091735
+✅ 聖剣学院の魔剣使い / abema -> ⭕あり https://abema.tv/video/title/11-54
+✅ 実は私は / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 下ネタという概念が存在しない退屈な世界 / unext -> ⭕あり https://video.unext.jp/title/SID0018927
+✅ 聖剣学院の魔剣使い / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ PLUTO / unext -> ⭕あり https://video.unext.jp/title/SID0238060
+✅ PLUTO / abema -> ❌なし
+✅ PLUTO / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺だけレベルアップな件 / unext -> ⭕あり https://video.unext.jp/title/SID0095999
+✅ 俺だけレベルアップな件 / abema -> ❌なし
+✅ 実は私は / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000035774
+✅ 実は私は / abema -> ❌なし
+✅ 俺だけレベルアップな件 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 愚かな天使は悪魔と踊る / unext -> ⭕あり https://video.unext.jp/title/SID0096087
+✅ 愚かな天使は悪魔と踊る / abema -> ❌なし
+✅ 愚かな天使は悪魔と踊る / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000333629
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / abema -> ❌なし
+✅ ケイオスドラゴン 赤竜戦役 / abema -> ❌なし
+✅ ケイオスドラゴン 赤竜戦役 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 七つの大罪 黙示録の四騎士 / unext -> ⭕あり https://video.unext.jp/title/SID0157060
+✅ 七つの大罪 黙示録の四騎士 / abema -> ❌なし
+✅ 七つの大罪 黙示録の四騎士 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ はめつのおうこく / unext -> ⭕あり https://video.unext.jp/title/SID0091707
+✅ はめつのおうこく / abema -> ❌なし
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ケイオスドラゴン 赤竜戦役 / unext -> ❌なし
+✅ はめつのおうこく / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ひきこまり吸血姫の悶々 / unext -> ⭕あり https://video.unext.jp/title/SID0092059
+✅ ひきこまり吸血姫の悶々 / abema -> ⭕あり https://abema.tv/video/title/174-29
+✅ ひきこまり吸血姫の悶々 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 豚のレバーは加熱しろ / unext -> ⭕あり https://video.unext.jp/title/SID0091732
+✅ 豚のレバーは加熱しろ / abema -> ❌なし
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / unext -> ❌なし
+✅ GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり / abema -> ❌なし
+✅ 豚のレバーは加熱しろ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / unext -> ⭕あり https://video.unext.jp/title/SID0091737
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / abema -> ⭕あり https://abema.tv/video/title/11-53
+✅ 冒険者になりたいと都に出て行った娘がSランクになってた / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 暴食のベルセルク / unext -> ⭕あり https://video.unext.jp/title/SID0091713
+✅ 暴食のベルセルク / abema -> ❌なし
+✅ 空戦魔導士候補生の教官 / abema -> ❌なし
+✅ 空戦魔導士候補生の教官 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 暴食のベルセルク / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ミギとダリ / unext -> ⭕あり https://video.unext.jp/title/SID0091708
+✅ ミギとダリ / abema -> ❌なし
+✅ ミギとダリ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ラグナクリムゾン / unext -> ⭕あり https://video.unext.jp/title/SID0093574
+✅ ラグナクリムゾン / abema -> ❌なし
+✅ GANGSTA. / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 空戦魔導士候補生の教官 / unext -> ⭕あり https://video.unext.jp/title/SID0018996
+✅ ラグナクリムゾン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 私の推しは悪役令嬢。 / unext -> ⭕あり https://video.unext.jp/title/SID0093577
+✅ 私の推しは悪役令嬢。 / abema -> ❌なし
+✅ 私の推しは悪役令嬢。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ グッド・ナイト・ワールド / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000800706
+✅ グッド・ナイト・ワールド / abema -> ❌なし
+✅ GANGSTA. / unext -> ⭕あり https://video.unext.jp/title/SID0019023
+✅ GANGSTA. / abema -> ❌なし
+✅ グッド・ナイト・ワールド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / unext -> ⭕あり https://video.unext.jp/title/SID0096085
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / abema -> ⭕あり https://abema.tv/video/title/25-250
+✅ 悪役令嬢レベル99～私は裏ボスですが魔王ではありません～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 結婚指輪物語 / unext -> ⭕あり https://video.unext.jp/title/SID0232870
+✅ 結婚指輪物語 / abema -> ⭕あり https://abema.tv/video/title/149-22
+✅ がっこうぐらし！ / abema -> ❌なし
+✅ がっこうぐらし！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 結婚指輪物語 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / unext -> ⭕あり https://video.unext.jp/title/SID0096697
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / abema -> ❌なし
+✅ 即死チートが最強すぎて、異世界のやつらがまるで相手にならないんですが。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダンジョン飯 / unext -> ⭕あり https://video.unext.jp/title/SID0096083
+✅ ダンジョン飯 / abema -> ❌なし
+✅ おくさまが生徒会長！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ がっこうぐらし！ / unext -> ⭕あり https://video.unext.jp/title/SID0043070
+✅ ダンジョン飯 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000276130
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / abema -> ⭕あり https://abema.tv/video/title/117-36
+✅ 治癒魔法の間違った使い方 ～戦場を駆ける回復要員～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 望まぬ不死の冒険者 / unext -> ⭕あり https://video.unext.jp/title/SID0095992
+✅ 望まぬ不死の冒険者 / abema -> ⭕あり https://abema.tv/video/title/149-25
+✅ おくさまが生徒会長！ / unext -> ⭕あり https://video.unext.jp/title/SID0038706
+✅ おくさまが生徒会長！ / abema -> ❌なし
+✅ 望まぬ不死の冒険者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 姫様“拷問”の時間です / unext -> ⭕あり https://video.unext.jp/title/SID0095998
+✅ 姫様“拷問”の時間です / abema -> ⭕あり https://abema.tv/video/title/2-15
+✅ 姫様“拷問”の時間です / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悶えてよ、アダムくん / unext -> ⭕あり https://video.unext.jp/title/SID0097523
+✅ 悶えてよ、アダムくん / abema -> ❌なし
+✅ オーバーロード（第1期） / abema -> ❌なし
+✅ オーバーロード（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悶えてよ、アダムくん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゆびさきと恋々 / unext -> ⭕あり https://video.unext.jp/title/SID0096082
+✅ ゆびさきと恋々 / abema -> ⭕あり https://abema.tv/video/title/632-5
+✅ ゆびさきと恋々 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / unext -> ⭕あり https://video.unext.jp/title/SID0096005
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / abema -> ❌なし
+✅ うしおととら（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オーバーロード（第1期） / unext -> ❌なし
+✅ ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Unnamed Memory / unext -> ⭕あり https://video.unext.jp/title/SID0100050
+✅ Unnamed Memory / abema -> ⭕あり https://abema.tv/video/title/25-262
+✅ Unnamed Memory / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ WIND BREAKER / unext -> ⭕あり https://video.unext.jp/title/SID0181246
+✅ WIND BREAKER / abema -> ⭕あり https://abema.tv/video/title/26-219
+✅ うしおととら（第1期） / unext -> ❌なし
+✅ うしおととら（第1期） / abema -> ⭕あり https://abema.tv/video/title/149-3
+✅ WIND BREAKER / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 怪獣8号 / unext -> ⭕あり https://video.unext.jp/title/SID0100076
+✅ 怪獣8号 / abema -> ⭕あり https://abema.tv/video/title/19-190
+✅ 怪獣8号 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガールズバンドクライ / unext -> ⭕あり https://video.unext.jp/title/SID0100041
+✅ ガールズバンドクライ / abema -> ⭕あり https://abema.tv/video/episode/218-706_s1_p2191
+✅ 赤髪の白雪姫（第1期） / abema -> ❌なし
+✅ 赤髪の白雪姫（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガールズバンドクライ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 狼と香辛料 merchant meets the wise wolf / unext -> ⭕あり https://video.unext.jp/title/SID0100059
+✅ 狼と香辛料 merchant meets the wise wolf / abema -> ⭕あり https://abema.tv/video/title/25-259
+✅ 狼と香辛料 merchant meets the wise wolf / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 烏は主を選ばない / unext -> ⭕あり https://video.unext.jp/title/SID0100062
+✅ 烏は主を選ばない / abema -> ❌なし
+✅ 青春×機関銃 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 赤髪の白雪姫（第1期） / unext -> ❌なし
+✅ 烏は主を選ばない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 喧嘩独学 / unext -> ⭕あり https://video.unext.jp/title/SID0100077
+✅ 喧嘩独学 / abema -> ❌なし
+✅ 喧嘩独学 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ THE NEW GATE / unext -> ⭕あり https://video.unext.jp/title/SID0100088
+✅ THE NEW GATE / abema -> ❌なし
+✅ 青春×機関銃 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000042711
+✅ 青春×機関銃 / abema -> ❌なし
+✅ THE NEW GATE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ザ・ファブル / unext -> ⭕あり https://video.unext.jp/title/SID0100087
+✅ ザ・ファブル / abema -> ❌なし
+✅ ザ・ファブル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 戦隊大失格 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000873982
+✅ 戦隊大失格 / abema -> ❌なし
+✅ 山田くんと7人の魔女 / abema -> ❌なし
+✅ 山田くんと7人の魔女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 戦隊大失格 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / unext -> ⭕あり https://video.unext.jp/title/SID0100040
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / abema -> ❌なし
+✅ 出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生貴族、鑑定スキルで成り上がる / unext -> ⭕あり https://video.unext.jp/title/SID0157614
+✅ 転生貴族、鑑定スキルで成り上がる / abema -> ⭕あり https://abema.tv/video/title/420-65
+✅ プラスティック・メモリーズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 山田くんと7人の魔女 / unext -> ⭕あり https://video.unext.jp/title/SID0013567
+✅ 転生貴族、鑑定スキルで成り上がる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / unext -> ⭕あり https://video.unext.jp/title/SID0201738
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / abema -> ⭕あり https://abema.tv/video/title/420-66
+✅ 転生したら第七王子だったので、気ままに魔術を極めます / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バーテンダー 神のグラス / unext -> ⭕あり https://video.unext.jp/title/SID0100075
+✅ バーテンダー 神のグラス / abema -> ❌なし
+✅ プラスティック・メモリーズ / unext -> ⭕あり https://video.unext.jp/title/SID0012716
+✅ プラスティック・メモリーズ / abema -> ❌なし
+✅ バーテンダー 神のグラス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 変人のサラダボウル / unext -> ⭕あり https://video.unext.jp/title/SID0100078
+✅ 変人のサラダボウル / abema -> ❌なし
+✅ 変人のサラダボウル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ しかのこのこのここしたんたん / unext -> ⭕あり https://video.unext.jp/title/SID0104169
+✅ しかのこのこのここしたんたん / abema -> ⭕あり https://abema.tv/video/title/675-2
+✅ 響け！ユーフォニアム（第1期） / abema -> ❌なし
+✅ 響け！ユーフォニアム（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ しかのこのこのここしたんたん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 義妹生活 / unext -> ⭕あり https://video.unext.jp/title/SID0104145
+✅ 義妹生活 / abema -> ❌なし
+✅ 義妹生活 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ チ。―地球の運動について― / unext -> ⭕あり https://video.unext.jp/title/SID0166163
+✅ チ。―地球の運動について― / abema -> ⭕あり https://abema.tv/video/title/568-32
+✅ パンチライン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 響け！ユーフォニアム（第1期） / unext -> ❌なし
+✅ チ。―地球の運動について― / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 忘却バッテリー / unext -> ⭕あり https://video.unext.jp/title/SID0100046
+✅ 忘却バッテリー / abema -> ❌なし
+✅ 忘却バッテリー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / unext -> ⭕あり https://video.unext.jp/title/SID0100061
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / abema -> ⭕あり https://abema.tv/video/title/194-40
+✅ パンチライン / unext -> ⭕あり https://video.unext.jp/title/SID0018377
+✅ パンチライン / abema -> ⭕あり https://abema.tv/video/episode/90-1426_s4_p1
+✅ 魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Re:Monster / unext -> ⭕あり https://video.unext.jp/title/SID0100049
+✅ Re:Monster / abema -> ❌なし
+✅ Re:Monster / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夜桜さんちの大作戦 / unext -> ⭕あり https://video.unext.jp/title/SID0100044
+✅ 夜桜さんちの大作戦 / abema -> ❌なし
+✅ トリアージX / abema -> ❌なし
+✅ トリアージX / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夜桜さんちの大作戦 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夜のクラゲは泳げない / unext -> ⭕あり https://video.unext.jp/title/SID0100090
+✅ 夜のクラゲは泳げない / abema -> ❌なし
+✅ 夜のクラゲは泳げない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / unext -> ⭕あり https://video.unext.jp/title/SID0100081
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / abema -> ❌なし
+✅ 電波教師 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ トリアージX / unext -> ⭕あり https://video.unext.jp/title/SID0018374
+✅ Lv2からチートだった元勇者候補のまったり異世界ライフ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ T・Pぼん シーズン1 / unext -> ❌なし
+✅ T・Pぼん シーズン1 / abema -> ❌なし
+✅ T・Pぼん シーズン1 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界スーサイド・スクワッド / unext -> ⭕あり https://video.unext.jp/title/SID0104340
+✅ 異世界スーサイド・スクワッド / abema -> ❌なし
+✅ 電波教師 / unext -> ⭕あり https://video.unext.jp/title/SID0012713
+✅ 電波教師 / abema -> ❌なし
+✅ 異世界スーサイド・スクワッド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000393153
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / abema -> ❌なし
+✅ 俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かつて魔法少女と悪は敵対していた。 / unext -> ⭕あり https://video.unext.jp/title/SID0104170
+✅ かつて魔法少女と悪は敵対していた。 / abema -> ❌なし
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / abema -> ⭕あり https://abema.tv/video/title/174-3
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かつて魔法少女と悪は敵対していた。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 「小市民」シリーズ / unext -> ⭕あり https://video.unext.jp/title/SID0104528
+✅ 「小市民」シリーズ / abema -> ⭕あり https://abema.tv/video/title/12-25
+✅ 「小市民」シリーズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 杖と剣のウィストリア / unext -> ⭕あり https://video.unext.jp/title/SID0104180
+✅ 杖と剣のウィストリア / abema -> ❌なし
+✅ 血界戦線 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダンジョンに出会いを求めるのは間違っているだろうか（第1期） / unext -> ❌なし
+✅ 杖と剣のウィストリア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / unext -> ⭕あり https://video.unext.jp/title/SID0104147
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / abema -> ❌なし
+✅ 時々ボソッとロシア語でデレる隣のアーリャさん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ なぜ僕の世界を誰も覚えていないのか？ / unext -> ⭕あり https://video.unext.jp/title/SID0104178
+✅ 暁のヨナ / abema -> ❌なし
+✅ 暁のヨナ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 結城友奈は勇者である / abema -> ❌なし
+✅ ワールドトリガー（1stシーズン） / unext -> ❌なし
+✅ ワールドトリガー（1stシーズン） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アイドルマスター シンデレラガールズ / abema -> ❌なし
+✅ 来世は他人がいい / abema -> ❌なし
+✅ 来世は他人がいい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 歴史に残る悪女になるぞ / unext -> ⭕あり https://video.unext.jp/title/SID0157057
+✅ 歴史に残る悪女になるぞ / abema -> ❌なし
+✅ 歴史に残る悪女になるぞ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ぼくたちのリメイク / unext -> ⭕あり https://video.unext.jp/title/SID0058480
+✅ ぼくたちのリメイク / abema -> ❌なし
+✅ ぼくたちのリメイク / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 女神寮の寮母くん。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 王様ランキング / unext -> ⭕あり https://video.unext.jp/title/SID0061700
+✅ 王様ランキング / abema -> ❌なし
+✅ 王様ランキング / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 古見さんは、コミュ症です。 / unext -> ⭕あり https://video.unext.jp/title/SID0061747
+✅ 古見さんは、コミュ症です。 / abema -> ❌なし
+✅ 古見さんは、コミュ症です。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 最果てのパラディン / unext -> ⭕あり https://video.unext.jp/title/SID0061707
+✅ しょうたいむ！～歌のお姉さんだってしたい / unext -> ⭕あり https://video.unext.jp/title/SID0061667
+✅ しょうたいむ！～歌のお姉さんだってしたい / abema -> ❌なし
+✅ しょうたいむ！～歌のお姉さんだってしたい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 進化の実～知らないうちに勝ち組人生～ / unext -> ⭕あり https://video.unext.jp/title/SID0076930
+✅ 進化の実～知らないうちに勝ち組人生～ / abema -> ❌なし
+✅ 進化の実～知らないうちに勝ち組人生～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / unext -> ⭕あり https://video.unext.jp/title/SID0101648
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / abema -> ⭕あり https://abema.tv/video/title/25-189
+✅ 世界最高の暗殺者、異世界貴族に転生する / abema -> ⭕あり https://abema.tv/video/title/25-182
+✅ 世界最高の暗殺者、異世界貴族に転生する / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ takt op.Destiny / unext -> ⭕あり https://video.unext.jp/title/SID0061697
+✅ takt op.Destiny / abema -> ❌なし
+✅ takt op.Destiny / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ プラチナエンド / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000143871
+✅ プラチナエンド / abema -> ❌なし
+✅ プラチナエンド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブルーピリオド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 見える子ちゃん / unext -> ⭕あり https://video.unext.jp/title/SID0252187
+✅ 見える子ちゃん / abema -> ❌なし
+✅ 見える子ちゃん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 賢者の弟子を名乗る賢者 / unext -> ⭕あり https://video.unext.jp/title/SID0063376
+✅ 賢者の弟子を名乗る賢者 / abema -> ❌なし
+✅ 賢者の弟子を名乗る賢者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 甘城ブリリアントパーク / unext -> ⭕あり https://video.unext.jp/title/SID0012554
+✅ 異能バトルは日常系のなかで / abema -> ⭕あり https://abema.tv/video/title/174-35
+✅ 失われた未来を求めて / unext -> ⭕あり https://video.unext.jp/title/SID0011932
+✅ 失われた未来を求めて / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オオカミ少女と黒王子 / abema -> ❌なし
+✅ 俺、ツインテールになります。 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000103761
+✅ 俺、ツインテールになります。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガールフレンド(仮) / abema -> ❌なし
+✅ 寄生獣 セイの格率 / unext -> ⭕あり https://video.unext.jp/title/SID0011863
+✅ グリザイアの果実 / abema -> ❌なし
+✅ クロスアンジュ 天使と竜の輪舞 / unext -> ⭕あり https://video.unext.jp/title/SID0017625
+✅ クロスアンジュ 天使と竜の輪舞 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 四月は君の嘘 / abema -> ⭕あり https://abema.tv/video/title/19-147
+✅ SHIROBAKO / unext -> ⭕あり https://video.unext.jp/title/SID0011933
+✅ SHIROBAKO / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 天体のメソッド / abema -> ❌なし
+✅ 旦那が何を言っているかわからない件 / unext -> ⭕あり https://video.unext.jp/title/SID0012730
+✅ トリニティセブン / abema -> ❌なし
+✅ Fate/stay night [Unlimited Blade Works] / unext -> ⭕あり https://video.unext.jp/title/SID0010777
+✅ Fate/stay night [Unlimited Blade Works] / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 残響のテロル / abema -> ❌なし
+✅ まじっく快斗1412 / unext -> ⭕あり https://video.unext.jp/title/SID0002987
+✅ まじっく快斗1412 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔弾の王と戦姫 / abema -> ❌なし
+✅ 結城友奈は勇者である / unext -> ⭕あり https://video.unext.jp/title/SID0052092
+✅ アイドルマスター シンデレラガールズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アブソリュート・デュオ / abema -> ❌なし
+✅ 暗殺教室（第1期） / unext -> ❌なし
+✅ 暗殺教室（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 艦隊これくしょん -艦これ- / abema -> ❌なし
+✅ 幸腹グラフィティ / unext -> ⭕あり https://video.unext.jp/title/SID0012570
+✅ 幸腹グラフィティ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 冴えない彼女の育てかた / abema -> ⭕あり https://abema.tv/video/title/19-143
+✅ 銃皇無尽のファフニール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 純潔のマリア / abema -> ❌なし
+✅ 新妹魔王の契約者 / unext -> ⭕あり https://video.unext.jp/title/SID0035660
+✅ 新妹魔王の契約者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / abema -> ❌なし
+✅ 夜ノヤッターマン / unext -> ⭕あり https://video.unext.jp/title/SID0002400
+✅ 夜ノヤッターマン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 食戟のソーマ（第1期） / abema -> ❌なし
+✅ 終わりのセラフ（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガンスリンガー ストラトス -THE ANIMATION- / abema -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / unext -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 血界戦線 / abema -> ❌なし
+✅ なぜ僕の世界を誰も覚えていないのか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 逃げ上手の若君 / abema -> ❌なし
+✅ 2.5次元の誘惑 / unext -> ⭕あり https://video.unext.jp/title/SID0104168
+✅ NINJA KAMUI / abema -> ❌なし
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / unext -> ⭕あり https://video.unext.jp/title/SID0104142
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ FAIRY TAIL 100年クエスト / abema -> ⭕あり https://abema.tv/video/title/168-63
+✅ 負けヒロインが多すぎる！ / unext -> ⭕あり https://video.unext.jp/title/SID0104158
+✅ 負けヒロインが多すぎる！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ モブから始まる探索英雄譚 / abema -> ⭕あり https://abema.tv/video/title/218-709
+✅ よあそびぐらしっ！ / unext -> ⭕あり https://video.unext.jp/title/SID0104167
+✅ アオのハコ / abema -> ⭕あり https://abema.tv/video/title/172-59
+✅ 甘神さんちの縁結び / unext -> ⭕あり https://video.unext.jp/title/SID0157093
+✅ 甘神さんちの縁結び / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 株式会社マジルミエ / abema -> ⭕あり https://abema.tv/video/title/19-204
+✅ 君は冥土様。 / unext -> ⭕あり https://video.unext.jp/title/SID0157088
+✅ 君は冥土様。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / abema -> ⭕あり https://abema.tv/video/title/54-95
+✅ ダンダダン / unext -> ⭕あり https://video.unext.jp/title/SID0156958
+✅ 妻、小学生になる。 / abema -> ⭕あり https://abema.tv/video/title/19-202
+✅ トリリオンゲーム / unext -> ⭕あり https://video.unext.jp/title/SID0090487
+✅ トリリオンゲーム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ パーティーから追放されたその治癒師、実は最強につき / abema -> ⭕あり https://abema.tv/video/title/11-62
+✅ ひとりぼっちの異世界攻略 / unext -> ⭕あり https://video.unext.jp/title/SID0157045
+✅ ひとりぼっちの異世界攻略 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王2099 / abema -> ⭕あり https://abema.tv/video/title/25-274
+✅ やり直し令嬢は竜帝陛下を攻略中 / unext -> ⭕あり https://video.unext.jp/title/SID0157074
+✅ 女神寮の寮母くん。 / unext -> ⭕あり https://video.unext.jp/title/SID0059227
+✅ 最果てのパラディン / abema -> ⭕あり https://abema.tv/video/title/54-64
+✅ 真の仲間じゃないと勇者のパーティーを追い出されたので、辺境でスローライフすることにしました / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブルーピリオド / unext -> ⭕あり https://video.unext.jp/title/SID0160718
+✅ 甘城ブリリアントパーク / abema -> ❌なし
+✅ 異能バトルは日常系のなかで / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オオカミ少女と黒王子 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガールフレンド(仮) / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ クロスアンジュ 天使と竜の輪舞 / abema -> ❌なし
+✅ SHIROBAKO / abema -> ❌なし
+✅ 旦那が何を言っているかわからない件 / abema -> ❌なし
+✅ トリニティセブン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 残響のテロル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔弾の王と戦姫 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アイドルマスター シンデレラガールズ / unext -> ⭕あり https://video.unext.jp/title/SID0017836
+✅ 暗殺教室（第1期） / abema -> ❌なし
+✅ 冴えない彼女の育てかた / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 純潔のマリア / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000177565
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / unext -> ⭕あり https://video.unext.jp/title/SID0018872
+✅ 食戟のソーマ（第1期） / unext -> ⭕あり https://video.unext.jp/title/SID0060099
+✅ 終わりのセラフ（第1期） / abema -> ❌なし
+✅ 境界のRINNE（第1シリーズ） / abema -> ❌なし
+✅ 逃げ上手の若君 / unext -> ⭕あり https://video.unext.jp/title/SID0104159
+✅ 2.5次元の誘惑 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ FAIRY TAIL 100年クエスト / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ モブから始まる探索英雄譚 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+⏳ Supabase 500 一時エラー: 1000ms 待って再試行...
+✅ アオのハコ / unext -> ⭕あり https://video.unext.jp/title/SID0157094
+✅ 株式会社マジルミエ / unext -> ⭕あり https://video.unext.jp/title/SID0157082
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / unext -> ⭕あり https://video.unext.jp/title/SID0157075
+✅ ダンダダン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ トリリオンゲーム / abema -> ❌なし
+✅ ひとりぼっちの異世界攻略 / abema -> ⭕あり https://abema.tv/video/title/189-70
+✅ 来世は他人がいい / unext -> ⭕あり https://video.unext.jp/title/SID0157050
+✅ 世界最高の暗殺者、異世界貴族に転生する / unext -> ⭕あり https://video.unext.jp/title/SID0058466
+✅ 異能バトルは日常系のなかで / unext -> ⭕あり https://video.unext.jp/title/SID0002999
+✅ ガールフレンド(仮) / unext -> ⭕あり https://video.unext.jp/title/SID0002955
+✅ グリザイアの果実 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 天体のメソッド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 残響のテロル / unext -> ⭕あり https://video.unext.jp/title/SID0011215
+✅ ワールドトリガー（1stシーズン） / abema -> ❌なし
+✅ 冴えない彼女の育てかた / unext -> ⭕あり https://video.unext.jp/title/SID0051544
+✅ 新妹魔王の契約者 / abema -> ❌なし
+✅ 終わりのセラフ（第1期） / unext -> ❌なし
+✅ なぜ僕の世界を誰も覚えていないのか？ / abema -> ❌なし
+✅ NINJA KAMUI / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ モブから始まる探索英雄譚 / unext -> ⭕あり https://video.unext.jp/title/SID0104156
+✅ 甘神さんちの縁結び / abema -> ⭕あり https://abema.tv/video/title/115-116
+✅ ダンダダン / abema -> ⭕あり https://abema.tv/video/title/593-10
+✅ 魔王2099 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 最果てのパラディン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オオカミ少女と黒王子 / unext -> ⭕あり https://video.unext.jp/title/SID0011865
+✅ 四月は君の嘘 / unext -> ⭕あり https://video.unext.jp/title/SID0012508
+✅ Fate/stay night [Unlimited Blade Works] / abema -> ❌なし
+✅ アブソリュート・デュオ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 銃皇無尽のファフニール / abema -> ❌なし
+✅ ガンスリンガー ストラトス -THE ANIMATION- / unext -> ❌なし
+✅ FAIRY TAIL 100年クエスト / unext -> ⭕あり https://video.unext.jp/title/SID0104171
+✅ 株式会社マジルミエ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ パーティーから追放されたその治癒師、実は最強につき / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000371064
+✅ 女神寮の寮母くん。 / abema -> ❌なし
+✅ 寄生獣 セイの格率 / abema -> ⭕あり https://abema.tv/video/title/143-61
+✅ トリニティセブン / unext -> ⭕あり https://video.unext.jp/title/SID0011931
+✅ 艦隊これくしょん -艦これ- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アオのハコ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王2099 / unext -> ⭕あり https://video.unext.jp/title/SID0157056
+✅ 俺、ツインテールになります。 / abema -> ❌なし
+✅ 魔弾の王と戦姫 / unext -> ⭕あり https://video.unext.jp/title/SID0017701
+✅ 聖剣使いの禁呪詠唱＜ワールドブレイク＞ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ NINJA KAMUI / unext -> ⭕あり https://video.unext.jp/title/SID0104162
+✅ 妻、小学生になる。 / unext -> ⭕あり https://video.unext.jp/title/SID0157067
+✅ 失われた未来を求めて / abema -> ❌なし
+✅ 結城友奈は勇者である / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガンスリンガー ストラトス -THE ANIMATION- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 君は冥土様。 / abema -> ⭕あり https://abema.tv/video/title/12-26
+✅ 寄生獣 セイの格率 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 銃皇無尽のファフニール / unext -> ⭕あり https://video.unext.jp/title/SID0003310
+✅ よあそびぐらしっ！ / abema -> ❌なし
+✅ グリザイアの果実 / unext -> ⭕あり https://video.unext.jp/title/SID0017690
+✅ 食戟のソーマ（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ やり直し令嬢は竜帝陛下を攻略中 / abema -> ❌なし
+✅ 幸腹グラフィティ / abema -> ❌なし
+✅ パーティーから追放されたその治癒師、実は最強につき / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 純潔のマリア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 四月は君の嘘 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 最凶の支援職【話術士】である俺は世界最強クランを従える / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 2.5次元の誘惑 / abema -> ⭕あり https://abema.tv/video/title/675-3
+✅ 血界戦線 / unext -> ⭕あり https://video.unext.jp/title/SID0012729
+✅ 逃げ上手の若君 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 負けヒロインが多すぎる！ / abema -> ❌なし
+✅ 甘城ブリリアントパーク / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ よあそびぐらしっ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハズレ枠の【状態異常スキル】で最強になった俺がすべてを蹂躙するまで / abema -> ❌なし
+✅ 天体のメソッド / unext -> ⭕あり https://video.unext.jp/title/SID0017696
+✅ ブルーピリオド / abema -> ❌なし
+✅ 夜ノヤッターマン / abema -> ❌なし
+✅ 妻、小学生になる。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ まじっく快斗1412 / abema -> ⭕あり https://abema.tv/video/title/415-6
+✅ アブソリュート・デュオ / unext -> ⭕あり https://video.unext.jp/title/SID0017844
+✅ やり直し令嬢は竜帝陛下を攻略中 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 旦那が何を言っているかわからない件 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 艦隊これくしょん -艦これ- / unext -> ⭕あり https://video.unext.jp/title/SID0026814
+✅ RAIL WARS! / abema -> ❌なし
+✅ 六畳間の侵略者!? / abema -> ❌なし
+✅ 呪術廻戦 死滅回游 前編 / unext -> ⭕あり https://video.unext.jp/title/SID0249078
+✅ 呪術廻戦 死滅回游 前編 / abema -> ⭕あり https://abema.tv/video/title/536-1
+✅ 呪術廻戦 死滅回游 前編 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 葬送のフリーレン 第2期 / unext -> ⭕あり https://video.unext.jp/title/SID0251484
+✅ 葬送のフリーレン 第2期 / abema -> ⭕あり https://abema.tv/video/title/19-171
+✅ 葬送のフリーレン 第2期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 地獄楽 第二期 / unext -> ❌なし
+✅ 地獄楽 第二期 / abema -> ❌なし
+✅ 地獄楽 第二期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / unext -> ⭕あり https://video.unext.jp/title/SID0251560
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / abema -> ⭕あり https://abema.tv/video/title/25-308
+✅ 勇者刑に処す　懲罰勇者9004隊刑務記録 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 【推しの子】第3期 / unext -> ⭕あり https://video.unext.jp/title/SID0251565
+✅ 【推しの子】第3期 / abema -> ⭕あり https://abema.tv/video/title/25-240
+✅ 【推しの子】第3期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 炎炎ノ消防隊 参ノ章 第2クール / unext -> ❌なし
+✅ 炎炎ノ消防隊 参ノ章 第2クール / abema -> ❌なし
+✅ 炎炎ノ消防隊 参ノ章 第2クール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Fate/strange Fake / unext -> ⭕あり https://video.unext.jp/title/SID0251572
+✅ Fate/strange Fake / abema -> ⭕あり https://abema.tv/video/title/26-206
+✅ Fate/strange Fake / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / unext -> ❌なし
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / abema -> ❌なし
+✅ 劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / unext -> ❌なし
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / abema -> ❌なし
+✅ ジョジョの奇妙な冒険 スティール・ボール・ラン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 正反対な君と僕 / unext -> ⭕あり https://video.unext.jp/title/SID0252773
+✅ 正反対な君と僕 / abema -> ⭕あり https://abema.tv/video/title/210-16
+✅ 正反対な君と僕 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / unext -> ❌なし
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / abema -> ⭕あり https://abema.tv/video/title/420-11
+✅ 劇場版 転生したらスライムだった件 蒼海の涙編 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔都精兵のスレイブ2 / unext -> ⭕あり https://video.unext.jp/title/SID0251559
+✅ 魔都精兵のスレイブ2 / abema -> ⭕あり https://abema.tv/video/title/189-59
+✅ 魔都精兵のスレイブ2 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 死亡遊戯で飯を食う。 / unext -> ⭕あり https://video.unext.jp/title/SID0251567
+✅ 死亡遊戯で飯を食う。 / abema -> ⭕あり https://abema.tv/video/title/25-311
+✅ 死亡遊戯で飯を食う。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 勇者パーティを追い出された器用貧乏 / unext -> ⭕あり https://video.unext.jp/title/SID0252774
+✅ 勇者パーティを追い出された器用貧乏 / abema -> ⭕あり https://abema.tv/video/title/420-75
+✅ 勇者パーティを追い出された器用貧乏 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / unext -> ❌なし
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / abema -> ⭕あり https://abema.tv/video/title/19-253
+✅ ヴィジランテ -僕のヒーローアカデミア ILLEGALS- 第2期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ TRIGUN STARGAZE / unext -> ⭕あり https://video.unext.jp/title/SID0251554
+✅ TRIGUN STARGAZE / abema -> ❌なし
+✅ TRIGUN STARGAZE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 多聞くん今どっち！？ / unext -> ⭕あり https://video.unext.jp/title/SID0252770
+✅ 多聞くん今どっち！？ / abema -> ⭕あり https://abema.tv/video/title/115-125
+✅ 多聞くん今どっち！？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / unext -> ⭕あり https://video.unext.jp/title/SID0251571
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / abema -> ⭕あり https://abema.tv/video/title/656-4
+✅ 勇者パーティーにかわいい子がいたので、告白してみた。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 劇場版 僕の心のヤバイやつ / unext -> ❌なし
+✅ 劇場版 僕の心のヤバイやつ / abema -> ❌なし
+✅ 劇場版 僕の心のヤバイやつ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 真夜中ハートチューン / unext -> ⭕あり https://video.unext.jp/title/SID0249080
+✅ 真夜中ハートチューン / abema -> ⭕あり https://abema.tv/video/title/11-77
+✅ 真夜中ハートチューン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 違国日記 / unext -> ⭕あり https://video.unext.jp/title/SID0233416
+✅ 違国日記 / abema -> ⭕あり https://abema.tv/video/title/189-87
+✅ 違国日記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ うるわしの宵の月 / unext -> ⭕あり https://video.unext.jp/title/SID0251568
+✅ うるわしの宵の月 / abema -> ⭕あり https://abema.tv/video/title/194-79
+✅ うるわしの宵の月 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / unext -> ⭕あり https://video.unext.jp/title/SID0249082
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / abema -> ⭕あり https://abema.tv/video/title/174-37
+✅ 貴族転生 ～恵まれた生まれから最強の力を得る～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔術師クノンは見えている / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000607066
+✅ 魔術師クノンは見えている / abema -> ⭕あり https://abema.tv/video/title/704-1
+✅ 魔術師クノンは見えている / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / unext -> ⭕あり https://video.unext.jp/title/SID0079585
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / abema -> ⭕あり https://abema.tv/video/title/172-54
+✅ 異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゴールデンカムイ 最終章 / unext -> ❌なし
+✅ ゴールデンカムイ 最終章 / abema -> ❌なし
+✅ ゴールデンカムイ 最終章 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダーウィン事変 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000409015
+✅ ダーウィン事変 / abema -> ❌なし
+✅ ダーウィン事変 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ALL YOU NEED IS KILL / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000086864
+✅ ALL YOU NEED IS KILL / abema -> ❌なし
+✅ ALL YOU NEED IS KILL / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / unext -> ⭕あり https://video.unext.jp/title/SID0252769
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / abema -> ⭕あり https://abema.tv/video/title/593-14
+✅ ヘルモード ～やり込み好きのゲーマーは廃設定の異世界で無双する～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / unext -> ❌なし
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / abema -> ⭕あり https://abema.tv/video/title/750-2
+✅ わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ エリスの聖杯 / unext -> ⭕あり https://video.unext.jp/title/SID0249089
+✅ エリスの聖杯 / abema -> ⭕あり https://abema.tv/video/title/780-1
+✅ エリスの聖杯 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ お気楽領主の楽しい領地防衛 / unext -> ⭕あり https://video.unext.jp/title/SID0249079
+✅ お気楽領主の楽しい領地防衛 / abema -> ⭕あり https://abema.tv/video/title/149-34
+✅ お気楽領主の楽しい領地防衛 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000489503
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / abema -> ⭕あり https://abema.tv/video/title/198-19
+✅ 透明男と人間女～そのうち夫婦になるふたり～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / unext -> ⭕あり https://video.unext.jp/title/SID0249090
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / abema -> ⭕あり https://abema.tv/video/title/247-22
+✅ 「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ デッドアカウント / unext -> ⭕あり https://video.unext.jp/title/SID0251275
+✅ デッドアカウント / abema -> ⭕あり https://abema.tv/video/title/632-7
+✅ デッドアカウント / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 綺麗にしてもらえますか。 / unext -> ⭕あり https://video.unext.jp/title/SID0255299
+✅ 綺麗にしてもらえますか。 / abema -> ⭕あり https://abema.tv/video/title/169-151
+✅ 綺麗にしてもらえますか。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 異世界の沙汰は社畜次第 / unext -> ⭕あり https://video.unext.jp/title/SID0251561
+✅ 異世界の沙汰は社畜次第 / abema -> ⭕あり https://abema.tv/video/title/25-309
+✅ 異世界の沙汰は社畜次第 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 幼馴染とはラブコメにならない / unext -> ⭕あり https://video.unext.jp/title/SID0249087
+✅ 幼馴染とはラブコメにならない / abema -> ⭕あり https://abema.tv/video/title/218-860
+✅ 幼馴染とはラブコメにならない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ シャンピニオンの魔女 / unext -> ⭕あり https://video.unext.jp/title/SID0251569
+✅ シャンピニオンの魔女 / abema -> ⭕あり https://abema.tv/video/title/194-81
+✅ シャンピニオンの魔女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BEASTARS FINAL SEASON Part 2 / unext -> ❌なし
+✅ BEASTARS FINAL SEASON Part 2 / abema -> ❌なし
+✅ BEASTARS FINAL SEASON Part 2 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悪役令嬢は隣国の王太子に溺愛される / unext -> ⭕あり https://video.unext.jp/title/SID0249083
+✅ 悪役令嬢は隣国の王太子に溺愛される / abema -> ⭕あり https://abema.tv/video/title/198-18
+✅ 悪役令嬢は隣国の王太子に溺愛される / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ メダリスト 第2期 / unext -> ❌なし
+✅ メダリスト 第2期 / abema -> ❌なし
+✅ メダリスト 第2期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔王の娘は優しすぎる!! / unext -> ⭕あり https://video.unext.jp/title/SID0251570
+✅ 魔王の娘は優しすぎる!! / abema -> ⭕あり https://abema.tv/video/title/194-80
+✅ 魔王の娘は優しすぎる!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 超かぐや姫！ / unext -> ❌なし
+✅ 超かぐや姫！ / abema -> ❌なし
+✅ 超かぐや姫！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ カヤちゃんはコワくない / unext -> ⭕あり https://video.unext.jp/title/SID0249086
+✅ カヤちゃんはコワくない / abema -> ⭕あり https://abema.tv/video/title/54-114
+✅ カヤちゃんはコワくない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 花ざかりの君たちへ / unext -> ⭕あり https://video.unext.jp/title/SID0251573
+✅ 花ざかりの君たちへ / abema -> ⭕あり https://abema.tv/video/title/26-259
+✅ 花ざかりの君たちへ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 29歳独身中堅冒険者の日常 / unext -> ⭕あり https://video.unext.jp/title/SID0251562
+✅ 29歳独身中堅冒険者の日常 / abema -> ⭕あり https://abema.tv/video/title/25-305
+✅ 29歳独身中堅冒険者の日常 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 転生したらドラゴンの卵だった / unext -> ⭕あり https://video.unext.jp/title/SID0249081
+✅ 転生したらドラゴンの卵だった / abema -> ⭕あり https://abema.tv/video/title/11-78
+✅ 転生したらドラゴンの卵だった / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 姫様“拷問”の時間です 第2期 / unext -> ⭕あり https://video.unext.jp/title/SID0251578
+✅ 姫様“拷問”の時間です 第2期 / abema -> ⭕あり https://abema.tv/video/title/2-15
+✅ 姫様“拷問”の時間です 第2期 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アンドロイドは経験人数に入りますか？？ / unext -> ⭕あり https://video.unext.jp/title/SID0251552
+✅ アンドロイドは経験人数に入りますか？？ / abema -> ⭕あり https://abema.tv/video/title/643-18
+✅ アンドロイドは経験人数に入りますか？？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 暗殺教室 みんなの時間 / unext -> ❌なし
+✅ 暗殺教室 みんなの時間 / abema -> ❌なし
+✅ 暗殺教室 みんなの時間 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 勇者のクズ / unext -> ⭕あり https://video.unext.jp/title/SID0251566
+✅ 勇者のクズ / abema -> ⭕あり https://abema.tv/video/title/25-310
+✅ 勇者のクズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ MFゴースト 3rd Season / unext -> ⭕あり https://video.unext.jp/title/SID0249085
+✅ MFゴースト 3rd Season / abema -> ❌なし
+✅ MFゴースト 3rd Season / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 穏やか貴族の休暇のすすめ。 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0001056400
+✅ 穏やか貴族の休暇のすすめ。 / abema -> ❌なし
+✅ 穏やか貴族の休暇のすすめ。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ DARK MOON　-黒の月: 月の祭壇- / unext -> ⭕あり https://video.unext.jp/title/SID0251574
+✅ DARK MOON　-黒の月: 月の祭壇- / abema -> ⭕あり https://abema.tv/video/title/26-258
+✅ DARK MOON　-黒の月: 月の祭壇- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ プリズム輪舞曲 / unext -> ❌なし
+✅ プリズム輪舞曲 / abema -> ❌なし
+✅ プリズム輪舞曲 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 人外教室の人間嫌い教師 / unext -> ⭕あり https://video.unext.jp/title/SID0251564
+✅ 人外教室の人間嫌い教師 / abema -> ⭕あり https://abema.tv/video/title/25-306
+✅ 人外教室の人間嫌い教師 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アルネの事件簿 / unext -> ⭕あり https://video.unext.jp/title/SID0252771
+✅ アルネの事件簿 / abema -> ⭕あり https://abema.tv/video/title/115-126
+✅ アルネの事件簿 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 拷問バイトくんの日常 / unext -> ⭕あり https://video.unext.jp/title/SID0251563
+✅ 拷問バイトくんの日常 / abema -> ⭕あり https://abema.tv/video/title/25-307
+✅ 拷問バイトくんの日常 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / unext -> ❌なし
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / abema -> ⭕あり https://abema.tv/video/title/13-202
+✅ 機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 花緑青が明ける日に / unext -> ⭕あり https://video.unext.jp/book/title/BSD0001098072
+✅ 花緑青が明ける日に / abema -> ❌なし
+✅ 花緑青が明ける日に / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ どうせ、恋してしまうんだ。Season 2 / unext -> ❌なし
+✅ どうせ、恋してしまうんだ。Season 2 / abema -> ⭕あり https://abema.tv/video/title/19-219
+✅ どうせ、恋してしまうんだ。Season 2 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 火喰鳥 / unext -> ⭕あり https://video.unext.jp/title/SID0251276
+✅ 火喰鳥 / abema -> ⭕あり https://abema.tv/video/title/694-16
+✅ 火喰鳥 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 新劇場版 銀魂 -吉原大炎上- / unext -> ❌なし
+✅ 新劇場版 銀魂 -吉原大炎上- / abema -> ❌なし
+✅ 新劇場版 銀魂 -吉原大炎上- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ パリに咲くエトワール / unext -> ❌なし
+✅ パリに咲くエトワール / abema -> ❌なし
+✅ パリに咲くエトワール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 鎧真伝サムライトルーパー / unext -> ⭕あり https://video.unext.jp/title/SID0251577
+✅ 鎧真伝サムライトルーパー / abema -> ⭕あり https://abema.tv/video/title/13-203
+✅ 鎧真伝サムライトルーパー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ クスノキの番人 / unext -> ❌なし
+✅ クスノキの番人 / abema -> ❌なし
+✅ クスノキの番人 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 青のミブロ 芹沢暗殺編 / unext -> ❌なし
+✅ 青のミブロ 芹沢暗殺編 / abema -> ⭕あり https://abema.tv/video/title/19-205
+✅ 青のミブロ 芹沢暗殺編 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000278190
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / abema -> ❌なし
+✅ ガールズ＆パンツァー もっとらぶらぶ作戦です！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / unext -> ❌なし
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / abema -> ⭕あり https://abema.tv/video/title/750-1
+✅ 地獄先生ぬ～べ～ (2025) 第2クール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / unext -> ⭕あり https://video.unext.jp/title/SID0251553
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / abema -> ⭕あり https://abema.tv/video/title/643-16
+✅ イチゴ哀歌～雑で生イキな妹と割り切れない兄～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / unext -> ❌なし
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / abema -> ❌なし
+✅ エヴァンゲリオン 新作短編アニメーション（仮） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 迷宮のしおり / unext -> ⭕あり https://video.unext.jp/book/title/BSD0001069733
+✅ 迷宮のしおり / abema -> ❌なし
+✅ 迷宮のしおり / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 進撃の巨人 / unext -> ⭕あり https://video.unext.jp/title/SID0063895
+✅ 進撃の巨人 / abema -> ⭕あり https://abema.tv/video/title/30-5
+✅ 進撃の巨人 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 86 ―エイティシックス― / unext -> ⭕あり https://video.unext.jp/title/SID0056090
+✅ 86 ―エイティシックス― / abema -> ❌なし
+✅ 86 ―エイティシックス― / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ プラネテス / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000006784
+✅ プラネテス / abema -> ❌なし
+✅ プラネテス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Fate/Zero / unext -> ⭕あり https://video.unext.jp/title/SID0016588
+✅ Fate/Zero / abema -> ❌なし
+✅ Fate/Zero / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヴィンランド・サガ / unext -> ⭕あり https://video.unext.jp/title/SID0148119
+✅ ヴィンランド・サガ / abema -> ❌なし
+✅ ヴィンランド・サガ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ID:INVADED / unext -> ⭕あり https://video.unext.jp/title/SID0045325
+✅ ID:INVADED / abema -> ❌なし
+✅ ID:INVADED / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ PSYCHO-PASS / unext -> ⭕あり https://video.unext.jp/title/SID0079419
+✅ PSYCHO-PASS / abema -> ⭕あり https://abema.tv/video/title/19-107
+✅ PSYCHO-PASS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ メイドインアビス / unext -> ⭕あり https://video.unext.jp/title/SID0070853
+✅ メイドインアビス / abema -> ⭕あり https://abema.tv/video/title/25-135
+✅ メイドインアビス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 少女終末旅行 / unext -> ⭕あり https://video.unext.jp/title/SID0031286
+✅ 少女終末旅行 / abema -> ⭕あり https://abema.tv/video/title/25-78
+✅ 少女終末旅行 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ オッドタクシー / unext -> ⭕あり https://video.unext.jp/title/SID0070978
+✅ オッドタクシー / abema -> ❌なし
+✅ オッドタクシー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 蟲師 / unext -> ⭕あり https://video.unext.jp/title/SID0002335
+✅ 蟲師 / abema -> ❌なし
+✅ 蟲師 / dmmtv -> ❌なし
+✅ デスパレード / unext -> ⭕あり https://video.unext.jp/title/SID0002401
+✅ デスパレード / abema -> ❌なし
+✅ デスパレード / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 灰と幻想のグリムガル / unext -> ⭕あり https://video.unext.jp/title/SID0021061
+✅ 灰と幻想のグリムガル / abema -> ⭕あり https://abema.tv/video/title/19-6
+✅ 灰と幻想のグリムガル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Angel Beats! / unext -> ⭕あり https://video.unext.jp/title/SID0018967
+✅ Angel Beats! / abema -> ❌なし
+✅ Angel Beats! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 新世界より / unext -> ⭕あり https://video.unext.jp/title/SID0013096
+✅ 新世界より / abema -> ⭕あり https://abema.tv/video/title/12-4nn654j98a6
+✅ 新世界より / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 葬送のフリーレン / unext -> ⭕あり https://video.unext.jp/title/SID0091754
+✅ 葬送のフリーレン / abema -> ⭕あり https://abema.tv/video/title/19-171
+✅ 葬送のフリーレン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Vivy -Fluorite Eye’s Song- / unext -> ⭕あり https://video.unext.jp/title/SID0056088
+✅ Vivy -Fluorite Eye’s Song- / abema -> ❌なし
+✅ Vivy -Fluorite Eye’s Song- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ グラップラー刃牙 / unext -> ⭕あり https://video.unext.jp/title/SID0068502
+✅ グラップラー刃牙 / abema -> ❌なし
+✅ グラップラー刃牙 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スクライド / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000507072
+✅ スクライド / abema -> ❌なし
+✅ スクライド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ テニスの王子様 / unext -> ⭕あり https://video.unext.jp/title/SID0054278
+✅ テニスの王子様 / abema -> ⭕あり https://abema.tv/video/title/203-15
+✅ テニスの王子様 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヒカルの碁 / unext -> ⭕あり https://video.unext.jp/title/SID0158059
+✅ ヒカルの碁 / abema -> ❌なし
+✅ ヒカルの碁 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ フルメタル・パニック！ / unext -> ⭕あり https://video.unext.jp/title/SID0013376
+✅ フルメタル・パニック！ / abema -> ❌なし
+✅ フルメタル・パニック！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 十二国記 / unext -> ⭕あり https://video.unext.jp/title/SID0002220
+✅ 十二国記 / abema -> ❌なし
+✅ 十二国記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 最終兵器彼女 / unext -> ⭕あり https://video.unext.jp/title/SID0014909
+✅ 最終兵器彼女 / abema -> ❌なし
+✅ 最終兵器彼女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 機動戦士ガンダムSEED / unext -> ⭕あり https://video.unext.jp/title/SID0164776
+✅ 機動戦士ガンダムSEED / abema -> ❌なし
+✅ 機動戦士ガンダムSEED / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ NARUTO -ナルト- / unext -> ⭕あり https://video.unext.jp/title/SID0018960
+✅ NARUTO -ナルト- / abema -> ❌なし
+✅ NARUTO -ナルト- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 灰羽連盟 / unext -> ⭕あり https://video.unext.jp/title/SID0045450
+✅ 灰羽連盟 / abema -> ❌なし
+✅ 灰羽連盟 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 金色のガッシュベル!! / unext -> ⭕あり https://video.unext.jp/title/SID0011165
+✅ 金色のガッシュベル!! / abema -> ❌なし
+✅ 金色のガッシュベル!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ キノの旅 -the Beautiful World- / unext -> ⭕あり https://video.unext.jp/title/SID0012905
+✅ キノの旅 -the Beautiful World- / abema -> ❌なし
+✅ キノの旅 -the Beautiful World- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 探偵学園Q / unext -> ⭕あり https://video.unext.jp/title/SID0004968
+✅ 探偵学園Q / abema -> ❌なし
+✅ 探偵学園Q / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 一騎当千 / unext -> ⭕あり https://video.unext.jp/title/SID0013886
+✅ 一騎当千 / abema -> ⭕あり https://abema.tv/video/episode/444-1_s5_p3082
+✅ 一騎当千 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ D.C.～ダ・カーポ～ / unext -> ⭕あり https://video.unext.jp/title/SID0020398
+✅ D.C.～ダ・カーポ～ / abema -> ❌なし
+✅ D.C.～ダ・カーポ～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 君が望む永遠 / unext -> ❌なし
+✅ 君が望む永遠 / abema -> ❌なし
+✅ 君が望む永遠 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かいけつゾロリ / unext -> ⭕あり https://video.unext.jp/title/SID0020193
+✅ かいけつゾロリ / abema -> ❌なし
+✅ かいけつゾロリ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 妄想代理人 / unext -> ⭕あり https://video.unext.jp/title/SID0017149
+✅ 妄想代理人 / abema -> ❌なし
+✅ 妄想代理人 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サムライチャンプルー / unext -> ⭕あり https://video.unext.jp/title/SID0002215
+✅ サムライチャンプルー / abema -> ❌なし
+✅ サムライチャンプルー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ MONSTER / unext -> ⭕あり https://video.unext.jp/title/SID0002905
+✅ MONSTER / abema -> ❌なし
+✅ MONSTER / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ エルフェンリート / unext -> ⭕あり https://video.unext.jp/title/SID0068115
+✅ エルフェンリート / abema -> ❌なし
+✅ エルフェンリート / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 蒼穹のファフナー / unext -> ⭕あり https://video.unext.jp/title/SID0002242
+✅ 蒼穹のファフナー / abema -> ❌なし
+✅ 蒼穹のファフナー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 巌窟王 / unext -> ⭕あり https://video.unext.jp/title/SID0014422
+✅ 巌窟王 / abema -> ❌なし
+✅ 巌窟王 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブラック・ジャック / unext -> ⭕あり https://video.unext.jp/title/SID0002841
+✅ ブラック・ジャック / abema -> ⭕あり https://abema.tv/video/episode/87-1692_s1720_p58639
+✅ ブラック・ジャック / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BLEACH / unext -> ⭕あり https://video.unext.jp/title/SID0037540
+✅ BLEACH / abema -> ❌なし
+✅ BLEACH / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ メジャー / unext -> ⭕あり https://video.unext.jp/title/SID0002339
+✅ メジャー / abema -> ⭕あり https://abema.tv/video/title/2-2bxddsdhdiw
+✅ メジャー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 焼きたて!! ジャぱん / unext -> ⭕あり https://video.unext.jp/title/SID0003366
+✅ 焼きたて!! ジャぱん / abema -> ❌なし
+✅ 焼きたて!! ジャぱん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ AIR / unext -> ⭕あり https://video.unext.jp/title/SID0042410
+✅ AIR / abema -> ⭕あり https://abema.tv/video/title/47-22
+✅ AIR / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ いちご100% / unext -> ⭕あり https://video.unext.jp/title/SID0052801
+✅ いちご100% / abema -> ❌なし
+✅ いちご100% / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アイシールド21 / unext -> ⭕あり https://video.unext.jp/title/SID0003140
+✅ アイシールド21 / abema -> ❌なし
+✅ アイシールド21 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 交響詩篇エウレカセブン / unext -> ⭕あり https://video.unext.jp/title/SID0012983
+✅ 交響詩篇エウレカセブン / abema -> ❌なし
+✅ 交響詩篇エウレカセブン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 創聖のアクエリオン / unext -> ⭕あり https://video.unext.jp/title/SID0011349
+✅ 創聖のアクエリオン / abema -> ❌なし
+✅ 創聖のアクエリオン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハチミツとクローバー / unext -> ⭕あり https://video.unext.jp/title/SID0017950
+✅ ハチミツとクローバー / abema -> ❌なし
+✅ ハチミツとクローバー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ フタコイ オルタナティブ / unext -> ⭕あり https://video.unext.jp/title/SID0025572
+✅ フタコイ オルタナティブ / abema -> ❌なし
+✅ フタコイ オルタナティブ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SHUFFLE! / unext -> ⭕あり https://video.unext.jp/title/SID0043045
+✅ SHUFFLE! / abema -> ❌なし
+✅ SHUFFLE! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 涼風 / unext -> ⭕あり https://video.unext.jp/title/SID0002234
+✅ 涼風 / abema -> ❌なし
+✅ 涼風 / dmmtv -> ❌なし
+✅ ソルティレイ / unext -> ❌なし
+✅ ソルティレイ / abema -> ❌なし
+✅ ソルティレイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 灼眼のシャナ / unext -> ⭕あり https://video.unext.jp/title/SID0015129
+✅ 灼眼のシャナ / abema -> ⭕あり https://abema.tv/video/episode/218-706_s1_p5047
+✅ 灼眼のシャナ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BLOOD+ / unext -> ⭕あり https://video.unext.jp/title/SID0016669
+✅ BLOOD+ / abema -> ❌なし
+✅ BLOOD+ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブラックキャット / unext -> ⭕あり https://video.unext.jp/title/SID0087412
+✅ ブラックキャット / abema -> ❌なし
+✅ ブラックキャット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ラムネ / unext -> ⭕あり https://video.unext.jp/title/SID0232882
+✅ ラムネ / abema -> ⭕あり https://abema.tv/video/title/675-8
+✅ ラムネ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Ergo Proxy / unext -> ⭕あり https://video.unext.jp/title/SID0002165
+✅ Ergo Proxy / abema -> ❌なし
+✅ Ergo Proxy / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Fate/stay night / unext -> ⭕あり https://video.unext.jp/title/SID0002308
+✅ Fate/stay night / abema -> ❌なし
+✅ Fate/stay night / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ARIA The NATURAL / unext -> ⭕あり https://video.unext.jp/title/SID0002445
+✅ ARIA The NATURAL / abema -> ❌なし
+✅ ARIA The NATURAL / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 桜蘭高校ホスト部 / unext -> ⭕あり https://video.unext.jp/title/SID0002488
+✅ 桜蘭高校ホスト部 / abema -> ❌なし
+✅ 桜蘭高校ホスト部 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 牙-KIBA- / unext -> ❌なし
+✅ 牙-KIBA- / abema -> ❌なし
+✅ 牙-KIBA- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 神様家族 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000293334
+✅ 神様家族 / abema -> ❌なし
+✅ 神様家族 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 銀魂 / unext -> ⭕あり https://video.unext.jp/title/SID0013600
+✅ 銀魂 / abema -> ⭕あり https://abema.tv/video/title/13-47
+✅ 銀魂 / dmmtv -> ❌なし
+✅ 涼宮ハルヒの憂鬱 / unext -> ⭕あり https://video.unext.jp/title/SID0015307
+✅ 涼宮ハルヒの憂鬱 / abema -> ⭕あり https://abema.tv/video/title/25-20xetywbrdye
+✅ 涼宮ハルヒの憂鬱 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゼーガペイン / unext -> ❌なし
+✅ ゼーガペイン / abema -> ❌なし
+✅ ゼーガペイン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ NANA / unext -> ⭕あり https://video.unext.jp/title/SID0029890
+✅ NANA / abema -> ❌なし
+✅ NANA / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BLACK LAGOON / unext -> ⭕あり https://video.unext.jp/title/SID0003263
+✅ BLACK LAGOON / abema -> ❌なし
+✅ BLACK LAGOON / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ N・H・Kにようこそ! / unext -> ⭕あり https://video.unext.jp/title/SID0012815
+✅ N・H・Kにようこそ! / abema -> ❌なし
+✅ N・H・Kにようこそ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゼロの使い魔 / unext -> ⭕あり https://video.unext.jp/title/SID0015445
+✅ ゼロの使い魔 / abema -> ❌なし
+✅ ゼロの使い魔 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ カノン / unext -> ⭕あり https://video.unext.jp/title/SID0030738
+✅ カノン / abema -> ❌なし
+✅ カノン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 家庭教師ヒットマンREBORN! / unext -> ⭕あり https://video.unext.jp/title/SID0020196
+✅ 家庭教師ヒットマンREBORN! / abema -> ❌なし
+✅ 家庭教師ヒットマンREBORN! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ コードギアス 反逆のルルーシュ / unext -> ⭕あり https://video.unext.jp/title/SID0002580
+✅ コードギアス 反逆のルルーシュ / abema -> ⭕あり https://abema.tv/video/title/13-13jjengjfhdx
+✅ コードギアス 反逆のルルーシュ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 攻殻機動隊 S.A.C. Solid State Society / unext -> ❌なし
+✅ 攻殻機動隊 S.A.C. Solid State Society / abema -> ❌なし
+✅ 攻殻機動隊 S.A.C. Solid State Society / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 人造昆虫カブトボーグ V×V / unext -> ❌なし
+✅ 人造昆虫カブトボーグ V×V / abema -> ❌なし
+✅ 人造昆虫カブトボーグ V×V / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ D.Gray-man / unext -> ⭕あり https://video.unext.jp/title/SID0022319
+✅ D.Gray-man / abema -> ❌なし
+✅ D.Gray-man / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ DEATH NOTE / unext -> ⭕あり https://video.unext.jp/title/SID0018019
+✅ DEATH NOTE / abema -> ❌なし
+✅ DEATH NOTE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ネギま!? / unext -> ⭕あり https://video.unext.jp/title/SID0002768
+✅ ネギま!? / abema -> ⭕あり https://abema.tv/video/episode/89-116_s25_p11730
+✅ ネギま!? / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 一騎当千 Dragon Destiny / unext -> ⭕あり https://video.unext.jp/title/SID0013888
+✅ 一騎当千 Dragon Destiny / abema -> ❌なし
+✅ 一騎当千 Dragon Destiny / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ NARUTO -ナルト- 疾風伝 / unext -> ⭕あり https://video.unext.jp/title/SID0025866
+✅ NARUTO -ナルト- 疾風伝 / abema -> ❌なし
+✅ NARUTO -ナルト- 疾風伝 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ひだまりスケッチ / unext -> ⭕あり https://video.unext.jp/title/SID0004813
+✅ ひだまりスケッチ / abema -> ❌なし
+✅ ひだまりスケッチ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ のだめカンタービレ / unext -> ⭕あり https://video.unext.jp/title/SID0020377
+✅ のだめカンタービレ / abema -> ⭕あり https://abema.tv/video/title/213-3
+✅ のだめカンタービレ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ローゼンメイデン・オーベルテューレ / unext -> ⭕あり https://video.unext.jp/title/SID0010720
+✅ ローゼンメイデン・オーベルテューレ / abema -> ❌なし
+✅ ローゼンメイデン・オーベルテューレ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 風のスティグマ（風の聖痕） / unext -> ❌なし
+✅ 風のスティグマ（風の聖痕） / abema -> ❌なし
+✅ 風のスティグマ（風の聖痕） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 瀬戸の花嫁 / unext -> ⭕あり https://video.unext.jp/title/SID0002239
+✅ 瀬戸の花嫁 / abema -> ❌なし
+✅ 瀬戸の花嫁 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ sola / unext -> ⭕あり https://video.unext.jp/title/SID0219992
+✅ sola / abema -> ❌なし
+✅ sola / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ DARKER THAN BLACK -黒の契約者- / unext -> ⭕あり https://video.unext.jp/title/SID0002693
+✅ DARKER THAN BLACK -黒の契約者- / abema -> ❌なし
+✅ DARKER THAN BLACK -黒の契約者- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 地球へ･･･ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000115520
+✅ 地球へ･･･ / abema -> ⭕あり https://abema.tv/video/episode/769-9_s1_p33
+✅ 地球へ･･･ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 天元突破グレンラガン / unext -> ⭕あり https://video.unext.jp/title/SID0032045
+✅ 天元突破グレンラガン / abema -> ❌なし
+✅ 天元突破グレンラガン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 電脳コイル / unext -> ⭕あり https://video.unext.jp/title/SID0015834
+✅ 電脳コイル / abema -> ❌なし
+✅ 電脳コイル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハヤテのごとく! / unext -> ⭕あり https://video.unext.jp/title/SID0002801
+✅ ハヤテのごとく! / abema -> ❌なし
+✅ ハヤテのごとく! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ぼくらの / unext -> ⭕あり https://video.unext.jp/title/SID0013397
+✅ ぼくらの / abema -> ❌なし
+✅ ぼくらの / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ロミオ×ジュリエット / unext -> ⭕あり https://video.unext.jp/title/SID0002362
+✅ ロミオ×ジュリエット / abema -> ❌なし
+✅ ロミオ×ジュリエット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ さよなら絶望先生 / unext -> ⭕あり https://video.unext.jp/title/SID0002615
+✅ さよなら絶望先生 / abema -> ❌なし
+✅ さよなら絶望先生 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ School Days / unext -> ⭕あり https://video.unext.jp/title/SID0002656
+✅ School Days / abema -> ❌なし
+✅ School Days / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バッカーノ! / unext -> ⭕あり https://video.unext.jp/title/SID0016327
+✅ バッカーノ! / abema -> ⭕あり https://abema.tv/video/episode/194-15_s4_p5
+✅ バッカーノ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ モノノ怪 / unext -> ⭕あり https://video.unext.jp/title/SID0002384
+✅ モノノ怪 / abema -> ⭕あり https://abema.tv/video/title/19-128
+✅ モノノ怪 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ef - a tale of memories. / unext -> ⭕あり https://video.unext.jp/title/SID0002161
+✅ ef - a tale of memories. / abema -> ❌なし
+✅ ef - a tale of memories. / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ キミキス pure rouge / unext -> ❌なし
+✅ キミキス pure rouge / abema -> ❌なし
+✅ キミキス pure rouge / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ CLANNAD / unext -> ⭕あり https://video.unext.jp/title/SID0002554
+✅ CLANNAD / abema -> ❌なし
+✅ CLANNAD / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔人探偵脳噛ネウロ / unext -> ⭕あり https://video.unext.jp/title/SID0035205
+✅ 魔人探偵脳噛ネウロ / abema -> ❌なし
+✅ 魔人探偵脳噛ネウロ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ みなみけ / unext -> ⭕あり https://video.unext.jp/title/SID0002889
+✅ みなみけ / abema -> ❌なし
+✅ みなみけ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 狼と香辛料 / unext -> ⭕あり https://video.unext.jp/title/SID0012833
+✅ 狼と香辛料 / abema -> ⭕あり https://abema.tv/video/title/25-259
+✅ 狼と香辛料 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 君が主で執事が俺で / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000278499
+✅ 君が主で執事が俺で / abema -> ❌なし
+✅ 君が主で執事が俺で / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ true tears（トゥルーティアーズ） / unext -> ❌なし
+✅ true tears（トゥルーティアーズ） / abema -> ❌なし
+✅ true tears（トゥルーティアーズ） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ロザリオとバンパイア / unext -> ⭕あり https://video.unext.jp/title/SID0017506
+✅ ロザリオとバンパイア / abema -> ❌なし
+✅ ロザリオとバンパイア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヤッターマン / unext -> ⭕あり https://video.unext.jp/title/SID0003268
+✅ ヤッターマン / abema -> ⭕あり https://abema.tv/video/title/19-208
+✅ ヤッターマン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ かのこん / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000278915
+✅ かのこん / abema -> ❌なし
+✅ かのこん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ソウルイーター / unext -> ⭕あり https://video.unext.jp/title/SID0011353
+✅ ソウルイーター / abema -> ❌なし
+✅ ソウルイーター / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 図書館戦争 / unext -> ⭕あり https://video.unext.jp/title/SID0075451
+✅ 図書館戦争 / abema -> ⭕あり https://abema.tv/video/episode/174-2_s0_p2
+✅ 図書館戦争 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ To Loveる -とらぶる- / unext -> ⭕あり https://video.unext.jp/title/SID0211182
+✅ To Loveる -とらぶる- / abema -> ❌なし
+✅ To Loveる -とらぶる- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 恋姫†無双 / unext -> ⭕あり https://video.unext.jp/title/SID0003207
+✅ 恋姫†無双 / abema -> ❌なし
+✅ 恋姫†無双 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夏目友人帳 / unext -> ⭕あり https://video.unext.jp/title/SID0239997
+✅ 夏目友人帳 / abema -> ❌なし
+✅ 夏目友人帳 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 乃木坂春香の秘密 / unext -> ⭕あり https://video.unext.jp/title/SID0044565
+✅ 乃木坂春香の秘密 / abema -> ❌なし
+✅ 乃木坂春香の秘密 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ イヴの時間 / unext -> ⭕あり https://video.unext.jp/title/SID0053700
+✅ イヴの時間 / abema -> ❌なし
+✅ イヴの時間 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ あかね色に染まる坂 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000261065
+✅ あかね色に染まる坂 / abema -> ❌なし
+✅ あかね色に染まる坂 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ イナズマイレブン / unext -> ⭕あり https://video.unext.jp/title/SID0034372
+✅ イナズマイレブン / abema -> ❌なし
+✅ イナズマイレブン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 喰霊-零- / unext -> ⭕あり https://video.unext.jp/title/SID0012877
+✅ 喰霊-零- / abema -> ⭕あり https://abema.tv/video/episode/218-706_s1_p5072
+✅ 喰霊-零- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ CHAOS;HEAD / unext -> ❌なし
+✅ CHAOS;HEAD / abema -> ❌なし
+✅ CHAOS;HEAD / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ とある魔術の禁書目録 / unext -> ⭕あり https://video.unext.jp/title/SID0037284
+✅ とある魔術の禁書目録 / abema -> ⭕あり https://abema.tv/video/title/25-4pkxnjwwrpn
+✅ とある魔術の禁書目録 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ とらドラ！ / unext -> ⭕あり https://video.unext.jp/title/SID0013260
+✅ とらドラ！ / abema -> ⭕あり https://abema.tv/video/episode/218-706_s1_p5045
+✅ とらドラ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ONE OUTS－ワンナウツ－ / unext -> ⭕あり https://video.unext.jp/title/SID0030390
+✅ ONE OUTS－ワンナウツ－ / abema -> ⭕あり https://abema.tv/video/title/143-62
+✅ ONE OUTS－ワンナウツ－ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 獣の奏者エリン / unext -> ⭕あり https://video.unext.jp/title/SID0041841
+✅ 獣の奏者エリン / abema -> ❌なし
+✅ 獣の奏者エリン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 鋼殻のレギオス / unext -> ⭕あり https://video.unext.jp/title/SID0012982
+✅ 鋼殻のレギオス / abema -> ❌なし
+✅ 鋼殻のレギオス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ スレイヤーズEVOLUTION-R / unext -> ⭕あり https://video.unext.jp/title/SID0002667
+✅ スレイヤーズEVOLUTION-R / abema -> ❌なし
+✅ スレイヤーズEVOLUTION-R / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ WHITE ALBUM（第1期） / unext -> ❌なし
+✅ WHITE ALBUM（第1期） / abema -> ❌なし
+✅ WHITE ALBUM（第1期） / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ まりあ†ほりっく / unext -> ⭕あり https://video.unext.jp/title/SID0017029
+✅ まりあ†ほりっく / abema -> ❌なし
+✅ まりあ†ほりっく / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アスラクライン / unext -> ⭕あり https://video.unext.jp/title/SID0002436
+✅ アスラクライン / abema -> ❌なし
+✅ アスラクライン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ けいおん! / unext -> ⭕あり https://video.unext.jp/title/SID0011113
+✅ けいおん! / abema -> ⭕あり https://abema.tv/video/title/19-183
+✅ けいおん! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 咲-Saki- / unext -> ⭕あり https://video.unext.jp/title/SID0002213
+✅ 咲-Saki- / abema -> ❌なし
+✅ 咲-Saki- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 鋼の錬金術師 FULLMETAL ALCHEMIST / unext -> ⭕あり https://video.unext.jp/title/SID0002778
+✅ 鋼の錬金術師 FULLMETAL ALCHEMIST / abema -> ❌なし
+✅ 鋼の錬金術師 FULLMETAL ALCHEMIST / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 東のエデン / unext -> ⭕あり https://video.unext.jp/title/SID0002299
+✅ 東のエデン / abema -> ❌なし
+✅ 東のエデン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 宙のまにまに / unext -> ⭕あり https://video.unext.jp/title/SID0002689
+✅ 宙のまにまに / abema -> ❌なし
+✅ 宙のまにまに / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 化物語 / unext -> ⭕あり https://video.unext.jp/title/SID0002286
+✅ 化物語 / abema -> ⭕あり https://abema.tv/video/title/26-2mzbynr-cph?s=26-2mzbynr-cph_s10
+✅ 化物語 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 東京マグニチュード8.0 / unext -> ⭕あり https://video.unext.jp/title/SID0002261
+✅ 東京マグニチュード8.0 / abema -> ❌なし
+✅ 東京マグニチュード8.0 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ プリンセスラバー! / unext -> ⭕あり https://video.unext.jp/title/SID0002850
+✅ プリンセスラバー! / abema -> ❌なし
+✅ プリンセスラバー! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 怪談レストラン / unext -> ❌なし
+✅ 怪談レストラン / abema -> ❌なし
+✅ 怪談レストラン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 君に届け / unext -> ⭕あり https://video.unext.jp/title/SID0053439
+✅ 君に届け / abema -> ❌なし
+✅ 君に届け / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ けんぷファー / unext -> ⭕あり https://video.unext.jp/title/SID0014751
+✅ けんぷファー / abema -> ❌なし
+✅ けんぷファー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 生徒会の一存 / unext -> ⭕あり https://video.unext.jp/title/SID0013126
+✅ 生徒会の一存 / abema -> ❌なし
+✅ 生徒会の一存 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ そらのおとしもの / unext -> ⭕あり https://video.unext.jp/title/SID0013161
+✅ そらのおとしもの / abema -> ⭕あり https://abema.tv/video/title/25-42
+✅ そらのおとしもの / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ とある科学の超電磁砲 / unext -> ⭕あり https://video.unext.jp/title/SID0015839
+✅ とある科学の超電磁砲 / abema -> ⭕あり https://abema.tv/video/title/25-26d-6nt9ibcd
+✅ とある科学の超電磁砲 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ にゃんこい! / unext -> ⭕あり https://video.unext.jp/title/SID0003243
+✅ にゃんこい! / abema -> ❌なし
+✅ にゃんこい! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ FAIRY TAIL / unext -> ⭕あり https://video.unext.jp/title/SID0011692
+✅ FAIRY TAIL / abema -> ⭕あり https://abema.tv/video/title/168-63
+✅ FAIRY TAIL / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アマガミSS / unext -> ⭕あり https://video.unext.jp/title/SID0010850
+✅ アマガミSS / abema -> ❌なし
+✅ アマガミSS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 荒川アンダー ザ ブリッジ / unext -> ⭕あり https://video.unext.jp/title/SID0094337
+✅ 荒川アンダー ザ ブリッジ / abema -> ⭕あり https://abema.tv/video/title/337-20
+✅ 荒川アンダー ザ ブリッジ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ えむえむっ! / unext -> ⭕あり https://video.unext.jp/title/SID0010947
+✅ えむえむっ! / abema -> ❌なし
+✅ えむえむっ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ おまもりひまり / unext -> ⭕あり https://video.unext.jp/title/SID0042777
+✅ おまもりひまり / abema -> ❌なし
+✅ おまもりひまり / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺の妹がこんなに可愛いわけがない / unext -> ⭕あり https://video.unext.jp/title/SID0012849
+✅ 俺の妹がこんなに可愛いわけがない / abema -> ⭕あり https://abema.tv/video/title/25-12bcmuytxgcm
+✅ 俺の妹がこんなに可愛いわけがない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 学園黙示録 HIGHSCHOOL OF THE DEAD / unext -> ⭕あり https://video.unext.jp/title/SID0002520
+✅ 学園黙示録 HIGHSCHOOL OF THE DEAD / abema -> ❌なし
+✅ 学園黙示録 HIGHSCHOOL OF THE DEAD / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 刀語 / unext -> ⭕あり https://video.unext.jp/title/SID0002175
+✅ 刀語 / abema -> ❌なし
+✅ 刀語 / dmmtv -> ❌なし
+✅ 神のみぞ知るセカイ / unext -> ⭕あり https://video.unext.jp/title/SID0002526
+✅ 神のみぞ知るセカイ / abema -> ❌なし
+✅ 神のみぞ知るセカイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ kiss×sis / unext -> ⭕あり https://video.unext.jp/title/SID0047534
+✅ kiss×sis / abema -> ❌なし
+✅ kiss×sis / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ けいおん!! / unext -> ⭕あり https://video.unext.jp/title/SID0011113
+✅ けいおん!! / abema -> ⭕あり https://abema.tv/video/title/19-183
+✅ けいおん!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 屍鬼 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000027666
+✅ 屍鬼 / abema -> ⭕あり https://abema.tv/video/title/19-126
+✅ 屍鬼 / dmmtv -> ❌なし
+✅ 侵略!イカ娘 / unext -> ⭕あり https://video.unext.jp/title/SID0002652
+✅ 侵略!イカ娘 / abema -> ❌なし
+✅ 侵略!イカ娘 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 聖痕のクェイサー / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000953043
+✅ 聖痕のクェイサー / abema -> ❌なし
+✅ 聖痕のクェイサー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 生徒会役員共 / unext -> ⭕あり https://video.unext.jp/title/SID0002674
+✅ 生徒会役員共 / abema -> ❌なし
+✅ 生徒会役員共 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ セキレイ / unext -> ⭕あり https://video.unext.jp/title/SID0037812
+✅ セキレイ / abema -> ❌なし
+✅ セキレイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 伝説の勇者の伝説 / unext -> ⭕あり https://video.unext.jp/title/SID0002256
+✅ 伝説の勇者の伝説 / abema -> ❌なし
+✅ 伝説の勇者の伝説 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ デュラララ!! / unext -> ⭕あり https://video.unext.jp/title/SID0012261
+✅ デュラララ!! / abema -> ❌なし
+✅ デュラララ!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バカとテストと召喚獣 / unext -> ⭕あり https://video.unext.jp/title/SID0013310
+✅ バカとテストと召喚獣 / abema -> ❌なし
+✅ バカとテストと召喚獣 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バクマン。 / unext -> ⭕あり https://video.unext.jp/title/SID0021917
+✅ バクマン。 / abema -> ❌なし
+✅ バクマン。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ B型H系 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000991399
+✅ B型H系 / abema -> ❌なし
+✅ B型H系 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ まじっく快斗 / unext -> ⭕あり https://video.unext.jp/title/SID0100489
+✅ まじっく快斗 / abema -> ⭕あり https://abema.tv/video/title/415-6
+✅ まじっく快斗 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 迷い猫オーバーラン! / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000253055
+✅ 迷い猫オーバーラン! / abema -> ❌なし
+✅ 迷い猫オーバーラン! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 四畳半神話大系 / unext -> ⭕あり https://video.unext.jp/title/SID0002349
+✅ 四畳半神話大系 / abema -> ❌なし
+✅ 四畳半神話大系 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヨスガノソラ / unext -> ⭕あり https://video.unext.jp/title/SID0002915
+✅ ヨスガノソラ / abema -> ⭕あり https://abema.tv/video/title/117-5
+✅ ヨスガノソラ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ れでぃ×ばと! / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000288173
+✅ れでぃ×ばと! / abema -> ❌なし
+✅ れでぃ×ばと! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ WORKING!! / unext -> ⭕あり https://video.unext.jp/title/SID0111542
+✅ WORKING!! / abema -> ⭕あり https://abema.tv/video/title/243-205
+✅ WORKING!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ THE IDOLM@STER / unext -> ⭕あり https://video.unext.jp/title/SID0021419
+✅ THE IDOLM@STER / abema -> ❌なし
+✅ THE IDOLM@STER / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 青の祓魔師 / unext -> ⭕あり https://video.unext.jp/title/SID0163352
+✅ 青の祓魔師 / abema -> ❌なし
+✅ 青の祓魔師 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ あの日見た花の名前を僕達はまだ知らない。 / unext -> ⭕あり https://video.unext.jp/title/SID0002144
+✅ あの日見た花の名前を僕達はまだ知らない。 / abema -> ⭕あり https://abema.tv/video/title/19-105
+✅ あの日見た花の名前を僕達はまだ知らない。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ UN-GO / unext -> ⭕あり https://video.unext.jp/title/SID0017968
+✅ UN-GO / abema -> ❌なし
+✅ UN-GO / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ いつか天魔の黒ウサギ / unext -> ⭕あり https://video.unext.jp/title/SID0042773
+✅ いつか天魔の黒ウサギ / abema -> ❌なし
+✅ いつか天魔の黒ウサギ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ IS＜インフィニット・ストラトス＞ / unext -> ⭕あり https://video.unext.jp/title/SID0013947
+✅ IS＜インフィニット・ストラトス＞ / abema -> ❌なし
+✅ IS＜インフィニット・ストラトス＞ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 神様のメモ帳 / unext -> ⭕あり https://video.unext.jp/title/SID0012873
+✅ 神様のメモ帳 / abema -> ❌なし
+✅ 神様のメモ帳 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 境界線上のホライゾン / unext -> ⭕あり https://video.unext.jp/title/SID0014565
+✅ 境界線上のホライゾン / abema -> ❌なし
+✅ 境界線上のホライゾン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ギルティクラウン / unext -> ⭕あり https://video.unext.jp/title/SID0002192
+✅ ギルティクラウン / abema -> ❌なし
+✅ ギルティクラウン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ これはゾンビですか? / unext -> ⭕あり https://video.unext.jp/title/SID0035436
+✅ これはゾンビですか? / abema -> ❌なし
+✅ これはゾンビですか? / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ GOSICK -ゴシック- / unext -> ⭕あり https://video.unext.jp/title/SID0012994
+✅ GOSICK -ゴシック- / abema -> ❌なし
+✅ GOSICK -ゴシック- / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ C / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000895982
+✅ C / abema -> ⭕あり https://abema.tv/video/title/193-206
+✅ C / dmmtv -> ❌なし
+✅ シュタインズ・ゲート / unext -> ⭕あり https://video.unext.jp/title/SID0034225
+✅ シュタインズ・ゲート / abema -> ⭕あり https://abema.tv/video/title/25-93
+✅ シュタインズ・ゲート / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ SKET DANCE / unext -> ⭕あり https://video.unext.jp/title/SID0063017
+✅ SKET DANCE / abema -> ❌なし
+✅ SKET DANCE / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ TIGER & BUNNY / unext -> ⭕あり https://video.unext.jp/title/SID0013605
+✅ TIGER & BUNNY / abema -> ❌なし
+✅ TIGER & BUNNY / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 電波女と青春男 / unext -> ⭕あり https://video.unext.jp/title/SID0002735
+✅ 電波女と青春男 / abema -> ❌なし
+✅ 電波女と青春男 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ デッドマン・ワンダーランド / unext -> ⭕あり https://video.unext.jp/title/SID0013210
+✅ デッドマン・ワンダーランド / abema -> ❌なし
+✅ デッドマン・ワンダーランド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ トリコ / unext -> ⭕あり https://video.unext.jp/title/SID0011509
+✅ トリコ / abema -> ⭕あり https://abema.tv/video/episode/5-38_s20_p492
+✅ トリコ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ NO.6 / unext -> ⭕あり https://video.unext.jp/title/SID0147985
+✅ NO.6 / abema -> ⭕あり https://abema.tv/video/title/273-403
+✅ NO.6 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 日常 / unext -> ⭕あり https://video.unext.jp/title/SID0015623
+✅ 日常 / abema -> ⭕あり https://abema.tv/video/title/25-307
+✅ 日常 / dmmtv -> ❌なし
+✅ 花咲くいろは / unext -> ⭕あり https://video.unext.jp/title/SID0016365
+✅ 花咲くいろは / abema -> ❌なし
+✅ 花咲くいろは / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ HUNTER×HUNTER / unext -> ⭕あり https://video.unext.jp/title/SID0148646
+✅ HUNTER×HUNTER / abema -> ❌なし
+✅ HUNTER×HUNTER / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 緋弾のアリア / unext -> ⭕あり https://video.unext.jp/title/SID0017745
+✅ 緋弾のアリア / abema -> ❌なし
+✅ 緋弾のアリア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ BLOOD-C / unext -> ⭕あり https://video.unext.jp/title/SID0002844
+✅ BLOOD-C / abema -> ❌なし
+✅ BLOOD-C / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ べるぜバブ / unext -> ⭕あり https://video.unext.jp/title/SID0016773
+✅ べるぜバブ / abema -> ⭕あり https://abema.tv/video/title/415-23
+✅ べるぜバブ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ベン・トー / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000139425
+✅ ベン・トー / abema -> ⭕あり https://abema.tv/video/title/652-1
+✅ ベン・トー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 僕は友達が少ない / unext -> ⭕あり https://video.unext.jp/title/SID0017670
+✅ 僕は友達が少ない / abema -> ❌なし
+✅ 僕は友達が少ない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ マケン姫っ！ / unext -> ⭕あり https://video.unext.jp/title/SID0080308
+✅ マケン姫っ！ / abema -> ❌なし
+✅ マケン姫っ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 真剣で私に恋しなさい!! / unext -> ⭕あり https://video.unext.jp/title/SID0003333
+✅ 真剣で私に恋しなさい!! / abema -> ❌なし
+✅ 真剣で私に恋しなさい!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔乳秘剣帖 / unext -> ⭕あり https://video.unext.jp/title/SID0013423
+✅ 魔乳秘剣帖 / abema -> ❌なし
+✅ 魔乳秘剣帖 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔法少女まどか☆マギカ / unext -> ⭕あり https://video.unext.jp/title/SID0012328
+✅ 魔法少女まどか☆マギカ / abema -> ⭕あり https://abema.tv/video/title/26-1csgwzchpyj
+✅ 魔法少女まどか☆マギカ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ まよチキ! / unext -> ⭕あり https://video.unext.jp/title/SID0017026
+✅ まよチキ! / abema -> ❌なし
+✅ まよチキ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 輪るピングドラム / unext -> ⭕あり https://video.unext.jp/title/SID0002885
+✅ 輪るピングドラム / abema -> ❌なし
+✅ 輪るピングドラム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 未来日記 / unext -> ⭕あり https://video.unext.jp/title/SID0035661
+✅ 未来日記 / abema -> ❌なし
+✅ 未来日記 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夢喰いメリー / unext -> ⭕あり https://video.unext.jp/title/SID0003271
+✅ 夢喰いメリー / abema -> ❌なし
+✅ 夢喰いメリー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゆるゆり / unext -> ⭕あり https://video.unext.jp/title/SID0018612
+✅ ゆるゆり / abema -> ⭕あり https://abema.tv/video/title/149-28i9ircg5g9
+✅ ゆるゆり / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ +チック姉さん / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000169126
+✅ +チック姉さん / abema -> ❌なし
+✅ +チック姉さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 放課後のプレアデス / unext -> ⭕あり https://video.unext.jp/title/SID0018101
+✅ 放課後のプレアデス / abema -> ❌なし
+✅ 放課後のプレアデス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アクセル・ワールド / unext -> ⭕あり https://video.unext.jp/title/SID0012752
+✅ アクセル・ワールド / abema -> ❌なし
+✅ アクセル・ワールド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Another / unext -> ⭕あり https://video.unext.jp/title/SID0065315
+✅ Another / abema -> ⭕あり https://abema.tv/video/episode/90-1170_s2_p12
+✅ Another / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ あの夏で待ってる / unext -> ⭕あり https://video.unext.jp/title/SID0013761
+✅ あの夏で待ってる / abema -> ❌なし
+✅ あの夏で待ってる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 妖狐×僕SS / unext -> ⭕あり https://video.unext.jp/title/SID0013915
+✅ 妖狐×僕SS / abema -> ❌なし
+✅ 妖狐×僕SS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 宇宙兄弟 / unext -> ⭕あり https://video.unext.jp/title/SID0002159
+✅ 宇宙兄弟 / abema -> ❌なし
+✅ 宇宙兄弟 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ エリアの騎士 / unext -> ⭕あり https://video.unext.jp/title/SID0002986
+✅ エリアの騎士 / abema -> ❌なし
+✅ エリアの騎士 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 織田信奈の野望 / unext -> ⭕あり https://video.unext.jp/title/SID0002168
+✅ 織田信奈の野望 / abema -> ⭕あり https://abema.tv/video/title/174-36
+✅ 織田信奈の野望 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ お兄ちゃんだけど愛さえあれば関係ないよねっ / unext -> ⭕あり https://video.unext.jp/title/SID0017673
+✅ お兄ちゃんだけど愛さえあれば関係ないよねっ / abema -> ❌なし
+✅ お兄ちゃんだけど愛さえあれば関係ないよねっ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ガールズ&パンツァー / unext -> ⭕あり https://video.unext.jp/title/SID0099901
+✅ ガールズ&パンツァー / abema -> ❌なし
+✅ ガールズ&パンツァー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ カンピオーネ! / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000170463
+✅ カンピオーネ! / abema -> ❌なし
+✅ カンピオーネ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 銀河へキックオフ!! / unext -> ⭕あり https://video.unext.jp/title/SID0035373
+✅ 銀河へキックオフ!! / abema -> ❌なし
+✅ 銀河へキックオフ!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ キルミーベイベー / unext -> ⭕あり https://video.unext.jp/title/SID0003407
+✅ キルミーベイベー / abema -> ❌なし
+✅ キルミーベイベー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 黒子のバスケ / unext -> ⭕あり https://video.unext.jp/title/SID0013549
+✅ 黒子のバスケ / abema -> ❌なし
+✅ 黒子のバスケ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ K / unext -> ⭕あり https://video.unext.jp/title/SID0254536
+✅ K / abema -> ⭕あり https://abema.tv/video/title/504-85
+✅ K / dmmtv -> ❌なし
+✅ 恋と選挙とチョコレート / unext -> ⭕あり https://video.unext.jp/title/SID0012973
+✅ 恋と選挙とチョコレート / abema -> ❌なし
+✅ 恋と選挙とチョコレート / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ココロコネクト / unext -> ⭕あり https://video.unext.jp/title/SID0002586
+✅ ココロコネクト / abema -> ❌なし
+✅ ココロコネクト / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 坂道のアポロン / unext -> ⭕あり https://video.unext.jp/title/SID0042213
+✅ 坂道のアポロン / abema -> ❌なし
+✅ 坂道のアポロン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ さくら荘のペットな彼女 / unext -> ⭕あり https://video.unext.jp/title/SID0044566
+✅ さくら荘のペットな彼女 / abema -> ❌なし
+✅ さくら荘のペットな彼女 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ さんかれあ / unext -> ⭕あり https://video.unext.jp/title/SID0003215
+✅ さんかれあ / abema -> ❌なし
+✅ さんかれあ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ジョジョの奇妙な冒険 / unext -> ⭕あり https://video.unext.jp/title/SID0037283
+✅ ジョジョの奇妙な冒険 / abema -> ⭕あり https://abema.tv/video/episode/218-706_s1_p5043
+✅ ジョジョの奇妙な冒険 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 人類は衰退しました / unext -> ⭕あり https://video.unext.jp/title/SID0002230
+✅ 人類は衰退しました / abema -> ❌なし
+✅ 人類は衰退しました / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 好きっていいなよ。 / unext -> ⭕あり https://video.unext.jp/title/SID0010801
+✅ 好きっていいなよ。 / abema -> ❌なし
+✅ 好きっていいなよ。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 絶園のテンペスト / unext -> ⭕あり https://video.unext.jp/title/SID0054844
+✅ 絶園のテンペスト / abema -> ❌なし
+✅ 絶園のテンペスト / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ソードアート・オンライン / unext -> ⭕あり https://video.unext.jp/title/SID0011356
+✅ ソードアート・オンライン / abema -> ⭕あり https://abema.tv/video/title/25-1nzan-whrxe
+✅ ソードアート・オンライン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 戦姫絶唱シンフォギア / unext -> ⭕あり https://video.unext.jp/title/SID0013603
+✅ 戦姫絶唱シンフォギア / abema -> ❌なし
+✅ 戦姫絶唱シンフォギア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ だから僕は、Hができない。 / unext -> ⭕あり https://video.unext.jp/title/SID0015557
+✅ だから僕は、Hができない。 / abema -> ❌なし
+✅ だから僕は、Hができない。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ TARI TARI / unext -> ❌なし
+✅ TARI TARI / abema -> ⭕あり https://abema.tv/video/title/149-17h9c6mfw48
+✅ TARI TARI / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 黄昏乙女×アムネジア / unext -> ⭕あり https://video.unext.jp/title/SID0017752
+✅ 黄昏乙女×アムネジア / abema -> ❌なし
+✅ 黄昏乙女×アムネジア / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 男子高校生の日常 / unext -> ⭕あり https://video.unext.jp/title/SID0015623
+✅ 男子高校生の日常 / abema -> ❌なし
+✅ 男子高校生の日常 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 中二病でも恋がしたい！ / unext -> ⭕あり https://video.unext.jp/title/SID0002717
+✅ 中二病でも恋がしたい！ / abema -> ❌なし
+✅ 中二病でも恋がしたい！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ となりの怪物くん / unext -> ⭕あり https://video.unext.jp/title/SID0037348
+✅ となりの怪物くん / abema -> ❌なし
+✅ となりの怪物くん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハイスクールD×D / unext -> ⭕あり https://video.unext.jp/title/SID0018482
+✅ ハイスクールD×D / abema -> ⭕あり https://abema.tv/video/title/25-2
+✅ ハイスクールD×D / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 這いよれ！ ニャル子さん / unext -> ⭕あり https://video.unext.jp/title/SID0002777
+✅ 這いよれ！ ニャル子さん / abema -> ⭕あり https://abema.tv/video/title/174-1
+✅ 這いよれ！ ニャル子さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ はぐれ勇者の鬼畜美学 / unext -> ⭕あり https://video.unext.jp/title/SID0017749
+✅ はぐれ勇者の鬼畜美学 / abema -> ❌なし
+✅ はぐれ勇者の鬼畜美学 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ パパのいうことを聞きなさい！ / unext -> ⭕あり https://video.unext.jp/title/SID0046208
+✅ パパのいうことを聞きなさい！ / abema -> ❌なし
+✅ パパのいうことを聞きなさい！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 氷菓 / unext -> ⭕あり https://video.unext.jp/title/SID0013355
+✅ 氷菓 / abema -> ⭕あり https://abema.tv/video/episode/19-174_s2_p39
+✅ 氷菓 / dmmtv -> ❌なし
+✅ BTOOOM! / unext -> ⭕あり https://video.unext.jp/title/SID0002837
+✅ BTOOOM! / abema -> ❌なし
+✅ BTOOOM! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ マギ / unext -> ⭕あり https://video.unext.jp/title/SID0016936
+✅ マギ / abema -> ⭕あり https://abema.tv/video/title/26-89
+✅ マギ / dmmtv -> ❌なし
+✅ めだかボックス / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000027946
+✅ めだかボックス / abema -> ❌なし
+✅ めだかボックス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ヨルムンガンド / unext -> ⭕あり https://video.unext.jp/title/SID0017320
+✅ ヨルムンガンド / abema -> ❌なし
+✅ ヨルムンガンド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ リトルバスターズ! / unext -> ⭕あり https://video.unext.jp/title/SID0017408
+✅ リトルバスターズ! / abema -> ❌なし
+✅ リトルバスターズ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アウトブレイク・カンパニー 萌える侵略者 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000042275
+✅ アウトブレイク・カンパニー 萌える侵略者 / abema -> ❌なし
+✅ アウトブレイク・カンパニー 萌える侵略者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 惡の華 / unext -> ⭕あり https://video.unext.jp/title/SID0045090
+✅ 惡の華 / abema -> ⭕あり https://abema.tv/video/title/170-17
+✅ 惡の華 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 犬とハサミは使いよう / unext -> ⭕あり https://video.unext.jp/title/SID0002155
+✅ 犬とハサミは使いよう / abema -> ❌なし
+✅ 犬とハサミは使いよう / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 有頂天家族 / unext -> ⭕あり https://video.unext.jp/title/SID0013997
+✅ 有頂天家族 / abema -> ❌なし
+✅ 有頂天家族 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺の脳内選択肢が、学園ラブコメを全力で邪魔している / unext -> ⭕あり https://video.unext.jp/title/SID0027696
+✅ 俺の脳内選択肢が、学園ラブコメを全力で邪魔している / abema -> ❌なし
+✅ 俺の脳内選択肢が、学園ラブコメを全力で邪魔している / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 俺の彼女と幼なじみが修羅場すぎる / unext -> ⭕あり https://video.unext.jp/title/SID0002173
+✅ 俺の彼女と幼なじみが修羅場すぎる / abema -> ⭕あり https://abema.tv/video/title/174-6
+✅ 俺の彼女と幼なじみが修羅場すぎる / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 革命機ヴァルヴレイヴ / unext -> ⭕あり https://video.unext.jp/title/SID0003201
+✅ 革命機ヴァルヴレイヴ / abema -> ❌なし
+✅ 革命機ヴァルヴレイヴ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 神さまのいない日曜日 / unext -> ⭕あり https://video.unext.jp/title/SID0014374
+✅ 神さまのいない日曜日 / abema -> ❌なし
+✅ 神さまのいない日曜日 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 君のいる町 / unext -> ⭕あり https://video.unext.jp/title/SID0011053
+✅ 君のいる町 / abema -> ❌なし
+✅ 君のいる町 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 境界の彼方 / unext -> ⭕あり https://video.unext.jp/title/SID0003203
+✅ 境界の彼方 / abema -> ❌なし
+✅ 境界の彼方 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ キルラキル / unext -> ⭕あり https://video.unext.jp/title/SID0014581
+✅ キルラキル / abema -> ❌なし
+✅ キルラキル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 銀の匙 Silver Spoon / unext -> ⭕あり https://video.unext.jp/title/SID0014606
+✅ 銀の匙 Silver Spoon / abema -> ⭕あり https://abema.tv/video/title/19-115
+✅ 銀の匙 Silver Spoon / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ゴールデンタイム / unext -> ⭕あり https://video.unext.jp/title/SID0014807
+✅ ゴールデンタイム / abema -> ⭕あり https://abema.tv/video/episode/504-62_s1_p1
+✅ ゴールデンタイム / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 琴浦さん / unext -> ⭕あり https://video.unext.jp/title/SID0002600
+✅ 琴浦さん / abema -> ❌なし
+✅ 琴浦さん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ サーバント×サービス / unext -> ⭕あり https://video.unext.jp/title/SID0014890
+✅ サーバント×サービス / abema -> ❌なし
+✅ サーバント×サービス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ストライク・ザ・ブラッド / unext -> ⭕あり https://video.unext.jp/title/SID0066220
+✅ ストライク・ザ・ブラッド / abema -> ❌なし
+✅ ストライク・ザ・ブラッド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダイヤのA / unext -> ⭕あり https://video.unext.jp/title/SID0003288
+✅ ダイヤのA / abema -> ❌なし
+✅ ダイヤのA / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000293251
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / abema -> ❌なし
+✅ ダンガンロンパ 希望の学園と絶望の高校生 The Animation / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ デート・ア・ライブ / unext -> ⭕あり https://video.unext.jp/title/SID0100053
+✅ デート・ア・ライブ / abema -> ❌なし
+✅ デート・ア・ライブ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 東京レイヴンズ / unext -> ⭕あり https://video.unext.jp/title/SID0015880
+✅ 東京レイヴンズ / abema -> ❌なし
+✅ 東京レイヴンズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 凪のあすから / unext -> ⭕あり https://video.unext.jp/title/SID0016032
+✅ 凪のあすから / abema -> ❌なし
+✅ 凪のあすから / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ はたらく魔王さま！ / unext -> ⭕あり https://video.unext.jp/title/SID0016267
+✅ はたらく魔王さま！ / abema -> ❌なし
+✅ はたらく魔王さま！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Fate/kaleid liner プリズマ☆イリヤ / unext -> ⭕あり https://video.unext.jp/title/SID0045257
+✅ Fate/kaleid liner プリズマ☆イリヤ / abema -> ❌なし
+✅ Fate/kaleid liner プリズマ☆イリヤ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ フォトカノ / unext -> ⭕あり https://video.unext.jp/title/SID0011694
+✅ フォトカノ / abema -> ❌なし
+✅ フォトカノ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 変態王子と笑わない猫。 / unext -> ⭕あり https://video.unext.jp/title/SID0003292
+✅ 変態王子と笑わない猫。 / abema -> ❌なし
+✅ 変態王子と笑わない猫。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ まおゆう魔王勇者 / unext -> ⭕あり https://video.unext.jp/title/SID0013411
+✅ まおゆう魔王勇者 / abema -> ❌なし
+✅ まおゆう魔王勇者 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 機巧少女は傷つかない / unext -> ⭕あり https://video.unext.jp/title/SID0017748
+✅ 機巧少女は傷つかない / abema -> ❌なし
+✅ 機巧少女は傷つかない / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 問題児たちが異世界から来るそうですよ？ / unext -> ⭕あり https://video.unext.jp/title/SID0027683
+✅ 問題児たちが異世界から来るそうですよ？ / abema -> ❌なし
+✅ 問題児たちが異世界から来るそうですよ？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ やはり俺の青春ラブコメはまちがっている。 / unext -> ⭕あり https://video.unext.jp/title/SID0003349
+✅ やはり俺の青春ラブコメはまちがっている。 / abema -> ❌なし
+✅ やはり俺の青春ラブコメはまちがっている。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / unext -> ⭕あり https://video.unext.jp/title/SID0011859
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / abema -> ❌なし
+✅ 勇者になれなかった俺はしぶしぶ就職を決意しました。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 恋愛ラボ / unext -> ⭕あり https://video.unext.jp/title/SID0017368
+✅ 恋愛ラボ / abema -> ❌なし
+✅ 恋愛ラボ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ラブライブ！ School idol project / unext -> ❌なし
+✅ ラブライブ！ School idol project / abema -> ❌なし
+✅ ラブライブ！ School idol project / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000406804
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / abema -> ❌なし
+✅ 夜桜四重奏 ～ヨザクラカルテット～ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ログ・ホライズン / unext -> ⭕あり https://video.unext.jp/title/SID0052897
+✅ ログ・ホライズン / abema -> ❌なし
+✅ ログ・ホライズン / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 私がモテないのはどう考えてもお前らが悪い! / unext -> ⭕あり https://video.unext.jp/title/SID0002946
+✅ 私がモテないのはどう考えてもお前らが悪い! / abema -> ❌なし
+✅ 私がモテないのはどう考えてもお前らが悪い! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ワルキューレ ロマンツェ / unext -> ⭕あり https://video.unext.jp/title/SID0003277
+✅ ワルキューレ ロマンツェ / abema -> ❌なし
+✅ ワルキューレ ロマンツェ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ いなり、こんこん、恋いろは。 / unext -> ⭕あり https://video.unext.jp/title/SID0027684
+✅ いなり、こんこん、恋いろは。 / abema -> ❌なし
+✅ いなり、こんこん、恋いろは。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ウィッチクラフトワークス / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000006337
+✅ ウィッチクラフトワークス / abema -> ❌なし
+✅ ウィッチクラフトワークス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ Wake Up, Girls! / unext -> ⭕あり https://video.unext.jp/title/SID0002158
+✅ Wake Up, Girls! / abema -> ❌なし
+✅ Wake Up, Girls! / dmmtv -> ❌なし
+✅ 最近、妹のようすがちょっとおかしいんだが。 / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000232005
+✅ 最近、妹のようすがちょっとおかしいんだが。 / abema -> ❌なし
+✅ 最近、妹のようすがちょっとおかしいんだが。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ GJ部 / unext -> ⭕あり https://video.unext.jp/title/SID0002553
+✅ GJ部 / abema -> ❌なし
+✅ GJ部 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 桜Trick / unext -> ⭕あり https://video.unext.jp/title/SID0003213
+✅ 桜Trick / abema -> ❌なし
+✅ 桜Trick / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ディーふらぐ！ / unext -> ⭕あり https://video.unext.jp/title/SID0015751
+✅ ディーふらぐ！ / abema -> ❌なし
+✅ ディーふらぐ！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ニセコイ / unext -> ⭕あり https://video.unext.jp/title/SID0010757
+✅ ニセコイ / abema -> ❌なし
+✅ ニセコイ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ となりの関くん / unext -> ⭕あり https://video.unext.jp/title/SID0002985
+✅ となりの関くん / abema -> ❌なし
+✅ となりの関くん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ のうりん / unext -> ⭕あり https://video.unext.jp/title/SID0002277
+✅ のうりん / abema -> ⭕あり https://abema.tv/video/title/174-33
+✅ のうりん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ノラガミ / unext -> ⭕あり https://video.unext.jp/title/SID0002772
+✅ ノラガミ / abema -> ❌なし
+✅ ノラガミ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ バディ・コンプレックス / unext -> ⭕あり https://video.unext.jp/title/SID0016349
+✅ バディ・コンプレックス / abema -> ❌なし
+✅ バディ・コンプレックス / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハマトラ / unext -> ⭕あり https://video.unext.jp/title/SID0002800
+✅ ハマトラ / abema -> ❌なし
+✅ ハマトラ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 鬼灯の冷徹 / unext -> ⭕あり https://video.unext.jp/title/SID0050894
+✅ 鬼灯の冷徹 / abema -> ⭕あり https://abema.tv/video/title/115-7yjdnebupe-
+✅ 鬼灯の冷徹 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔法戦争 / unext -> ⭕あり https://video.unext.jp/title/SID0017742
+✅ 魔法戦争 / abema -> ❌なし
+✅ 魔法戦争 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 未確認で進行形 / unext -> ⭕あり https://video.unext.jp/title/SID0002332
+✅ 未確認で進行形 / abema -> ❌なし
+✅ 未確認で進行形 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 悪魔のリドル / unext -> ⭕あり https://video.unext.jp/title/SID0013713
+✅ 悪魔のリドル / abema -> ❌なし
+✅ 悪魔のリドル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 一週間フレンズ。 / unext -> ⭕あり https://video.unext.jp/title/SID0029753
+✅ 一週間フレンズ。 / abema -> ❌なし
+✅ 一週間フレンズ。 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 彼女がフラグをおられたら / unext -> ⭕あり https://video.unext.jp/title/SID0002176
+✅ 彼女がフラグをおられたら / abema -> ❌なし
+✅ 彼女がフラグをおられたら / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 極黒のブリュンヒルデ / unext -> ⭕あり https://video.unext.jp/title/SID0002584
+✅ 極黒のブリュンヒルデ / abema -> ❌なし
+✅ 極黒のブリュンヒルデ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 健全ロボ ダイミダラー / unext -> ⭕あり https://video.unext.jp/title/SID0014749
+✅ 健全ロボ ダイミダラー / abema -> ❌なし
+✅ 健全ロボ ダイミダラー / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ご注文はうさぎですか？ / unext -> ⭕あり https://video.unext.jp/title/SID0050914
+✅ ご注文はうさぎですか？ / abema -> ❌なし
+✅ ご注文はうさぎですか？ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ シドニアの騎士 / unext -> ⭕あり https://video.unext.jp/title/SID0002627
+✅ シドニアの騎士 / abema -> ❌なし
+✅ シドニアの騎士 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 星刻の竜騎士 / unext -> ⭕あり https://video.unext.jp/title/SID0015398
+✅ 星刻の竜騎士 / abema -> ❌なし
+✅ 星刻の竜騎士 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ selector infected WIXOSS / unext -> ⭕あり https://video.unext.jp/title/SID0015439
+✅ selector infected WIXOSS / abema -> ❌なし
+✅ selector infected WIXOSS / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ それでも世界は美しい / unext -> ⭕あり https://video.unext.jp/title/SID0002244
+✅ それでも世界は美しい / abema -> ❌なし
+✅ それでも世界は美しい / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ノーゲーム・ノーライフ / unext -> ⭕あり https://video.unext.jp/title/SID0016189
+✅ ノーゲーム・ノーライフ / abema -> ⭕あり https://abema.tv/video/title/25-10wkyfrkuytx
+✅ ノーゲーム・ノーライフ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ハイキュー!! / unext -> ⭕あり https://video.unext.jp/title/SID0045516
+✅ ハイキュー!! / abema -> ⭕あり https://abema.tv/video/title/19-16
+✅ ハイキュー!! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 棺姫のチャイカ / unext -> ⭕あり https://video.unext.jp/title/SID0027697
+✅ 棺姫のチャイカ / abema -> ❌なし
+✅ 棺姫のチャイカ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ピンポン THE ANIMATION / unext -> ⭕あり https://video.unext.jp/title/SID0016554
+✅ ピンポン THE ANIMATION / abema -> ⭕あり https://abema.tv/video/title/19-264
+✅ ピンポン THE ANIMATION / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブラック・ブレット / unext -> ⭕あり https://video.unext.jp/title/SID0013372
+✅ ブラック・ブレット / abema -> ❌なし
+✅ ブラック・ブレット / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ブレイドアンドソウル / unext -> ⭕あり https://video.unext.jp/title/SID0002317
+✅ ブレイドアンドソウル / abema -> ❌なし
+✅ ブレイドアンドソウル / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ベイビーステップ / unext -> ⭕あり https://video.unext.jp/title/SID0002320
+✅ ベイビーステップ / abema -> ❌なし
+✅ ベイビーステップ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 僕らはみんな河合荘 / unext -> ⭕あり https://video.unext.jp/title/SID0003264
+✅ 僕らはみんな河合荘 / abema -> ❌なし
+✅ 僕らはみんな河合荘 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 魔法科高校の劣等生 / unext -> ⭕あり https://video.unext.jp/title/SID0063372
+✅ 魔法科高校の劣等生 / abema -> ⭕あり https://abema.tv/video/title/25-2xrwzkrsieb
+✅ 魔法科高校の劣等生 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ マンガ家さんとアシスタントさんと / unext -> ⭕あり https://video.unext.jp/title/SID0017039
+✅ マンガ家さんとアシスタントさんと / abema -> ❌なし
+✅ マンガ家さんとアシスタントさんと / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ メカクシティアクターズ / unext -> ⭕あり https://video.unext.jp/title/SID0032048
+✅ メカクシティアクターズ / abema -> ❌なし
+✅ メカクシティアクターズ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 龍ヶ嬢七々々の埋蔵金 / unext -> ⭕あり https://video.unext.jp/title/SID0017418
+✅ 龍ヶ嬢七々々の埋蔵金 / abema -> ❌なし
+✅ 龍ヶ嬢七々々の埋蔵金 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アオハライド / unext -> ⭕あり https://video.unext.jp/title/SID0012746
+✅ アオハライド / abema -> ❌なし
+✅ アオハライド / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アカメが斬る！ / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000086185
+✅ アカメが斬る！ / abema -> ❌なし
+✅ アカメが斬る！ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ アルドノア・ゼロ / unext -> ⭕あり https://video.unext.jp/title/SID0013818
+✅ アルドノア・ゼロ / abema -> ❌なし
+✅ アルドノア・ゼロ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ グラスリップ / unext -> ⭕あり https://video.unext.jp/title/SID0014648
+✅ グラスリップ / abema -> ❌なし
+✅ グラスリップ / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 月刊少女野崎くん / unext -> ⭕あり https://video.unext.jp/title/SID0002571
+✅ 月刊少女野崎くん / abema -> ⭕あり https://abema.tv/video/title/25-11ijxdyytjnx
+✅ 月刊少女野崎くん / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ さばげぶっ! / unext -> ⭕あり https://video.unext.jp/book/title/BSD0000006019
+✅ さばげぶっ! / abema -> ❌なし
+✅ さばげぶっ! / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 精霊使いの剣舞 / unext -> ⭕あり https://video.unext.jp/title/SID0017678
+✅ 精霊使いの剣舞 / abema -> ❌なし
+✅ 精霊使いの剣舞 / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 東京喰種 トーキョーグール / unext -> ⭕あり https://video.unext.jp/title/SID0045088
+✅ 東京喰種 トーキョーグール / abema -> ❌なし
+✅ 東京喰種 トーキョーグール / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ 東京ESP / unext -> ⭕あり https://video.unext.jp/title/SID0027699
+✅ 東京ESP / abema -> ❌なし
+✅ 東京ESP / dmmtv -> ⭕あり https://tv.dmm.com/vod/
+✅ ばらかもん / abema -> ❌なし
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 2972 }
+===== END 2026/01/22  1:51:15.60 ===== 
+===== END step7-vod-3only 2026/01/22  1:51:15.61 ===== 

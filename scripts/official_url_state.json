@@ -1,0 +1,3210 @@
+{
+  "cursorId": 3914,
+  "skipped": {
+    "34": {
+      "title": "金色のガッシュベル!!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:37.462Z"
+    },
+    "35": {
+      "title": "キノの旅 -the Beautiful World-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:38.262Z"
+    },
+    "36": {
+      "title": "探偵学園Q",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:38.986Z"
+    },
+    "38": {
+      "title": "D.C.～ダ・カーポ～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:39.761Z"
+    },
+    "39": {
+      "title": "君が望む永遠",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:40.511Z"
+    },
+    "47": {
+      "title": "巌窟王",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:41.235Z"
+    },
+    "48": {
+      "title": "ブラック・ジャック",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:41.991Z"
+    },
+    "51": {
+      "title": "焼きたて!! ジャぱん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:42.735Z"
+    },
+    "53": {
+      "title": "いちご100%",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:43.468Z"
+    },
+    "56": {
+      "title": "創聖のアクエリオン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:44.214Z"
+    },
+    "64": {
+      "title": "BLACK CAT",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:44.960Z"
+    },
+    "67": {
+      "title": "Ergo Proxy",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:45.731Z"
+    },
+    "72": {
+      "title": "神様家族",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:46.446Z"
+    },
+    "80": {
+      "title": "Kanon（京都アニメーション版）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:42:47.261Z"
+    },
+    "84": {
+      "title": "人造昆虫カブトボーグ V×V",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:49.243Z"
+    },
+    "85": {
+      "title": "D.Gray-man",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:50.013Z"
+    },
+    "87": {
+      "title": "ネギま!?",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:50.795Z"
+    },
+    "91": {
+      "title": "のだめカンタービレ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:51.562Z"
+    },
+    "96": {
+      "title": "sola",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:52.317Z"
+    },
+    "98": {
+      "title": "地球へ･･･",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:53.055Z"
+    },
+    "101": {
+      "title": "ハヤテのごとく!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:53.830Z"
+    },
+    "105": {
+      "title": "School Days",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:54.587Z"
+    },
+    "111": {
+      "title": "魔人探偵脳噛ネウロ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:55.344Z"
+    },
+    "114": {
+      "title": "君が主で執事が俺で",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:56.113Z"
+    },
+    "118": {
+      "title": "かのこん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:56.852Z"
+    },
+    "122": {
+      "title": "恋姫†無双",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:42:57.585Z"
+    },
+    "133": {
+      "title": "ONE OUTS－ワンナウツ－",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:42:58.385Z"
+    },
+    "136": {
+      "title": "スレイヤーズEVOLUTION-R",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:00.389Z"
+    },
+    "158": {
+      "title": "えむえむっ!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:01.138Z"
+    },
+    "160": {
+      "title": "おまもりひまり",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:01.883Z"
+    },
+    "164": {
+      "title": "神のみぞ知るセカイ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:52.050Z"
+    },
+    "175": {
+      "title": "バクマン。",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:52.842Z"
+    },
+    "176": {
+      "title": "B型H系",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:53.605Z"
+    },
+    "177": {
+      "title": "まじっく快斗",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:54.356Z"
+    },
+    "178": {
+      "title": "迷い猫オーバーラン!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:55.146Z"
+    },
+    "179": {
+      "title": "四畳半神話大系",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:55.936Z"
+    },
+    "181": {
+      "title": "れでぃ×ばと!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:43:58.586Z"
+    },
+    "187": {
+      "title": "いつか天魔の黒ウサギ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:06.944Z"
+    },
+    "189": {
+      "title": "神様のメモ帳",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:09.170Z"
+    },
+    "190": {
+      "title": "境界線上のホライゾン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:09.945Z"
+    },
+    "193": {
+      "title": "GOSICK -ゴシック-",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:44:13.688Z"
+    },
+    "199": {
+      "title": "デッドマン・ワンダーランド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:23.190Z"
+    },
+    "200": {
+      "title": "トリコ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:23.941Z"
+    },
+    "201": {
+      "title": "NO.6",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:24.681Z"
+    },
+    "204": {
+      "title": "HUNTER×HUNTER",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:56.828Z"
+    },
+    "205": {
+      "title": "緋弾のアリア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:57.573Z"
+    },
+    "207": {
+      "title": "BLOOD-C",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:58.303Z"
+    },
+    "208": {
+      "title": "べるぜバブ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:59.056Z"
+    },
+    "209": {
+      "title": "ベン・トー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:44:59.781Z"
+    },
+    "210": {
+      "title": "僕は友達が少ない",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:45:00.568Z"
+    },
+    "211": {
+      "title": "マケン姫っ！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:45:01.320Z"
+    },
+    "212": {
+      "title": "真剣で私に恋しなさい!!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:45:02.110Z"
+    },
+    "214": {
+      "title": "魔法少女まどか☆マギカ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:45:04.403Z"
+    },
+    "217": {
+      "title": "未来日記",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:45:07.946Z"
+    },
+    "218": {
+      "title": "夢喰いメリー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:45:08.690Z"
+    },
+    "220": {
+      "title": "+チック姉さん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:18.502Z"
+    },
+    "223": {
+      "title": "Another",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:22.095Z"
+    },
+    "225": {
+      "title": "妖狐×僕SS",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:24.267Z"
+    },
+    "226": {
+      "title": "宇宙兄弟",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:25.020Z"
+    },
+    "227": {
+      "title": "エリアの騎士",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:25.777Z"
+    },
+    "228": {
+      "title": "織田信奈の野望",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:26.557Z"
+    },
+    "229": {
+      "title": "お兄ちゃんだけど愛さえあれば関係ないよねっ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:27.397Z"
+    },
+    "231": {
+      "title": "カンピオーネ!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:29.677Z"
+    },
+    "232": {
+      "title": "銀河へキックオフ!!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:30.434Z"
+    },
+    "235": {
+      "title": "K",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:34.032Z"
+    },
+    "238": {
+      "title": "坂道のアポロン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:37.688Z"
+    },
+    "240": {
+      "title": "さんかれあ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:39.844Z"
+    },
+    "241": {
+      "title": "ジョジョの奇妙な冒険",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:40.610Z"
+    },
+    "242": {
+      "title": "人類は衰退しました",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:41.348Z"
+    },
+    "247": {
+      "title": "だから僕は、Hができない。",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:46:47.887Z"
+    },
+    "249": {
+      "title": "黄昏乙女×アムネジア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:18.351Z"
+    },
+    "254": {
+      "title": "這いよれ！ ニャル子さん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:24.810Z"
+    },
+    "255": {
+      "title": "はぐれ勇者の鬼畜美学",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:25.565Z"
+    },
+    "260": {
+      "title": "めだかボックス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:31.986Z"
+    },
+    "261": {
+      "title": "ヨルムンガンド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:32.755Z"
+    },
+    "263": {
+      "title": "アウトブレイク・カンパニー 萌える侵略者",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:47:35.012Z"
+    },
+    "266": {
+      "title": "有頂天家族",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:39.846Z"
+    },
+    "269": {
+      "title": "革命機ヴァルヴレイヴ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:43.646Z"
+    },
+    "274": {
+      "title": "銀の匙 Silver Spoon",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:47:50.006Z"
+    },
+    "276": {
+      "title": "琴浦さん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:47:53.360Z"
+    },
+    "287": {
+      "title": "フォトカノ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:48:36.350Z"
+    },
+    "291": {
+      "title": "問題児たちが異世界から来るそうですよ？",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:48:41.429Z"
+    },
+    "293": {
+      "title": "勇者になれなかった俺はしぶしぶ就職を決意しました。",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:48:43.758Z"
+    },
+    "296": {
+      "title": "夜桜四重奏 ～ヨザクラカルテット～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:48:47.394Z"
+    },
+    "299": {
+      "title": "ワルキューレ ロマンツェ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:48:51.033Z"
+    },
+    "304": {
+      "title": "GJ部",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:48:57.487Z"
+    },
+    "308": {
+      "title": "となりの関くん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:49:02.418Z"
+    },
+    "322": {
+      "title": "シドニアの騎士",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:49:50.768Z"
+    },
+    "323": {
+      "title": "星刻の竜騎士",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:49:51.525Z"
+    },
+    "331": {
+      "title": "ブレイドアンドソウル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:50:02.367Z"
+    },
+    "343": {
+      "title": "さばげぶっ!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:50:47.485Z"
+    },
+    "346": {
+      "title": "東京ESP",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:50:51.053Z"
+    },
+    "357": {
+      "title": "俺、ツインテールになります。",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:51:06.273Z"
+    },
+    "372": {
+      "title": "ワールドトリガー（1stシーズン）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:51:55.970Z"
+    },
+    "375": {
+      "title": "暗殺教室（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:00.768Z"
+    },
+    "385": {
+      "title": "食戟のソーマ（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:14.338Z"
+    },
+    "386": {
+      "title": "終わりのセラフ（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:16.300Z"
+    },
+    "388": {
+      "title": "境界のRINNE（第1シリーズ）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:19.880Z"
+    },
+    "390": {
+      "title": "ダンジョンに出会いを求めるのは間違っているだろうか（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:23.349Z"
+    },
+    "394": {
+      "title": "響け！ユーフォニアム（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:29.595Z"
+    },
+    "399": {
+      "title": "赤髪の白雪姫（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:35.840Z"
+    },
+    "400": {
+      "title": "うしおととら（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:37.842Z"
+    },
+    "401": {
+      "title": "オーバーロード（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:52:39.820Z"
+    },
+    "406": {
+      "title": "GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:53:04.245Z"
+    },
+    "421": {
+      "title": "学戦都市アスタリスク（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:53:26.424Z"
+    },
+    "422": {
+      "title": "機動戦士ガンダム 鉄血のオルフェンズ（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:53:28.467Z"
+    },
+    "429": {
+      "title": "ワンパンマン（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:54:47.209Z"
+    },
+    "431": {
+      "title": "亜人（TVシリーズ）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:54:50.621Z"
+    },
+    "433": {
+      "title": "この素晴らしい世界に祝福を！（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:54:54.153Z"
+    },
+    "437": {
+      "title": "昭和元禄落語心中（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:55:00.727Z"
+    },
+    "456": {
+      "title": "文豪ストレイドッグス（第1シーズン）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:55:27.319Z"
+    },
+    "457": {
+      "title": "僕のヒーローアカデミア（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:55:46.014Z"
+    },
+    "460": {
+      "title": "Re:ゼロから始める異世界生活（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:55:50.936Z"
+    },
+    "466": {
+      "title": "斉木楠雄のΨ難（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:56:00.034Z"
+    },
+    "469": {
+      "title": "91Days",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:56:04.845Z"
+    },
+    "474": {
+      "title": "ベルセルク（2016）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:56:11.465Z"
+    },
+    "476": {
+      "title": "Rewrite（第1期）",
+      "reason": "request_failed",
+      "at": "2026-01-12T12:56:14.881Z"
+    },
+    "484": {
+      "title": "ドリフターズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:57:35.559Z"
+    },
+    "489": {
+      "title": "月曜日のたわわ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:57:42.156Z"
+    },
+    "490": {
+      "title": "ACCA13区監察課",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:57:42.964Z"
+    },
+    "503": {
+      "title": "龍の歯医者",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:58:00.770Z"
+    },
+    "514": {
+      "title": "月がきれい",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T12:58:44.466Z"
+    },
+    "550": {
+      "title": "僕の彼女がマジメ過ぎるしょびっちな件",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:00:01.065Z"
+    },
+    "575": {
+      "title": "ピアノの森",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:01:45.350Z"
+    },
+    "611": {
+      "title": "中卒労働者から始める高校生活",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:03:05.831Z"
+    },
+    "627": {
+      "title": "なんでここに先生が!?",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:03:29.056Z"
+    },
+    "628": {
+      "title": "フルーツバスケット",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:03:29.815Z"
+    },
+    "652": {
+      "title": "慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～",
+      "reason": "request_failed",
+      "at": "2026-01-12T13:05:10.982Z"
+    },
+    "700": {
+      "title": "EX-ARM エクスアーム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:07:47.750Z"
+    },
+    "742": {
+      "title": "時光代理人 -LINK CLICK-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:08:59.584Z"
+    },
+    "841": {
+      "title": "スプリガン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:14:23.073Z"
+    },
+    "890": {
+      "title": "治癒魔法の間違った使い方 ～戦場を駆ける回復要員～",
+      "reason": "request_failed",
+      "at": "2026-01-12T13:16:22.857Z"
+    },
+    "939": {
+      "title": "忘却バッテリー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:18:22.281Z"
+    },
+    "945": {
+      "title": "T・Pぼん シーズン1",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:18:30.307Z"
+    },
+    "955": {
+      "title": "NINJA KAMUI",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-12T13:18:44.316Z"
+    },
+    "1023": {
+      "title": "カウボーイビバップ天国の扉",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:33.489Z"
+    },
+    "1024": {
+      "title": "TRIGUN",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:34.234Z"
+    },
+    "1025": {
+      "title": "Witch Hunter ROBIN",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:35.005Z"
+    },
+    "1029": {
+      "title": "ハングリーハート Wild Striker",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:36.007Z"
+    },
+    "1030": {
+      "title": "頭文字〈イニシャル〉D FOURTH STAGE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:36.843Z"
+    },
+    "1035": {
+      "title": "リングにかけろ１",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:37.653Z"
+    },
+    "1036": {
+      "title": "スクールランブル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:38.432Z"
+    },
+    "1037": {
+      "title": "砂ぼうず",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:39.182Z"
+    },
+    "1038": {
+      "title": "TEXHNOLYZE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:39.947Z"
+    },
+    "1039": {
+      "title": "トリニティ・ブラッド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:40.723Z"
+    },
+    "1041": {
+      "title": "ジパング",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:41.454Z"
+    },
+    "1043": {
+      "title": "新世紀エヴァンゲリオン劇場版 シト新生",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:42.314Z"
+    },
+    "1044": {
+      "title": "新世紀エヴァンゲリオン劇場版 Air/まごころを、君に",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:43.202Z"
+    },
+    "1046": {
+      "title": "GHOST IN THE SHELL / 攻殻機動隊",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:44.015Z"
+    },
+    "1047": {
+      "title": "るろうに剣心―明治剣客浪漫譚―追憶編",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:44.840Z"
+    },
+    "1048": {
+      "title": "るろうに剣心 -明治剣客浪漫譚-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:45.656Z"
+    },
+    "1049": {
+      "title": "るろうに剣心 -明治剣客浪漫譚- 維新志士への鎮魂歌",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:46.531Z"
+    },
+    "1050": {
+      "title": "AKIRA",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:47.280Z"
+    },
+    "1051": {
+      "title": ".hack//SIGN",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:48.029Z"
+    },
+    "1052": {
+      "title": "ああっ女神さまっ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:48.806Z"
+    },
+    "1054": {
+      "title": "ああっ女神さまっ (TV)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:49.582Z"
+    },
+    "1056": {
+      "title": "天使禁猟区",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:50.338Z"
+    },
+    "1058": {
+      "title": "機動天使エンジェリックレイヤー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:51.137Z"
+    },
+    "1060": {
+      "title": "藍より青し",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:53.500Z"
+    },
+    "1062": {
+      "title": "アップルシード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:55.729Z"
+    },
+    "1064": {
+      "title": "アークザラッド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:00:57.989Z"
+    },
+    "1067": {
+      "title": "アヴェンジャー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:01:51.235Z"
+    },
+    "1071": {
+      "title": "BLUE GENDER",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:01:56.392Z"
+    },
+    "1073": {
+      "title": "ちょびっツ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:01:58.547Z"
+    },
+    "1075": {
+      "title": "クロノクルセイド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:02:00.755Z"
+    },
+    "1077": {
+      "title": "Ｄ・Ｎ・ＡＮＧＥＬ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:02:02.944Z"
+    },
+    "1083": {
+      "title": "ローゼンメイデン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:02:09.478Z"
+    },
+    "1085": {
+      "title": "ローゼンメイデン ~ トロイメント",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:02:11.718Z"
+    },
+    "1087": {
+      "title": "あずまんが大王 THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:02:14.045Z"
+    },
+    "1102": {
+      "title": "フルメタル・パニック? ふもっふ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:03:01.974Z"
+    },
+    "1104": {
+      "title": "フルメタル パニック！The Second Raid",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:03:04.437Z"
+    },
+    "1106": {
+      "title": "学園アリス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:03:06.748Z"
+    },
+    "1116": {
+      "title": "機動戦士ガンダム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:03:18.143Z"
+    },
+    "1118": {
+      "title": "機動戦士ガンダム 第08MS小隊",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:03:20.405Z"
+    },
+    "1120": {
+      "title": "機動戦士ガンダム 0080 ポケットの中の戦争",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-19T13:03:22.683Z"
+    },
+    "2667": {
+      "title": "プリズム輪舞曲",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:08:42.316Z"
+    },
+    "2701": {
+      "title": "制服は着たままで",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:09:59.465Z"
+    },
+    "2703": {
+      "title": "もう一度、してみたい。",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:10:01.701Z"
+    },
+    "2705": {
+      "title": "L'amour fou de l'automate",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:10:03.977Z"
+    },
+    "2706": {
+      "title": "蛇と蜘蛛",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:10:04.695Z"
+    },
+    "2707": {
+      "title": "聖光閃姫ポニーセレス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:10:05.462Z"
+    },
+    "2708": {
+      "title": "剣鬼バルゴ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:10:06.196Z"
+    },
+    "2709": {
+      "title": "ファントム・アルケミア ～シルヴィアのドキドキ搾精都市計画～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:10:07.109Z"
+    },
+    "2768": {
+      "title": "また殺されてしまったのですね、探偵様",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:26.810Z"
+    },
+    "2774": {
+      "title": "ひみつのアイプリ まんかいバズリウムライブ！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:35.020Z"
+    },
+    "2775": {
+      "title": "アナルマニアオタクとアナニー大好きなお嬢様～奇跡のマッチング～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:35.898Z"
+    },
+    "2778": {
+      "title": "おしりダンディ ザ・ヤング",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:39.850Z"
+    },
+    "2779": {
+      "title": "ラブはギャルから始まる運命",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:40.654Z"
+    },
+    "2780": {
+      "title": "痴魅悶凌",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:41.365Z"
+    },
+    "3123": {
+      "title": "カウボーイビバップ天国の扉",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:45.229Z"
+    },
+    "3124": {
+      "title": "TRIGUN",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:46.025Z"
+    },
+    "3125": {
+      "title": "Witch Hunter ROBIN",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:46.825Z"
+    },
+    "3129": {
+      "title": "ハングリーハート Wild Striker",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:49.075Z"
+    },
+    "3130": {
+      "title": "頭文字〈イニシャル〉D FOURTH STAGE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:49.901Z"
+    },
+    "3135": {
+      "title": "リングにかけろ１",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:52.033Z"
+    },
+    "3136": {
+      "title": "スクールランブル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:52.812Z"
+    },
+    "3137": {
+      "title": "砂ぼうず",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:53.656Z"
+    },
+    "3138": {
+      "title": "TEXHNOLYZE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:54.411Z"
+    },
+    "3139": {
+      "title": "トリニティ・ブラッド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:55.201Z"
+    },
+    "3141": {
+      "title": "ジパング",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:13:55.952Z"
+    },
+    "3143": {
+      "title": "新世紀エヴァンゲリオン劇場版 シト新生",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:26.753Z"
+    },
+    "3144": {
+      "title": "新世紀エヴァンゲリオン劇場版 Air/まごころを、君に",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:27.621Z"
+    },
+    "3146": {
+      "title": "GHOST IN THE SHELL / 攻殻機動隊",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:29.977Z"
+    },
+    "3147": {
+      "title": "るろうに剣心―明治剣客浪漫譚―追憶編",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:30.796Z"
+    },
+    "3148": {
+      "title": "るろうに剣心 -明治剣客浪漫譚-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:31.595Z"
+    },
+    "3149": {
+      "title": "るろうに剣心 -明治剣客浪漫譚- 維新志士への鎮魂歌",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:32.478Z"
+    },
+    "3150": {
+      "title": "AKIRA",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:33.212Z"
+    },
+    "3151": {
+      "title": ".hack//SIGN",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:33.977Z"
+    },
+    "3152": {
+      "title": "ああっ女神さまっ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:34.756Z"
+    },
+    "3153": {
+      "title": "ああっ女神さまっ (TV)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:35.530Z"
+    },
+    "3154": {
+      "title": "天使禁猟区",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:36.267Z"
+    },
+    "3155": {
+      "title": "機動天使エンジェリックレイヤー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:37.084Z"
+    },
+    "3156": {
+      "title": "藍より青し",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:37.847Z"
+    },
+    "3157": {
+      "title": "アップルシード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:38.586Z"
+    },
+    "3158": {
+      "title": "アークザラッド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:39.324Z"
+    },
+    "3159": {
+      "title": "アヴェンジャー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:40.113Z"
+    },
+    "3161": {
+      "title": "BLUE GENDER",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:42.336Z"
+    },
+    "3162": {
+      "title": "ちょびっツ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:43.083Z"
+    },
+    "3163": {
+      "title": "クロノクルセイド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:43.875Z"
+    },
+    "3164": {
+      "title": "Ｄ・Ｎ・ＡＮＧＥＬ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:44.655Z"
+    },
+    "3167": {
+      "title": "ローゼンメイデン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:46.850Z"
+    },
+    "3168": {
+      "title": "ローゼンメイデン ~ トロイメント",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:47.771Z"
+    },
+    "3169": {
+      "title": "あずまんが大王 THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:14:48.601Z"
+    },
+    "3174": {
+      "title": "フルメタル・パニック? ふもっふ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:00.701Z"
+    },
+    "3175": {
+      "title": "フルメタル パニック！The Second Raid",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:01.495Z"
+    },
+    "3176": {
+      "title": "学園アリス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:02.235Z"
+    },
+    "3181": {
+      "title": "機動戦士ガンダム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:05.900Z"
+    },
+    "3182": {
+      "title": "機動戦士ガンダム 第08MS小隊",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:06.733Z"
+    },
+    "3183": {
+      "title": "機動戦士ガンダム 0080 ポケットの中の戦争",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:07.558Z"
+    },
+    "3184": {
+      "title": "機動戦士ガンダム 第08MS小隊 ミラーズ・リポート",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:08.398Z"
+    },
+    "3185": {
+      "title": "機動戦士ガンダム0083 STARDUST MEMORY",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:09.262Z"
+    },
+    "3186": {
+      "title": "機動戦士Zガンダム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:10.048Z"
+    },
+    "3187": {
+      "title": "機動戦士ガンダムZZ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:10.815Z"
+    },
+    "3188": {
+      "title": "機動戦士ガンダム 逆襲のシャア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:11.659Z"
+    },
+    "3189": {
+      "title": "機動戦士ガンダムF91",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:12.438Z"
+    },
+    "3190": {
+      "title": "機動戦士Vガンダム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:13.190Z"
+    },
+    "3191": {
+      "title": "新機動戦記ガンダムW",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:13.959Z"
+    },
+    "3192": {
+      "title": "新機動戦記ガンダムW Endless Waltz",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:14.827Z"
+    },
+    "3193": {
+      "title": "機動新世紀ガンダムX",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:15.582Z"
+    },
+    "3195": {
+      "title": "機動戦士ガンダムSEED DESTINY",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:16.398Z"
+    },
+    "3197": {
+      "title": "機動武闘伝Gガンダム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:18.615Z"
+    },
+    "3198": {
+      "title": "ラストエグザイル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:19.373Z"
+    },
+    "3199": {
+      "title": "舞-HiME",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:20.105Z"
+    },
+    "3201": {
+      "title": "新白雪姫伝説プリーティア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:22.313Z"
+    },
+    "3203": {
+      "title": "愛してるぜ ベイベ★★",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:23.087Z"
+    },
+    "3204": {
+      "title": "赤ずきんチャチャ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:23.838Z"
+    },
+    "3205": {
+      "title": "妖しのセレス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:16:24.646Z"
+    },
+    "3207": {
+      "title": "花より男子",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:15.532Z"
+    },
+    "3208": {
+      "title": "王ドロボウ JING",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:16.298Z"
+    },
+    "3209": {
+      "title": "王ドロボウ JING in Seventh Heaven",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:17.129Z"
+    },
+    "3210": {
+      "title": "爆裂天使",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:17.926Z"
+    },
+    "3211": {
+      "title": "中華一番!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:18.650Z"
+    },
+    "3212": {
+      "title": "コレクター・ユイ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:19.390Z"
+    },
+    "3213": {
+      "title": "超変身コス∞プレイヤー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:20.209Z"
+    },
+    "3214": {
+      "title": "宇宙のステルヴィア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:20.967Z"
+    },
+    "3215": {
+      "title": "魁!!クロマティ高校",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:21.730Z"
+    },
+    "3216": {
+      "title": "異次元の世界エルハザード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:22.509Z"
+    },
+    "3217": {
+      "title": "神秘の世界エルハザード (TV)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:23.340Z"
+    },
+    "3218": {
+      "title": "神秘の世界エルハザード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:24.121Z"
+    },
+    "3219": {
+      "title": "神秘の世界 エルハザード 2",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:24.905Z"
+    },
+    "3220": {
+      "title": "Φなる・あぷろーち",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:25.649Z"
+    },
+    "3223": {
+      "title": "満月をさがして",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:27.879Z"
+    },
+    "3224": {
+      "title": "ふしぎ遊戯",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:17:28.641Z"
+    },
+    "3225": {
+      "title": "ふしぎ遊戯 -永光伝-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:37.620Z"
+    },
+    "3226": {
+      "title": "双恋",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:38.339Z"
+    },
+    "3228": {
+      "title": "ゲートキーパーズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:39.096Z"
+    },
+    "3229": {
+      "title": "ゲートキーパーズ21",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:39.924Z"
+    },
+    "3230": {
+      "title": "幻想魔伝 最遊記",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:40.687Z"
+    },
+    "3231": {
+      "title": "最遊記RELOAD",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:41.461Z"
+    },
+    "3232": {
+      "title": "最遊記RELOAD GUNLOCK",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:42.279Z"
+    },
+    "3233": {
+      "title": "GetBackers 奪還屋",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:43.057Z"
+    },
+    "3234": {
+      "title": "グリーングリーン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:43.825Z"
+    },
+    "3235": {
+      "title": "GUNSLINGER GIRL",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:44.744Z"
+    },
+    "3238": {
+      "title": "HUNTER×HUNTER OVA",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:45.552Z"
+    },
+    "3239": {
+      "title": "HUNTER×HUNTER: Greed Island",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:46.394Z"
+    },
+    "3240": {
+      "title": "HUNTER×HUNTER　G・I　Final",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:47.201Z"
+    },
+    "3241": {
+      "title": "ジンキ・エクステンド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:47.980Z"
+    },
+    "3242": {
+      "title": "神風怪盗ジャンヌ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:48.741Z"
+    },
+    "3245": {
+      "title": "彼氏彼女の事情",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:51.213Z"
+    },
+    "3246": {
+      "title": "この醜くも美しい世界",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:52.051Z"
+    },
+    "3248": {
+      "title": "北へ。 ～Diamond Dust Drops～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:52.864Z"
+    },
+    "3249": {
+      "title": "LOVELESS",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:53.626Z"
+    },
+    "3251": {
+      "title": "Re:キューティーハニー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:54.407Z"
+    },
+    "3254": {
+      "title": "シャーマンキング",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:55.163Z"
+    },
+    "3255": {
+      "title": "X -エックス-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:55.898Z"
+    },
+    "3256": {
+      "title": "X−エックス− (TV)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:56.654Z"
+    },
+    "3257": {
+      "title": "魔法先生 ネギま！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:57.404Z"
+    },
+    "3258": {
+      "title": "マリア様がみてる",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:58.205Z"
+    },
+    "3259": {
+      "title": "忘却の旋律",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:58.930Z"
+    },
+    "3260": {
+      "title": "今、そこにいる僕",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:18:59.691Z"
+    },
+    "3261": {
+      "title": "PEACE MAKER 鐵",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:00.484Z"
+    },
+    "3262": {
+      "title": "ぴたテン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:01.210Z"
+    },
+    "3263": {
+      "title": "パワーストーン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:50.752Z"
+    },
+    "3264": {
+      "title": "もののけ姫",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:51.510Z"
+    },
+    "3265": {
+      "title": "ラーゼフォン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:52.261Z"
+    },
+    "3266": {
+      "title": "サムライセブン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:53.000Z"
+    },
+    "3267": {
+      "title": "スクラップド・プリンセス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:53.839Z"
+    },
+    "3270": {
+      "title": "SLAM DUNK",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:56.054Z"
+    },
+    "3271": {
+      "title": "ストレンジ・ドーン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:56.806Z"
+    },
+    "3273": {
+      "title": "天上天下",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:58.967Z"
+    },
+    "3274": {
+      "title": "東京アンダーグラウンド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:19:59.755Z"
+    },
+    "3275": {
+      "title": "とらいあんぐるハート -Sweet Songs Forever-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:00.626Z"
+    },
+    "3276": {
+      "title": "ツバサ・クロニクル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:01.395Z"
+    },
+    "3277": {
+      "title": "ウルトラマニアック",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:02.175Z"
+    },
+    "3278": {
+      "title": "ときめき不思議ダイアリー★ウルトラマニアック",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:03.022Z"
+    },
+    "3279": {
+      "title": "ヴァンドレッド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:03.799Z"
+    },
+    "3280": {
+      "title": "ヴァンドレッド the second stage",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:04.605Z"
+    },
+    "3281": {
+      "title": "天空のエスカフローネ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:05.378Z"
+    },
+    "3282": {
+      "title": "ホイッスル！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:06.163Z"
+    },
+    "3283": {
+      "title": "ゼノサーガ THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:06.955Z"
+    },
+    "3284": {
+      "title": "頭文字D",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:07.699Z"
+    },
+    "3285": {
+      "title": "頭文字〈イニシャル〉D SECOND STAGE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:08.517Z"
+    },
+    "3286": {
+      "title": "頭文字〈イニシャル〉D THIRD STAGE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:09.327Z"
+    },
+    "3287": {
+      "title": "ラブひな",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:10.062Z"
+    },
+    "3288": {
+      "title": "ラブ ひな Again",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:10.841Z"
+    },
+    "3289": {
+      "title": "ラブひなクリスマススペシャル 〜サイレント・イヴ〜",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:11.727Z"
+    },
+    "3290": {
+      "title": "ラブひな春スペシャル 〜キミサクラチルナカレ!!〜",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:12.561Z"
+    },
+    "3291": {
+      "title": "まぶらほ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:13.277Z"
+    },
+    "3292": {
+      "title": "マクロス ゼロ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:14.042Z"
+    },
+    "3293": {
+      "title": "おねがい☆ティーチャー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:20:14.810Z"
+    },
+    "3294": {
+      "title": "おねがい☆ツインズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:04.554Z"
+    },
+    "3295": {
+      "title": "りぜるまいん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:05.305Z"
+    },
+    "3296": {
+      "title": "スピードグラファー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:06.061Z"
+    },
+    "3297": {
+      "title": "千と千尋の神隠し",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:06.838Z"
+    },
+    "3298": {
+      "title": "天使な小生意気",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:07.602Z"
+    },
+    "3299": {
+      "title": "電影少女 VIDEO・GIRL・AI",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:08.391Z"
+    },
+    "3300": {
+      "title": "ウルフズレイン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:09.158Z"
+    },
+    "3301": {
+      "title": "ゆめりあ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:09.876Z"
+    },
+    "3303": {
+      "title": "ロードス島戦記　英雄騎士伝",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:10.666Z"
+    },
+    "3304": {
+      "title": "ロードス島戦記",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:11.434Z"
+    },
+    "3305": {
+      "title": "R.O.D -READ OR DIE-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:12.255Z"
+    },
+    "3306": {
+      "title": "R.O.D -THE TV-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:12.958Z"
+    },
+    "3307": {
+      "title": "らんま1/2",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:13.709Z"
+    },
+    "3308": {
+      "title": "プロジェクトA子",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:14.481Z"
+    },
+    "3309": {
+      "title": "Pia キャロット へ ようこそ!! 2 DX",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:15.301Z"
+    },
+    "3310": {
+      "title": "Pia キャロットへようこそ！！劇場版～さやかの恋物語～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:16.196Z"
+    },
+    "3311": {
+      "title": "機動戦艦ナデシコ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:16.951Z"
+    },
+    "3312": {
+      "title": "機動戦艦ナデシコ The prince of darkness",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:21:17.783Z"
+    },
+    "3314": {
+      "title": "ドラゴンボール",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:27.510Z"
+    },
+    "3315": {
+      "title": "ドラゴンボールGT",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:28.281Z"
+    },
+    "3317": {
+      "title": "フリクリ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:29.029Z"
+    },
+    "3318": {
+      "title": "地獄少女",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:29.742Z"
+    },
+    "3319": {
+      "title": "ニニンがシノブ伝",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:30.502Z"
+    },
+    "3320": {
+      "title": "エアマスター",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:31.266Z"
+    },
+    "3321": {
+      "title": "朝霧の巫女",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:32.034Z"
+    },
+    "3322": {
+      "title": "カードキャプターさくら",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:32.825Z"
+    },
+    "3323": {
+      "title": "だぁ! だぁ! だぁ!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:33.581Z"
+    },
+    "3324": {
+      "title": "ダンドー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:34.298Z"
+    },
+    "3326": {
+      "title": "E'S OTHERWISE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:36.560Z"
+    },
+    "3328": {
+      "title": "烈火の炎",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:37.307Z"
+    },
+    "3330": {
+      "title": "げんしけん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:38.039Z"
+    },
+    "3331": {
+      "title": "GIRLSブラボー first season",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:38.818Z"
+    },
+    "3333": {
+      "title": "グラビテーション",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:41.076Z"
+    },
+    "3334": {
+      "title": "アガサ・クリスティーの名探偵ポワロとマープル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:41.942Z"
+    },
+    "3335": {
+      "title": "GTO",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:42.662Z"
+    },
+    "3336": {
+      "title": "GROOVE ADVENTURE RAVE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:43.455Z"
+    },
+    "3337": {
+      "title": "遙かなる時空の中で〜八葉抄〜",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:44.254Z"
+    },
+    "3339": {
+      "title": "犬夜叉",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:44.970Z"
+    },
+    "3341": {
+      "title": "今日からマ王！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:45.984Z"
+    },
+    "3342": {
+      "title": "マドラックス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:46.725Z"
+    },
+    "3343": {
+      "title": "ジャングルはいつもハレのちグゥ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:47.558Z"
+    },
+    "3344": {
+      "title": "ジャングルはいつもハレのちグゥ　デラックス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:48.380Z"
+    },
+    "3346": {
+      "title": "ほしのこえ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:50.730Z"
+    },
+    "3348": {
+      "title": "羊のうた",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:22:51.464Z"
+    },
+    "3349": {
+      "title": "HAPPY☆LESSON",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:40.594Z"
+    },
+    "3351": {
+      "title": "HAPPY☆LESSON ADVANCE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:41.384Z"
+    },
+    "3352": {
+      "title": "HAPPY☆LESSON THE FINAL",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:42.171Z"
+    },
+    "3353": {
+      "title": "はじめの一歩 THE FIGHTING!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:43.009Z"
+    },
+    "3354": {
+      "title": "はじめの一歩 -Champion Road-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:43.824Z"
+    },
+    "3355": {
+      "title": "はじめの一歩 間柴vs木村 死刑執行",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:44.755Z"
+    },
+    "3356": {
+      "title": "ガンパレード・マーチ -新たなる行軍歌-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:45.592Z"
+    },
+    "3357": {
+      "title": "ガングレイヴ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:46.361Z"
+    },
+    "3358": {
+      "title": "GOLDEN BOY さすらいのお勉強野郎",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:47.179Z"
+    },
+    "3360": {
+      "title": "HELLSING",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:47.888Z"
+    },
+    "3361": {
+      "title": "ガドガード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:48.613Z"
+    },
+    "3362": {
+      "title": "ノワール",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:49.355Z"
+    },
+    "3363": {
+      "title": "魔法遣いに大切なこと",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:50.142Z"
+    },
+    "3364": {
+      "title": "キディ・グレイド",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:50.909Z"
+    },
+    "3365": {
+      "title": "LOVE♥LOVE?",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:51.662Z"
+    },
+    "3366": {
+      "title": "まほろまてぃっく",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:52.436Z"
+    },
+    "3367": {
+      "title": "まほろまてぃっく～もっと 美しいもの",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:53.253Z"
+    },
+    "3368": {
+      "title": "ビューティフル  ジョー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:54.035Z"
+    },
+    "3369": {
+      "title": "京極夏彦 巷説百物語",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:54.800Z"
+    },
+    "3370": {
+      "title": "アニマル横町",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:55.574Z"
+    },
+    "3371": {
+      "title": "アカネマニアックス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:56.338Z"
+    },
+    "3372": {
+      "title": "エンジェル・ハート",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:57.087Z"
+    },
+    "3373": {
+      "title": "赤毛のアン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:57.811Z"
+    },
+    "3374": {
+      "title": "エリア８８",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:58.542Z"
+    },
+    "3375": {
+      "title": "アルジェント ソーマ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:23:59.330Z"
+    },
+    "3376": {
+      "title": "B'T X",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:00.049Z"
+    },
+    "3377": {
+      "title": "グラップラー刃牙 (TV)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:00.822Z"
+    },
+    "3378": {
+      "title": "爆転シュート　ベイブレード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:01.628Z"
+    },
+    "3379": {
+      "title": "こみっくパーティー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:02.418Z"
+    },
+    "3380": {
+      "title": "星界の紋章",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:03.171Z"
+    },
+    "3381": {
+      "title": "D.C.S.S. ～ダ・カーポ セカンドシーズン～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:53.123Z"
+    },
+    "3382": {
+      "title": "ディア・ボーイズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:53.885Z"
+    },
+    "3384": {
+      "title": "ダイバージェンス・イヴ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:56.898Z"
+    },
+    "3385": {
+      "title": "みさきクロニクル 〜ダイバージェンス・イヴ〜",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:57.708Z"
+    },
+    "3386": {
+      "title": "ドラゴンドライブ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:58.474Z"
+    },
+    "3387": {
+      "title": "グレネーダー 〜ほほえみの閃士〜",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:24:59.315Z"
+    },
+    "3388": {
+      "title": ".hack//黄昏の腕輪伝説",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:00.107Z"
+    },
+    "3389": {
+      "title": ".hack//Liminality",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:00.901Z"
+    },
+    "3390": {
+      "title": "3×3EYES",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:01.629Z"
+    },
+    "3391": {
+      "title": "シンデレラボーイ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:02.419Z"
+    },
+    "3392": {
+      "title": "未来少年コナン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:03.185Z"
+    },
+    "3393": {
+      "title": "ああっ女神さまっ 小っちゃいって事は便利だねっ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:04.024Z"
+    },
+    "3394": {
+      "title": "劇場版 ああっ女神さまっ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:04.835Z"
+    },
+    "3395": {
+      "title": "あばしり一家",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:05.580Z"
+    },
+    "3396": {
+      "title": "アベノ橋魔法☆商店街",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:06.344Z"
+    },
+    "3397": {
+      "title": "けろっこデメタン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:07.121Z"
+    },
+    "3398": {
+      "title": "絶対少年",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:07.851Z"
+    },
+    "3399": {
+      "title": "ちいさなおばけアッチ・コッチ・ソッチ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:08.667Z"
+    },
+    "3400": {
+      "title": "エースをねらえ!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:09.436Z"
+    },
+    "3401": {
+      "title": "「エースをねらえ！」 —ファイナル・ステージ—",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:10.280Z"
+    },
+    "3402": {
+      "title": "エースをねらえ！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:11.095Z"
+    },
+    "3403": {
+      "title": "エースをねらえ！２",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:11.857Z"
+    },
+    "3404": {
+      "title": "小倩",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:12.884Z"
+    },
+    "3405": {
+      "title": "ファイナルファンタジーVII アドベントチルドレン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:13.709Z"
+    },
+    "3407": {
+      "title": "Happy World!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:15.884Z"
+    },
+    "3408": {
+      "title": "ナジカ電撃作戦",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:16.652Z"
+    },
+    "3411": {
+      "title": "機動警察パトレイバー ON TELEVISION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:25:18.963Z"
+    },
+    "3412": {
+      "title": "ピーチガール",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:08.788Z"
+    },
+    "3413": {
+      "title": "Petshop of Horrors",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:09.567Z"
+    },
+    "3414": {
+      "title": "ぷちぷり*ユーシィ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:10.343Z"
+    },
+    "3415": {
+      "title": "PIANO",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:11.091Z"
+    },
+    "3417": {
+      "title": "美鳥の日々",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:11.826Z"
+    },
+    "3419": {
+      "title": "ドキドキ伝説 魔法陣グルグル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:14.218Z"
+    },
+    "3420": {
+      "title": "ママは小学４年生",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:14.983Z"
+    },
+    "3421": {
+      "title": "ママレード・ボーイ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:15.729Z"
+    },
+    "3422": {
+      "title": "魔探偵ロキ RAGNAROK",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:16.557Z"
+    },
+    "3423": {
+      "title": "吟遊黙示録 マイネリーベ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:17.338Z"
+    },
+    "3424": {
+      "title": "サイキックアカデミー　煌羅万象",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:18.153Z"
+    },
+    "3425": {
+      "title": "ベルサイユのばら",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:18.968Z"
+    },
+    "3428": {
+      "title": "スパイラル -推理の絆-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:22.600Z"
+    },
+    "3429": {
+      "title": "スターシップ・オペレーターズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:23.414Z"
+    },
+    "3430": {
+      "title": "月詠 −MOON PHASE−",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:24.181Z"
+    },
+    "3431": {
+      "title": "ふたつのスピカ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:26:24.945Z"
+    },
+    "3432": {
+      "title": "英國戀物語エマ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:33.562Z"
+    },
+    "3433": {
+      "title": "W 〜ウィッシュ〜",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:34.503Z"
+    },
+    "3434": {
+      "title": "ワイルドアームズ トワイライトヴェノム",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:35.298Z"
+    },
+    "3435": {
+      "title": "瓶詰妖精",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:36.049Z"
+    },
+    "3436": {
+      "title": "まじかるカナン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:36.840Z"
+    },
+    "3437": {
+      "title": "おジャ魔女どれみ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:37.588Z"
+    },
+    "3438": {
+      "title": "おジャ魔女どれみ♯",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:38.355Z"
+    },
+    "3439": {
+      "title": "も〜っと！おジャ魔女どれみ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:39.155Z"
+    },
+    "3440": {
+      "title": "おジャ魔女どれみドッカ〜ン！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:39.936Z"
+    },
+    "3441": {
+      "title": "UG☆アルティメットガール",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:40.731Z"
+    },
+    "3444": {
+      "title": "撲殺天使ドクロちゃん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:41.485Z"
+    },
+    "3445": {
+      "title": "イリヤの空、UFOの夏",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:42.260Z"
+    },
+    "3446": {
+      "title": "I'll/CKBC",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:43.049Z"
+    },
+    "3447": {
+      "title": "火魅子伝",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:43.798Z"
+    },
+    "3448": {
+      "title": "Memories Off",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:44.649Z"
+    },
+    "3449": {
+      "title": "メモリーズオフ 2nd",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:45.476Z"
+    },
+    "3450": {
+      "title": "メモリーズオフ3.5",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:46.279Z"
+    },
+    "3451": {
+      "title": "ギャラリーフェイク",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:47.056Z"
+    },
+    "3452": {
+      "title": "FAKE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:47.782Z"
+    },
+    "3453": {
+      "title": "AIKa",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:48.552Z"
+    },
+    "3454": {
+      "title": "赤ずきんチャチャ (1995)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:49.326Z"
+    },
+    "3455": {
+      "title": "ブギーポップは笑わない Boogiepop Phantom",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:50.151Z"
+    },
+    "3456": {
+      "title": "BURN-UP EXCESS",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:51.133Z"
+    },
+    "3457": {
+      "title": "劇場版 カードキャプターさくら",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:51.958Z"
+    },
+    "3458": {
+      "title": "劇場版 カードキャプターさくら 封印されたカード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:52.827Z"
+    },
+    "3459": {
+      "title": "万能文化猫娘",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:53.571Z"
+    },
+    "3460": {
+      "title": "万能文化猫娘ＤＡＳＨ！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:54.333Z"
+    },
+    "3462": {
+      "title": "エルフェンリート 通り雨にて 或いは、少女はいかにしてその心情に至ったか?（REGENSCHAUER）",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:55.299Z"
+    },
+    "3463": {
+      "title": "エクスドライバー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:56.062Z"
+    },
+    "3464": {
+      "title": "エクスドライバー the Movie",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:27:56.889Z"
+    },
+    "3465": {
+      "title": "へっぽこ実験アニメーション エクセル・サーガ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:47.218Z"
+    },
+    "3467": {
+      "title": "ふしぎ遊戯　第二部",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:48.032Z"
+    },
+    "3468": {
+      "title": "ギャラクシーエンジェル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:48.817Z"
+    },
+    "3469": {
+      "title": "GANTZ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:49.532Z"
+    },
+    "3470": {
+      "title": "ギルガメッシュ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:50.691Z"
+    },
+    "3471": {
+      "title": "H2",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:51.409Z"
+    },
+    "3474": {
+      "title": "鴉 -KARAS-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:53.542Z"
+    },
+    "3476": {
+      "title": "テイルズ オブ ファンタジア THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:54.424Z"
+    },
+    "3477": {
+      "title": "幽☆遊☆白書",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:55.210Z"
+    },
+    "3478": {
+      "title": "エスカフローネ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:55.995Z"
+    },
+    "3479": {
+      "title": "藍より青し～縁～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:56.766Z"
+    },
+    "3480": {
+      "title": "GANTZ 2",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:57.532Z"
+    },
+    "3481": {
+      "title": "星界の戦旗",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:58.268Z"
+    },
+    "3482": {
+      "title": "星界の戦旗 II",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:59.027Z"
+    },
+    "3483": {
+      "title": "星界の戦旗 III",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:28:59.792Z"
+    },
+    "3484": {
+      "title": "星界の戦旗 特別編",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:00.607Z"
+    },
+    "3485": {
+      "title": "星方武侠アウトロースター",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:01.395Z"
+    },
+    "3486": {
+      "title": "るろうに剣心 -明治剣客浪漫譚- 星霜編",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:02.220Z"
+    },
+    "3488": {
+      "title": "花右京メイド隊",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:04.559Z"
+    },
+    "3489": {
+      "title": "バスタード!! 暗黒の破壊神",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:05.344Z"
+    },
+    "3490": {
+      "title": "BLOOD THE LAST VAMPIRE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:06.152Z"
+    },
+    "3491": {
+      "title": "BUZZER BEATER",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:06.915Z"
+    },
+    "3493": {
+      "title": "ラストオーダー -ファイナルファンタジーVII-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:07.798Z"
+    },
+    "3494": {
+      "title": "ガン×ソード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:08.569Z"
+    },
+    "3495": {
+      "title": "これが私の御主人様",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:09.334Z"
+    },
+    "3496": {
+      "title": "破滅のマルス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:10.089Z"
+    },
+    "3497": {
+      "title": "ホーホケキョ となりの山田くん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:10.929Z"
+    },
+    "3498": {
+      "title": "紅の豚",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:29:11.659Z"
+    },
+    "3499": {
+      "title": "RAGNAROK THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:01.370Z"
+    },
+    "3500": {
+      "title": "らんま1/2 中国寝崑崙大決戦! 掟やぶりの激闘篇!!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:02.252Z"
+    },
+    "3501": {
+      "title": "Samurai Deeper Kyo",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:03.039Z"
+    },
+    "3503": {
+      "title": "ストラトス・フォー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:03.831Z"
+    },
+    "3504": {
+      "title": "ストラトス・フォー OVA",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:04.585Z"
+    },
+    "3505": {
+      "title": "ストラトス・フォー アドヴァンス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:05.412Z"
+    },
+    "3506": {
+      "title": "ダーティペア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:06.189Z"
+    },
+    "3507": {
+      "title": "私立荒磯高等学校生徒会執行部",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:06.992Z"
+    },
+    "3508": {
+      "title": "ファイナルファンタジー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:07.780Z"
+    },
+    "3510": {
+      "title": "カレイドスター ～新たなる翼～ EXTRA STAGE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:10.194Z"
+    },
+    "3511": {
+      "title": "Legend of Phoenix ～レイラ・ハミルトン物語～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:11.043Z"
+    },
+    "3512": {
+      "title": "鋼の錬金術師 シャンバラを征く者",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:11.885Z"
+    },
+    "3513": {
+      "title": "ハウルの動く城",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:12.664Z"
+    },
+    "3514": {
+      "title": "I・Я・I・A ZЁIЯAM THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:13.486Z"
+    },
+    "3515": {
+      "title": "雲のむこう、約束の場所",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:14.284Z"
+    },
+    "3516": {
+      "title": "Legend of Lemnear 極黒の翼 バルキサス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:15.120Z"
+    },
+    "3517": {
+      "title": "魔法騎士（マジックナイト）レイアース",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:15.969Z"
+    },
+    "3518": {
+      "title": "PERFECT BLUE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:16.733Z"
+    },
+    "3519": {
+      "title": "ファントム THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:17.522Z"
+    },
+    "3520": {
+      "title": "聖伝-RG VEDA-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:30:18.256Z"
+    },
+    "3521": {
+      "title": "少女革命ウテナ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:26.780Z"
+    },
+    "3522": {
+      "title": "少女革命ウテナ アドゥレセンス黙示録",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:27.600Z"
+    },
+    "3523": {
+      "title": "劇場版 NARUTO -ナルト- 大活劇!雪姫忍法帖だってばよ!!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:28.490Z"
+    },
+    "3525": {
+      "title": "マリア様がみてる～春～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:29.266Z"
+    },
+    "3526": {
+      "title": "テイルズ オブ エターニア THE ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:30.102Z"
+    },
+    "3527": {
+      "title": "ヴァイスクロイツ・グリーエン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:30.880Z"
+    },
+    "3528": {
+      "title": "Weiß kreuz　ヴァイス　クロイツ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:31.698Z"
+    },
+    "3529": {
+      "title": "天上天下ULTIMATE FIGHT",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:32.495Z"
+    },
+    "3530": {
+      "title": "犬夜叉 紅蓮の蓬莱島",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:33.260Z"
+    },
+    "3531": {
+      "title": "犬夜叉 鏡の中の夢幻城",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:34.036Z"
+    },
+    "3532": {
+      "title": "犬夜叉 天下覇道の剣",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:34.793Z"
+    },
+    "3533": {
+      "title": "犬夜叉 時代を越える想い",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:35.593Z"
+    },
+    "3534": {
+      "title": ".hack//GIFT",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:36.375Z"
+    },
+    "3535": {
+      "title": "ファンタジックチルドレン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:37.596Z"
+    },
+    "3536": {
+      "title": "極上生徒会",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:38.373Z"
+    },
+    "3538": {
+      "title": "ぶっとび!!CPU",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:39.116Z"
+    },
+    "3539": {
+      "title": "ONE PIECE (Movie)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:39.880Z"
+    },
+    "3540": {
+      "title": "ONE PIECE ねじまき島の冒険",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:40.685Z"
+    },
+    "3541": {
+      "title": "ONE PIECE 珍獣島のチョッパー王国",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:41.498Z"
+    },
+    "3542": {
+      "title": "ONE PIECE THE MOVIE デッドエンドの冒険",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:42.353Z"
+    },
+    "3543": {
+      "title": "ONE PIECE 呪われた聖剣",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:43.151Z"
+    },
+    "3544": {
+      "title": "ONE PIECE THE MOVIE オマツリ男爵と秘密の島",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:44.025Z"
+    },
+    "3545": {
+      "title": "ONE PIECE THE MOVIE カラクリ城のメカ巨兵",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:44.871Z"
+    },
+    "3546": {
+      "title": "ONE PIECE 倒せ!海賊ギャンザック",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:45.677Z"
+    },
+    "3547": {
+      "title": "攻殻機動隊 STAND ALONE COMPLEX",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:46.527Z"
+    },
+    "3548": {
+      "title": "イノセンス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:47.258Z"
+    },
+    "3549": {
+      "title": "かりん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:48.010Z"
+    },
+    "3550": {
+      "title": "おくさまは女子高生",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:48.761Z"
+    },
+    "3551": {
+      "title": "ToHeart2",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:49.505Z"
+    },
+    "3552": {
+      "title": "ToHeart",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:31:50.279Z"
+    },
+    "3553": {
+      "title": "タイドライン・ブルー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:39.750Z"
+    },
+    "3554": {
+      "title": "マクロスプラス",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:40.517Z"
+    },
+    "3555": {
+      "title": "ほとり～たださいわいを希う",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:41.328Z"
+    },
+    "3556": {
+      "title": "銀盤カレイドスコープ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:42.104Z"
+    },
+    "3557": {
+      "title": "ARIA The ANIMATION",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:42.897Z"
+    },
+    "3559": {
+      "title": "うえきの法則",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:43.656Z"
+    },
+    "3561": {
+      "title": "遊☆戯☆王デュエルモンスターズＧＸ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:46.120Z"
+    },
+    "3562": {
+      "title": "クラウ ファントムメモリー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:46.911Z"
+    },
+    "3563": {
+      "title": "劇場版 幻想魔伝最遊記 Requiem 選ばれざる者への鎮魂歌",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:47.769Z"
+    },
+    "3564": {
+      "title": "だめっこどうぶつ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:48.532Z"
+    },
+    "3569": {
+      "title": "ぱにぽにだっしゅ！",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:53.605Z"
+    },
+    "3570": {
+      "title": "あかほり外道アワーらぶげ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:54.308Z"
+    },
+    "3571": {
+      "title": "アミテージ・ザ・サード DUAL-MATRIX",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:55.154Z"
+    },
+    "3572": {
+      "title": "アミテージ・ザ・サード POLY-MATRIX",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:56.004Z"
+    },
+    "3573": {
+      "title": "爆れつハンター",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:56.752Z"
+    },
+    "3574": {
+      "title": "カムイの剣",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:57.465Z"
+    },
+    "3575": {
+      "title": "ヤミと帽子と本の旅人",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:58.275Z"
+    },
+    "3576": {
+      "title": "破邪大星弾劾凰 [ダンガイオー]",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:59.090Z"
+    },
+    "3577": {
+      "title": "魔界都市〈新宿〉",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:32:59.847Z"
+    },
+    "3578": {
+      "title": "ドラえもん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:00.587Z"
+    },
+    "3579": {
+      "title": "ドラゴンボール 神龍の伝説",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:01.387Z"
+    },
+    "3580": {
+      "title": "永遠のアセリア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:02.196Z"
+    },
+    "3581": {
+      "title": "餓狼伝説 -THE MOTION PICTURE-",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:03.014Z"
+    },
+    "3582": {
+      "title": "ふしぎ星の☆ふたご姫",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:03.796Z"
+    },
+    "3583": {
+      "title": "ガラスの仮面",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:04.540Z"
+    },
+    "3584": {
+      "title": "グラビテーション OVA",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:05.316Z"
+    },
+    "3585": {
+      "title": "とっとこハム太郎",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:55.116Z"
+    },
+    "3586": {
+      "title": "あぃまぃみぃ！ストロベリー・エッグ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:55.940Z"
+    },
+    "3587": {
+      "title": "下級生２ ～瞳の中の少女たち～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:56.756Z"
+    },
+    "3588": {
+      "title": "機動新撰組 萌えよ剣 TV",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:57.739Z"
+    },
+    "3589": {
+      "title": "魔女の宅急便",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:58.502Z"
+    },
+    "3590": {
+      "title": "天空の城ラピュタ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:33:59.276Z"
+    },
+    "3591": {
+      "title": "コゼットの肖像",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:00.045Z"
+    },
+    "3592": {
+      "title": "はじまりの冒険者たち レジェンド・オブ・クリスタニア",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:00.932Z"
+    },
+    "3593": {
+      "title": "ケロロ軍曹",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:01.681Z"
+    },
+    "3594": {
+      "title": "スクールランブル一学期補習",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:02.455Z"
+    },
+    "3595": {
+      "title": "魔法のプリンセス ミンキーモモ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:03.260Z"
+    },
+    "3597": {
+      "title": "ママレード・ボーイ (1995)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:06.003Z"
+    },
+    "3598": {
+      "title": "マーメイドメロディー ぴちぴちピッチ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:06.871Z"
+    },
+    "3600": {
+      "title": "となりのトトロ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:09.045Z"
+    },
+    "3602": {
+      "title": "お伽草子",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:09.819Z"
+    },
+    "3603": {
+      "title": "ぼくの地球を守って",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:10.588Z"
+    },
+    "3605": {
+      "title": "ポケットモンスター ミュウツーの逆襲",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:12.828Z"
+    },
+    "3607": {
+      "title": "美少女戦士セーラームーン",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:13.636Z"
+    },
+    "3608": {
+      "title": "美少女戦士セーラームーンＲ THE MOVIE",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:14.450Z"
+    },
+    "3609": {
+      "title": "美少女戦士セーラームーン S",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:15.256Z"
+    },
+    "3610": {
+      "title": "せんせいのお時間",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:16.021Z"
+    },
+    "3611": {
+      "title": "スレイヤーズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:16.769Z"
+    },
+    "3612": {
+      "title": "スレイヤーズ NEXT",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:17.539Z"
+    },
+    "3613": {
+      "title": "劇場版 スレイヤーズ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:18.309Z"
+    },
+    "3614": {
+      "title": "鉄拳",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:19.029Z"
+    },
+    "3615": {
+      "title": "新・天地無用!",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:34:19.795Z"
+    },
+    "3616": {
+      "title": "天地無用! 魎皇鬼 第1期",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:28.527Z"
+    },
+    "3617": {
+      "title": "天地無用! 魎皇鬼 第2期",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:29.300Z"
+    },
+    "3618": {
+      "title": "天地無用! 魎皇鬼 第3期",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:30.076Z"
+    },
+    "3619": {
+      "title": "バンパイアハンターD",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:30.843Z"
+    },
+    "3620": {
+      "title": "ヴイナス戦記",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:31.598Z"
+    },
+    "3621": {
+      "title": "妄想科学シリーズ ワンダバスタイル",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:32.405Z"
+    },
+    "3622": {
+      "title": "Wind -a breath of heart- (2004)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:33.221Z"
+    },
+    "3623": {
+      "title": "Wind -a breath of heart- OVA",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:34.053Z"
+    },
+    "3624": {
+      "title": "원더풀 데이즈",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:34.805Z"
+    },
+    "3625": {
+      "title": "遊☆戯☆王",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:35.545Z"
+    },
+    "3626": {
+      "title": "グラップラー刃牙(バキ) 最大トーナメント編",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:36.408Z"
+    },
+    "3627": {
+      "title": "デジモンアドベンチャー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:37.186Z"
+    },
+    "3628": {
+      "title": "闇の末裔",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:37.943Z"
+    },
+    "3629": {
+      "title": "鋼鉄天使くるみ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:38.674Z"
+    },
+    "3630": {
+      "title": "鋼鉄天使くるみ2式",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:39.490Z"
+    },
+    "3631": {
+      "title": "鋼鉄天使くるみ零",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:40.237Z"
+    },
+    "3632": {
+      "title": "鋼鉄天使くるみ DVDシングル エピソード",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:41.047Z"
+    },
+    "3633": {
+      "title": "メジャー  (第2シリーズ)",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:41.862Z"
+    },
+    "3634": {
+      "title": "ラーゼフォン 間奏曲 / 彼女と彼女自身と 「Thatness And Thereness」",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:42.778Z"
+    },
+    "3636": {
+      "title": "サクラ大戦",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:45.231Z"
+    },
+    "3637": {
+      "title": "サクラ大戦『ル・ヌーヴォー・巴里』",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:46.080Z"
+    },
+    "3638": {
+      "title": "Ｄ・Ｎ・Ａ² ～何処かで失くしたあいつのアイツ～",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:46.910Z"
+    },
+    "3639": {
+      "title": "ぷにぷに☆ぽえみぃ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:47.695Z"
+    },
+    "3640": {
+      "title": "スチームボーイ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:48.447Z"
+    },
+    "3641": {
+      "title": "鉄腕バーディー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:49.204Z"
+    },
+    "3642": {
+      "title": "THEビッグオー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:50.194Z"
+    },
+    "3643": {
+      "title": "バブルガムクライシス TOKYO2040",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:51.013Z"
+    },
+    "3644": {
+      "title": "無責任艦長タイラー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:51.781Z"
+    },
+    "3645": {
+      "title": "人狼 JIN-ROH",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:35:52.565Z"
+    },
+    "3646": {
+      "title": "モルダイバー",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:42.257Z"
+    },
+    "3647": {
+      "title": "風の谷のナウシカ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:43.023Z"
+    },
+    "3648": {
+      "title": "セイバーマリオネットJ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:43.861Z"
+    },
+    "3649": {
+      "title": "リーンの翼",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:44.594Z"
+    },
+    "3650": {
+      "title": "マジカノ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:45.386Z"
+    },
+    "3651": {
+      "title": "鍵姫物語 永久アリス輪舞曲",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:46.177Z"
+    },
+    "3652": {
+      "title": "火垂るの墓",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:46.925Z"
+    },
+    "3653": {
+      "title": "バトルプログラマーシラセ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:47.710Z"
+    },
+    "3654": {
+      "title": "こげぱん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:48.442Z"
+    },
+    "3655": {
+      "title": "炎のらびりんす",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:49.228Z"
+    },
+    "3656": {
+      "title": "セクシーコマンドー外伝 すごいよ!! マサルさん",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:50.093Z"
+    },
+    "3657": {
+      "title": "ノエイン もうひとりの君へ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:50.896Z"
+    },
+    "3658": {
+      "title": "耳をすませば",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:51.673Z"
+    },
+    "3659": {
+      "title": "怪～ayakashi～ Japanese Classic Horror",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-20T22:36:52.559Z"
+    },
+    "3914": {
+      "title": "おねがいアイプリ",
+      "reason": "no_official_in_anilist",
+      "at": "2026-01-21T13:34:12.470Z"
+    }
+  }
+}

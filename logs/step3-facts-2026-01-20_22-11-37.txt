@@ -1,0 +1,9 @@
+===== START step3-facts 2026/01/20 22:11:37.69 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ enqueue-facts-meta start { LIMIT: 5000, OFFSET: 0, REGION: 'JP' }
+targets=568
+✅ queued=568
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ resolve-official-url v2 start { LIMIT: 5000, OFFSET: 0 }
+🎉 done { updated: 0, skipped: 64 }
+===== END step3-facts 2026/01/20 22:12:08.64 ===== 

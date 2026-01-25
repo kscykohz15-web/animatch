@@ -1,0 +1,10 @@
+===== START step3-facts 2026/01/20 22:38:35.09 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ enqueue-facts-meta start { LIMIT: 5000, OFFSET: 0, REGION: 'JP' }
+targets=568
+✅ queued=568
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ resolve-official-url v2 start { LIMIT: 5000, OFFSET: 0 }
+🎉 done { updated: 0, skipped: 64 }
+===== END step3-facts 2026/01/20 22:39:01.79 ===== 

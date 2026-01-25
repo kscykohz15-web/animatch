@@ -1,0 +1,16 @@
+===== START step1-backfill 2026/01/20 21:18:10.82 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ AniList backfill start {
+  start_page: 4,
+  end_page: 8,
+  PER_PAGE: 50,
+  ALLOW_UPDATE_EXISTING: false,
+  state: 'C:\\Users\\kouhe\\Desktop\\animatch-work\\animatch\\scripts\\anilist_backfill_state.json'
+}
+🎉 page=4 inserted_attempt=42
+🎉 page=5 inserted_attempt=50
+🎉 page=6 inserted_attempt=48
+🎉 page=7 inserted_attempt=49
+🎉 page=8 inserted_attempt=49
+✅ backfill done { scannedPages: 5, inserted_attempt_total: 238, next_page: 9 }
+===== END step1-backfill 2026/01/20 21:18:17.69 ===== 

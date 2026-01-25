@@ -1,0 +1,40 @@
+===== START step3-facts 2026/01/20 23:06:09.83 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ step3-anilist-facts start { LIMIT: 5000, OFFSET: 0, FORCE: false, MIN_INTERVAL: 900 }
+targets=358 / rows=1000
+✅ updated id=109 title=キミキス pure rouge anilist_id=4205
+✅ updated id=111 title=魔人探偵脳噛ネウロ anilist_id=2985
+✅ updated id=112 title=みなみけ anilist_id=2963
+✅ updated id=115 title=true tears（トゥルーティアーズ） anilist_id=2129
+❌ failed id=118 title=かのこん anilist_id=4760 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=119 title=ソウルイーター anilist_id=3588 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=121 title=To Loveる -とらぶる- anilist_id=3455
+✅ updated id=124 title=夏目友人帳 anilist_id=4081
+✅ updated id=126 title=イヴの時間 anilist_id=3167
+✅ updated id=129 title=喰霊-零- anilist_id=4725
+✅ updated id=130 title=CHAOS;HEAD anilist_id=4975
+✅ updated id=132 title=とらドラ！ anilist_id=4224
+✅ updated id=135 title=鋼殻のレギオス anilist_id=4186
+✅ updated id=137 title=WHITE ALBUM（第1期） anilist_id=4720
+✅ updated id=142 title=鋼の錬金術師 FULLMETAL ALCHEMIST anilist_id=5114
+✅ updated id=146 title=東京マグニチュード8.0 anilist_id=6211
+✅ updated id=147 title=プリンセスラバー! anilist_id=7468
+✅ updated id=148 title=怪談レストラン anilist_id=6980
+✅ updated id=150 title=けんぷファー anilist_id=6205
+✅ updated id=151 title=生徒会の一存 anilist_id=5909
+✅ updated id=152 title=そらのおとしもの anilist_id=5958
+❌ failed id=154 title=にゃんこい! anilist_id=6512 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+❌ failed id=155 title=FAIRY TAIL anilist_id=6702 -> AniList HTTP 429 (retry over): {"data": null,"errors": [{"message": "Too Many Requests.","status": 429}]}
+✅ updated id=157 title=荒川アンダー ザ ブリッジ anilist_id=7647
+✅ updated id=158 title=えむえむっ! anilist_id=8424
+✅ updated id=163 title=刀語 anilist_id=6594
+✅ updated id=164 title=神のみぞ知るセカイ anilist_id=8525
+✅ updated id=165 title=kiss×sis anilist_id=5042
+✅ updated id=168 title=侵略!イカ娘 anilist_id=8557
+✅ updated id=171 title=セキレイ anilist_id=4063
+✅ updated id=175 title=バクマン。 anilist_id=102608
+✅ updated id=176 title=B型H系 anilist_id=7817
+✅ updated id=177 title=まじっく快斗 anilist_id=8310
+✅ updated id=178 title=迷い猫オーバーラン! anilist_id=7590
+^C
