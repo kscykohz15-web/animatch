@@ -442,15 +442,19 @@ function getVodServices(a: AnimeWork): string[] {
   return Array.from(new Set(normalized));
 }
 
-function VodIconsRow({ services }: { services: string[] }) {
+function VodIconsRow({
+  services,
+  watchUrls,
+  size = 36, // ← クリックしやすい見た目サイズ（必要なら40に）
+}: {
+  services: string[];
+  watchUrls?: Record<string, string> | null;
+  size?: number;
+}) {
   if (!services || services.length === 0) {
     return <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>配信：—</div>;
   }
 
-  console.log("VOD services raw:", services);
-
-
-  // ✅ ここが重要：表記ゆれを正規化してから表示
   const canonSet = new Set(vodServices as readonly string[]);
   const canonical = Array.from(
     new Set(
@@ -467,26 +471,90 @@ function VodIconsRow({ services }: { services: string[] }) {
     return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
   });
 
+  const MIN_HIT = 44; // ✅ クリック領域（スマホ基準）
+  const hit = Math.max(MIN_HIT, size);
+
   return (
-    <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+    <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
       <div style={{ fontSize: 12, opacity: 0.85 }}>配信：</div>
 
-      {sorted.map((s) => {
-        const icon = vodIconMap[s];
-        if (!icon) return null; // ✅ ここはもう文字を出さない（揺れは上で吸収）
-        return (
+      {sorted.map((svc) => {
+        const icon = vodIconMap[svc];
+        if (!icon) return null;
+
+        const url = watchUrls?.[svc] ? String(watchUrls[svc]).trim() : "";
+        const clickable = !!url;
+
+        const inner = (
           <img
-            key={s}
             src={icon.src}
             alt={icon.alt}
-            title={s}
-            style={{ height: 18, width: "auto", display: "block" }}
+            title={clickable ? `${svc}で視聴ページを開く` : svc}
+            style={{
+              height: size,
+              width: "auto",
+              display: "block",
+              filter: clickable ? "none" : "grayscale(1)",
+              opacity: clickable ? 1 : 0.45,
+            }}
           />
+        );
+
+        // ✅ クリックできない場合は見た目を落として表示だけ
+        if (!clickable) {
+          return (
+            <span
+              key={svc}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: hit,
+                height: hit,
+                borderRadius: 12,
+              }}
+            >
+              {inner}
+            </span>
+          );
+        }
+
+        // ✅ クリックできる場合（押しやすいサイズ＆hover）
+        return (
+          <a
+            key={svc}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              trackEvent({
+                event_name: "vod_click",
+                work_id: 0, // ← 呼び出し側で上書きするなら不要。ここでは最低限。
+                vod_service: svc,
+                meta: { from: "vod_icons" },
+              });
+            }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: hit,
+              height: hit,
+              borderRadius: 12,
+              border: "1px solid rgba(0,0,0,0.14)",
+              background: "rgba(255,255,255,0.9)",
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+          >
+            {inner}
+          </a>
         );
       })}
     </div>
   );
 }
+
 
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
@@ -1216,7 +1284,7 @@ useEffect(() => {
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
-                <VodIconsRow services={vods} />
+                <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} size={34} />
 
                 <p>{a.summary || ""}</p>
                 <p>{passiveText(a.passive_viewing)}</p>
@@ -1285,44 +1353,11 @@ useEffect(() => {
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
 
-                <VodIconsRow services={getVodServices(selectedAnime)} />
-
-                {/* ✅ 配信リンク（watch_url）ボタン */}
-{selectedAnime.vod_watch_urls && Object.keys(selectedAnime.vod_watch_urls).length ? (
-  <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 10 }}>
-    {Object.entries(selectedAnime.vod_watch_urls)
-      .sort(([a], [b]) => (vodServices as readonly string[]).indexOf(a) - (vodServices as readonly string[]).indexOf(b))
-      .map(([svc, url]) => (
-        <button
-          key={svc}
-          type="button"
-          onClick={() => {
-            trackEvent({
-              event_name: "vod_click",
-              work_id: Number(selectedAnime.id || 0),
-              vod_service: svc,
-              meta: { from: "modal" },
-            });
-            window.open(url, "_blank", "noopener,noreferrer");
-          }}
-          style={{
-            padding: "8px 12px",
-            borderRadius: 12,
-            border: "1px solid rgba(0,0,0,0.2)",
-            background: "white",
-            cursor: "pointer",
-            fontWeight: 700,
-          }}
-        >
-          {svc} で見る
-        </button>
-      ))}
-  </div>
-) : (
-  <div style={{ marginTop: 10, fontSize: 12, opacity: 0.7 }}>
-    配信リンクが見つかりませんでした
-  </div>
-)}
+                <VodIconsRow
+  services={getVodServices(selectedAnime)}
+  watchUrls={selectedAnime.vod_watch_urls}
+  size={40}
+/>
 
 
                 <div className="meta" style={{ marginTop: 10 }}>
