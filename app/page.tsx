@@ -447,7 +447,21 @@ function VodIconsRow({ services }: { services: string[] }) {
     return <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>配信：—</div>;
   }
 
-  const sorted = [...services].sort((a, b) => {
+  console.log("VOD services raw:", services);
+
+
+  // ✅ ここが重要：表記ゆれを正規化してから表示
+  const canonSet = new Set(vodServices as readonly string[]);
+  const canonical = Array.from(
+    new Set(
+      services
+        .map((s) => canonicalVodName(String(s || "").trim()))
+        .map((s) => String(s).trim())
+        .filter((s) => canonSet.has(s))
+    )
+  );
+
+  const sorted = canonical.sort((a, b) => {
     const ia = (vodServices as readonly string[]).indexOf(a);
     const ib = (vodServices as readonly string[]).indexOf(b);
     return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
@@ -456,25 +470,19 @@ function VodIconsRow({ services }: { services: string[] }) {
   return (
     <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
       <div style={{ fontSize: 12, opacity: 0.85 }}>配信：</div>
+
       {sorted.map((s) => {
         const icon = vodIconMap[s];
-        if (!icon) {
-          return (
-            <span
-              key={s}
-              style={{
-                fontSize: 12,
-                padding: "2px 8px",
-                borderRadius: 999,
-                border: "1px solid rgba(0,0,0,0.18)",
-                background: "rgba(0,0,0,0.04)",
-              }}
-            >
-              {s}
-            </span>
-          );
-        }
-        return <img key={s} src={icon.src} alt={icon.alt} title={s} style={{ height: 18, width: "auto", display: "block" }} />;
+        if (!icon) return null; // ✅ ここはもう文字を出さない（揺れは上で吸収）
+        return (
+          <img
+            key={s}
+            src={icon.src}
+            alt={icon.alt}
+            title={s}
+            style={{ height: 18, width: "auto", display: "block" }}
+          />
+        );
       })}
     </div>
   );
