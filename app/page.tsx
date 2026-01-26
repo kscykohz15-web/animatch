@@ -137,10 +137,10 @@ const vodServices = [
   "Lemino",
 ] as const;
 
-/** ✅ 表記ゆれ吸収：DBの service をUI標準名に寄せる */
+/** ✅ 表記ゆれ吸収：DBの service をUI標準名に寄せる（canonicalへ統一） */
 function normalizeVodName(name: string) {
-  const n = String(name || "").trim();
-  const key = n.toLowerCase().replace(/[ 　]/g, "");
+  return canonicalVodName(name);
+}
 
   const map: Record<string, string> = {
     abema: "Abema",
@@ -445,7 +445,7 @@ function getVodServices(a: AnimeWork): string[] {
 function VodIconsRow({
   services,
   watchUrls,
-  size = 36, // ← クリックしやすい見た目サイズ（必要なら40に）
+  size = 36,
 }: {
   services: string[];
   watchUrls?: Record<string, string> | null;
@@ -456,40 +456,52 @@ function VodIconsRow({
   }
 
   const canonSet = new Set(vodServices as readonly string[]);
+
+  // ✅ services は必ず canonical に寄せる
   const canonical = Array.from(
     new Set(
       services
         .map((s) => canonicalVodName(String(s || "").trim()))
         .map((s) => String(s).trim())
-        .filter((s) => canonSet.has(s))
+        .filter(Boolean)
     )
   );
 
-  const sorted = canonical.sort((a, b) => {
-    const ia = (vodServices as readonly string[]).indexOf(a);
-    const ib = (vodServices as readonly string[]).indexOf(b);
-    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
-  });
+  // ✅ 既知サービスを先に（vodServices順）
+  const knownSorted = canonical
+    .filter((s) => canonSet.has(s))
+    .sort((a, b) => {
+      const ia = (vodServices as readonly string[]).indexOf(a);
+      const ib = (vodServices as readonly string[]).indexOf(b);
+      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    });
 
-  const MIN_HIT = 44; // ✅ クリック領域（スマホ基準）
+  // ✅ 未知サービスも潰さない（最後にバッジで出す）
+  const unknown = canonical.filter((s) => !canonSet.has(s)).sort();
+
+  const MIN_HIT = 44;
   const hit = Math.max(MIN_HIT, size);
 
   return (
     <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
       <div style={{ fontSize: 12, opacity: 0.85 }}>配信：</div>
 
-      {sorted.map((svc) => {
+      {knownSorted.map((svc) => {
         const icon = vodIconMap[svc];
-        if (!icon) return null;
 
-        const url = watchUrls?.[svc] ? String(watchUrls[svc]).trim() : "";
-        const clickable = !!url;
+        // ✅ ここは基本 icon ある想定だが、万一なくてもバッジで出す
+        const urlRaw = watchUrls?.[svc] ? String(watchUrls[svc]).trim() : "";
+        const clickable = !!urlRaw;
 
-        const inner = (
+        // ✅ 画像は onError で原因を必ず出す
+        const inner = icon ? (
           <img
             src={icon.src}
             alt={icon.alt}
             title={clickable ? `${svc}で視聴ページを開く` : svc}
+            onError={() => {
+              console.warn("[VOD ICON ERROR]", { svc, src: icon.src });
+            }}
             style={{
               height: size,
               width: "auto",
@@ -498,9 +510,11 @@ function VodIconsRow({
               opacity: clickable ? 1 : 0.45,
             }}
           />
+        ) : (
+          <span style={{ fontSize: 12, padding: "4px 10px" }}>{svc}</span>
         );
 
-        // ✅ クリックできない場合は見た目を落として表示だけ
+        // ✅ クリック不可：表示のみ
         if (!clickable) {
           return (
             <span
@@ -519,17 +533,17 @@ function VodIconsRow({
           );
         }
 
-        // ✅ クリックできる場合（押しやすいサイズ＆hover）
+        // ✅ クリック可：押しやすい領域
         return (
           <a
             key={svc}
-            href={url}
+            href={urlRaw}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
               trackEvent({
                 event_name: "vod_click",
-                work_id: 0, // ← 呼び出し側で上書きするなら不要。ここでは最低限。
+                work_id: 0,
                 vod_service: svc,
                 meta: { from: "vod_icons" },
               });
@@ -551,9 +565,31 @@ function VodIconsRow({
           </a>
         );
       })}
+
+      {/* ✅ 未知 service はバッジ表示（壊れない） */}
+      {unknown.map((svc) => (
+        <span
+          key={`unknown-${svc}`}
+          title={`未知のVOD: ${svc}`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            height: hit,
+            padding: "0 12px",
+            borderRadius: 999,
+            border: "1px solid rgba(0,0,0,0.18)",
+            background: "rgba(255,255,255,0.85)",
+            fontSize: 12,
+            opacity: 0.85,
+          }}
+        >
+          {svc}
+        </span>
+      ))}
     </div>
   );
 }
+
 
 
 function stageLabel(stage: string | null | undefined) {
@@ -786,7 +822,8 @@ useEffect(() => {
         const watchUrl = r?.watch_url ? String(r.watch_url).trim() : "";
         if (!animeId || !rawService || !watchUrl) continue;
 
-        const svc = normalizeVodName(rawService);
+        const svc = canonicalVodName(rawService);
+
 
         const arr = mapServices.get(animeId) ?? [];
         arr.push(svc);
