@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/track";
 
-
 type AnimeWork = {
   id?: number;
   title: string;
@@ -137,79 +136,61 @@ const vodServices = [
   "Lemino",
 ] as const;
 
-/** ✅ 表記ゆれ吸収：DBの service をUI標準名に寄せる（canonicalへ統一） */
-function normalizeVodName(name: string) {
-  return canonicalVodName(name);
-}
-
-  const map: Record<string, string> = {
-    abema: "Abema",
-    abematv: "Abema",
-    primevideo: "Prime Video",
-    amazonprimevideo: "Prime Video",
-    amazonprime: "Prime Video",
-    disneyplus: "Disney+",
-    ディズニープラス: "Disney+",
-    danime: "dアニメストア",
-    "dアニメストア": "dアニメストア",
-    unext: "U-NEXT",
-    "u-next": "U-NEXT",
-    dmmtv: "DMM TV",
-    dmm: "DMM TV",
-    fod: "FOD",
-    netflix: "Netflix",
-    hulu: "Hulu",
-    lemino: "Lemino",
-    bandai: "バンダイチャンネル",
-    バンダイチャンネル: "バンダイチャンネル",
-    アニメ放題: "アニメ放題",
-  };
-
-  if (map[key]) return map[key];
-
-  const direct = (vodServices as readonly string[]).find((s) => s.toLowerCase() === n.toLowerCase());
-  if (direct) return direct;
-
-  return n;
-}
-
+/** ✅ canonicalへ統一（ここに正規化を集約） */
 function canonicalVodName(raw: string) {
   const s = String(raw || "").trim();
 
   const map: Record<string, (typeof vodServices)[number]> = {
     "U-NEXT": "U-NEXT",
     UNEXT: "U-NEXT",
+    unext: "U-NEXT",
+    "u-next": "U-NEXT",
 
     "DMM TV": "DMM TV",
     DMMTV: "DMM TV",
+    dmmtv: "DMM TV",
+    dmm: "DMM TV",
 
     "dアニメストア": "dアニメストア",
-    dアニメ: "dアニメストア",
+    danime: "dアニメストア",
+    "dアニメ": "dアニメストア",
 
     アニメ放題: "アニメ放題",
+    animehodai: "アニメ放題",
+
     バンダイチャンネル: "バンダイチャンネル",
+    bandai: "バンダイチャンネル",
+    bandaich: "バンダイチャンネル",
+
     Hulu: "Hulu",
+    hulu: "Hulu",
 
     "Prime Video": "Prime Video",
     "Amazon Prime Video": "Prime Video",
     AmazonPrimeVideo: "Prime Video",
     prime: "Prime Video",
+    primevideo: "Prime Video",
     "prime video": "Prime Video",
     プライムビデオ: "Prime Video",
     アマプラ: "Prime Video",
 
     Netflix: "Netflix",
+    netflix: "Netflix",
 
     FOD: "FOD",
+    fod: "FOD",
     フジテレビオンデマンド: "FOD",
 
     "Disney+": "Disney+",
     "Disney Plus": "Disney+",
+    disneyplus: "Disney+",
     ディズニープラス: "Disney+",
     "disney+": "Disney+",
 
     Abema: "Abema",
     ABEMA: "Abema",
+    abema: "Abema",
+    abematv: "Abema",
 
     Lemino: "Lemino",
     lemino: "Lemino",
@@ -222,8 +203,15 @@ function canonicalVodName(raw: string) {
   if (lower.includes("disney")) return "Disney+";
   if (lower.includes("abema")) return "Abema";
   if (lower.includes("netflix")) return "Netflix";
+  if (lower.includes("hulu")) return "Hulu";
+  if (lower.includes("fod")) return "FOD";
 
   return s as any;
+}
+
+/** ✅ 表記ゆれ吸収：DBの service をUI標準名に寄せる */
+function normalizeVodName(name: string) {
+  return canonicalVodName(name);
 }
 
 /** ✅ PG配列 "{a,b,c}" を配列にする */
@@ -242,13 +230,13 @@ function parsePgArrayString(s: string): string[] {
     .filter(Boolean);
 }
 
-/** ✅ VODアイコン */
+/** ✅ VODアイコン（public/vod 配下） */
 const vodIconMap: Record<string, { src: string; alt: string }> = {
   "U-NEXT": { src: "/vod/unext.jpg", alt: "U-NEXT" },
   "DMM TV": { src: "/vod/dmmtv.jpg", alt: "DMM TV" },
   "dアニメストア": { src: "/vod/danime.jpg", alt: "dアニメストア" },
   アニメ放題: { src: "/vod/animehodai.jpg", alt: "アニメ放題" },
-  バンダイチャンネル: { src: "/vod/bandai.jpg", alt: "バンダイチャンネル" },
+  バンダイチャンネル: { src: "/vod/bandai.jpg", alt: "バンダイチャンネル" }, // alias追加したのでOK
   Hulu: { src: "/vod/hulu.jpg", alt: "Hulu" },
   "Prime Video": { src: "/vod/prime.jpg", alt: "Prime Video" },
   Netflix: { src: "/vod/netflix.jpg", alt: "Netflix" },
@@ -434,10 +422,7 @@ function getVodServices(a: AnimeWork): string[] {
   }
 
   const canonSet = new Set(vodServices as readonly string[]);
-  const normalized = arr
-    .map(canonicalVodName)
-    .map((x) => String(x).trim())
-    .filter((x) => canonSet.has(x));
+  const normalized = arr.map(canonicalVodName).map((x) => String(x).trim()).filter((x) => canonSet.has(x));
 
   return Array.from(new Set(normalized));
 }
@@ -457,7 +442,6 @@ function VodIconsRow({
 
   const canonSet = new Set(vodServices as readonly string[]);
 
-  // ✅ services は必ず canonical に寄せる
   const canonical = Array.from(
     new Set(
       services
@@ -467,7 +451,6 @@ function VodIconsRow({
     )
   );
 
-  // ✅ 既知サービスを先に（vodServices順）
   const knownSorted = canonical
     .filter((s) => canonSet.has(s))
     .sort((a, b) => {
@@ -476,7 +459,6 @@ function VodIconsRow({
       return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
     });
 
-  // ✅ 未知サービスも潰さない（最後にバッジで出す）
   const unknown = canonical.filter((s) => !canonSet.has(s)).sort();
 
   const MIN_HIT = 44;
@@ -489,11 +471,9 @@ function VodIconsRow({
       {knownSorted.map((svc) => {
         const icon = vodIconMap[svc];
 
-        // ✅ ここは基本 icon ある想定だが、万一なくてもバッジで出す
         const urlRaw = watchUrls?.[svc] ? String(watchUrls[svc]).trim() : "";
         const clickable = !!urlRaw;
 
-        // ✅ 画像は onError で原因を必ず出す
         const inner = icon ? (
           <img
             src={icon.src}
@@ -514,7 +494,6 @@ function VodIconsRow({
           <span style={{ fontSize: 12, padding: "4px 10px" }}>{svc}</span>
         );
 
-        // ✅ クリック不可：表示のみ
         if (!clickable) {
           return (
             <span
@@ -533,7 +512,6 @@ function VodIconsRow({
           );
         }
 
-        // ✅ クリック可：押しやすい領域
         return (
           <a
             key={svc}
@@ -566,7 +544,6 @@ function VodIconsRow({
         );
       })}
 
-      {/* ✅ 未知 service はバッジ表示（壊れない） */}
       {unknown.map((svc) => (
         <span
           key={`unknown-${svc}`}
@@ -589,8 +566,6 @@ function VodIconsRow({
     </div>
   );
 }
-
-
 
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
@@ -670,13 +645,10 @@ export default function Home() {
   const [freeQuery, setFreeQuery] = useState("");
   const [titleQuery, setTitleQuery] = useState("");
 
-  // ✅ ⑤の候補表示の開閉
   const [titleSuggestOpen, setTitleSuggestOpen] = useState(false);
-
   const [vodChecked, setVodChecked] = useState<Set<string>>(new Set());
 
   const [resultList, setResultList] = useState<AnimeWork[]>([]);
-
   const [selectedAnime, setSelectedAnime] = useState<AnimeWork | null>(null);
 
   const [sourceLinks, setSourceLinks] = useState<SourceLink[]>([]);
@@ -688,18 +660,15 @@ export default function Home() {
   const [resultFlash, setResultFlash] = useState(false);
   const [lastSearchedAt, setLastSearchedAt] = useState<number | null>(null);
 
-  // ✅ watch_urlベースのVODマップ（ランキングから開いても補完できる）
   const vodMapRef = useRef<Map<number, string[]>>(new Map());
   const vodUrlMapRef = useRef<Map<number, Record<string, string>>>(new Map());
 
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  // ✅ 検索結果が更新されたタイミングで「結果表示」をログ
-useEffect(() => {
-  if (!lastSearchedAt) return;
-  trackEvent({ event_name: "result_view", meta: { mode } });
-}, [lastSearchedAt, mode]);
-
+  useEffect(() => {
+    if (!lastSearchedAt) return;
+    trackEvent({ event_name: "result_view", meta: { mode } });
+  }, [lastSearchedAt, mode]);
 
   function jumpToResult() {
     resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -717,7 +686,6 @@ useEffect(() => {
     });
   }
 
-  // ✅ モーダルを開く（ランキングからでもOK）
   function openAnimeModal(base: AnimeWork) {
     const id = Number(base.id || 0);
     if (!id) {
@@ -735,7 +703,6 @@ useEffect(() => {
     });
   }
 
-  // ✅ VOD絞り込み（watch_urlで作った vod_services を使う）
   function applyVodFilter(list: AnimeWork[]) {
     const selected = Array.from(vodChecked).map(normalizeVodName);
     if (selected.length === 0) return list;
@@ -744,11 +711,10 @@ useEffect(() => {
       const v = getVodServices(a);
       if (v.length === 0) return false;
       if (VOD_FILTER_MODE === "AND") return selected.every((s) => v.includes(s));
-      return selected.some((s) => v.includes(s)); // OR
+      return selected.some((s) => v.includes(s));
     });
   }
 
-  // ✅ クリックログ（UI止めない）
   function logClick(animeId: number | undefined) {
     if (!animeId) return;
     if (!SUPABASE_URL || !SUPABASE_KEY) return;
@@ -765,7 +731,6 @@ useEffect(() => {
     }).catch(() => {});
   }
 
-  // ✅ works と VOD を読む（VODは watch_url not null を「配信あり」として採用）
   async function loadWorksAndVod() {
     if (!SUPABASE_URL || !SUPABASE_KEY) {
       setLoadError("Supabase URL/KEY が設定されていません（.env.local を確認）");
@@ -775,7 +740,6 @@ useEffect(() => {
     setLoadError(null);
     const headers = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` };
 
-    // ① works
     setLoadingWorks(true);
     let works: AnimeWork[] = [];
     try {
@@ -796,7 +760,6 @@ useEffect(() => {
       setLoadingWorks(false);
     }
 
-    // ② VOD（watch_url not null）
     setLoadingVod(true);
     try {
       const url =
@@ -824,7 +787,6 @@ useEffect(() => {
 
         const svc = canonicalVodName(rawService);
 
-
         const arr = mapServices.get(animeId) ?? [];
         arr.push(svc);
         mapServices.set(animeId, arr);
@@ -841,7 +803,6 @@ useEffect(() => {
       vodMapRef.current = mapServices;
       vodUrlMapRef.current = mapUrls;
 
-      // worksへ付与
       setAnimeList((prev) =>
         prev.map((w) => {
           const id = Number(w.id || 0);
@@ -862,7 +823,6 @@ useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SUPABASE_URL, SUPABASE_KEY]);
 
-  // モーダル中：スクロール停止 + Escで閉じる
   useEffect(() => {
     if (!selectedAnime) return;
     const prev = document.body.style.overflow;
@@ -877,7 +837,6 @@ useEffect(() => {
     };
   }, [selectedAnime]);
 
-  // モーダルが開いたら原作情報を取得
   useEffect(() => {
     if (!selectedAnime?.id) {
       setSourceLinks([]);
@@ -919,7 +878,6 @@ useEffect(() => {
   const nextRankStart = rankPagesShown * RANK_PAGE_SIZE + 1;
   const nextRankEnd = (rankPagesShown + 1) * RANK_PAGE_SIZE;
 
-  // ① 作品から探す（候補）
   const suggestions = useMemo(() => {
     if (activeInputIndex === null) return [];
     const q = workInputs[activeInputIndex]?.trim();
@@ -930,7 +888,6 @@ useEffect(() => {
       .map((a) => a.title);
   }, [activeInputIndex, animeList, workInputs]);
 
-  // ⑤ 作品そのもの検索（候補）
   const titleSuggestions = useMemo(() => {
     const q = titleQuery?.trim();
     if (!q) return [];
@@ -940,7 +897,6 @@ useEffect(() => {
       .map((a) => a.title);
   }, [animeList, titleQuery]);
 
-  // ① 作品から探す
   function searchByWorks() {
     const titles = workInputs.map((s) => s.trim()).filter(Boolean);
     if (titles.length === 0) return alert("1作品以上入力してください");
@@ -967,7 +923,6 @@ useEffect(() => {
     jumpToResult();
   }
 
-  // ② ジャンル検索
   function searchByGenre() {
     const checks = Array.from(genreChecked);
     if (checks.length === 0) return alert("重視ポイントを1つ以上選択してください");
@@ -988,7 +943,6 @@ useEffect(() => {
     jumpToResult();
   }
 
-  // ③ キーワード検索
   function searchByKeyword() {
     const selected = Array.from(keywordChecked);
     if (selected.length === 0) return alert("キーワードを1つ以上選択してください");
@@ -1014,7 +968,6 @@ useEffect(() => {
     jumpToResult();
   }
 
-  // ④ フリーワード（ローカル判定）
   function searchByFreeword() {
     const q = freeQuery.trim();
     if (!q) return alert("フリーワードを入力してください");
@@ -1030,7 +983,6 @@ useEffect(() => {
     jumpToResult();
   }
 
-  // ⑤ 作品そのものを検索（候補あり）
   function searchByTitle() {
     const q = titleQuery.trim();
     if (!q) return alert("作品名を入力してください");
@@ -1238,7 +1190,6 @@ useEffect(() => {
                 value={titleQuery}
                 onFocus={() => setTitleSuggestOpen(true)}
                 onBlur={() => {
-                  // クリック選択を潰さないため少し遅らせて閉じる
                   window.setTimeout(() => setTitleSuggestOpen(false), 120);
                 }}
                 onChange={(e) => {
@@ -1256,7 +1207,6 @@ useEffect(() => {
                     <div
                       key={t}
                       onMouseDown={(e) => {
-                        // blurより先に実行させる
                         e.preventDefault();
                         setTitleQuery(t);
                         setTitleSuggestOpen(false);
@@ -1301,17 +1251,14 @@ useEffect(() => {
               key={a.id ?? a.title}
               style={{ cursor: "pointer" }}
               onClick={() => {
-  openAnimeModal(a);
-  logClick(a.id);
-
-  // ✅ 作品を開いたログ
-  trackEvent({
-    event_name: "work_open",
-    work_id: Number(a.id || 0),
-    meta: { from: "result_card", mode },
-  });
-}}
-
+                openAnimeModal(a);
+                logClick(a.id);
+                trackEvent({
+                  event_name: "work_open",
+                  work_id: Number(a.id || 0),
+                  meta: { from: "result_card", mode },
+                });
+              }}
             >
               <img src={img} alt={a.title} />
               <div>
@@ -1340,14 +1287,13 @@ useEffect(() => {
             <button
               type="button"
               onClick={() => {
-  openAnimeModal(a);
-  trackEvent({
-    event_name: "work_open",
-    work_id: Number(a.id || 0),
-    meta: { from: "ranking", rank: i + 1 },
-  });
-}}
-
+                openAnimeModal(a);
+                trackEvent({
+                  event_name: "work_open",
+                  work_id: Number(a.id || 0),
+                  meta: { from: "ranking", rank: i + 1 },
+                });
+              }}
               style={{
                 border: "none",
                 background: "transparent",
@@ -1371,7 +1317,6 @@ useEffect(() => {
         </button>
       ) : null}
 
-      {/* 詳細モーダル */}
       {selectedAnime ? (
         <div style={overlayStyle} onClick={() => setSelectedAnime(null)}>
           <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
@@ -1390,12 +1335,7 @@ useEffect(() => {
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
 
-                <VodIconsRow
-  services={getVodServices(selectedAnime)}
-  watchUrls={selectedAnime.vod_watch_urls}
-  size={40}
-/>
-
+                <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} size={40} />
 
                 <div className="meta" style={{ marginTop: 10 }}>
                   原作：
