@@ -57,7 +57,7 @@ type VodAvailRow = {
 
 const RANK_PAGE_SIZE = 10;
 
-// ✅ 検索結果のページング
+// ✅ 結果ページング（常に10件だけ表示）
 const RESULT_PAGE_SIZE = 10;
 
 // ✅ VOD絞り込み：複数チェック時の条件
@@ -334,7 +334,6 @@ function bigrams(str: string) {
   for (let i = 0; i < s.length - 1; i++) arr.push(s.slice(i, i + 2));
   return arr;
 }
-
 function ngramJaccard(a: string, b: string) {
   const A = new Set(bigrams(a));
   const B = new Set(bigrams(b));
@@ -345,13 +344,22 @@ function ngramJaccard(a: string, b: string) {
   return union ? inter / union : 0;
 }
 
-// ✅ ③ キーワード精度UP（少し厳しめ）
 function isSimilarKeyword(selected: string, token: string) {
   const s = normalizeForCompare(selected);
   const t = normalizeForCompare(token);
   if (!s || !t) return false;
   if (t.includes(s) || s.includes(t)) return true;
-  return ngramJaccard(s, t) >= 0.52;
+  return ngramJaccard(s, t) >= 0.42;
+}
+
+function expandSelectedKeywords(keysSelected: string[]) {
+  const expanded: string[] = [];
+  keysSelected.forEach((k) => {
+    expanded.push(k);
+    const syn = keywordSynonyms[k];
+    if (Array.isArray(syn)) expanded.push(...syn);
+  });
+  return Array.from(new Set(expanded.map((x) => String(x).trim()).filter(Boolean)));
 }
 
 function buildText(a: AnimeWork) {
@@ -422,7 +430,7 @@ function getVodServices(a: AnimeWork): string[] {
   return Array.from(new Set(normalized));
 }
 
-/** ✅ VODアイコン行（①②：リンク文字は出さず、アイコンをクリックで飛ぶ） */
+/** ✅ VODアイコン行（スマホ調整：サイズ/間隔/タップ領域/親クリック抑止） */
 function safeExternalUrl(raw?: string | null) {
   const s = String(raw || "").trim();
   if (!s) return "";
@@ -435,11 +443,17 @@ function VodIconsRow({
   watchUrls,
   size = 36,
   workId = 0,
+  gap = 10,
+  minHit = 44,
+  compact = false,
 }: {
   services: string[];
   watchUrls?: Record<string, string> | null;
   size?: number;
   workId?: number;
+  gap?: number;
+  minHit?: number;
+  compact?: boolean;
 }) {
   if (!services || services.length === 0) {
     return <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>配信：—</div>;
@@ -465,12 +479,11 @@ function VodIconsRow({
     });
 
   const unknown = canonical.filter((s) => !canonSet.has(s)).sort();
-
-  const HIT = Math.max(44, size);
+  const HIT = Math.max(minHit, size);
 
   return (
-    <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-      <div style={{ fontSize: 12, opacity: 0.85 }}>配信：</div>
+    <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap, alignItems: "center" }}>
+      <div style={{ fontSize: 12, opacity: 0.85, marginRight: compact ? 2 : 0 }}>配信：</div>
 
       {knownSorted.map((svc) => {
         const icon = vodIconMap[svc];
@@ -500,6 +513,7 @@ function VodIconsRow({
           return (
             <span
               key={svc}
+              onClick={(e) => e.stopPropagation()}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -521,7 +535,8 @@ function VodIconsRow({
             href={urlRaw}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               try {
                 trackEvent({
                   event_name: "vod_click",
@@ -552,11 +567,12 @@ function VodIconsRow({
         <span
           key={`unknown-${svc}`}
           title={`未知のVOD: ${svc}`}
+          onClick={(e) => e.stopPropagation()}
           style={{
             display: "inline-flex",
             alignItems: "center",
             height: HIT,
-            padding: "0 12px",
+            padding: "0 10px",
             borderRadius: 999,
             border: "1px solid rgba(0,0,0,0.18)",
             background: "rgba(255,255,255,0.85)",
@@ -571,7 +587,6 @@ function VodIconsRow({
   );
 }
 
-/** ✅ ⑤ 原作表記を「漫画/小説 + 掲載誌っぽいもの」に寄せる（anilist等は除外） */
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
   if (!s) return "—";
@@ -582,33 +597,6 @@ function stageLabel(stage: string | null | undefined) {
   if (s === "game") return "ゲーム";
   if (s === "original") return "オリジナル";
   return stage || "—";
-}
-
-function formatOriginalInfo(links: SourceLink[]) {
-  if (!links || links.length === 0) return "—";
-
-  const ignore = (p: string) => {
-    const s = String(p || "").toLowerCase();
-    if (!s) return true;
-    if (s.includes("anilist")) return true;
-    if (s.includes("official")) return true;
-    if (s.includes("candidate")) return true;
-    if (s.includes("external")) return true;
-    if (s.includes("hulu") || s.includes("crunchyroll") || s.includes("iq")) return true;
-    return false;
-  };
-
-  const usable = links
-    .filter((x) => stageLabel(x.stage) !== "—")
-    .filter((x) => !ignore(String(x.platform || "")));
-
-  const best = usable.length ? usable[0] : links.find((x) => stageLabel(x.stage) !== "—") || links[0];
-  const kind = stageLabel(best.stage);
-
-  const platform = String(best.platform || "").trim();
-  const platformText = platform && !ignore(platform) ? `（${platform}）` : "";
-
-  return `${kind}${platformText}`;
 }
 
 function titleMatches(title: string, q: string) {
@@ -659,15 +647,6 @@ async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, 
   return cols.join(",");
 }
 
-function shuffleArray<T>(arr: T[]) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 export default function Home() {
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
   const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -687,18 +666,11 @@ export default function Home() {
   const [titleQuery, setTitleQuery] = useState("");
 
   const [titleSuggestOpen, setTitleSuggestOpen] = useState(false);
-
   const [vodChecked, setVodChecked] = useState<Set<string>>(new Set());
 
-  // ✅ ④：検索結果は全件を持って、表示はページング
-  const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
-  const [resultPageShown, setResultPageShown] = useState(1);
-
-  const visibleResults = useMemo(() => {
-    return resultAll.slice(0, resultPageShown * RESULT_PAGE_SIZE);
-  }, [resultAll, resultPageShown]);
-
-  const canShowMoreResults = resultAll.length > resultPageShown * RESULT_PAGE_SIZE;
+  const [resultList, setResultList] = useState<AnimeWork[]>([]);
+  const [resultPool, setResultPool] = useState<AnimeWork[]>([]);
+  const [resultPage, setResultPage] = useState(0);
 
   const [selectedAnime, setSelectedAnime] = useState<AnimeWork | null>(null);
 
@@ -711,10 +683,21 @@ export default function Home() {
   const [resultFlash, setResultFlash] = useState(false);
   const [lastSearchedAt, setLastSearchedAt] = useState<number | null>(null);
 
+  // ✅ watch_urlベースのVODマップ（ランキングから開いても補完できる）
   const vodMapRef = useRef<Map<number, string[]>>(new Map());
   const vodUrlMapRef = useRef<Map<number, Record<string, string>>>(new Map());
 
   const [loadError, setLoadError] = useState<string | null>(null);
+
+  // ✅ スマホ判定（サイズ/間隔を切り替える）
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 520px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
 
   useEffect(() => {
     if (!lastSearchedAt) return;
@@ -737,6 +720,23 @@ export default function Home() {
     });
   }
 
+  function setPagedResults(pool: AnimeWork[], page = 0) {
+    setResultPool(pool);
+    setResultPage(page);
+    setResultList(pool.slice(page * RESULT_PAGE_SIZE, (page + 1) * RESULT_PAGE_SIZE));
+  }
+
+  function nextResultsPage() {
+    if (!resultPool.length) return;
+    const next =
+      (resultPage + 1) * RESULT_PAGE_SIZE >= resultPool.length ? 0 : resultPage + 1;
+
+    setResultPage(next);
+    setResultList(resultPool.slice(next * RESULT_PAGE_SIZE, (next + 1) * RESULT_PAGE_SIZE));
+    jumpToResult();
+  }
+
+  // ✅ モーダルを開く（ランキングからでもOK）
   function openAnimeModal(base: AnimeWork) {
     const id = Number(base.id || 0);
     if (!id) {
@@ -754,6 +754,7 @@ export default function Home() {
     });
   }
 
+  // ✅ VOD絞り込み（watch_urlで作った vod_services を使う）
   function applyVodFilter(list: AnimeWork[]) {
     const selected = Array.from(vodChecked).map(normalizeVodName);
     if (selected.length === 0) return list;
@@ -922,7 +923,10 @@ export default function Home() {
     };
   }, [selectedAnime?.id, SUPABASE_URL, SUPABASE_KEY]);
 
-  const ranked = useMemo(() => [...animeList].sort((a, b) => Number(b.popularity_score || 0) - Number(a.popularity_score || 0)), [animeList]);
+  const ranked = useMemo(
+    () => [...animeList].sort((a, b) => Number(b.popularity_score || 0) - Number(a.popularity_score || 0)),
+    [animeList]
+  );
   const visibleRanking = useMemo(() => ranked.slice(0, rankPagesShown * RANK_PAGE_SIZE), [rankPagesShown, ranked]);
 
   const canShowMoreRank = ranked.length > rankPagesShown * RANK_PAGE_SIZE;
@@ -948,7 +952,6 @@ export default function Home() {
       .map((a) => a.title);
   }, [animeList, titleQuery]);
 
-  // ① 作品から探す
   function searchByWorks() {
     const titles = workInputs.map((s) => s.trim()).filter(Boolean);
     if (titles.length === 0) return alert("1作品以上入力してください");
@@ -971,12 +974,17 @@ export default function Home() {
 
     scored = applyVodFilter(scored) as any;
 
-    setResultAll(scored.map(({ _score, ...rest }: any) => rest));
-    setResultPageShown(1);
+    const pool = scored
+      .slice(0, 200)
+      .map((x: any) => {
+        const { _score, _hitAll, _hitCount, ...rest } = x;
+        return rest as AnimeWork;
+      });
+
+    setPagedResults(pool, 0);
     jumpToResult();
   }
 
-  // ② ジャンル検索
   function searchByGenre() {
     const checks = Array.from(genreChecked);
     if (checks.length === 0) return alert("重視ポイントを1つ以上選択してください");
@@ -993,59 +1001,50 @@ export default function Home() {
 
     scored = applyVodFilter(scored) as any;
 
-    setResultAll(scored.map(({ _score, _hitAll, ...rest }: any) => rest));
-    setResultPageShown(1);
+    const pool = scored
+      .slice(0, 200)
+      .map((x: any) => {
+        const { _score, _hitAll, _hitCount, ...rest } = x;
+        return rest as AnimeWork;
+      });
+
+    setPagedResults(pool, 0);
     jumpToResult();
   }
 
-  // ③ キーワード検索（精度改善：グループ一致）
   function searchByKeyword() {
     const selected = Array.from(keywordChecked);
     if (selected.length === 0) return alert("キーワードを1つ以上選択してください");
 
-    const groups = selected.map((k) => {
-      const syn = keywordSynonyms[k] ?? [];
-      return Array.from(new Set([k, ...syn].map((x) => String(x).trim()).filter(Boolean)));
-    });
+    const candidates = expandSelectedKeywords(selected);
 
     let scored = animeList
       .map((a) => {
         const kws = normalizeKeywords(a.keywords);
-        let groupsHit = 0;
-        let exactHit = 0;
-
-        for (let gi = 0; gi < groups.length; gi++) {
-          const group = groups[gi];
-          let hitThisGroup = false;
-
-          for (const cand of group) {
-            const hit = kws.some((tag) => isSimilarKeyword(cand, tag));
-            if (hit) {
-              hitThisGroup = true;
-              if (cand === group[0]) exactHit++;
-              break;
-            }
-          }
-          if (hitThisGroup) groupsHit++;
+        let hitCount = 0;
+        for (const cand of candidates) {
+          const hit = kws.some((tag) => isSimilarKeyword(cand, tag));
+          if (hit) hitCount++;
         }
-
-        const need = selected.length >= 2 ? Math.ceil(selected.length / 2) : 1;
-        const ok = groupsHit >= need;
-
-        const score = (ok ? 100 : 0) + groupsHit * 35 + exactHit * 10 + totalScore(a) * 0.25;
-        return { ...a, _score: score, _ok: ok } as any;
+        const score = hitCount * 10 + totalScore(a) * 0.4;
+        return { ...a, _score: score, _hitCount: hitCount } as any;
       })
-      .filter((x) => x._ok)
+      .filter((x) => x._hitCount > 0)
       .sort((a, b) => b._score - a._score);
 
     scored = applyVodFilter(scored) as any;
 
-    setResultAll(scored.map(({ _score, _ok, ...rest }: any) => rest));
-    setResultPageShown(1);
+    const pool = scored
+      .slice(0, 200)
+      .map((x: any) => {
+        const { _score, _hitAll, _hitCount, ...rest } = x;
+        return rest as AnimeWork;
+      });
+
+    setPagedResults(pool, 0);
     jumpToResult();
   }
 
-  // ④ フリーワード
   function searchByFreeword() {
     const q = freeQuery.trim();
     if (!q) return alert("フリーワードを入力してください");
@@ -1057,12 +1056,17 @@ export default function Home() {
 
     scored = applyVodFilter(scored) as any;
 
-    setResultAll(scored.map(({ _score, ...rest }: any) => rest));
-    setResultPageShown(1);
+    const pool = scored
+      .slice(0, 200)
+      .map((x: any) => {
+        const { _score, _hitAll, _hitCount, ...rest } = x;
+        return rest as AnimeWork;
+      });
+
+    setPagedResults(pool, 0);
     jumpToResult();
   }
 
-  // ⑤ 作品そのもの検索
   function searchByTitle() {
     const q = titleQuery.trim();
     if (!q) return alert("作品名を入力してください");
@@ -1086,15 +1090,22 @@ export default function Home() {
 
     scored = applyVodFilter(scored) as any;
 
-    setResultAll(scored.map(({ _score, ...rest }: any) => rest));
-    setResultPageShown(1);
+    const pool = scored
+      .slice(0, 200)
+      .map((x: any) => {
+        const { _score, _hitAll, _hitCount, ...rest } = x;
+        return rest as AnimeWork;
+      });
+
+    setPagedResults(pool, 0);
     jumpToResult();
   }
 
   function onChangeMode(v: "work" | "genre" | "keyword" | "free" | "title") {
     setMode(v);
-    setResultAll([]);
-    setResultPageShown(1);
+    setResultList([]);
+    setResultPool([]);
+    setResultPage(0);
     setActiveInputIndex(null);
     setGenreChecked(new Set());
     setKeywordChecked(new Set());
@@ -1129,28 +1140,21 @@ export default function Home() {
     marginBottom: 10,
   };
 
+  const vodCardSize = isMobile ? 24 : 34;
+  const vodCardGap = isMobile ? 6 : 10;
+  const vodCardHit = isMobile ? 34 : 44;
+
+  const vodModalSize = isMobile ? 28 : 40;
+  const vodModalGap = isMobile ? 8 : 10;
+  const vodModalHit = isMobile ? 36 : 44;
+
+  const canNextResults = resultPool.length > RESULT_PAGE_SIZE;
+  const isLastPage = (resultPage + 1) * RESULT_PAGE_SIZE >= resultPool.length;
+
   return (
     <div className="container">
-      <h1>AniMatch</h1>
+      <h1 className="brandTitle">AniMatch</h1>
       <p className="subtitle">あなたの好みから、今観るべきアニメを見つけます</p>
-
-      {/* ✅ ⑤⑥⑦：スマホ最適化（ページ内CSSで強制適用） */}
-      <style>{`
-        .container { max-width: 1100px; margin: 0 auto; padding: 16px 14px; }
-        .card { display: flex; gap: 14px; align-items: flex-start; }
-        .card img { width: 160px; height: 240px; object-fit: cover; border-radius: 14px; }
-
-        @media (max-width: 640px) {
-          body { font-size: 13px; }
-          .container { max-width: 100%; padding: 10px 8px; }
-          h1 { font-size: 22px; }
-          h2 { font-size: 18px; }
-          .subtitle { font-size: 12px; }
-          .meta, .genres, p, label, button, select, input { font-size: 12px; }
-          .card { gap: 10px; }
-          .card img { width: 120px; height: 72px; object-fit: cover; border-radius: 12px; }
-        }
-      `}</style>
 
       {loadError ? (
         <div className="section" style={{ border: "1px solid rgba(255,0,0,0.25)", background: "rgba(255,0,0,0.06)" }}>
@@ -1325,35 +1329,6 @@ export default function Home() {
       </div>
 
       <h2>おすすめ結果</h2>
-
-      {/* ✅ ④：全検索共通の「次の10作品」「シャッフル」 */}
-      {resultAll.length ? (
-        <div className="section" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
-          <button type="button" onClick={() => setResultPageShown((p) => p + 1)} disabled={!canShowMoreResults}>
-            次の10作品を表示
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setResultAll((prev) => shuffleArray(prev));
-              setResultPageShown(1);
-              try {
-                trackEvent({ event_name: "result_shuffle", meta: { mode } });
-              } catch {}
-              jumpToResult();
-            }}
-            disabled={resultAll.length < 2}
-          >
-            別の10作品（シャッフル）
-          </button>
-
-          <div style={{ fontSize: 12, opacity: 0.75 }}>
-            {Math.min(visibleResults.length, resultAll.length)} / {resultAll.length} 件表示中
-          </div>
-        </div>
-      ) : null}
-
       <div
         id="result"
         ref={resultRef}
@@ -1370,19 +1345,18 @@ export default function Home() {
           </div>
         ) : null}
 
-        {visibleResults.map((a) => {
+        {resultList.map((a) => {
           const img = a.image_url || titleImage(a.title);
           const vods = getVodServices(a);
 
           return (
             <div
-              className="card"
+              className="card cardMobileStack"
               key={a.id ?? a.title}
               style={{ cursor: "pointer" }}
               onClick={() => {
                 openAnimeModal(a);
                 logClick(a.id);
-
                 trackEvent({
                   event_name: "work_open",
                   work_id: Number(a.id || 0),
@@ -1390,15 +1364,27 @@ export default function Home() {
                 });
               }}
             >
-              <img src={img} alt={a.title} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h3>{a.title}</h3>
+              <div className="cardTop">
+                <h3 className="cardTitle">{a.title}</h3>
                 <div className="genres">{formatGenre(a.genre)}</div>
+              </div>
+
+              <img className="cardImageWide" src={img} alt={a.title} />
+
+              <div className="cardBodyWide">
                 <div className="meta">制作：{a.studio || "—"}</div>
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
-                <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} size={34} workId={Number(a.id || 0)} />
+                <VodIconsRow
+                  services={vods}
+                  watchUrls={a.vod_watch_urls}
+                  size={vodCardSize}
+                  gap={vodCardGap}
+                  minHit={vodCardHit}
+                  compact={isMobile}
+                  workId={Number(a.id || 0)}
+                />
 
                 <p>{a.summary || ""}</p>
                 <p>{passiveText(a.passive_viewing)}</p>
@@ -1407,6 +1393,12 @@ export default function Home() {
             </div>
           );
         })}
+
+        {canNextResults ? (
+          <button onClick={nextResultsPage} style={{ marginTop: 12 }}>
+            {isLastPage ? "最初の10作品に戻る" : `次の${RESULT_PAGE_SIZE}作品を表示`}
+          </button>
+        ) : null}
       </div>
 
       <h2>人気アニメランキング</h2>
@@ -1447,7 +1439,6 @@ export default function Home() {
         </button>
       ) : null}
 
-      {/* 詳細モーダル */}
       {selectedAnime ? (
         <div style={overlayStyle} onClick={() => setSelectedAnime(null)}>
           <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
@@ -1455,22 +1446,47 @@ export default function Home() {
               <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
             </div>
 
-            <div className="card" style={{ cursor: "default" }}>
-              <img src={selectedAnime.image_url || titleImage(selectedAnime.title)} alt={selectedAnime.title} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h3>{selectedAnime.title}</h3>
-
+            {/* ✅ スマホは「タイトル→全幅画像→全幅説明」 */}
+            <div className="card cardMobileStack" style={{ cursor: "default" }}>
+              <div className="cardTop">
+                <h3 className="cardTitle">{selectedAnime.title}</h3>
                 <div className="genres">{formatGenre(selectedAnime.genre)}</div>
+              </div>
+
+              <img className="cardImageWide" src={selectedAnime.image_url || titleImage(selectedAnime.title)} alt={selectedAnime.title} />
+
+              <div className="cardBodyWide">
                 <div className="meta">制作：{selectedAnime.studio || "—"}</div>
                 <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
 
-                <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} size={40} workId={Number(selectedAnime.id || 0)} />
+                <VodIconsRow
+                  services={getVodServices(selectedAnime)}
+                  watchUrls={selectedAnime.vod_watch_urls}
+                  size={vodModalSize}
+                  gap={vodModalGap}
+                  minHit={vodModalHit}
+                  compact={isMobile}
+                  workId={Number(selectedAnime.id || 0)}
+                />
 
-                {/* ✅ ⑤ 原作情報の表示を1行に */}
                 <div className="meta" style={{ marginTop: 10 }}>
-                  原作：{sourceLoading ? "読み込み中..." : formatOriginalInfo(sourceLinks)}
+                  原作：
+                  {sourceLoading ? (
+                    " 読み込み中..."
+                  ) : sourceLinks.length ? (
+                    <ul style={{ marginTop: 6, marginBottom: 0, paddingLeft: 18 }}>
+                      {sourceLinks.map((s, idx) => (
+                        <li key={idx} style={{ marginBottom: 4 }}>
+                          {stageLabel(s.stage)}
+                          {s.platform ? `（${s.platform}）` : ""}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    " —"
+                  )}
                 </div>
 
                 <div className="meta" style={{ marginTop: 10 }}>
@@ -1478,7 +1494,7 @@ export default function Home() {
                   {selectedAnime.official_url ? (
                     <>
                       {" "}
-                      <a href={selectedAnime.official_url} target="_blank" rel="noreferrer">
+                      <a href={selectedAnime.official_url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
                         開く
                       </a>
                     </>

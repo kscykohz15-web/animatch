@@ -154,3 +154,54 @@ button:hover { background:#000; }
   border-radius: 16px;
   transition: outline 0.15s ease;
 }
+
+.brandTitle{
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #111;
+  font-size: 34px;
+  margin: 0 0 6px;
+}
+@media (max-width: 520px){
+  .brandTitle{ font-size: 30px; }
+}
+
+/* ✅ カード：スマホは縦積み（タイトル→全幅画像→全幅説明） */
+.card.cardMobileStack{
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  grid-template-areas:
+    "img top"
+    "img body";
+  gap: 14px;
+}
+
+.cardTop{ grid-area: top; }
+.cardImageWide{
+  grid-area: img;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+.cardBodyWide{ grid-area: body; }
+.cardTitle{
+  margin: 0;
+  font-weight: 800;
+}
+
+@media (max-width: 520px){
+  .card.cardMobileStack{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "img"
+      "body";
+    gap: 10px;
+  }
+  .cardTitle{ font-size: 16px; }
+  .cardImageWide{
+    height: 150px; /* 横長 */
+  }
+  .cardBodyWide{ font-size: 13px; }
+}
