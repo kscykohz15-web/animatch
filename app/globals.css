@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss"; 
 
 :root {
   --background: #ffffff;
@@ -86,24 +86,13 @@ button:hover { background:#000; }
   box-shadow:0 8px 20px rgba(0,0,0,0.10);
 }
 
-/* ✅変更：これが VODアイコン崩れの原因なので「禁止」。
-   代わりに .poster / .cardImageWide のみを画像スタイル対象にする */
-/*
-.card img {
-  width:140px;
-  height:200px;
-  object-fit:cover;
-  border-radius:10px;
-  background:#eee;
-}
-*/
-
-/* ✅ ポスターだけに限定（元の見た目を維持） */
+/* ✅ ここが今回の肝： .card img をやめる（VODアイコンまで巨大化する） */
+/* 代わりに poster クラスだけをポスター扱いにする */
 .poster {
-  width:140px;
-  height:200px;
-  object-fit:cover;
-  border-radius:10px;
+  width: 160px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 14px;
   background:#eee;
 }
 
@@ -169,23 +158,21 @@ button:hover { background:#000; }
   transition: outline 0.15s ease;
 }
 
-/* ✅変更：左端から1文字分空けたい → padding-left 追加 */
 .brandTitle{
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #111;
   font-size: 34px;
   margin: 0 0 6px;
-  padding-left: 0.35em; /* ✅追加 */
 }
 @media (max-width: 520px){
   .brandTitle{ font-size: 30px; }
 }
 
-/* ✅ カード：スマホは縦積み（タイトル→全幅画像→全幅説明） */
+/* ✅ カード：スマホは「タイトル→横長画像→本文」全幅 */
 .card.cardMobileStack{
   display: grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: 160px 1fr;
   grid-template-areas:
     "img top"
     "img body";
@@ -193,19 +180,21 @@ button:hover { background:#000; }
 }
 
 .cardTop{ grid-area: top; }
+.cardBodyWide{ grid-area: body; }
+
+/* タイトルは太字やめ（h3標準の太字もここで抑える） */
+.cardTitle{
+  margin: 0;
+  font-weight: 400;
+}
+
+/* 画像（PC：左のポスター / SP：横長） */
 .cardImageWide{
   grid-area: img;
   width: 100%;
-  height: 260px;
+  height: 240px;
   object-fit: cover;
   border-radius: 14px;
-}
-.cardBodyWide{ grid-area: body; }
-
-/* ✅変更：タイトル太字をやめる（見やすさ優先） */
-.cardTitle{
-  margin: 0;
-  font-weight: 500; /* ✅ 800 → 500 に変更 */
 }
 
 @media (max-width: 520px){
@@ -217,66 +206,53 @@ button:hover { background:#000; }
       "body";
     gap: 10px;
   }
-  .cardTitle{ font-size: 16px; }
+
   .cardImageWide{
-    height: 150px; /* 横長 */
+    height: 150px; /* ✅ スマホは横長に見える */
   }
+
   .cardBodyWide{ font-size: 13px; }
 }
 
-/* =========================
-   ✅追加：VODアイコン崩れ防止（Tailwind/他CSSに絶対負けない）
-   ※ここだけ追加でOK
-========================= */
-.vodRow{
+/* ✅ VODアイコン（クリックできる・小さめ・崩れ防止） */
+.vodIconsRow{
   margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   align-items: center;
+  gap: 8px;
 }
+
 .vodLabel{
   font-size: 12px;
   opacity: 0.85;
+  margin-right: 2px;
 }
 
-/* クリック領域（元のサイズ感） */
 .vodIconWrap{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: calc(var(--vod-icon-size, 34px) + 10px);
-  height: calc(var(--vod-icon-size, 34px) + 10px);
+  padding: 4px;
   border-radius: 12px;
   text-decoration: none;
   background: transparent;
 }
 
-/* ★最重要：imgに当たる全てのCSS（.card img / tailwind preflight）を上書き */
-.vodIconImg{
-  width: var(--vod-icon-size, 34px) !important;
-  height: var(--vod-icon-size, 34px) !important;
-  object-fit: contain !important;
-  border-radius: 0 !important;
-  max-width: none !important;
-  max-height: none !important;
-  display: block !important;
-  background: transparent !important;
-}
-
-.vodIconWrap.isDisabled .vodIconImg{
-  filter: grayscale(1);
+.vodIconWrap.disabled{
   opacity: 0.45;
 }
 
-.vodUnknown{
-  display: inline-flex;
-  align-items: center;
-  height: calc(var(--vod-icon-size, 34px) + 10px);
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.18);
-  background: rgba(255,255,255,0.85);
-  font-size: 12px;
-  opacity: 0.85;
+.vodIconImg{
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: block;
+}
+
+/* スマホは少し小さく＋間隔も詰める */
+@media (max-width: 520px){
+  .vodIconsRow{ gap: 6px; }
+  .vodIconWrap{ padding: 3px; }
+  .vodIconImg{ width: 28px; height: 28px; }
 }

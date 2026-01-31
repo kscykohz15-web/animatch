@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/track";
-import "./globals.css";
 
 type AnimeWork = {
   id?: number;
@@ -423,7 +422,7 @@ function getVodServices(a: AnimeWork): string[] {
   return Array.from(new Set(normalized));
 }
 
-/** ✅ VODアイコン行（クリックできる形） */
+/** ✅ VODアイコン行（クリックで飛ぶ） */
 function safeExternalUrl(raw?: string | null) {
   const s = String(raw || "").trim();
   if (!s) return "";
@@ -434,12 +433,10 @@ function safeExternalUrl(raw?: string | null) {
 function VodIconsRow({
   services,
   watchUrls,
-  size = 36,
   workId = 0,
 }: {
   services: string[];
   watchUrls?: Record<string, string> | null;
-  size?: number;
   workId?: number;
 }) {
   if (!services || services.length === 0) {
@@ -468,7 +465,7 @@ function VodIconsRow({
   const unknown = canonical.filter((s) => !canonSet.has(s)).sort();
 
   return (
-    <div className="vodRow" style={{ ["--vod-size" as any]: `${size}px` } as React.CSSProperties}>
+    <div className="vodIconsRow">
       <div className="vodLabel">配信：</div>
 
       {knownSorted.map((svc) => {
@@ -483,6 +480,10 @@ function VodIconsRow({
             alt={icon.alt}
             title={clickable ? `${svc}で視聴ページを開く` : svc}
             onError={() => console.warn("[VOD ICON ERROR]", { svc, src: icon.src })}
+            style={{
+              filter: clickable ? "none" : "grayscale(1)",
+              opacity: clickable ? 1 : 0.45,
+            }}
           />
         ) : (
           <span style={{ fontSize: 12, padding: "4px 8px" }}>{svc}</span>
@@ -490,7 +491,7 @@ function VodIconsRow({
 
         if (!clickable) {
           return (
-            <span key={svc} className="vodIconWrap isDisabled">
+            <span key={svc} className="vodIconWrap disabled">
               {imgNode}
             </span>
           );
@@ -503,10 +504,7 @@ function VodIconsRow({
             href={urlRaw}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => {
-              // ✅ カードの onClick（モーダル開く）に負けない
-              e.stopPropagation();
-
+            onClick={() => {
               try {
                 trackEvent({
                   event_name: "vod_click",
@@ -523,7 +521,20 @@ function VodIconsRow({
       })}
 
       {unknown.map((svc) => (
-        <span key={`unknown-${svc}`} className="vodUnknown" title={`未知のVOD: ${svc}`}>
+        <span
+          key={`unknown-${svc}`}
+          title={`未知のVOD: ${svc}`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            padding: "6px 10px",
+            borderRadius: 999,
+            border: "1px solid rgba(0,0,0,0.18)",
+            background: "rgba(255,255,255,0.85)",
+            fontSize: 12,
+            opacity: 0.85,
+          }}
+        >
           {svc}
         </span>
       ))}
@@ -531,7 +542,7 @@ function VodIconsRow({
   );
 }
 
-/** ✅ ⑤ 原作表記を「漫画/小説 + 掲載誌っぽいもの」に寄せる（anilist等は除外） */
+/** ✅ 原作表記 */
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
   if (!s) return "—";
@@ -559,7 +570,6 @@ function formatOriginalInfo(links: SourceLink[]) {
   };
 
   const usable = links.filter((x) => stageLabel(x.stage) !== "—").filter((x) => !ignore(String(x.platform || "")));
-
   const best = usable.length ? usable[0] : links.find((x) => stageLabel(x.stage) !== "—") || links[0];
   const kind = stageLabel(best.stage);
 
@@ -648,7 +658,7 @@ export default function Home() {
 
   const [vodChecked, setVodChecked] = useState<Set<string>>(new Set());
 
-  // ✅ 検索結果は全件を持って、表示はページング
+  // ✅ 検索結果：全件保持 + 表示ページ
   const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
   const [resultPageShown, setResultPageShown] = useState(1);
 
@@ -1062,99 +1072,10 @@ export default function Home() {
     setTitleSuggestOpen(false);
   }
 
-  const overlayStyle: React.CSSProperties = {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(0,0,0,0.6)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 18,
-    zIndex: 9999,
-  };
-  const modalStyle: React.CSSProperties = {
-    width: "min(980px, 100%)",
-    maxHeight: "90vh",
-    overflow: "auto",
-    borderRadius: 18,
-    background: "transparent",
-  };
-  const closeRowStyle: React.CSSProperties = {
-    position: "sticky",
-    top: 0,
-    display: "flex",
-    justifyContent: "flex-end",
-    marginBottom: 10,
-  };
-
   return (
     <div className="container">
-      <h1>AniMatch</h1>
+      <h1 className="brandTitle">AniMatch</h1>
       <p className="subtitle">あなたの好みから、今観るべきアニメを見つけます</p>
-
-      {/* ✅ CSS（VODアイコンが崩れないように強制保護） */}
-      <style>{`
-        .container { max-width: 1100px; margin: 0 auto; padding: 16px 14px; }
-        .card { display: flex; gap: 14px; align-items: flex-start; }
-        /* ⚠️ .card img を使うとVODのimgも巻き込むので禁止（VODは別classで保護する） */
-
-        /* ✅ VODアイコン：他の img スタイルに絶対負けないように固定 */
-        .vodRow {
-          margin-top: 8px;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-          align-items: center;
-        }
-        .vodLabel { font-size: 12px; opacity: 0.85; margin-right: 2px; }
-
-        .vodIconWrap{
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: calc(var(--vod-size, 34px) + 10px);
-          height: calc(var(--vod-size, 34px) + 10px);
-          border-radius: 12px;
-          text-decoration: none;
-          background: transparent;
-        }
-
-        /* ★最重要：card img / img に負けない */
-        .vodIconImg{
-          width: var(--vod-size, 34px) !important;
-          height: var(--vod-size, 34px) !important;
-          object-fit: contain !important;
-          border-radius: 0 !important;
-          max-width: none !important;
-          max-height: none !important;
-          display: block !important;
-        }
-
-        .vodIconWrap.isDisabled .vodIconImg { filter: grayscale(1); opacity: 0.45; }
-        .vodIconWrap.isDisabled { opacity: 0.45; }
-
-        .vodUnknown{
-          display: inline-flex;
-          align-items: center;
-          height: calc(var(--vod-size, 34px) + 10px);
-          padding: 0 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(0,0,0,0.18);
-          background: rgba(255,255,255,0.85);
-          font-size: 12px;
-          opacity: 0.85;
-        }
-
-        @media (max-width: 640px) {
-          body { font-size: 13px; }
-          .container { max-width: 100%; padding: 10px 8px; }
-          h1 { font-size: 22px; }
-          h2 { font-size: 18px; }
-          .subtitle { font-size: 12px; }
-          .meta, .genres, p, label, button, select, input { font-size: 12px; }
-          .card { gap: 10px; }
-        }
-      `}</style>
 
       {loadError ? (
         <div className="section" style={{ border: "1px solid rgba(255,0,0,0.25)", background: "rgba(255,0,0,0.06)" }}>
@@ -1330,7 +1251,6 @@ export default function Home() {
 
       <h2>おすすめ結果</h2>
 
-      {/* ✅ ページング */}
       {resultAll.length ? (
         <div className="section" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
           <button type="button" onClick={() => setResultPageShown((p) => p + 1)} disabled={!canShowMoreResults}>
@@ -1358,16 +1278,7 @@ export default function Home() {
         </div>
       ) : null}
 
-      <div
-        id="result"
-        ref={resultRef}
-        style={{
-          outline: resultFlash ? "3px solid #111" : "none",
-          outlineOffset: 6,
-          borderRadius: 16,
-          transition: "outline 0.2s ease",
-        }}
-      >
+      <div id="result" ref={resultRef} className={resultFlash ? "flashCard" : ""}>
         {lastSearchedAt ? (
           <div className="section" style={{ marginBottom: 14 }}>
             検索を更新しました：{new Date(lastSearchedAt).toLocaleTimeString()}
@@ -1380,9 +1291,8 @@ export default function Home() {
 
           return (
             <div
-              className="card"
+              className="card clickable cardMobileStack"
               key={a.id ?? a.title}
-              style={{ cursor: "pointer" }}
               onClick={() => {
                 openAnimeModal(a);
                 logClick(a.id);
@@ -1394,19 +1304,20 @@ export default function Home() {
                 });
               }}
             >
-              <img
-                src={img}
-                alt={a.title}
-                style={{ width: 160, height: 240, objectFit: "cover", borderRadius: 14 }}
-              />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h3>{a.title}</h3>
+              {/* ✅ スマホのみ：タイトル → 横長画像 → 本文（全部全幅） */}
+              <div className="cardTop">
+                <h3 className="cardTitle">{a.title}</h3>
+              </div>
+
+              <img className="poster cardImageWide" src={img} alt={a.title} />
+
+              <div className="cardBodyWide">
                 <div className="genres">{formatGenre(a.genre)}</div>
                 <div className="meta">制作：{a.studio || "—"}</div>
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
-                <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} size={34} workId={Number(a.id || 0)} />
+                <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} workId={Number(a.id || 0)} />
 
                 <p>{a.summary || ""}</p>
                 <p>{passiveText(a.passive_viewing)}</p>
@@ -1457,33 +1368,27 @@ export default function Home() {
 
       {/* 詳細モーダル */}
       {selectedAnime ? (
-        <div style={overlayStyle} onClick={() => setSelectedAnime(null)}>
-          <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
-            <div style={closeRowStyle}>
+        <div className="modalOverlay" onClick={() => setSelectedAnime(null)}>
+          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+            <div className="modalClose">
               <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
             </div>
 
-            <div className="card" style={{ cursor: "default" }}>
-              <img
-                src={selectedAnime.image_url || titleImage(selectedAnime.title)}
-                alt={selectedAnime.title}
-                style={{ width: 160, height: 240, objectFit: "cover", borderRadius: 14 }}
-              />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h3>{selectedAnime.title}</h3>
+            <div className="card cardMobileStack">
+              <div className="cardTop">
+                <h3 className="cardTitle">{selectedAnime.title}</h3>
+              </div>
 
+              <img className="poster cardImageWide" src={selectedAnime.image_url || titleImage(selectedAnime.title)} alt={selectedAnime.title} />
+
+              <div className="cardBodyWide">
                 <div className="genres">{formatGenre(selectedAnime.genre)}</div>
                 <div className="meta">制作：{selectedAnime.studio || "—"}</div>
                 <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
 
-                <VodIconsRow
-                  services={getVodServices(selectedAnime)}
-                  watchUrls={selectedAnime.vod_watch_urls}
-                  size={40}
-                  workId={Number(selectedAnime.id || 0)}
-                />
+                <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} workId={Number(selectedAnime.id || 0)} />
 
                 <div className="meta" style={{ marginTop: 10 }}>
                   原作：{sourceLoading ? "読み込み中..." : formatOriginalInfo(sourceLinks)}
