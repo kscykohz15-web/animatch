@@ -1,0 +1,12 @@
+===== START step5-ai-jptext 2026/01/31 13:55:12.43 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step5-ai-jptext-fill-empty.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ step5-ai-generate-jptext-fill-empty start {
+  LIMIT: 500,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1500
+}
+targets=0
+===== END step5-ai-jptext 2026/01/31 13:55:13.94 ===== 

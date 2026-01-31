@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/track";
+import "./globals.css";
 
 type AnimeWork = {
   id?: number;
@@ -422,7 +423,7 @@ function getVodServices(a: AnimeWork): string[] {
   return Array.from(new Set(normalized));
 }
 
-/** ✅ VODアイコン行 */
+/** ✅ VODアイコン行（クリックできる形） */
 function safeExternalUrl(raw?: string | null) {
   const s = String(raw || "").trim();
   if (!s) return "";
@@ -435,13 +436,11 @@ function VodIconsRow({
   watchUrls,
   size = 36,
   workId = 0,
-  stopPropagation = false,
 }: {
   services: string[];
   watchUrls?: Record<string, string> | null;
   size?: number;
   workId?: number;
-  stopPropagation?: boolean;
 }) {
   if (!services || services.length === 0) {
     return <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>配信：—</div>;
@@ -469,10 +468,7 @@ function VodIconsRow({
   const unknown = canonical.filter((s) => !canonSet.has(s)).sort();
 
   return (
-    <div
-      className="vodRow"
-      style={{ ["--vod-size" as any]: `${size}px` } as React.CSSProperties}
-    >
+    <div className="vodRow" style={{ ["--vod-size" as any]: `${size}px` } as React.CSSProperties}>
       <div className="vodLabel">配信：</div>
 
       {knownSorted.map((svc) => {
@@ -494,7 +490,7 @@ function VodIconsRow({
 
         if (!clickable) {
           return (
-            <span key={svc} className="vodIconWrap isDisabled" aria-label={`${svc}（リンクなし）`}>
+            <span key={svc} className="vodIconWrap isDisabled">
               {imgNode}
             </span>
           );
@@ -503,12 +499,14 @@ function VodIconsRow({
         return (
           <a
             key={svc}
-            className="vodIconWrap isClickable"
+            className="vodIconWrap"
             href={urlRaw}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => {
-              if (stopPropagation) e.stopPropagation();
+              // ✅ カードの onClick（モーダル開く）に負けない
+              e.stopPropagation();
+
               try {
                 trackEvent({
                   event_name: "vod_click",
@@ -525,11 +523,7 @@ function VodIconsRow({
       })}
 
       {unknown.map((svc) => (
-        <span
-          key={`unknown-${svc}`}
-          className="vodUnknown"
-          title={`未知のVOD: ${svc}`}
-        >
+        <span key={`unknown-${svc}`} className="vodUnknown" title={`未知のVOD: ${svc}`}>
           {svc}
         </span>
       ))}
@@ -537,7 +531,7 @@ function VodIconsRow({
   );
 }
 
-/** ✅ 原作表記 */
+/** ✅ ⑤ 原作表記を「漫画/小説 + 掲載誌っぽいもの」に寄せる（anilist等は除外） */
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
   if (!s) return "—";
@@ -564,9 +558,7 @@ function formatOriginalInfo(links: SourceLink[]) {
     return false;
   };
 
-  const usable = links
-    .filter((x) => stageLabel(x.stage) !== "—")
-    .filter((x) => !ignore(String(x.platform || "")));
+  const usable = links.filter((x) => stageLabel(x.stage) !== "—").filter((x) => !ignore(String(x.platform || "")));
 
   const best = usable.length ? usable[0] : links.find((x) => stageLabel(x.stage) !== "—") || links[0];
   const kind = stageLabel(best.stage);
@@ -656,24 +648,15 @@ export default function Home() {
 
   const [vodChecked, setVodChecked] = useState<Set<string>>(new Set());
 
-  // ✅ 検索結果：全件保持、表示は「常に10件」（ページ切替）
+  // ✅ 検索結果は全件を持って、表示はページング
   const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
-  const [resultPageShown, setResultPageShown] = useState(1); // 1-based
+  const [resultPageShown, setResultPageShown] = useState(1);
 
   const visibleResults = useMemo(() => {
-    const start = (resultPageShown - 1) * RESULT_PAGE_SIZE;
-    const end = resultPageShown * RESULT_PAGE_SIZE;
-    return resultAll.slice(start, end);
+    return resultAll.slice(0, resultPageShown * RESULT_PAGE_SIZE);
   }, [resultAll, resultPageShown]);
 
   const canShowMoreResults = resultAll.length > resultPageShown * RESULT_PAGE_SIZE;
-
-  const resultRange = useMemo(() => {
-    if (!resultAll.length) return null;
-    const start = (resultPageShown - 1) * RESULT_PAGE_SIZE + 1;
-    const end = Math.min(resultPageShown * RESULT_PAGE_SIZE, resultAll.length);
-    return { start, end, total: resultAll.length };
-  }, [resultAll.length, resultPageShown]);
 
   const [selectedAnime, setSelectedAnime] = useState<AnimeWork | null>(null);
 
@@ -1102,74 +1085,30 @@ export default function Home() {
     display: "flex",
     justifyContent: "flex-end",
     marginBottom: 10,
-    zIndex: 2,
   };
 
   return (
     <div className="container">
-      <h1 className="brandTitle">AniMatch</h1>
+      <h1>AniMatch</h1>
       <p className="subtitle">あなたの好みから、今観るべきアニメを見つけます</p>
 
-      {/* ✅ スマホ最適化 + VODアイコン崩れ対策（.card img を廃止して .poster に限定） */}
+      {/* ✅ CSS（VODアイコンが崩れないように強制保護） */}
       <style>{`
         .container { max-width: 1100px; margin: 0 auto; padding: 16px 14px; }
+        .card { display: flex; gap: 14px; align-items: flex-start; }
+        /* ⚠️ .card img を使うとVODのimgも巻き込むので禁止（VODは別classで保護する） */
 
-        /* ③ 上部 AniMatch：少し大きく＆左に1文字分の余白 */
-        .brandTitle { 
-          margin: 0;
-          font-size: 30px;
-          letter-spacing: 0.02em;
-          color: #111;
-          padding-left: 0.6em;
-        }
-        .subtitle { margin-top: 6px; margin-bottom: 12px; opacity: 0.75; }
-
-        /* ---- カード：PCは画像左＋本文右、スマホはタイトル→横長画像→本文（全幅） ---- */
-        .workCard, .modalCard {
-          display: grid;
-          grid-template-columns: var(--poster-w, 160px) 1fr;
-          grid-template-areas:
-            "img title"
-            "img meta";
-          column-gap: 14px;
-          row-gap: 6px;
-          align-items: start;
-        }
-        .workTitle, .modalTitle { 
-          grid-area: title; 
-          margin: 0; 
-          line-height: 1.2;
-        }
-
-        /* ② 検索結果タイトルは太字にしない（他と同じ太さ） */
-        .workTitle { font-size: 18px; font-weight: 400; }
-
-        /* モーダルのタイトルは見出しとして少し強め（要望にないので維持） */
-        .modalTitle { font-size: 22px; font-weight: 700; }
-
-        .workMeta, .modalMeta { grid-area: meta; min-width: 0; }
-
-        /* ✅ ポスター画像だけに効かせる（VODアイコンに干渉しない） */
-        .poster {
-          grid-area: img;
-          width: var(--poster-w, 160px);
-          height: var(--poster-h, 240px);
-          object-fit: cover;
-          border-radius: 14px;
-          display: block;
-        }
-
-        /* ---- ① VODアイコン：崩れ防止 + スマホだけ少し小さく＆間隔詰める ---- */
+        /* ✅ VODアイコン：他の img スタイルに絶対負けないように固定 */
         .vodRow {
           margin-top: 8px;
           display: flex;
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 10px;
           align-items: center;
         }
         .vodLabel { font-size: 12px; opacity: 0.85; margin-right: 2px; }
 
-        .vodIconWrap {
+        .vodIconWrap{
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -1179,16 +1118,22 @@ export default function Home() {
           text-decoration: none;
           background: transparent;
         }
-        .vodIconImg {
-          width: var(--vod-size, 34px);
-          height: var(--vod-size, 34px);
-          object-fit: contain;
-          display: block;
+
+        /* ★最重要：card img / img に負けない */
+        .vodIconImg{
+          width: var(--vod-size, 34px) !important;
+          height: var(--vod-size, 34px) !important;
+          object-fit: contain !important;
+          border-radius: 0 !important;
+          max-width: none !important;
+          max-height: none !important;
+          display: block !important;
         }
+
         .vodIconWrap.isDisabled .vodIconImg { filter: grayscale(1); opacity: 0.45; }
         .vodIconWrap.isDisabled { opacity: 0.45; }
 
-        .vodUnknown {
+        .vodUnknown{
           display: inline-flex;
           align-items: center;
           height: calc(var(--vod-size, 34px) + 10px);
@@ -1203,45 +1148,11 @@ export default function Home() {
         @media (max-width: 640px) {
           body { font-size: 13px; }
           .container { max-width: 100%; padding: 10px 8px; }
-
-          .brandTitle { font-size: 26px; padding-left: 0.6em; }
+          h1 { font-size: 22px; }
           h2 { font-size: 18px; }
           .subtitle { font-size: 12px; }
           .meta, .genres, p, label, button, select, input { font-size: 12px; }
-
-          /* ④ スマホ：タイトル→横長画像→本文（全幅） */
-          .workCard, .modalCard {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-              "title"
-              "img"
-              "meta";
-            row-gap: 8px;
-          }
-
-          /* 横長 16:9 でトリミング（必要なら横長化） */
-          .poster {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            border-radius: 14px;
-          }
-
-          /* ① スマホだけアイコン少し小さく＆間隔も詰める */
-          .vodRow { gap: 6px; }
-          .vodIconImg {
-            width: calc(var(--vod-size, 34px) - 6px);
-            height: calc(var(--vod-size, 34px) - 6px);
-          }
-          .vodIconWrap {
-            width: calc(var(--vod-size, 34px) + 4px);
-            height: calc(var(--vod-size, 34px) + 4px);
-          }
-          .vodUnknown {
-            height: calc(var(--vod-size, 34px) + 4px);
-            padding: 0 10px;
-          }
+          .card { gap: 10px; }
         }
       `}</style>
 
@@ -1419,16 +1330,10 @@ export default function Home() {
 
       <h2>おすすめ結果</h2>
 
+      {/* ✅ ページング */}
       {resultAll.length ? (
         <div className="section" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
-          <button
-            type="button"
-            onClick={() => {
-              setResultPageShown((p) => p + 1);
-              jumpToResult();
-            }}
-            disabled={!canShowMoreResults}
-          >
+          <button type="button" onClick={() => setResultPageShown((p) => p + 1)} disabled={!canShowMoreResults}>
             次の10作品を表示
           </button>
 
@@ -1447,11 +1352,9 @@ export default function Home() {
             別の10作品（シャッフル）
           </button>
 
-          {resultRange ? (
-            <div style={{ fontSize: 12, opacity: 0.75 }}>
-              {resultRange.start}〜{resultRange.end} / {resultRange.total} 件
-            </div>
-          ) : null}
+          <div style={{ fontSize: 12, opacity: 0.75 }}>
+            {Math.min(visibleResults.length, resultAll.length)} / {resultAll.length} 件表示中
+          </div>
         </div>
       ) : null}
 
@@ -1477,9 +1380,9 @@ export default function Home() {
 
           return (
             <div
-              className="card workCard"
+              className="card"
               key={a.id ?? a.title}
-              style={{ ["--poster-w" as any]: "160px", ["--poster-h" as any]: "240px" } as React.CSSProperties}
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 openAnimeModal(a);
                 logClick(a.id);
@@ -1491,15 +1394,19 @@ export default function Home() {
                 });
               }}
             >
-              <h3 className="workTitle">{a.title}</h3>
-              <img className="poster" src={img} alt={a.title} />
-              <div className="workMeta">
+              <img
+                src={img}
+                alt={a.title}
+                style={{ width: 160, height: 240, objectFit: "cover", borderRadius: 14 }}
+              />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h3>{a.title}</h3>
                 <div className="genres">{formatGenre(a.genre)}</div>
                 <div className="meta">制作：{a.studio || "—"}</div>
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
-                <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} size={34} workId={Number(a.id || 0)} stopPropagation />
+                <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} size={34} workId={Number(a.id || 0)} />
 
                 <p>{a.summary || ""}</p>
                 <p>{passiveText(a.passive_viewing)}</p>
@@ -1556,20 +1463,27 @@ export default function Home() {
               <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
             </div>
 
-            <div
-              className="card modalCard"
-              style={{ ["--poster-w" as any]: "240px", ["--poster-h" as any]: "360px" } as React.CSSProperties}
-            >
-              <h3 className="modalTitle">{selectedAnime.title}</h3>
-              <img className="poster" src={selectedAnime.image_url || titleImage(selectedAnime.title)} alt={selectedAnime.title} />
-              <div className="modalMeta">
+            <div className="card" style={{ cursor: "default" }}>
+              <img
+                src={selectedAnime.image_url || titleImage(selectedAnime.title)}
+                alt={selectedAnime.title}
+                style={{ width: 160, height: 240, objectFit: "cover", borderRadius: 14 }}
+              />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h3>{selectedAnime.title}</h3>
+
                 <div className="genres">{formatGenre(selectedAnime.genre)}</div>
                 <div className="meta">制作：{selectedAnime.studio || "—"}</div>
                 <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
 
-                <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} size={40} workId={Number(selectedAnime.id || 0)} />
+                <VodIconsRow
+                  services={getVodServices(selectedAnime)}
+                  watchUrls={selectedAnime.vod_watch_urls}
+                  size={40}
+                  workId={Number(selectedAnime.id || 0)}
+                />
 
                 <div className="meta" style={{ marginTop: 10 }}>
                   原作：{sourceLoading ? "読み込み中..." : formatOriginalInfo(sourceLinks)}
