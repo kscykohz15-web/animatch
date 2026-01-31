@@ -93,6 +93,11 @@ button:hover { background:#000; }
   background:#eee;
 }
 
+/* ❌ .card img は禁止（VODも巻き込む） */
+/* ✅ ポスターだけに限定 */
+.poster { width: 160px; height: 240px; object-fit: cover; border-radius: 14px; }
+
+
 .genres { color:#666; font-size:.9em; margin-bottom:6px; }
 .meta { color:#555; font-size:.85em; margin: 6px 0 10px 0; }
 .warning { color:#c00; font-weight:bold; margin-top:8px; }
