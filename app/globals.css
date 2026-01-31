@@ -86,8 +86,7 @@ button:hover { background:#000; }
   box-shadow:0 8px 20px rgba(0,0,0,0.10);
 }
 
-/* ✅ ここが今回の肝： .card img をやめる（VODアイコンまで巨大化する） */
-/* 代わりに poster クラスだけをポスター扱いにする */
+/* ✅ 重要：.card img を使わない（VODアイコンが巻き込まれて崩れる原因） */
 .poster {
   width: 160px;
   height: 240px;
@@ -101,25 +100,31 @@ button:hover { background:#000; }
 .warning { color:#c00; font-weight:bold; margin-top:8px; }
 .rankLine { padding: 4px 0; border-bottom: 1px dashed #ddd; }
 
-/* ===== 詳細モーダル（カードがズームして浮く） ===== */
+/* ===== 詳細モーダル（縦スクロール対応＋閉じる固定） ===== */
 .modalOverlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.55);
   display: flex;
-  align-items: center;
+  align-items: flex-start;           /* ✅ 上寄せ */
   justify-content: center;
   padding: 18px;
   z-index: 9999;
+
+  overflow-y: auto;                  /* ✅ 縦のみスクロール */
+  overflow-x: hidden;                /* ✅ 横は絶対に出さない */
+  -webkit-overflow-scrolling: touch; /* iOS滑らか */
 }
 
 .modalContent {
   width: min(980px, 100%);
-  max-height: 90vh;
-  overflow: auto;
+  max-height: calc(100dvh - 36px);   /* ✅ 画面からはみ出したら中が縦スクロール */
+  overflow-y: auto;
+  overflow-x: hidden;
   background: transparent;
   border-radius: 18px;
   animation: zoomIn 160ms ease-out;
+  -webkit-overflow-scrolling: touch; /* iOS */
 }
 
 @keyframes zoomIn {
@@ -127,12 +132,15 @@ button:hover { background:#000; }
   to   { transform: scale(1); opacity: 1; }
 }
 
+/* ✅ 閉じるボタンを常に上に出す */
 .modalClose {
   position: sticky;
   top: 0;
+  z-index: 20;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+  padding: 8px 0;
 }
 
 .modalClose button {
@@ -141,7 +149,7 @@ button:hover { background:#000; }
   border: 1px solid #ddd;
 }
 
-/* クリックしたカード自体も “ちょい浮き” させる（任意） */
+/* クリックしたカード自体も “ちょい浮き” */
 .card.clickable {
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease;
@@ -158,12 +166,14 @@ button:hover { background:#000; }
   transition: outline 0.15s ease;
 }
 
+/* ✅ AniMatch 表示：左に1文字分空ける */
 .brandTitle{
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #111;
   font-size: 34px;
   margin: 0 0 6px;
+  text-indent: 1em; /* ✅ ここ */
 }
 @media (max-width: 520px){
   .brandTitle{ font-size: 30px; }
@@ -182,13 +192,13 @@ button:hover { background:#000; }
 .cardTop{ grid-area: top; }
 .cardBodyWide{ grid-area: body; }
 
-/* タイトルは太字やめ（h3標準の太字もここで抑える） */
+/* タイトルは太字やめ */
 .cardTitle{
   margin: 0;
   font-weight: 400;
 }
 
-/* 画像（PC：左のポスター / SP：横長） */
+/* 画像（PCは左、SPは横長） */
 .cardImageWide{
   grid-area: img;
   width: 100%;
@@ -197,24 +207,7 @@ button:hover { background:#000; }
   border-radius: 14px;
 }
 
-@media (max-width: 520px){
-  .card.cardMobileStack{
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "top"
-      "img"
-      "body";
-    gap: 10px;
-  }
-
-  .cardImageWide{
-    height: 150px; /* ✅ スマホは横長に見える */
-  }
-
-  .cardBodyWide{ font-size: 13px; }
-}
-
-/* ✅ VODアイコン（クリックできる・小さめ・崩れ防止） */
+/* ✅ VODアイコン（崩れ防止） */
 .vodIconsRow{
   margin-top: 8px;
   display: flex;
@@ -222,13 +215,11 @@ button:hover { background:#000; }
   align-items: center;
   gap: 8px;
 }
-
 .vodLabel{
   font-size: 12px;
   opacity: 0.85;
   margin-right: 2px;
 }
-
 .vodIconWrap{
   display: inline-flex;
   align-items: center;
@@ -238,11 +229,7 @@ button:hover { background:#000; }
   text-decoration: none;
   background: transparent;
 }
-
-.vodIconWrap.disabled{
-  opacity: 0.45;
-}
-
+.vodIconWrap.disabled{ opacity: 0.45; }
 .vodIconImg{
   width: 34px;
   height: 34px;
@@ -250,9 +237,48 @@ button:hover { background:#000; }
   display: block;
 }
 
-/* スマホは少し小さく＋間隔も詰める */
+/* ✅ スマホ調整：横幅広く・文字サイズ元に戻す・画像小さく・モーダル安全域 */
+@media (max-width: 640px) {
+  body { font-size: 13px; }
+  .container { max-width: 100%; padding: 10px 8px; } /* ✅ 横幅を広く（余白減） */
+
+  h1 { font-size: 22px; }
+  h2 { font-size: 18px; }
+  .subtitle { font-size: 12px; }
+
+  .meta, .genres, p, label, button, select, input { font-size: 12px; }
+}
+
 @media (max-width: 520px){
+  /* ✅ モーダルの上が隠れにくいように安全域確保 */
+  .modalOverlay{
+    padding-top: calc(12px + env(safe-area-inset-top));
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+  .modalContent{
+    max-height: calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .card.cardMobileStack{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "img"
+      "body";
+    gap: 10px;
+  }
+
+  /* ✅ 横長画像を一回り小さく（高さ＆左右） */
+  .cardImageWide{
+    height: 132px;
+    width: 94%;
+    justify-self: center;
+  }
+
+  /* ✅ アイコンも少し小さく */
   .vodIconsRow{ gap: 6px; }
   .vodIconWrap{ padding: 3px; }
-  .vodIconImg{ width: 28px; height: 28px; }
+  .vodIconImg{ width: 26px; height: 26px; }
 }

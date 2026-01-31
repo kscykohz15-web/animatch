@@ -32,10 +32,7 @@ type AnimeWork = {
 
   keywords?: string[] | string | null;
 
-  // 作品ごとの配信サービス配列（正規化済み名）
   vod_services?: string[] | string | null;
-
-  // 作品ごとの watch_url（正規化済み service -> URL）
   vod_watch_urls?: Record<string, string> | null;
 
   official_url?: string | null;
@@ -56,11 +53,7 @@ type VodAvailRow = {
 };
 
 const RANK_PAGE_SIZE = 10;
-
-// ✅ 検索結果のページング
 const RESULT_PAGE_SIZE = 10;
-
-// ✅ VOD絞り込み：複数チェック時の条件
 const VOD_FILTER_MODE: "OR" | "AND" = "OR";
 
 const genreOptions = [
@@ -123,7 +116,6 @@ const freewordConcepts: { key: string; hints: string[]; boost?: (a: AnimeWork) =
   },
 ];
 
-// ✅ UIで使う標準サービス名
 const vodServices = [
   "U-NEXT",
   "DMM TV",
@@ -139,7 +131,6 @@ const vodServices = [
   "Lemino",
 ] as const;
 
-/** ✅ canonicalへ統一（ここに正規化を集約） */
 function canonicalVodName(raw: string) {
   const s = String(raw || "").trim();
 
@@ -212,12 +203,10 @@ function canonicalVodName(raw: string) {
   return s as any;
 }
 
-/** ✅ 表記ゆれ吸収：DBの service をUI標準名に寄せる */
 function normalizeVodName(name: string) {
   return canonicalVodName(name);
 }
 
-/** ✅ PG配列 "{a,b,c}" を配列にする */
 function parsePgArrayString(s: string): string[] {
   const raw = String(s || "").trim();
   if (!raw) return [];
@@ -233,7 +222,6 @@ function parsePgArrayString(s: string): string[] {
     .filter(Boolean);
 }
 
-/** ✅ VODアイコン（public/vod 配下） */
 const vodIconMap: Record<string, { src: string; alt: string }> = {
   "U-NEXT": { src: "/vod/unext.jpg", alt: "U-NEXT" },
   "DMM TV": { src: "/vod/dmmtv.jpg", alt: "DMM TV" },
@@ -345,7 +333,6 @@ function ngramJaccard(a: string, b: string) {
   return union ? inter / union : 0;
 }
 
-// ✅ ③ キーワード精度UP（少し厳しめ）
 function isSimilarKeyword(selected: string, token: string) {
   const s = normalizeForCompare(selected);
   const t = normalizeForCompare(token);
@@ -401,7 +388,6 @@ function freewordScore(a: AnimeWork, qRaw: string) {
   return score;
 }
 
-/** ✅ VOD：配信サービス配列を取り出す（正規化済み） */
 function getVodServices(a: AnimeWork): string[] {
   const v = (a as any).vod_services ?? null;
   let arr: string[] = [];
@@ -418,11 +404,9 @@ function getVodServices(a: AnimeWork): string[] {
 
   const canonSet = new Set(vodServices as readonly string[]);
   const normalized = arr.map(canonicalVodName).map((x) => String(x).trim()).filter((x) => canonSet.has(x));
-
   return Array.from(new Set(normalized));
 }
 
-/** ✅ VODアイコン行（クリックで飛ぶ） */
 function safeExternalUrl(raw?: string | null) {
   const s = String(raw || "").trim();
   if (!s) return "";
@@ -461,8 +445,6 @@ function VodIconsRow({
       const ib = (vodServices as readonly string[]).indexOf(b);
       return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
     });
-
-  const unknown = canonical.filter((s) => !canonSet.has(s)).sort();
 
   return (
     <div className="vodIconsRow">
@@ -519,30 +501,10 @@ function VodIconsRow({
           </a>
         );
       })}
-
-      {unknown.map((svc) => (
-        <span
-          key={`unknown-${svc}`}
-          title={`未知のVOD: ${svc}`}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            padding: "6px 10px",
-            borderRadius: 999,
-            border: "1px solid rgba(0,0,0,0.18)",
-            background: "rgba(255,255,255,0.85)",
-            fontSize: 12,
-            opacity: 0.85,
-          }}
-        >
-          {svc}
-        </span>
-      ))}
     </div>
   );
 }
 
-/** ✅ 原作表記 */
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
   if (!s) return "—";
@@ -587,7 +549,6 @@ function titleMatches(title: string, q: string) {
   return ngramJaccard(t, s) >= 0.42;
 }
 
-/** ✅ anime_works: 既存カラムだけselect（episodes問題防止） */
 async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, string>): Promise<string> {
   const wanted = [
     "id",
@@ -658,7 +619,6 @@ export default function Home() {
 
   const [vodChecked, setVodChecked] = useState<Set<string>>(new Set());
 
-  // ✅ 検索結果：全件保持 + 表示ページ
   const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
   const [resultPageShown, setResultPageShown] = useState(1);
 
@@ -842,6 +802,7 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SUPABASE_URL, SUPABASE_KEY]);
 
+  // ✅ モーダル中は背景スクロール禁止（モーダル内だけ縦スクロール）
   useEffect(() => {
     if (!selectedAnime) return;
     const prev = document.body.style.overflow;
@@ -916,7 +877,6 @@ export default function Home() {
       .map((a) => a.title);
   }, [animeList, titleQuery]);
 
-  // ① 作品から探す
   function searchByWorks() {
     const titles = workInputs.map((s) => s.trim()).filter(Boolean);
     if (titles.length === 0) return alert("1作品以上入力してください");
@@ -938,13 +898,11 @@ export default function Home() {
       .sort((a, b) => b._score - a._score);
 
     scored = applyVodFilter(scored) as any;
-
     setResultAll(scored.map(({ _score, ...rest }: any) => rest));
     setResultPageShown(1);
     jumpToResult();
   }
 
-  // ② ジャンル検索
   function searchByGenre() {
     const checks = Array.from(genreChecked);
     if (checks.length === 0) return alert("重視ポイントを1つ以上選択してください");
@@ -960,13 +918,11 @@ export default function Home() {
       .sort((a, b) => b._score - a._score);
 
     scored = applyVodFilter(scored) as any;
-
     setResultAll(scored.map(({ _score, _hitAll, ...rest }: any) => rest));
     setResultPageShown(1);
     jumpToResult();
   }
 
-  // ③ キーワード検索（精度改善：グループ一致）
   function searchByKeyword() {
     const selected = Array.from(keywordChecked);
     if (selected.length === 0) return alert("キーワードを1つ以上選択してください");
@@ -1007,13 +963,11 @@ export default function Home() {
       .sort((a, b) => b._score - a._score);
 
     scored = applyVodFilter(scored) as any;
-
     setResultAll(scored.map(({ _score, _ok, ...rest }: any) => rest));
     setResultPageShown(1);
     jumpToResult();
   }
 
-  // ④ フリーワード
   function searchByFreeword() {
     const q = freeQuery.trim();
     if (!q) return alert("フリーワードを入力してください");
@@ -1024,13 +978,11 @@ export default function Home() {
       .sort((a, b) => b._score - a._score);
 
     scored = applyVodFilter(scored) as any;
-
     setResultAll(scored.map(({ _score, ...rest }: any) => rest));
     setResultPageShown(1);
     jumpToResult();
   }
 
-  // ⑤ 作品そのもの検索
   function searchByTitle() {
     const q = titleQuery.trim();
     if (!q) return alert("作品名を入力してください");
@@ -1053,7 +1005,6 @@ export default function Home() {
     if (scored.length === 0) return alert("該当作品が見つかりませんでした（別の表記も試してください）");
 
     scored = applyVodFilter(scored) as any;
-
     setResultAll(scored.map(({ _score, ...rest }: any) => rest));
     setResultPageShown(1);
     jumpToResult();
@@ -1296,7 +1247,6 @@ export default function Home() {
               onClick={() => {
                 openAnimeModal(a);
                 logClick(a.id);
-
                 trackEvent({
                   event_name: "work_open",
                   work_id: Number(a.id || 0),
@@ -1304,7 +1254,6 @@ export default function Home() {
                 });
               }}
             >
-              {/* ✅ スマホのみ：タイトル → 横長画像 → 本文（全部全幅） */}
               <div className="cardTop">
                 <h3 className="cardTitle">{a.title}</h3>
               </div>
@@ -1374,7 +1323,7 @@ export default function Home() {
               <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
             </div>
 
-            <div className="card cardMobileStack">
+            <div className="card cardMobileStack" style={{ cursor: "default" }}>
               <div className="cardTop">
                 <h3 className="cardTitle">{selectedAnime.title}</h3>
               </div>
@@ -1410,7 +1359,6 @@ export default function Home() {
 
                 <p style={{ marginTop: 10 }}>{selectedAnime.summary || ""}</p>
                 <p style={{ marginTop: 10 }}>{passiveText(selectedAnime.passive_viewing)}</p>
-
                 {Number(selectedAnime.gore || 0) >= 4 ? <div className="warning">⚠ グロ表現が強めです</div> : null}
               </div>
             </div>
