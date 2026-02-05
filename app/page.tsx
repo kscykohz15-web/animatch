@@ -368,50 +368,12 @@ function seriesKeyFromTitle(title: string) {
   return normalizeForCompare(t);
 }
 
-type SeriesStats = {
-  key: string;
-  countWorks: number;
-  totalEpisodes: number | null; // episode_countが入っているものだけ合計
-  countedWorks: number; // episode_countが入っていた作品数
-};
-
 function getSeriesKey(work: AnimeWork) {
   // ✅ DB側で series_key / series_title があるならそれを優先
   const fromDb = String(work.series_key || work.series_title || "").trim();
   if (fromDb) return normalizeForCompare(fromDb);
 
   return seriesKeyFromTitle(work.title);
-}
-
-function buildSeriesStatsMap(list: AnimeWork[]) {
-  const map = new Map<string, { count: number; total: number; counted: number }>();
-
-  for (const w of list) {
-    const key = getSeriesKey(w);
-    if (!key) continue;
-
-    const cur = map.get(key) ?? { count: 0, total: 0, counted: 0 };
-    cur.count += 1;
-
-    const ep = getEpisodeCount(w);
-    if (ep !== null) {
-      cur.total += ep;
-      cur.counted += 1;
-    }
-
-    map.set(key, cur);
-  }
-
-  const out = new Map<string, SeriesStats>();
-  for (const [key, v] of map.entries()) {
-    out.set(key, {
-      key,
-      countWorks: v.count,
-      totalEpisodes: v.counted > 0 ? v.total : null,
-      countedWorks: v.counted,
-    });
-  }
-  return out;
 }
 
 function bigrams(str: string) {
@@ -649,6 +611,8 @@ function titleMatches(title: string, q: string) {
 
 /** =========================
  *  ✅ 9軸スコア表示（棒グラフ）
+ *  ・文言：基本→評価項目 / 注意→注意点
+ *  ・モノトーンで少しおしゃれに（カード風）
  * ========================= */
 
 function toScore10(v: any): number | null {
@@ -678,20 +642,36 @@ function calcBaseTotal(work: AnimeWork): number | null {
   const vals = BASIC_AXES.map((a) => toScore10((work as any)[a.key]));
   if (vals.some((x) => x === null)) return null;
 
-  // ✅ reduceの累積値を number と明示してTS推論エラー回避
+  // ✅ TS対策：accumulatorをnumberで固定
   return vals.reduce<number>((sum, x) => sum + (x ?? 0), 0);
 }
 
-
-function ScoreBarRow({ label, value, max = 10 }: { label: string; value: number | null; max?: number }) {
+function ScoreBarRow({
+  label,
+  value,
+  max = 10,
+}: {
+  label: string;
+  value: number | null;
+  max?: number;
+}) {
   const pct = value === null ? 0 : Math.round((value / max) * 100);
+
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "92px 1fr 52px", gap: 8, alignItems: "center", marginTop: 6 }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "92px 1fr auto",
+        gap: 10,
+        alignItems: "center",
+        padding: "6px 0",
+      }}
+    >
       <div style={{ fontSize: 12, opacity: 0.85, whiteSpace: "nowrap" }}>{label}</div>
 
       <div
         style={{
-          height: 10,
+          height: 12,
           borderRadius: 999,
           background: "rgba(0,0,0,0.10)",
           overflow: "hidden",
@@ -704,13 +684,26 @@ function ScoreBarRow({ label, value, max = 10 }: { label: string; value: number 
             width: `${pct}%`,
             height: "100%",
             borderRadius: 999,
-            background: "rgba(0,0,0,0.75)",
-            transition: "width 200ms ease",
+            background: "rgba(0,0,0,0.78)",
+            transition: "width 220ms ease",
           }}
         />
       </div>
 
-      <div style={{ fontSize: 12, textAlign: "right", opacity: 0.9 }}>{value === null ? "—" : `${value}/${max}`}</div>
+      <div
+        style={{
+          fontSize: 12,
+          textAlign: "right",
+          opacity: 0.92,
+          padding: "3px 8px",
+          borderRadius: 999,
+          border: "1px solid rgba(0,0,0,0.12)",
+          background: "rgba(255,255,255,0.9)",
+          minWidth: 56,
+        }}
+      >
+        {value === null ? "—" : `${value}/${max}`}
+      </div>
     </div>
   );
 }
@@ -728,7 +721,8 @@ function ScoreSection({
 }) {
   const baseTotal = calcBaseTotal(work);
   const hasAny =
-    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) || WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
+    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) ||
+    WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
 
   const defaultOpen = alwaysOpen ? true : !(isMobile && defaultCollapsedOnMobile);
   const [open, setOpen] = useState(defaultOpen);
@@ -752,7 +746,7 @@ function ScoreSection({
   return (
     <div style={{ marginTop: 10 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-        <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.9 }}>評価（{headerText}）</div>
+        <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: 0.2, opacity: 0.92 }}>評価（{headerText}）</div>
 
         {!alwaysOpen ? (
           <button
@@ -764,11 +758,12 @@ function ScoreSection({
             style={{
               padding: "6px 10px",
               borderRadius: 999,
-              border: "1px solid rgba(0,0,0,0.15)",
-              background: "#fff",
+              border: "1px solid rgba(0,0,0,0.16)",
+              background: "rgba(255,255,255,0.95)",
               color: "#111",
               cursor: "pointer",
               fontSize: 12,
+              boxShadow: "0 1px 8px rgba(0,0,0,0.05)",
             }}
           >
             {open ? "閉じる" : "開く"}
@@ -781,19 +776,22 @@ function ScoreSection({
           style={{
             marginTop: 8,
             border: "1px solid rgba(0,0,0,0.10)",
-            borderRadius: 12,
+            borderRadius: 14,
             padding: 12,
             background: "rgba(0,0,0,0.02)",
+            boxShadow: "0 2px 14px rgba(0,0,0,0.04)",
           }}
         >
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, opacity: 0.9 }}>基本（6軸）</div>
+          <div style={{ fontSize: 12, fontWeight: 800, marginBottom: 4, opacity: 0.9 }}>評価項目</div>
+          <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", margin: "6px 0 2px" }} />
           {BASIC_AXES.map((ax) => (
             <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
           ))}
 
           <div style={{ height: 10 }} />
 
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, opacity: 0.9 }}>注意（3軸）</div>
+          <div style={{ fontSize: 12, fontWeight: 800, marginBottom: 4, opacity: 0.9 }}>注意点</div>
+          <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", margin: "6px 0 2px" }} />
           {WARN_AXES.map((ax) => (
             <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
           ))}
@@ -871,6 +869,85 @@ function shuffleArray<T>(arr: T[]) {
   return a;
 }
 
+/** =========================
+ * ✅ シリーズ情報：アニメ/劇場版で分けて表示
+ *  - 判定はざっくりタイトルワード（ユーザー要望：まずはタイトル一致系でOK）
+ * ========================= */
+
+type SeriesBundle = {
+  key: string;
+  allWorks: AnimeWork[];
+  animeWorks: AnimeWork[];
+  movieWorks: AnimeWork[];
+  specialWorks: AnimeWork[]; // OVA/特別編など（必要なら表示）
+  animeTotalEpisodes: number | null;
+  animeCountedWorks: number;
+};
+
+function seriesBucketFromTitle(title: string): "anime" | "movie" | "special" {
+  const t = String(title || "");
+  const lower = t.toLowerCase();
+
+  // 劇場版/映画
+  if (t.includes("劇場版") || t.includes("映画") || lower.includes("the movie") || lower.includes("movie")) return "movie";
+
+  // OVA/特別編など（将来拡張用。今は「その他」として出せる）
+  if (t.includes("OVA") || t.includes("OAD") || t.includes("特別編") || t.includes("総集編") || t.includes("スペシャル") || lower.includes("ova") || lower.includes("sp")) {
+    return "special";
+  }
+
+  return "anime";
+}
+
+function buildSeriesBundleMap(list: AnimeWork[]) {
+  const map = new Map<string, { all: AnimeWork[]; anime: AnimeWork[]; movie: AnimeWork[]; special: AnimeWork[] }>();
+
+  for (const w of list) {
+    const key = getSeriesKey(w);
+    if (!key) continue;
+
+    const cur = map.get(key) ?? { all: [], anime: [], movie: [], special: [] };
+    cur.all.push(w);
+
+    const bucket = seriesBucketFromTitle(w.title);
+    if (bucket === "movie") cur.movie.push(w);
+    else if (bucket === "special") cur.special.push(w);
+    else cur.anime.push(w);
+
+    map.set(key, cur);
+  }
+
+  const out = new Map<string, SeriesBundle>();
+  for (const [key, v] of map.entries()) {
+    let total = 0;
+    let counted = 0;
+    for (const w of v.anime) {
+      const ep = getEpisodeCount(w);
+      if (ep !== null) {
+        total += ep;
+        counted += 1;
+      }
+    }
+
+    out.set(key, {
+      key,
+      allWorks: v.all,
+      animeWorks: v.anime,
+      movieWorks: v.movie,
+      specialWorks: v.special,
+      animeTotalEpisodes: counted > 0 ? total : null,
+      animeCountedWorks: counted,
+    });
+  }
+  return out;
+}
+
+function formatSeasonRangeByCount(count: number) {
+  if (count <= 0) return "";
+  if (count === 1) return "第1期";
+  return `第1〜第${count}期`;
+}
+
 export default function Home() {
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
   const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -881,8 +958,8 @@ export default function Home() {
   const [loadingWorks, setLoadingWorks] = useState(false);
   const [loadingVod, setLoadingVod] = useState(false);
 
-  // ✅ シリーズ統計（作品数/合計話数）を全件から作る
-  const seriesStatsMap = useMemo(() => buildSeriesStatsMap(animeList), [animeList]);
+  // ✅ シリーズ束（アニメ/映画/その他）を全件から作る
+  const seriesBundleMap = useMemo(() => buildSeriesBundleMap(animeList), [animeList]);
 
   const [workInputs, setWorkInputs] = useState<string[]>(["", "", "", "", ""]);
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
@@ -1015,7 +1092,7 @@ export default function Home() {
 
   async function loadWorksAndVod() {
     if (!SUPABASE_URL || !SUPABASE_KEY) {
-      setLoadError("Supabase URL/KEY が設定されていません（.env.local / Vercel環境変数を確認）");
+      setLoadError("Supabase URL/KEY が設定されていません（.env.local を確認）");
       return;
     }
 
@@ -1045,7 +1122,10 @@ export default function Home() {
     setLoadingVod(true);
     try {
       const url =
-        `${SUPABASE_URL}/rest/v1/anime_vod_availability` + `?select=anime_id,service,watch_url,region` + `&region=eq.JP` + `&watch_url=not.is.null`;
+        `${SUPABASE_URL}/rest/v1/anime_vod_availability` +
+        `?select=anime_id,service,watch_url,region` +
+        `&region=eq.JP` +
+        `&watch_url=not.is.null`;
 
       const res = await fetch(url, { headers });
       if (!res.ok) {
@@ -1102,7 +1182,6 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SUPABASE_URL, SUPABASE_KEY]);
 
-  // ✅ モーダル中は本体スクロール禁止（縦スクロールはモーダル内部へ）
   useEffect(() => {
     if (!selectedAnime) return;
     const prev = document.body.style.overflow;
@@ -1151,10 +1230,7 @@ export default function Home() {
     };
   }, [selectedAnime?.id, SUPABASE_URL, SUPABASE_KEY]);
 
-  const ranked = useMemo(
-    () => [...animeList].sort((a, b) => Number(b.popularity_score || 0) - Number(a.popularity_score || 0)),
-    [animeList]
-  );
+  const ranked = useMemo(() => [...animeList].sort((a, b) => Number(b.popularity_score || 0) - Number(a.popularity_score || 0)), [animeList]);
   const visibleRanking = useMemo(() => ranked.slice(0, rankPagesShown * RANK_PAGE_SIZE), [rankPagesShown, ranked]);
 
   const canShowMoreRank = ranked.length > rankPagesShown * RANK_PAGE_SIZE;
@@ -1337,13 +1413,46 @@ export default function Home() {
     return img || titleImage(work.title);
   }
 
-  // ✅ 選択中作品のシリーズ情報（モーダルで表示）
-  const selectedSeriesStats = useMemo(() => {
+  // ✅ 選択中作品のシリーズ束
+  const selectedSeriesBundle = useMemo(() => {
     if (!selectedAnime) return null;
     const key = getSeriesKey(selectedAnime);
     if (!key) return null;
-    return seriesStatsMap.get(key) ?? null;
-  }, [selectedAnime, seriesStatsMap]);
+    return seriesBundleMap.get(key) ?? null;
+  }, [selectedAnime, seriesBundleMap]);
+
+  // ✅ 表示用文字列（アニメ/劇場版/その他）
+  const selectedSeriesLines = useMemo(() => {
+    const b = selectedSeriesBundle;
+    if (!b) return null;
+
+    const lines: { label: string; text: string }[] = [];
+
+    if (b.animeWorks.length > 0) {
+      const seasonText = formatSeasonRangeByCount(b.animeWorks.length);
+      const epText = b.animeTotalEpisodes !== null ? `合計${b.animeTotalEpisodes}話` : "合計話数：—";
+      lines.push({
+        label: "アニメシリーズ",
+        text: `${seasonText}（${b.animeWorks.length}作品） / ${epText}`,
+      });
+    }
+
+    if (b.movieWorks.length > 0) {
+      lines.push({
+        label: "劇場版シリーズ",
+        text: `${b.movieWorks.length}作品`,
+      });
+    }
+
+    if (b.specialWorks.length > 0) {
+      lines.push({
+        label: "その他",
+        text: `${b.specialWorks.length}作品`,
+      });
+    }
+
+    return lines.length ? lines : null;
+  }, [selectedSeriesBundle]);
 
   return (
     <div className="container">
@@ -1567,7 +1676,6 @@ export default function Home() {
         {visibleResults.map((a) => {
           const img = pickWorkImage(a);
           const vods = getVodServices(a);
-          const ep = getEpisodeCount(a);
 
           return (
             <div
@@ -1588,19 +1696,15 @@ export default function Home() {
                 <h3 className="cardTitle">{a.title}</h3>
               </div>
 
-              {/* ✅ 横長画像はスマホで一回り小さく見せたい → CSS側で調整（後述） */}
               <img className="poster cardImageWide" src={img} alt={a.title} />
 
               <div className="cardBodyWide">
                 <div className="genres">{formatGenre(a.genre)}</div>
                 <div className="meta">制作：{a.studio || "—"}</div>
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
-                <div className="meta">話数：{ep ? `全${ep}話` : "—"}</div>
+                <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
-                {/* ✅ 9軸スコア（検索結果カードでも見える化）
-                    ・スマホはデフォルト閉じる
-                    ・PCはデフォルト展開
-                */}
+                {/* ✅ 9軸（検索カードでも見える化） */}
                 <ScoreSection work={a} isMobile={isMobile} />
 
                 <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} workId={Number(a.id || 0)} />
@@ -1652,27 +1756,40 @@ export default function Home() {
         </button>
       ) : null}
 
-      {/* 詳細モーダル（✅ はみ出す場合はモーダル内部だけ縦スクロール） */}
+      {/* 詳細モーダル */}
       {selectedAnime ? (
         <div className="modalOverlay" onClick={() => setSelectedAnime(null)}>
-          <div
-            className="modalContent"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              maxHeight: "92vh",
-              overflowY: "auto",
-              overflowX: "hidden",
-              WebkitOverflowScrolling: "touch",
-            }}
-          >
-            {/* ✅ 閉じるボタンを見失わないように sticky */}
-            <div className="modalClose" style={{ position: "sticky", top: 0, zIndex: 10, background: "#fff", paddingBottom: 8 }}>
-              <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
-            </div>
+          {/* ✅ 余白バグ対策：paddingを明示して、閉じるボタンをカード内に統合 */}
+          <div className="modalContent" style={{ padding: 16 }} onClick={(e) => e.stopPropagation()}>
+            <div className="card cardMobileStack" style={{ cursor: "default", marginTop: 0 }}>
+              <div
+                className="cardTop"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 12,
+                }}
+              >
+                <h3 className="cardTitle" style={{ margin: 0 }}>{selectedAnime.title}</h3>
 
-            <div className="card cardMobileStack" style={{ cursor: "default" }}>
-              <div className="cardTop">
-                <h3 className="cardTitle">{selectedAnime.title}</h3>
+                <button
+                  type="button"
+                  onClick={() => setSelectedAnime(null)}
+                  style={{
+                    padding: "8px 12px",
+                    borderRadius: 999,
+                    border: "1px solid rgba(0,0,0,0.18)",
+                    background: "rgba(255,255,255,0.95)",
+                    color: "#111",
+                    cursor: "pointer",
+                    fontSize: 12,
+                    boxShadow: "0 1px 10px rgba(0,0,0,0.06)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  閉じる（Esc）
+                </button>
               </div>
 
               <img className="poster cardImageWide" src={pickWorkImage(selectedAnime)} alt={selectedAnime.title} />
@@ -1683,22 +1800,39 @@ export default function Home() {
                 <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
 
-                {/* ✅ シリーズ数・合計話数（詳細モーダルのみ表示） */}
-                {selectedSeriesStats ? (
-                  <div className="meta">
-                    シリーズ：{selectedSeriesStats.countWorks}作品
-                    {selectedSeriesStats.totalEpisodes !== null ? <> / 合計{selectedSeriesStats.totalEpisodes}話</> : <> / 合計話数：—</>}
-                    {selectedSeriesStats.totalEpisodes !== null && selectedSeriesStats.countedWorks < selectedSeriesStats.countWorks ? (
-                      <span style={{ marginLeft: 6, fontSize: 12, opacity: 0.7 }}>（話数未登録の作品があるため、合計は登録済みのみ）</span>
-                    ) : null}
-                  </div>
-                ) : (
-                  <div className="meta" style={{ fontSize: 12, opacity: 0.7 }}>
-                    シリーズ：—（同シリーズ判定ができませんでした）
-                  </div>
-                )}
+                {/* ✅ 追加：シリーズ数・合計話数（アニメ/劇場版で分けて改行表示） */}
+{selectedSeriesLines ? (
+  <div className="meta" style={{ marginTop: 8 }}>
+    <div style={{ fontWeight: 800, marginBottom: 4, opacity: 0.92 }}>シリーズ情報</div>
+    <div style={{ borderTop: "1px solid rgba(0,0,0,0.08)", margin: "6px 0 8px" }} />
 
-                {/* ✅ 9軸スコア（詳細は常に展開） */}
+    {selectedSeriesLines.map((x) => (
+      <div key={x.label} style={{ marginTop: 4 }}>
+        {x.label}：{x.text}
+      </div>
+    ))}
+
+    {/* 合計話数が「登録済みのみ」の場合の注記（TS安全） */}
+    {(() => {
+      const b = selectedSeriesBundle;
+      if (!b) return null;
+      if (b.animeTotalEpisodes === null) return null;
+      if (b.animeCountedWorks >= b.animeWorks.length) return null;
+
+      return (
+        <div style={{ marginTop: 6, fontSize: 12, opacity: 0.7 }}>
+          ※ 話数未登録の作品があるため、合計話数は登録済み分のみ
+        </div>
+      );
+    })()}
+  </div>
+) : (
+  <div className="meta" style={{ fontSize: 12, opacity: 0.7, marginTop: 8 }}>
+    シリーズ情報：—（同シリーズ判定ができませんでした）
+  </div>
+)}
+
+                {/* ✅ 9軸（詳細は常に展開） */}
                 <ScoreSection work={selectedAnime} isMobile={isMobile} alwaysOpen />
 
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
