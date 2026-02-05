@@ -11,7 +11,7 @@ set LOG=logs\step2-match-%TS%.txt
 echo ===== START step2-match %date% %time% ===== >> "%LOG%"
 
 REM 1) anilist_id が空の作品だけ ANILIST_MATCH を投入
-set LIMIT=5000
+set LIMIT=10000
 set OFFSET=0
 set REGION=JP
 call node scripts\enqueue-meta.mjs >> "%LOG%" 2>&1

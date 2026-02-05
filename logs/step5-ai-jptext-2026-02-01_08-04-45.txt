@@ -1,0 +1,1313 @@
+===== START step5-ai-jptext 2026/02/01  8:04:45.48 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step5-ai-jptext-fill-empty.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ step5-ai-generate-jptext-fill-empty start {
+  LIMIT: 500,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1500
+}
+targets=500
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=5702 title=バイオレンス ジャック 〜ヘルスウインド編〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5707 title=バブルガムクラッシュ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5720 title=名探偵コナン 銀翼の奇術師[マジシャン] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5722 title=名探偵コナン: Conan VS KID VS YAIBA -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5723 title=頭山 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5726 title=ブラック・ジャックスペシャル ～命をめぐる4つの奇跡～ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5730 title=宇宙交響詩メーテル ～銀河鉄道999外伝～ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5734 title=星界の紋章 総集編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5736 title=吸血姫美夕 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5738 title=新世紀GPXサイバーフォーミュラ11 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5740 title=新世紀ＧＰＸサイバーフォーミュラSAGA fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5743 title=マクロス７ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5746 title=マクロス7 -銀河がオレを呼んでいる!- -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5750 title=ルパン三世 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5751 title=ルパン三世 アルカトラズコネクション -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5753 title=ルパン三世 バイバイ・リバティー・危機一発! -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5756 title=ルパン三世ＥＰＩＳＯＤＥ：０（ゼロ） 『ファーストコンタクト』 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5757 title=ルパン三世 くたばれ!ノストラダムス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5759 title=ルパン三世ヘミングウェイペーパーの謎 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5762 title=ルパン三世: お宝返却大作戦！！ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5763 title=新・ルパン三世 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5766 title=ルパン三世 盗まれたルパン 〜コピーキャットは真夏の蝶〜 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5767 title=ルパン三世 カリオストロの城 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5771 title=ルパン三世 ルパンvs複製人間 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5773 title=ルパン三世『炎の記憶 ~Tokyo Crisis~』 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5774 title=ルパン三世ルパン暗殺指令 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=5777 title=銀河鉄道の夜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5779 title=SOL BIANCA -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5780 title=太陽の船　ソルビアンカ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5785 title=ザ・サムライ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5788 title=魔界転生 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5790 title=KEY THE METAL IDOL -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5796 title=白鯨伝説 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5798 title=モンスターファーム 〜円盤石の秘密〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5799 title=シティーハンター -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5800 title=シティーハンター2 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5801 title=シティーハンター3 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=5805 title=シティーハンター 百万ドルの陰謀 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5807 title=シティーハンタースペシャル グッド・バイ・マイ・スイート・ハート -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5810 title=うる星やつら 春だ、とびだせ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5812 title=妖魔 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5813 title=赤ちゃんと僕 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5815 title=.hack//Unison -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5817 title=銀河鉄道物語 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5818 title=銀河鉄道９９９ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=5820 title=Project ARMS: The 2nd Chapter fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5826 title=低俗霊DAYDREAM fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5828 title=魔法少女プリティサミー(1996) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5830 title=超時空要塞マクロス FLASH BACK 2012 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5831 title=名探偵コナン　水平線上の陰謀 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=5835 title=円盤皇女ワるきゅーレ 星霊節の花嫁 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5837 title=きらりん☆レボリューション fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5838 title=サイレントメビウス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5839 title=BLACK LAGOON The Second Barrage fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5840 title=ブラック・ジャック 劇場版 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5841 title=風人物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5842 title=ポケットモンスター クリスタル ～ライコウ 雷の伝説～ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5846 title=創世聖紀デヴァダシー -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5847 title=カノン (2006) -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=5848 title=灼眼のシャナ 特別編 恋と温泉の校外学習！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5852 title=武装錬金 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5857 title=蒼天の拳 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5858 title=ブレンパワード -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5863 title=1000年女王 Queen Millennia fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5865 title=陽あたり良好！ KA・SU・MI 夢の中に君がいた fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5870 title=少年陰陽師 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5871 title=史上最強の弟子 ケンイチ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5875 title=魔法騎士（マジックナイト）レイアース II fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5879 title=怪盗セイント・テール -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5882 title=はぴねす！ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5884 title=ジャングル大帝 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5885 title=鬼神童子ZENKI fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5889 title=恋する天使アンジェリーク　～心のめざめる時～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5890 title=金色のコルダ ～primo passo～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5892 title=ギフト～ eternal rainbow -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5894 title=ゼロゼロナインワン -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5896 title=スペクトラルフォース fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5898 title=天保異聞 妖奇士 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5900 title=バーテンダー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5901 title=レジェンズ 甦る竜王伝説 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5902 title=くじびき♥アンバランス -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5904 title=あずまんがWEB大王 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5905 title=地獄少女 二籠 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5906 title=アーケードゲーマーふぶき -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5907 title=ぱにょぱにょ　デ・ジ・キャラット -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5908 title=キャシャーン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5913 title=スーパーロボット大戦OG -ディバイン・ウォーズ- -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=5915 title=Venus Versus Virus fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5916 title=サラリーマン金太郎 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5917 title=舞-乙HiME ZWEI fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5920 title=キャプテン翼 (2001) -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5923 title=魔法先生ネギま！OVA春 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5924 title=マップス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5926 title=怪童丸 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5929 title=超神姫ダンガイザー3 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5930 title=魔王ダンテ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5933 title=風と木の詩　ＳＡＮＣＴＵＳ－聖なるかな－ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5938 title=プリンセス・ルージュ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5939 title=ハーロック・サーガ ニーベルングの指環 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5940 title=覚悟のススメ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=5945 title=練馬大根ブラザーズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5946 title=ポストペットモモ便 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5950 title=キューティーハニー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+✅ updated id=5953 title=バビル2世 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5956 title=バロムワン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5959 title=爆転シュート　ベイブレード　THE MOVIE　激闘！！タカオＶＳ大地 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5960 title=それゆけ!宇宙戦艦ヤマモト・ヨーコⅡ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5961 title=B[ボンバーマン]ビーダマン爆外伝 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5962 title=B[ボンバーマン]ビーダマン爆外伝Ｖ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5963 title=キャプテン翼Ｊ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5964 title=超ロボット生命体トランスフォーマー マイクロン伝説 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5965 title=コスモウォーリアー零 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5966 title=ヤングハーロックを追え! コスモウォーリアー零外伝 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5967 title=サイボーグ009 THE CYBORG SOLDIER -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5968 title=グリーングリーン DVD -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5969 title=ブレイブ・ストーリー -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5970 title=バルドフォース　エグゼ　レソリューション -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5971 title=デ・ジ・キャラットにょ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5972 title=ドッとKONIちゃん -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5973 title=デュエル・マスターズ -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5974 title=BLEACH MEMORIES OF NOBODY -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=5975 title=ななついろ★ドロップス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5976 title=秒速５センチメートル -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=5977 title=_summer [アンダーバーサマー] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=5978 title=REIDEEN fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5979 title=アイドルマスター ゼノグラシア -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5980 title=レ・ミゼラブル 少女コゼット -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=5981 title=マーダープリンセス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+✅ updated id=5982 title=ぼくのマリー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=5983 title=TOKYO TRIBE 2 -> OpenAI 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+^C

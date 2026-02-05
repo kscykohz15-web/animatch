@@ -1,0 +1,20 @@
+===== START step1-discover 2026/01/31 21:51:51.43 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ AniList discover seasonal {
+  targets: [
+    { year: 2026, season: 'WINTER' },
+    { year: 2026, season: 'SPRING' }
+  ],
+  PER_PAGE: 50,
+  ALLOW_UPDATE_EXISTING: false,
+  MAX_PAGES: 5
+}
+🎉 2026 WINTER page=1 inserted_or_skipped=50
+🎉 2026 WINTER page=2 inserted_or_skipped=50
+🎉 2026 WINTER page=3 inserted_or_skipped=5
+✅ 2026 WINTER done inserted_or_skipped=105
+🎉 2026 SPRING page=1 inserted_or_skipped=50
+🎉 2026 SPRING page=2 inserted_or_skipped=27
+✅ 2026 SPRING done inserted_or_skipped=77
+✅ discover done { total: 182 }
+===== END step1-discover 2026/01/31 21:51:56.19 ===== 

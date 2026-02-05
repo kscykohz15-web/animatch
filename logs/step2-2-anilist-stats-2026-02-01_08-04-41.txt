@@ -1,0 +1,5 @@
+===== START step2-2-anilist-stats 2026/02/01  8:04:41.70 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ refresh-anilist-stats-monthly start { LIMIT: 800, OFFSET: 0, ONLY_NEW: true }
+🎉 対象0件
+===== END step2-2-anilist-stats 2026/02/01  8:04:42.59 ===== 

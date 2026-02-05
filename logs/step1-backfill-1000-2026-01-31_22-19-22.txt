@@ -1,0 +1,42 @@
+===== START step1-backfill-1000 2026/01/31 22:19:22.82 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ AniList backfill (target) start {
+  start_page: 60,
+  PER_PAGE: 50,
+  TARGET_NEW: 1000,
+  MAX_SCAN_PAGES: 300,
+  USE_STATE: true,
+  state: 'C:\\Users\\kouhe\\Desktop\\animatch-work\\animatch\\scripts\\anilist_backfill_state.json',
+  ALLOW_UPDATE_EXISTING: false
+}
+🎉 page=60 scanned=35 dupSkipped=3 willInsert=32 inserted=32 totalInserted=32
+🎉 page=61 scanned=41 dupSkipped=3 willInsert=38 inserted=38 totalInserted=70
+🎉 page=62 scanned=34 dupSkipped=1 willInsert=33 inserted=33 totalInserted=103
+🎉 page=63 scanned=29 dupSkipped=2 willInsert=27 inserted=27 totalInserted=130
+🎉 page=64 scanned=36 dupSkipped=1 willInsert=35 inserted=35 totalInserted=165
+🎉 page=65 scanned=42 dupSkipped=0 willInsert=42 inserted=42 totalInserted=207
+🎉 page=66 scanned=44 dupSkipped=1 willInsert=43 inserted=43 totalInserted=250
+🎉 page=67 scanned=40 dupSkipped=3 willInsert=37 inserted=37 totalInserted=287
+🎉 page=68 scanned=29 dupSkipped=0 willInsert=29 inserted=29 totalInserted=316
+🎉 page=69 scanned=35 dupSkipped=1 willInsert=34 inserted=34 totalInserted=350
+🎉 page=70 scanned=47 dupSkipped=2 willInsert=45 inserted=45 totalInserted=395
+🎉 page=71 scanned=45 dupSkipped=6 willInsert=39 inserted=39 totalInserted=434
+🎉 page=72 scanned=33 dupSkipped=2 willInsert=31 inserted=31 totalInserted=465
+🎉 page=73 scanned=40 dupSkipped=5 willInsert=35 inserted=35 totalInserted=500
+🎉 page=74 scanned=32 dupSkipped=1 willInsert=31 inserted=31 totalInserted=531
+🎉 page=75 scanned=34 dupSkipped=2 willInsert=32 inserted=32 totalInserted=563
+🎉 page=76 scanned=34 dupSkipped=5 willInsert=29 inserted=29 totalInserted=592
+🎉 page=77 scanned=28 dupSkipped=2 willInsert=26 inserted=26 totalInserted=618
+🎉 page=78 scanned=49 dupSkipped=2 willInsert=47 inserted=47 totalInserted=665
+🎉 page=79 scanned=42 dupSkipped=6 willInsert=36 inserted=36 totalInserted=701
+🎉 page=80 scanned=35 dupSkipped=2 willInsert=33 inserted=33 totalInserted=734
+🎉 page=81 scanned=47 dupSkipped=3 willInsert=44 inserted=44 totalInserted=778
+🎉 page=82 scanned=32 dupSkipped=3 willInsert=29 inserted=29 totalInserted=807
+🎉 page=83 scanned=39 dupSkipped=2 willInsert=37 inserted=37 totalInserted=844
+🎉 page=84 scanned=12 dupSkipped=0 willInsert=12 inserted=12 totalInserted=856
+🎉 page=85 scanned=30 dupSkipped=3 willInsert=27 inserted=27 totalInserted=883
+🎉 page=86 scanned=46 dupSkipped=2 willInsert=44 inserted=44 totalInserted=927
+🎉 page=87 scanned=47 dupSkipped=2 willInsert=45 inserted=45 totalInserted=972
+🎉 page=88 scanned=45 dupSkipped=3 willInsert=28 inserted=28 totalInserted=1000
+✅ backfill (target) done { scannedPages: 29, inserted_new_total: 1000, next_page: 89 }
+===== END step1-backfill-1000 2026/01/31 22:20:03.10 ===== 

@@ -1,0 +1,39 @@
+===== START 2026/02/03 23:08:41.47 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ fill-tmdb-backdrop-16x9 start {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  FORCE: false,
+  TMDB_IMG_SIZE: 'w1280'
+}
+targets=1000
+… no match: id=41 title=かいけつゾロリ (score=0.00)
+… no match: id=84 title=人造昆虫カブトボーグ V×V (score=0.00)
+… no match: id=92 title=ローゼンメイデン・オーベルテューレ (score=0.00)
+… no match: id=109 title=キミキス pure rouge (score=0.00)
+… no match: id=175 title=バクマン。 (score=0.00)
+… no match: id=190 title=境界線上のホライゾン (score=0.00)
+… no match: id=311 title=バディ・コンプレックス (score=0.00)
+… no match: id=388 title=境界のRINNE（第1シリーズ） (score=0.00)
+… no match: id=412 title=ビキニ・ウォリアーズ (score=0.00)
+… no match: id=414 title=監獄学園(プリズンスクール) (score=0.00)
+… no match: id=419 title=うたわれるもの 偽りの仮面 (score=0.00)
+… no match: id=484 title=ドリフターズ (score=0.00)
+… no match: id=550 title=僕の彼女がマジメ過ぎるしょびっちな件 (score=0.00)
+… no backdrop: id=939 title=忘却バッテリー (tmdb=movie/1076616)
+… no match: id=945 title=T・Pぼん シーズン1 (score=0.00)
+… no match: id=2623 title=魔都精兵のスレイブ2 (score=0.00)
+… no match: id=2636 title=異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ (score=0.00)
+… no match: id=2641 title=わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 (score=0.00)
+… no match: id=2651 title=BEASTARS FINAL SEASON Part 2 (score=0.00)
+… no backdrop: id=2662 title=暗殺教室 みんなの時間 (tmdb=movie/1542877)
+… no match: id=2664 title=MFゴースト 3rd Season (score=0.00)
+… no match: id=2673 title=どうせ、恋してしまうんだ。Season 2 (score=0.00)
+… no match: id=2679 title=青のミブロ 芹沢暗殺編 (score=0.00)
+… no backdrop: id=2680 title=ガールズ＆パンツァー もっとらぶらぶ作戦です！ (tmdb=movie/1591447)
+… no match: id=2681 title=地獄先生ぬ～べ～ (2025) 第2クール (score=0.00)
+… no match: id=2682 title=イチゴ哀歌～雑で生イキな妹と割り切れない兄～ (score=0.08)
+… no match: id=2683 title=エヴァンゲリオン 新作短編アニメーション（仮） (score=0.00)
+🎉 done { updated: 0, skipped: 973, noBackdrop: 3 }
+===== END 2026/02/03 23:08:53.71 ===== 

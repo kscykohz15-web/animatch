@@ -1,0 +1,819 @@
+===== START step5-ai-jptext 2026/02/04 21:55:31.17 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step5-ai-jptext-fill-empty.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ step5-ai-generate-jptext-fill-empty start {
+  LIMIT: 500,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1500
+}
+targets=500
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6193 title=.hack//黄昏の腕輪伝説 オフラインで会いましょう -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6435 title=戦え!! イクサー1 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6436 title=冒険！イクサー３ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6437 title=強殖装甲ガイバー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6438 title=機動戦士ガンダムＳＥＥＤ ＤＥＳＴＩＮＹ スペシャルエディション -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6439 title=機動戦士ガンダムSEED 星のはざまで -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6440 title=宇宙の騎士テッカマンブレード -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6441 title=宇宙の騎士テッカマンブレード 特典映像 TWIN BLOOD -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6443 title=機動戦士SDガンダム -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6444 title=機動戦士SDガンダム Mk-II -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6445 title=機動戦士SDガンダム Mk-IV -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6446 title=機動戦士SDガンダム Mk-III -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6447 title=機動戦士ＳＤガンダムの逆襲 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6448 title=らいむいろ戦奇譚 南国夢浪漫 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6449 title=らいむいろ流奇譚 X CROSS ～恋 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6450 title=アズサ、お手伝いします！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6451 title=超機動伝説ダイナギガ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6452 title=少年ケニヤ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6453 title=大自然の魔獣 バギ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6454 title=楽しいムーミン一家 ムーミン谷の彗星 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6455 title=とべ! くじらのピーク -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+✅ updated id=6456 title=赤き血のイレブン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=6457 title=変 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6458 title=ドッグソルジャー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6459 title=Freedom Previsited fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6460 title=ジャイアントロボ THE ANIMATION 地球が静止する日 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6461 title=ジャイアントロボ外伝 GinRei 銀鈴 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6462 title=ジバクくん TWELVE WORLD STORY fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6463 title=宇宙伝説ユリシーズ31 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6464 title=プラスチックリトル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=6465 title=アニメ三銃士 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6466 title=アニメ三銃士 アラミスの冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6467 title=剣勇伝説YAIBA fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6468 title=鉄人２８号 (2004) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6469 title=殺し屋１ THE ANIMATION EPISODE 0 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6470 title=デビルマン 誕生編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6471 title=デビルマン 妖鳥シレーヌ編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=6472 title=AMON デビルマン黙示録 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6473 title=星銃士ビスマルク fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6474 title=Run=Dim fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6475 title=ポケットモンスター　サイドストーリー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6476 title=VIRUS ‐VIRUS BUSTER SERGE‐ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6477 title=GRANDEEK-外伝- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6478 title=闘魔鬼神伝ONI fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=6479 title=もえたん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6480 title=レンタルマギカ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6481 title=FIRESTORM　ファイアーストーム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6482 title=サイバーシックス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6483 title=厄災仔寵[やくさいこちょう] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6484 title=ONE PIECE ねじまき島の冒険 ジャンゴのダンスカーニバル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6485 title=ONE PIECE 夢のサッカー王! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6486 title=愛物語 9 Love Stories fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6487 title=立喰師列伝 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6488 title=科学忍者隊ガッチャマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6489 title=星のカービィ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6490 title=SDガンダムフォース fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6491 title=ドラえもん のび太の恐竜2006 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+✅ updated id=6492 title=ドラえもん のび太とふしぎ風使い fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6493 title=デジモンアドベンチャー ぼくらのウォーゲーム! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6494 title=デジモンアドベンチャー02 ディアボロモンの逆襲 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6495 title=ハム太郎のおたんじょうび 〜ママをたずねて三千てちてち〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6496 title=GS美神 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6497 title=あしたのジョー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6498 title=こどものじかん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+✅ updated id=6499 title=ゾンビローン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6500 title=ハロー! レディリン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6501 title=サザエさん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6502 title=超劇場版 ケロロ軍曹 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6503 title=超劇場版　ケロロ軍曹２　深海のプリンセスであります！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6504 title=ゴクドーくん漫遊記 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6505 title=アッセンブル・インサート fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6506 title=スーパーフィッシング グランダー武蔵 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6507 title=グランダー武蔵ＲＶ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6508 title=最後のドアを閉めろ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6509 title=ストレンヂア -無皇刃譚- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6510 title=ザスピリットオブワンダー - チャイナさんの憂鬱 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6511 title=ザスピリットオブワンダー : 少年科學倶楽部 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6512 title=スーパークマさん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6513 title=県立地球防衛軍 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6514 title=ＧＲＥＹ デジタル・ターゲット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6515 title=すてきですわ、さくらちゃん!　知世のカードキャプターさくら活躍ビデオ日記! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6516 title=ユニコ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6517 title=短編ユニコ 黒い雲と白い羽 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6518 title=ユニコ 魔法の島へ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6519 title=攻殻機動隊 S.A.C. 2nd GIG Individual Eleven fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6520 title=攻殻機動隊 Stand Alone Complex - The Laughing Man fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6521 title=映画　クレヨンしんちゃん　嵐を呼ぶモーレツ！オトナ帝国の逆襲 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6522 title=スペースコブラ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6523 title=SPACE ADVENTURE コブラ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6524 title=きまぐれオレンジ☆ロード　あの日にかえりたい fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6525 title=プレイヤーズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6526 title=森の伝説 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6527 title=魔女っ娘つくねちゃん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6528 title=めぞん一刻番外編 一刻島ナンパ始末記 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6529 title=めぞん一刻 完結篇 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6530 title=メタルスキンパニック ＭＡＤＯＸ－０１ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6531 title=闘神伝 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6532 title=湘南爆走族 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6533 title=アイドル防衛隊ハミングバード fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6534 title=スクランブル・ウォーズ　突っ走る！ゲノムトロフィーラリー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6535 title=3丁目のタマ　うちのタマ知りませんか? 第2期 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6536 title=NINETEEN 19 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6537 title=宇宙海賊キャプテン・ハーロック　アルカディア号の謎 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6538 title=劇場版 NARUTO -ナルト- 疾風伝 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6539 title=銀河お嬢様伝説ユナ ～哀しみのセイレーン～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6540 title=銀河お嬢様伝説ユナ　～深闇のフェアリィ～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6541 title=シックス・エンジェルズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6542 title=School Days (TV) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6543 title=Good Morning アルテア fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6544 title=快刀乱麻 THE ANIMATION fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6545 title=GEAR戦士 電童 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6546 title=高橋留美子劇場 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6547 title=恐竜冒険記ジュラトリッパー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6548 title=めいとこねこバス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6549 title=おねがいマイメロディ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6550 title=ONE PIECE めざせ! 海賊野球王 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6551 title=タッチ 背番号のないエース fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6552 title=タッチ2 さよならの贈り物 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6553 title=タッチ３ 君が通り過ぎたあとに -DON`T PASS ME BY- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6554 title=ご愁傷さま二ノ宮くん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6555 title=チャンス〜トライアングルセッション〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6556 title=新・キューティーハニー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6557 title=SLAM DUNK 湘北最大の危機! 燃えろ桜木花道 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6558 title=SLAM DUNK 吠えろバスケットマン魂! 花道と流川の熱き夏 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6559 title=ザ・コクピット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6560 title=パプワ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6561 title=南国少年パプワくん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6562 title=げんしけん2 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6563 title=戦国魔神ゴーショーグン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6564 title=戦国魔人ゴーショーグン 時の異邦人[ÉTRANGER[エトランゼ]] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6565 title=名探偵コナン 16人の容疑者!? fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6566 title=名探偵コナン: コナンと平次と消えた少年 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6567 title=名探偵コナン: コナンとキッドとクリスタルマザー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6568 title=名探偵コナン 標的は小五郎!!少年探偵団マル秘調査 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6569 title=宇宙の戦士 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6570 title=増田こうすけ劇場 ギャグマンガ日和2 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6571 title=破邪巨星Gダンガイオ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6572 title=楽勝! ハイパードール fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6573 title=IZUMO -猛き剣の閃記- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6574 title=ジャングルDEいこう! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6575 title=けっこう仮面 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6576 title=KIRARA fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6577 title=小鉄の大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6578 title=女神天国 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6579 title=プリンセス ミネルバ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6580 title=オリジナルビデオアニメーション アンジェリーク fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6581 title=アンジェリーク　聖地より愛をこめて fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6582 title=アンジェリーク　～白い翼のメモワール～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6583 title=アンジェリーク　Twinコレクション fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6584 title=With You ~みつめていたい~ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6585 title=レディジョージィ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6586 title=ロビンフッドの大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6587 title=家族ロビンソン漂流記ふしぎな島のフローネ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6588 title=ハックルベリィの冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6589 title=アルプス物語 わたしのアンネット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6590 title=小公女セーラ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6591 title=愛の若草物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6592 title=ペリーヌ物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6593 title=おんぼろフィルム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6594 title=鉄子の旅 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6595 title=フランダースの犬 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6596 title=愛少女ポリアンナ物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6597 title=小公子セディ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6598 title=トラップ一家物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6599 title=若草物語ナンとジョー先生 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6600 title=ロミオの青い空 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6601 title=キャプテンフューチャー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6602 title=しおんの王 - The Flowers of Hard Blood fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6603 title=ARIA The OVA ~ARIETTA~ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6604 title=CODE-E fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6605 title=ジャングル大帝 進めレオ! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6606 title=うちゅう人田中太郎 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6607 title=ピノキオより ピコリーノの冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6608 title=子鹿物語 THE YEARLING fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6609 title=ジャングルブック・少年モーグリ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6610 title=おちゃめな双子　－クレア学院物語－ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6611 title=みつばちマーヤの冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6612 title=ふしぎの国のアリス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6613 title=南の虹のルーシー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6614 title=樫の木モック fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6615 title=ドンチャック物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6616 title=あらいぐまラスカル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6617 title=トム・ソーヤーの冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6618 title=タオタオ絵本館・世界動物ばなし fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6619 title=アニメ80日間世界一周 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6620 title=機動戦士ガンダム00 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6621 title=装甲騎兵ボトムズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6622 title=装甲騎兵ボトムズ　ザ・ラストレッドショルダー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6623 title=装甲騎兵ボトムズ　ビッグバトル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6624 title=装甲騎兵ボトムズ　レッドショルダードキュメント野望のルーツ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6625 title=装甲騎兵ボトムズ 赫奕たる異端 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6626 title=ブラックキャット 遠ざかる猫 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6627 title=SAMURAI SPIRITS 〜破天降魔の章〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6628 title=祈明羅 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6629 title=空の境界 俯瞰風景 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6630 title=D.C.II ～ダ・カーポII～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6631 title=神霊狩 Ghost Hound fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6632 title=名探偵コナン 阿笠からの挑戦状! 阿笠vsコナン&少年探偵団 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6633 title=重戦機エルガイム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6634 title=重戦機エルガイムI ペンタゴナ ウインドゥ+レディ ギャブレー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6635 title=重戦機エルガイムII フェアウェル マイ ラブリー+ペンタゴナ ドールズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6636 title=重戦機エルガイムⅢ フルメタル ソルジャー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6637 title=ケンコー全裸系水泳部 ウミショー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6638 title=ムシウタ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6639 title=デジモンセイバーズ THE MOVIE 究極パワー！バーストモード発動！！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6640 title=バース fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6641 title=湾岸ミッドナイト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6642 title=下級生 (TV) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6643 title=パンダコパンダ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6644 title=スプーンおばさん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6645 title=未来少年コナンII　タイガアドベンチャー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6646 title=未来少年コナン特別篇　巨大機ギガントの復活 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6647 title=乙女はお姉さま[ボク]に恋してる fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6648 title=そらいろのたね fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6649 title=ギブリーズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6650 title=宝島 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6651 title=スパイダーライダーズ ～オラクルの勇者たち～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6652 title=スパイダーライダーズ ～よみがえる太陽～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6653 title=夏への扉 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6654 title=ビッグ・ウォーズ 神撃つ朱き荒野に fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6655 title=THE DOG OF FLANDERS fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6656 title=フランダースの犬　～ぼくのパトラッシュ～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6657 title=ザ☆ドラえもんズ 怪盗ドラパン謎の挑戦状！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6658 title=ザ☆ドラえもんズ ムシムシぴょんぴょん大作戦！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6659 title=お正月だよ！ドラえもん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6660 title=ザ☆ドラえもんズ おかしなお菓子なオカシナナ？ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6661 title=Doraemon and Itchy the Stray fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6662 title=Doraemon Meets Hattori the Ninja fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6663 title=ザ☆ドラえもんズ ゴール！ゴール！ゴール！！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6664 title=Doraemon's Time Capsule for 2001 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6665 title=ザ☆ドラえもんズ ドキドキ機関車大爆走！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6666 title=Doraemon: Come Back Doraemon fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6667 title=Doraemon: Featherplace fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6668 title=ドラミちゃん アララ・少年山賊団！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6669 title=秋だ！一番ドラえもん祭り fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6670 title=春だ！一番ドラえもん祭り fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6671 title=ドラミちゃん ハロー恐竜キッズ!! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6672 title=夏だ！一番ドラえもん祭り fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6673 title=冬だ！一番ドラえもん祭り fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6674 title=ドラミちゃん 青いストローハット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6675 title=Doraemon: Summer Holiday fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6676 title=Doraemon: Treasure of the Shinugumi Mountain fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6677 title=ドラミ＆ドラえもんズ 宇宙（スペース）ランド危機イッパツ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6678 title=ドラミ＆ドラえもんズ ロボット学校七不思議！？ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6679 title=ドラミちゃん ミニドラSOS!!! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6680 title=ドラえもん ２１１２年ドラえもん誕生 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6681 title=ドラえもん おばあちゃんの思い出 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6682 title=ドラえもん ぼく、桃太郎のなんなのさ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6683 title=帰ってきたドラえもん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6684 title=ドラえもん ぼくの生まれた日 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6685 title=ドラえもん がんばれ！ジャイアン！！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6686 title=ドラえもん のび太と翼の勇者たち fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6687 title=ドラえもん のび太とロボット王国 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6688 title=ドラえもん のび太のワンニャン時空伝 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6689 title=ドラえもん のび太と竜の騎士 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6690 title=ドラえもん のび太のパラレル西遊記 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6691 title=ドラえもん のび太とブリキの迷宮 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6692 title=ドラえもん のび太の結婚前夜 The night before a wedding fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6693 title=ドラえもん のび太と雲の王国 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6694 title=のび太の宇宙開拓史 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6695 title=ドラえもん のび太の南海大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6696 title=ドラえもん のび太と鉄人兵団 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6697 title=ドラえもん のび太の日本誕生 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6698 title=ドラえもん のび太の海底鬼岩城 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6699 title=ドラえもん のび太の宇宙漂流記 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6700 title=ドラえもん のび太の宇宙小戦争 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6701 title=ドラえもん のび太のドラビアンナイト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6702 title=ドラえもん のび太の大魔境 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6703 title=ドラえもん のび太の魔界大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6704 title=ドラえもん のび太の新魔界大冒険～7人の魔法使い～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6705 title=ドラえもん のび太の創世日記 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6706 title=ドラえもん のび太と銀河超特急(エクスプレス) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6707 title=ドラえもん のび太と夢幻三剣士 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6708 title=ドラえもん のび太とアニマル惑星(プラネット) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6709 title=ドラえもん のび太のねじ巻き都市冒険記 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6710 title=敵は海賊　～猫たちの饗宴～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6711 title=蒼き伝説 シュート! (Movie) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6712 title=東京魔人學園剣風帖　龖（トウ） 第弐幕 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6713 title=BUZZER BEATER (2007) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6714 title=ツバサ TOKYO REVELATIONS fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6715 title=鉄人28号 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6716 title=悟空の大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6717 title=赤い光弾ジリオン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6718 title=赤い光弾ジリオン 歌姫夜曲 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6719 title=アーバンスクウェア 琥珀の追撃 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6720 title=CBキャラ永井豪ワールド fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6721 title=でたとこプリンセス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6722 title=陽だまりの樹 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6723 title=機動戦士ガンダム0083 －ジオンの残光－ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6724 title=クラッシャージョウ OVA fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6725 title=ハイスピード・ジェシー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6726 title=サンクチュアリ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6727 title=宇宙海賊ミトの大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6728 title=宇宙海賊ミトの大冒険 2人の女王様 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6729 title=スージーちゃんとマービー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6730 title=爆球連発！スーパービーダマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6731 title=超速スピナー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6732 title=快傑 蒸気探偵団 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6733 title=爆走兄弟レッツ＆ゴー!! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6734 title=爆走兄弟レッツ＆ゴー!!　ＷＧＰ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6735 title=まじめにふまじめ　かいけつゾロリ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6736 title=わんころべえ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6737 title=爆走兄弟レッツ＆ゴー!! ＭＡＸ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6738 title=映画 忍たま乱太郎 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6739 title=白鳥麗子でございます！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6740 title=ロックマンエグゼビースト+（プラス） fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6741 title=卒業~Graduation~ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6742 title=とつぜん! ネコの国 バニパルウィット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6743 title=浦安鉄筋家族 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6744 title=銀河鉄道物語 ～永遠への分岐点～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6745 title=海のトリトン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6746 title=メイプルストーリー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6747 title=クラッシャージョウ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6748 title=D4 プリンセス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6749 title=DAICONⅢ オープニングアニメ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6750 title=天地無用！番外編 宇宙刑事美星銀河大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6751 title=スケバン刑事 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6752 title=スウィート・ヴァレリアン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6753 title=TWO-MIX: White Reflection fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6754 title=X² ダブルエックス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6755 title=１＋２＝パラダイス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6756 title=思春期美少女合体ロボ ジーマイン THE BATTLING DAYS OF THE "SHITAMACHI" VIRGINS fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6757 title=ベイベーばあちゃん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6758 title=ミニパト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6759 title=マジンカイザー　死闘！暗黒大将軍 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6760 title=無限戦記ポトリス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6761 title=モジャ公 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6762 title=黄龍の耳 美那の章 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6763 title=カスミン (第3シリーズ) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6764 title=ハイスクール・オーラバスター　光の誕生[めざめ] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6765 title=モンキーターン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6766 title=モンキー ターン V fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6767 title=おもいっきり科学アドベンチャー そーなんだ! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6768 title=機動戦士ガンダムSEED たねきゃら劇場 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6769 title=ぽてまよ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6770 title=地獄先生ぬ～べ～ THE OVA fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6771 title=ベクシル 2077日本鎖国 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6772 title=鉄腕アトム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6773 title=ダッシュ勝平 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6774 title=平成イヌ物語バウ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6775 title=平成イヌ物語バウ 原始イヌ物語バウ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6776 title=ミヨリの森 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6777 title=テニスの王子様 全国大会篇 Semifinal fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6778 title=うしろの正面だあれ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6779 title=クレオパトラＤ．Ｃ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6780 title=천년여우 여우비 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6781 title=十二戦支 爆烈エトレンジャー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6782 title=疾風！ アイアンリーガー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6783 title=ヱヴァンゲリヲン新劇場版:序 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6784 title=THE IDEON 接触篇 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6785 title=THE IDEON 発動篇 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6786 title=伊賀野カバ丸 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6787 title=桃太郎　海の神兵 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6788 title=スーパードール★リカちゃん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6789 title=種山ヶ原の夜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6790 title=CLAMP in Wonderland 2 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6791 title=GALACTIC PATROL　レンズマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6792 title=SF新世紀レンズマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6793 title=超くせになりそう fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6794 title=獣神演武 - HERO TALES - fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6795 title=ジェノサイバー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6796 title=ジェネレーション オブ カオス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6797 title=ジェネレーション オブ カオス ネクスト～誓いのペンダント～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6798 title=ジェネレーションオブカオス３ ～時の封印～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6799 title=卒業M ～オレ達のカーニバル～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6800 title=恐怖のバイオ人間 最終教師 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6801 title=聖ルミナス女学院 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6802 title=ファイアーエムブレム 紋章の謎 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6803 title=おやゆび姫物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6804 title=木之坂旅館 危機一髪!! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6805 title=オズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6806 title=妖逆門 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6807 title=灼眼のシャナⅡ(Second) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6808 title=B-伝説！バトルビーダマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6809 title=おいら女蛮[スケバン] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6810 title=まかせてイルか! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6811 title=パンツァードラグーン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6812 title=火の鳥 ２７７２ 愛のコスモゾーン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6813 title=ドラゴノーツ-ザ・レソナンス- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6814 title=アフロ犬 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6815 title=高校鉄拳伝　タフ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6816 title=ハロー！サンディベル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6817 title=キャンディ・キャンディ 春の呼び声 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6818 title=キャンディ・キャンディ キャンディの夏休み fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6819 title=伝説の勇者ダ・ガーン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6820 title=花の魔法使いマリーベル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6821 title=おねがい！サミアどん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6822 title=ヤダモン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6823 title=イレギュラーハンターＸ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6824 title=風船少女テンプルちゃん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6825 title=アニメ ひみつの花園 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6826 title=空飛ぶゆうれい船 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6827 title=小さなアヒルの大きな愛の物語 あひるのクワック fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6828 title=どんどんドメルとロン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6829 title=げらげらブース物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6830 title=闘将ダイモス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6831 title=シンデレラ物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6832 title=魔動王グランゾート fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6833 title=ドラゴンクエスト～勇者アベル伝説～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6834 title=たいむとらぶる トンデケマン! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6835 title=バンブー・ベアーズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6836 title=バーバパパ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6837 title=バーバパパ　世界をまわる fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6838 title=アラビアンナイト シンドバットの冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6839 title=オズの魔法使い fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6840 title=カリメロ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6841 title=家なき子 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6842 title=家なき子レミ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6843 title=ちびっ子レミと名犬カピ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6845 title=アニ＊クリ15 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6846 title=ガリバーの宇宙旅行 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6847 title=ミラクル☆ガールズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6848 title=パタリロ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6849 title=小さなバイキングビッケ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6850 title=エリアル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6851 title=ARIEL VISUAL SCEBAI最大の危機 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6852 title=ようこそロードス島へ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6853 title=ポケモン不思議のダンジョン 出動ポケモン救助隊ガンバルズ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6854 title=ポケットモンスター ダイヤモンド＆パール ディアルガVSパルキアVSダークライ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6855 title=河童のクゥと夏休み fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6856 title=NINKU -忍空- (Movie) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6857 title=星のオルフェウス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6858 title=沈黙の艦隊 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6859 title=アニメ親子劇場 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6860 title=아치와 씨팍 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6861 title=がんばれゴエモン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6862 title=BLEACH The DiamondDust Rebellion もう一つの氷輪丸 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6863 title=崖の上のポニョ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6864 title=イバラード時間 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6865 title=ハクション大魔王 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6866 title=くじらとり fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6867 title=なんだろう fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6868 title=ひぐらしのなく頃に 猫殺し編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6869 title=こちら葛飾区亀有公園前派出所　ＴＨＥ　ＭＯＶＩＥ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6870 title=魁!!男塾 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6871 title=コードギアス 反逆のルルーシュ R2 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6872 title=一騎当千 Dragon Destiny 赤壁温泉大決戦 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6873 title=六神合体ゴッドマーズ 十七歳の伝説 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6874 title=サイボーグクロちゃん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6875 title=こいこい7 Specials fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6876 title=おはよう！スパンク fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6877 title=大草原の小さな天使　ブッシュベイビー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6878 title=地球が動いた日 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6879 title=元気爆発ガンバルガー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6880 title=あしたのジョー (1980) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6881 title=あしたのジョー２ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6882 title=しゅごキャラ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6883 title=マイセルフ；ユアセルフ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6884 title=.hack//G.U. Returner fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6885 title=MOONLIGHT MILE 2ndシーズン -Touch down- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6886 title=天才？Dr.ハマックス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6887 title=もっけ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6888 title=未来警察ウラシマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6889 title=しあわせソウのオコジョさん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6890 title=メイクアップ！ セーラー戦士 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6891 title=アイドル伝説えり子 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6892 title=엘리시움 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6893 title=スケッチブック 〜full color's〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6894 title=おジャ魔女どれみ♯ (映画) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6895 title=も～っと！おジャ魔女どれみ カエル石のひみつ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6896 title=どうぶつの森 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6897 title=銀魂ジャンプフェスタアニメツアー’０５ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6898 title=ファイナルファンタジーVII アドベント チルドレン コンプリート fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6899 title=みんなのうた「笑顔」 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6900 title=マリア様がみてる～3rdシーズンOVA～マリア様にはないしょ。 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6901 title=デジモンアドベンチャー (Movie) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6902 title=デジモンアドベンチャー０２ 前篇 デジモンハリケーン上陸！！ 後篇 超絶進化！！黄金のデジメンタル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6903 title=BLUE DROP ～天使達の戯曲～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6904 title=素敵探偵☆ラビリンス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6905 title=最終試験くじら fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6906 title=アップルシード サーガ エクスマキナ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6907 title=ナイトウィザード The ANIMATION fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6908 title=今日からマ王！R fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6909 title=禁断の黙示録 クリスタルトライアングル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6910 title=炎トリッパー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6911 title=ザ・ヒューマノイド 哀の惑星レザリア fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6912 title=新ゲッターロボ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6913 title=空想科学世界ガリバーボーイ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6914 title=デジタル・デビル物語 女神転生 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6915 title=バンブーブレード fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6916 title=銀河漂流バイファム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6917 title=DEATH NOTE リライト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6918 title=火の鳥・鳳凰編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6919 title=火の鳥　宇宙編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6920 title=火の鳥・ヤマト編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6921 title=逮捕しちゃうぞ フルスロットル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6922 title=もやしもん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6923 title=逆境無頼カイジ Ultimate Survivor fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6924 title=ゆめだまや奇談 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6925 title=セイント・ビースト～幾千の昼と夜 編～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6926 title=あたしンち fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6927 title=BRONZE KoJI NANJo cathexis fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6928 title=タイムボカンシリーズ ヤッターマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6929 title=タイガーマスク fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6930 title=快傑ゾロ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6931 title=よつのは fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6932 title=激闘! クラッシュギアTURBO fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6933 title=銀河英雄伝説: わが征くは星の大海 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6934 title=銀河英雄伝説外伝　黄金の翼 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6935 title=銀河英雄伝説外伝　新たなる戦いの序曲[オーヴァチュア] fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+===== END step5-ai-jptext 2026/02/04 23:44:52.47 ===== 

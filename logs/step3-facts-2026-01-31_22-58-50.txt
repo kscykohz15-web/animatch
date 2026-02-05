@@ -1,0 +1,37 @@
+===== START step3-facts-v3 2026/01/31 22:58:50.80 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ step3-anilist-facts v3 start {
+  LIMIT: 1000,
+  OFFSET: 0,
+  FORCE: false,
+  MIN_INTERVAL: 1200,
+  RETRY_MAX: 10
+}
+targets=24 / rows=1000
+- nochange id=109 title=キミキス pure rouge
+- nochange id=118 title=かのこん
+- nochange id=229 title=お兄ちゃんだけど愛さえあれば関係ないよねっ
+- nochange id=484 title=ドリフターズ
+- nochange id=611 title=中卒労働者から始める高校生活
+- nochange id=2620 title=ジョジョの奇妙な冒険 スティール・ボール・ラン
+- nochange id=2625 title=勇者パーティを追い出された器用貧乏
+- nochange id=2633 title=うるわしの宵の月
+- nochange id=2634 title=貴族転生 ～恵まれた生まれから最強の力を得る～
+- nochange id=2642 title=エリスの聖杯
+- nochange id=2643 title=お気楽領主の楽しい領地防衛
+- nochange id=2645 title=「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい
+- nochange id=2647 title=綺麗にしてもらえますか。
+- nochange id=2651 title=BEASTARS FINAL SEASON Part 2
+- nochange id=2657 title=花ざかりの君たちへ
+- nochange id=2659 title=転生したらドラゴンの卵だった
+- nochange id=2664 title=MFゴースト 3rd Season
+- nochange id=2665 title=穏やか貴族の休暇のすすめ。
+- nochange id=2674 title=火喰鳥
+- nochange id=2677 title=鎧真伝サムライトルーパー
+- nochange id=2679 title=青のミブロ 芹沢暗殺編
+- nochange id=2681 title=地獄先生ぬ～べ～ (2025) 第2クール
+- nochange id=2682 title=イチゴ哀歌～雑で生イキな妹と割り切れない兄～
+- nochange id=2683 title=エヴァンゲリオン 新作短編アニメーション（仮）
+🎉 done { updatedCount: 0, skippedCount: 24, failedCount: 0 }
+===== END step3-facts-v3 2026/01/31 23:01:40.82 ===== 

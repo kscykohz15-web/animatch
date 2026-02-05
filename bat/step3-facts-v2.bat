@@ -13,7 +13,7 @@ echo RUNNING: %~f0 >> "%LOG%"
 
 REM --- Step3: AniList FACTS（DBの anilist_id 前提 / nullだけ埋める）---
 set LIMIT=1000
-set OFFSET=0
+set OFFSET=8000
 set FORCE=0
 set ANILIST_MIN_INTERVAL_MS=1200
 set ANILIST_RETRY_MAX=10

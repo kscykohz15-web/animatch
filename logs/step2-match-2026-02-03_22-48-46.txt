@@ -1,0 +1,7 @@
+===== START step2-match 2026/02/03 22:48:46.24 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ enqueue-facts start { LIMIT: 5000, OFFSET: 0, REGION: 'JP' }
+🎉 対象0件（FACTSで埋める必要がある作品がありません）
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ resolve-official-url v2 start { LIMIT: 5000, OFFSET: 0 }
+^C

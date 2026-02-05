@@ -1,0 +1,37 @@
+===== START step1-backfill-1000 2026/01/31 22:21:41.26 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ AniList backfill (target) start {
+  start_page: 89,
+  PER_PAGE: 50,
+  TARGET_NEW: 1000,
+  MAX_SCAN_PAGES: 300,
+  USE_STATE: true,
+  state: 'C:\\Users\\kouhe\\Desktop\\animatch-work\\animatch\\scripts\\anilist_backfill_state.json',
+  ALLOW_UPDATE_EXISTING: false
+}
+🎉 page=89 scanned=45 dupSkipped=2 willInsert=43 inserted=43 totalInserted=43
+🎉 page=90 scanned=47 dupSkipped=4 willInsert=43 inserted=43 totalInserted=86
+🎉 page=91 scanned=46 dupSkipped=5 willInsert=41 inserted=41 totalInserted=127
+🎉 page=92 scanned=47 dupSkipped=2 willInsert=45 inserted=45 totalInserted=172
+🎉 page=93 scanned=46 dupSkipped=5 willInsert=41 inserted=41 totalInserted=213
+🎉 page=94 scanned=43 dupSkipped=8 willInsert=35 inserted=35 totalInserted=248
+🎉 page=95 scanned=50 dupSkipped=0 willInsert=50 inserted=50 totalInserted=298
+🎉 page=96 scanned=46 dupSkipped=6 willInsert=40 inserted=40 totalInserted=338
+🎉 page=97 scanned=47 dupSkipped=5 willInsert=42 inserted=42 totalInserted=380
+🎉 page=98 scanned=44 dupSkipped=2 willInsert=42 inserted=42 totalInserted=422
+🎉 page=99 scanned=43 dupSkipped=2 willInsert=41 inserted=41 totalInserted=463
+🎉 page=100 scanned=47 dupSkipped=3 willInsert=44 inserted=44 totalInserted=507
+🎉 page=101 scanned=44 dupSkipped=5 willInsert=39 inserted=39 totalInserted=546
+🎉 page=102 scanned=46 dupSkipped=5 willInsert=41 inserted=41 totalInserted=587
+🎉 page=103 scanned=46 dupSkipped=9 willInsert=37 inserted=37 totalInserted=624
+🎉 page=104 scanned=47 dupSkipped=5 willInsert=42 inserted=42 totalInserted=666
+🎉 page=105 scanned=50 dupSkipped=2 willInsert=48 inserted=48 totalInserted=714
+🎉 page=106 scanned=43 dupSkipped=6 willInsert=37 inserted=37 totalInserted=751
+🎉 page=107 scanned=49 dupSkipped=9 willInsert=40 inserted=40 totalInserted=791
+🎉 page=108 scanned=46 dupSkipped=6 willInsert=40 inserted=40 totalInserted=831
+🎉 page=109 scanned=46 dupSkipped=2 willInsert=44 inserted=44 totalInserted=875
+🎉 page=110 scanned=48 dupSkipped=5 willInsert=43 inserted=43 totalInserted=918
+🎉 page=111 scanned=47 dupSkipped=0 willInsert=47 inserted=47 totalInserted=965
+🎉 page=112 scanned=47 dupSkipped=5 willInsert=35 inserted=35 totalInserted=1000
+✅ backfill (target) done { scannedPages: 24, inserted_new_total: 1000, next_page: 113 }
+===== END step1-backfill-1000 2026/01/31 22:22:15.50 ===== 

@@ -1,0 +1,8 @@
+===== START step2-match 2026/01/31 22:58:49.19 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ enqueue-facts start { LIMIT: 5000, OFFSET: 0, REGION: 'JP' }
+✅ queued=14
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ resolve-official-url v2 start { LIMIT: 5000, OFFSET: 0 }
+🎉 done { updated: 0, skipped: 64 }
+===== END step2-match 2026/01/31 22:59:35.49 ===== 

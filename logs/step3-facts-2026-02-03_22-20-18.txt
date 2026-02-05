@@ -1,0 +1,15 @@
+===== START step3-facts-v3 2026/02/03 22:20:18.72 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ step3-anilist-facts v3 start {
+  LIMIT: 1000,
+  OFFSET: 1000,
+  FORCE: false,
+  MIN_INTERVAL: 1200,
+  RETRY_MAX: 10
+}
+targets=277 / rows=1000
+- nochange id=2685 title=名探偵プリキュア！
+- nochange id=2687 title=最推しの義兄を愛でるため、長生きします！
+- nochange id=2688 title=銀河特急 ミルキー☆サブウェイ 各駅停車劇場行き
+^C

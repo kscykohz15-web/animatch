@@ -1,0 +1,2508 @@
+===== START step6-score-fill 2026/02/01  8:04:46.70 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step6-score-fill.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ step6-score-fill start {
+  LIMIT: 200,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1200,
+  FILL_ZERO: false
+}
+✅ updated id=6969 title=美少女戦士セーラームーンSuperSスペシャル fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=6983 title=出撃！マシンロボレスキュー fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7005 title=釣りキチ三平 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7019 title=海底超特急マリン・エクスプレス -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7070 title=キン肉マン 正義超人ＶＳ古代超人 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7093 title=ハーバーライト物語 ファッションララより fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7108 title=ふるさとJAPAN -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7117 title=金色のコルダ ~primo passo~ ひと夏のアンコール -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7129 title=こどものおもちゃ (OVA) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=7225 title=ネオアンジェリーク Abyss fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7256 title=二十面相の娘 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7261 title=Mix Juice -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7294 title=アラジンと魔法のランプ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7336 title=アンネの日記 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=7436 title=ネットゴーストPIPOPA fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7514 title=チョッちゃん物語 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7518 title=ハレルヤIIBOY -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7530 title=ウルトラヴァイオレットコード044 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7562 title=お猿の三吉 突撃隊の巻 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7599 title=緊急発進セイバーキッズ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7668 title=クイーンズブレイド 流浪の戦士 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7681 title=ef - a tale of melodies. -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7706 title=テイルズ オブ ジ アビス -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7769 title=仮面のメイドガイ OAD fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7799 title=大正野球娘。 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7834 title=頭文字〈イニシャル〉D EXTRA STAGE 2 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7907 title=ちびケロ ケロボールの秘密!? fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=7910 title=トップをねらえ！科学講座 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7921 title=真マジンガー 衝撃！Z編 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7928 title=神曲奏界ポリフォニカcrimsonS -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=7958 title=21エモン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=7967 title=海の桃太郎 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=7977 title=ゲゲゲの鬼太郎 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=7996 title=宇宙空母ブルーノア -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8020 title=とんでも戦士ムテキング -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8050 title=B.B. フィッシュ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8107 title=せんせいのお時間: Doki Doki School Hours fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8138 title=ファイナルファンタジーVII On the Way to a Smile デンゼル編 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8194 title=逮捕しちゃうぞ フルスロットル Special -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8203 title=ef - a tale of memories. ~prologue~ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8204 title=軽井沢シンドローム -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8251 title=劇場版キューティーハニーＦ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8260 title=アニメ　ＴＶで発見！！　たまごっち fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8269 title=pico～ぼくの小さな夏物語 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8288 title=エルマーの冒険 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8292 title=いばらの王 -King of Thorn- fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8293 title=わたしのコーヒー・サムライ ～自販機的な彼氏～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8295 title=ののちゃん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8297 title=あさりちゃん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8298 title=あさりちゃん 愛のメルヘン少女 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8299 title=クイーンズブレイド 玉座を継ぐ者 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8300 title=戦国BASARA弐 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8301 title=超攻速ガルビオン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8302 title=東のエデン 劇場版II Paradise Lost -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8303 title=となりの801ちゃんR fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8304 title=ちゅーぶら!! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8305 title=銀河鉄道９９９ ガラスのクレア fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8317 title=珍遊記　～太郎とゆかいな仲間たち～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8318 title=パッテンライ!!　～南の島の水ものがたり～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8319 title=劇場版 ヤッターマン 新ヤッターメカ大集合！ オモチャの国で大決断だコロン！ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8320 title=망치 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8321 title=ジムボタン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8322 title=タユタマ -Pure my heart- -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8323 title=黒執事II fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8324 title=藍より青し 夢語り -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8325 title=夏のあらし! 〜春夏冬中〜 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8326 title=らんま1/2 熱闘歌合戦 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8327 title=ドラゴンボールZ あつまれ! 悟空ワールド fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8328 title=YAMATO2520 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8329 title=暗黒キャット -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8330 title=めちゃっこドタコン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8331 title=ヘレン・ケラー物語　愛と光の天使 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8332 title=とんでモン・ぺ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8333 title=ウルトラマン キッズの ことわざ物語 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8334 title=銀河鉄道９９９　君は戦士のように生きられるか！？ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8335 title=銀河鉄道９９９　永遠の旅人エメラルダス fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8336 title=銀河鉄道９９９　君は母のように愛せるか！！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8337 title=ダンスインザヴァンパイアバンド fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8338 title=Prince of Tennis: Band of Princes fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8339 title=戦う司書 The Book of Bantorra -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8340 title=シニカル・ヒステリー・アワー トリップ・コースター fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8341 title=シニカル・ヒステリー・アワー へんしん！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8342 title=シニカル・ヒステリー・アワー 夜は楽しい -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8343 title=シニカル・ヒステリー・アワー うたかたのうた fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8344 title=村祭り -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8345 title=ドリモグだァ!! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8346 title=ブレイク ブレイド 覚醒ノ刻 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8347 title=灼眼のシャナIII (Final) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8348 title=空中ブランコ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8349 title=電車かもしれない -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8350 title=ポコニャン！ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8351 title=ef - a tale of memories. ~Recollections~ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8352 title=グラール騎士団 Evoked the Beginning Black fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8353 title=かのこん ～真夏の大謝肉祭～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8354 title=機動戦士SDガンダム Mk-V -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8355 title=黒執事 その執事、興行 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8356 title=黒神 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8357 title=ジーニアスパーティービヨンド -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8358 title=究極超人あ～る -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8359 title=どっちにする？ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8360 title=さぁイコー！たまごっち -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8361 title=戦え!超ロボット生命体トランスフォーマー スクランブルシティ発動編 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8362 title=ソ・ラ・ノ・ヲ・ト fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8363 title=都市伝説物語　ひきこ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8364 title=犬夜叉 完結編 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8365 title=うっかりペネロペ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8366 title=オモチャ箱シリーズ第3話 絵本1936年 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8367 title=雀のお宿 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8368 title=お日様と蛙 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8369 title=居酒屋の一夜 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8370 title=日の丸旗之助～稲妻組討伐の巻～ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8371 title=日の丸旗之助～化物屋敷の巻～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8372 title=證城寺の狸囃子 塙団右衛門 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8373 title=忍術火の玉小僧～江戸の巻～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8374 title=ターチャンの海底旅行 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8375 title=海の水はなぜからい fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8376 title=一寸法師〜ちび助物語 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8377 title=天狗退治 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8378 title=凸坊の自動車旅行 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8379 title=日の丸太郎～武者修行の巻～ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8380 title=マー坊の大競争 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8381 title=マー坊の木下藤吉郎 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8382 title=泳げや泳げ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8383 title=カンガルーの誕生日 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8384 title=お猿の三吉～防空戦～ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8385 title=熊に喰われぬ男 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8386 title=ガリヴァー奮闘記 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8387 title=動物村の大騒動 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8388 title=冒険ダン吉～漂流の巻～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8389 title=のらくろ少尉～日曜日の怪事件～ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8390 title=海底の暴君 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8391 title=アヒルのお手柄 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8392 title=大闹天宫 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8393 title=青い蝶 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8394 title=桃太郎の海鷲 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8395 title=水脑袋 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8396 title=けいおん!「ライブハウス！」 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8397 title=×××HOLiC・籠 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8398 title=ヘイロー・レジェンズ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8399 title=ワンサくん fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8400 title=アイアンマン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8401 title=ぼくたちピチューブラザーズ　～パーティはおおさわぎ！のまき～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8402 title=ウサビッチ: 労働の時間（裏） -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8403 title=初恋限定。限定少女 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8404 title=うみものがたり　～あなたがいてくれたコト～ OVA -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8405 title=狼と香辛料II ホロのショートアニメ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8406 title=タイムボカンシリーズ　ゼンダマン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8407 title=おんたま! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8408 title=薄桜鬼 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8409 title=スティッチ!～いたずらエイリアンの大冒険～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8410 title=たまごっち! fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8411 title=バトルスピリッツ 少年激覇ダン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8412 title=最强武将传·三国演义 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8413 title=ミカンせいじん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8414 title=ジャングル大帝 -勇気が未来をかえる fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8415 title=ついでにとんちんかん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8416 title=ウルヴァリン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8417 title=エックスメン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8418 title=ブレイド -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8419 title=劇場版 Fate/stay night UNLIMITED BLADE WORKS -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8420 title=東のエデン 総集編 Air Communication -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8421 title=ドラえもん 新・のび太の宇宙開拓史 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8422 title=けものとチャット -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8423 title=遠近法の箱 -博士のさがしもの -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8424 title=ヘルメス 愛は風の如く -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8425 title=永遠の法 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8426 title=マリンスノーの伝説 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8427 title=ジャンプアニメツアー 2008 白夜叉降誕 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8428 title=ムダヅモ無き改革 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8429 title=ウチュレイ！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8430 title=アオス fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8431 title=劇場版 遊☆戯☆王 ～超融合! 時空を越えた絆～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8432 title=人間動物園 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8433 title=空の境界 終章 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8434 title=ヒャッコOVA -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8435 title=GA 芸術科アートデザインクラス OVA fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8436 title=かいけつゾロリ　まほう使いのでし　大かいぞくの宝さがし -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8437 title=超人戦隊バラタック fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8438 title=閃光のナイトレイド fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8439 title=世紀末オカルト学院 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8440 title=コロの大さんぽ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8441 title=恐怖伝説　怪奇！フランケンシュタイン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8442 title=祝福のカンパネラ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8443 title=スーパーヅガン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8444 title=ひだまりスケッチ×３６５ 特別編 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8445 title=仏陀再誕 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8446 title=ドラえもん のび太の人魚大海戦 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8447 title=宇宙エース -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8448 title=星に願いを Fantastic Cat -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8449 title=こねこのらくがき -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8450 title=こねこのスタジオ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8451 title=新 カリメロ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8452 title=手塚治虫のブッダ－赤い砂漠よ！美しく－ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8453 title=うらおん! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8454 title=ファッション fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8455 title=二匹のサンマ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8456 title=Ｇ線上の悲劇 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8457 title=部屋 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8458 title=寄生虫の一夜 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8459 title=窓 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8460 title=漫画 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8461 title=ポップ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8462 title=隣の野郎 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8463 title=ケメ子のLOVE -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8464 title=殺人狂時代 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8465 title=切手の幻想 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8466 title=瀬戸の花嫁 OVA Extras -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8467 title=懺さよなら絶望先生 番外地 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8468 title=ドラえもん のび太の太陽王伝説 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8469 title=クラッシュギア ニトロ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8470 title=神州魑魅変 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8471 title=会長はメイド様! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8472 title=裏切りは僕の名前を知っている -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8473 title=ブラック★ロックシューター (OVA) -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8474 title=リング　オブ　ガンダム fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8475 title=ひだまりスケッチ x ☆☆☆ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8476 title=まほろまてぃっく ただいま◇おかえり -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8477 title=證城寺の狸囃子 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8478 title=おおかみかくし -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8479 title=ダンボール戦機 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8480 title=しゅごキャラ！パーティー！ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8481 title=Hakushaku to Yousei Specials -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8482 title=いちばんうしろの大魔王 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8483 title=魔動王グランゾート 最後のマジカル大戦 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8484 title=少女ファイト 野良犬たちのおでかけ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8485 title=ミラクル☆トレイン〜大江戸線へようこそ〜 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8486 title=黄金戦士ゴールドライタン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8487 title=屍姫ぷちっと fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8488 title=仰天人間バトシーラー -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8489 title=30th GUNDAM PERFECT MISSION -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8490 title=ピカドン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8491 title=大ヤマト零号 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8492 title=魔動王グランゾート 冒険編 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8493 title=魔法先生ネギま! ANIME FINAL fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8494 title=ガデュリン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8495 title=宇宙戦艦ヤマト 復活篇 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8496 title=あにゃまる探偵 キルミンずぅ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8497 title=アレイの鏡 ~ Way to the Virgin Space fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8498 title=Ｄｒ．スランプ アラレちゃん んちゃ！ペンギン村より愛をこめて fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8499 title=Ｄｒ．スランプ んちゃ!!わくわくハートの夏休み -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8500 title=よろしくメカドック fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8501 title=いばら姫またはねむり姫 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8502 title=火宅 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8503 title=鬼 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8504 title=うさるさん fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8505 title=秘密結社 鷹の爪 カウントダウン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8506 title=チェブラーシカ あれれ？ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8507 title=ご姉弟物語 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8508 title=炬燵猫 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8509 title=超時空ロマネスク　サミー　ＭＩＳＳＩＮＧ・９９ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8510 title=青い文学シリーズ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8511 title=ローズオニール キューピー fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8512 title=世界童話アニメ全集 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8513 title=劇場版 マクロスF ~サヨナラノツバサ~ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8514 title=ブラック・ジャック(インターネット版) -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8515 title=星に願いを COLD BODY + WARM HEART -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8516 title=戦国驍刃デュラハン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8517 title=水棲 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8518 title=ひゃっかずかん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8519 title=アニメ世界の童話 / メルヘン王国 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8520 title=NAKED WOLVES -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8521 title=トップをねらえ！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8522 title=グリックの冒険 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8523 title=遙かなる時空の中で3 終わりなき運命 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8524 title=花折り -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8525 title=詩人の生涯 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8526 title=旅 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8527 title=犬儒戯画 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8528 title=機動戦士ガンダム00 スペシャルエディション fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8529 title=二度と目覚めぬ子守唄 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8530 title=トゥー -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8531 title=銀河鉄道999 ダイヤモンドリングの彼方へ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8532 title=サイボーグ００９ 怪獣戦争 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8533 title=リカちゃん　ふしぎな魔法のリング -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8534 title=恋つぼみ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8535 title=道 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8536 title=未来少年コナン (1979) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8537 title=涼宮ハルヒの消失 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8538 title=よなよなペンギン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8539 title=Needless+ -聖リリィ学園の秘密- -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8540 title=とっとこハム太郎 ハムハムランド大冒険 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8541 title=とっとこハム太郎 ハムハムハムージャ！幻のプリンセス fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8542 title=恋する天使アンジェリーク ～かがやきの明日～ OVA -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8543 title=爆丸バトルブローラーズ Gundalian Invaders fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8544 title=サイボーグ００９・超銀河伝説 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8545 title=銀幕ヘタリア Axis Powers Paint it, White! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8546 title=DARKER THAN BLACK -黒の契約者- 外伝 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8547 title=力と女の世の中 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8548 title=北斗の拳 LEGEND of HEROES -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8549 title=ドラゴンクエスト ダイの大冒険 ぶちやぶれ!!新生6大将軍 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8550 title=ぼくの地球を守って～亜梨子から、輪くんへ～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8551 title=NARUTO -ナルト- THE CROSS ROADS fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8552 title=１００％ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8553 title=灼眼のシャナたん S -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8554 title=くるみ割り人形 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8555 title=카드왕 믹스마스터 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8556 title=Shuffle! Prologue -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8557 title=世界名作童話 まんがシリーズ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8558 title=ジャンケンマン fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8559 title=向ヶ丘千里はただ見つめていたのだった -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8560 title=Socket fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8561 title=レスラー軍団＜銀河編＞ 聖戦士ロビンＪｒ． -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8562 title=별별 이야기 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8563 title=rien村物語 第１話 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8564 title=月面兎兵器ミーナ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8565 title=金色のガッシュベル！！00F～黄金のチチをもつ男～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8566 title=ドラゴンクエスト ダイの大冒険 起ちあがれ!!アバンの使徒 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8567 title=カロとピヨブプト -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8568 title=カロとピヨブプト「サンドイッチ」 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8569 title=パ ク シ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8570 title=パクシのうた fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8571 title=キップリングJr. -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8572 title=キッズキャッスル fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8573 title=ミニモニ。やるのだぴょん fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8574 title=AIKa ZERO Picture Drama -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8575 title=The Collected Animations of ICAF (2001-2006) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8576 title=こまねこ のクリスマス　―迷子になったプレゼント― -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8577 title=イヴの時間 劇場版 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8578 title=走れ！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8579 title=銀魂 新訳紅桜篇 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8580 title=蓮如とその母 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8581 title=おねがい☆ティーチャー まりえ、愛の劇場 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8582 title=あの子に1000％ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8583 title=不射之射 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8584 title=空手バカ一代 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8585 title=夢から、さめない fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8586 title=浦島太郎（仮） -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8587 title=カロとピヨブプト「あめのひ」 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8588 title=ドラゴンクエスト列伝 ロトの紋章 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8589 title=教育お伽漫画　兎と亀 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8590 title=ノンキナトウサン竜宮参り fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8591 title=西遊記孫悟空物語 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8592 title=みかん船 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8593 title=動物オリムピック大會 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8594 title=マー坊の少年航空兵 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8595 title=キンタロー体育日記 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8596 title=볼로기 이야기 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8597 title=ニャッキ！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8598 title=死者の書 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8599 title=WORKU～第１話 FROM BEHIND～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8600 title=Dambo fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8601 title=ぼくはくま fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8602 title=太極千字文 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8603 title=魔法のペン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8604 title=キックオフ２００２ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8605 title=王様のしっぽ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8606 title=ポン助の腕くらべ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8607 title=くじら -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8608 title=森の音楽会 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8609 title=花と蝶 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8610 title=おんぶおばけ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8611 title=黒いきこりと白いきこり -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8612 title=鉄のラインバレル OVA -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8613 title=こま撮りえいが こまねこ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8614 title=クイズマジックアカデミー ～オリジナルアニメーション2～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8615 title=ピカチュウの探検クラブ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8616 title=ゴワッパー5ゴーダム -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8617 title=怪盗レーニャ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8618 title=アイドルA -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8619 title=北へ。 ～Diamond Dust Drops～ Special -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8620 title=Ｏｈ！ファミリー -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8621 title=ご近所物語 (1996) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8622 title=HAPPY☆LESSON ホカホカ★カンナと二人きり -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8623 title=一騎当千 XTREME XECUTOR fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8624 title=さらい屋 五葉 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8625 title=殿といっしょ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8626 title=ぬらりひょんの孫 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8627 title=kiss×sis (TV) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8628 title=這いよる!ニャルアニ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8629 title=ぼく、オタリーマン. fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8630 title=ルー=ガルー fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8631 title=魔神英雄伝ワタル　終わりなき時の物語 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8632 title=パラソルヘンべえ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8633 title=安寿と厨子王丸 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8634 title=路 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8635 title=atelier petros上空劇場 ～洗濯島の洗濯鳥～ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8636 title=妖精ディック fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8637 title=海のトリトン (Movie) -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8638 title=みつどもえ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8639 title=아라리쇼 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8640 title=蟻の生活 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8641 title=少年サンタの大冒険！ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8642 title=どーもくん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8643 title=ハートキャッチプリキュア! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8644 title=やわらかめ♥ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8645 title=人間失格 ディレクターズカット版 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8646 title=東京マグニチュード8.0 総集編 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8647 title=メジャー（第6シリーズ) fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8648 title=愛すべき未来へ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8649 title=GIANT KILLING -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8650 title=心霊探偵 八雲 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8651 title=ニルスのふしぎな旅 劇場版 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8652 title=Dr.スランプ アラレちゃん ハロー！不思議島 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8653 title=Dr.スランプ アラレちゃん ほよよ世界一周大レース fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8654 title=好きです鈴木くん!! -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8655 title=文学少女 今日のおやつ 〜はつ恋〜 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8656 title=恐竜惑星 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8657 title=​睡蓮の人 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8658 title=ときめきメモリアル4 ORIGINAL ANIMATION -始まりのファインダー fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8659 title=ポケットモンスター ダイヤモンド&パール 幻影の覇者 ゾロアーク fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8660 title=三国志 第一部 英雄たちの夜明け -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8661 title=三国志 第二部 長江燃ゆ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8662 title=三国志 第三部 遥かなる大地 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8663 title=スタ☆スカ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8664 title=ポンユタウン -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8665 title=借りぐらしのアリエッティ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8666 title=日本むかしばなし さるかに fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8667 title=auto mommy fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8668 title=電信柱エレミの恋 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8669 title=おおきく振りかぶって　〜夏の大会編〜 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8670 title=ヤンス！ガンス！Meat or Die -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8671 title=ヒピラくん -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8672 title=北極のムーシカ・ミーシカ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8673 title=イレブンアイズ OVA -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8674 title=絶対可憐チルドレン OVA 〜愛多憎生! 奪われた未来?〜 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8675 title=デジガールPOP! 〜STRAWBERRY＆POP MIX FLAVOR〜 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8676 title=ミッドナイトホラースクール -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8677 title=宝莲灯 -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8678 title=咲-Saki- ピクチャードラマ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8679 title=増田こうすけ劇場 ギャグマンガ日和+ fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+✅ updated id=8680 title=よんでますよ、アザゼルさん。 fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+❌ failed id=8681 title=探偵オペラ ミルキィホームズ -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+❌ failed id=8682 title=オオカミさんと七人の仲間たち -> OpenAI HTTP 429: {
+    "error": {
+        "message": "Rate limit reached for gpt-4o-mini in organization org-gP4jhJnZ4biZI048psxd15ud on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.",
+        "type": "requests",
+        "param": null,
+        "code": "rate_limit_exceeded"
+    }
+}
+
+✅ updated id=8683 title=ゆとりちゃん fields=[battle,story,world,character,animation,gore,ero,passive_viewing]
+^C

@@ -1247,3 +1247,136 @@ targets=1000
 🎉 done { updated: 895, skipped: 0, noBanner: 99 }
 ===== END 2026/01/31 16:15:11.84 ===== 
 ===== START 2026/01/31 17:15:02.15 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ fill-anilist-wide-image start {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  FORCE: false,
+  MIN_INTERVAL_MS: 900
+}
+targets=1000
+… no banner: id=24 title=グラップラー刃牙 anilist_id=1859
+… no banner: id=41 title=かいけつゾロリ anilist_id=182548
+… no banner: id=53 title=いちご100% anilist_id=641
+… no banner: id=56 title=創聖のアクエリオン anilist_id=478
+… no banner: id=61 title=ソルティレイ anilist_id=152
+… no banner: id=71 title=牙-KIBA- anilist_id=845
+… no banner: id=72 title=神様家族 anilist_id=990
+… no banner: id=83 title=攻殻機動隊 S.A.C. Solid State Society anilist_id=10950
+… no banner: id=84 title=人造昆虫カブトボーグ V×V anilist_id=17291
+… no banner: id=92 title=ローゼンメイデン・オーベルテューレ anilist_id=1719
+… no banner: id=109 title=キミキス pure rouge anilist_id=4205
+… no banner: id=114 title=君が主で執事が俺で anilist_id=3229
+… no banner: id=118 title=かのこん anilist_id=4760
+✅ updated id=122 title=恋姫†無双 banner=https://s4.anilist.co/file/anilistcdn/media/anime/banner/4262-fUFj6W5TLGp4.jpg
+… no banner: id=139 title=アスラクライン anilist_id=5342
+… no banner: id=144 title=宙のまにまに anilist_id=6885
+… no banner: id=147 title=プリンセスラバー! anilist_id=7468
+… no banner: id=148 title=怪談レストラン anilist_id=6980
+… no banner: id=175 title=バクマン。 anilist_id=102608
+… no banner: id=187 title=いつか天魔の黒ウサギ anilist_id=9750
+… no banner: id=188 title=IS＜インフィニット・ストラトス＞ anilist_id=10794
+… no banner: id=190 title=境界線上のホライゾン anilist_id=104211
+… no banner: id=225 title=妖狐×僕SS anilist_id=13403
+… no banner: id=227 title=エリアの騎士 anilist_id=11697
+… no banner: id=229 title=お兄ちゃんだけど愛さえあれば関係ないよねっ anilist_id=15881
+… no banner: id=232 title=銀河へキックオフ!! anilist_id=12875
+… no banner: id=242 title=人類は衰退しました anilist_id=15617
+✅ updated id=246 title=戦姫絶唱シンフォギア banner=https://s4.anilist.co/file/anilistcdn/media/anime/banner/11751-d9hxwvaF0aJc.jpg
+… no banner: id=275 title=ゴールデンタイム anilist_id=102755
+… no banner: id=299 title=ワルキューレ ロマンツェ anilist_id=19151
+⏳ AniList 429: 1000ms 待って再試行... (id=20533)
+⏳ AniList 429: 2000ms 待って再試行... (id=20533)
+⏳ AniList 429: 4000ms 待って再試行... (id=20533)
+⏳ AniList 429: 8000ms 待って再試行... (id=20533)
+⏳ AniList 429: 16000ms 待って再試行... (id=20533)
+⏳ AniList 429: 30000ms 待って再試行... (id=20533)
+… no banner: id=311 title=バディ・コンプレックス anilist_id=20533
+… no banner: id=320 title=健全ロボ ダイミダラー anilist_id=20588
+… no banner: id=331 title=ブレイドアンドソウル anilist_id=20836
+✅ updated id=338 title=アオハライド banner=https://s4.anilist.co/file/anilistcdn/media/anime/banner/20596.jpg
+… no banner: id=349 title=普通の女子校生が【ろこどる】やってみた。 anilist_id=20611
+… no banner: id=358 title=ガールフレンド(仮) anilist_id=20757
+… no banner: id=387 title=ガンスリンガー ストラトス -THE ANIMATION- anilist_id=20979
+… no banner: id=388 title=境界のRINNE（第1シリーズ） anilist_id=20953
+… no banner: id=412 title=ビキニ・ウォリアーズ anilist_id=87480
+… no banner: id=414 title=監獄学園(プリズンスクール) anilist_id=21565
+… no banner: id=419 title=うたわれるもの 偽りの仮面 anilist_id=98547
+… no banner: id=484 title=ドリフターズ anilist_id=16932
+… no banner: id=490 title=ACCA13区監察課 anilist_id=100979
+… no banner: id=506 title=銀の墓守り anilist_id=21662
+… no banner: id=550 title=僕の彼女がマジメ過ぎるしょびっちな件 anilist_id=100518
+✅ updated id=552 title=魔法使いの嫁 banner=https://s4.anilist.co/file/anilistcdn/media/anime/banner/98436-mipAtJXRUCgx.jpg
+… no banner: id=575 title=ピアノの森 anilist_id=2594
+✅ updated id=706 title=弱キャラ友崎くん banner=https://s4.anilist.co/file/anilistcdn/media/anime/banner/112443-w44XlUOHN5kh.jpg
+… no banner: id=715 title=究極進化したフルダイブRPGが現実よりもクソゲーだったら anilist_id=126791
+… no banner: id=763 title=魔法使い黎明期 anilist_id=133175
+… no banner: id=770 title=黒の召喚士 anilist_id=145260
+… no banner: id=781 title=ある朝ダミーヘッドマイクになっていた俺クンの人生 anilist_id=152207
+… no banner: id=785 title=新米錬金術師の店舗経営 anilist_id=139369
+… no banner: id=792 title=僕とロボコ anilist_id=150117
+… no banner: id=812 title=もういっぽん！ anilist_id=136435
+… no banner: id=825 title=異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ anilist_id=146234
+✅ updated id=862 title=愚かな天使は悪魔と踊る banner=https://s4.anilist.co/file/anilistcdn/media/anime/banner/164244-Xd5RWTHAZ6wI.jpg
+… no banner: id=898 title=怪獣8号 anilist_id=179999
+… no banner: id=906 title=出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした anilist_id=166372
+… no banner: id=939 title=忘却バッテリー anilist_id=124703
+⏳ AniList 429: 1000ms 待って再試行... (id=169930)
+⏳ AniList 429: 2000ms 待って再試行... (id=169930)
+⏳ AniList 429: 4000ms 待って再試行... (id=169930)
+⏳ AniList 429: 8000ms 待って再試行... (id=169930)
+⏳ AniList 429: 16000ms 待って再試行... (id=169930)
+… no banner: id=945 title=T・Pぼん シーズン1 anilist_id=169930
+… no banner: id=947 title=俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ anilist_id=170695
+… no banner: id=959 title=モブから始まる探索英雄譚 anilist_id=172416
+… no banner: id=960 title=よあそびぐらしっ！ anilist_id=173489
+… no banner: id=965 title=最凶の支援職【話術士】である俺は世界最強クランを従える anilist_id=177104
+… no banner: id=970 title=パーティーから追放されたその治癒師、実は最強につき anilist_id=174043
+… no banner: id=1004 title=進化の実～知らないうちに勝ち組人生～ anilist_id=129068
+… no banner: id=2622 title=劇場版 転生したらスライムだった件 蒼海の涙編 anilist_id=182206
+… no banner: id=2623 title=魔都精兵のスレイブ2 anilist_id=176276
+… no banner: id=2625 title=勇者パーティを追い出された器用貧乏 anilist_id=187264
+… no banner: id=2629 title=勇者パーティーにかわいい子がいたので、告白してみた。 anilist_id=195515
+… no banner: id=2631 title=真夜中ハートチューン anilist_id=187942
+… no banner: id=2633 title=うるわしの宵の月 anilist_id=192507
+… no banner: id=2635 title=魔術師クノンは見えている anilist_id=186333
+… no banner: id=2636 title=異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ anilist_id=170110
+… no banner: id=2641 title=わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 anilist_id=199112
+… no banner: id=2642 title=エリスの聖杯 anilist_id=183270
+… no banner: id=2643 title=お気楽領主の楽しい領地防衛 anilist_id=191205
+… no banner: id=2645 title=「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい anilist_id=191718
+… no banner: id=2647 title=綺麗にしてもらえますか。 anilist_id=194028
+… no banner: id=2648 title=異世界の沙汰は社畜次第 anilist_id=183661
+… no banner: id=2649 title=幼馴染とはラブコメにならない anilist_id=189565
+… no banner: id=2651 title=BEASTARS FINAL SEASON Part 2 anilist_id=187267
+… no banner: id=2652 title=悪役令嬢は隣国の王太子に溺愛される anilist_id=195518
+… no banner: id=2656 title=カヤちゃんはコワくない anilist_id=183660
+… no banner: id=2657 title=花ざかりの君たちへ anilist_id=177580
+… no banner: id=2659 title=転生したらドラゴンの卵だった anilist_id=187941
+… no banner: id=2662 title=暗殺教室 みんなの時間 anilist_id=198373
+… no banner: id=2663 title=勇者のクズ anilist_id=187989
+… no banner: id=2664 title=MFゴースト 3rd Season anilist_id=185753
+⏳ AniList 429: 1000ms 待って再試行... (id=182771)
+⏳ AniList 429: 2000ms 待って再試行... (id=182771)
+⏳ AniList 429: 4000ms 待って再試行... (id=182771)
+⏳ AniList 429: 8000ms 待って再試行... (id=182771)
+⏳ AniList 429: 16000ms 待って再試行... (id=182771)
+⏳ AniList 429: 30000ms 待って再試行... (id=182771)
+… no banner: id=2665 title=穏やか貴族の休暇のすすめ。 anilist_id=182771
+… no banner: id=2669 title=アルネの事件簿 anilist_id=183984
+… no banner: id=2670 title=拷問バイトくんの日常 anilist_id=197731
+… no banner: id=2671 title=機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 anilist_id=113971
+… no banner: id=2673 title=どうせ、恋してしまうんだ。Season 2 anilist_id=189137
+… no banner: id=2674 title=火喰鳥 anilist_id=187062
+… no banner: id=2676 title=パリに咲くエトワール anilist_id=197097
+… no banner: id=2677 title=鎧真伝サムライトルーパー anilist_id=194318
+… no banner: id=2678 title=クスノキの番人 anilist_id=189956
+… no banner: id=2679 title=青のミブロ 芹沢暗殺編 anilist_id=189258
+… no banner: id=2680 title=ガールズ＆パンツァー もっとらぶらぶ作戦です！ anilist_id=188034
+… no banner: id=2681 title=地獄先生ぬ～べ～ (2025) 第2クール anilist_id=191967
+… no banner: id=2682 title=イチゴ哀歌～雑で生イキな妹と割り切れない兄～ anilist_id=198767
+… no banner: id=2683 title=エヴァンゲリオン 新作短編アニメーション（仮） anilist_id=204270
+… no banner: id=2684 title=迷宮のしおり anilist_id=195384
+🎉 done { updated: 6, skipped: 895, noBanner: 99 }
+===== END 2026/01/31 17:19:14.74 ===== 

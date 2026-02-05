@@ -1,0 +1,8 @@
+===== START step2-match 2026/02/01  8:04:42.83 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ enqueue-facts start { LIMIT: 5000, OFFSET: 0, REGION: 'JP' }
+✅ queued=14
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ resolve-official-url v2 start { LIMIT: 5000, OFFSET: 0 }
+🎉 done { updated: 0, skipped: 64 }
+===== END step2-match 2026/02/01  8:05:21.08 ===== 

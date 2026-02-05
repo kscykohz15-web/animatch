@@ -1,0 +1,74 @@
+===== START step3-facts-v3 FULLSCAN(stream) 2026/02/03 22:13:06.80 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+
+----- BATCH OFFSET=0 LIMIT=200 ----- 
+
+----- BATCH OFFSET=200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=1000 LIMIT=200 ----- 
+
+----- BATCH OFFSET=1200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=1400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=1600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=1800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=2000 LIMIT=200 ----- 
+
+----- BATCH OFFSET=2200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=2400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=2600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=2800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=3000 LIMIT=200 ----- 
+
+----- BATCH OFFSET=3200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=3400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=3600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=3800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=4000 LIMIT=200 ----- 
+
+----- BATCH OFFSET=4200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=4400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=4600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=4800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=5000 LIMIT=200 ----- 
+
+----- BATCH OFFSET=5200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=5400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=5600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=5800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=6000 LIMIT=200 ----- 
+
+----- BATCH OFFSET=6200 LIMIT=200 ----- 
+
+----- BATCH OFFSET=6400 LIMIT=200 ----- 
+
+----- BATCH OFFSET=6600 LIMIT=200 ----- 
+
+----- BATCH OFFSET=6800 LIMIT=200 ----- 
+
+----- BATCH OFFSET=7000 LIMIT=200 ----- 

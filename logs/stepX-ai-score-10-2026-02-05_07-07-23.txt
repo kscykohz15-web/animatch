@@ -1,0 +1,2 @@
+===== START stepX-ai-score-10 2026/02/05  7:07:23.56 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\stepX-ai-score-10.bat 

@@ -1,0 +1,5 @@
+===== START step2-2-anilist-stats 2026/01/31 22:59:05.17 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ refresh-anilist-stats-monthly start { LIMIT: 800, OFFSET: 0, ONLY_NEW: true }
+🎉 対象0件
+===== END step2-2-anilist-stats 2026/01/31 22:59:05.59 ===== 

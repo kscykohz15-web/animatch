@@ -1,0 +1,290 @@
+===== START step3-facts-v3 2026/02/03 22:21:34.60 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ step3-anilist-facts v3 start {
+  LIMIT: 1000,
+  OFFSET: 1000,
+  FORCE: false,
+  MIN_INTERVAL: 1200,
+  RETRY_MAX: 10
+}
+targets=277 / rows=1000
+- nochange id=2685 title=名探偵プリキュア！
+- nochange id=2687 title=最推しの義兄を愛でるため、長生きします！
+- nochange id=2688 title=銀河特急 ミルキー☆サブウェイ 各駅停車劇場行き
+- nochange id=2689 title=お前はまだグンマを知らない～令和版～
+- nochange id=2692 title=CHOPPER's
+- nochange id=2693 title=#神奈川に住んでるエルフ
+- nochange id=2694 title=闇芝居 十六期
+- nochange id=2696 title=北斗の拳 拳王軍ザコたちの挽歌
+- nochange id=2697 title=カードファイト!! ヴァンガード Divinez 幻真星戦編
+- nochange id=2699 title=mofusand
+- nochange id=2700 title=映画ドラえもん 新・のび太の海底鬼岩城
+- nochange id=2701 title=制服は着たままで
+- nochange id=2703 title=もう一度、してみたい。
+- nochange id=2704 title=ほっぺちゃん ～サン王国と黒ほっぺ団の秘密～
+- nochange id=2705 title=L'amour fou de l'automate
+- nochange id=2706 title=蛇と蜘蛛
+- nochange id=2707 title=聖光閃姫ポニーセレス
+- nochange id=2708 title=剣鬼バルゴ
+- nochange id=2709 title=ファントム・アルケミア ～シルヴィアのドキドキ搾精都市計画～
+- nochange id=2710 title=ブラックジャックやねん
+- nochange id=2711 title=ゲルぴよ
+- nochange id=2712 title=秘密結社 鷹の爪XX（ダブルエックス）
+- nochange id=2713 title=とんがり帽子のアトリエ
+- nochange id=2714 title=Re:ゼロから始める異世界生活 4th season
+- nochange id=2715 title=転生したらスライムだった件 第4期
+- nochange id=2716 title=ようこそ実力至上主義の教室へ 4th Season 2年生編1学期
+- nochange id=2717 title=お隣の天使様にいつの間にか駄目人間にされていた件 第2期
+- nochange id=2718 title=杖と剣のウィストリア Season2
+- nochange id=2719 title=Dr.STONE SCIENCE FUTURE 3クール
+- nochange id=2720 title=ドロヘドロ (新シーズン)
+- nochange id=2721 title=黄泉のツガイ
+- nochange id=2722 title=魔入りました！入間くん 第4シリーズ
+- nochange id=2723 title=本好きの下剋上 領主の養女
+- nochange id=2725 title=僕のヒーローアカデミア No. 170+1 「More」
+- nochange id=2726 title=劇場版 魔法科高校の劣等生 四葉継承編
+- nochange id=2727 title=姫騎士は蛮族の嫁
+- nochange id=2728 title=夜桜さんちの大作戦 第2期
+- nochange id=2729 title=クラスで２番目に可愛い女の子と友だちになった
+- nochange id=2730 title=マリッジトキシン
+- nochange id=2731 title=カナン様はあくまでチョロい
+- nochange id=2732 title=LIAR GAME
+- nochange id=2733 title=あかね噺
+- nochange id=2734 title=愛してるゲームを終わらせたい
+- nochange id=2736 title=悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします。Season2
+- nochange id=2737 title=彼女、お借りします 第5期
+- nochange id=2738 title=リィンカーネーションの花弁
+- nochange id=2739 title=春夏秋冬代行者 春の舞
+- nochange id=2741 title=ニワトリ・ファイター
+- nochange id=2742 title=オタクに優しいギャルはいない!?
+- nochange id=2743 title=上伊那ぼたん、酔へる姿は百合の花
+- nochange id=2744 title=ダイヤのA actII -Second Season-
+- nochange id=2746 title=氷の城壁
+- nochange id=2747 title=よわよわ先生
+- nochange id=2748 title=ふつつかな悪女ではございますが ~雛宮蝶鼠とりかえ伝~
+- nochange id=2749 title=転生した大聖女は、聖女であることをひた隠す
+- nochange id=2750 title=黒猫と魔女の教室
+- nochange id=2751 title=MAO
+- nochange id=2752 title=淡島百景
+- nochange id=2753 title=最強の職業は勇者でも賢者でもなく鑑定士（仮）らしいですよ？
+- nochange id=2754 title=ここは俺に任せて先に行けと言ってから１０年がたったら伝説になっていた。
+- nochange id=2756 title=神の庭付き楠木邸
+- nochange id=2757 title=キルアオ
+- nochange id=2758 title=逃がした魚は大きかったが釣りあげた魚が大きすぎた件
+- nochange id=2759 title=メイドさんは食べるだけ
+- nochange id=2760 title=灰原くんの強くて青春ニューゲーム
+- nochange id=2761 title=嫌な顔されながらおパンツ見せてもらいたいR（リターンズ）
+- nochange id=2762 title=スノウボールアース
+- nochange id=2763 title=一畳間まんきつ暮らし！
+- nochange id=2764 title=霧尾ファンクラブ
+- nochange id=2765 title=左ききのエレン
+- nochange id=2766 title=魔法の姉妹ルルットリリィ
+- nochange id=2767 title=クジマ歌えば家ほろろ
+- nochange id=2768 title=また殺されてしまったのですね、探偵様
+- nochange id=2770 title=転生悪女の黒歴史 OVA
+- nochange id=2771 title=リラックマ
+- nochange id=2773 title=おでかけ子ザメ シーズン2
+- nochange id=2774 title=ひみつのアイプリ まんかいバズリウムライブ！
+- nochange id=2775 title=アナルマニアオタクとアナニー大好きなお嬢様～奇跡のマッチング～
+- nochange id=2777 title=キャンディーカリエス
+- nochange id=2778 title=おしりダンディ ザ・ヤング
+- nochange id=2781 title=小3アシベ QQゴマちゃん
+- nochange id=3133 title=ONE PIECE
+- nochange id=3213 title=超変身コス∞プレイヤー
+- nochange id=3214 title=宇宙のステルヴィア
+- nochange id=3220 title=Φなる・あぷろーち
+- nochange id=3226 title=双恋
+- nochange id=3229 title=ゲートキーパーズ21
+- nochange id=3275 title=とらいあんぐるハート -Sweet Songs Forever-
+- nochange id=3282 title=ホイッスル！
+- nochange id=3309 title=Pia キャロット へ ようこそ!! 2 DX
+- nochange id=3325 title=名探偵コナン
+- nochange id=3349 title=HAPPY☆LESSON
+- nochange id=3351 title=HAPPY☆LESSON ADVANCE
+- nochange id=3368 title=ビューティフル  ジョー
+- nochange id=3372 title=エンジェル・ハート
+- nochange id=3381 title=D.C.S.S. ～ダ・カーポ セカンドシーズン～
+- nochange id=3391 title=シンデレラボーイ
+- nochange id=3397 title=けろっこデメタン
+- nochange id=3399 title=ちいさなおばけアッチ・コッチ・ソッチ
+- nochange id=3401 title=「エースをねらえ！」 —ファイナル・ステージ—
+- nochange id=3405 title=ファイナルファンタジーVII アドベントチルドレン
+- nochange id=3407 title=Happy World!
+- nochange id=3420 title=ママは小学４年生
+- nochange id=3441 title=UG☆アルティメットガール
+- nochange id=3447 title=火魅子伝
+- nochange id=3450 title=メモリーズオフ3.5
+- nochange id=3460 title=万能文化猫娘ＤＡＳＨ！
+- nochange id=3476 title=テイルズ オブ ファンタジア THE ANIMATION
+- nochange id=3491 title=BUZZER BEATER
+- nochange id=3504 title=ストラトス・フォー OVA
+- nochange id=3505 title=ストラトス・フォー アドヴァンス
+- nochange id=3511 title=Legend of Phoenix ～レイラ・ハミルトン物語～
+- nochange id=3519 title=ファントム THE ANIMATION
+- nochange id=3529 title=天上天下ULTIMATE FIGHT
+- nochange id=3532 title=犬夜叉 天下覇道の剣
+- nochange id=3534 title=.hack//GIFT
+- nochange id=3541 title=ONE PIECE 珍獣島のチョッパー王国
+- nochange id=3542 title=ONE PIECE THE MOVIE デッドエンドの冒険
+- nochange id=3543 title=ONE PIECE 呪われた聖剣
+- nochange id=3544 title=ONE PIECE THE MOVIE オマツリ男爵と秘密の島
+- nochange id=3551 title=ToHeart2
+- nochange id=3555 title=ほとり～たださいわいを希う
+- nochange id=3563 title=劇場版 幻想魔伝最遊記 Requiem 選ばれざる者への鎮魂歌
+- nochange id=3578 title=ドラえもん
+- nochange id=3580 title=永遠のアセリア
+- nochange id=3581 title=餓狼伝説 -THE MOTION PICTURE-
+- nochange id=3582 title=ふしぎ星の☆ふたご姫
+- nochange id=3585 title=とっとこハム太郎
+- nochange id=3587 title=下級生２ ～瞳の中の少女たち～
+- nochange id=3592 title=はじまりの冒険者たち レジェンド・オブ・クリスタニア
+- nochange id=3622 title=Wind -a breath of heart- (2004)
+- nochange id=3623 title=Wind -a breath of heart- OVA
+- nochange id=3624 title=원더풀 데이즈
+- nochange id=3626 title=グラップラー刃牙(バキ) 最大トーナメント編
+- nochange id=3631 title=鋼鉄天使くるみ零
+- nochange id=3632 title=鋼鉄天使くるみ DVDシングル エピソード
+- nochange id=3635 title=蒼穹のファフナー RIGHT OF LEFT ～single program～
+- nochange id=3637 title=サクラ大戦『ル・ヌーヴォー・巴里』
+- nochange id=3646 title=モルダイバー
+- nochange id=3649 title=リーンの翼
+- nochange id=3650 title=マジカノ
+- nochange id=3651 title=鍵姫物語 永久アリス輪舞曲
+- nochange id=3654 title=こげぱん
+- nochange id=3822 title=葬送のフリーレン ～●●の魔法～ 3クール
+- nochange id=3902 title=神の雫
+- nochange id=3914 title=おねがいアイプリ
+- nochange id=4897 title=ポンコツ風紀委員とスカート丈が不適切なJKの話
+- nochange id=4911 title=日本三國
+- nochange id=4916 title=ただいま、おじゃまされます！
+- nochange id=4919 title=女神「異世界転生先は何になりたいですか」 俺「勇者の肋骨で」
+- nochange id=4930 title=とどの妻り
+- nochange id=4932 title=クマーバシーズン3
+- nochange id=5101 title=陰からマモル！
+- nochange id=5103 title=ポポロクロイス
+- nochange id=5107 title=ちょびっツ ちびっツ すもも・琴子　届ける
+- nochange id=5122 title=プラトニック・チェーン
+- nochange id=5124 title=陰陽大戦記
+- nochange id=5133 title=夏色の砂時計
+- nochange id=5154 title=ギャラクシーエンジェルＡ
+- nochange id=5160 title=エルフ版下級生 あなただけを見つめて...
+- nochange id=5168 title=Refrain Blue
+- nochange id=5175 title=天使のしっぽＣｈｕ！
+- nochange id=5177 title=ToHeart ～Remember my memories～ Heart Fighters
+- nochange id=5184 title=Canvas2 ～虹色のスケッチ～
+- nochange id=5186 title=カノン 風花
+- nochange id=5187 title=超変身コス∞プレイヤー VS暗黒宇宙将軍
+- nochange id=5192 title=宇宙戦艦ヤマト
+- nochange id=5193 title=ゾイド ジェネシス
+- nochange id=5200 title=ベイビィ★LOVE
+- nochange id=5201 title=キャンディ・キャンディ
+- nochange id=5202 title=ファーストKiss★物語 〜Kissからはじまる物語〜
+- nochange id=5205 title=放課後の職員室
+- nochange id=5216 title=True Love Story Summer Days; and yet...
+- nochange id=5217 title=ななみちゃん
+- nochange id=5219 title=ボンバーマン ジェッターズ
+- nochange id=5222 title=風を見た少年
+- nochange id=5225 title=天上天下　THE PAST CHAPTER
+- nochange id=5226 title=NARUTO -ナルト- 紅き四つ葉のクローバーを探せ
+- nochange id=5229 title=超変身コス∞プレイヤー Specials
+- nochange id=5230 title=機神咆吼デモンベイン
+- nochange id=5234 title=吟遊黙示録マイネリーベ ヴィーダー
+- nochange id=5248 title=らんま1/2 決戦桃幻郷! 花嫁を奪りもどせ!!
+- nochange id=5256 title=ツバサ・クロニクル 鳥カゴの国の姫君
+- nochange id=5262 title=テニスの王子様 跡部からの贈り物 ～君に捧げるテニプリ祭り～
+- nochange id=5265 title=タクティカルロア
+- nochange id=5267 title=僕は妹に恋をする
+- nochange id=5271 title=がぁーでぃあんHearts
+- nochange id=5279 title=今日の5の2
+- nochange id=5281 title=SAMURAI SPIRITS 2 〜アスラ斬魔伝〜
+- nochange id=5284 title=劇場版 金色のガッシュベル!! 101番目の魔物
+- nochange id=5286 title=ジンキ・エクステンド それから
+- nochange id=5290 title=Soul Link
+- nochange id=5318 title=女神候補生 スペシャルカリキュラム
+- nochange id=5341 title=劇場版　金色のガッシュベル!!　メカバルカンの来襲
+- nochange id=5345 title=銀牙伝説ウィード
+- nochange id=5346 title=TOKKÔ[特公]
+- nochange id=5350 title=ナースウィッチ小麦ちゃんマジカルてZ
+- nochange id=5351 title=トランスフォーマー・超神マスターフォース
+- nochange id=5352 title=トランスフォーマー・ザ・ヘッドマスターズ
+- nochange id=5353 title=トランスフォーマー・ビクトリー
+- nochange id=5358 title=一撃殺虫!!ホイホイさん
+- nochange id=5363 title=真ゲッターロボ対ネオゲッターロボ
+- nochange id=5374 title=大空魔竜ガイキング
+- nochange id=5380 title=ラブひな 素子のセンタク、恋か剣... 泣くな
+- nochange id=5383 title=クレヨンしんちゃん
+- nochange id=5386 title=ツバサ・クロニクル 第2シリーズ
+- nochange id=5387 title=横山光輝 三国志
+- nochange id=5402 title=新釈 戦国英雄伝説 眞田十勇士 The Animation
+- nochange id=5403 title=新釈 戦国英雄伝説 眞田十勇士
+- nochange id=5406 title=デュアル！ぱられルンルン物語「ファイナル・フロンティア」
+- nochange id=5407 title=sin in the rain
+- nochange id=5408 title=テニスの王子様 全国大会篇
+- nochange id=5412 title=BLUE SEED 2
+- nochange id=5418 title=天地無用! in Love
+- nochange id=5422 title=らんま1/2 超無差別決戦! 乱馬チームVS伝説の鳳凰
+- nochange id=5428 title=魔術士オーフェンRevenge
+- nochange id=5430 title=炎の蜃気楼～みなぎわの反逆者～
+- nochange id=5434 title=Weiß Kreuz ヴァイスクロイツ OVA
+✅ updated id=5441 title=はなれ砦のヨナ anilist_id=1031 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5442 title=雲のように風のように anilist_id=1032 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5443 title=千年女優 anilist_id=1033 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5444 title=王立宇宙軍 オネアミスの翼 anilist_id=1034 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5445 title=パタリロ西遊記！ anilist_id=1035 fields=[start_year,episode_count,episodes,image_url,completion_status,source_platform,source_ref_url]
+✅ updated id=5446 title=火宵の月～秋狂言～ anilist_id=1036 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5447 title=セイント・ビースト～聖獣降臨編～ anilist_id=1037 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5448 title=みずいろ (2003) anilist_id=1039 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5449 title=水色時代 anilist_id=1040 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5450 title=絶愛ー1989ー anilist_id=1041 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5451 title=BRONZE ZETSUAI since 1989 anilist_id=1042 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5452 title=東京ＢＡＢＹＬＯＮ anilist_id=1043 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5453 title=太陽の王子 ホルスの大冒険 anilist_id=1044 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5454 title=エルフを狩るモノたち anilist_id=1045 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5455 title=エルフを狩るモノたち II anilist_id=1046 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5456 title=On Your Mark CHAGE & ASKA anilist_id=1047 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5457 title=The SoulTaker ～魂狩～ anilist_id=1048 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5458 title=セロ弾きのゴーシュ anilist_id=1049 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5459 title=ボボボーボ・ボーボボ anilist_id=1050 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5460 title=青の6号 anilist_id=1051 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5461 title=倒凶十将伝 anilist_id=1052 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5462 title=東京大学物語 anilist_id=1053 fields=[start_year,episode_count,episodes,image_url,completion_status,source_platform,source_ref_url]
+✅ updated id=5463 title=BLAME! Ver.0.11 anilist_id=1055 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5464 title=グッドモーニング・コール anilist_id=1056 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5465 title=イッパツ危機娘 anilist_id=1057 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5466 title=機動新撰組　萌えよ剣 anilist_id=1058 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5467 title=ミュータント タートルズ 超人伝説編 anilist_id=1059 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5468 title=ねこぢる劇場 ぢるぢるORIGINAL anilist_id=1062 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5469 title=マジンカイザー anilist_id=1064 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5470 title=タッチ anilist_id=1065 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5471 title=灼眼のシャナ スペシャル anilist_id=1066 fields=[start_year,episode_count,episodes,image_url,completion_status,source_platform,source_ref_url]
+✅ updated id=5472 title=超電磁ロボ コン・バトラーV anilist_id=1068 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5473 title=超電磁マシーン ボルテスV anilist_id=1069 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5474 title=ラブゲッCHU ～ミラクル声優白書～ anilist_id=1070 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5475 title=Memories Off #5 とぎれたフィルム THE ANIMATION anilist_id=1071 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5476 title=スウェットパンチ anilist_id=1072 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5477 title=NARUTO -ナルト- ナルティメットヒーロー3 ついに激突! 上忍VS下忍!! 無差別大乱戦大会開催!! anilist_id=1074 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5478 title=ねとらん者 THE MOVIE anilist_id=1075 fields=[start_year,episode_count,episodes,image_url,completion_status,source_platform,source_ref_url]
+✅ updated id=5479 title=ウィザードリィ anilist_id=1076 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5480 title=ケロちゃんにおまかせ！ anilist_id=1078 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5481 title=アミテージ・ザ・サード anilist_id=1079 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5482 title=戦闘妖精雪風 anilist_id=1080 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5483 title=SPACE PIRATE CAPTAIN HERLOCK OUTSIDE LEGEND 〜The Endless Odyssey〜 anilist_id=1081 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_platform,source_ref_url]
+✅ updated id=5484 title=光と水のダフネ anilist_id=1082 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5485 title=人間交差点 anilist_id=1083 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5486 title=フロム I"s アイズ 〜もうひとつの夏の物語〜 anilist_id=1084 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5487 title=インタールード anilist_id=1085 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5488 title=絢爛舞踏祭ザ･マーズ･デイブレイク anilist_id=1086 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5489 title=きまぐれオレンジ☆ロード anilist_id=1087 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5490 title=超時空要塞マクロス anilist_id=1088 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5491 title=超時空要塞マクロス -愛・おぼえていますか- anilist_id=1089 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5492 title=機動戦士ガンダムⅠ anilist_id=1090 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5493 title=機動戦士ガンダムⅡ　哀・戦士編 anilist_id=1091 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5494 title=機動戦士ガンダムⅢ　めぐりあい宇宙編 anilist_id=1092 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5495 title=美味しんぼ anilist_id=1093 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5496 title=ONE PIECE TVスペシャル 海のヘソの大冒険篇 anilist_id=1094 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5497 title=機動警察パトレイバー 劇場版 anilist_id=1095 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5498 title=機動警察パトレイバー2 the Movie anilist_id=1096 fields=[start_year,episode_count,episodes,image_url,studio,completion_status,source_name,source_platform,source_ref_url]
+✅ updated id=5499 title=らいむいろ戦奇譚 anilist_id=1097 fields=[start_year,episode_count,episodes,image_url,completion_status,source_name,source_platform,source_ref_url]
+🎉 done { updatedCount: 59, skippedCount: 218, failedCount: 0 }
+===== END step3-facts-v3 2026/02/03 23:31:17.19 ===== 

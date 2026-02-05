@@ -1,0 +1,19 @@
+===== START step1-discover 2026/02/01  3:10:00.84 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ AniList discover seasonal {
+  targets: [
+    { year: 2026, season: 'WINTER' },
+    { year: 2026, season: 'SPRING' }
+  ],
+  PER_PAGE: 50,
+  ALLOW_UPDATE_EXISTING: false,
+  MAX_PAGES: 5
+}
+⏳ AniList 429 wait 1500ms retry...
+❌ 失敗: [
+  {
+    "message": "Too Many Requests.",
+    "status": 429
+  }
+]
+===== END step1-discover 2026/02/01  3:10:03.27 ===== 

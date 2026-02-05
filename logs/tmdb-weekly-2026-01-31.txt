@@ -1,0 +1,93 @@
+===== START 2026/01/31 22:44:44.52 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/31 22:44:45.48 ===== 
+--- RUN: run-weekly-official4.bat --- 
+===== START 2026/01/31 22:45:04.44 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/31 22:45:05.32 ===== 
+===== START 2026/01/31 22:45:18.65 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/31 22:45:19.64 ===== 
+--- RUN: run-weekly-official4.bat --- 
+===== START 2026/01/31 22:48:11.02 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/31 22:48:11.94 ===== 
+--- RUN: run-weekly-official4.bat --- 
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+===== START 2026/01/31 22:58:57.99 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/31 22:58:59.09 ===== 
+--- RUN: run-weekly-official4.bat --- 
+===== START 2026/01/31 22:59:14.20 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+🟡 queue empty (tmdb_vod) { pickedType: 'object' }
+🎉 worker tmdb end { processed: 0 }
+===== END 2026/01/31 22:59:15.12 ===== 
+--- RUN: run-weekly-official4.bat --- 

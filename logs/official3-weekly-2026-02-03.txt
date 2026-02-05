@@ -1,0 +1,45 @@
+===== START 2026/02/03 23:07:50.16 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/02/03 23:07:52.73 ===== 
+--- RUN: run-weekly-tmdb.bat --- 
+===== START 2026/02/03 23:08:02.90 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/02/03 23:08:04.96 ===== 

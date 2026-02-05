@@ -1,0 +1,12 @@
+===== START step3-facts-v3 2026/02/03 22:20:47.22 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  enable debug logging with { debug: true }
+✅ step3-anilist-facts v3 start {
+  LIMIT: 1000,
+  OFFSET: 1000,
+  FORCE: false,
+  MIN_INTERVAL: 1200,
+  RETRY_MAX: 10
+}
+targets=277 / rows=1000
+^C

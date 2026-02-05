@@ -1,0 +1,1373 @@
+===== START step4-official-url 2026/02/01  8:04:44.67 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ fill official_url (AniList only / skip-unresolved / cursor mode)
+   dry-run: false
+   page: 60
+   limit: ∞
+   state: C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json
+   cursorId: 7344
+   skipped: 2702
+- no official (skip): id=7345 title=チーズスイートホーム
+- no official (skip): id=7346 title=どうぶつ宝島
+- no official (skip): id=7347 title=アリババと４０匹の盗賊
+- no official (skip): id=7348 title=アパッチ野球軍
+- no official (skip): id=7349 title=魔法使いチャッピー
+   ⏳ 429(AniList): 1611ms待ってリトライ (1/8) title=ミクロイドＳ
+   ⏳ 429(AniList): 2559ms待ってリトライ (2/8) title=ミクロイドＳ
+   ⏳ 429(AniList): 4392ms待ってリトライ (3/8) title=ミクロイドＳ
+   ⏳ 429(AniList): 7109ms待ってリトライ (4/8) title=ミクロイドＳ
+   ⏳ 429(AniList): 11748ms待ってリトライ (5/8) title=ミクロイドＳ
+   ⏳ 429(AniList): 20062ms待ってリトライ (6/8) title=ミクロイドＳ
+   ⏳ 429(AniList): 20303ms待ってリトライ (7/8) title=ミクロイドＳ
+- no official (skip): id=7350 title=ミクロイドＳ
+- no official (skip): id=7351 title=世界名作童話 白鳥の王子
+- no official (skip): id=7352 title=ONE PIECE THE MOVIE エピソードオブチョッパー+ 冬に咲く、奇跡の桜
+   ⏳ 429(AniList): 1523ms待ってリトライ (1/8) title=こむぎ大作戦
+   ⏳ 429(AniList): 2496ms待ってリトライ (2/8) title=こむぎ大作戦
+   ⏳ 429(AniList): 4204ms待ってリトライ (3/8) title=こむぎ大作戦
+   ⏳ 429(AniList): 7041ms待ってリトライ (4/8) title=こむぎ大作戦
+   ⏳ 429(AniList): 11839ms待ってリトライ (5/8) title=こむぎ大作戦
+   ⏳ 429(AniList): 19957ms待ってリトライ (6/8) title=こむぎ大作戦
+   ⏳ 429(AniList): 20211ms待ってリトライ (7/8) title=こむぎ大作戦
+- no official (skip): id=7353 title=こむぎ大作戦
+- no official (skip): id=7354 title=銀河鉄道物語 ～忘れられた時の惑星～
+- no official (skip): id=7355 title=昆虫物語みなしごハッチ
+   ⏳ 429(AniList): 1707ms待ってリトライ (1/8) title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 2554ms待ってリトライ (2/8) title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 4381ms待ってリトライ (3/8) title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 6988ms待ってリトライ (4/8) title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 11748ms待ってリトライ (5/8) title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 20085ms待ってリトライ (6/8) title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 20307ms待ってリトライ (7/8) title=秘密 トップ・シークレット
+- no official (skip): id=7356 title=秘密 トップ・シークレット
+   ⏳ 429(AniList): 1674ms待ってリトライ (1/8) title=蒼天の拳 OVA
+   ⏳ 429(AniList): 2655ms待ってリトライ (2/8) title=蒼天の拳 OVA
+   ⏳ 429(AniList): 4200ms待ってリトライ (3/8) title=蒼天の拳 OVA
+   ⏳ 429(AniList): 7059ms待ってリトライ (4/8) title=蒼天の拳 OVA
+   ⏳ 429(AniList): 11802ms待ってリトライ (5/8) title=蒼天の拳 OVA
+   ⏳ 429(AniList): 19985ms待ってリトライ (6/8) title=蒼天の拳 OVA
+   ⏳ 429(AniList): 20326ms待ってリトライ (7/8) title=蒼天の拳 OVA
+- no official (skip): id=7357 title=蒼天の拳 OVA
+- no official (skip): id=7358 title=クロがいた夏
+- no official (skip): id=7359 title=ベルサイユのばら 生命あるかぎり愛して
+- no official (skip): id=7360 title=さくらももこ劇場 コジコジ
+   ⏳ 429(AniList): 1435ms待ってリトライ (1/8) title=キックの鬼
+   ⏳ 429(AniList): 2486ms待ってリトライ (2/8) title=キックの鬼
+   ⏳ 429(AniList): 4200ms待ってリトライ (3/8) title=キックの鬼
+   ⏳ 429(AniList): 7176ms待ってリトライ (4/8) title=キックの鬼
+   ⏳ 429(AniList): 11989ms待ってリトライ (5/8) title=キックの鬼
+   ⏳ 429(AniList): 19946ms待ってリトライ (6/8) title=キックの鬼
+   ⏳ 429(AniList): 20175ms待ってリトライ (7/8) title=キックの鬼
+- no official (skip): id=7361 title=キックの鬼
+- no official (skip): id=7362 title=ハニーハニーのすてきな冒険
+- no official (skip): id=7363 title=あしたへフリーキック
+- no official (skip): id=7364 title=魔法使いサリー２
+   ⏳ 429(AniList): 1434ms待ってリトライ (1/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+   ⏳ 429(AniList): 2699ms待ってリトライ (2/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+   ⏳ 429(AniList): 4102ms待ってリトライ (3/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+   ⏳ 429(AniList): 7056ms待ってリトライ (4/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+   ⏳ 429(AniList): 11846ms待ってリトライ (5/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+   ⏳ 429(AniList): 20133ms待ってリトライ (6/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+   ⏳ 429(AniList): 20079ms待ってリトライ (7/8) title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+- no official (skip): id=7365 title=メーテルリンクの青い鳥　チルチルミチルの冒険旅行
+- no official (skip): id=7366 title=さすらいの少女ネル
+- updated: id=7367 title=魔法少女ララベル -> http://www.toei-anim.co.jp/lineup/tv/lalabel/
+- no official (skip): id=7368 title=巴里のイザベル
+   ⏳ 429(AniList): 1640ms待ってリトライ (1/8) title=魔境伝説アクロバンチ
+   ⏳ 429(AniList): 2580ms待ってリトライ (2/8) title=魔境伝説アクロバンチ
+   ⏳ 429(AniList): 4328ms待ってリトライ (3/8) title=魔境伝説アクロバンチ
+   ⏳ 429(AniList): 7216ms待ってリトライ (4/8) title=魔境伝説アクロバンチ
+   ⏳ 429(AniList): 11839ms待ってリトライ (5/8) title=魔境伝説アクロバンチ
+   ⏳ 429(AniList): 19904ms待ってリトライ (6/8) title=魔境伝説アクロバンチ
+   ⏳ 429(AniList): 20134ms待ってリトライ (7/8) title=魔境伝説アクロバンチ
+- no official (skip): id=7369 title=魔境伝説アクロバンチ
+- no official (skip): id=7370 title=魔女っ子チックル
+- no official (skip): id=7371 title=聖獣機サイガード -CYBERNETICS・GUARDIAN-
+- no official (skip): id=7372 title=MAZE☆爆熱時空 作者真剣! 愛と死を見つめて... 湯煙温泉紀行看護婦は見た
+   ⏳ 429(AniList): 1549ms待ってリトライ (1/8) title=シュガーバニーズ
+   ⏳ 429(AniList): 2659ms待ってリトライ (2/8) title=シュガーバニーズ
+   ⏳ 429(AniList): 4395ms待ってリトライ (3/8) title=シュガーバニーズ
+   ⏳ 429(AniList): 7078ms待ってリトライ (4/8) title=シュガーバニーズ
+   ⏳ 429(AniList): 11711ms待ってリトライ (5/8) title=シュガーバニーズ
+   ⏳ 429(AniList): 19951ms待ってリトライ (6/8) title=シュガーバニーズ
+   ⏳ 429(AniList): 20261ms待ってリトライ (7/8) title=シュガーバニーズ
+- no official (skip): id=7373 title=シュガーバニーズ
+   ⏳ 429(AniList): 1746ms待ってリトライ (1/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+   ⏳ 429(AniList): 2543ms待ってリトライ (2/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+   ⏳ 429(AniList): 4211ms待ってリトライ (3/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+   ⏳ 429(AniList): 6958ms待ってリトライ (4/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+   ⏳ 429(AniList): 11833ms待ってリトライ (5/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+   ⏳ 429(AniList): 19991ms待ってリトライ (6/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+   ⏳ 429(AniList): 20126ms待ってリトライ (7/8) title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+- no official (skip): id=7374 title=スーパーマリオブラザーズ　ピーチ姫救出大作戦!
+- no official (skip): id=7375 title=おおきく振りかぶって 基本のキホン
+- no official (skip): id=7376 title=ジャンクボーイ
+- no official (skip): id=7377 title=マジンガーＺ対デビルマン
+- no official (skip): id=7378 title=黄金バット
+   ⏳ 429(AniList): 1598ms待ってリトライ (1/8) title=わんぱく王子の大蛇退治
+   ⏳ 429(AniList): 2705ms待ってリトライ (2/8) title=わんぱく王子の大蛇退治
+   ⏳ 429(AniList): 4390ms待ってリトライ (3/8) title=わんぱく王子の大蛇退治
+   ⏳ 429(AniList): 6964ms待ってリトライ (4/8) title=わんぱく王子の大蛇退治
+   ⏳ 429(AniList): 11978ms待ってリトライ (5/8) title=わんぱく王子の大蛇退治
+   ⏳ 429(AniList): 20028ms待ってリトライ (6/8) title=わんぱく王子の大蛇退治
+   ⏳ 429(AniList): 20329ms待ってリトライ (7/8) title=わんぱく王子の大蛇退治
+- no official (skip): id=7379 title=わんぱく王子の大蛇退治
+- updated: id=7380 title=H・P・ラヴクラフトの　ダニッチ・ホラー　その他の物語 -> https://www.toei-anim.co.jp/sp/ganime/dunwich/index.html
+- no official (skip): id=7381 title=銀河戦国群雄伝ライ
+   ⏳ 429(AniList): 1605ms待ってリトライ (1/8) title=ビックリマン
+   ⏳ 429(AniList): 2644ms待ってリトライ (2/8) title=ビックリマン
+   ⏳ 429(AniList): 4247ms待ってリトライ (3/8) title=ビックリマン
+   ⏳ 429(AniList): 7056ms待ってリトライ (4/8) title=ビックリマン
+   ⏳ 429(AniList): 11695ms待ってリトライ (5/8) title=ビックリマン
+   ⏳ 429(AniList): 19994ms待ってリトライ (6/8) title=ビックリマン
+   ⏳ 429(AniList): 20127ms待ってリトライ (7/8) title=ビックリマン
+- updated: id=7382 title=ビックリマン -> https://www.toei-anim.co.jp/sp/bikkuri-man/intro/index.html
+- no official (skip): id=7383 title=鬼切丸
+- no official (skip): id=7384 title=1001 Nights
+- no official (skip): id=7385 title=タイムボカン
+   ⏳ 429(AniList): 1707ms待ってリトライ (1/8) title=仮面ライダー電王: イマジンあにめ
+   ⏳ 429(AniList): 2529ms待ってリトライ (2/8) title=仮面ライダー電王: イマジンあにめ
+   ⏳ 429(AniList): 4319ms待ってリトライ (3/8) title=仮面ライダー電王: イマジンあにめ
+   ⏳ 429(AniList): 7127ms待ってリトライ (4/8) title=仮面ライダー電王: イマジンあにめ
+   ⏳ 429(AniList): 11817ms待ってリトライ (5/8) title=仮面ライダー電王: イマジンあにめ
+   ⏳ 429(AniList): 20019ms待ってリトライ (6/8) title=仮面ライダー電王: イマジンあにめ
+   ⏳ 429(AniList): 20343ms待ってリトライ (7/8) title=仮面ライダー電王: イマジンあにめ
+- no official (skip): id=7386 title=仮面ライダー電王: イマジンあにめ
+- updated: id=7387 title=機動戦士ガンダム00 セカンドシーズン -> http://sunrise-inc.co.jp/work/detail.php?cid=277
+- no official (skip): id=7388 title=動絵狐狸達引
+- no official (skip): id=7389 title=一寸法師ノ出世
+   ⏳ 429(AniList): 1475ms待ってリトライ (1/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+   ⏳ 429(AniList): 2694ms待ってリトライ (2/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+   ⏳ 429(AniList): 4158ms待ってリトライ (3/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+   ⏳ 429(AniList): 7212ms待ってリトライ (4/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+   ⏳ 429(AniList): 11910ms待ってリトライ (5/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+   ⏳ 429(AniList): 20117ms待ってリトライ (6/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+   ⏳ 429(AniList): 20017ms待ってリトライ (7/8) title=頭文字〈イニシャル〉D BATTLE STAGE 2
+- no official (skip): id=7390 title=頭文字〈イニシャル〉D BATTLE STAGE 2
+- no official (skip): id=7391 title=マグネロボ・ガ・キーン
+- no official (skip): id=7392 title=機巧奇傳 ヒヲウ戦記
+- no official (skip): id=7393 title=パソコントラベル探偵団
+- no official (skip): id=7394 title=たこやきマントマン
+   ⏳ 429(AniList): 1662ms待ってリトライ (1/8) title=じゃりン子チエ
+   ⏳ 429(AniList): 2520ms待ってリトライ (2/8) title=じゃりン子チエ
+   ⏳ 429(AniList): 4212ms待ってリトライ (3/8) title=じゃりン子チエ
+   ⏳ 429(AniList): 6998ms待ってリトライ (4/8) title=じゃりン子チエ
+   ⏳ 429(AniList): 11984ms待ってリトライ (5/8) title=じゃりン子チエ
+   ⏳ 429(AniList): 20113ms待ってリトライ (6/8) title=じゃりン子チエ
+   ⏳ 429(AniList): 20158ms待ってリトライ (7/8) title=じゃりン子チエ
+- no official (skip): id=7395 title=じゃりン子チエ
+   ⏳ 429(AniList): 1688ms待ってリトライ (1/8) title=じゃりン子チエ (TV)
+   ⏳ 429(AniList): 2546ms待ってリトライ (2/8) title=じゃりン子チエ (TV)
+   ⏳ 429(AniList): 4373ms待ってリトライ (3/8) title=じゃりン子チエ (TV)
+   ⏳ 429(AniList): 6973ms待ってリトライ (4/8) title=じゃりン子チエ (TV)
+   ⏳ 429(AniList): 11913ms待ってリトライ (5/8) title=じゃりン子チエ (TV)
+   ⏳ 429(AniList): 19972ms待ってリトライ (6/8) title=じゃりン子チエ (TV)
+   ⏳ 429(AniList): 20261ms待ってリトライ (7/8) title=じゃりン子チエ (TV)
+- no official (skip): id=7396 title=じゃりン子チエ (TV)
+- no official (skip): id=7397 title=Mahou Sensei Negima! Introduction Film
+- no official (skip): id=7398 title=ブルーシード 1.5
+- no official (skip): id=7399 title=クラトス先生の プライべートレスン
+   ⏳ 429(AniList): 1716ms待ってリトライ (1/8) title=灼眼のシャナII (Second) スペシャル
+   ⏳ 429(AniList): 2571ms待ってリトライ (2/8) title=灼眼のシャナII (Second) スペシャル
+   ⏳ 429(AniList): 4374ms待ってリトライ (3/8) title=灼眼のシャナII (Second) スペシャル
+   ⏳ 429(AniList): 7075ms待ってリトライ (4/8) title=灼眼のシャナII (Second) スペシャル
+   ⏳ 429(AniList): 11874ms待ってリトライ (5/8) title=灼眼のシャナII (Second) スペシャル
+   ⏳ 429(AniList): 19877ms待ってリトライ (6/8) title=灼眼のシャナII (Second) スペシャル
+   ⏳ 429(AniList): 20090ms待ってリトライ (7/8) title=灼眼のシャナII (Second) スペシャル
+- no official (skip): id=7400 title=灼眼のシャナII (Second) スペシャル
+- updated: id=7401 title=かんなぎ -> https://www.nagisama-fc.com/anime/index.html
+- no official (skip): id=7402 title=ARMORED CORE -FORT TOWER SONG-
+- no official (skip): id=7403 title=チョコレート・アンダーグラウンド
+   ⏳ 429(AniList): 1687ms待ってリトライ (1/8) title=劇場版∀ガンダムI 地球光
+   ⏳ 429(AniList): 2426ms待ってリトライ (2/8) title=劇場版∀ガンダムI 地球光
+   ⏳ 429(AniList): 4355ms待ってリトライ (3/8) title=劇場版∀ガンダムI 地球光
+   ⏳ 429(AniList): 7157ms待ってリトライ (4/8) title=劇場版∀ガンダムI 地球光
+   ⏳ 429(AniList): 11861ms待ってリトライ (5/8) title=劇場版∀ガンダムI 地球光
+   ⏳ 429(AniList): 20098ms待ってリトライ (6/8) title=劇場版∀ガンダムI 地球光
+   ⏳ 429(AniList): 20303ms待ってリトライ (7/8) title=劇場版∀ガンダムI 地球光
+- no official (skip): id=7404 title=劇場版∀ガンダムI 地球光
+- no official (skip): id=7405 title=劇場版∀ガンダムII 月光蝶
+- no official (skip): id=7406 title=のだめカンタービレ「のだめと千秋の海物語」
+- no official (skip): id=7407 title=竜機伝承
+   ⏳ 429(AniList): 1565ms待ってリトライ (1/8) title=科学救助隊テクノボイジャー
+   ⏳ 429(AniList): 2726ms待ってリトライ (2/8) title=科学救助隊テクノボイジャー
+   ⏳ 429(AniList): 4168ms待ってリトライ (3/8) title=科学救助隊テクノボイジャー
+   ⏳ 429(AniList): 7169ms待ってリトライ (4/8) title=科学救助隊テクノボイジャー
+   ⏳ 429(AniList): 11988ms待ってリトライ (5/8) title=科学救助隊テクノボイジャー
+   ⏳ 429(AniList): 20155ms待ってリトライ (6/8) title=科学救助隊テクノボイジャー
+   ⏳ 429(AniList): 20324ms待ってリトライ (7/8) title=科学救助隊テクノボイジャー
+- no official (skip): id=7408 title=科学救助隊テクノボイジャー
+- no official (skip): id=7409 title=遊☆戯☆王5D's（ファイブディーズ）
+- no official (skip): id=7410 title=いくぜっ！源さん
+- updated: id=7411 title=鉄腕バーディー DECODE -> https://www.birdy-tv.com/season01/
+   ⏳ 429(AniList): 1485ms待ってリトライ (1/8) title=うちの3姉妹
+   ⏳ 429(AniList): 2654ms待ってリトライ (2/8) title=うちの3姉妹
+   ⏳ 429(AniList): 4395ms待ってリトライ (3/8) title=うちの3姉妹
+   ⏳ 429(AniList): 6903ms待ってリトライ (4/8) title=うちの3姉妹
+   ⏳ 429(AniList): 11967ms待ってリトライ (5/8) title=うちの3姉妹
+   ⏳ 429(AniList): 20137ms待ってリトライ (6/8) title=うちの3姉妹
+   ⏳ 429(AniList): 20123ms待ってリトライ (7/8) title=うちの3姉妹
+- updated: id=7412 title=うちの3姉妹 -> https://www.tv-tokyo.co.jp/anime/3shimai/index.html
+   ⏳ 429(AniList): 1427ms待ってリトライ (1/8) title=トゥハート おまけ
+   ⏳ 429(AniList): 2547ms待ってリトライ (2/8) title=トゥハート おまけ
+   ⏳ 429(AniList): 4289ms待ってリトライ (3/8) title=トゥハート おまけ
+   ⏳ 429(AniList): 7223ms待ってリトライ (4/8) title=トゥハート おまけ
+   ⏳ 429(AniList): 11902ms待ってリトライ (5/8) title=トゥハート おまけ
+   ⏳ 429(AniList): 20028ms待ってリトライ (6/8) title=トゥハート おまけ
+   ⏳ 429(AniList): 20105ms待ってリトライ (7/8) title=トゥハート おまけ
+- no official (skip): id=7413 title=トゥハート おまけ
+- no official (skip): id=7414 title=砂の薔薇 雪の黙示録
+- no official (skip): id=7415 title=くもとちゅうりっぷ
+- no official (skip): id=7416 title=魔法少女隊アルス THE ADVENTURE
+- updated: id=7417 title=ドリームハンター麗夢 -> http://www.dreamhunter.jp/
+   ⏳ 429(AniList): 1672ms待ってリトライ (1/8) title=ファーストスクワッド
+   ⏳ 429(AniList): 2426ms待ってリトライ (2/8) title=ファーストスクワッド
+   ⏳ 429(AniList): 4051ms待ってリトライ (3/8) title=ファーストスクワッド
+   ⏳ 429(AniList): 7146ms待ってリトライ (4/8) title=ファーストスクワッド
+   ⏳ 429(AniList): 11833ms待ってリトライ (5/8) title=ファーストスクワッド
+   ⏳ 429(AniList): 20222ms待ってリトライ (6/8) title=ファーストスクワッド
+   ⏳ 429(AniList): 20255ms待ってリトライ (7/8) title=ファーストスクワッド
+- no official (skip): id=7418 title=ファーストスクワッド
+- no official (skip): id=7419 title=ポールのミラクル大作戦
+- no official (skip): id=7420 title=超人ロック ロードレオン
+   ⏳ 429(AniList): 1692ms待ってリトライ (1/8) title=スクールランブル三学期
+   ⏳ 429(AniList): 2541ms待ってリトライ (2/8) title=スクールランブル三学期
+   ⏳ 429(AniList): 4127ms待ってリトライ (3/8) title=スクールランブル三学期
+   ⏳ 429(AniList): 7144ms待ってリトライ (4/8) title=スクールランブル三学期
+   ⏳ 429(AniList): 11796ms待ってリトライ (5/8) title=スクールランブル三学期
+   ⏳ 429(AniList): 20118ms待ってリトライ (6/8) title=スクールランブル三学期
+   ⏳ 429(AniList): 20048ms待ってリトライ (7/8) title=スクールランブル三学期
+- no official (skip): id=7421 title=スクールランブル三学期
+- no official (skip): id=7422 title=西洋 骨董 洋菓子店
+- no official (skip): id=7423 title=キティズパラダイス
+- no official (skip): id=7424 title=サンリオ・アニメ世界名作劇場
+   ⏳ 429(AniList): 1676ms待ってリトライ (1/8) title=あそぼう!! ハローキティ
+   ⏳ 429(AniList): 2418ms待ってリトライ (2/8) title=あそぼう!! ハローキティ
+   ⏳ 429(AniList): 4368ms待ってリトライ (3/8) title=あそぼう!! ハローキティ
+   ⏳ 429(AniList): 7081ms待ってリトライ (4/8) title=あそぼう!! ハローキティ
+   ⏳ 429(AniList): 11983ms待ってリトライ (5/8) title=あそぼう!! ハローキティ
+   ⏳ 429(AniList): 20139ms待ってリトライ (6/8) title=あそぼう!! ハローキティ
+   ⏳ 429(AniList): 20253ms待ってリトライ (7/8) title=あそぼう!! ハローキティ
+- no official (skip): id=7425 title=あそぼう!! ハローキティ
+- no official (skip): id=7426 title=ポケットモンスター ダイヤモンド&パール ギラティナと氷空の花束 シェイミ
+- no official (skip): id=7427 title=スレイヤーズ REVOLUTION
+- no official (skip): id=7428 title=魁!!男塾 (Movie)
+   ⏳ 429(AniList): 1430ms待ってリトライ (1/8) title=アイドルマスター ライブフォーユー!
+   ⏳ 429(AniList): 2385ms待ってリトライ (2/8) title=アイドルマスター ライブフォーユー!
+   ⏳ 429(AniList): 4090ms待ってリトライ (3/8) title=アイドルマスター ライブフォーユー!
+   ⏳ 429(AniList): 7139ms待ってリトライ (4/8) title=アイドルマスター ライブフォーユー!
+   ⏳ 429(AniList): 12018ms待ってリトライ (5/8) title=アイドルマスター ライブフォーユー!
+   ⏳ 429(AniList): 20101ms待ってリトライ (6/8) title=アイドルマスター ライブフォーユー!
+   ⏳ 429(AniList): 20023ms待ってリトライ (7/8) title=アイドルマスター ライブフォーユー!
+- no official (skip): id=7429 title=アイドルマスター ライブフォーユー!
+- no official (skip): id=7430 title=カウボーイビバップ よせあつめブルース
+- no official (skip): id=7431 title=絶対可憐チルドレン
+- no official (skip): id=7432 title=ゴルゴ13 (TV)
+   ⏳ 429(AniList): 1510ms待ってリトライ (1/8) title=妖怪人間ベム
+   ⏳ 429(AniList): 2669ms待ってリトライ (2/8) title=妖怪人間ベム
+   ⏳ 429(AniList): 4106ms待ってリトライ (3/8) title=妖怪人間ベム
+   ⏳ 429(AniList): 7132ms待ってリトライ (4/8) title=妖怪人間ベム
+   ⏳ 429(AniList): 12010ms待ってリトライ (5/8) title=妖怪人間ベム
+   ⏳ 429(AniList): 20004ms待ってリトライ (6/8) title=妖怪人間ベム
+   ⏳ 429(AniList): 20170ms待ってリトライ (7/8) title=妖怪人間ベム
+- no official (skip): id=7433 title=妖怪人間ベム
+- no official (skip): id=7434 title=魔豆奇伝パンダリアン
+   ⏳ 429(AniList): 1548ms待ってリトライ (1/8) title=甲虫王者ムシキング ～森の民の伝説～
+   ⏳ 429(AniList): 2686ms待ってリトライ (2/8) title=甲虫王者ムシキング ～森の民の伝説～
+   ⏳ 429(AniList): 4225ms待ってリトライ (3/8) title=甲虫王者ムシキング ～森の民の伝説～
+   ⏳ 429(AniList): 7123ms待ってリトライ (4/8) title=甲虫王者ムシキング ～森の民の伝説～
+   ⏳ 429(AniList): 11799ms待ってリトライ (5/8) title=甲虫王者ムシキング ～森の民の伝説～
+   ⏳ 429(AniList): 19890ms待ってリトライ (6/8) title=甲虫王者ムシキング ～森の民の伝説～
+   ⏳ 429(AniList): 20282ms待ってリトライ (7/8) title=甲虫王者ムシキング ～森の民の伝説～
+- no official (skip): id=7435 title=甲虫王者ムシキング ～森の民の伝説～
+- no official (skip): id=7436 title=ネットゴーストPIPOPA
+- no official (skip): id=7437 title=メダロット魂
+- no official (skip): id=7438 title=テニスの王子様 全国大会篇 Final
+   ⏳ 429(AniList): 1585ms待ってリトライ (1/8) title=ぶぶチャチャ
+   ⏳ 429(AniList): 2441ms待ってリトライ (2/8) title=ぶぶチャチャ
+   ⏳ 429(AniList): 4050ms待ってリトライ (3/8) title=ぶぶチャチャ
+   ⏳ 429(AniList): 6982ms待ってリトライ (4/8) title=ぶぶチャチャ
+   ⏳ 429(AniList): 12020ms待ってリトライ (5/8) title=ぶぶチャチャ
+   ⏳ 429(AniList): 20169ms待ってリトライ (6/8) title=ぶぶチャチャ
+   ⏳ 429(AniList): 20334ms待ってリトライ (7/8) title=ぶぶチャチャ
+- no official (skip): id=7439 title=ぶぶチャチャ
+- no official (skip): id=7440 title=増田こうすけ劇場 ギャグマンガ日和3
+- no official (skip): id=7441 title=魔境外伝レ・ディウス
+- no official (skip): id=7442 title=ＣＬＡＮＮＡＤ もうひとつの世界 智代編
+   ⏳ 429(AniList): 1452ms待ってリトライ (1/8) title=グリム名作劇場
+   ⏳ 429(AniList): 2519ms待ってリトライ (2/8) title=グリム名作劇場
+   ⏳ 429(AniList): 4231ms待ってリトライ (3/8) title=グリム名作劇場
+   ⏳ 429(AniList): 7175ms待ってリトライ (4/8) title=グリム名作劇場
+   ⏳ 429(AniList): 11803ms待ってリトライ (5/8) title=グリム名作劇場
+   ⏳ 429(AniList): 20009ms待ってリトライ (6/8) title=グリム名作劇場
+   ⏳ 429(AniList): 20081ms待ってリトライ (7/8) title=グリム名作劇場
+- no official (skip): id=7443 title=グリム名作劇場
+- no official (skip): id=7444 title=新グリム名作劇場
+- no official (skip): id=7445 title=六三四の剣
+- no official (skip): id=7446 title=タイタニア
+- no official (skip): id=7447 title=真・女神転生 デビチル
+- no official (skip): id=7448 title=真･女神転生Ｄチルドレン ライト＆ダーク
+   ⏳ 429(AniList): 1478ms待ってリトライ (1/8) title=짜장소녀 뿌까
+   ⏳ 429(AniList): 2713ms待ってリトライ (2/8) title=짜장소녀 뿌까
+   ⏳ 429(AniList): 4267ms待ってリトライ (3/8) title=짜장소녀 뿌까
+   ⏳ 429(AniList): 7074ms待ってリトライ (4/8) title=짜장소녀 뿌까
+   ⏳ 429(AniList): 11938ms待ってリトライ (5/8) title=짜장소녀 뿌까
+   ⏳ 429(AniList): 20052ms待ってリトライ (6/8) title=짜장소녀 뿌까
+   ⏳ 429(AniList): 20338ms待ってリトライ (7/8) title=짜장소녀 뿌까
+- updated: id=7449 title=짜장소녀 뿌까 -> http://www.puccaclub.com/
+- no official (skip): id=7450 title=ブラック・ジャック Dr. ピノコの森の冒険
+- no official (skip): id=7451 title=Black Jack TV: Lost Episodes
+- no official (skip): id=7452 title=恐竜大戦争アイゼンボーグ
+   ⏳ 429(AniList): 1656ms待ってリトライ (1/8) title=荒野の叫び声 吠えろバック
+   ⏳ 429(AniList): 2519ms待ってリトライ (2/8) title=荒野の叫び声 吠えろバック
+   ⏳ 429(AniList): 4073ms待ってリトライ (3/8) title=荒野の叫び声 吠えろバック
+   ⏳ 429(AniList): 6930ms待ってリトライ (4/8) title=荒野の叫び声 吠えろバック
+   ⏳ 429(AniList): 11707ms待ってリトライ (5/8) title=荒野の叫び声 吠えろバック
+   ⏳ 429(AniList): 20070ms待ってリトライ (6/8) title=荒野の叫び声 吠えろバック
+   ⏳ 429(AniList): 20154ms待ってリトライ (7/8) title=荒野の叫び声 吠えろバック
+- no official (skip): id=7453 title=荒野の叫び声 吠えろバック
+- no official (skip): id=7454 title=スーパーロボット大戦OG ディバイン・ウォーズ それぞれの路（みち）
+   ⏳ 429(AniList): 1463ms待ってリトライ (1/8) title=今日の5の2 課外授業:ミズカケ
+   ⏳ 429(AniList): 2536ms待ってリトライ (2/8) title=今日の5の2 課外授業:ミズカケ
+   ⏳ 429(AniList): 4184ms待ってリトライ (3/8) title=今日の5の2 課外授業:ミズカケ
+   ⏳ 429(AniList): 7092ms待ってリトライ (4/8) title=今日の5の2 課外授業:ミズカケ
+   ⏳ 429(AniList): 11856ms待ってリトライ (5/8) title=今日の5の2 課外授業:ミズカケ
+   ⏳ 429(AniList): 19892ms待ってリトライ (6/8) title=今日の5の2 課外授業:ミズカケ
+   ⏳ 429(AniList): 20158ms待ってリトライ (7/8) title=今日の5の2 課外授業:ミズカケ
+- no official (skip): id=7455 title=今日の5の2 課外授業:ミズカケ
+- no official (skip): id=7456 title=今日からマ王！第3シリーズ
+- no official (skip): id=7457 title=怪物王女：昏睡王女
+- no official (skip): id=7458 title=ワンダービート S(スクランブル)
+   ⏳ 429(AniList): 1666ms待ってリトライ (1/8) title=世にも恐ろしいグリム童話
+   ⏳ 429(AniList): 2475ms待ってリトライ (2/8) title=世にも恐ろしいグリム童話
+   ⏳ 429(AniList): 4242ms待ってリトライ (3/8) title=世にも恐ろしいグリム童話
+   ⏳ 429(AniList): 7129ms待ってリトライ (4/8) title=世にも恐ろしいグリム童話
+   ⏳ 429(AniList): 12027ms待ってリトライ (5/8) title=世にも恐ろしいグリム童話
+   ⏳ 429(AniList): 20011ms待ってリトライ (6/8) title=世にも恐ろしいグリム童話
+   ⏳ 429(AniList): 20278ms待ってリトライ (7/8) title=世にも恐ろしいグリム童話
+- no official (skip): id=7459 title=世にも恐ろしいグリム童話
+- no official (skip): id=7460 title=ムカムカパラダイス
+- no official (skip): id=7461 title=ミチコとハッチン
+- updated: id=7462 title=ワンダースリー -> https://tezukaosamu.net/jp/anime/32.html
+   ⏳ 429(AniList): 1726ms待ってリトライ (1/8) title=かがみのげんおん
+   ⏳ 429(AniList): 2636ms待ってリトライ (2/8) title=かがみのげんおん
+   ⏳ 429(AniList): 4223ms待ってリトライ (3/8) title=かがみのげんおん
+   ⏳ 429(AniList): 7047ms待ってリトライ (4/8) title=かがみのげんおん
+   ⏳ 429(AniList): 11892ms待ってリトライ (5/8) title=かがみのげんおん
+   ⏳ 429(AniList): 20201ms待ってリトライ (6/8) title=かがみのげんおん
+   ⏳ 429(AniList): 20274ms待ってリトライ (7/8) title=かがみのげんおん
+- no official (skip): id=7463 title=かがみのげんおん
+- no official (skip): id=7464 title=バットマン ゴッサムナイト
+- no official (skip): id=7465 title=注文の多い料理店
+   ⏳ 429(AniList): 1440ms待ってリトライ (1/8) title=水のたね
+   ⏳ 429(AniList): 2563ms待ってリトライ (2/8) title=水のたね
+   ⏳ 429(AniList): 4190ms待ってリトライ (3/8) title=水のたね
+   ⏳ 429(AniList): 6917ms待ってリトライ (4/8) title=水のたね
+   ⏳ 429(AniList): 11773ms待ってリトライ (5/8) title=水のたね
+   ⏳ 429(AniList): 20011ms待ってリトライ (6/8) title=水のたね
+   ⏳ 429(AniList): 20166ms待ってリトライ (7/8) title=水のたね
+- no official (skip): id=7466 title=水のたね
+- no official (skip): id=7467 title=南無一病息災
+- updated: id=7468 title=裏路地ダイヤモンド -> http://beyondcity.studio4c.co.jp/DVDcollection/about_dvd_01.html
+- updated: id=7469 title=아빠가 필요해 -> https://www.cwfilms.jp/wolf/
+   ⏳ 429(AniList): 1600ms待ってリトライ (1/8) title=ワンワンセレプー それゆけ！徹之進
+   ⏳ 429(AniList): 2397ms待ってリトライ (2/8) title=ワンワンセレプー それゆけ！徹之進
+   ⏳ 429(AniList): 4212ms待ってリトライ (3/8) title=ワンワンセレプー それゆけ！徹之進
+   ⏳ 429(AniList): 7195ms待ってリトライ (4/8) title=ワンワンセレプー それゆけ！徹之進
+   ⏳ 429(AniList): 11812ms待ってリトライ (5/8) title=ワンワンセレプー それゆけ！徹之進
+   ⏳ 429(AniList): 20086ms待ってリトライ (6/8) title=ワンワンセレプー それゆけ！徹之進
+   ⏳ 429(AniList): 20082ms待ってリトライ (7/8) title=ワンワンセレプー それゆけ！徹之進
+- no official (skip): id=7470 title=ワンワンセレプー それゆけ！徹之進
+- no official (skip): id=7471 title=Oval x Over
+- no official (skip): id=7472 title=ミニモニ。
+- no official (skip): id=7473 title=TRIGUN Badlands Rumble
+- no official (skip): id=7474 title=天元突破グレンラガン 紅蓮篇
+   ⏳ 429(AniList): 1601ms待ってリトライ (1/8) title=魔法のマコちゃん
+   ⏳ 429(AniList): 2475ms待ってリトライ (2/8) title=魔法のマコちゃん
+   ⏳ 429(AniList): 4049ms待ってリトライ (3/8) title=魔法のマコちゃん
+   ⏳ 429(AniList): 7107ms待ってリトライ (4/8) title=魔法のマコちゃん
+   ⏳ 429(AniList): 12035ms待ってリトライ (5/8) title=魔法のマコちゃん
+   ⏳ 429(AniList): 19916ms待ってリトライ (6/8) title=魔法のマコちゃん
+   ⏳ 429(AniList): 20177ms待ってリトライ (7/8) title=魔法のマコちゃん
+- updated: id=7475 title=魔法のマコちゃん -> https://lineup.toei-anim.co.jp/ja/tv/mako/
+- no official (skip): id=7476 title=おねがいマイメロディ くるくるシャッフル！
+- no official (skip): id=7477 title=獣神ライガー
+   ⏳ 429(AniList): 1591ms待ってリトライ (1/8) title=名門！第三野球部
+   ⏳ 429(AniList): 2701ms待ってリトライ (2/8) title=名門！第三野球部
+   ⏳ 429(AniList): 4202ms待ってリトライ (3/8) title=名門！第三野球部
+   ⏳ 429(AniList): 6921ms待ってリトライ (4/8) title=名門！第三野球部
+   ⏳ 429(AniList): 11929ms待ってリトライ (5/8) title=名門！第三野球部
+   ⏳ 429(AniList): 19940ms待ってリトライ (6/8) title=名門！第三野球部
+   ⏳ 429(AniList): 20159ms待ってリトライ (7/8) title=名門！第三野球部
+- no official (skip): id=7478 title=名門！第三野球部
+- updated: id=7479 title=ふたりはプリキュア Splash Star チクタク危機一髪! -> https://www.toei-anim.co.jp/movie/2006_precureSS/
+- no official (skip): id=7480 title=魔法の天使クリィミーマミ　ラブリーセレナーデ
+- no official (skip): id=7481 title=魔法の天使クリィミーマミ　カーテンコール
+   ⏳ 429(AniList): 1434ms待ってリトライ (1/8) title=ぷちえゔぁ
+   ⏳ 429(AniList): 2726ms待ってリトライ (2/8) title=ぷちえゔぁ
+   ⏳ 429(AniList): 4057ms待ってリトライ (3/8) title=ぷちえゔぁ
+   ⏳ 429(AniList): 7220ms待ってリトライ (4/8) title=ぷちえゔぁ
+   ⏳ 429(AniList): 11856ms待ってリトライ (5/8) title=ぷちえゔぁ
+   ⏳ 429(AniList): 20216ms待ってリトライ (6/8) title=ぷちえゔぁ
+   ⏳ 429(AniList): 20191ms待ってリトライ (7/8) title=ぷちえゔぁ
+- no official (skip): id=7482 title=ぷちえゔぁ
+- no official (skip): id=7483 title=ツインビーPARADISE
+- no official (skip): id=7484 title=若草の四姉妹
+- no official (skip): id=7485 title=NARUTO -ナルト- 疾風伝 疾風! "木ノ葉学園"伝
+   ⏳ 429(AniList): 1416ms待ってリトライ (1/8) title=ペンギン娘♥はぁと
+   ⏳ 429(AniList): 2560ms待ってリトライ (2/8) title=ペンギン娘♥はぁと
+   ⏳ 429(AniList): 4266ms待ってリトライ (3/8) title=ペンギン娘♥はぁと
+   ⏳ 429(AniList): 6933ms待ってリトライ (4/8) title=ペンギン娘♥はぁと
+   ⏳ 429(AniList): 11725ms待ってリトライ (5/8) title=ペンギン娘♥はぁと
+   ⏳ 429(AniList): 19997ms待ってリトライ (6/8) title=ペンギン娘♥はぁと
+   ⏳ 429(AniList): 20318ms待ってリトライ (7/8) title=ペンギン娘♥はぁと
+- no official (skip): id=7486 title=ペンギン娘♥はぁと
+- no official (skip): id=7487 title=小さなペンギンロロの冒険
+- no official (skip): id=7488 title=강아지똥
+- no official (skip): id=7489 title=コスモス　ピンクショック
+   ⏳ 429(AniList): 1702ms待ってリトライ (1/8) title=無限の住人
+   ⏳ 429(AniList): 2426ms待ってリトライ (2/8) title=無限の住人
+   ⏳ 429(AniList): 4346ms待ってリトライ (3/8) title=無限の住人
+   ⏳ 429(AniList): 7051ms待ってリトライ (4/8) title=無限の住人
+   ⏳ 429(AniList): 11919ms待ってリトライ (5/8) title=無限の住人
+   ⏳ 429(AniList): 20024ms待ってリトライ (6/8) title=無限の住人
+   ⏳ 429(AniList): 20058ms待ってリトライ (7/8) title=無限の住人
+- no official (skip): id=7490 title=無限の住人
+- no official (skip): id=7491 title=タイムボカンシリーズ　ヤットデタマン
+- no official (skip): id=7492 title=ONE PIECE FILM STRONG WORLD
+- no official (skip): id=7493 title=金曜ロードショー オープニング映像
+   ⏳ 429(AniList): 1575ms待ってリトライ (1/8) title=逮捕しちゃうぞ 渚の交通誘導
+   ⏳ 429(AniList): 2500ms待ってリトライ (2/8) title=逮捕しちゃうぞ 渚の交通誘導
+   ⏳ 429(AniList): 4356ms待ってリトライ (3/8) title=逮捕しちゃうぞ 渚の交通誘導
+   ⏳ 429(AniList): 7212ms待ってリトライ (4/8) title=逮捕しちゃうぞ 渚の交通誘導
+   ⏳ 429(AniList): 11794ms待ってリトライ (5/8) title=逮捕しちゃうぞ 渚の交通誘導
+   ⏳ 429(AniList): 20127ms待ってリトライ (6/8) title=逮捕しちゃうぞ 渚の交通誘導
+   ⏳ 429(AniList): 20303ms待ってリトライ (7/8) title=逮捕しちゃうぞ 渚の交通誘導
+- no official (skip): id=7494 title=逮捕しちゃうぞ 渚の交通誘導
+- no official (skip): id=7495 title=瀬戸の花嫁 OVA
+   ⏳ 429(AniList): 1421ms待ってリトライ (1/8) title=ToHeart2ad
+   ⏳ 429(AniList): 2618ms待ってリトライ (2/8) title=ToHeart2ad
+   ⏳ 429(AniList): 4390ms待ってリトライ (3/8) title=ToHeart2ad
+   ⏳ 429(AniList): 7148ms待ってリトライ (4/8) title=ToHeart2ad
+   ⏳ 429(AniList): 11862ms待ってリトライ (5/8) title=ToHeart2ad
+   ⏳ 429(AniList): 19880ms待ってリトライ (6/8) title=ToHeart2ad
+   ⏳ 429(AniList): 20266ms待ってリトライ (7/8) title=ToHeart2ad
+- updated: id=7496 title=ToHeart2ad -> https://aquaplus.jp/th2ad/
+- no official (skip): id=7497 title=ウォナビーズ
+- no official (skip): id=7498 title=亡念のザムド
+- updated: id=7499 title=ＣＬＡＮＮＡＤ ~After Story~ クラナド アフターストーリー -> https://www.tbs.co.jp/clannad/
+   ⏳ 429(AniList): 1566ms待ってリトライ (1/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+   ⏳ 429(AniList): 2457ms待ってリトライ (2/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+   ⏳ 429(AniList): 4336ms待ってリトライ (3/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+   ⏳ 429(AniList): 7164ms待ってリトライ (4/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+   ⏳ 429(AniList): 11753ms待ってリトライ (5/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+   ⏳ 429(AniList): 20101ms待ってリトライ (6/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+   ⏳ 429(AniList): 20217ms待ってリトライ (7/8) title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下
+- updated: id=7500 title=DARKER THAN BLACK -黒の契約者- 桜の花の満開の下 -> http://www.d-black.net/1st/dvdcd/index.html
+- no official (skip): id=7501 title=宇宙大帝ゴッドシグマ
+- no official (skip): id=7502 title=めぐみ
+- no official (skip): id=7503 title=魔法先生ネギま！～白き翼 ALA ALBA～
+   ⏳ 429(AniList): 1547ms待ってリトライ (1/8) title=冬のソナタ
+   ⏳ 429(AniList): 2418ms待ってリトライ (2/8) title=冬のソナタ
+   ⏳ 429(AniList): 4178ms待ってリトライ (3/8) title=冬のソナタ
+   ⏳ 429(AniList): 7074ms待ってリトライ (4/8) title=冬のソナタ
+   ⏳ 429(AniList): 11697ms待ってリトライ (5/8) title=冬のソナタ
+   ⏳ 429(AniList): 19999ms待ってリトライ (6/8) title=冬のソナタ
+   ⏳ 429(AniList): 20223ms待ってリトライ (7/8) title=冬のソナタ
+- updated: id=7504 title=冬のソナタ -> https://anime-wintersonata.com/
+- no official (skip): id=7505 title=Harukanaru Toki no Naka de 3: Onsen Chibi Special
+- no official (skip): id=7506 title=ポポロクロイス物語
+- updated: id=7507 title=ハヤテのごとく！！ -> http://hayatenogotoku.com/
+   ⏳ 429(AniList): 1591ms待ってリトライ (1/8) title=こどものじかん 2学期
+   ⏳ 429(AniList): 2390ms待ってリトライ (2/8) title=こどものじかん 2学期
+   ⏳ 429(AniList): 4199ms待ってリトライ (3/8) title=こどものじかん 2学期
+   ⏳ 429(AniList): 7129ms待ってリトライ (4/8) title=こどものじかん 2学期
+   ⏳ 429(AniList): 11939ms待ってリトライ (5/8) title=こどものじかん 2学期
+   ⏳ 429(AniList): 20195ms待ってリトライ (6/8) title=こどものじかん 2学期
+   ⏳ 429(AniList): 20006ms待ってリトライ (7/8) title=こどものじかん 2学期
+- no official (skip): id=7508 title=こどものじかん 2学期
+- no official (skip): id=7509 title=一騎当千: Great Guardians
+- no official (skip): id=7510 title=BLUE DRAGON 天界の七竜
+- no official (skip): id=7511 title=鋼鉄ジーグ
+- no official (skip): id=7512 title=円卓の騎士物語　燃えろアーサー
+   ⏳ 429(AniList): 1719ms待ってリトライ (1/8) title=ダーティペア (OVA)
+   ⏳ 429(AniList): 2510ms待ってリトライ (2/8) title=ダーティペア (OVA)
+   ⏳ 429(AniList): 4332ms待ってリトライ (3/8) title=ダーティペア (OVA)
+   ⏳ 429(AniList): 7158ms待ってリトライ (4/8) title=ダーティペア (OVA)
+   ⏳ 429(AniList): 12027ms待ってリトライ (5/8) title=ダーティペア (OVA)
+   ⏳ 429(AniList): 20013ms待ってリトライ (6/8) title=ダーティペア (OVA)
+   ⏳ 429(AniList): 20121ms待ってリトライ (7/8) title=ダーティペア (OVA)
+- no official (skip): id=7513 title=ダーティペア (OVA)
+   ⏳ 429(AniList): 1632ms待ってリトライ (1/8) title=チョッちゃん物語
+   ⏳ 429(AniList): 2674ms待ってリトライ (2/8) title=チョッちゃん物語
+   ⏳ 429(AniList): 4262ms待ってリトライ (3/8) title=チョッちゃん物語
+   ⏳ 429(AniList): 7088ms待ってリトライ (4/8) title=チョッちゃん物語
+   ⏳ 429(AniList): 11892ms待ってリトライ (5/8) title=チョッちゃん物語
+   ⏳ 429(AniList): 19984ms待ってリトライ (6/8) title=チョッちゃん物語
+   ⏳ 429(AniList): 20239ms待ってリトライ (7/8) title=チョッちゃん物語
+- no official (skip): id=7514 title=チョッちゃん物語
+- no official (skip): id=7515 title=太陽の使者 鉄人28号
+- no official (skip): id=7516 title=MISSION-E
+   ⏳ 429(AniList): 1680ms待ってリトライ (1/8) title=ゴキブリたちの黄昏
+   ⏳ 429(AniList): 2663ms待ってリトライ (2/8) title=ゴキブリたちの黄昏
+   ⏳ 429(AniList): 4128ms待ってリトライ (3/8) title=ゴキブリたちの黄昏
+   ⏳ 429(AniList): 6941ms待ってリトライ (4/8) title=ゴキブリたちの黄昏
+   ⏳ 429(AniList): 11776ms待ってリトライ (5/8) title=ゴキブリたちの黄昏
+   ⏳ 429(AniList): 19942ms待ってリトライ (6/8) title=ゴキブリたちの黄昏
+   ⏳ 429(AniList): 20086ms待ってリトライ (7/8) title=ゴキブリたちの黄昏
+- no official (skip): id=7517 title=ゴキブリたちの黄昏
+- no official (skip): id=7518 title=ハレルヤIIBOY
+- no official (skip): id=7519 title=最終試験くじら Progressive
+- no official (skip): id=7520 title=ロザリオとバンパイア Capu2
+   ⏳ 429(AniList): 1694ms待ってリトライ (1/8) title=虹に向って
+   ⏳ 429(AniList): 2606ms待ってリトライ (2/8) title=虹に向って
+   ⏳ 429(AniList): 4252ms待ってリトライ (3/8) title=虹に向って
+   ⏳ 429(AniList): 7172ms待ってリトライ (4/8) title=虹に向って
+   ⏳ 429(AniList): 11964ms待ってリトライ (5/8) title=虹に向って
+   ⏳ 429(AniList): 20053ms待ってリトライ (6/8) title=虹に向って
+   ⏳ 429(AniList): 20270ms待ってリトライ (7/8) title=虹に向って
+- no official (skip): id=7521 title=虹に向って
+- no official (skip): id=7522 title=おこんじょうるり
+- no official (skip): id=7523 title=機動戦士ガンダム MS IGLOO 2 -重力戦線-
+- no official (skip): id=7524 title=銀河旋風ブライガー
+   ⏳ 429(AniList): 1628ms待ってリトライ (1/8) title=銀河烈風バクシンガー
+   ⏳ 429(AniList): 2395ms待ってリトライ (2/8) title=銀河烈風バクシンガー
+   ⏳ 429(AniList): 4213ms待ってリトライ (3/8) title=銀河烈風バクシンガー
+   ⏳ 429(AniList): 7113ms待ってリトライ (4/8) title=銀河烈風バクシンガー
+   ⏳ 429(AniList): 11905ms待ってリトライ (5/8) title=銀河烈風バクシンガー
+   ⏳ 429(AniList): 20092ms待ってリトライ (6/8) title=銀河烈風バクシンガー
+   ⏳ 429(AniList): 20333ms待ってリトライ (7/8) title=銀河烈風バクシンガー
+- no official (skip): id=7525 title=銀河烈風バクシンガー
+- no official (skip): id=7526 title=銀河疾風サスライガー
+- no official (skip): id=7527 title=交響詩篇エウレカセブン ポケットが虹でいっぱい
+- no official (skip): id=7528 title=これがＵＦＯだ！ 空飛ぶ円盤
+   ⏳ 429(AniList): 1598ms待ってリトライ (1/8) title=EXPLORER-WOMAN RAY
+   ⏳ 429(AniList): 2631ms待ってリトライ (2/8) title=EXPLORER-WOMAN RAY
+   ⏳ 429(AniList): 4189ms待ってリトライ (3/8) title=EXPLORER-WOMAN RAY
+   ⏳ 429(AniList): 6972ms待ってリトライ (4/8) title=EXPLORER-WOMAN RAY
+   ⏳ 429(AniList): 11781ms待ってリトライ (5/8) title=EXPLORER-WOMAN RAY
+   ⏳ 429(AniList): 20201ms待ってリトライ (6/8) title=EXPLORER-WOMAN RAY
+   ⏳ 429(AniList): 20103ms待ってリトライ (7/8) title=EXPLORER-WOMAN RAY
+- no official (skip): id=7529 title=EXPLORER-WOMAN RAY
+- no official (skip): id=7530 title=ウルトラヴァイオレットコード044
+- no official (skip): id=7531 title=ヴィ・デュラン
+- no official (skip): id=7532 title=空の境界伽藍の洞
+   ⏳ 429(AniList): 1749ms待ってリトライ (1/8) title=空の境界 矛盾螺旋
+   ⏳ 429(AniList): 2698ms待ってリトライ (2/8) title=空の境界 矛盾螺旋
+   ⏳ 429(AniList): 4340ms待ってリトライ (3/8) title=空の境界 矛盾螺旋
+   ⏳ 429(AniList): 7167ms待ってリトライ (4/8) title=空の境界 矛盾螺旋
+   ⏳ 429(AniList): 11909ms待ってリトライ (5/8) title=空の境界 矛盾螺旋
+   ⏳ 429(AniList): 19974ms待ってリトライ (6/8) title=空の境界 矛盾螺旋
+   ⏳ 429(AniList): 20233ms待ってリトライ (7/8) title=空の境界 矛盾螺旋
+- no official (skip): id=7533 title=空の境界 矛盾螺旋
+- no official (skip): id=7534 title=ぼのぼの
+   ⏳ 429(AniList): 1711ms待ってリトライ (1/8) title=ふたりのジョー
+   ⏳ 429(AniList): 2412ms待ってリトライ (2/8) title=ふたりのジョー
+   ⏳ 429(AniList): 4289ms待ってリトライ (3/8) title=ふたりのジョー
+   ⏳ 429(AniList): 7067ms待ってリトライ (4/8) title=ふたりのジョー
+   ⏳ 429(AniList): 11969ms待ってリトライ (5/8) title=ふたりのジョー
+   ⏳ 429(AniList): 19928ms待ってリトライ (6/8) title=ふたりのジョー
+   ⏳ 429(AniList): 20041ms待ってリトライ (7/8) title=ふたりのジョー
+- no official (skip): id=7535 title=ふたりのジョー
+- no official (skip): id=7536 title=水グモもんもん
+- no official (skip): id=7537 title=真救世主伝説 北斗の拳 トキ伝
+- no official (skip): id=7538 title=ななみちゃん 第2シリーズ
+   ⏳ 429(AniList): 1511ms待ってリトライ (1/8) title=ななみちゃん 第3シリーズ
+   ⏳ 429(AniList): 2616ms待ってリトライ (2/8) title=ななみちゃん 第3シリーズ
+   ⏳ 429(AniList): 4364ms待ってリトライ (3/8) title=ななみちゃん 第3シリーズ
+   ⏳ 429(AniList): 7170ms待ってリトライ (4/8) title=ななみちゃん 第3シリーズ
+   ⏳ 429(AniList): 11946ms待ってリトライ (5/8) title=ななみちゃん 第3シリーズ
+   ⏳ 429(AniList): 19984ms待ってリトライ (6/8) title=ななみちゃん 第3シリーズ
+   ⏳ 429(AniList): 20306ms待ってリトライ (7/8) title=ななみちゃん 第3シリーズ
+- no official (skip): id=7539 title=ななみちゃん 第3シリーズ
+- no official (skip): id=7540 title=竜世紀
+- no official (skip): id=7541 title=ルパン三世 GREEN vs RED
+   ⏳ 429(AniList): 1558ms待ってリトライ (1/8) title=ペンギンの問題
+   ⏳ 429(AniList): 2530ms待ってリトライ (2/8) title=ペンギンの問題
+   ⏳ 429(AniList): 4190ms待ってリトライ (3/8) title=ペンギンの問題
+   ⏳ 429(AniList): 7116ms待ってリトライ (4/8) title=ペンギンの問題
+   ⏳ 429(AniList): 11783ms待ってリトライ (5/8) title=ペンギンの問題
+   ⏳ 429(AniList): 20192ms待ってリトライ (6/8) title=ペンギンの問題
+   ⏳ 429(AniList): 20248ms待ってリトライ (7/8) title=ペンギンの問題
+- no official (skip): id=7542 title=ペンギンの問題
+- no official (skip): id=7543 title=正義を愛する人、月光仮面
+- no official (skip): id=7544 title=ヒーローマン
+- no official (skip): id=7545 title=あしたへアタック！
+- no official (skip): id=7546 title=はむはむヘヴン
+   ⏳ 429(AniList): 1489ms待ってリトライ (1/8) title=ファイアボール
+   ⏳ 429(AniList): 2491ms待ってリトライ (2/8) title=ファイアボール
+   ⏳ 429(AniList): 4066ms待ってリトライ (3/8) title=ファイアボール
+   ⏳ 429(AniList): 6899ms待ってリトライ (4/8) title=ファイアボール
+   ⏳ 429(AniList): 12011ms待ってリトライ (5/8) title=ファイアボール
+   ⏳ 429(AniList): 20158ms待ってリトライ (6/8) title=ファイアボール
+   ⏳ 429(AniList): 20181ms待ってリトライ (7/8) title=ファイアボール
+- updated: id=7547 title=ファイアボール -> http://www.disney.co.jp/tv/sp/fireball/1.html
+- no official (skip): id=7548 title=宇宙戦士バルディオス(劇場版)
+- no official (skip): id=7549 title=キョロちゃん
+- no official (skip): id=7550 title=キャットマン
+   ⏳ 429(AniList): 1614ms待ってリトライ (1/8) title=グレートマジンガー対ゲッターロボ
+   ⏳ 429(AniList): 2602ms待ってリトライ (2/8) title=グレートマジンガー対ゲッターロボ
+   ⏳ 429(AniList): 4246ms待ってリトライ (3/8) title=グレートマジンガー対ゲッターロボ
+   ⏳ 429(AniList): 7208ms待ってリトライ (4/8) title=グレートマジンガー対ゲッターロボ
+   ⏳ 429(AniList): 11860ms待ってリトライ (5/8) title=グレートマジンガー対ゲッターロボ
+   ⏳ 429(AniList): 20059ms待ってリトライ (6/8) title=グレートマジンガー対ゲッターロボ
+   ⏳ 429(AniList): 20067ms待ってリトライ (7/8) title=グレートマジンガー対ゲッターロボ
+- no official (skip): id=7551 title=グレートマジンガー対ゲッターロボ
+- no official (skip): id=7552 title=グレートマジンガー対ゲッターロボＧ 空中大激突
+   ⏳ 429(AniList): 1666ms待ってリトライ (1/8) title=UFOロボ グレンダイザー対グレートマジンガー
+   ⏳ 429(AniList): 2547ms待ってリトライ (2/8) title=UFOロボ グレンダイザー対グレートマジンガー
+   ⏳ 429(AniList): 4244ms待ってリトライ (3/8) title=UFOロボ グレンダイザー対グレートマジンガー
+   ⏳ 429(AniList): 7101ms待ってリトライ (4/8) title=UFOロボ グレンダイザー対グレートマジンガー
+   ⏳ 429(AniList): 12038ms待ってリトライ (5/8) title=UFOロボ グレンダイザー対グレートマジンガー
+   ⏳ 429(AniList): 19890ms待ってリトライ (6/8) title=UFOロボ グレンダイザー対グレートマジンガー
+   ⏳ 429(AniList): 20293ms待ってリトライ (7/8) title=UFOロボ グレンダイザー対グレートマジンガー
+- no official (skip): id=7553 title=UFOロボ グレンダイザー対グレートマジンガー
+- no official (skip): id=7554 title=アマダアニメシリーズ スーパーマリオブラザーズ
+- no official (skip): id=7555 title=空の桃太郎
+- no official (skip): id=7556 title=猿正宗
+   ⏳ 429(AniList): 1576ms待ってリトライ (1/8) title=大当り空の円タク
+   ⏳ 429(AniList): 2567ms待ってリトライ (2/8) title=大当り空の円タク
+   ⏳ 429(AniList): 4313ms待ってリトライ (3/8) title=大当り空の円タク
+   ⏳ 429(AniList): 7075ms待ってリトライ (4/8) title=大当り空の円タク
+   ⏳ 429(AniList): 11772ms待ってリトライ (5/8) title=大当り空の円タク
+   ⏳ 429(AniList): 20213ms待ってリトライ (6/8) title=大当り空の円タク
+   ⏳ 429(AniList): 20329ms待ってリトライ (7/8) title=大当り空の円タク
+- no official (skip): id=7557 title=大当り空の円タク
+- no official (skip): id=7558 title=国歌 君か代
+- no official (skip): id=7559 title=のらくろ伍長
+   ⏳ 429(AniList): 1612ms待ってリトライ (1/8) title=のらくろ二等兵 演習の巻
+   ⏳ 429(AniList): 2687ms待ってリトライ (2/8) title=のらくろ二等兵 演習の巻
+   ⏳ 429(AniList): 4394ms待ってリトライ (3/8) title=のらくろ二等兵 演習の巻
+   ⏳ 429(AniList): 6929ms待ってリトライ (4/8) title=のらくろ二等兵 演習の巻
+   ⏳ 429(AniList): 12020ms待ってリトライ (5/8) title=のらくろ二等兵 演習の巻
+   ⏳ 429(AniList): 20077ms待ってリトライ (6/8) title=のらくろ二等兵 演習の巻
+   ⏳ 429(AniList): 20162ms待ってリトライ (7/8) title=のらくろ二等兵 演習の巻
+- no official (skip): id=7560 title=のらくろ二等兵 演習の巻
+- no official (skip): id=7561 title=お猿の艦隊
+- no official (skip): id=7562 title=お猿の三吉 突撃隊の巻
+- no official (skip): id=7563 title=黒ニャゴ
+   ⏳ 429(AniList): 1464ms待ってリトライ (1/8) title=マジンガーＺ対暗黒大将軍
+   ⏳ 429(AniList): 2632ms待ってリトライ (2/8) title=マジンガーＺ対暗黒大将軍
+   ⏳ 429(AniList): 4082ms待ってリトライ (3/8) title=マジンガーＺ対暗黒大将軍
+   ⏳ 429(AniList): 6989ms待ってリトライ (4/8) title=マジンガーＺ対暗黒大将軍
+   ⏳ 429(AniList): 11747ms待ってリトライ (5/8) title=マジンガーＺ対暗黒大将軍
+   ⏳ 429(AniList): 20020ms待ってリトライ (6/8) title=マジンガーＺ対暗黒大将軍
+   ⏳ 429(AniList): 20230ms待ってリトライ (7/8) title=マジンガーＺ対暗黒大将軍
+- no official (skip): id=7564 title=マジンガーＺ対暗黒大将軍
+- no official (skip): id=7565 title=未来ロボ ダルタニアス
+- updated: id=7566 title=ワールド・デストラクション ～世界撲滅の六人～ -> http://www.tv-tokyo.co.jp/anime/world-d/
+- no official (skip): id=7567 title=勇者王ガオガイガーFINAL Grand Glorious Gathering
+   ⏳ 429(AniList): 1454ms待ってリトライ (1/8) title=へんな子ちゃん
+   ⏳ 429(AniList): 2461ms待ってリトライ (2/8) title=へんな子ちゃん
+   ⏳ 429(AniList): 4165ms待ってリトライ (3/8) title=へんな子ちゃん
+   ⏳ 429(AniList): 6915ms待ってリトライ (4/8) title=へんな子ちゃん
+   ⏳ 429(AniList): 12032ms待ってリトライ (5/8) title=へんな子ちゃん
+   ⏳ 429(AniList): 19996ms待ってリトライ (6/8) title=へんな子ちゃん
+   ⏳ 429(AniList): 20188ms待ってリトライ (7/8) title=へんな子ちゃん
+- no official (skip): id=7568 title=へんな子ちゃん
+- no official (skip): id=7569 title=闘将!!拉麺男
+- no official (skip): id=7570 title=劇場版 NARUTO -ナルト- 疾風伝 絆
+- no official (skip): id=7571 title=紅三四郎
+- no official (skip): id=7572 title=姿三四郎
+   ⏳ 429(AniList): 1678ms待ってリトライ (1/8) title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 2491ms待ってリトライ (2/8) title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 4373ms待ってリトライ (3/8) title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 7215ms待ってリトライ (4/8) title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 11997ms待ってリトライ (5/8) title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 20097ms待ってリトライ (6/8) title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 20256ms待ってリトライ (7/8) title=デュエル・マスターズ　チャージ
+- no official (skip): id=7573 title=デュエル・マスターズ　チャージ
+   ⏳ 429(AniList): 1563ms待ってリトライ (1/8) title=ゼロ デュエル・マスターズ
+   ⏳ 429(AniList): 2571ms待ってリトライ (2/8) title=ゼロ デュエル・マスターズ
+   ⏳ 429(AniList): 4143ms待ってリトライ (3/8) title=ゼロ デュエル・マスターズ
+   ⏳ 429(AniList): 7213ms待ってリトライ (4/8) title=ゼロ デュエル・マスターズ
+   ⏳ 429(AniList): 11849ms待ってリトライ (5/8) title=ゼロ デュエル・マスターズ
+   ⏳ 429(AniList): 19906ms待ってリトライ (6/8) title=ゼロ デュエル・マスターズ
+   ⏳ 429(AniList): 20188ms待ってリトライ (7/8) title=ゼロ デュエル・マスターズ
+- no official (skip): id=7574 title=ゼロ デュエル・マスターズ
+- no official (skip): id=7575 title=名探偵コナン 戦慄の楽譜（フルスコア）
+- no official (skip): id=7576 title=クロノクルセイド アズでもわかるクロノクルセイド講座
+- no official (skip): id=7577 title=他人の関係
+- no official (skip): id=7578 title=星屑パラダイス
+   ⏳ 429(AniList): 1524ms待ってリトライ (1/8) title=マクロスＦ
+   ⏳ 429(AniList): 2512ms待ってリトライ (2/8) title=マクロスＦ
+   ⏳ 429(AniList): 4146ms待ってリトライ (3/8) title=マクロスＦ
+   ⏳ 429(AniList): 6992ms待ってリトライ (4/8) title=マクロスＦ
+   ⏳ 429(AniList): 11771ms待ってリトライ (5/8) title=マクロスＦ
+   ⏳ 429(AniList): 20165ms待ってリトライ (6/8) title=マクロスＦ
+   ⏳ 429(AniList): 20315ms待ってリトライ (7/8) title=マクロスＦ
+- no official (skip): id=7579 title=マクロスＦ
+- no official (skip): id=7580 title=バベルの本
+- updated: id=7581 title=おじゃる丸 -> http://www9.nhk.or.jp/anime/ojaru/
+   ⏳ 429(AniList): 1672ms待ってリトライ (1/8) title=キクマナ
+   ⏳ 429(AniList): 2473ms待ってリトライ (2/8) title=キクマナ
+   ⏳ 429(AniList): 4145ms待ってリトライ (3/8) title=キクマナ
+   ⏳ 429(AniList): 6972ms待ってリトライ (4/8) title=キクマナ
+   ⏳ 429(AniList): 11951ms待ってリトライ (5/8) title=キクマナ
+   ⏳ 429(AniList): 19876ms待ってリトライ (6/8) title=キクマナ
+   ⏳ 429(AniList): 20051ms待ってリトライ (7/8) title=キクマナ
+- no official (skip): id=7582 title=キクマナ
+- no official (skip): id=7583 title=校長先生とクジラ
+- no official (skip): id=7584 title=大力太郎の無茶修業
+- no official (skip): id=7585 title=ユニバース
+- no official (skip): id=7586 title=長靴をはいた猫の冒険
+   ⏳ 429(AniList): 1595ms待ってリトライ (1/8) title=ジーンダイバー
+   ⏳ 429(AniList): 2710ms待ってリトライ (2/8) title=ジーンダイバー
+   ⏳ 429(AniList): 4284ms待ってリトライ (3/8) title=ジーンダイバー
+   ⏳ 429(AniList): 7058ms待ってリトライ (4/8) title=ジーンダイバー
+   ⏳ 429(AniList): 11777ms待ってリトライ (5/8) title=ジーンダイバー
+   ⏳ 429(AniList): 20132ms待ってリトライ (6/8) title=ジーンダイバー
+   ⏳ 429(AniList): 20025ms待ってリトライ (7/8) title=ジーンダイバー
+- no official (skip): id=7587 title=ジーンダイバー
+- no official (skip): id=7588 title=新SOS大東京探検隊
+- no official (skip): id=7589 title=らき☆すた OVA
+- no official (skip): id=7590 title=年をとった鰐
+- no official (skip): id=7591 title=幻想魔伝最遊記-希望の罪過-
+   ⏳ 429(AniList): 1689ms待ってリトライ (1/8) title=のだめカンタービレ 巴里編
+   ⏳ 429(AniList): 2589ms待ってリトライ (2/8) title=のだめカンタービレ 巴里編
+   ⏳ 429(AniList): 4305ms待ってリトライ (3/8) title=のだめカンタービレ 巴里編
+   ⏳ 429(AniList): 7066ms待ってリトライ (4/8) title=のだめカンタービレ 巴里編
+   ⏳ 429(AniList): 11799ms待ってリトライ (5/8) title=のだめカンタービレ 巴里編
+   ⏳ 429(AniList): 20125ms待ってリトライ (6/8) title=のだめカンタービレ 巴里編
+   ⏳ 429(AniList): 20310ms待ってリトライ (7/8) title=のだめカンタービレ 巴里編
+- no official (skip): id=7592 title=のだめカンタービレ 巴里編
+- no official (skip): id=7593 title=西遊記
+   ⏳ 429(AniList): 1454ms待ってリトライ (1/8) title=魔法遣いに大切なこと ～夏のソラ～
+   ⏳ 429(AniList): 2658ms待ってリトライ (2/8) title=魔法遣いに大切なこと ～夏のソラ～
+   ⏳ 429(AniList): 4222ms待ってリトライ (3/8) title=魔法遣いに大切なこと ～夏のソラ～
+   ⏳ 429(AniList): 6981ms待ってリトライ (4/8) title=魔法遣いに大切なこと ～夏のソラ～
+   ⏳ 429(AniList): 11747ms待ってリトライ (5/8) title=魔法遣いに大切なこと ～夏のソラ～
+   ⏳ 429(AniList): 20172ms待ってリトライ (6/8) title=魔法遣いに大切なこと ～夏のソラ～
+   ⏳ 429(AniList): 20085ms待ってリトライ (7/8) title=魔法遣いに大切なこと ～夏のソラ～
+- no official (skip): id=7594 title=魔法遣いに大切なこと ～夏のソラ～
+- no official (skip): id=7595 title=海の闇、月の影
+- no official (skip): id=7596 title=華星夜曲
+   ⏳ 429(AniList): 1505ms待ってリトライ (1/8) title=ゲッターロボG
+   ⏳ 429(AniList): 2707ms待ってリトライ (2/8) title=ゲッターロボG
+   ⏳ 429(AniList): 4068ms待ってリトライ (3/8) title=ゲッターロボG
+   ⏳ 429(AniList): 6927ms待ってリトライ (4/8) title=ゲッターロボG
+   ⏳ 429(AniList): 11865ms待ってリトライ (5/8) title=ゲッターロボG
+   ⏳ 429(AniList): 20018ms待ってリトライ (6/8) title=ゲッターロボG
+   ⏳ 429(AniList): 20047ms待ってリトライ (7/8) title=ゲッターロボG
+- no official (skip): id=7597 title=ゲッターロボG
+- no official (skip): id=7598 title=超時空騎団サザンクロス
+- no official (skip): id=7599 title=緊急発進セイバーキッズ
+- no official (skip): id=7600 title=D.C. ～ダ・カーポ～ セコンドシースン Omake
+- no official (skip): id=7601 title=キャプテンフューチャー・華麗なる太陽系レース
+- no official (skip): id=7602 title=ほえろブンブン
+   ⏳ 429(AniList): 1469ms待ってリトライ (1/8) title=白蛇伝
+   ⏳ 429(AniList): 2446ms待ってリトライ (2/8) title=白蛇伝
+   ⏳ 429(AniList): 4268ms待ってリトライ (3/8) title=白蛇伝
+   ⏳ 429(AniList): 7227ms待ってリトライ (4/8) title=白蛇伝
+   ⏳ 429(AniList): 11694ms待ってリトライ (5/8) title=白蛇伝
+   ⏳ 429(AniList): 19955ms待ってリトライ (6/8) title=白蛇伝
+   ⏳ 429(AniList): 20215ms待ってリトライ (7/8) title=白蛇伝
+- updated: id=7603 title=白蛇伝 -> https://www.toei-video.co.jp/special/hakujaden/
+- no official (skip): id=7604 title=シートン動物記 くまの子ジャッキー
+- no official (skip): id=7605 title=シートン動物記 りすのバナー
+   ⏳ 429(AniList): 1467ms待ってリトライ (1/8) title=ワット・ボーとぼくらのお話
+   ⏳ 429(AniList): 2395ms待ってリトライ (2/8) title=ワット・ボーとぼくらのお話
+   ⏳ 429(AniList): 4378ms待ってリトライ (3/8) title=ワット・ボーとぼくらのお話
+   ⏳ 429(AniList): 7031ms待ってリトライ (4/8) title=ワット・ボーとぼくらのお話
+   ⏳ 429(AniList): 11919ms待ってリトライ (5/8) title=ワット・ボーとぼくらのお話
+   ⏳ 429(AniList): 20104ms待ってリトライ (6/8) title=ワット・ボーとぼくらのお話
+   ⏳ 429(AniList): 20294ms待ってリトライ (7/8) title=ワット・ボーとぼくらのお話
+- no official (skip): id=7606 title=ワット・ボーとぼくらのお話
+- no official (skip): id=7607 title=ザ・ハード BOUNTY HUNTER
+- no official (skip): id=7608 title=シェンムー・ザ・ムービー
+- no official (skip): id=7609 title=ダークキャット
+- updated: id=7610 title=太陽の勇者ファイバード -> http://www.yusha.net/fighbird/
+   ⏳ 429(AniList): 1728ms待ってリトライ (1/8) title=宇宙家族カールビンソン
+   ⏳ 429(AniList): 2487ms待ってリトライ (2/8) title=宇宙家族カールビンソン
+   ⏳ 429(AniList): 4087ms待ってリトライ (3/8) title=宇宙家族カールビンソン
+   ⏳ 429(AniList): 7194ms待ってリトライ (4/8) title=宇宙家族カールビンソン
+   ⏳ 429(AniList): 11754ms待ってリトライ (5/8) title=宇宙家族カールビンソン
+   ⏳ 429(AniList): 20162ms待ってリトライ (6/8) title=宇宙家族カールビンソン
+   ⏳ 429(AniList): 20021ms待ってリトライ (7/8) title=宇宙家族カールビンソン
+- no official (skip): id=7611 title=宇宙家族カールビンソン
+- no official (skip): id=7612 title=超人ロック／新世界戦隊
+- no official (skip): id=7613 title=Candy☆Boy
+- no official (skip): id=7614 title=無敵ロボトライダーG7
+- no official (skip): id=7615 title=八神くんの家庭の事情
+   ⏳ 429(AniList): 1679ms待ってリトライ (1/8) title=ガンダムミッション・トゥ・ザ・ライズ
+   ⏳ 429(AniList): 2461ms待ってリトライ (2/8) title=ガンダムミッション・トゥ・ザ・ライズ
+   ⏳ 429(AniList): 4055ms待ってリトライ (3/8) title=ガンダムミッション・トゥ・ザ・ライズ
+   ⏳ 429(AniList): 6900ms待ってリトライ (4/8) title=ガンダムミッション・トゥ・ザ・ライズ
+   ⏳ 429(AniList): 11961ms待ってリトライ (5/8) title=ガンダムミッション・トゥ・ザ・ライズ
+   ⏳ 429(AniList): 20111ms待ってリトライ (6/8) title=ガンダムミッション・トゥ・ザ・ライズ
+   ⏳ 429(AniList): 20057ms待ってリトライ (7/8) title=ガンダムミッション・トゥ・ザ・ライズ
+- no official (skip): id=7616 title=ガンダムミッション・トゥ・ザ・ライズ
+- no official (skip): id=7617 title=ロボディーズ-RoboDz-風雲篇
+   ⏳ 429(AniList): 1664ms待ってリトライ (1/8) title=北斗の拳 ラオウ外伝 天の覇王
+   ⏳ 429(AniList): 2715ms待ってリトライ (2/8) title=北斗の拳 ラオウ外伝 天の覇王
+   ⏳ 429(AniList): 4049ms待ってリトライ (3/8) title=北斗の拳 ラオウ外伝 天の覇王
+   ⏳ 429(AniList): 7172ms待ってリトライ (4/8) title=北斗の拳 ラオウ外伝 天の覇王
+   ⏳ 429(AniList): 11955ms待ってリトライ (5/8) title=北斗の拳 ラオウ外伝 天の覇王
+   ⏳ 429(AniList): 20020ms待ってリトライ (6/8) title=北斗の拳 ラオウ外伝 天の覇王
+   ⏳ 429(AniList): 20308ms待ってリトライ (7/8) title=北斗の拳 ラオウ外伝 天の覇王
+- no official (skip): id=7618 title=北斗の拳 ラオウ外伝 天の覇王
+- no official (skip): id=7619 title=ヒャッコ
+- updated: id=7620 title=伯爵と妖精 -> https://www.ponican.jp/myfairy/index.html
+   ⏳ 429(AniList): 1503ms待ってリトライ (1/8) title=スキマの国のポルタ
+   ⏳ 429(AniList): 2657ms待ってリトライ (2/8) title=スキマの国のポルタ
+   ⏳ 429(AniList): 4113ms待ってリトライ (3/8) title=スキマの国のポルタ
+   ⏳ 429(AniList): 7110ms待ってリトライ (4/8) title=スキマの国のポルタ
+   ⏳ 429(AniList): 12005ms待ってリトライ (5/8) title=スキマの国のポルタ
+   ⏳ 429(AniList): 20193ms待ってリトライ (6/8) title=スキマの国のポルタ
+   ⏳ 429(AniList): 20115ms待ってリトライ (7/8) title=スキマの国のポルタ
+- no official (skip): id=7621 title=スキマの国のポルタ
+- no official (skip): id=7622 title=どっきりドクター
+- no official (skip): id=7623 title=爆球HIT! クラッシュビーダマン
+- no official (skip): id=7624 title=天元突破グレンラガン 螺巌篇
+   ⏳ 429(AniList): 1439ms待ってリトライ (1/8) title=プリズム・アーク ぷりあーく
+   ⏳ 429(AniList): 2596ms待ってリトライ (2/8) title=プリズム・アーク ぷりあーく
+   ⏳ 429(AniList): 4106ms待ってリトライ (3/8) title=プリズム・アーク ぷりあーく
+   ⏳ 429(AniList): 7090ms待ってリトライ (4/8) title=プリズム・アーク ぷりあーく
+   ⏳ 429(AniList): 11797ms待ってリトライ (5/8) title=プリズム・アーク ぷりあーく
+   ⏳ 429(AniList): 20157ms待ってリトライ (6/8) title=プリズム・アーク ぷりあーく
+   ⏳ 429(AniList): 20052ms待ってリトライ (7/8) title=プリズム・アーク ぷりあーく
+- no official (skip): id=7625 title=プリズム・アーク ぷりあーく
+- no official (skip): id=7626 title=아마게돈
+- no official (skip): id=7627 title=最強ロボ ダイオージャ
+- updated: id=7628 title=タイムボカン王道復古 -> https://tatsunoko.co.jp/en/works/time-bokan-2/
+- no official (skip): id=7629 title=屍姫 赫
+   ⏳ 429(AniList): 1539ms待ってリトライ (1/8) title=トッポ・ジージョ
+   ⏳ 429(AniList): 2436ms待ってリトライ (2/8) title=トッポ・ジージョ
+   ⏳ 429(AniList): 4229ms待ってリトライ (3/8) title=トッポ・ジージョ
+   ⏳ 429(AniList): 6915ms待ってリトライ (4/8) title=トッポ・ジージョ
+   ⏳ 429(AniList): 11973ms待ってリトライ (5/8) title=トッポ・ジージョ
+   ⏳ 429(AniList): 20125ms待ってリトライ (6/8) title=トッポ・ジージョ
+   ⏳ 429(AniList): 20348ms待ってリトライ (7/8) title=トッポ・ジージョ
+- updated: id=7630 title=トッポ・ジージョ -> https://www.nippon-animation.co.jp/work/1546/
+- no official (skip): id=7631 title=だいすき! ぶぶチャチャ
+- no official (skip): id=7632 title=よいこ
+- no official (skip): id=7633 title=荒野の少年イサム
+   ⏳ 429(AniList): 1603ms待ってリトライ (1/8) title=ウリクペン救助隊
+   ⏳ 429(AniList): 2521ms待ってリトライ (2/8) title=ウリクペン救助隊
+   ⏳ 429(AniList): 4271ms待ってリトライ (3/8) title=ウリクペン救助隊
+   ⏳ 429(AniList): 7215ms待ってリトライ (4/8) title=ウリクペン救助隊
+   ⏳ 429(AniList): 12031ms待ってリトライ (5/8) title=ウリクペン救助隊
+   ⏳ 429(AniList): 19896ms待ってリトライ (6/8) title=ウリクペン救助隊
+   ⏳ 429(AniList): 20322ms待ってリトライ (7/8) title=ウリクペン救助隊
+- no official (skip): id=7634 title=ウリクペン救助隊
+   ⏳ 429(AniList): 1632ms待ってリトライ (1/8) title=楽しいウイロータウン
+   ⏳ 429(AniList): 2616ms待ってリトライ (2/8) title=楽しいウイロータウン
+   ⏳ 429(AniList): 4377ms待ってリトライ (3/8) title=楽しいウイロータウン
+   ⏳ 429(AniList): 7198ms待ってリトライ (4/8) title=楽しいウイロータウン
+   ⏳ 429(AniList): 11761ms待ってリトライ (5/8) title=楽しいウイロータウン
+   ⏳ 429(AniList): 20013ms待ってリトライ (6/8) title=楽しいウイロータウン
+   ⏳ 429(AniList): 20005ms待ってリトライ (7/8) title=楽しいウイロータウン
+- no official (skip): id=7635 title=楽しいウイロータウン
+- no official (skip): id=7636 title=燃えろアーサー 白馬の王子
+- no official (skip): id=7637 title=山ねずみ ロッキーチャック
+- no official (skip): id=7638 title=夢見るトッポ・ジージョ
+   ⏳ 429(AniList): 1655ms待ってリトライ (1/8) title=七都市物語 ～北極海戦線～
+   ⏳ 429(AniList): 2386ms待ってリトライ (2/8) title=七都市物語 ～北極海戦線～
+   ⏳ 429(AniList): 4125ms待ってリトライ (3/8) title=七都市物語 ～北極海戦線～
+   ⏳ 429(AniList): 7043ms待ってリトライ (4/8) title=七都市物語 ～北極海戦線～
+   ⏳ 429(AniList): 11859ms待ってリトライ (5/8) title=七都市物語 ～北極海戦線～
+   ⏳ 429(AniList): 20134ms待ってリトライ (6/8) title=七都市物語 ～北極海戦線～
+   ⏳ 429(AniList): 20190ms待ってリトライ (7/8) title=七都市物語 ～北極海戦線～
+- no official (skip): id=7639 title=七都市物語 ～北極海戦線～
+- no official (skip): id=7640 title=ライドバック
+- no official (skip): id=7641 title=아리수변의 꿈나무
+- no official (skip): id=7642 title=御先祖様万々歳!
+   ⏳ 429(AniList): 1454ms待ってリトライ (1/8) title=MAROKO 麿子
+   ⏳ 429(AniList): 2679ms待ってリトライ (2/8) title=MAROKO 麿子
+   ⏳ 429(AniList): 4155ms待ってリトライ (3/8) title=MAROKO 麿子
+   ⏳ 429(AniList): 7109ms待ってリトライ (4/8) title=MAROKO 麿子
+   ⏳ 429(AniList): 11723ms待ってリトライ (5/8) title=MAROKO 麿子
+   ⏳ 429(AniList): 20045ms待ってリトライ (6/8) title=MAROKO 麿子
+   ⏳ 429(AniList): 20296ms待ってリトライ (7/8) title=MAROKO 麿子
+- no official (skip): id=7643 title=MAROKO 麿子
+- no official (skip): id=7644 title=COBRA THE ANIMATION ザ・サイコガン
+- no official (skip): id=7645 title=夢のクレヨン王国
+- no official (skip): id=7646 title=アラド戦記 ～スラップアップパーティー～
+- no official (skip): id=7647 title=吉野の姫制
+   ⏳ 429(AniList): 1492ms待ってリトライ (1/8) title=ネオアンジェリーク Abyss -Second Age-
+   ⏳ 429(AniList): 2447ms待ってリトライ (2/8) title=ネオアンジェリーク Abyss -Second Age-
+   ⏳ 429(AniList): 4222ms待ってリトライ (3/8) title=ネオアンジェリーク Abyss -Second Age-
+   ⏳ 429(AniList): 7214ms待ってリトライ (4/8) title=ネオアンジェリーク Abyss -Second Age-
+   ⏳ 429(AniList): 11975ms待ってリトライ (5/8) title=ネオアンジェリーク Abyss -Second Age-
+   ⏳ 429(AniList): 20026ms待ってリトライ (6/8) title=ネオアンジェリーク Abyss -Second Age-
+   ⏳ 429(AniList): 20047ms待ってリトライ (7/8) title=ネオアンジェリーク Abyss -Second Age-
+- no official (skip): id=7648 title=ネオアンジェリーク Abyss -Second Age-
+- no official (skip): id=7649 title=鉄拳チンミ
+- no official (skip): id=7650 title=るろうに剣心－明治剣客浪漫譚－
+- no official (skip): id=7651 title=B-伝説! バトルビーダマン 炎魂
+   ⏳ 429(AniList): 1716ms待ってリトライ (1/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+   ⏳ 429(AniList): 2650ms待ってリトライ (2/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+   ⏳ 429(AniList): 4165ms待ってリトライ (3/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+   ⏳ 429(AniList): 6891ms待ってリトライ (4/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+   ⏳ 429(AniList): 12022ms待ってリトライ (5/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+   ⏳ 429(AniList): 20022ms待ってリトライ (6/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+   ⏳ 429(AniList): 20309ms待ってリトライ (7/8) title=GHOST IN THE SHELL / 攻殻機動隊2.0
+- no official (skip): id=7652 title=GHOST IN THE SHELL / 攻殻機動隊2.0
+- no official (skip): id=7653 title=坊っちゃん
+- no official (skip): id=7654 title=ウルトラニャン　星空から舞い降りたふしぎネコ
+   ⏳ 429(AniList): 1544ms待ってリトライ (1/8) title=ウルトラニャン２　ハッピー大作戦
+   ⏳ 429(AniList): 2655ms待ってリトライ (2/8) title=ウルトラニャン２　ハッピー大作戦
+   ⏳ 429(AniList): 4205ms待ってリトライ (3/8) title=ウルトラニャン２　ハッピー大作戦
+   ⏳ 429(AniList): 6892ms待ってリトライ (4/8) title=ウルトラニャン２　ハッピー大作戦
+   ⏳ 429(AniList): 11789ms待ってリトライ (5/8) title=ウルトラニャン２　ハッピー大作戦
+   ⏳ 429(AniList): 20173ms待ってリトライ (6/8) title=ウルトラニャン２　ハッピー大作戦
+   ⏳ 429(AniList): 20147ms待ってリトライ (7/8) title=ウルトラニャン２　ハッピー大作戦
+- no official (skip): id=7655 title=ウルトラニャン２　ハッピー大作戦
+- no official (skip): id=7656 title=スケアクロウマン
+- no official (skip): id=7657 title=タカネの自転車
+- no official (skip): id=7658 title=みんなあげちゃう
+   ⏳ 429(AniList): 1441ms待ってリトライ (1/8) title=カゼノトオリミチ
+   ⏳ 429(AniList): 2698ms待ってリトライ (2/8) title=カゼノトオリミチ
+   ⏳ 429(AniList): 4337ms待ってリトライ (3/8) title=カゼノトオリミチ
+   ⏳ 429(AniList): 7137ms待ってリトライ (4/8) title=カゼノトオリミチ
+   ⏳ 429(AniList): 11933ms待ってリトライ (5/8) title=カゼノトオリミチ
+   ⏳ 429(AniList): 20135ms待ってリトライ (6/8) title=カゼノトオリミチ
+   ⏳ 429(AniList): 20269ms待ってリトライ (7/8) title=カゼノトオリミチ
+- updated: id=7659 title=カゼノトオリミチ -> https://www.nhk.or.jp/minna/songs/MIN200412_01/
+- no official (skip): id=7660 title=サイボーグ009
+- updated: id=7661 title=Yes! プリキュア５GoGo! お菓子の国のハッピーバースデイ♪ -> https://www.toei-anim.co.jp/movie/2008_precure5gogo/
+   ⏳ 429(AniList): 1673ms待ってリトライ (1/8) title=グレンラガン パラレルワークス
+   ⏳ 429(AniList): 2380ms待ってリトライ (2/8) title=グレンラガン パラレルワークス
+   ⏳ 429(AniList): 4249ms待ってリトライ (3/8) title=グレンラガン パラレルワークス
+   ⏳ 429(AniList): 6978ms待ってリトライ (4/8) title=グレンラガン パラレルワークス
+   ⏳ 429(AniList): 12019ms待ってリトライ (5/8) title=グレンラガン パラレルワークス
+   ⏳ 429(AniList): 20110ms待ってリトライ (6/8) title=グレンラガン パラレルワークス
+   ⏳ 429(AniList): 20322ms待ってリトライ (7/8) title=グレンラガン パラレルワークス
+- no official (skip): id=7662 title=グレンラガン パラレルワークス
+- no official (skip): id=7663 title=イソップ・ワールド
+- no official (skip): id=7664 title=デジモンセイバーズ 特典映像 アグモン！ガオモン！ララモン！爆裂！場外ラストバトル！
+- no official (skip): id=7665 title=劇場版ハートの国のアリス～Wonderful Wonder World～
+   ⏳ 429(AniList): 1469ms待ってリトライ (1/8) title=シゴフミ「ソレカラ」
+   ⏳ 429(AniList): 2521ms待ってリトライ (2/8) title=シゴフミ「ソレカラ」
+   ⏳ 429(AniList): 4393ms待ってリトライ (3/8) title=シゴフミ「ソレカラ」
+   ⏳ 429(AniList): 7094ms待ってリトライ (4/8) title=シゴフミ「ソレカラ」
+   ⏳ 429(AniList): 11830ms待ってリトライ (5/8) title=シゴフミ「ソレカラ」
+   ⏳ 429(AniList): 20041ms待ってリトライ (6/8) title=シゴフミ「ソレカラ」
+   ⏳ 429(AniList): 20338ms待ってリトライ (7/8) title=シゴフミ「ソレカラ」
+- no official (skip): id=7666 title=シゴフミ「ソレカラ」
+- no official (skip): id=7667 title=AIKa Special TRIAL
+- no official (skip): id=7668 title=クイーンズブレイド 流浪の戦士
+- no official (skip): id=7669 title=スキップ・ビート！
+- updated: id=7670 title=青春アニメ全集 -> http://www.nippon-animation.co.jp/work/1499/
+   ⏳ 429(AniList): 1724ms待ってリトライ (1/8) title=ドルアーガの塔 ～the Sword of URUK～
+   ⏳ 429(AniList): 2633ms待ってリトライ (2/8) title=ドルアーガの塔 ～the Sword of URUK～
+   ⏳ 429(AniList): 4275ms待ってリトライ (3/8) title=ドルアーガの塔 ～the Sword of URUK～
+   ⏳ 429(AniList): 6925ms待ってリトライ (4/8) title=ドルアーガの塔 ～the Sword of URUK～
+   ⏳ 429(AniList): 11897ms待ってリトライ (5/8) title=ドルアーガの塔 ～the Sword of URUK～
+   ⏳ 429(AniList): 20223ms待ってリトライ (6/8) title=ドルアーガの塔 ～the Sword of URUK～
+   ⏳ 429(AniList): 20266ms待ってリトライ (7/8) title=ドルアーガの塔 ～the Sword of URUK～
+- no official (skip): id=7671 title=ドルアーガの塔 ～the Sword of URUK～
+- no official (skip): id=7672 title=ブルーリメイン
+- no official (skip): id=7673 title=秘密結社 鷹の爪
+   ⏳ 429(AniList): 1487ms待ってリトライ (1/8) title=パパと踊ろう
+   ⏳ 429(AniList): 2427ms待ってリトライ (2/8) title=パパと踊ろう
+   ⏳ 429(AniList): 4290ms待ってリトライ (3/8) title=パパと踊ろう
+   ⏳ 429(AniList): 6987ms待ってリトライ (4/8) title=パパと踊ろう
+   ⏳ 429(AniList): 11811ms待ってリトライ (5/8) title=パパと踊ろう
+   ⏳ 429(AniList): 20109ms待ってリトライ (6/8) title=パパと踊ろう
+   ⏳ 429(AniList): 20040ms待ってリトライ (7/8) title=パパと踊ろう
+- no official (skip): id=7674 title=パパと踊ろう
+- no official (skip): id=7675 title=ハロー張りネズミ ファイル170 殺意の領分
+- no official (skip): id=7676 title=トーキョー・ループ
+   ⏳ 429(AniList): 1657ms待ってリトライ (1/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+   ⏳ 429(AniList): 2614ms待ってリトライ (2/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+   ⏳ 429(AniList): 4184ms待ってリトライ (3/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+   ⏳ 429(AniList): 7175ms待ってリトライ (4/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+   ⏳ 429(AniList): 12037ms待ってリトライ (5/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+   ⏳ 429(AniList): 19880ms待ってリトライ (6/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+   ⏳ 429(AniList): 20320ms待ってリトライ (7/8) title=GUNSLINGER GIRL -IL TEATRINO- OVA
+- no official (skip): id=7677 title=GUNSLINGER GIRL -IL TEATRINO- OVA
+- no official (skip): id=7678 title=ARIA The ORIGINATION「そのちょっぴり秘密の場所に…」
+- no official (skip): id=7679 title=ヤマトタケル
+- no official (skip): id=7680 title=ママはぽよぽよザウルスがお好き
+   ⏳ 429(AniList): 1581ms待ってリトライ (1/8) title=ef - a tale of melodies.
+   ⏳ 429(AniList): 2727ms待ってリトライ (2/8) title=ef - a tale of melodies.
+   ⏳ 429(AniList): 4123ms待ってリトライ (3/8) title=ef - a tale of melodies.
+   ⏳ 429(AniList): 7151ms待ってリトライ (4/8) title=ef - a tale of melodies.
+   ⏳ 429(AniList): 11959ms待ってリトライ (5/8) title=ef - a tale of melodies.
+   ⏳ 429(AniList): 20088ms待ってリトライ (6/8) title=ef - a tale of melodies.
+   ⏳ 429(AniList): 20306ms待ってリトライ (7/8) title=ef - a tale of melodies.
+- no official (skip): id=7681 title=ef - a tale of melodies.
+- no official (skip): id=7682 title=ゼノ かぎりなき愛に
+- no official (skip): id=7683 title=ピカチュウたんけんたい
+- no official (skip): id=7684 title=ピチューとピカチュウ
+   ⏳ 429(AniList): 1608ms待ってリトライ (1/8) title=ピカチュウのドキドキかくれんぼ
+   ⏳ 429(AniList): 2405ms待ってリトライ (2/8) title=ピカチュウのドキドキかくれんぼ
+   ⏳ 429(AniList): 4272ms待ってリトライ (3/8) title=ピカチュウのドキドキかくれんぼ
+   ⏳ 429(AniList): 7072ms待ってリトライ (4/8) title=ピカチュウのドキドキかくれんぼ
+   ⏳ 429(AniList): 11934ms待ってリトライ (5/8) title=ピカチュウのドキドキかくれんぼ
+   ⏳ 429(AniList): 20043ms待ってリトライ (6/8) title=ピカチュウのドキドキかくれんぼ
+   ⏳ 429(AniList): 20016ms待ってリトライ (7/8) title=ピカチュウのドキドキかくれんぼ
+- no official (skip): id=7685 title=ピカチュウのドキドキかくれんぼ
+- no official (skip): id=7686 title=ピカピカ星空キャンプ
+- no official (skip): id=7687 title=Druaga no Tou: The Aegis of Uruk - Jil no Bouken
+- no official (skip): id=7688 title=ハックルベリー・フィン物語
+- no official (skip): id=7689 title=수호요정 미셸
+- updated: id=7690 title=ToHeart2 adplus -> https://aquaplus.jp/th2adplus/
+   ⏳ 429(AniList): 1567ms待ってリトライ (1/8) title=魔神英雄伝ワタル2
+   ⏳ 429(AniList): 2592ms待ってリトライ (2/8) title=魔神英雄伝ワタル2
+   ⏳ 429(AniList): 4330ms待ってリトライ (3/8) title=魔神英雄伝ワタル2
+   ⏳ 429(AniList): 7063ms待ってリトライ (4/8) title=魔神英雄伝ワタル2
+   ⏳ 429(AniList): 12034ms待ってリトライ (5/8) title=魔神英雄伝ワタル2
+   ⏳ 429(AniList): 20066ms待ってリトライ (6/8) title=魔神英雄伝ワタル2
+   ⏳ 429(AniList): 20048ms待ってリトライ (7/8) title=魔神英雄伝ワタル2
+- no official (skip): id=7691 title=魔神英雄伝ワタル2
+- no official (skip): id=7692 title=破裏拳ポリマー
+- no official (skip): id=7693 title=新造人間キャシャーン
+   ⏳ 429(AniList): 1423ms待ってリトライ (1/8) title=苺ましまろencore
+   ⏳ 429(AniList): 2621ms待ってリトライ (2/8) title=苺ましまろencore
+   ⏳ 429(AniList): 4227ms待ってリトライ (3/8) title=苺ましまろencore
+   ⏳ 429(AniList): 7011ms待ってリトライ (4/8) title=苺ましまろencore
+   ⏳ 429(AniList): 11942ms待ってリトライ (5/8) title=苺ましまろencore
+   ⏳ 429(AniList): 20141ms待ってリトライ (6/8) title=苺ましまろencore
+   ⏳ 429(AniList): 20288ms待ってリトライ (7/8) title=苺ましまろencore
+- no official (skip): id=7694 title=苺ましまろencore
+   ⏳ 429(AniList): 1543ms待ってリトライ (1/8) title=純情ロマンチカ2(に)
+   ⏳ 429(AniList): 2456ms待ってリトライ (2/8) title=純情ロマンチカ2(に)
+   ⏳ 429(AniList): 4317ms待ってリトライ (3/8) title=純情ロマンチカ2(に)
+   ⏳ 429(AniList): 7158ms待ってリトライ (4/8) title=純情ロマンチカ2(に)
+   ⏳ 429(AniList): 12015ms待ってリトライ (5/8) title=純情ロマンチカ2(に)
+   ⏳ 429(AniList): 20112ms待ってリトライ (6/8) title=純情ロマンチカ2(に)
+   ⏳ 429(AniList): 20229ms待ってリトライ (7/8) title=純情ロマンチカ2(に)
+- no official (skip): id=7695 title=純情ロマンチカ2(に)
+- no official (skip): id=7696 title=BLEACH Fade to Black 君の名を呼ぶ
+- no official (skip): id=7697 title=ルパン三世 「セブンデイズ・ラプソディ」
+- no official (skip): id=7698 title=手塚治虫のドン・ドラキュラ
+   ⏳ 429(AniList): 1656ms待ってリトライ (1/8) title=風魔の小次郎 夜叉篇
+   ⏳ 429(AniList): 2411ms待ってリトライ (2/8) title=風魔の小次郎 夜叉篇
+   ⏳ 429(AniList): 4147ms待ってリトライ (3/8) title=風魔の小次郎 夜叉篇
+   ⏳ 429(AniList): 6980ms待ってリトライ (4/8) title=風魔の小次郎 夜叉篇
+   ⏳ 429(AniList): 11814ms待ってリトライ (5/8) title=風魔の小次郎 夜叉篇
+   ⏳ 429(AniList): 19886ms待ってリトライ (6/8) title=風魔の小次郎 夜叉篇
+   ⏳ 429(AniList): 20197ms待ってリトライ (7/8) title=風魔の小次郎 夜叉篇
+- no official (skip): id=7699 title=風魔の小次郎 夜叉篇
+- no official (skip): id=7700 title=風魔の小次郎 聖剣戦争篇
+- no official (skip): id=7701 title=風魔の小次郎～風魔反乱篇～
+- no official (skip): id=7702 title=獄・さよなら絶望先生
+   ⏳ 429(AniList): 1501ms待ってリトライ (1/8) title=ピカチュウのふゆやすみ
+   ⏳ 429(AniList): 2562ms待ってリトライ (2/8) title=ピカチュウのふゆやすみ
+   ⏳ 429(AniList): 4108ms待ってリトライ (3/8) title=ピカチュウのふゆやすみ
+   ⏳ 429(AniList): 6928ms待ってリトライ (4/8) title=ピカチュウのふゆやすみ
+   ⏳ 429(AniList): 11919ms待ってリトライ (5/8) title=ピカチュウのふゆやすみ
+   ⏳ 429(AniList): 20149ms待ってリトライ (6/8) title=ピカチュウのふゆやすみ
+   ⏳ 429(AniList): 20125ms待ってリトライ (7/8) title=ピカチュウのふゆやすみ
+- no official (skip): id=7703 title=ピカチュウのふゆやすみ
+- no official (skip): id=7704 title=走れメロス
+- no official (skip): id=7705 title=魍魎の匣
+- no official (skip): id=7706 title=テイルズ オブ ジ アビス
+   ⏳ 429(AniList): 1709ms待ってリトライ (1/8) title=犬夜叉 黒い鉄砕牙
+   ⏳ 429(AniList): 2639ms待ってリトライ (2/8) title=犬夜叉 黒い鉄砕牙
+   ⏳ 429(AniList): 4381ms待ってリトライ (3/8) title=犬夜叉 黒い鉄砕牙
+   ⏳ 429(AniList): 7015ms待ってリトライ (4/8) title=犬夜叉 黒い鉄砕牙
+   ⏳ 429(AniList): 11838ms待ってリトライ (5/8) title=犬夜叉 黒い鉄砕牙
+   ⏳ 429(AniList): 19880ms待ってリトライ (6/8) title=犬夜叉 黒い鉄砕牙
+   ⏳ 429(AniList): 20024ms待ってリトライ (7/8) title=犬夜叉 黒い鉄砕牙
+- no official (skip): id=7707 title=犬夜叉 黒い鉄砕牙
+- no official (skip): id=7708 title=Peut-être toi
+- no official (skip): id=7709 title=うみねこのなく頃に
+- updated: id=7710 title=黒執事 -> http://www.kuroshitsuji.tv/1st/
+- updated: id=7711 title=BLACK LAGOON Roberta's Blood Trail -> http://www.blacklagoon.jp/
+   ⏳ 429(AniList): 1666ms待ってリトライ (1/8) title=今日の５の２ (2008)
+   ⏳ 429(AniList): 2609ms待ってリトライ (2/8) title=今日の５の２ (2008)
+   ⏳ 429(AniList): 4137ms待ってリトライ (3/8) title=今日の５の２ (2008)
+   ⏳ 429(AniList): 7153ms待ってリトライ (4/8) title=今日の５の２ (2008)
+   ⏳ 429(AniList): 11828ms待ってリトライ (5/8) title=今日の５の２ (2008)
+   ⏳ 429(AniList): 20175ms待ってリトライ (6/8) title=今日の５の２ (2008)
+   ⏳ 429(AniList): 20337ms待ってリトライ (7/8) title=今日の５の２ (2008)
+- no official (skip): id=7712 title=今日の５の２ (2008)
+- no official (skip): id=7713 title=マッハガール
+- no official (skip): id=7714 title=大恐竜時代
+   ⏳ 429(AniList): 1695ms待ってリトライ (1/8) title=美肌一族
+   ⏳ 429(AniList): 2446ms待ってリトライ (2/8) title=美肌一族
+   ⏳ 429(AniList): 4347ms待ってリトライ (3/8) title=美肌一族
+   ⏳ 429(AniList): 7210ms待ってリトライ (4/8) title=美肌一族
+   ⏳ 429(AniList): 11912ms待ってリトライ (5/8) title=美肌一族
+   ⏳ 429(AniList): 19969ms待ってリトライ (6/8) title=美肌一族
+   ⏳ 429(AniList): 20347ms待ってリトライ (7/8) title=美肌一族
+- updated: id=7715 title=美肌一族 -> https://www.tv-tokyo.co.jp/anime/bihada/
+- no official (skip): id=7716 title=ピカチュウのわんぱくアイランド
+- updated: id=7717 title=銀河探査２１００年 ボーダープラネット -> https://tezukaosamu.net/jp/anime/62.html
+   ⏳ 429(AniList): 1724ms待ってリトライ (1/8) title=×××HOLiC 春夢記
+   ⏳ 429(AniList): 2638ms待ってリトライ (2/8) title=×××HOLiC 春夢記
+   ⏳ 429(AniList): 4138ms待ってリトライ (3/8) title=×××HOLiC 春夢記
+   ⏳ 429(AniList): 7018ms待ってリトライ (4/8) title=×××HOLiC 春夢記
+   ⏳ 429(AniList): 11988ms待ってリトライ (5/8) title=×××HOLiC 春夢記
+   ⏳ 429(AniList): 20088ms待ってリトライ (6/8) title=×××HOLiC 春夢記
+   ⏳ 429(AniList): 20037ms待ってリトライ (7/8) title=×××HOLiC 春夢記
+- updated: id=7718 title=×××HOLiC 春夢記 -> http://gentei.kodansha.co.jp/content/tsubaholi/
+- no official (skip): id=7719 title=ラーマヤーナ ラーマ王子伝説
+- no official (skip): id=7720 title=紅いハヤテ
+   ⏳ 429(AniList): 1644ms待ってリトライ (1/8) title=Marco: 母をたずねて三千里
+   ⏳ 429(AniList): 2392ms待ってリトライ (2/8) title=Marco: 母をたずねて三千里
+   ⏳ 429(AniList): 4313ms待ってリトライ (3/8) title=Marco: 母をたずねて三千里
+   ⏳ 429(AniList): 7025ms待ってリトライ (4/8) title=Marco: 母をたずねて三千里
+   ⏳ 429(AniList): 11708ms待ってリトライ (5/8) title=Marco: 母をたずねて三千里
+   ⏳ 429(AniList): 20040ms待ってリトライ (6/8) title=Marco: 母をたずねて三千里
+   ⏳ 429(AniList): 20160ms待ってリトライ (7/8) title=Marco: 母をたずねて三千里
+- no official (skip): id=7721 title=Marco: 母をたずねて三千里
+- no official (skip): id=7722 title=巴がゆく!
+- no official (skip): id=7723 title=アイドル天使ようこそようこ
+- no official (skip): id=7724 title=ネクスト戦記エーアガイツ
+- no official (skip): id=7725 title=ムーの白鯨
+   ⏳ 429(AniList): 1706ms待ってリトライ (1/8) title=Ａ.Ｆ
+   ⏳ 429(AniList): 2423ms待ってリトライ (2/8) title=Ａ.Ｆ
+   ⏳ 429(AniList): 4049ms待ってリトライ (3/8) title=Ａ.Ｆ
+   ⏳ 429(AniList): 7056ms待ってリトライ (4/8) title=Ａ.Ｆ
+   ⏳ 429(AniList): 11743ms待ってリトライ (5/8) title=Ａ.Ｆ
+   ⏳ 429(AniList): 20037ms待ってリトライ (6/8) title=Ａ.Ｆ
+   ⏳ 429(AniList): 20059ms待ってリトライ (7/8) title=Ａ.Ｆ
+- no official (skip): id=7726 title=Ａ.Ｆ
+- no official (skip): id=7727 title=一休さん
+- no official (skip): id=7728 title=忍者ハットリくん
+- no official (skip): id=7729 title=ツバサ 春雷記
+   ⏳ 429(AniList): 1705ms待ってリトライ (1/8) title=マクロスfufonfia
+   ⏳ 429(AniList): 2576ms待ってリトライ (2/8) title=マクロスfufonfia
+   ⏳ 429(AniList): 4121ms待ってリトライ (3/8) title=マクロスfufonfia
+   ⏳ 429(AniList): 6927ms待ってリトライ (4/8) title=マクロスfufonfia
+   ⏳ 429(AniList): 11946ms待ってリトライ (5/8) title=マクロスfufonfia
+   ⏳ 429(AniList): 19948ms待ってリトライ (6/8) title=マクロスfufonfia
+   ⏳ 429(AniList): 20027ms待ってリトライ (7/8) title=マクロスfufonfia
+- no official (skip): id=7730 title=マクロスfufonfia
+- no official (skip): id=7731 title=砂漠の海賊！ キャプテンクッパ
+- no official (skip): id=7732 title=手塚治虫が消えた?! 20世紀最後の怪事件
+- no official (skip): id=7733 title=妖精フローレンス
+- no official (skip): id=7734 title=少年猿飛佐助
+   ⏳ 429(AniList): 1467ms待ってリトライ (1/8) title=マシュランボー (2008)
+   ⏳ 429(AniList): 2723ms待ってリトライ (2/8) title=マシュランボー (2008)
+   ⏳ 429(AniList): 4238ms待ってリトライ (3/8) title=マシュランボー (2008)
+   ⏳ 429(AniList): 7065ms待ってリトライ (4/8) title=マシュランボー (2008)
+   ⏳ 429(AniList): 11951ms待ってリトライ (5/8) title=マシュランボー (2008)
+   ⏳ 429(AniList): 20107ms待ってリトライ (6/8) title=マシュランボー (2008)
+   ⏳ 429(AniList): 20020ms待ってリトライ (7/8) title=マシュランボー (2008)
+- no official (skip): id=7735 title=マシュランボー (2008)
+- no official (skip): id=7736 title=六門天外モンコレナイト
+   ⏳ 429(AniList): 1608ms待ってリトライ (1/8) title=自画像
+   ⏳ 429(AniList): 2435ms待ってリトライ (2/8) title=自画像
+   ⏳ 429(AniList): 4190ms待ってリトライ (3/8) title=自画像
+   ⏳ 429(AniList): 7007ms待ってリトライ (4/8) title=自画像
+   ⏳ 429(AniList): 11929ms待ってリトライ (5/8) title=自画像
+   ⏳ 429(AniList): 20010ms待ってリトライ (6/8) title=自画像
+   ⏳ 429(AniList): 20151ms待ってリトライ (7/8) title=自画像
+- no official (skip): id=7737 title=自画像
+- no official (skip): id=7738 title=超人ロック～ミラーリング～
+- updated: id=7739 title=アフロサムライ：レザレクション -> http://www.afrosamurai2.jp/
+- no official (skip): id=7740 title=キャシャーンSins
+- no official (skip): id=7741 title=ヘルズ
+   ⏳ 429(AniList): 1579ms待ってリトライ (1/8) title=魔法少女リリカルなのは The MOVIE 1st
+   ⏳ 429(AniList): 2461ms待ってリトライ (2/8) title=魔法少女リリカルなのは The MOVIE 1st
+   ⏳ 429(AniList): 4301ms待ってリトライ (3/8) title=魔法少女リリカルなのは The MOVIE 1st
+   ⏳ 429(AniList): 6971ms待ってリトライ (4/8) title=魔法少女リリカルなのは The MOVIE 1st
+   ⏳ 429(AniList): 11711ms待ってリトライ (5/8) title=魔法少女リリカルなのは The MOVIE 1st
+   ⏳ 429(AniList): 19892ms待ってリトライ (6/8) title=魔法少女リリカルなのは The MOVIE 1st
+   ⏳ 429(AniList): 20253ms待ってリトライ (7/8) title=魔法少女リリカルなのは The MOVIE 1st
+- updated: id=7742 title=魔法少女リリカルなのは The MOVIE 1st -> http://www.nanoha.com/archive4/index.html
+- no official (skip): id=7743 title=若草物語
+- no official (skip): id=7744 title=明日のよいち！
+   ⏳ 429(AniList): 1407ms待ってリトライ (1/8) title=バリバリ伝説
+   ⏳ 429(AniList): 2654ms待ってリトライ (2/8) title=バリバリ伝説
+   ⏳ 429(AniList): 4141ms待ってリトライ (3/8) title=バリバリ伝説
+   ⏳ 429(AniList): 6912ms待ってリトライ (4/8) title=バリバリ伝説
+   ⏳ 429(AniList): 11851ms待ってリトライ (5/8) title=バリバリ伝説
+   ⏳ 429(AniList): 19950ms待ってリトライ (6/8) title=バリバリ伝説
+   ⏳ 429(AniList): 20204ms待ってリトライ (7/8) title=バリバリ伝説
+- no official (skip): id=7745 title=バリバリ伝説
+- no official (skip): id=7746 title=天体戦士サンレッド
+- no official (skip): id=7747 title=ながぐつ三銃士
+- no official (skip): id=7748 title=十五少年漂流記
+- no official (skip): id=7749 title=サンゴ礁伝説 青い海のエルフィ
+   ⏳ 429(AniList): 1588ms待ってリトライ (1/8) title=Fluximation
+   ⏳ 429(AniList): 2614ms待ってリトライ (2/8) title=Fluximation
+   ⏳ 429(AniList): 4271ms待ってリトライ (3/8) title=Fluximation
+   ⏳ 429(AniList): 7205ms待ってリトライ (4/8) title=Fluximation
+   ⏳ 429(AniList): 11874ms待ってリトライ (5/8) title=Fluximation
+   ⏳ 429(AniList): 19906ms待ってリトライ (6/8) title=Fluximation
+   ⏳ 429(AniList): 20081ms待ってリトライ (7/8) title=Fluximation
+- no official (skip): id=7750 title=Fluximation
+- no official (skip): id=7751 title=夢のかけら
+- no official (skip): id=7752 title=ピロッポ
+- no official (skip): id=7753 title=ルパン三世　sweet lost night ～魔法のランプは悪夢の予感～
+   ⏳ 429(AniList): 1645ms待ってリトライ (1/8) title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 2491ms待ってリトライ (2/8) title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 4371ms待ってリトライ (3/8) title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 7220ms待ってリトライ (4/8) title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 11896ms待ってリトライ (5/8) title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 20165ms待ってリトライ (6/8) title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 20178ms待ってリトライ (7/8) title=絶対衝激～プラトニックハート～
+- no official (skip): id=7754 title=絶対衝激～プラトニックハート～
+   ⏳ 429(AniList): 1731ms待ってリトライ (1/8) title=闘士ゴーディアン
+   ⏳ 429(AniList): 2484ms待ってリトライ (2/8) title=闘士ゴーディアン
+   ⏳ 429(AniList): 4321ms待ってリトライ (3/8) title=闘士ゴーディアン
+   ⏳ 429(AniList): 7141ms待ってリトライ (4/8) title=闘士ゴーディアン
+   ⏳ 429(AniList): 12018ms待ってリトライ (5/8) title=闘士ゴーディアン
+   ⏳ 429(AniList): 20076ms待ってリトライ (6/8) title=闘士ゴーディアン
+   ⏳ 429(AniList): 20075ms待ってリトライ (7/8) title=闘士ゴーディアン
+- no official (skip): id=7755 title=闘士ゴーディアン
+- updated: id=7756 title=忍風カムイ外伝 -> https://eiken-anime.jp/works/忍風カムイ外伝/
+- no official (skip): id=7757 title=臀撃おしおき娘ゴータマン～ゴータマン誕生篇
+- no official (skip): id=7758 title=スティッチ！
+   ⏳ 429(AniList): 1568ms待ってリトライ (1/8) title=メジャー（第5シリーズ)
+   ⏳ 429(AniList): 2490ms待ってリトライ (2/8) title=メジャー（第5シリーズ)
+   ⏳ 429(AniList): 4215ms待ってリトライ (3/8) title=メジャー（第5シリーズ)
+   ⏳ 429(AniList): 6976ms待ってリトライ (4/8) title=メジャー（第5シリーズ)
+   ⏳ 429(AniList): 11705ms待ってリトライ (5/8) title=メジャー（第5シリーズ)
+   ⏳ 429(AniList): 19945ms待ってリトライ (6/8) title=メジャー（第5シリーズ)
+   ⏳ 429(AniList): 20045ms待ってリトライ (7/8) title=メジャー（第5シリーズ)
+- no official (skip): id=7759 title=メジャー（第5シリーズ)
+- no official (skip): id=7760 title=メジャー 友情の一球（ウイニングショット）
+- no official (skip): id=7761 title=COBRA THE ANIMATION タイム・ドライブ
+- no official (skip): id=7762 title=COBRA THE ANIMATION
+   ⏳ 429(AniList): 1650ms待ってリトライ (1/8) title=屍姫 玄
+   ⏳ 429(AniList): 2557ms待ってリトライ (2/8) title=屍姫 玄
+   ⏳ 429(AniList): 4379ms待ってリトライ (3/8) title=屍姫 玄
+   ⏳ 429(AniList): 6966ms待ってリトライ (4/8) title=屍姫 玄
+   ⏳ 429(AniList): 11819ms待ってリトライ (5/8) title=屍姫 玄
+   ⏳ 429(AniList): 20135ms待ってリトライ (6/8) title=屍姫 玄
+   ⏳ 429(AniList): 20073ms待ってリトライ (7/8) title=屍姫 玄
+- no official (skip): id=7763 title=屍姫 玄
+- no official (skip): id=7764 title=バブルガムクライシス Hurricane Live! 2033
+- no official (skip): id=7765 title=地球へ...
+- no official (skip): id=7766 title=黒塚
+- no official (skip): id=7767 title=グイン・サーガ
+   ⏳ 429(AniList): 1437ms待ってリトライ (1/8) title=バブルガムクライシス Hurricane Live! 2032
+   ⏳ 429(AniList): 2531ms待ってリトライ (2/8) title=バブルガムクライシス Hurricane Live! 2032
+   ⏳ 429(AniList): 4361ms待ってリトライ (3/8) title=バブルガムクライシス Hurricane Live! 2032
+   ⏳ 429(AniList): 7006ms待ってリトライ (4/8) title=バブルガムクライシス Hurricane Live! 2032
+   ⏳ 429(AniList): 11720ms待ってリトライ (5/8) title=バブルガムクライシス Hurricane Live! 2032
+   ⏳ 429(AniList): 19954ms待ってリトライ (6/8) title=バブルガムクライシス Hurricane Live! 2032
+   ⏳ 429(AniList): 20204ms待ってリトライ (7/8) title=バブルガムクライシス Hurricane Live! 2032
+- no official (skip): id=7768 title=バブルガムクライシス Hurricane Live! 2032
+- no official (skip): id=7769 title=仮面のメイドガイ OAD
+- no official (skip): id=7770 title=マクロスXX
+- updated: id=7771 title=エイトマン -> https://eiken-anime.jp/works/エイトマン/
+   ⏳ 429(AniList): 1582ms待ってリトライ (1/8) title=アイ・シティ
+   ⏳ 429(AniList): 2418ms待ってリトライ (2/8) title=アイ・シティ
+   ⏳ 429(AniList): 4206ms待ってリトライ (3/8) title=アイ・シティ
+   ⏳ 429(AniList): 6972ms待ってリトライ (4/8) title=アイ・シティ
+   ⏳ 429(AniList): 11825ms待ってリトライ (5/8) title=アイ・シティ
+   ⏳ 429(AniList): 20198ms待ってリトライ (6/8) title=アイ・シティ
+   ⏳ 429(AniList): 20228ms待ってリトライ (7/8) title=アイ・シティ
+- no official (skip): id=7772 title=アイ・シティ
+- no official (skip): id=7773 title=ヘタリア Axis Powers
+- no official (skip): id=7774 title=Detroit Metal City: Birth of the Metal Devil
+- no official (skip): id=7775 title=ビーストウォーズⅡ（セカンド） 超生命体トランスフォーマー
+   ⏳ 429(AniList): 1475ms待ってリトライ (1/8) title=コロッケ！
+   ⏳ 429(AniList): 2387ms待ってリトライ (2/8) title=コロッケ！
+   ⏳ 429(AniList): 4207ms待ってリトライ (3/8) title=コロッケ！
+   ⏳ 429(AniList): 7102ms待ってリトライ (4/8) title=コロッケ！
+   ⏳ 429(AniList): 11693ms待ってリトライ (5/8) title=コロッケ！
+   ⏳ 429(AniList): 19942ms待ってリトライ (6/8) title=コロッケ！
+   ⏳ 429(AniList): 20244ms待ってリトライ (7/8) title=コロッケ！
+- no official (skip): id=7776 title=コロッケ！
+- updated: id=7777 title=鉄腕バーディー DECODE:02 -> https://www.birdy-tv.com
+- updated: id=7778 title=勇者警察ジェイデッカー -> https://j-decker.net/
+   ⏳ 429(AniList): 1671ms待ってリトライ (1/8) title=黒神 The Animation
+   ⏳ 429(AniList): 2706ms待ってリトライ (2/8) title=黒神 The Animation
+   ⏳ 429(AniList): 4087ms待ってリトライ (3/8) title=黒神 The Animation
+   ⏳ 429(AniList): 7087ms待ってリトライ (4/8) title=黒神 The Animation
+   ⏳ 429(AniList): 11964ms待ってリトライ (5/8) title=黒神 The Animation
+   ⏳ 429(AniList): 19878ms待ってリトライ (6/8) title=黒神 The Animation
+   ⏳ 429(AniList): 20225ms待ってリトライ (7/8) title=黒神 The Animation
+- updated: id=7779 title=黒神 The Animation -> http://www.kurokami-anime.net
+- no official (skip): id=7780 title=クイズマジックアカデミー ~The Original Animation~
+- updated: id=7781 title=バトルスピリッツ 少年突破バシン -> https://www.nagoyatv.com/battlespirits/
+- updated: id=7782 title=マイマイ新子と千年の魔法 -> https://mai-mai.jp/
+   ⏳ 429(AniList): 1649ms待ってリトライ (1/8) title=Nakedyouth
+   ⏳ 429(AniList): 2544ms待ってリトライ (2/8) title=Nakedyouth
+   ⏳ 429(AniList): 4322ms待ってリトライ (3/8) title=Nakedyouth
+   ⏳ 429(AniList): 7147ms待ってリトライ (4/8) title=Nakedyouth
+   ⏳ 429(AniList): 11700ms待ってリトライ (5/8) title=Nakedyouth
+   ⏳ 429(AniList): 20208ms待ってリトライ (6/8) title=Nakedyouth
+   ⏳ 429(AniList): 20233ms待ってリトライ (7/8) title=Nakedyouth
+- no official (skip): id=7783 title=Nakedyouth
+- no official (skip): id=7784 title=ファーブル先生は名探偵
+- no official (skip): id=7785 title=のらみみ2
+   ⏳ 429(AniList): 1526ms待ってリトライ (1/8) title=テクノポリス21C
+   ⏳ 429(AniList): 2546ms待ってリトライ (2/8) title=テクノポリス21C
+   ⏳ 429(AniList): 4212ms待ってリトライ (3/8) title=テクノポリス21C
+   ⏳ 429(AniList): 7120ms待ってリトライ (4/8) title=テクノポリス21C
+   ⏳ 429(AniList): 12015ms待ってリトライ (5/8) title=テクノポリス21C
+   ⏳ 429(AniList): 20129ms待ってリトライ (6/8) title=テクノポリス21C
+   ⏳ 429(AniList): 20152ms待ってリトライ (7/8) title=テクノポリス21C
+- no official (skip): id=7786 title=テクノポリス21C
+- no official (skip): id=7787 title=まんが猿飛佐助
+- no official (skip): id=7788 title=ドラえもん のび太と緑の巨人伝
+- no official (skip): id=7789 title=アンデルセン物語
+- no official (skip): id=7790 title=アンデス少年ペペロの冒険
+   ⏳ 429(AniList): 1457ms待ってリトライ (1/8) title=アキカン!
+   ⏳ 429(AniList): 2448ms待ってリトライ (2/8) title=アキカン!
+   ⏳ 429(AniList): 4125ms待ってリトライ (3/8) title=アキカン!
+   ⏳ 429(AniList): 6991ms待ってリトライ (4/8) title=アキカン!
+   ⏳ 429(AniList): 12026ms待ってリトライ (5/8) title=アキカン!
+   ⏳ 429(AniList): 20114ms待ってリトライ (6/8) title=アキカン!
+   ⏳ 429(AniList): 20200ms待ってリトライ (7/8) title=アキカン!
+- no official (skip): id=7791 title=アキカン!
+- no official (skip): id=7792 title=Candy☆Boy EX01 - ミライヨホウズ
+- updated: id=7793 title=涼宮ハルヒちゃんの憂鬱 -> http://www.haruhi.tv/haruchuru/index.html
+- no official (skip): id=7794 title=時空冒険記　ゼントリックス
+   ⏳ 429(AniList): 1410ms待ってリトライ (1/8) title=グロイザーＸ
+   ⏳ 429(AniList): 2533ms待ってリトライ (2/8) title=グロイザーＸ
+   ⏳ 429(AniList): 4205ms待ってリトライ (3/8) title=グロイザーＸ
+   ⏳ 429(AniList): 6889ms待ってリトライ (4/8) title=グロイザーＸ
+   ⏳ 429(AniList): 11857ms待ってリトライ (5/8) title=グロイザーＸ
+   ⏳ 429(AniList): 20210ms待ってリトライ (6/8) title=グロイザーＸ
+   ⏳ 429(AniList): 20077ms待ってリトライ (7/8) title=グロイザーＸ
+- no official (skip): id=7795 title=グロイザーＸ
+- updated: id=7796 title=100万年地球の旅 バンダーブック -> https://tezukaosamu.net/jp/anime/55.html
+   ⏳ 429(AniList): 1566ms待ってリトライ (1/8) title=FLAG Director's Edition 一千万のクフラの記録
+   ⏳ 429(AniList): 2417ms待ってリトライ (2/8) title=FLAG Director's Edition 一千万のクフラの記録
+   ⏳ 429(AniList): 4354ms待ってリトライ (3/8) title=FLAG Director's Edition 一千万のクフラの記録
+   ⏳ 429(AniList): 6959ms待ってリトライ (4/8) title=FLAG Director's Edition 一千万のクフラの記録
+   ⏳ 429(AniList): 12021ms待ってリトライ (5/8) title=FLAG Director's Edition 一千万のクフラの記録
+   ⏳ 429(AniList): 19955ms待ってリトライ (6/8) title=FLAG Director's Edition 一千万のクフラの記録
+   ⏳ 429(AniList): 20301ms待ってリトライ (7/8) title=FLAG Director's Edition 一千万のクフラの記録
+- no official (skip): id=7797 title=FLAG Director's Edition 一千万のクフラの記録
+- no official (skip): id=7798 title=カラオケ戦士 マイク次郎
+- no official (skip): id=7799 title=大正野球娘。
+- no official (skip): id=7800 title=特装機兵ドルバック
+   ⏳ 429(AniList): 1406ms待ってリトライ (1/8) title=こみっくパーティーRevolution
+   ⏳ 429(AniList): 2431ms待ってリトライ (2/8) title=こみっくパーティーRevolution
+   ⏳ 429(AniList): 4155ms待ってリトライ (3/8) title=こみっくパーティーRevolution
+   ⏳ 429(AniList): 6879ms待ってリトライ (4/8) title=こみっくパーティーRevolution
+   ⏳ 429(AniList): 11727ms待ってリトライ (5/8) title=こみっくパーティーRevolution
+   ⏳ 429(AniList): 19912ms待ってリトライ (6/8) title=こみっくパーティーRevolution
+   ⏳ 429(AniList): 20211ms待ってリトライ (7/8) title=こみっくパーティーRevolution
+- no official (skip): id=7801 title=こみっくパーティーRevolution
+- no official (skip): id=7802 title=初恋限定。
+- no official (skip): id=7803 title=麻雀飛翔伝 哭きの竜
+- no official (skip): id=7804 title=ドラゴンボール オッス！帰ってきた孫悟空と仲間たち！！
+   ⏳ 429(AniList): 1579ms待ってリトライ (1/8) title=機甲界ガリアン
+   ⏳ 429(AniList): 2453ms待ってリトライ (2/8) title=機甲界ガリアン
+   ⏳ 429(AniList): 4145ms待ってリトライ (3/8) title=機甲界ガリアン
+   ⏳ 429(AniList): 6952ms待ってリトライ (4/8) title=機甲界ガリアン
+   ⏳ 429(AniList): 11936ms待ってリトライ (5/8) title=機甲界ガリアン
+   ⏳ 429(AniList): 19933ms待ってリトライ (6/8) title=機甲界ガリアン
+   ⏳ 429(AniList): 20106ms待ってリトライ (7/8) title=機甲界ガリアン
+- no official (skip): id=7805 title=機甲界ガリアン
+- no official (skip): id=7806 title=源氏物語千年紀Genji
+- no official (skip): id=7807 title=アレクサンダー戦記 劇場版
+- no official (skip): id=7808 title=我ハ機ナリ
+- no official (skip): id=7809 title=みなみけ おかえり
+   ⏳ 429(AniList): 1455ms待ってリトライ (1/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+   ⏳ 429(AniList): 2414ms待ってリトライ (2/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+   ⏳ 429(AniList): 4051ms待ってリトライ (3/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+   ⏳ 429(AniList): 7142ms待ってリトライ (4/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+   ⏳ 429(AniList): 11932ms待ってリトライ (5/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+   ⏳ 429(AniList): 20000ms待ってリトライ (6/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+   ⏳ 429(AniList): 20305ms待ってリトライ (7/8) title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+- no official (skip): id=7810 title=コードギアス 反逆のルルーシュ 続編 ピクチャードラマ
+- no official (skip): id=7811 title=ALL THAT VF: Macross 25th Anniversary Air Show - Ver.ZERO
+- no official (skip): id=7812 title=ALL THAT VF: Macross 25th Anniversary Air Show - Version F
+- no official (skip): id=7813 title=くりぃむレモン ニュージェネレーション
+   ⏳ 429(AniList): 1543ms待ってリトライ (1/8) title=ASIENCE 髪は女の命
+   ⏳ 429(AniList): 2409ms待ってリトライ (2/8) title=ASIENCE 髪は女の命
+   ⏳ 429(AniList): 4366ms待ってリトライ (3/8) title=ASIENCE 髪は女の命
+   ⏳ 429(AniList): 7173ms待ってリトライ (4/8) title=ASIENCE 髪は女の命
+   ⏳ 429(AniList): 11984ms待ってリトライ (5/8) title=ASIENCE 髪は女の命
+   ⏳ 429(AniList): 20174ms待ってリトライ (6/8) title=ASIENCE 髪は女の命
+   ⏳ 429(AniList): 20087ms待ってリトライ (7/8) title=ASIENCE 髪は女の命
+- no official (skip): id=7814 title=ASIENCE 髪は女の命
+- no official (skip): id=7815 title=電波的な彼女
+- no official (skip): id=7816 title=ねぎぼうずのあさたろう
+- no official (skip): id=7817 title=超特急ヒカリアン
+   ⏳ 429(AniList): 1681ms待ってリトライ (1/8) title=新宿シンちゃんパトロール わるい大人に気をつけて
+   ⏳ 429(AniList): 2567ms待ってリトライ (2/8) title=新宿シンちゃんパトロール わるい大人に気をつけて

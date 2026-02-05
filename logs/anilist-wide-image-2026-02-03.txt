@@ -1,0 +1,15 @@
+===== START 2026/02/03 23:08:30.57 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ fill-anilist-wide-image start {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  FORCE: false,
+  MIN_INTERVAL_MS: 900
+}
+targets=1000
+⏳ AniList 429: 1000ms 待って再試行... (id=182548)
+⏳ AniList 429: 2000ms 待って再試行... (id=182548)
+⏳ AniList 429: 4000ms 待って再試行... (id=182548)
+⏳ AniList 429: 8000ms 待って再試行... (id=182548)
+^C

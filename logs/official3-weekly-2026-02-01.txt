@@ -1,0 +1,45 @@
+===== START 2026/02/01  3:00:01.59 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/02/01  3:00:04.49 ===== 
+===== START 2026/02/01  8:04:47.59 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  enable debug logging with { debug: true }
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/02/01  8:04:50.03 ===== 
+--- RUN: run-weekly-tmdb.bat --- 

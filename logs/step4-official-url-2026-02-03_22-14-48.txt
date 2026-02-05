@@ -1,0 +1,173 @@
+===== START step4-official-url 2026/02/03 22:14:48.08 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ fill official_url (AniList only / skip-unresolved / cursor mode)
+   dry-run: false
+   page: 60
+   limit: ∞
+   state: C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json
+   cursorId: 8188
+   skipped: 3457
+- no official (skip): id=8189 title=仮面ライダー電王: イマジンあにめ 2
+- no official (skip): id=8190 title=マリア様がみてる 4thシーズン マリア様にはないしょ。
+- no official (skip): id=8191 title=パーマン
+- no official (skip): id=8192 title=Life no Color
+- no official (skip): id=8193 title=さるとびエッちゃん
+- no official (skip): id=8194 title=逮捕しちゃうぞ フルスロットル Special
+- no official (skip): id=8195 title=きグルみっく☆V3
+- no official (skip): id=8196 title=劇場版 NARUTO -ナルト- 疾風伝 火の意志を継ぐ者
+- no official (skip): id=8197 title=ミラクル☆トレイン〜中央線へようこそ〜
+- no official (skip): id=8198 title=フリアグネ&マリアンヌのなぜなにシャナ
+- no official (skip): id=8199 title=テンリトルガルフォース
+- no official (skip): id=8200 title=機動戦士ガンダムUC
+- no official (skip): id=8201 title=Cherryのまんま
+- no official (skip): id=8202 title=ＣＬＡＮＮＡＤ ~After Story~ もうひとつの世界 杏編
+- no official (skip): id=8203 title=ef - a tale of memories. ~prologue~
+- no official (skip): id=8204 title=軽井沢シンドローム
+- no official (skip): id=8205 title=レジェンド・オブ・レギオス
+- no official (skip): id=8206 title=東のエデン 劇場版I The King of Eden
+- no official (skip): id=8207 title=科学忍者隊ガッチャマンII
+- no official (skip): id=8208 title=科学忍者隊ガッチャマンF
+- no official (skip): id=8209 title=懺・さよなら絶望先生
+- no official (skip): id=8210 title=今日の５の２ 宝箱
+- no official (skip): id=8211 title=鉄腕バーディー DECODE -THE CIPHER-
+- updated: id=8212 title=ストライクウィッチーズ 2 -> http://s-witch.cute.or.jp/
+- no official (skip): id=8213 title=チャージマン研！
+- no official (skip): id=8214 title=一本包丁満太郎
+- no official (skip): id=8215 title=ヤドキングのいちにち
+- no official (skip): id=8216 title=Ｒ２０ 銀河空港
+- updated: id=8217 title=いっしょにとれーにんぐ TRAINING WITH HINAKO -> http://www.isshoni-training.com/
+- no official (skip): id=8218 title=てんとう虫の歌
+   ⏳ 429(AniList): 1452ms待ってリトライ (1/8) title=Higashi no Eden: Falling Down
+   ⏳ 429(AniList): 2385ms待ってリトライ (2/8) title=Higashi no Eden: Falling Down
+   ⏳ 429(AniList): 4143ms待ってリトライ (3/8) title=Higashi no Eden: Falling Down
+   ⏳ 429(AniList): 6893ms待ってリトライ (4/8) title=Higashi no Eden: Falling Down
+   ⏳ 429(AniList): 11738ms待ってリトライ (5/8) title=Higashi no Eden: Falling Down
+   ⏳ 429(AniList): 20162ms待ってリトライ (6/8) title=Higashi no Eden: Falling Down
+- no official (skip): id=8219 title=Higashi no Eden: Falling Down
+- no official (skip): id=8220 title=ef - a tale of melodies. ~prologue~
+- updated: id=8221 title=文学少女 -> http://www.bungakushoujo.jp/
+- no official (skip): id=8222 title=テライユキ
+- no official (skip): id=8223 title=ゴーゴーアックマン
+- no official (skip): id=8224 title=アイシールド21ジャンプフェスタ 2005
+- no official (skip): id=8225 title=シンデレラ エクスプレス
+- no official (skip): id=8226 title=鋼の錬金術師 FULLMETAL ALCHEMIST 未放送エピソード
+- no official (skip): id=8227 title=ヴァイス・サヴァイヴ
+- no official (skip): id=8228 title=サイコアーマー ゴーバリアン
+- no official (skip): id=8229 title=茶目子の一日
+- no official (skip): id=8230 title=最遊記RELOAD うら最
+- no official (skip): id=8231 title=宇宙をかける少女 ピクチャードラマ
+- no official (skip): id=8232 title=名探偵コナン～10年後の異邦人[ストレンジャー]～
+- updated: id=8233 title=AIKa ZERO -> https://www.aika-zero.com/
+- updated: id=8234 title=テガミバチ -> https://www.tv-tokyo.co.jp/anime/tegamibachi/
+- no official (skip): id=8235 title=ブレイクエイジ
+- no official (skip): id=8236 title=遊星少年パピイ
+- no official (skip): id=8237 title=亜空大作戦　スラングル
+- no official (skip): id=8238 title=映画 クレヨンしんちゃん　暗黒タマタマ大追跡
+- no official (skip): id=8239 title=雨ふり小僧
+   ⏳ 429(AniList): 1706ms待ってリトライ (1/8) title=星をかった日
+   ⏳ 429(AniList): 2560ms待ってリトライ (2/8) title=星をかった日
+   ⏳ 429(AniList): 4146ms待ってリトライ (3/8) title=星をかった日
+   ⏳ 429(AniList): 6933ms待ってリトライ (4/8) title=星をかった日
+   ⏳ 429(AniList): 11835ms待ってリトライ (5/8) title=星をかった日
+   ⏳ 429(AniList): 20036ms待ってリトライ (6/8) title=星をかった日
+   ⏳ 429(AniList): 20277ms待ってリトライ (7/8) title=星をかった日
+- no official (skip): id=8240 title=星をかった日
+- no official (skip): id=8241 title=名探偵コナン 天空の難破船
+- no official (skip): id=8242 title=天才バカボン
+- updated: id=8243 title=学校のコワイうわさ　花子さんがきた！！ -> http://www.hanakosan.net/index_pc.htm
+- no official (skip): id=8244 title=Candy☆Boy EX02 - シアワセキョウユウリロン
+- no official (skip): id=8245 title=シュガーバニーズ フルール
+- no official (skip): id=8246 title=シュガーバニーズ ショコラ！
+- no official (skip): id=8247 title=儲金戰士
+- no official (skip): id=8248 title=ゼロの使い魔～三美姫の輪舞～ ピクチャードラマ
+- no official (skip): id=8249 title=SCANDAL ANIME
+- no official (skip): id=8250 title=MINKY MOMO in 旅立ちの駅
+- updated: id=8251 title=劇場版キューティーハニーＦ -> https://www.toei-anim.co.jp/movie/97summer/honey/
+- no official (skip): id=8252 title=ですぺら
+- updated: id=8253 title=떳다 그녀!! -> http://www.sambakza.net/works_tsi/tsi_main.html
+- no official (skip): id=8254 title=キテレツ大百科
+- no official (skip): id=8255 title=超生命体トランスフォーマー ビーストウォーズ・ネオ
+- no official (skip): id=8256 title=ravex in Tezuka World
+- no official (skip): id=8257 title=映画！たまごっち うちゅーいちハッピーな物語！？
+- no official (skip): id=8258 title=えいがでとーじょー！ たまごっち ドキドキ！うちゅーのまいごっち！？
+- no official (skip): id=8259 title=たまごっちホントのはなし
+- no official (skip): id=8260 title=アニメ　ＴＶで発見！！　たまごっち
+- no official (skip): id=8261 title=ウサハナ 夢見るバレリーナ
+- no official (skip): id=8262 title=뽀롱뽀롱 뽀로로
+- no official (skip): id=8263 title=뽀로로의 대모험
+- no official (skip): id=8264 title=ピーピング・ライフ
+- updated: id=8265 title=フレッシュプリキュア！ おもちゃの国は秘密がいっぱい！？ -> https://www.toei-anim.co.jp/movie/2009_fresh_precure/
+   ⏳ 429(AniList): 1730ms待ってリトライ (1/8) title=伝染るんです。
+   ⏳ 429(AniList): 2449ms待ってリトライ (2/8) title=伝染るんです。
+   ⏳ 429(AniList): 4168ms待ってリトライ (3/8) title=伝染るんです。
+   ⏳ 429(AniList): 7129ms待ってリトライ (4/8) title=伝染るんです。
+   ⏳ 429(AniList): 11910ms待ってリトライ (5/8) title=伝染るんです。
+- no official (skip): id=8266 title=伝染るんです。
+- no official (skip): id=8267 title=新しい世界
+- updated: id=8268 title=愛 -> http://www.yojikuri.jp/
+- no official (skip): id=8269 title=pico～ぼくの小さな夏物語
+- no official (skip): id=8270 title=天元突破グレンラガン キラメキ★ヨーコBOX~Pieces of sweet stars~
+- no official (skip): id=8271 title=川の光
+- no official (skip): id=8272 title=ピカチュウのキラキラだいそうさく！
+- updated: id=8273 title=フォーチュン·クエスト 世にも幸せな冒険者たち -> http://www.jcstaff.co.jp/sakuhin/nenpyo/1993/06_fortuneQuest/fortuneQuest.htm
+- no official (skip): id=8274 title=ポピーザぱフォーマー
+- no official (skip): id=8275 title=It's a Rumic World: 50th Anniversary Weekly★Shonen Sunday
+- no official (skip): id=8276 title=うる星やつら ザ・障害物水泳大会
+- no official (skip): id=8277 title=ぼくらの裁判員物語
+- no official (skip): id=8278 title=小梅ちゃんが行く！！
+- no official (skip): id=8279 title=灼眼のシャナ S
+- updated: id=8280 title=DARKER THAN BLACK -流星の双子- -> http://www.d-black.net/2nd/
+- updated: id=8281 title=はなまる幼稚園 -> http://www.starchild.co.jp/special/hanamaru/
+- no official (skip): id=8282 title=レイナ剣狼伝説
+- no official (skip): id=8283 title=戦国BASARA 瀬戸内の激突! 火を噴く海の大要塞・富嶽!!
+- no official (skip): id=8284 title=スーパービックリマン
+- updated: id=8285 title=夢みる機械 -> http://www.madhouse.co.jp/yume-robo/
+- no official (skip): id=8286 title=夢色パティシエール
+- no official (skip): id=8287 title=るろうに剣心
+- no official (skip): id=8288 title=エルマーの冒険
+- no official (skip): id=8289 title=くるねこ
+- no official (skip): id=8290 title=すーぱーふらっと・ファーストラブ
+- no official (skip): id=8291 title=뿌까
+- no official (skip): id=8292 title=いばらの王 -King of Thorn-
+   ⏳ 429(AniList): 1700ms待ってリトライ (1/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+   ⏳ 429(AniList): 2593ms待ってリトライ (2/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+   ⏳ 429(AniList): 4339ms待ってリトライ (3/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+   ⏳ 429(AniList): 7131ms待ってリトライ (4/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+   ⏳ 429(AniList): 11816ms待ってリトライ (5/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+   ⏳ 429(AniList): 20175ms待ってリトライ (6/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+   ⏳ 429(AniList): 20146ms待ってリトライ (7/8) title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+- no official (skip): id=8293 title=わたしのコーヒー・サムライ ～自販機的な彼氏～
+- no official (skip): id=8294 title=空の境界 Remix -Gate of seventh heaven-
+- no official (skip): id=8295 title=ののちゃん
+- no official (skip): id=8296 title=Dengeki Bunko 2007 Movie Festival Special
+- no official (skip): id=8297 title=あさりちゃん
+- no official (skip): id=8298 title=あさりちゃん 愛のメルヘン少女
+- no official (skip): id=8299 title=クイーンズブレイド 玉座を継ぐ者
+- no official (skip): id=8300 title=戦国BASARA弐
+- no official (skip): id=8301 title=超攻速ガルビオン
+- no official (skip): id=8302 title=東のエデン 劇場版II Paradise Lost
+- no official (skip): id=8303 title=となりの801ちゃんR
+- no official (skip): id=8304 title=ちゅーぶら!!
+- no official (skip): id=8305 title=銀河鉄道９９９ ガラスのクレア
+- no official (skip): id=8306 title=なまくら刀
+- no official (skip): id=8307 title=うんこさん ツイてる人にしか見えない妖精
+- no official (skip): id=8308 title=Love to Live By
+- updated: id=8309 title=8月のシンフォニー ―渋谷 2002～2003 -> https://www.8gatsu-eiga.com/
+- no official (skip): id=8310 title=별나라 삼총사
+- no official (skip): id=8311 title=ビデオ戦士レザリオン
+- no official (skip): id=8312 title=レポーターブルース
+- no official (skip): id=8313 title=REDLINE
+- no official (skip): id=8314 title=道成寺
+- no official (skip): id=8315 title=イレブンアイズ
+- no official (skip): id=8316 title=マリー＆ガリー
+- no official (skip): id=8317 title=珍遊記　～太郎とゆかいな仲間たち～
+- updated: id=8318 title=パッテンライ!!　～南の島の水ものがたり～ -> https://www.mushi-pro.co.jp/2010/08/パッテンライ！！〜南の島の水ものがたり〜/
+- updated: id=8319 title=劇場版 ヤッターマン 新ヤッターメカ大集合！ オモチャの国で大決断だコロン！ -> https://tatsunoko.co.jp/works/yatterman-anime-the-movie/
+   ⏳ 429(AniList): 1569ms待ってリトライ (1/8) title=망치
+   ⏳ 429(AniList): 2588ms待ってリトライ (2/8) title=망치
+   ⏳ 429(AniList): 4127ms待ってリトライ (3/8) title=망치
+   ⏳ 429(AniList): 7103ms待ってリトライ (4/8) title=망치
+   ⏳ 429(AniList): 11706ms待ってリトライ (5/8) title=망치
+   ⏳ 429(AniList): 20209ms待ってリトライ (6/8) title=망치
+   ⏳ 429(AniList): 20296ms待ってリトライ (7/8) title=망치
+^C

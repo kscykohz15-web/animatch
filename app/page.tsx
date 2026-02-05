@@ -13,6 +13,11 @@ type AnimeWork = {
 
   episode_count?: number | null;
 
+  // ✅ シリーズ判定用（DBに存在するなら自動で拾う）
+  series_key?: string | null;
+  series_title?: string | null;
+  series_id?: number | null;
+
   // 縦長（PC向け）
   image_url?: string | null;
   // 横長（スマホ向け）
@@ -33,6 +38,19 @@ type AnimeWork = {
   romance?: number | null;
   emotion?: number | null;
   ero?: number | null;
+
+  // ✅ 9軸（0-10）
+  story_10?: number | null; // シナリオ
+  animation_10?: number | null; // 作画
+  world_10?: number | null; // 世界観
+  emotion_10?: number | null; // 心が動かされるか
+  tempo_10?: number | null; // テンポ
+  music_10?: number | null; // 音楽
+  gore_10?: number | null; // グロさ
+  depression_10?: number | null; // 鬱要素
+  ero_10?: number | null; // 叡智さ
+
+  ai_score_note?: string | null; // （必要なら後で根拠UIに使える）
 
   keywords?: string[] | string | null;
 
@@ -324,6 +342,78 @@ function normalizeForCompare(s: string) {
     .trim();
 }
 
+/** ✅ シリーズ推定用：タイトルからシリーズキーを作る（DBに series_key 等が無い場合の保険） */
+function seriesKeyFromTitle(title: string) {
+  let t = String(title || "").trim();
+  if (!t) return "";
+
+  // 括弧類の中身を落とす（例：〜（第2期）/【新編集版】など）
+  t = t.replace(/[【\[][^【\]]*[】\]]/g, "");
+  t = t.replace(/[（(][^（）()]*[）)]/g, "");
+
+  // よくある表記ゆれをざっくり正規化
+  t = t.replace(/[：:]/g, " ");
+  t = t.replace(/[‐-‒–—―ー]/g, "-").replace(/\s+/g, " ").trim();
+
+  // 劇場版/OVA/特別編などのワードを落としてシリーズに寄せる
+  t = t.replace(/\s*(劇場版|映画|the\s*movie|movie|OVA|OAD|SP|スペシャル|特別編|総集編|新編集版|新作)\s*/gi, " ").trim();
+
+  // 期/シーズン/part/章 などの末尾を落とす
+  t = t.replace(/\s*(第?\s*\d+\s*期|第?\s*\d+\s*シーズン|シーズン\s*\d+|season\s*\d+|part\s*\d+|第?\s*\d+\s*部)\s*$/i, "").trim();
+
+  // ローマ数字（II/III...）が末尾に付くケース
+  t = t.replace(/\s*(ii|iii|iv|v|vi|vii|viii|ix|x)\s*$/i, "").trim();
+
+  // 記号を落として比較キー化
+  return normalizeForCompare(t);
+}
+
+type SeriesStats = {
+  key: string;
+  countWorks: number;
+  totalEpisodes: number | null; // episode_countが入っているものだけ合計
+  countedWorks: number; // episode_countが入っていた作品数
+};
+
+function getSeriesKey(work: AnimeWork) {
+  // ✅ DB側で series_key / series_title があるならそれを優先
+  const fromDb = String(work.series_key || work.series_title || "").trim();
+  if (fromDb) return normalizeForCompare(fromDb);
+
+  return seriesKeyFromTitle(work.title);
+}
+
+function buildSeriesStatsMap(list: AnimeWork[]) {
+  const map = new Map<string, { count: number; total: number; counted: number }>();
+
+  for (const w of list) {
+    const key = getSeriesKey(w);
+    if (!key) continue;
+
+    const cur = map.get(key) ?? { count: 0, total: 0, counted: 0 };
+    cur.count += 1;
+
+    const ep = getEpisodeCount(w);
+    if (ep !== null) {
+      cur.total += ep;
+      cur.counted += 1;
+    }
+
+    map.set(key, cur);
+  }
+
+  const out = new Map<string, SeriesStats>();
+  for (const [key, v] of map.entries()) {
+    out.set(key, {
+      key,
+      countWorks: v.count,
+      totalEpisodes: v.counted > 0 ? v.total : null,
+      countedWorks: v.counted,
+    });
+  }
+  return out;
+}
+
 function bigrams(str: string) {
   const s = normalizeForCompare(str);
   if (s.length < 2) return [];
@@ -557,6 +647,175 @@ function titleMatches(title: string, q: string) {
   return ngramJaccard(t, s) >= 0.42;
 }
 
+/** =========================
+ *  ✅ 9軸スコア表示（棒グラフ）
+ * ========================= */
+
+function toScore10(v: any): number | null {
+  if (v === null || v === undefined) return null;
+  const n = Number(v);
+  if (!Number.isFinite(n)) return null;
+  const x = Math.round(n);
+  return Math.max(0, Math.min(10, x));
+}
+
+const BASIC_AXES: { key: keyof AnimeWork; label: string }[] = [
+  { key: "story_10", label: "シナリオ" },
+  { key: "animation_10", label: "作画" },
+  { key: "world_10", label: "世界観" },
+  { key: "emotion_10", label: "心が動く" },
+  { key: "tempo_10", label: "テンポ" },
+  { key: "music_10", label: "音楽" },
+];
+
+const WARN_AXES: { key: keyof AnimeWork; label: string }[] = [
+  { key: "gore_10", label: "グロ" },
+  { key: "depression_10", label: "鬱" },
+  { key: "ero_10", label: "叡智" },
+];
+
+function calcBaseTotal(work: AnimeWork): number | null {
+  const vals = BASIC_AXES.map((a) => toScore10((work as any)[a.key]));
+  if (vals.some((x) => x === null)) return null;
+  return vals.reduce((s, x) => s + (x ?? 0), 0);
+}
+
+function ScoreBarRow({
+  label,
+  value,
+  max = 10,
+}: {
+  label: string;
+  value: number | null;
+  max?: number;
+}) {
+  const pct = value === null ? 0 : Math.round((value / max) * 100);
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "92px 1fr 52px", gap: 8, alignItems: "center", marginTop: 6 }}>
+      <div style={{ fontSize: 12, opacity: 0.85, whiteSpace: "nowrap" }}>{label}</div>
+
+      <div
+        style={{
+          height: 10,
+          borderRadius: 999,
+          background: "rgba(0,0,0,0.10)",
+          overflow: "hidden",
+          position: "relative",
+        }}
+        aria-label={`${label} ${value ?? "—"} / ${max}`}
+      >
+        <div
+          style={{
+            width: `${pct}%`,
+            height: "100%",
+            borderRadius: 999,
+            background: "rgba(0,0,0,0.75)",
+            transition: "width 200ms ease",
+          }}
+        />
+      </div>
+
+      <div style={{ fontSize: 12, textAlign: "right", opacity: 0.9 }}>
+        {value === null ? "—" : `${value}/${max}`}
+      </div>
+    </div>
+  );
+}
+
+function ScoreSection({
+  work,
+  isMobile,
+  defaultCollapsedOnMobile = true,
+  alwaysOpen = false,
+}: {
+  work: AnimeWork;
+  isMobile: boolean;
+  defaultCollapsedOnMobile?: boolean;
+  alwaysOpen?: boolean;
+}) {
+  const baseTotal = calcBaseTotal(work);
+  const hasAny =
+    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) ||
+    WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
+
+  const defaultOpen = alwaysOpen ? true : !(isMobile && defaultCollapsedOnMobile);
+  const [open, setOpen] = useState(defaultOpen);
+
+  useEffect(() => {
+    // 作品が変わったら、デフォルトの開閉に戻す
+    setOpen(defaultOpen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [work?.id]);
+
+  if (!hasAny) {
+    return (
+      <div className="meta" style={{ marginTop: 10, opacity: 0.8 }}>
+        評価：—
+      </div>
+    );
+  }
+
+  const headerText = baseTotal === null ? "合計：— / 60" : `合計：${baseTotal} / 60`;
+
+  return (
+    <div style={{ marginTop: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.9 }}>評価（{headerText}）</div>
+
+        {!alwaysOpen ? (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ カードのモーダルopenを防ぐ
+              setOpen((p) => !p);
+            }}
+            style={{
+              padding: "6px 10px",
+              borderRadius: 999,
+              border: "1px solid rgba(0,0,0,0.15)",
+              background: "#fff",
+              color: "#111",
+              cursor: "pointer",
+              fontSize: 12,
+            }}
+          >
+            {open ? "閉じる" : "開く"}
+          </button>
+        ) : null}
+      </div>
+
+      {open ? (
+        <div
+          style={{
+            marginTop: 8,
+            border: "1px solid rgba(0,0,0,0.10)",
+            borderRadius: 12,
+            padding: 12,
+            background: "rgba(0,0,0,0.02)",
+          }}
+          onClick={(e) => {
+            // バーをクリックしてもモーダルが開くのは好み次第。
+            // ここでは「開いてOK」にしたいので stopPropagation しません。
+            // （ボタンだけ止めています）
+          }}
+        >
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, opacity: 0.9 }}>基本（6軸）</div>
+          {BASIC_AXES.map((ax) => (
+            <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
+          ))}
+
+          <div style={{ height: 10 }} />
+
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, opacity: 0.9 }}>注意（3軸）</div>
+          {WARN_AXES.map((ax) => (
+            <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 /** ✅ anime_works: 既存カラムだけselect（episodes問題防止） */
 async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, string>): Promise<string> {
   const wanted = [
@@ -566,8 +825,14 @@ async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, 
     "studio",
     "summary",
     "episode_count",
+
+    // ✅ もし存在すればシリーズ情報を拾う（なくてもOK）
+    "series_key",
+    "series_title",
+    "series_id",
+
     "image_url",
-    "image_url_wide", // ✅ 追加（スマホ用横長）
+    "image_url_wide",
     "themes",
     "start_year",
     "passive_viewing",
@@ -583,6 +848,18 @@ async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, 
     "ero",
     "keywords",
     "official_url",
+
+    // ✅ 9軸（0-10）※存在するなら自動で拾う
+    "story_10",
+    "animation_10",
+    "world_10",
+    "emotion_10",
+    "tempo_10",
+    "music_10",
+    "gore_10",
+    "depression_10",
+    "ero_10",
+    "ai_score_note",
   ];
 
   const probe = await fetch(`${supabaseUrl}/rest/v1/anime_works?select=*&limit=1`, { headers });
@@ -616,6 +893,9 @@ export default function Home() {
   const [animeList, setAnimeList] = useState<AnimeWork[]>([]);
   const [loadingWorks, setLoadingWorks] = useState(false);
   const [loadingVod, setLoadingVod] = useState(false);
+
+  // ✅ シリーズ統計（作品数/合計話数）を全件から作る
+  const seriesStatsMap = useMemo(() => buildSeriesStatsMap(animeList), [animeList]);
 
   const [workInputs, setWorkInputs] = useState<string[]>(["", "", "", "", ""]);
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
@@ -1069,6 +1349,14 @@ export default function Home() {
     return img || titleImage(work.title);
   }
 
+  // ✅ 選択中作品のシリーズ情報（モーダルで表示）
+  const selectedSeriesStats = useMemo(() => {
+    if (!selectedAnime) return null;
+    const key = getSeriesKey(selectedAnime);
+    if (!key) return null;
+    return seriesStatsMap.get(key) ?? null;
+  }, [selectedAnime, seriesStatsMap]);
+
   return (
     <div className="container">
       <h1 className="brandTitle">AniMatch</h1>
@@ -1319,6 +1607,12 @@ export default function Home() {
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
+                {/* ✅ 追加：9軸スコア（検索結果カードでも見える化）
+                    ・スマホはデフォルト「閉じる」→ボタンで展開
+                    ・PCはデフォルト展開
+                */}
+                <ScoreSection work={a} isMobile={isMobile} />
+
                 <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} workId={Number(a.id || 0)} />
 
                 <p>{a.summary || ""}</p>
@@ -1388,6 +1682,25 @@ export default function Home() {
                 <div className="meta">制作：{selectedAnime.studio || "—"}</div>
                 <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
+
+                {/* ✅ 追加：シリーズ数・合計話数（詳細モーダルのみ表示） */}
+                {selectedSeriesStats ? (
+                  <div className="meta">
+                    シリーズ：{selectedSeriesStats.countWorks}作品
+                    {selectedSeriesStats.totalEpisodes !== null ? <> / 合計{selectedSeriesStats.totalEpisodes}話</> : <> / 合計話数：—</>}
+                    {selectedSeriesStats.totalEpisodes !== null && selectedSeriesStats.countedWorks < selectedSeriesStats.countWorks ? (
+                      <span style={{ marginLeft: 6, fontSize: 12, opacity: 0.7 }}>（話数未登録の作品があるため、合計は登録済みのみ）</span>
+                    ) : null}
+                  </div>
+                ) : (
+                  <div className="meta" style={{ fontSize: 12, opacity: 0.7 }}>
+                    シリーズ：—（同シリーズ判定ができませんでした）
+                  </div>
+                )}
+
+                {/* ✅ 追加：9軸スコア（詳細は常に展開） */}
+                <ScoreSection work={selectedAnime} isMobile={isMobile} alwaysOpen />
+
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
 
                 <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} workId={Number(selectedAnime.id || 0)} />

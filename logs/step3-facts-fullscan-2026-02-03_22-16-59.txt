@@ -1,0 +1,18 @@
+===== START step3-facts-v3 FULLSCAN(cmd) 2026/02/03 22:16:59.93 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step3-facts-v2.bat 
+
+----- BATCH OFFSET=0 LIMIT=200 ----- 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ step3-anilist-facts v3 start {
+  LIMIT: 200,
+  OFFSET: 0,
+  FORCE: false,
+  MIN_INTERVAL: 1200,
+  RETRY_MAX: 10
+}
+targets=2 / rows=200
+- nochange id=109 title=キミキス pure rouge
+- nochange id=118 title=かのこん
+🎉 done { updatedCount: 0, skippedCount: 2, failedCount: 0 }
+
+===== END step3-facts-v3 FULLSCAN(cmd) 2026/02/03 22:17:24.49 (error) ===== 

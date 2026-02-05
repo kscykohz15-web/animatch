@@ -1,0 +1,94 @@
+===== START official4 2026/01/31 22:44:45.49 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3180 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/31 22:44:49.11 ===== 
+===== END step7-vod 2026/01/31 22:44:49.12 =====
+===== START official4 2026/01/31 22:45:06.69 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3180 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/31 22:45:10.15 ===== 
+===== START official4 2026/01/31 22:45:19.65 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3180 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/31 22:45:23.11 ===== 
+===== END step7-vod 2026/01/31 22:45:23.11 =====
+===== START official4 2026/01/31 22:48:10.77 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3180 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/31 22:48:14.10 ===== 
+===== START official4 2026/01/31 22:58:59.10 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3180 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/31 22:59:02.70 ===== 
+===== END step7-vod 2026/01/31 22:59:02.71 =====
+===== START official4 2026/01/31 22:59:15.13 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3180 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/01/31 22:59:18.29 ===== 
+===== END step7-vod 2026/01/31 22:59:18.29 =====

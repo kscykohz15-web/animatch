@@ -1,0 +1,31 @@
+===== START official4 2026/02/03 23:07:53.72 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3183 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/02/03 23:07:57.20 ===== 
+===== END step7-vod 2026/02/03 23:07:57.21 =====
+===== START official4 2026/02/03 23:08:04.12 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ enqueue official_vod_4 {
+  LIMIT: 999999,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3183 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ worker official_vod_4 start { WORKER_ID: 'official4-weekly', LOOP_LIMIT: 999999, HEADLESS: true }
+🟡 queue empty (official_vod_4)
+🎉 worker official_vod_4 end { processed: 0 }
+===== END official4 2026/02/03 23:08:07.35 ===== 

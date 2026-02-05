@@ -1,0 +1,4129 @@
+===== START step5-ai-jptext 2026/02/03 22:21:38.38 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\step5-ai-jptext-fill-empty.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ step5-ai-generate-jptext-fill-empty start {
+  LIMIT: 500,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1500
+}
+targets=500
+✅ updated id=6193 title=.hack//黄昏の腕輪伝説 オフラインで会いましょう fields=[summary,themes,genre,embedding_source_text]
+✅ updated id=6194 title=満月をさがして かわいい かわいい 大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6195 title=Amazing Nuts! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6196 title=『サクラ大戦』～神崎すみれ引退記念～「す・み・れ」 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6197 title=老人Ｚ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6198 title=ヒロイック・エイジ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6199 title=トウキョウ・バイス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6200 title=花田少年史 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6201 title=遊☆戯☆王 (Movie) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6202 title=YAWARA！ それゆけ腰ぬけキッズ！！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6203 title=YAWARA! Special ずっと君のことが…。 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6204 title=逮捕しちゃうぞ イン アメリカ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6205 title=逮捕しちゃうぞ Special fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6206 title=地獄先生ぬ～べ～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6207 title=逮捕しちゃうぞ the MOVIE fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6208 title=逮捕しちゃうぞ SECOND SEASON fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6209 title=Wind -a breath of heart- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6210 title=人魚の森 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6211 title=人魚の傷 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6212 title=笑う標的 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6213 title=火聖旅団ダナサイト999.9 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6214 title=ONE PIECE 年末特別企画！麦わらのルフィ親分捕物帖 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6215 title=FIGHT!! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6216 title=爆炎CAMPUSガードレス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6217 title=吉宗 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6218 title=Wind -a breath of heart- Specials fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6219 title=絶対無敵ライジンオー (1992) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6220 title=シリウスの伝説 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6221 title=エル・カザド fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6222 title=シャイニング・ティアーズ・クロス・ウィンド fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6223 title=ウエルベールの物語 Sisters of Wellber fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6224 title=TAMALA2010 a punk cat in space fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6225 title=ラブ★コン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6226 title=英國戀物語エマ ～メルダース編～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6227 title=Cosmic Baton Girl コメットさん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6228 title=姫ちゃんのリボン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6229 title=魔法のスター マジカルエミ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6230 title=魔法の妖精 ペルシャ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6231 title=魔法のエンジェル スイートミント fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6232 title=愛と勇気のピッグガール　とんでぶーりん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6233 title=ファイブスター物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6234 title=キャッツ♥アイ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6235 title=魔法の天使 クリィミーマミ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6236 title=魔法の天使クリィミーマミ　永遠のワンスモア fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6237 title=魔法の天使クリィミーマミ　ロング・グッドバイ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6238 title=人魚 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6239 title=機甲猟兵メロウリンク fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6240 title=甲竜伝説ヴィルガスト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6241 title=炎の転校生 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6242 title=紅い牙 ブルーソネット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6243 title=のぞみ ウィッチィズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6244 title=カプリコン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6245 title=CAROL fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6246 title=Coo 遠い海から来たクー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6247 title=ＣＯＳＭＯ　ＰＯＬＩＣＥ　ジャスティ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6248 title=お嬢様捜査網 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6249 title=デルパワーＸ爆発みらくる元気！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6250 title=毎日が日曜日 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6251 title=ガルフォース ETERNAL STORY fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6252 title=ガルフォース2 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6253 title=ガルフォース3 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6254 title=レア・ガルフォース fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6255 title=ガルフォース地球章 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6256 title=ガルフォース新世紀編 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6257 title=ガルフォース THE REVOLUTION fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6258 title=ゲキ・ガンガー３　熱血大決戦 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6259 title=創世機士ガイアース fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6260 title=女戦士エフェ&ジーラ グーデの紋章 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6261 title=アイドルプロジェクト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6262 title=変幻退魔夜行 カルラ舞う！ 仙台小芥子怨歌 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6263 title=ケロケロちゃいむ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6264 title=きこちゃんすまいる fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6265 title=金田一少年の事件簿 (TV) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6266 title=金田一少年の事件簿 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6267 title=ランドロック fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6268 title=魔獣戦士ルナ・ヴァルガー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6269 title=魔女っ子クラブ4人組 A空間からのエイリアンX fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6270 title=負けるな！魔剣道 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6271 title=Marriage ～ 結婚 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6272 title=なつきクライシス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6273 title=NG騎士ラムネ＆４０ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6274 title=NG騎士ラムネ&40EX ビクビクトライアングル愛の嵐大作戦 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6275 title=NG騎士ラムネ&40DX ワクワク時空 炎の大捜査戦 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6276 title=VS騎士ラムネ&40炎 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6277 title=ノーラ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6278 title=超時空世紀オーガス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6279 title=超時空世紀オーガス02 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6280 title=お洒落小僧は花マルッ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6281 title=キッスは瞳にして fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6282 title=POPS fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6283 title=レリックアーマーLEGACIAM fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6284 title=沙羅曼蛇 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6285 title=シークエンス fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6286 title=務戦隊シャインズマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6287 title=新きまぐれオレンジ☆ロード ～ そして、あの夏のはじまり fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6288 title=サイレントメビウスTHE MOTION PICTURE fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6289 title=サイレントメビウス2THE MOTION PICTURE fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6290 title=SINGLES fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6291 title=タトゥーン・マスター fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6292 title=TO-Y fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6293 title=桃華月憚 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6294 title=キスダム -ENGAGE planet- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6295 title=ONE PIECE エピソードオブアラバスタ 砂漠の王女と海賊たち fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6296 title=ロックマンエグゼ AXESS fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6297 title=ロックマンエクゼStream fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6298 title=ロックマンエグゼ BEAST fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6299 title=劇場版 ロックマン エグゼ: 光と闇の遺産 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6300 title=オーバードライヴ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6301 title=天空戦記シュラト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6302 title=天空戦記シュラト　創世への暗闘 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6303 title=キャプテン翼 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6304 title=新・キャプテン翼 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6305 title=キャプテン翼　ヨーロッパ大決戦 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6306 title=キャプテン翼　危うし！全日本Ｊｒ． fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6307 title=キャプテン翼　明日に向って走れ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6308 title=キャプテン翼　世界大決戦！！Ｊｒ．ワールドカップ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6309 title=キャプテン翼　「最強の敵！オランダユース」 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6310 title=デジタルモンスター ゼヴォリューション fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6311 title=幽☆遊☆白書 映像白書 暗黒武術会の章 上巻 & 下巻 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6312 title=映像白書Ⅱ: 幽助、蔵魔、飛影、桑原 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6313 title=超者ライディーン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6314 title=勇者ライディーン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6315 title=怪物王女 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6316 title=撲殺天使ドクロちゃん2 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6317 title=いぬかみっ！ THE MOVIE　特命霊的捜査官・仮名史郎っ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6318 title=마리 이야기 (korean) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6319 title=오세암 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6320 title=ブルー・ドラゴン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6321 title=最遊記RELOAD -burial- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6322 title=劇場版 NARUTO -ナルト- 大興奮!みかづき島のアニマル騒動だってばよ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6323 title=カナリア fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6324 title=コール・ミー・トゥナイト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6325 title=楽しいムーミン一家 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6326 title=ニルスのふしぎな旅 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6327 title=大江戸ロケット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6328 title=セイント・ビースト～光陰叙事詩天使譚～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6329 title=鉄コン筋クリート fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6330 title=この青空に約束を― 〜ようこそつぐみ寮へ〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6331 title=爆丸バトルブローラーズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6332 title=鋼鉄神ジーグ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6333 title=地球へ… (TV) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6334 title=おおきく振りかぶって fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6335 title=スカルマン SKULL MAN fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6336 title=鋼鉄三国志 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6337 title=AIKa R-16：VIRGIN MISSION fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6338 title=ゲゲゲの鬼太郎 (2007) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6339 title=ドージンワーク fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6340 title=サクラ大戦 ニューヨーク・紐育 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6341 title=ICE - アイス - fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6342 title=創星のアクエリオン -裏切りの翼- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6343 title=名探偵コナン 紺碧の棺 （ジョリー・ロジャー） fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6344 title=映画 クレヨンしんちゃん 嵐を呼ぶ歌うケツだけ爆弾 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6345 title=甲虫王者ムシキング　スーパーバトルムービー ～闇の改造甲虫～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6346 title=真救世主伝説　北斗の拳　ラオウ伝　激闘の章 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6347 title=キノの旅 the Beautiful World 病気の国 -For You- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6348 title=キディ・グレイド　劇場版　第一部: 覚醒篇 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6349 title=ハイランダー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6350 title=ときめきメモリアル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6351 title=スローステップ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6352 title=警察戦車隊 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6353 title=ロボット・カーニバル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6354 title=綾音ちゃんハイキック! fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6355 title=幻夢戦記レダ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6356 title=ああっ女神さまっ　それぞれの翼 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6357 title=チリンの鈴 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6358 title=無敵超人ザンボット３ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6359 title=ポケットモンスターアドバンスジェネレーション ポケモンレンジャーと蒼海の王子 マナフィ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6360 title=わが青春のアルカディア fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6361 title=わが青春のアルカディア・無限軌道ＳＳＸ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6362 title=人形草紙あやつり左近 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6363 title=爆裂天使 -インフィニティ- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6364 title=ギャラクシーエンジェルZ: 硝煙と紫煙のカスレ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6365 title=遠い世界 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6366 title=ジャンピング fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6367 title=爆裂天使 -Infinity- fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6368 title=ブラックジャック fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6369 title=ブラック・ジャック21 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6370 title=機神大戦 ギガンティック・フォーミュラ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6371 title=シグルイ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6372 title=HAND MAID メイ「あきらめません」 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6373 title=富士見二丁目交響楽団 寒冷前線/雨のち嵐 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6374 title=緑野原迷宮 〜Sparkling Phantom〜 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6375 title=BE-BOY KIDNAPP`N IDOL fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6376 title=愛してナイト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6377 title=Dr.スランプ・アラレちゃん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6378 title=メイプルタウン物語 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6379 title=光の伝説 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6380 title=アルプスの少女ハイジ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6381 title=森のトントたち fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6382 title=レディレディ！！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6383 title=炎の闘球児・ドッジ弾平 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6384 title=ドラゴンクエスト ダイの大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6385 title=花の子ルンルン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6386 title=みゆき fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6387 title=ファニーペッツ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6388 title=お茶犬～ちょこっとものがたり～ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6389 title=パンダーゼット THE ROBONIMATION fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6390 title=水のコトバ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6391 title=時をかける少女 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6392 title=ローゼンメイデン 名探偵くんくん fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6393 title=冬の蝉 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6394 title=カラス天狗カブト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6395 title=落語天女おゆい fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6396 title=セラフィムコール fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6397 title=木ノ葉の里と大うん動会 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6398 title=アモン・サーガ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6399 title=ルーツ・サーチ 食心物体Ｘ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6400 title=バッカーノ！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6401 title=デビルマン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6402 title=マジンガーＺ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6403 title=戦闘メカザブングル fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6404 title=超獣機神ダンクーガ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6405 title=超獣機神ダンクーガ 失われた者たちへの鎮魂歌（レクイエム） fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6406 title=太陽の牙ダグラム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6407 title=チョロＱダグラム fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6408 title=Dr.リンにきいてみて！ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6409 title=きらめき☆プロジェクト fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6410 title=Malice@doll マリスドール fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6411 title=Sin: The Movie fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6412 title=ソニック・ザ・ヘッジホッグ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6413 title=ジャングル大帝 劇場版 (1997) fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6414 title=トランスフォーマー　ザ・ムービー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6415 title=レッドガーデン デッドガールズ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6416 title=戦え!超ロボット生命体トランスフォーマー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6417 title=機動戦士ガンダムＳＥＥＤ　スペシャルエディション fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6418 title=魔法のプリンセス ミンキーモモ夢の中の輪舞 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6419 title=新機動戦記ガンダムW Endless Waltz 特別篇 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6420 title=CLAMP in Wonderland fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6421 title=魔法遊戯: 飛び出す!!ハナマル大冒険 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6422 title=魔法遊戯 3D fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6423 title=長靴をはいた猫 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6424 title=はれときどきぶた fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6425 title=時空探偵ゲンシクン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6426 title=手塚治虫の旧約聖書物語 In The Beginning fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6427 title=レッドバロン fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6428 title=トランスフォーマー・カーロボット fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6429 title=ディノブレイカー fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6430 title=ニモ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6431 title=格闘料理伝説ビストロレシピ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6432 title=アキハバラ電脳組 fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+✅ updated id=6433 title=劇場版 アキハバラ電脳組 2011年の夏休み fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+✅ updated id=6434 title=すーぱーふらっと・ものぐらむ fields=[summary,themes,genre,keywords,description_long,embedding_source_text]
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6435 title=戦え!! イクサー1 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6436 title=冒険！イクサー３ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6437 title=強殖装甲ガイバー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6438 title=機動戦士ガンダムＳＥＥＤ ＤＥＳＴＩＮＹ スペシャルエディション -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6439 title=機動戦士ガンダムSEED 星のはざまで -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6440 title=宇宙の騎士テッカマンブレード -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6441 title=宇宙の騎士テッカマンブレード 特典映像 TWIN BLOOD -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6443 title=機動戦士SDガンダム -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6444 title=機動戦士SDガンダム Mk-II -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6445 title=機動戦士SDガンダム Mk-IV -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6446 title=機動戦士SDガンダム Mk-III -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6447 title=機動戦士ＳＤガンダムの逆襲 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6448 title=らいむいろ戦奇譚 南国夢浪漫 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6449 title=らいむいろ流奇譚 X CROSS ～恋 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6450 title=アズサ、お手伝いします！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6451 title=超機動伝説ダイナギガ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6452 title=少年ケニヤ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6453 title=大自然の魔獣 バギ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6454 title=楽しいムーミン一家 ムーミン谷の彗星 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6455 title=とべ! くじらのピーク -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6456 title=赤き血のイレブン -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6457 title=変 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6458 title=ドッグソルジャー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6459 title=Freedom Previsited -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6460 title=ジャイアントロボ THE ANIMATION 地球が静止する日 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6461 title=ジャイアントロボ外伝 GinRei 銀鈴 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6462 title=ジバクくん TWELVE WORLD STORY -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6463 title=宇宙伝説ユリシーズ31 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6464 title=プラスチックリトル -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6465 title=アニメ三銃士 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6466 title=アニメ三銃士 アラミスの冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6467 title=剣勇伝説YAIBA -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6468 title=鉄人２８号 (2004) -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6469 title=殺し屋１ THE ANIMATION EPISODE 0 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6470 title=デビルマン 誕生編 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6471 title=デビルマン 妖鳥シレーヌ編 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6472 title=AMON デビルマン黙示録 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6473 title=星銃士ビスマルク -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6474 title=Run=Dim -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6475 title=ポケットモンスター　サイドストーリー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6476 title=VIRUS ‐VIRUS BUSTER SERGE‐ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6477 title=GRANDEEK-外伝- -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6478 title=闘魔鬼神伝ONI -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6479 title=もえたん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6480 title=レンタルマギカ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6481 title=FIRESTORM　ファイアーストーム -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6482 title=サイバーシックス -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6483 title=厄災仔寵[やくさいこちょう] -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6484 title=ONE PIECE ねじまき島の冒険 ジャンゴのダンスカーニバル -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6485 title=ONE PIECE 夢のサッカー王! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6486 title=愛物語 9 Love Stories -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6487 title=立喰師列伝 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6488 title=科学忍者隊ガッチャマン -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6489 title=星のカービィ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6490 title=SDガンダムフォース -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6491 title=ドラえもん のび太の恐竜2006 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6492 title=ドラえもん のび太とふしぎ風使い -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6493 title=デジモンアドベンチャー ぼくらのウォーゲーム! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6494 title=デジモンアドベンチャー02 ディアボロモンの逆襲 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6495 title=ハム太郎のおたんじょうび 〜ママをたずねて三千てちてち〜 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6496 title=GS美神 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6497 title=あしたのジョー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6498 title=こどものじかん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6499 title=ゾンビローン -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6500 title=ハロー! レディリン -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6501 title=サザエさん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6502 title=超劇場版 ケロロ軍曹 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6503 title=超劇場版　ケロロ軍曹２　深海のプリンセスであります！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6504 title=ゴクドーくん漫遊記 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6505 title=アッセンブル・インサート -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6506 title=スーパーフィッシング グランダー武蔵 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6507 title=グランダー武蔵ＲＶ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6508 title=最後のドアを閉めろ！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6509 title=ストレンヂア -無皇刃譚- -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6510 title=ザスピリットオブワンダー - チャイナさんの憂鬱 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6511 title=ザスピリットオブワンダー : 少年科學倶楽部 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6512 title=スーパークマさん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6513 title=県立地球防衛軍 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6514 title=ＧＲＥＹ デジタル・ターゲット -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6515 title=すてきですわ、さくらちゃん!　知世のカードキャプターさくら活躍ビデオ日記! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6516 title=ユニコ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6517 title=短編ユニコ 黒い雲と白い羽 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6518 title=ユニコ 魔法の島へ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6519 title=攻殻機動隊 S.A.C. 2nd GIG Individual Eleven -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6520 title=攻殻機動隊 Stand Alone Complex - The Laughing Man -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6521 title=映画　クレヨンしんちゃん　嵐を呼ぶモーレツ！オトナ帝国の逆襲 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6522 title=スペースコブラ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6523 title=SPACE ADVENTURE コブラ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6524 title=きまぐれオレンジ☆ロード　あの日にかえりたい -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6525 title=プレイヤーズ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6526 title=森の伝説 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6527 title=魔女っ娘つくねちゃん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6528 title=めぞん一刻番外編 一刻島ナンパ始末記 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6529 title=めぞん一刻 完結篇 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6530 title=メタルスキンパニック ＭＡＤＯＸ－０１ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6531 title=闘神伝 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6532 title=湘南爆走族 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6533 title=アイドル防衛隊ハミングバード -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6534 title=スクランブル・ウォーズ　突っ走る！ゲノムトロフィーラリー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6535 title=3丁目のタマ　うちのタマ知りませんか? 第2期 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6536 title=NINETEEN 19 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6537 title=宇宙海賊キャプテン・ハーロック　アルカディア号の謎 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6538 title=劇場版 NARUTO -ナルト- 疾風伝 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6539 title=銀河お嬢様伝説ユナ ～哀しみのセイレーン～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6540 title=銀河お嬢様伝説ユナ　～深闇のフェアリィ～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6541 title=シックス・エンジェルズ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6542 title=School Days (TV) -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6543 title=Good Morning アルテア -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6544 title=快刀乱麻 THE ANIMATION -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6545 title=GEAR戦士 電童 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6546 title=高橋留美子劇場 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6547 title=恐竜冒険記ジュラトリッパー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6548 title=めいとこねこバス -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6549 title=おねがいマイメロディ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6550 title=ONE PIECE めざせ! 海賊野球王 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6551 title=タッチ 背番号のないエース -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6552 title=タッチ2 さよならの贈り物 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6553 title=タッチ３ 君が通り過ぎたあとに -DON`T PASS ME BY- -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6554 title=ご愁傷さま二ノ宮くん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6555 title=チャンス〜トライアングルセッション〜 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6556 title=新・キューティーハニー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6557 title=SLAM DUNK 湘北最大の危機! 燃えろ桜木花道 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6558 title=SLAM DUNK 吠えろバスケットマン魂! 花道と流川の熱き夏 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6559 title=ザ・コクピット -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6560 title=パプワ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6561 title=南国少年パプワくん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6562 title=げんしけん2 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6563 title=戦国魔神ゴーショーグン -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6564 title=戦国魔人ゴーショーグン 時の異邦人[ÉTRANGER[エトランゼ]] -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6565 title=名探偵コナン 16人の容疑者!? -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6566 title=名探偵コナン: コナンと平次と消えた少年 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6567 title=名探偵コナン: コナンとキッドとクリスタルマザー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6568 title=名探偵コナン 標的は小五郎!!少年探偵団マル秘調査 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6569 title=宇宙の戦士 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6570 title=増田こうすけ劇場 ギャグマンガ日和2 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6571 title=破邪巨星Gダンガイオ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6572 title=楽勝! ハイパードール -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6573 title=IZUMO -猛き剣の閃記- -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6574 title=ジャングルDEいこう! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6575 title=けっこう仮面 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6576 title=KIRARA -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6577 title=小鉄の大冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6578 title=女神天国 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6579 title=プリンセス ミネルバ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6580 title=オリジナルビデオアニメーション アンジェリーク -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6581 title=アンジェリーク　聖地より愛をこめて -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6582 title=アンジェリーク　～白い翼のメモワール～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6583 title=アンジェリーク　Twinコレクション -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6584 title=With You ~みつめていたい~ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6585 title=レディジョージィ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6586 title=ロビンフッドの大冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6587 title=家族ロビンソン漂流記ふしぎな島のフローネ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6588 title=ハックルベリィの冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6589 title=アルプス物語 わたしのアンネット -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6590 title=小公女セーラ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6591 title=愛の若草物語 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6592 title=ペリーヌ物語 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6593 title=おんぼろフィルム -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6594 title=鉄子の旅 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6595 title=フランダースの犬 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6596 title=愛少女ポリアンナ物語 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6597 title=小公子セディ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6598 title=トラップ一家物語 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6599 title=若草物語ナンとジョー先生 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6600 title=ロミオの青い空 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6601 title=キャプテンフューチャー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6602 title=しおんの王 - The Flowers of Hard Blood -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6603 title=ARIA The OVA ~ARIETTA~ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6604 title=CODE-E -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6605 title=ジャングル大帝 進めレオ! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6606 title=うちゅう人田中太郎 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6607 title=ピノキオより ピコリーノの冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6608 title=子鹿物語 THE YEARLING -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6609 title=ジャングルブック・少年モーグリ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6610 title=おちゃめな双子　－クレア学院物語－ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6611 title=みつばちマーヤの冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6612 title=ふしぎの国のアリス -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6613 title=南の虹のルーシー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6614 title=樫の木モック -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6615 title=ドンチャック物語 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6616 title=あらいぐまラスカル -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6617 title=トム・ソーヤーの冒険 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6618 title=タオタオ絵本館・世界動物ばなし -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6619 title=アニメ80日間世界一周 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6620 title=機動戦士ガンダム00 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6621 title=装甲騎兵ボトムズ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6622 title=装甲騎兵ボトムズ　ザ・ラストレッドショルダー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6623 title=装甲騎兵ボトムズ　ビッグバトル -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6624 title=装甲騎兵ボトムズ　レッドショルダードキュメント野望のルーツ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6625 title=装甲騎兵ボトムズ 赫奕たる異端 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6626 title=ブラックキャット 遠ざかる猫 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6627 title=SAMURAI SPIRITS 〜破天降魔の章〜 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6628 title=祈明羅 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6629 title=空の境界 俯瞰風景 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6630 title=D.C.II ～ダ・カーポII～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6631 title=神霊狩 Ghost Hound -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6632 title=名探偵コナン 阿笠からの挑戦状! 阿笠vsコナン&少年探偵団 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6633 title=重戦機エルガイム -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6634 title=重戦機エルガイムI ペンタゴナ ウインドゥ+レディ ギャブレー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6635 title=重戦機エルガイムII フェアウェル マイ ラブリー+ペンタゴナ ドールズ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6636 title=重戦機エルガイムⅢ フルメタル ソルジャー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6637 title=ケンコー全裸系水泳部 ウミショー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6638 title=ムシウタ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6639 title=デジモンセイバーズ THE MOVIE 究極パワー！バーストモード発動！！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6640 title=バース -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6641 title=湾岸ミッドナイト -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6642 title=下級生 (TV) -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6643 title=パンダコパンダ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6644 title=スプーンおばさん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6645 title=未来少年コナンII　タイガアドベンチャー -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6646 title=未来少年コナン特別篇　巨大機ギガントの復活 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6647 title=乙女はお姉さま[ボク]に恋してる -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6648 title=そらいろのたね -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6649 title=ギブリーズ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6650 title=宝島 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6651 title=スパイダーライダーズ ～オラクルの勇者たち～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6652 title=スパイダーライダーズ ～よみがえる太陽～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6653 title=夏への扉 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6654 title=ビッグ・ウォーズ 神撃つ朱き荒野に -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6655 title=THE DOG OF FLANDERS -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6656 title=フランダースの犬　～ぼくのパトラッシュ～ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6657 title=ザ☆ドラえもんズ 怪盗ドラパン謎の挑戦状！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6658 title=ザ☆ドラえもんズ ムシムシぴょんぴょん大作戦！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6659 title=お正月だよ！ドラえもん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6660 title=ザ☆ドラえもんズ おかしなお菓子なオカシナナ？ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6661 title=Doraemon and Itchy the Stray -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6662 title=Doraemon Meets Hattori the Ninja -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6663 title=ザ☆ドラえもんズ ゴール！ゴール！ゴール！！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6664 title=Doraemon's Time Capsule for 2001 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6665 title=ザ☆ドラえもんズ ドキドキ機関車大爆走！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6666 title=Doraemon: Come Back Doraemon -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6667 title=Doraemon: Featherplace -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6668 title=ドラミちゃん アララ・少年山賊団！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6669 title=秋だ！一番ドラえもん祭り -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6670 title=春だ！一番ドラえもん祭り -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6671 title=ドラミちゃん ハロー恐竜キッズ!! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6672 title=夏だ！一番ドラえもん祭り -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6673 title=冬だ！一番ドラえもん祭り -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6674 title=ドラミちゃん 青いストローハット -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6675 title=Doraemon: Summer Holiday -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6676 title=Doraemon: Treasure of the Shinugumi Mountain -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6677 title=ドラミ＆ドラえもんズ 宇宙（スペース）ランド危機イッパツ！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6678 title=ドラミ＆ドラえもんズ ロボット学校七不思議！？ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6679 title=ドラミちゃん ミニドラSOS!!! -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6680 title=ドラえもん ２１１２年ドラえもん誕生 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6681 title=ドラえもん おばあちゃんの思い出 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6682 title=ドラえもん ぼく、桃太郎のなんなのさ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6683 title=帰ってきたドラえもん -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6684 title=ドラえもん ぼくの生まれた日 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6685 title=ドラえもん がんばれ！ジャイアン！！ -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6686 title=ドラえもん のび太と翼の勇者たち -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6687 title=ドラえもん のび太とロボット王国 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6688 title=ドラえもん のび太のワンニャン時空伝 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6689 title=ドラえもん のび太と竜の騎士 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6690 title=ドラえもん のび太のパラレル西遊記 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6691 title=ドラえもん のび太とブリキの迷宮 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6692 title=ドラえもん のび太の結婚前夜 The night before a wedding -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+⚠️ 429 retry attempt=1/6 wait=1500ms
+⚠️ 429 retry attempt=2/6 wait=3000ms
+⚠️ 429 retry attempt=3/6 wait=6000ms
+⚠️ 429 retry attempt=4/6 wait=12000ms
+⚠️ 429 retry attempt=5/6 wait=24000ms
+⚠️ 429 retry attempt=6/6 wait=48000ms
+❌ failed id=6693 title=ドラえもん のび太と雲の王国 -> OpenAI 429: {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+===== END step5-ai-jptext 2026/02/04  6:01:51.64 ===== 

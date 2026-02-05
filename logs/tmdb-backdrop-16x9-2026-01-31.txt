@@ -1,0 +1,111 @@
+===== START 2026/01/31 21:33:48.71 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ fill-tmdb-backdrop-16x9 start {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: true,
+  FORCE: false,
+  TMDB_IMG_SIZE: 'w1280'
+}
+targets=1000
+✅ updated id=24 title=グラップラー刃牙 wide=https://image.tmdb.org/t/p/w1280/qo0QMHbtINR4JAux50G6p5bLiPG.jpg
+… no match: id=41 title=かいけつゾロリ (score=0.00)
+✅ updated id=53 title=いちご100% wide=https://image.tmdb.org/t/p/w1280/7etJxtpWqYs1qXuzCyaFrz1IP7e.jpg
+✅ updated id=56 title=創聖のアクエリオン wide=https://image.tmdb.org/t/p/w1280/ooZ594lyG7jtLyj2aXkzgPb4wim.jpg
+✅ updated id=61 title=ソルティレイ wide=https://image.tmdb.org/t/p/w1280/5NVIijd8tReEDTXyO1rSrz4XTtS.jpg
+✅ updated id=71 title=牙-KIBA- wide=https://image.tmdb.org/t/p/w1280/31jZ9r4KYRzA3N91entiaBh7mVx.jpg
+✅ updated id=72 title=神様家族 wide=https://image.tmdb.org/t/p/w1280/dY0BLU7TGRRh2Vb5gcIUJ653Izb.jpg
+✅ updated id=83 title=攻殻機動隊 S.A.C. Solid State Society wide=https://image.tmdb.org/t/p/w1280/xl7yVV8WH71aOBfcTgnkoGOx2qz.jpg
+… no match: id=84 title=人造昆虫カブトボーグ V×V (score=0.00)
+… no match: id=92 title=ローゼンメイデン・オーベルテューレ (score=0.00)
+… no match: id=109 title=キミキス pure rouge (score=0.00)
+✅ updated id=114 title=君が主で執事が俺で wide=https://image.tmdb.org/t/p/w1280/ojR7MmJ9prF5ws1RJMt0LZiDghQ.jpg
+✅ updated id=118 title=かのこん wide=https://image.tmdb.org/t/p/w1280/z1o6vvFkMmZ5It3Gb3YtFD56KrH.jpg
+✅ updated id=139 title=アスラクライン wide=https://image.tmdb.org/t/p/w1280/pGCKkACejNJ5rN710X09EOfRTxJ.jpg
+✅ updated id=144 title=宙のまにまに wide=https://image.tmdb.org/t/p/w1280/pjLj73KARmaToMSq4KW7yjDGD6m.jpg
+✅ updated id=147 title=プリンセスラバー! wide=https://image.tmdb.org/t/p/w1280/52lDY5tyBQkVn9ERUOI53O0pM8.jpg
+✅ updated id=148 title=怪談レストラン wide=https://image.tmdb.org/t/p/w1280/ibSE77wVaQUP0m1iBkPKxHWJqdT.jpg
+… no match: id=175 title=バクマン。 (score=0.00)
+✅ updated id=187 title=いつか天魔の黒ウサギ wide=https://image.tmdb.org/t/p/w1280/jHnZscollAZ8IaOiqYYcFmJp0tK.jpg
+✅ updated id=188 title=IS＜インフィニット・ストラトス＞ wide=https://image.tmdb.org/t/p/w1280/xQNNHHLJj7WNUplWTKrB36pK55c.jpg
+… no match: id=190 title=境界線上のホライゾン (score=0.00)
+✅ updated id=225 title=妖狐×僕SS wide=https://image.tmdb.org/t/p/w1280/tXLnqWhnCqrQSvexVW9JhStcZg3.jpg
+✅ updated id=227 title=エリアの騎士 wide=https://image.tmdb.org/t/p/w1280/1h1l8bSu0az0eu0S4QpYoDo9YSe.jpg
+✅ updated id=229 title=お兄ちゃんだけど愛さえあれば関係ないよねっ wide=https://image.tmdb.org/t/p/w1280/vceI7hiHAuWS35CLOe5HtZdEV4f.jpg
+✅ updated id=232 title=銀河へキックオフ!! wide=https://image.tmdb.org/t/p/w1280/vBPoQ31jMmdPaVWbw8PQot0wAmE.jpg
+✅ updated id=242 title=人類は衰退しました wide=https://image.tmdb.org/t/p/w1280/5sb5LaaS89yLzTH1wj5gdfxUjbV.jpg
+✅ updated id=275 title=ゴールデンタイム wide=https://image.tmdb.org/t/p/w1280/pLXzjzd5fKNHBHUldvkKgptHpmJ.jpg
+✅ updated id=299 title=ワルキューレ ロマンツェ wide=https://image.tmdb.org/t/p/w1280/6afN7lQPDLlaWY0ZOJy7mtf4awf.jpg
+… no match: id=311 title=バディ・コンプレックス (score=0.00)
+✅ updated id=320 title=健全ロボ ダイミダラー wide=https://image.tmdb.org/t/p/w1280/m216SCuk4nQrhQEOVnc4RxE3YxY.jpg
+✅ updated id=331 title=ブレイドアンドソウル wide=https://image.tmdb.org/t/p/w1280/umRuntFGGmaDr9R0opfNnWK1zOi.jpg
+✅ updated id=349 title=普通の女子校生が【ろこどる】やってみた。 wide=https://image.tmdb.org/t/p/w1280/mUe1Rk9lx0Y9cqMyQCyQctvTh3T.jpg
+✅ updated id=358 title=ガールフレンド(仮) wide=https://image.tmdb.org/t/p/w1280/vwU33m22nhhYDlCPI6PtKXwbUka.jpg
+✅ updated id=387 title=ガンスリンガー ストラトス -THE ANIMATION- wide=https://image.tmdb.org/t/p/w1280/jo09ciCWaivNeiH4vgh48HMJC7i.jpg
+… no match: id=388 title=境界のRINNE（第1シリーズ） (score=0.00)
+… no match: id=412 title=ビキニ・ウォリアーズ (score=0.00)
+… no match: id=414 title=監獄学園(プリズンスクール) (score=0.00)
+… no match: id=419 title=うたわれるもの 偽りの仮面 (score=0.00)
+… no match: id=484 title=ドリフターズ (score=0.00)
+✅ updated id=490 title=ACCA13区監察課 wide=https://image.tmdb.org/t/p/w1280/sicm3KhlaSVppqaUx7n7h33LPqk.jpg
+✅ updated id=506 title=銀の墓守り wide=https://image.tmdb.org/t/p/w1280/7cCvD67ckdKKZ90lz2qgRa1nbFK.jpg
+… no match: id=550 title=僕の彼女がマジメ過ぎるしょびっちな件 (score=0.00)
+✅ updated id=575 title=ピアノの森 wide=https://image.tmdb.org/t/p/w1280/1lRLUzmdhmM3mrnMgTDfzKllE8u.jpg
+✅ updated id=715 title=究極進化したフルダイブRPGが現実よりもクソゲーだったら wide=https://image.tmdb.org/t/p/w1280/mJHSbFtVwYafbGYOuGueFrIqXYl.jpg
+✅ updated id=763 title=魔法使い黎明期 wide=https://image.tmdb.org/t/p/w1280/y4DVLXmb4M5JHFGHSLglYpFwUVZ.jpg
+✅ updated id=770 title=黒の召喚士 wide=https://image.tmdb.org/t/p/w1280/TT1kfBoM5KGS42kXq8Tn4MXOtj.jpg
+✅ updated id=781 title=ある朝ダミーヘッドマイクになっていた俺クンの人生 wide=https://image.tmdb.org/t/p/w1280/ltNNBuLV2YB82MJ4A5kXL3uY0I1.jpg
+✅ updated id=785 title=新米錬金術師の店舗経営 wide=https://image.tmdb.org/t/p/w1280/50CUkSThRy6rW3OnxO18C7xM6pu.jpg
+✅ updated id=792 title=僕とロボコ wide=https://image.tmdb.org/t/p/w1280/aoYiYpC66jtwxn4TXofu4ArCymb.jpg
+✅ updated id=812 title=もういっぽん！ wide=https://image.tmdb.org/t/p/w1280/tBfiCVZHqbWTy7pPhjmhazEtxy9.jpg
+✅ updated id=825 title=異世界ワンターンキル姉さん～姉同伴の異世界生活はじめました～ wide=https://image.tmdb.org/t/p/w1280/xny1jVdXW839f05UFb0it9tOZdf.jpg
+✅ updated id=898 title=怪獣8号 wide=https://image.tmdb.org/t/p/w1280/rLk3ZXXgEbTF7rVW36SMLpNVrbv.jpg
+✅ updated id=906 title=出来損ないと呼ばれた元英雄は、実家から追放されたので好き勝手に生きることにした wide=https://image.tmdb.org/t/p/w1280/ulPhuyAA6Yd0k372vQhhj5BmyVM.jpg
+… no backdrop: id=939 title=忘却バッテリー (tmdb=movie/1076616)
+… no match: id=945 title=T・Pぼん シーズン1 (score=0.00)
+✅ updated id=947 title=俺は全てを【パリイ】する～逆勘違いの世界最強は冒険者になりたい～ wide=https://image.tmdb.org/t/p/w1280/t324alfKvsj3OnLULib7jud9k8m.jpg
+✅ updated id=959 title=モブから始まる探索英雄譚 wide=https://image.tmdb.org/t/p/w1280/xBwizA3fc3eXRa2SVVsXNcRUgGa.jpg
+✅ updated id=960 title=よあそびぐらしっ！ wide=https://image.tmdb.org/t/p/w1280/iGNDdqA2XFieVUmWpbGL05nYNes.jpg
+✅ updated id=965 title=最凶の支援職【話術士】である俺は世界最強クランを従える wide=https://image.tmdb.org/t/p/w1280/fy229btO53qlYFo1gzrH2cM6jwX.jpg
+✅ updated id=970 title=パーティーから追放されたその治癒師、実は最強につき wide=https://image.tmdb.org/t/p/w1280/skP7TT721ZiGozU1QTByRYip8iY.jpg
+✅ updated id=1004 title=進化の実～知らないうちに勝ち組人生～ wide=https://image.tmdb.org/t/p/w1280/szgcMnJSa7HgM0UufecKsPC1Fbg.jpg
+✅ updated id=2622 title=劇場版 転生したらスライムだった件 蒼海の涙編 wide=https://image.tmdb.org/t/p/w1280/4z6VWajbDWZ6CQFC3u4ApKMzGMk.jpg
+… no match: id=2623 title=魔都精兵のスレイブ2 (score=0.00)
+✅ updated id=2625 title=勇者パーティを追い出された器用貧乏 wide=https://image.tmdb.org/t/p/w1280/1nt43fq7CKbqAJAospEo63vYXBV.jpg
+✅ updated id=2629 title=勇者パーティーにかわいい子がいたので、告白してみた。 wide=https://image.tmdb.org/t/p/w1280/7Wx1Io7Ml7ZUtf8XXsKLMBrj0lx.jpg
+✅ updated id=2631 title=真夜中ハートチューン wide=https://image.tmdb.org/t/p/w1280/zJJQCD9xMhDD4MlQ6haaP3IBCHk.jpg
+✅ updated id=2633 title=うるわしの宵の月 wide=https://image.tmdb.org/t/p/w1280/6Eg3t2KdtqiF29G7a7S1Npl93g8.jpg
+✅ updated id=2635 title=魔術師クノンは見えている wide=https://image.tmdb.org/t/p/w1280/jliuY8wmHTSB6WtpZUXAUF547t4.jpg
+… no match: id=2636 title=異世界でチート能力を手にした俺は、現実世界をも無双する ～レベルアップは人生を変えた～ (score=0.00)
+… no match: id=2641 title=わたしが恋人になれるわけないじゃん、ムリムリ! (※ムリじゃなかった!?)〜ネクストシャイン！〜 (score=0.00)
+✅ updated id=2642 title=エリスの聖杯 wide=https://image.tmdb.org/t/p/w1280/jK9HlovnISpiraw75B0o6qxlMbw.jpg
+✅ updated id=2643 title=お気楽領主の楽しい領地防衛 wide=https://image.tmdb.org/t/p/w1280/zwdmHsZIbFu9Bia6EvXMbG1lBBt.jpg
+✅ updated id=2645 title=「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい wide=https://image.tmdb.org/t/p/w1280/uLC9tdRSPcKsgvRLth38WEbm8pa.jpg
+✅ updated id=2647 title=綺麗にしてもらえますか。 wide=https://image.tmdb.org/t/p/w1280/qwQwTAvgH6QXPOOKsIlE0i2GfOn.jpg
+✅ updated id=2648 title=異世界の沙汰は社畜次第 wide=https://image.tmdb.org/t/p/w1280/fgESwlxIp0XTgjwKjdxaNQJmh2q.jpg
+✅ updated id=2649 title=幼馴染とはラブコメにならない wide=https://image.tmdb.org/t/p/w1280/pqxuE35pzdkCE3s1bvGkhbwqqD6.jpg
+… no match: id=2651 title=BEASTARS FINAL SEASON Part 2 (score=0.00)
+✅ updated id=2652 title=悪役令嬢は隣国の王太子に溺愛される wide=https://image.tmdb.org/t/p/w1280/6vaxQIDlAGtELnfyBMC9toTYMuX.jpg
+✅ updated id=2656 title=カヤちゃんはコワくない wide=https://image.tmdb.org/t/p/w1280/vcHzF9NHQLM8dCW1OOBhezsFRiO.jpg
+✅ updated id=2657 title=花ざかりの君たちへ wide=https://image.tmdb.org/t/p/w1280/2RT3KHdE54JXchZJBQyQOFXUx5q.jpg
+✅ updated id=2659 title=転生したらドラゴンの卵だった wide=https://image.tmdb.org/t/p/w1280/mB9zWzImN8Xvw2C8T8CupU9EIQ5.jpg
+… no backdrop: id=2662 title=暗殺教室 みんなの時間 (tmdb=movie/1542877)
+✅ updated id=2663 title=勇者のクズ wide=https://image.tmdb.org/t/p/w1280/1hS9huDDGeirdy1Regli71wo9ot.jpg
+… no match: id=2664 title=MFゴースト 3rd Season (score=0.00)
+✅ updated id=2665 title=穏やか貴族の休暇のすすめ。 wide=https://image.tmdb.org/t/p/w1280/snzpnGs0cX5cQR7Cxaefc6su53p.jpg
+✅ updated id=2669 title=アルネの事件簿 wide=https://image.tmdb.org/t/p/w1280/r92P8dIFevgmbmmT2RLu6BX4cJ1.jpg
+✅ updated id=2670 title=拷問バイトくんの日常 wide=https://image.tmdb.org/t/p/w1280/y1Z1BeU25Fb2POKhv5GbgsoSXIr.jpg
+✅ updated id=2671 title=機動戦士ガンダム 閃光のハサウェイ キルケーの魔女 wide=https://image.tmdb.org/t/p/w1280/4ZTD67RhUOcI8WVP1Kmd1LFFc7d.jpg
+… no match: id=2673 title=どうせ、恋してしまうんだ。Season 2 (score=0.00)
+✅ updated id=2674 title=火喰鳥 wide=https://image.tmdb.org/t/p/w1280/5MzPjgDGy2m0tSrIQL2LXJOdu3.jpg
+✅ updated id=2676 title=パリに咲くエトワール wide=https://image.tmdb.org/t/p/w1280/fKfRBPBrWK3QkhDmRTcuCITpqGL.jpg
+✅ updated id=2677 title=鎧真伝サムライトルーパー wide=https://image.tmdb.org/t/p/w1280/fikx5FofgLjNvyGORxdB4R2wxsE.jpg
+✅ updated id=2678 title=クスノキの番人 wide=https://image.tmdb.org/t/p/w1280/iBCuy1Ic4BFuObMmMf4b7eGylqS.jpg
+… no match: id=2679 title=青のミブロ 芹沢暗殺編 (score=0.00)
+… no backdrop: id=2680 title=ガールズ＆パンツァー もっとらぶらぶ作戦です！ (tmdb=movie/1591447)
+… no match: id=2681 title=地獄先生ぬ～べ～ (2025) 第2クール (score=0.00)
+… no match: id=2682 title=イチゴ哀歌～雑で生イキな妹と割り切れない兄～ (score=0.40)
+… no match: id=2683 title=エヴァンゲリオン 新作短編アニメーション（仮） (score=0.00)
+✅ updated id=2684 title=迷宮のしおり wide=https://image.tmdb.org/t/p/w1280/p8Lvakn7T67emHXOBeI9XldkY9O.jpg
+🎉 done { updated: 72, skipped: 901, noBackdrop: 3 }
+===== END 2026/01/31 21:35:02.75 ===== 

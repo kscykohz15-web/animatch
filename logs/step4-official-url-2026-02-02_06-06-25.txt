@@ -1,0 +1,414 @@
+===== START step4-official-url 2026/02/02  6:06:25.96 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ fill official_url (AniList only / skip-unresolved / cursor mode)
+   dry-run: false
+   page: 60
+   limit: ∞
+   state: C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json
+   cursorId: 7817
+   skipped: 3128
+- no official (skip): id=7818 title=新宿シンちゃんパトロール わるい大人に気をつけて
+- no official (skip): id=7819 title=アリア ジ・オリジネーション ピクチャードラマ
+- no official (skip): id=7820 title=ドラゴンリーグ
+- no official (skip): id=7821 title=オフサイド (TV)
+- no official (skip): id=7822 title=サラダ十勇士トマトマン
+- no official (skip): id=7823 title=チロリン村物語
+- no official (skip): id=7824 title=新メイプルタウン物語 パームタウン編
+- no official (skip): id=7825 title=空の境界 忘却録音
+- no official (skip): id=7826 title=空の境界 殺人考察(後)
+- no official (skip): id=7827 title=ホクロ兄弟 フルスロットル!!!!
+- no official (skip): id=7828 title=D.C.if ~ダ・カーポ イフ~
+- no official (skip): id=7829 title=ゴールFH (フィールド・ハンター)
+- updated: id=7830 title=シャングリ・ラ -> https://www.gonzo.co.jp/works/shangri-la/
+- no official (skip): id=7831 title=ロボタン
+- no official (skip): id=7832 title=ルパン三世 Pilot Film
+- no official (skip): id=7833 title=蒼天航路
+- no official (skip): id=7834 title=頭文字〈イニシャル〉D EXTRA STAGE 2
+- no official (skip): id=7835 title=忍者武芸帳
+- no official (skip): id=7836 title=絶対やれるギリシャ神話
+- no official (skip): id=7837 title=ライブオン CARDLIVER 翔
+- no official (skip): id=7838 title=Compiler 2
+- no official (skip): id=7839 title=チョコレート・アンダーグラウンド　ぼくらのチョコレート戦争 スペシャル・エディション
+- no official (skip): id=7840 title=ピューと吹く！ジャガー ～いま、吹きにゆきます～
+- no official (skip): id=7841 title=モフ☆モフ
+- no official (skip): id=7842 title=ARIA The NATURAL「その 再び出逢える奇跡に…」
+- no official (skip): id=7843 title=艶姿魔法の三人娘
+- no official (skip): id=7844 title=三つ目がとおる
+- no official (skip): id=7845 title=ゴッドマジンガー
+- no official (skip): id=7846 title=エンジェル伝説
+   ⏳ 429(AniList): 1586ms待ってリトライ (1/8) title=ONE PIECE ロマンス ドーン ストーリー
+   ⏳ 429(AniList): 2426ms待ってリトライ (2/8) title=ONE PIECE ロマンス ドーン ストーリー
+   ⏳ 429(AniList): 4359ms待ってリトライ (3/8) title=ONE PIECE ロマンス ドーン ストーリー
+   ⏳ 429(AniList): 7062ms待ってリトライ (4/8) title=ONE PIECE ロマンス ドーン ストーリー
+   ⏳ 429(AniList): 12008ms待ってリトライ (5/8) title=ONE PIECE ロマンス ドーン ストーリー
+   ⏳ 429(AniList): 19917ms待ってリトライ (6/8) title=ONE PIECE ロマンス ドーン ストーリー
+- no official (skip): id=7847 title=ONE PIECE ロマンス ドーン ストーリー
+- no official (skip): id=7848 title=ポケモン不思議のダンジョン 時の探検隊・闇の探検隊
+- no official (skip): id=7849 title=はじめの一歩 New Challenger
+- no official (skip): id=7850 title=ぱんくんち
+- no official (skip): id=7851 title=しゅごキャラ！！どきっ
+- updated: id=7852 title=トゥモロウズ ソング -> https://www.nhk.or.jp/minna/songs/MIN200508_02/
+- no official (skip): id=7853 title=超獣機神ダンクーガ ゴッド・ブレス・ダンクーガ
+- no official (skip): id=7854 title=ガンバの冒険
+- no official (skip): id=7855 title=ALL THAT GUNDAM
+- no official (skip): id=7856 title=トンデモネズミ大活躍
+- no official (skip): id=7857 title=ミラクル・ジャイアンツ童夢くん
+- no official (skip): id=7858 title=まじかる★タルるートくん
+- no official (skip): id=7859 title=はぴはぴクローバー
+- no official (skip): id=7860 title=セキレイ～Pure Engagement～
+- no official (skip): id=7861 title=突撃! パッパラ隊
+- no official (skip): id=7862 title=Sekirei Special
+- no official (skip): id=7863 title=一発貫太くん
+- no official (skip): id=7864 title=映画 ビーストウォーズII[セカンド]超生命体トランスフォーマー ライオコンボイ危機一髪!
+- no official (skip): id=7865 title=超劇場版ケロロ軍曹3 ケロロ対ケロロ 天空大決戦であります！
+- no official (skip): id=7866 title=ケンシロウ伝
+- no official (skip): id=7867 title=ゲッターロボ號
+- no official (skip): id=7868 title=タイムスリップ１００００年　プライム・ローズ
+- no official (skip): id=7869 title=地獄先生ぬ～べ～ 恐怖の夏休み！妖しの海の伝説
+- no official (skip): id=7870 title=コーヒータダイク
+- updated: id=7871 title=続 夏目友人帳 -> https://www.natsume-anime.jp
+- no official (skip): id=7872 title=ザブングルグラフィティ
+- updated: id=7873 title=アキバちゃん -> https://akibachan.jp/en/index.html
+- no official (skip): id=7874 title=恋姫†無双 OVA
+- no official (skip): id=7875 title=テイルズ オブ シンフォニア THE ANIMATION テセアラ編
+- updated: id=7876 title=宇宙をかける少女 -> http://www.sorakake.net
+- no official (skip): id=7877 title=うしおととら コミカル・デフォルメ劇場
+- no official (skip): id=7878 title=劇場版 マクロスF 虚空歌姫 ~イツワリノウタヒメ~
+- no official (skip): id=7879 title=アストロガンガー
+- no official (skip): id=7880 title=劇場版 六門天外モンコレナイト〜伝説のファイアドラゴン〜
+- no official (skip): id=7881 title=無限航路
+- no official (skip): id=7882 title=ありす in Cyberland
+- no official (skip): id=7883 title=図書館戦争 恋ノ障害
+⚠ failed: id=7884 title=一騎当千 Great Guardians バトルツアークラブ・セクシーコスプレ♥危険なアルバイト♥
+fetch failed
+- no official (skip): id=7885 title=爆丸バトルブローラーズ  New Vestroia
+- no official (skip): id=7886 title=狼と香辛料II
+- no official (skip): id=7887 title=モンキー・パンチ　漫画活動大写真
+- no official (skip): id=7888 title=タイムボカンシリーズ　イタダキマン
+- no official (skip): id=7889 title=名探偵コナンMagic File 2 ～工藤新一 謎の壁と黒ラブ事件～
+- no official (skip): id=7890 title=機動戦士ガンダム00-天使たちの軌跡
+- no official (skip): id=7891 title=カメレオン
+- no official (skip): id=7892 title=戦国BASARA
+- updated: id=7893 title=カナン -> http://ponican.jp/canaan/
+- no official (skip): id=7894 title=つみきのいえ
+- no official (skip): id=7895 title=ストリートファイターIV 新たなる絆
+- no official (skip): id=7896 title=聖戦士ダンバイン　New Story of AURA BATTLER Dunbine
+- no official (skip): id=7897 title=味楽る!ミミカ
+- no official (skip): id=7898 title=学級王ヤマザキ
+- updated: id=7899 title=宮本武蔵 -双剣に馳せる夢- -> https://musashi-souken.com/index2.html
+- no official (skip): id=7900 title=熱血最強ゴウザウラー
+- no official (skip): id=7901 title=勇者指令ダグオン 水晶の瞳の少年
+- no official (skip): id=7902 title=ウサビッチ III
+- no official (skip): id=7903 title=ぱにぽにだっしゅ！ 断じて行えば鬼神もこれを避く
+- no official (skip): id=7904 title=Ark
+- updated: id=7905 title=黄金勇者ゴルドラン -> http://www.yusha.net/goldran/
+- no official (skip): id=7906 title=A-Girl
+- no official (skip): id=7907 title=ちびケロ ケロボールの秘密!?
+- no official (skip): id=7908 title=よくわかる現代魔法
+- no official (skip): id=7909 title=名探偵コナン漆黒の追跡者(チェイサー)
+- no official (skip): id=7910 title=トップをねらえ！科学講座
+- no official (skip): id=7911 title=魔法使いTai! vs シャーマニックプリンセス
+- no official (skip): id=7912 title=やっとかめ探偵団
+- no official (skip): id=7913 title=Birthday Boy
+- no official (skip): id=7914 title=ココロ図書館 - コミュニケーションは切る
+- no official (skip): id=7915 title=釣りバカ日誌
+- no official (skip): id=7916 title=よばれてとびでて！アクビちゃん
+⚠ failed: id=7917 title=タイムボカン2000 怪盗きらめきマン
+fetch failed
+- no official (skip): id=7918 title=ふしぎなメルモ
+- no official (skip): id=7919 title=ごぞんじ！月光仮面くん
+- no official (skip): id=7920 title=ビックリマン2000
+- updated: id=7921 title=真マジンガー 衝撃！Z編 -> http://www.shin-mazinger.com/
+- no official (skip): id=7922 title=Platonic Chain: Web
+- no official (skip): id=7923 title=らんま1/2 悪夢! 春眠香
+- no official (skip): id=7924 title=こんにちは アン 〜Before Green Gables
+- no official (skip): id=7925 title=風雲決
+- no official (skip): id=7926 title=ガン×ソードさん
+- no official (skip): id=7927 title=アタゴオルは猫の森
+- no official (skip): id=7928 title=神曲奏界ポリフォニカcrimsonS
+- no official (skip): id=7929 title=ヴァイパーズ・クリード
+- updated: id=7930 title=戦場のヴァルキュリア -Gallian Chronicles- -> https://www.valkyria-anime.com/index.html
+- no official (skip): id=7931 title=惑星ロボ ダンガードA[エース] 宇宙大海戦
+⚠ failed: id=7932 title=おねがい マイメロディ すっきり♪
+fetch failed
+- no official (skip): id=7933 title=ハヤテのごとく!! アツがナツいぜ 水着編!
+- no official (skip): id=7934 title=セブンゴースト
+- no official (skip): id=7935 title=ピカチュウのなつやすみ
+- no official (skip): id=7936 title=おどるポケモンひみつ基地
+- no official (skip): id=7937 title=パンドラハーツ
+- no official (skip): id=7938 title=ハーイあっこです
+- updated: id=7939 title=トトイ -> http://www.nippon-animation.co.jp/work/1640/
+- no official (skip): id=7940 title=テガミバチ 〜光と青の幻想夜話〜
+- no official (skip): id=7941 title=ブラスレイター・ナビ
+- no official (skip): id=7942 title=臀撃おしおき娘ゴータマンＲ（リターン）～愛と悲しみのファイナルバトル
+- no official (skip): id=7943 title=江口寿史のNANTOKA NARUDESHO!
+- no official (skip): id=7944 title=青山剛昌短編集
+- no official (skip): id=7945 title=海底大戦争 愛の20000マイル
+- updated: id=7946 title=SONIC NIGHT OF THE WEREHOG ～ソニック&チップ 恐怖の館～ -> https://sonic.sega.jp/NightOfTheWerehog/
+- no official (skip): id=7947 title=NEW DREAM HUNTER 麗夢 殺戮の夢幻迷宮
+- no official (skip): id=7948 title=NEW DREAM HUNTER 麗夢 夢の騎士達
+- no official (skip): id=7949 title=ドッグズ／バレッツ＆カーネイジ
+- updated: id=7950 title=フーセンのドラ太郎 -> https://www.nippon-animation.co.jp/work/1400/
+- no official (skip): id=7951 title=夏のあらし!
+- no official (skip): id=7952 title=リトル・エル・シドの冒険
+- no official (skip): id=7953 title=Navia Dratp
+- updated: id=7954 title=ど根性ガエル -> https://pluto.tv/en/on-demand/series/6197f066d0b6ab001395d50d/details/season/1
+- no official (skip): id=7955 title=宇宙円盤大戦争
+- no official (skip): id=7956 title=ザ・チョコレートパニック・ピクチャーショー
+- no official (skip): id=7957 title=Biohazard 4D-Executer
+- no official (skip): id=7958 title=21エモン
+- no official (skip): id=7959 title=超獣機神ダンクーガ 白熱の終章
+- no official (skip): id=7960 title=かうもり
+- no official (skip): id=7961 title=日本一桃太郎
+- no official (skip): id=7962 title=레스톨 특수구조대
+- no official (skip): id=7963 title=旅立ち　-亜美・終章-
+- no official (skip): id=7964 title=同級生２ Special　卒業生
+- no official (skip): id=7965 title=プリごろ太 宇宙の友情大冒険
+- no official (skip): id=7966 title=グレートマジンガー
+- no official (skip): id=7967 title=海の桃太郎
+- no official (skip): id=7968 title=すて猫トラちゃん
+- updated: id=7969 title=To LOVEる -とらぶる- -> http://www.j-toloveru.com/old/old_tolove/index.html
+- no official (skip): id=7970 title=GA 芸術科アートデザインクラス
+- no official (skip): id=7971 title=アップフェルラント
+- no official (skip): id=7972 title=バスカッシュ！
+- no official (skip): id=7973 title=こばと。
+- no official (skip): id=7974 title=サマーウォーズ
+- updated: id=7975 title=Phantom 〜Requiem for the Phantom〜 -> https://www.tv-tokyo.co.jp/anime/phantom/
+- updated: id=7976 title=フレッシュプリキュア！ -> https://www.toei-anim.co.jp/tv/fresh_precure/
+- no official (skip): id=7977 title=ゲゲゲの鬼太郎
+- no official (skip): id=7978 title=永遠のフィレーナ
+- no official (skip): id=7979 title=のだめカンタービレ フィナーレ
+- no official (skip): id=7980 title=烈火の炎 FINAL BURNING
+- no official (skip): id=7981 title=親鸞さま ねがい そして、ひかり。
+- no official (skip): id=7982 title=空を見上げる少女の瞳に映る世界
+- no official (skip): id=7983 title=超劇場版ケロロ軍曹　撃侵ドラゴンウォリアーズであります！
+- no official (skip): id=7984 title=楽しいムーミン一家 冒険日記
+- no official (skip): id=7985 title=みなみけ べつばら
+- no official (skip): id=7986 title=アーケードゲーマーふぶき 特別編 〜カべノムコウノパラダイス〜
+- no official (skip): id=7987 title=金色のコルダ ～secondo passo～
+- updated: id=7988 title=SEX PISTOLS -> http://s-pistols.com/
+- no official (skip): id=7989 title=宇宙世紀余話
+- no official (skip): id=7990 title=古代王者恐竜キング Dキッズ・アドベンチャー翼竜伝説
+- updated: id=7991 title=タユタマ -Kiss on my Deity- -> http://www.tayutama.com/
+- no official (skip): id=7992 title=スペースコブラパイロット
+- no official (skip): id=7993 title=テニスの王子様　OVA ANOTHER STORY ～過去と未来のメッセージ
+- updated: id=7994 title=プリキュアオールスターズDX みんなともだちっ☆奇跡の全員大集合! -> https://www.toei-anim.co.jp/movie/2009_precure_allstars/
+- updated: id=7995 title=どろろと百鬼丸 -> https://tezukaosamu.net/jp/anime/37.html
+- no official (skip): id=7996 title=宇宙空母ブルーノア
+- updated: id=7997 title=ゼロの使い魔 ～三美姫（プリンセッセ）の輪舞（ロンド）～ 誘惑の砂浜 -> https://www.zero-tsukaima.com/
+- no official (skip): id=7998 title=あかね色に染まる坂 OVA
+- no official (skip): id=7999 title=生徒会長に忠告
+- no official (skip): id=8000 title=勇者王ガオガイガー 特典Disc
+- no official (skip): id=8001 title=異世界の聖機師物語
+- no official (skip): id=8002 title=恋する天使アンジェリーク ちびキャラAdventure
+- updated: id=8003 title=G-九 -> http://ganime.jp/g-9
+- no official (skip): id=8004 title=Robo Crosser
+- no official (skip): id=8005 title=楓ニュータウン
+- no official (skip): id=8006 title=Fantascope Tylostoma
+- no official (skip): id=8007 title=クプ~!!まめゴマ!
+- no official (skip): id=8008 title=さくらんBOY DT
+- no official (skip): id=8009 title=鼠の留守番
+   ⏳ 429(AniList): 1558ms待ってリトライ (1/8) title=動物相撲大会
+   ⏳ 429(AniList): 2709ms待ってリトライ (2/8) title=動物相撲大会
+   ⏳ 429(AniList): 4389ms待ってリトライ (3/8) title=動物相撲大会
+   ⏳ 429(AniList): 7052ms待ってリトライ (4/8) title=動物相撲大会
+   ⏳ 429(AniList): 11836ms待ってリトライ (5/8) title=動物相撲大会
+   ⏳ 429(AniList): 20192ms待ってリトライ (6/8) title=動物相撲大会
+- no official (skip): id=8010 title=動物相撲大会
+- no official (skip): id=8011 title=浦島太郎
+- no official (skip): id=8012 title=ダン吉島のオリムピック大会
+- no official (skip): id=8013 title=鳥の歌
+- no official (skip): id=8014 title=ぜんまいざむらい
+- no official (skip): id=8015 title=おい等の野球
+- no official (skip): id=8016 title=鬼神童子ＺＥＮＫＩ外伝　黯鬼奇譚
+- no official (skip): id=8017 title=ブロッカー軍団Ⅳマシーンブラスター
+- no official (skip): id=8018 title=つるピカハゲ丸くん
+- no official (skip): id=8019 title=タイガーマスク二世
+- updated: id=8020 title=とんでも戦士ムテキング -> https://tatsunoko.co.jp/works/muteking-the-dashing-warrior
+- no official (skip): id=8021 title=巨人の星
+- updated: id=8022 title=花咲ける青少年 -> http://pierrot.jp/archives/tv_list_2005/tv_075.html
+- no official (skip): id=8023 title=古寺のおばけ騒動
+- no official (skip): id=8024 title=夢をかなえるゾウ
+- no official (skip): id=8025 title=コタツネコ
+- no official (skip): id=8026 title=ピカチュウのおばけカーニバル
+- no official (skip): id=8027 title=ピカチュウのなつまつり
+- no official (skip): id=8028 title=シナモン the Movie
+- no official (skip): id=8029 title=神鵰俠侶 III: 相約十六年
+- no official (skip): id=8030 title=Kiddy GiRL-AND Pilot
+- updated: id=8031 title=フウムーン -> https://tezukaosamu.net/jp/anime/57.html
+- no official (skip): id=8032 title=春の唄
+- no official (skip): id=8033 title=蝶のさいなん
+- no official (skip): id=8034 title=雲雀の宿替
+- no official (skip): id=8035 title=のらくろ二等兵 教練の巻
+- no official (skip): id=8036 title=體育デー
+- no official (skip): id=8037 title=太郎さんの汽車
+- no official (skip): id=8038 title=三公と蛸～百万両珍騒動～
+- no official (skip): id=8039 title=瘤取り (1929)
+   ⏳ 429(AniList): 1423ms待ってリトライ (1/8) title=イズモ
+   ⏳ 429(AniList): 2396ms待ってリトライ (2/8) title=イズモ
+   ⏳ 429(AniList): 4386ms待ってリトライ (3/8) title=イズモ
+   ⏳ 429(AniList): 7041ms待ってリトライ (4/8) title=イズモ
+   ⏳ 429(AniList): 11992ms待ってリトライ (5/8) title=イズモ
+- no official (skip): id=8040 title=イズモ
+- no official (skip): id=8041 title=ABUNAI SISTERS -KOKO & MIKA-
+- no official (skip): id=8042 title=ラブ・ポジション　ハレー伝説
+- no official (skip): id=8043 title=おしるこ
+- no official (skip): id=8044 title=エグザムライ戦国
+- no official (skip): id=8045 title=くじらのホセフィーナ
+- no official (skip): id=8046 title=龙刀奇缘
+- no official (skip): id=8047 title=光速電神アルベガス
+- no official (skip): id=8048 title=チスト みどりのおやゆび
+- no official (skip): id=8049 title=ジャン・バルジャン物語
+- no official (skip): id=8050 title=B.B. フィッシュ
+- no official (skip): id=8051 title=夢次元ハンターファンドラ
+- no official (skip): id=8052 title=チンプイ
+- no official (skip): id=8053 title=かなめも
+- no official (skip): id=8054 title=どんぐりの家
+- no official (skip): id=8055 title=つるにのって とも子の冒険
+- updated: id=8056 title=悪魔の花嫁 蘭の組曲 -> http://www.madhouse.co.jp/works/1988-1987/works_ova_demon.html
+- no official (skip): id=8057 title=XANADU ドラゴンスレイヤー伝説
+- no official (skip): id=8058 title=宇宙皇子
+- no official (skip): id=8059 title=天上編・宇宙皇子
+⚠ failed: id=8060 title=宇宙皇子 天上篇
+fetch failed
+- updated: id=8061 title=ねこひきのオルオラネ -> http://www.jcstaff.co.jp/sakuhin/nenpyo/1992/09_oruorane/oruorane.htm
+- updated: id=8062 title=学園便利屋シリーズ AntiqueHeart -> http://www.jcstaff.co.jp/sakuhin/nenpyo/1988/03_AntiqueHeart/AntiqueHeart.htm
+- no official (skip): id=8063 title=星猫フルハウス
+- no official (skip): id=8064 title=企業戦士YAMAZAKI ~LONG DISTANCE CALL~
+- no official (skip): id=8065 title=火の雨がふる
+- no official (skip): id=8066 title=破妖の剣 漆黒の魔性
+- no official (skip): id=8067 title=愛と剣のキャメロット まんが家マリナ タイムスリップ事件
+- no official (skip): id=8068 title=白い牙 ホワイトファング物語
+- no official (skip): id=8069 title=グリード
+- no official (skip): id=8070 title=アニメーション紀行 マルコ・ポーロの冒険
+- no official (skip): id=8071 title=走れ! 白いオオカミ
+- no official (skip): id=8072 title=おねがいマイメロディ きららっ☆
+- no official (skip): id=8073 title=聖剣の刀鍛冶（ブラックスミス）
+- no official (skip): id=8074 title=クロスゲーム
+- no official (skip): id=8075 title=海のオーロラ
+⚠ failed: id=8076 title=エレメントハンター
+fetch failed
+- no official (skip): id=8077 title=天元突破グレンラガン 劇場版前夜祭 映像特典 「ヴィラルの甘い夢」
+- no official (skip): id=8078 title=魔法のプリンセス ミンキーモモ -夢を抱きしめて-
+- no official (skip): id=8079 title=とある魔術のいんでっくすたん
+- no official (skip): id=8080 title=ハイスクール!奇面組　劇場版
+- updated: id=8081 title=にょろーん☆ちゅるやさん -> http://www.haruhi.tv/haruchuru/index.html
+- no official (skip): id=8082 title=メタルファイト ベイブレード
+- no official (skip): id=8083 title=キン肉マンII世 ULTIMATE MUSCLE
+- no official (skip): id=8084 title=キン肉マンII世 ULTIMATE MUSCLE 2
+- no official (skip): id=8085 title=ファイト一発！充電ちゃん！！
+- no official (skip): id=8086 title=ひげぴよ
+- no official (skip): id=8087 title=リストランテ・パラディーゾ
+- no official (skip): id=8088 title=天外魔境 自来也おぼろ変
+- no official (skip): id=8089 title=マリンとヤマト 不思議な日曜日
+- no official (skip): id=8090 title=コズミック・ファンタジー　銀河女豹の罠
+- no official (skip): id=8091 title=ツヨシしっかりしなさい
+⚠ failed: id=8092 title=緑山高校 甲子園編
+fetch failed
+- no official (skip): id=8093 title=テニスの王子様: 羽子板の王子様
+- no official (skip): id=8094 title=佐武と市捕物控
+- updated: id=8095 title=ホッタラケの島　～遥と魔法の鏡～ -> http://www.oblivionisland.com
+- no official (skip): id=8096 title=ハルヲ
+- updated: id=8097 title=狼と香辛料II 狼と琥珀色の憂鬱 -> http://spicy-wolf.com/top.html
+- no official (skip): id=8098 title=F
+- updated: id=8099 title=サスケ -> https://eiken-anime.jp/works/サスケ/
+- no official (skip): id=8100 title=1月にはChristmas
+- no official (skip): id=8101 title=魔龍戦紀
+- no official (skip): id=8102 title=劇場版デュエル・マスターズ 黒月の神帝(ルナティック・ゴッド・サーガ)
+- no official (skip): id=8103 title=劇場版ペンギンの問題 幸せの青い鳥でごペンなさい
+- no official (skip): id=8104 title=うら☆ひぐ
+- no official (skip): id=8105 title=レモンエンジェル（ＹＪ版）
+- no official (skip): id=8106 title=燃える! お兄さん
+- no official (skip): id=8107 title=せんせいのお時間: Doki Doki School Hours
+- no official (skip): id=8108 title=グレゴリーホラーショー
+- no official (skip): id=8109 title=１１ぴきのねこ
+- no official (skip): id=8110 title=１１ぴきのねことあほうどり
+- no official (skip): id=8111 title=２１エモン　宇宙へいらっしゃい！
+- no official (skip): id=8112 title=21エモン 宇宙いけ! 裸足のプリンセス
+- no official (skip): id=8113 title=愛の若草山物語
+- no official (skip): id=8114 title=「エイジ」
+- no official (skip): id=8115 title=アクビガール
+- no official (skip): id=8116 title=アル・カラルの遺産
+- no official (skip): id=8117 title=ジェッターマルス
+- no official (skip): id=8118 title=私立探偵・土岐正造トラブル・ノート　ハード＆ルーズ
+- no official (skip): id=8119 title=あんみつ姫
+- no official (skip): id=8120 title=a piece of PHANTASMAGORIA
+- no official (skip): id=8121 title=あずきちゃん ホワイト・バレンタイン♥ 恋のチャンスがやってきた!!
+- no official (skip): id=8122 title=Bad Boys
+- no official (skip): id=8123 title=ある日のCLAMP学園探偵団
+- no official (skip): id=8124 title=真恋姫†無双 ～乙女繚乱☆三国志演義～
+- updated: id=8125 title=RAINBOW -二舎六房の七人- -> http://www.ntv.co.jp/rainbow/
+- no official (skip): id=8126 title=ルパン三世 vs 名探偵コナン
+- no official (skip): id=8127 title=毎日かあさん
+- no official (skip): id=8128 title=極上!!めちゃモテ委員長
+- no official (skip): id=8129 title=クッキンアイドル　アイ！マイ！まいん！
+- no official (skip): id=8130 title=杜子春
+- no official (skip): id=8131 title=とらドラ! SOS!
+- no official (skip): id=8132 title=うみものがたり　～あなたがいてくれたコト～
+- no official (skip): id=8133 title=マリー & ガリー
+- no official (skip): id=8134 title=キャラディのジョークな毎日
+- updated: id=8135 title=月のワルツ -> https://www.nhk.or.jp/minna/songs/MIN200410_01/
+- no official (skip): id=8136 title=ゆるめいつ
+- no official (skip): id=8137 title=闪闪的红星 孩子的天空
+- no official (skip): id=8138 title=ファイナルファンタジーVII On the Way to a Smile デンゼル編
+- no official (skip): id=8139 title=Final Fantasy VII: Advent Children - Venice Film Festival Footage
+- updated: id=8140 title=喜羊羊與灰太狼之牛气冲天 -> http://film.22dm.com/
+- updated: id=8141 title=テイルエンダーズ -> http://www.tailenders.com/index.htm
+- updated: id=8142 title=青い花 -> http://www.aoihana.tv/
+- no official (skip): id=8143 title=WHITE ALBUM 第2期
+- no official (skip): id=8144 title=あそびにいくヨ!
+- no official (skip): id=8145 title=天上人とアクト人最後の戦い
+- no official (skip): id=8146 title=聖闘士星矢 THE LOST CANVAS 冥王神話
+- no official (skip): id=8147 title=レイトン教授と永遠の歌姫
+- no official (skip): id=8148 title=ポケットモンスター ダイヤモンド&パール アルセウス 超克の時空へ
+- updated: id=8149 title=Highway Jenny -> https://www.toei-anim.co.jp/sp/ganime/highway/index.html
+- no official (skip): id=8150 title=舞姫
+- no official (skip): id=8151 title=葉祥明美術館 LINE
+- no official (skip): id=8152 title=魔狩人 Demon Hunter
+- no official (skip): id=8153 title=のだめカンタービレ OVA
+- no official (skip): id=8154 title=バトン
+- no official (skip): id=8155 title=りタエマシャン
+- no official (skip): id=8156 title=名探偵コナン 女子高生探偵　鈴木園子の事件簿
+- no official (skip): id=8157 title=大雪山の勇者 牙王
+- no official (skip): id=8158 title=ささめきこと
+- no official (skip): id=8159 title=おてんばルル
+- no official (skip): id=8160 title=マクロス7ぷらす
+- no official (skip): id=8161 title=Dr.
+   ⏳ 429(AniList): 1724ms待ってリトライ (1/8) title=クレヨンしんちゃん 雲黒斎の野望
+   ⏳ 429(AniList): 2433ms待ってリトライ (2/8) title=クレヨンしんちゃん 雲黒斎の野望
+   ⏳ 429(AniList): 4256ms待ってリトライ (3/8) title=クレヨンしんちゃん 雲黒斎の野望
+   ⏳ 429(AniList): 6963ms待ってリトライ (4/8) title=クレヨンしんちゃん 雲黒斎の野望
+   ⏳ 429(AniList): 11727ms待ってリトライ (5/8) title=クレヨンしんちゃん 雲黒斎の野望
+- no official (skip): id=8162 title=クレヨンしんちゃん 雲黒斎の野望
+- no official (skip): id=8163 title=虹色ほたる~永遠の夏休み~
+- no official (skip): id=8164 title=らぶドル 温泉ですか？
+- no official (skip): id=8165 title=紺碧の艦隊
+- no official (skip): id=8166 title=旭日の艦隊
+- no official (skip): id=8167 title=名探偵コナン Magic File 3 新一と蘭 麻雀牌と七夕の思い出
+- no official (skip): id=8168 title=True Tears Specials
+- no official (skip): id=8169 title=チャイナさん 短編集
+- no official (skip): id=8170 title=ブラック・ジャック 空からきた子ども
+- no official (skip): id=8171 title=こぐまのミーシャ
+- no official (skip): id=8172 title=まんが世界昔ばなし
+- no official (skip): id=8173 title=女生徒
+- no official (skip): id=8174 title=エコエコアザラク
+- updated: id=8175 title=赤色エレジー -> https://www.toei-anim.co.jp/sp/ganime/sekishoku/index.html
+- no official (skip): id=8176 title=猫町
+- updated: id=8177 title=現代畸聞録　怪異物語 -> http://www.toei-anim.co.jp/sp/ganime/kaii/index.html
+- no official (skip): id=8178 title=ざくろ屋敷
+- no official (skip): id=8179 title=つゆのひとしずく～「植田正治」の写真世界を彷徨う～
+- no official (skip): id=8180 title=ポケモン不思議のダンジョン 空の探検隊～時と闇をめぐる最後の冒険～
+- no official (skip): id=8181 title=楳図かずおの呪い
+- no official (skip): id=8182 title=まんが日本昔ばなし（第2期）
+- no official (skip): id=8183 title=キャットシットワン
+- updated: id=8184 title=アジール・セッション -> https://www.cwfilms.jp/as/
+- no official (skip): id=8185 title=アキカン！
+- no official (skip): id=8186 title=劇場版 機動戦士ガンダム00 -A wakening of the Trailblazer-
+- no official (skip): id=8187 title=フルメタル パニック！The Second Raid 前夜祭 Scene00
+- no official (skip): id=8188 title=高校武闘伝 クローズ
+   ⏳ 429(AniList): 1528ms待ってリトライ (1/8) title=仮面ライダー電王: イマジンあにめ 2
+   ⏳ 429(AniList): 2694ms待ってリトライ (2/8) title=仮面ライダー電王: イマジンあにめ 2
+   ⏳ 429(AniList): 4250ms待ってリトライ (3/8) title=仮面ライダー電王: イマジンあにめ 2
+   ⏳ 429(AniList): 7008ms待ってリトライ (4/8) title=仮面ライダー電王: イマジンあにめ 2
+   ⏳ 429(AniList): 11928ms待ってリトライ (5/8) title=仮面ライダー電王: イマジンあにめ 2
+   ⏳ 429(AniList): 20123ms待ってリトライ (6/8) title=仮面ライダー電王: イマジンあにめ 2
