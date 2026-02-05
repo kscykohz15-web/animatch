@@ -677,18 +677,13 @@ const WARN_AXES: { key: keyof AnimeWork; label: string }[] = [
 function calcBaseTotal(work: AnimeWork): number | null {
   const vals = BASIC_AXES.map((a) => toScore10((work as any)[a.key]));
   if (vals.some((x) => x === null)) return null;
-  return vals.reduce((s, x) => s + (x ?? 0), 0);
+
+  // ✅ reduceの累積値を number と明示してTS推論エラー回避
+  return vals.reduce<number>((sum, x) => sum + (x ?? 0), 0);
 }
 
-function ScoreBarRow({
-  label,
-  value,
-  max = 10,
-}: {
-  label: string;
-  value: number | null;
-  max?: number;
-}) {
+
+function ScoreBarRow({ label, value, max = 10 }: { label: string; value: number | null; max?: number }) {
   const pct = value === null ? 0 : Math.round((value / max) * 100);
   return (
     <div style={{ display: "grid", gridTemplateColumns: "92px 1fr 52px", gap: 8, alignItems: "center", marginTop: 6 }}>
@@ -715,9 +710,7 @@ function ScoreBarRow({
         />
       </div>
 
-      <div style={{ fontSize: 12, textAlign: "right", opacity: 0.9 }}>
-        {value === null ? "—" : `${value}/${max}`}
-      </div>
+      <div style={{ fontSize: 12, textAlign: "right", opacity: 0.9 }}>{value === null ? "—" : `${value}/${max}`}</div>
     </div>
   );
 }
@@ -735,8 +728,7 @@ function ScoreSection({
 }) {
   const baseTotal = calcBaseTotal(work);
   const hasAny =
-    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) ||
-    WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
+    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) || WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
 
   const defaultOpen = alwaysOpen ? true : !(isMobile && defaultCollapsedOnMobile);
   const [open, setOpen] = useState(defaultOpen);
@@ -792,11 +784,6 @@ function ScoreSection({
             borderRadius: 12,
             padding: 12,
             background: "rgba(0,0,0,0.02)",
-          }}
-          onClick={(e) => {
-            // バーをクリックしてもモーダルが開くのは好み次第。
-            // ここでは「開いてOK」にしたいので stopPropagation しません。
-            // （ボタンだけ止めています）
           }}
         >
           <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, opacity: 0.9 }}>基本（6軸）</div>
@@ -1028,7 +1015,7 @@ export default function Home() {
 
   async function loadWorksAndVod() {
     if (!SUPABASE_URL || !SUPABASE_KEY) {
-      setLoadError("Supabase URL/KEY が設定されていません（.env.local を確認）");
+      setLoadError("Supabase URL/KEY が設定されていません（.env.local / Vercel環境変数を確認）");
       return;
     }
 
@@ -1058,10 +1045,7 @@ export default function Home() {
     setLoadingVod(true);
     try {
       const url =
-        `${SUPABASE_URL}/rest/v1/anime_vod_availability` +
-        `?select=anime_id,service,watch_url,region` +
-        `&region=eq.JP` +
-        `&watch_url=not.is.null`;
+        `${SUPABASE_URL}/rest/v1/anime_vod_availability` + `?select=anime_id,service,watch_url,region` + `&region=eq.JP` + `&watch_url=not.is.null`;
 
       const res = await fetch(url, { headers });
       if (!res.ok) {
@@ -1118,6 +1102,7 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SUPABASE_URL, SUPABASE_KEY]);
 
+  // ✅ モーダル中は本体スクロール禁止（縦スクロールはモーダル内部へ）
   useEffect(() => {
     if (!selectedAnime) return;
     const prev = document.body.style.overflow;
@@ -1166,7 +1151,10 @@ export default function Home() {
     };
   }, [selectedAnime?.id, SUPABASE_URL, SUPABASE_KEY]);
 
-  const ranked = useMemo(() => [...animeList].sort((a, b) => Number(b.popularity_score || 0) - Number(a.popularity_score || 0)), [animeList]);
+  const ranked = useMemo(
+    () => [...animeList].sort((a, b) => Number(b.popularity_score || 0) - Number(a.popularity_score || 0)),
+    [animeList]
+  );
   const visibleRanking = useMemo(() => ranked.slice(0, rankPagesShown * RANK_PAGE_SIZE), [rankPagesShown, ranked]);
 
   const canShowMoreRank = ranked.length > rankPagesShown * RANK_PAGE_SIZE;
@@ -1579,6 +1567,7 @@ export default function Home() {
         {visibleResults.map((a) => {
           const img = pickWorkImage(a);
           const vods = getVodServices(a);
+          const ep = getEpisodeCount(a);
 
           return (
             <div
@@ -1599,16 +1588,17 @@ export default function Home() {
                 <h3 className="cardTitle">{a.title}</h3>
               </div>
 
+              {/* ✅ 横長画像はスマホで一回り小さく見せたい → CSS側で調整（後述） */}
               <img className="poster cardImageWide" src={img} alt={a.title} />
 
               <div className="cardBodyWide">
                 <div className="genres">{formatGenre(a.genre)}</div>
                 <div className="meta">制作：{a.studio || "—"}</div>
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
-                <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
+                <div className="meta">話数：{ep ? `全${ep}話` : "—"}</div>
 
-                {/* ✅ 追加：9軸スコア（検索結果カードでも見える化）
-                    ・スマホはデフォルト「閉じる」→ボタンで展開
+                {/* ✅ 9軸スコア（検索結果カードでも見える化）
+                    ・スマホはデフォルト閉じる
                     ・PCはデフォルト展開
                 */}
                 <ScoreSection work={a} isMobile={isMobile} />
@@ -1662,11 +1652,21 @@ export default function Home() {
         </button>
       ) : null}
 
-      {/* 詳細モーダル */}
+      {/* 詳細モーダル（✅ はみ出す場合はモーダル内部だけ縦スクロール） */}
       {selectedAnime ? (
         <div className="modalOverlay" onClick={() => setSelectedAnime(null)}>
-          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
-            <div className="modalClose">
+          <div
+            className="modalContent"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxHeight: "92vh",
+              overflowY: "auto",
+              overflowX: "hidden",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {/* ✅ 閉じるボタンを見失わないように sticky */}
+            <div className="modalClose" style={{ position: "sticky", top: 0, zIndex: 10, background: "#fff", paddingBottom: 8 }}>
               <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
             </div>
 
@@ -1683,7 +1683,7 @@ export default function Home() {
                 <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
 
-                {/* ✅ 追加：シリーズ数・合計話数（詳細モーダルのみ表示） */}
+                {/* ✅ シリーズ数・合計話数（詳細モーダルのみ表示） */}
                 {selectedSeriesStats ? (
                   <div className="meta">
                     シリーズ：{selectedSeriesStats.countWorks}作品
@@ -1698,7 +1698,7 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* ✅ 追加：9軸スコア（詳細は常に展開） */}
+                {/* ✅ 9軸スコア（詳細は常に展開） */}
                 <ScoreSection work={selectedAnime} isMobile={isMobile} alwaysOpen />
 
                 <div className="meta">テーマ：{formatList(selectedAnime.themes)}</div>
