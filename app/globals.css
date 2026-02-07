@@ -282,3 +282,67 @@ button:hover { background:#000; }
   .vodIconWrap{ padding: 3px; }
   .vodIconImg{ width: 26px; height: 26px; }
 }
+
+/* ✅ スマホは横幅を広めに（余白を減らす） */
+@media (max-width: 520px) {
+  .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* ✅ モーダル：中だけ縦スクロール、横は出さない */
+.modalContent {
+  max-height: 92vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ✅ 閉じるボタンは常に見える */
+.modalClose {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  padding-bottom: 8px;
+}
+
+/* ✅ 横長画像を“スマホだけ”一回り小さく見せる */
+@media (max-width: 520px) {
+  .cardImageWide {
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+  }
+}
+/* =========================
+   Font / size unify（重要）
+   ========================= */
+html,
+body {
+  font-family: "メイリオ", Meiryo, "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #111;
+}
+
+/* ✅ ボタン・入力系が勝手に別フォントになるのを防ぐ */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+/* モーダル内も念のため継承を強制 */
+.modalOverlay,
+.modalContent {
+  font-family: inherit;
+  font-size: inherit;
+}
+
