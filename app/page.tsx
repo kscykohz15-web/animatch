@@ -13,14 +13,11 @@ type AnimeWork = {
 
   episode_count?: number | null;
 
-  // ✅ シリーズ判定用（DBに存在するなら自動で拾う）
   series_key?: string | null;
   series_title?: string | null;
   series_id?: number | null;
 
-  // 縦長（PC向け）
   image_url?: string | null;
-  // 横長（スマホ向け）
   image_url_wide?: string | null;
 
   themes?: string[] | string | null;
@@ -39,7 +36,6 @@ type AnimeWork = {
   emotion?: number | null;
   ero?: number | null;
 
-  // ✅ 9軸（0-10）
   story_10?: number | null;
   animation_10?: number | null;
   world_10?: number | null;
@@ -223,7 +219,6 @@ function canonicalVodName(raw: string) {
 
   return s as any;
 }
-
 function normalizeVodName(name: string) {
   return canonicalVodName(name);
 }
@@ -232,6 +227,7 @@ function parsePgArrayString(s: string): string[] {
   const raw = String(s || "").trim();
   if (!raw) return [];
   const t = raw.startsWith("{") && raw.endsWith("}") ? raw.slice(1, -1) : raw;
+
   return t
     .split(",")
     .map((x) => x.trim())
@@ -283,7 +279,6 @@ function titleImage(title: string) {
   return `https://placehold.jp/320x480.png?text=${encodeURIComponent(title)}`;
 }
 
-// ✅（ユーザー指定の計算式）覚えてます
 function totalScore(a: AnimeWork) {
   const battle = Number(a.battle || 0);
   const story = Number(a.story || 0);
@@ -329,52 +324,30 @@ function normalizeForCompare(s: string) {
     .trim();
 }
 
-function clamp(n: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, n));
-}
-
-function ellipsize(s: string | null | undefined, max = 110) {
-  const t = String(s || "").trim();
-  if (!t) return "";
-  if (t.length <= max) return t;
-  return t.slice(0, max) + "…";
-}
-
-/** ✅ シリーズ推定：より強めに正規化（シーズン/Final/完結編/章/Part 等を広く除去） */
+/** シリーズキー（強化版） */
 function seriesKeyFromTitle(title: string) {
   let t = String(title || "").trim();
   if (!t) return "";
 
-  // 括弧類の中身を落とす
-  t = t.replace(/[【\[][^【\]]*[】\]]/g, " ");
-  t = t.replace(/[（(][^（）()]*[）)]/g, " ");
+  // 括弧/ブラケット類の中身を落とす
+  t = t.replace(/[【\[][^【\]]*[】\]]/g, "");
+  t = t.replace(/[（(][^（）()]*[）)]/g, "");
+  t = t.replace(/[『「][^』」]*[』」]/g, "");
 
   // 記号ゆれ
   t = t.replace(/[：:]/g, " ");
-  t = t.replace(/[‐-‒–—―ー]/g, "-");
+  t = t.replace(/[‐-‒–—―ー]/g, "-").replace(/\s+/g, " ").trim();
 
-  // 劇場版/映画などは判定用に残しつつ、キーとしては共通にしたいので後で分類側で見る
-  // ここでは「Final/Season/期/Part/章/編」などを広めに除去
-  t = t.replace(/\b(the\s*)?final\s*season\b/gi, " ");
-  t = t.replace(/\bfinal\s*season\b/gi, " ");
-  t = t.replace(/\bseason\s*\d+\b/gi, " ");
-  t = t.replace(/シーズン\s*\d+/g, " ");
-  t = t.replace(/第\s*\d+\s*(期|章|部)/g, " ");
-  t = t.replace(/\bpart\s*\d+\b/gi, " ");
-  t = t.replace(/\d+\s*期/g, " ");
-  t = t.replace(/(完結編|最終章|終章|新章|前編|後編|第\d+話|総集編|新編集版|特別編|スペシャル|sp|ova|oad)/gi, " ");
+  // 劇場版/OVAなどはキー上は落とす（同シリーズに寄せる）
+  t = t.replace(/\s*(劇場版|映画|the\s*movie|movie|OVA|OAD|SP|スペシャル|特別編|総集編|新編集版|新作)\s*/gi, " ").trim();
 
-  // movie/劇場版系はキーとしては落とす（シリーズ共通に寄せる）
-  t = t.replace(/(劇場版|映画|the\s*movie|movie|シネマ|cinema)/gi, " ");
+  // FINAL / 完結編 系
+  t = t.replace(/\s*(the\s*)?final\s*season\s*/gi, " ").trim();
+  t = t.replace(/\s*(完結編|最終章|最終期|ファイナル)\s*/g, " ").trim();
 
-  // ローマ数字末尾
-  t = t.replace(/\s*(ii|iii|iv|v|vi|vii|viii|ix|x)\s*$/i, " ");
-
-  // 余計な語
-  t = t.replace(/\b(tv|anime)\b/gi, " ");
-
-  // スペース整形
-  t = t.replace(/\s+/g, " ").trim();
+  // 期/シーズン/part
+  t = t.replace(/\s*(第?\s*\d+\s*期|第?\s*\d+\s*シーズン|シーズン\s*\d+|season\s*\d+|part\s*\d+|第?\s*\d+\s*部)\s*$/i, "").trim();
+  t = t.replace(/\s*(ii|iii|iv|v|vi|vii|viii|ix|x)\s*$/i, "").trim();
 
   return normalizeForCompare(t);
 }
@@ -385,100 +358,83 @@ function getSeriesKey(work: AnimeWork) {
   return seriesKeyFromTitle(work.title);
 }
 
-function isMovieLikeTitle(title: string) {
-  const s = String(title || "");
-  return /(劇場版|映画|the\s*movie|movie|シネマ|cinema)/i.test(s);
-}
-
-function extractSeasonNumber(title: string): number | null {
-  const s = String(title || "");
-  let m = s.match(/第\s*(\d+)\s*期/);
-  if (m?.[1]) return Number(m[1]);
-
-  m = s.match(/シーズン\s*(\d+)/i);
-  if (m?.[1]) return Number(m[1]);
-
-  m = s.match(/\bseason\s*(\d+)\b/i);
-  if (m?.[1]) return Number(m[1]);
-
-  m = s.match(/\bpart\s*(\d+)\b/i);
-  if (m?.[1]) return Number(m[1]);
-
-  m = s.match(/(\d+)\s*期/);
-  if (m?.[1]) return Number(m[1]);
-
-  // ローマ数字末尾（Ⅱ等）
-  m = s.match(/\b(ii|iii|iv|v|vi|vii|viii|ix|x)\b/i);
-  if (m?.[1]) {
-    const r = m[1].toLowerCase();
-    const map: Record<string, number> = { ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 };
-    return map[r] ?? null;
-  }
-
-  return null;
-}
-
 type SeriesBundle = {
   key: string;
   animeWorks: AnimeWork[];
   movieWorks: AnimeWork[];
+  animeSeasonsText: string; // 第1〜第4期 など
   animeTotalEpisodes: number | null;
   animeCountedWorks: number;
-  inferredSeasonMin: number;
-  inferredSeasonMax: number;
 };
 
-function buildSeriesBundle(list: AnimeWork[], selected: AnimeWork): SeriesBundle | null {
+function detectSeasonNumber(title: string): number | null {
+  const s = String(title || "");
+  const m1 = s.match(/第\s*(\d+)\s*期/);
+  if (m1?.[1]) return Number(m1[1]);
+  const m2 = s.match(/season\s*(\d+)/i);
+  if (m2?.[1]) return Number(m2[1]);
+  const m3 = s.match(/(\d+)\s*期/);
+  if (m3?.[1]) return Number(m3[1]);
+  return null;
+}
+
+function isMovieLikeTitle(title: string) {
+  const s = String(title || "");
+  return /劇場版|映画|the\s*movie|movie/i.test(s);
+}
+
+function buildSeriesBundle(list: AnimeWork[], selected: AnimeWork | null): SeriesBundle | null {
+  if (!selected) return null;
   const key = getSeriesKey(selected);
   if (!key) return null;
 
   const same = list.filter((w) => getSeriesKey(w) === key);
-  if (!same.length) return null;
+  if (same.length <= 1) {
+    // 作品名完全一致でも拾えるように保険（ユーザー希望：同名判定）
+    const exactKey = normalizeForCompare(selected.title);
+    const exact = list.filter((w) => normalizeForCompare(w.title) === exactKey);
+    if (exact.length > same.length) {
+      return buildSeriesBundle(exact, selected);
+    }
+  }
 
   const animeWorks = same.filter((w) => !isMovieLikeTitle(w.title));
   const movieWorks = same.filter((w) => isMovieLikeTitle(w.title));
 
-  // 合計話数（登録されている作品のみ）
-  let totalEp = 0;
+  const seasonNums = Array.from(
+    new Set(
+      animeWorks
+        .map((w) => detectSeasonNumber(w.title))
+        .filter((n): n is number => n !== null && Number.isFinite(n))
+    )
+  ).sort((a, b) => a - b);
+
+  let animeSeasonsText = "";
+  if (seasonNums.length === 0) {
+    animeSeasonsText = animeWorks.length >= 2 ? `全${animeWorks.length}期` : "第1期";
+  } else {
+    const min = seasonNums[0];
+    const max = seasonNums[seasonNums.length - 1];
+    animeSeasonsText = min === max ? `第${min}期` : `第${min}〜第${max}期`;
+  }
+
+  let total = 0;
   let counted = 0;
   for (const w of animeWorks) {
     const ep = getEpisodeCount(w);
     if (ep !== null) {
-      totalEp += ep;
+      total += ep;
       counted += 1;
     }
-  }
-  const animeTotalEpisodes = counted > 0 ? totalEp : null;
-
-  // 期推定
-  const extracted = animeWorks
-    .map((w) => extractSeasonNumber(w.title))
-    .filter((n): n is number => typeof n === "number" && Number.isFinite(n) && n >= 1);
-
-  let minS = 1;
-  let maxS = 1;
-
-  if (extracted.length >= 1) {
-    minS = Math.min(...extracted);
-    maxS = Math.max(...extracted);
-  } else if (animeWorks.length >= 2) {
-    // タイトルから取れない場合：放送年順で「第1期〜第N期」とみなす
-    const sorted = [...animeWorks].sort((a, b) => Number(a.start_year || 9999) - Number(b.start_year || 9999));
-    minS = 1;
-    maxS = sorted.length;
-  } else {
-    minS = 1;
-    maxS = 1;
   }
 
   return {
     key,
     animeWorks,
     movieWorks,
-    animeTotalEpisodes,
+    animeSeasonsText,
+    animeTotalEpisodes: counted > 0 ? total : null,
     animeCountedWorks: counted,
-    inferredSeasonMin: minS,
-    inferredSeasonMax: maxS,
   };
 }
 
@@ -581,6 +537,163 @@ function safeExternalUrl(raw?: string | null) {
   return "";
 }
 
+function truncateText(s: string | null | undefined, maxChars = 100) {
+  const t = String(s || "").replace(/\s+/g, " ").trim();
+  if (!t) return "";
+  if (t.length <= maxChars) return t;
+  return t.slice(0, maxChars) + "…";
+}
+
+/** --------- Stars ---------- */
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function toScore10(v: any): number | null {
+  if (v === null || v === undefined) return null;
+  const n = Number(v);
+  if (!Number.isFinite(n)) return null;
+  const x = Math.round(n);
+  return Math.max(0, Math.min(10, x));
+}
+
+const BASIC_AXES: { key: keyof AnimeWork; label: string }[] = [
+  { key: "story_10", label: "シナリオ" },
+  { key: "animation_10", label: "作画" },
+  { key: "world_10", label: "世界観" },
+  { key: "emotion_10", label: "心が動く" },
+  { key: "tempo_10", label: "テンポ" },
+  { key: "music_10", label: "音楽" },
+];
+
+const WARN_AXES: { key: keyof AnimeWork; label: string }[] = [
+  { key: "gore_10", label: "グロ" },
+  { key: "depression_10", label: "鬱" },
+  { key: "ero_10", label: "叡智" },
+];
+
+function calcBaseTotal(work: AnimeWork): number | null {
+  const vals = BASIC_AXES.map((a) => toScore10((work as any)[a.key]));
+  if (vals.some((x) => x === null)) return null;
+  return vals.reduce<number>((sum, x) => sum + (x ?? 0), 0);
+}
+
+function rating5FromWork(work: AnimeWork): number | null {
+  const baseTotal = calcBaseTotal(work);
+  if (baseTotal !== null) {
+    const r = (baseTotal / 60) * 5;
+    return Math.round(r * 10) / 10;
+  }
+  const t = totalScore(work); // max 55想定
+  if (t > 0) {
+    const r = (t / 55) * 5;
+    return Math.round(r * 10) / 10;
+  }
+  return null;
+}
+
+function passiveRating5(work: AnimeWork): number | null {
+  const n = work.passive_viewing;
+  if (n === null || n === undefined) return null;
+  const r = clamp(Math.round(Number(n)), 0, 5);
+  return r;
+}
+
+function StarRating({
+  value,
+  showText = true,
+  size = 16,
+}: {
+  value: number | null;
+  showText?: boolean;
+  size?: number;
+}) {
+  const v = value === null ? null : clamp(value, 0, 5);
+  const pct = v === null ? 0 : (v / 5) * 100;
+
+  return (
+    <div className="starRow" aria-label={v === null ? "—" : `${v}/5`}>
+      <div className="stars" style={{ fontSize: size }}>
+        <div className="starsBase">★★★★★</div>
+        <div className="starsFill" style={{ width: `${pct}%` }}>
+          ★★★★★
+        </div>
+      </div>
+      {showText ? <div className="starText">{v === null ? "—" : `${v.toFixed(1)}/5`}</div> : null}
+    </div>
+  );
+}
+
+/** --------- Score details (open/close) ---------- */
+function ScoreBarRow({ label, value, max = 10 }: { label: string; value: number | null; max?: number }) {
+  const pct = value === null ? 0 : Math.round((value / max) * 100);
+  return (
+    <div className="scoreRow" aria-label={`${label} ${value ?? "—"} / ${max}`}>
+      <div className="scoreLabel">{label}</div>
+      <div className="scoreTrack">
+        <div className="scoreFill" style={{ width: `${pct}%` }} />
+      </div>
+      <div className="scoreVal">{value === null ? "—" : `${value}/${max}`}</div>
+    </div>
+  );
+}
+
+function ScoreSection({
+  work,
+  defaultOpen = false,
+}: {
+  work: AnimeWork;
+  defaultOpen?: boolean;
+}) {
+  const hasAny =
+    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) ||
+    WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
+
+  const [open, setOpen] = useState<boolean>(defaultOpen);
+
+  useEffect(() => {
+    setOpen(defaultOpen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [work?.id]);
+
+  if (!hasAny) return null;
+
+  return (
+    <div className="scoreBoxWrap">
+      <div className="scoreHead">
+        <div className="scoreHeadTitle">評価</div>
+        <button
+          type="button"
+          className="btn btnGhost"
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen((p) => !p);
+          }}
+        >
+          {open ? "閉じる" : "開く"}
+        </button>
+      </div>
+
+      {open ? (
+        <div className="scoreBox" onClick={(e) => e.stopPropagation()}>
+          <div className="scoreSecTitle">評価項目</div>
+          {BASIC_AXES.map((ax) => (
+            <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
+          ))}
+
+          <div className="scoreDivider" />
+
+          <div className="scoreSecTitle">注意点</div>
+          {WARN_AXES.map((ax) => (
+            <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** --------- VOD icons ---------- */
 function VodIconsRow({
   services,
   watchUrls,
@@ -591,7 +704,7 @@ function VodIconsRow({
   workId?: number;
 }) {
   if (!services || services.length === 0) {
-    return <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>配信：—</div>;
+    return <div className="meta small">配信：—</div>;
   }
 
   const canonSet = new Set(vodServices as readonly string[]);
@@ -613,64 +726,58 @@ function VodIconsRow({
     });
 
   return (
-    <div className="vodIconsRow">
+    <div className="vodRow">
       <div className="vodLabel">配信：</div>
 
-      {knownSorted.map((svc) => {
-        const icon = vodIconMap[svc];
-        const urlRaw = safeExternalUrl(watchUrls?.[svc]);
-        const clickable = !!urlRaw;
+      <div className="vodIcons">
+        {knownSorted.map((svc) => {
+          const icon = vodIconMap[svc];
+          const urlRaw = safeExternalUrl(watchUrls?.[svc]);
+          const clickable = !!urlRaw;
 
-        const imgNode = icon ? (
-          <img
-            className="vodIconImg"
-            src={icon.src}
-            alt={icon.alt}
-            title={clickable ? `${svc}で視聴ページを開く` : svc}
-            onError={() => console.warn("[VOD ICON ERROR]", { svc, src: icon.src })}
-            style={{
-              filter: clickable ? "none" : "grayscale(1)",
-              opacity: clickable ? 1 : 0.45,
-            }}
-          />
-        ) : (
-          <span style={{ fontSize: 12, padding: "4px 8px" }}>{svc}</span>
-        );
-
-        if (!clickable) {
-          return (
-            <span key={svc} className="vodIconWrap disabled">
-              {imgNode}
-            </span>
+          const imgNode = icon ? (
+            <img
+              className="vodIconImg"
+              src={icon.src}
+              alt={icon.alt}
+              title={clickable ? `${svc}で視聴ページを開く` : svc}
+              onError={() => console.warn("[VOD ICON ERROR]", { svc, src: icon.src })}
+              style={{ filter: clickable ? "none" : "grayscale(1)", opacity: clickable ? 1 : 0.4 }}
+            />
+          ) : (
+            <span className="vodText">{svc}</span>
           );
-        }
 
-        return (
-          <a
-            key={svc}
-            className="vodIconWrap"
-            href={urlRaw}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              try {
-                trackEvent({
-                  event_name: "vod_click",
-                  work_id: Number(workId || 0),
-                  vod_service: svc,
-                  meta: { from: "vod_icons" },
-                });
-              } catch {}
-            }}
-          >
-            {imgNode}
-          </a>
-        );
-      })}
+          if (!clickable) return <span key={svc} className="vodIconLink disabled">{imgNode}</span>;
+
+          return (
+            <a
+              key={svc}
+              className="vodIconLink"
+              href={urlRaw}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                try {
+                  trackEvent({
+                    event_name: "vod_click",
+                    work_id: Number(workId || 0),
+                    vod_service: svc,
+                    meta: { from: "vod_icons" },
+                  });
+                } catch {}
+              }}
+            >
+              {imgNode}
+            </a>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
+/** --------- Original label ---------- */
 function stageLabel(stage: string | null | undefined) {
   const s = String(stage || "").toLowerCase();
   if (!s) return "—";
@@ -715,153 +822,6 @@ function titleMatches(title: string, q: string) {
   return ngramJaccard(t, s) >= 0.42;
 }
 
-/** =========================
- *  ✅ 評価UI
- *  - 通常は「合計 + ★」のみ
- *  - 開くボタンで詳細（棒）
- *  - 太文字禁止（全部 400）
- * ========================= */
-
-function toScore10(v: any): number | null {
-  if (v === null || v === undefined) return null;
-  const n = Number(v);
-  if (!Number.isFinite(n)) return null;
-  const x = Math.round(n);
-  return clamp(x, 0, 10);
-}
-
-const BASIC_AXES: { key: keyof AnimeWork; label: string }[] = [
-  { key: "story_10", label: "シナリオ" },
-  { key: "animation_10", label: "作画" },
-  { key: "world_10", label: "世界観" },
-  { key: "emotion_10", label: "心が動く" },
-  { key: "tempo_10", label: "テンポ" },
-  { key: "music_10", label: "音楽" },
-];
-
-const WARN_AXES: { key: keyof AnimeWork; label: string }[] = [
-  { key: "gore_10", label: "グロ" },
-  { key: "depression_10", label: "鬱" },
-  { key: "ero_10", label: "叡智" },
-];
-
-function calcBaseTotal(work: AnimeWork): number | null {
-  const vals = BASIC_AXES.map((a) => toScore10((work as any)[a.key]));
-  if (vals.some((x) => x === null)) return null;
-  return (vals as number[]).reduce((sum, v) => sum + v, 0);
-}
-
-function toRating5FromTotal60(total60: number) {
-  const r = (total60 / 60) * 5;
-  // 0.1刻み
-  return Math.round(r * 10) / 10;
-}
-
-function Stars({ rating, size = 14 }: { rating: number | null; size?: number }) {
-  const r = rating === null ? 0 : clamp(rating, 0, 5);
-  const pct = (r / 5) * 100;
-  return (
-    <span className="stars" style={{ fontSize: size, lineHeight: 1 }}>
-      <span className="starsBack">★★★★★</span>
-      <span className="starsFront" style={{ width: `${pct}%` }}>
-        ★★★★★
-      </span>
-    </span>
-  );
-}
-
-function ScoreBarRow({ label, value, max = 10 }: { label: string; value: number | null; max?: number }) {
-  const pct = value === null ? 0 : Math.round((value / max) * 100);
-  return (
-    <div className="scoreRow">
-      <div className="scoreLabel">{label}</div>
-      <div className="scoreTrack" aria-label={`${label} ${value ?? "—"} / ${max}`}>
-        <div className="scoreFill" style={{ width: `${pct}%` }} />
-      </div>
-      <div className="scoreValue">{value === null ? "—" : `${value}/${max}`}</div>
-    </div>
-  );
-}
-
-function ScoreSection({
-  work,
-  defaultCollapsed = true,
-}: {
-  work: AnimeWork;
-  defaultCollapsed?: boolean;
-}) {
-  const baseTotal = calcBaseTotal(work);
-  const hasAny =
-    BASIC_AXES.some((a) => toScore10((work as any)[a.key]) !== null) ||
-    WARN_AXES.some((a) => toScore10((work as any)[a.key]) !== null);
-
-  const totalText = baseTotal === null ? "—/60" : `${baseTotal}/60`;
-  const rating5 = baseTotal === null ? null : toRating5FromTotal60(baseTotal);
-
-  const [open, setOpen] = useState(!defaultCollapsed);
-
-  useEffect(() => {
-    setOpen(!defaultCollapsed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [work?.id]);
-
-  if (!hasAny) {
-    return (
-      <div className="meta" style={{ marginTop: 10, opacity: 0.75 }}>
-        評価：—
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ marginTop: 10 }}>
-      {/* ✅ 通常表示：合計 + ★ + 開く */}
-      <div className="scoreHead">
-        <div className="scoreHeadLeft">
-          <div className="scoreTotalText">評価：{totalText}</div>
-          <div className="scoreStarLine">
-            <Stars rating={rating5} size={14} />
-            <span className="scoreStarNum">{rating5 === null ? "" : `${rating5.toFixed(1)}/5`}</span>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          className="pillBtn"
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen((p) => !p);
-          }}
-        >
-          {open ? "閉じる" : "開く"}
-        </button>
-      </div>
-
-      {/* ✅ 詳細：評価項目 / 注意点 */}
-      {open ? (
-        <div
-          className="scorePanel"
-          onClick={(e) => {
-            // カードクリックは許可（好みで stopPropagation しない）
-          }}
-        >
-          <div className="scorePanelTitle">評価項目</div>
-          {BASIC_AXES.map((ax) => (
-            <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
-          ))}
-
-          <div className="scoreDivider" />
-
-          <div className="scorePanelTitle">注意点</div>
-          {WARN_AXES.map((ax) => (
-            <ScoreBarRow key={String(ax.key)} label={ax.label} value={toScore10((work as any)[ax.key])} />
-          ))}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
 /** ✅ anime_works: 既存カラムだけselect */
 async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, string>): Promise<string> {
   const wanted = [
@@ -871,11 +831,9 @@ async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, 
     "studio",
     "summary",
     "episode_count",
-
     "series_key",
     "series_title",
     "series_id",
-
     "image_url",
     "image_url_wide",
     "themes",
@@ -893,7 +851,6 @@ async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, 
     "ero",
     "keywords",
     "official_url",
-
     "story_10",
     "animation_10",
     "world_10",
@@ -928,64 +885,34 @@ function shuffleArray<T>(arr: T[]) {
   return a;
 }
 
-/** ✅ ページネーション（1 2 3 … last） */
-function buildPageItems(current: number, total: number): (number | "...")[] {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+/** --------- Pagination (1 … 96 97 98 99 100) ---------- */
+type PageItem = number | "…";
+function buildPageItems(current: number, total: number): PageItem[] {
+  if (total <= 1) return [1];
+  const set = new Set<number>();
+  set.add(1);
+  set.add(total);
 
-  // ユーザー要望：…の後は最後の番号
-  if (current <= 4) return [1, 2, 3, 4, "...", total];
-  if (current >= total - 3) return [1, "...", total - 3, total - 2, total - 1, total];
+  for (const d of [-2, -1, 0, 1, 2]) {
+    const p = current + d;
+    if (p >= 1 && p <= total) set.add(p);
+  }
 
-  return [1, "...", current - 1, current, current + 1, "...", total];
-}
-
-function Pagination({
-  current,
-  total,
-  onChange,
-}: {
-  current: number;
-  total: number;
-  onChange: (p: number) => void;
-}) {
-  if (total <= 1) return null;
-  const items = buildPageItems(current, total);
-
-  return (
-    <div className="pager">
-      <button className="pillBtn" type="button" onClick={() => onChange(Math.max(1, current - 1))} disabled={current <= 1}>
-        ←
-      </button>
-
-      <div className="pagerNums">
-        {items.map((it, idx) => {
-          if (it === "...") return <span key={`dots-${idx}`} className="pagerDots">…</span>;
-          const p = it;
-          const active = p === current;
-          return (
-            <button
-              key={p}
-              type="button"
-              className={`pagerNum ${active ? "active" : ""}`}
-              onClick={() => onChange(p)}
-            >
-              {p}
-            </button>
-          );
-        })}
-      </div>
-
-      <button className="pillBtn" type="button" onClick={() => onChange(Math.min(total, current + 1))} disabled={current >= total}>
-        →
-      </button>
-    </div>
-  );
-}
-
-/** ✅ ながら見（星5 / 日本語なし） */
-function passiveStars(v: number | null | undefined) {
-  const n = clamp(Number(v ?? 0), 0, 5);
-  return <Stars rating={n} size={14} />;
+  const pages = Array.from(set).sort((a, b) => a - b);
+  const out: PageItem[] = [];
+  for (let i = 0; i < pages.length; i++) {
+    const p = pages[i];
+    if (i === 0) out.push(p);
+    else {
+      const prev = pages[i - 1];
+      if (p - prev === 1) out.push(p);
+      else {
+        out.push("…");
+        out.push(p);
+      }
+    }
+  }
+  return out;
 }
 
 export default function Home() {
@@ -1009,11 +936,37 @@ export default function Home() {
 
   const [vodChecked, setVodChecked] = useState<Set<string>>(new Set());
 
-  // ✅ 検索結果は全件保持（ページで表示）
   const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
   const [resultPageShown, setResultPageShown] = useState(1);
 
-  const totalResultPages = useMemo(() => Math.max(1, Math.ceil(resultAll.length / RESULT_PAGE_SIZE)), [resultAll.length]);
+  const resultRef = useRef<HTMLDivElement | null>(null);
+  const [resultFlash, setResultFlash] = useState(false);
+  const [lastSearchedAt, setLastSearchedAt] = useState<number | null>(null);
+
+  const vodMapRef = useRef<Map<number, string[]>>(new Map());
+  const vodUrlMapRef = useRef<Map<number, Record<string, string>>>(new Map());
+
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 520px)");
+    const apply = () => setIsMobile(!!mq.matches);
+    apply();
+    const add = (mq as any).addEventListener ? "addEventListener" : "addListener";
+    const rm = (mq as any).removeEventListener ? "removeEventListener" : "removeListener";
+    (mq as any)[add]("change", apply);
+    return () => (mq as any)[rm]("change", apply);
+  }, []);
+
+  useEffect(() => {
+    if (!lastSearchedAt) return;
+    trackEvent({ event_name: "result_view", meta: { mode } });
+  }, [lastSearchedAt, mode]);
+
+  const pageCount = useMemo(() => Math.max(1, Math.ceil(resultAll.length / RESULT_PAGE_SIZE)), [resultAll.length]);
+  const pageItems = useMemo(() => buildPageItems(resultPageShown, pageCount), [resultPageShown, pageCount]);
 
   const visibleResults = useMemo(() => {
     const start = (resultPageShown - 1) * RESULT_PAGE_SIZE;
@@ -1035,40 +988,10 @@ export default function Home() {
 
   const [rankPagesShown, setRankPagesShown] = useState(1);
 
-  const resultRef = useRef<HTMLDivElement | null>(null);
-  const [resultFlash, setResultFlash] = useState(false);
-  const [lastSearchedAt, setLastSearchedAt] = useState<number | null>(null);
-
-  const vodMapRef = useRef<Map<number, string[]>>(new Map());
-  const vodUrlMapRef = useRef<Map<number, Record<string, string>>>(new Map());
-
-  const [loadError, setLoadError] = useState<string | null>(null);
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  // ✅ 評価の見方（説明モーダル）
-  const [evalHelpOpen, setEvalHelpOpen] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 520px)");
-    const apply = () => setIsMobile(!!mq.matches);
-    apply();
-    const add = (mq as any).addEventListener ? "addEventListener" : "addListener";
-    const rm = (mq as any).removeEventListener ? "removeEventListener" : "removeListener";
-    (mq as any)[add]("change", apply);
-    return () => (mq as any)[rm]("change", apply);
-  }, []);
-
-  useEffect(() => {
-    if (!lastSearchedAt) return;
-    trackEvent({ event_name: "result_view", meta: { mode } });
-  }, [lastSearchedAt, mode]);
-
   function jumpToResult() {
     resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     setResultFlash(true);
-    window.setTimeout(() => setResultFlash(false), 650);
+    window.setTimeout(() => setResultFlash(false), 800);
     setLastSearchedAt(Date.now());
   }
 
@@ -1288,10 +1211,47 @@ export default function Home() {
       .map((a) => a.title);
   }, [animeList, titleQuery]);
 
+  function onChangeMode(v: "work" | "genre" | "keyword" | "free" | "title") {
+    setMode(v);
+    setResultAll([]);
+    setResultPageShown(1);
+    setActiveInputIndex(null);
+    setGenreChecked(new Set());
+    setKeywordChecked(new Set());
+    setWorkInputs(["", "", "", "", ""]);
+    setFreeQuery("");
+    setTitleQuery("");
+    setTitleSuggestOpen(false);
+  }
+
   function pickWorkImage(work: AnimeWork) {
     const img = isMobile ? (work.image_url_wide ?? work.image_url) : work.image_url;
     return img || titleImage(work.title);
   }
+
+  const selectedSeriesBundle = useMemo(() => buildSeriesBundle(animeList, selectedAnime), [animeList, selectedAnime]);
+  const selectedSeriesLines = useMemo(() => {
+    if (!selectedSeriesBundle) return null;
+
+    const lines: { label: string; text: string }[] = [];
+
+    const aCount = selectedSeriesBundle.animeWorks.length;
+    const mCount = selectedSeriesBundle.movieWorks.length;
+
+    const animeText =
+      aCount <= 0
+        ? "—"
+        : `${selectedSeriesBundle.animeSeasonsText}（${aCount}作品）` +
+          (selectedSeriesBundle.animeTotalEpisodes !== null ? ` / 合計${selectedSeriesBundle.animeTotalEpisodes}話` : " / 合計話数：—");
+
+    lines.push({ label: "アニメシリーズ", text: animeText });
+
+    if (mCount > 0) {
+      lines.push({ label: "劇場版シリーズ", text: `${mCount}作品` });
+    }
+
+    return lines;
+  }, [selectedSeriesBundle]);
 
   function searchByWorks() {
     const titles = workInputs.map((s) => s.trim()).filter(Boolean);
@@ -1431,220 +1391,27 @@ export default function Home() {
     jumpToResult();
   }
 
-  function onChangeMode(v: "work" | "genre" | "keyword" | "free" | "title") {
-    setMode(v);
-    setResultAll([]);
-    setResultPageShown(1);
-    setActiveInputIndex(null);
-    setGenreChecked(new Set());
-    setKeywordChecked(new Set());
-    setWorkInputs(["", "", "", "", ""]);
-    setFreeQuery("");
-    setTitleQuery("");
-    setTitleSuggestOpen(false);
-  }
-
-  // ✅ 選択中のシリーズ情報（アニメ/劇場版）
-  const selectedSeriesBundle = useMemo(() => {
-    if (!selectedAnime) return null;
-    return buildSeriesBundle(animeList, selectedAnime);
-  }, [animeList, selectedAnime]);
-
-  const selectedSeriesLines = useMemo(() => {
-    const b = selectedSeriesBundle;
-    if (!b) return null;
-
-    const lines: { label: string; text: string }[] = [];
-
-    if (b.animeWorks.length > 0) {
-      const rangeText =
-        b.inferredSeasonMax > b.inferredSeasonMin
-          ? `第${b.inferredSeasonMin}期〜第${b.inferredSeasonMax}期`
-          : `第${b.inferredSeasonMin}期`;
-
-      const epText = b.animeTotalEpisodes !== null ? ` / 合計${b.animeTotalEpisodes}話` : ` / 合計話数：—`;
-      lines.push({
-        label: "アニメシリーズ",
-        text: `${rangeText}（${b.animeWorks.length}作品）${epText}`,
-      });
-    }
-
-    if (b.movieWorks.length > 0) {
-      lines.push({
-        label: "劇場版シリーズ",
-        text: `${b.movieWorks.length}作品`,
-      });
-    }
-
-    return lines.length ? lines : null;
-  }, [selectedSeriesBundle]);
-
   return (
     <div className="container">
-      {/* ✅ フォント/太さ/サイズを全体で統一（太文字禁止） */}
-      <style jsx global>{`
-        html, body, * {
-          font-family: "メイリオ", Meiryo, "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, -apple-system, Segoe UI, Arial, sans-serif !important;
-          font-weight: 400 !important;
-          letter-spacing: 0.01em;
-        }
-        body { font-size: 14px; }
-        h1, h2, h3, h4 { font-weight: 400 !important; }
-        .pillBtn {
-          background: #fff !important;
-          color: #111 !important;
-          border: 1px solid rgba(0,0,0,0.18) !important;
-          border-radius: 999px;
-          padding: 8px 12px;
-          cursor: pointer;
-          font-size: 12px;
-        }
-        .pillBtn:disabled { opacity: 0.5; cursor: default; }
-        button {
-          background: #fff;
-          color: #111;
-          border: 1px solid rgba(0,0,0,0.18);
-          border-radius: 12px;
-          padding: 10px 14px;
-          cursor: pointer;
-        }
-        button:disabled { opacity: 0.5; cursor: default; }
-        input, select {
-          font-size: 14px;
-        }
-
-        /* ⭐ */
-        .stars { position: relative; display: inline-block; }
-        .starsBack { color: rgba(0,0,0,0.18); }
-        .starsFront {
-          color: rgba(0,0,0,0.9);
-          position: absolute;
-          left: 0; top: 0;
-          overflow: hidden;
-          white-space: nowrap;
-        }
-
-        /* Score UI */
-        .scoreHead {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          margin-top: 6px;
-        }
-        .scoreHeadLeft { display: flex; flex-direction: column; gap: 4px; }
-        .scoreTotalText { font-size: 12px; opacity: 0.9; }
-        .scoreStarLine { display: flex; align-items: center; gap: 8px; }
-        .scoreStarNum { font-size: 12px; opacity: 0.75; }
-
-        .scorePanel {
-          margin-top: 10px;
-          border: 1px solid rgba(0,0,0,0.10);
-          border-radius: 14px;
-          padding: 12px;
-          background: rgba(0,0,0,0.02);
-        }
-        .scorePanelTitle { font-size: 12px; opacity: 0.9; margin-bottom: 6px; }
-        .scoreDivider { height: 1px; background: rgba(0,0,0,0.08); margin: 10px 0; }
-
-        .scoreRow {
-          display: grid;
-          grid-template-columns: 96px 1fr 56px;
-          gap: 10px;
-          align-items: center;
-          margin-top: 8px;
-        }
-        .scoreLabel { font-size: 12px; opacity: 0.85; white-space: nowrap; }
-        .scoreTrack {
-          height: 10px;
-          border-radius: 999px;
-          background: rgba(0,0,0,0.10);
-          overflow: hidden;
-        }
-        .scoreFill {
-          height: 100%;
-          border-radius: 999px;
-          background: rgba(0,0,0,0.75);
-          transition: width 200ms ease;
-        }
-        .scoreValue { font-size: 12px; text-align: right; opacity: 0.85; }
-
-        /* Pager */
-        .pager { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .pagerNums { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-        .pagerDots { font-size: 12px; opacity: 0.7; padding: 0 2px; }
-        .pagerNum {
-          background: #fff;
-          color: #111;
-          border: 1px solid rgba(0,0,0,0.18);
-          border-radius: 10px;
-          padding: 8px 10px;
-          font-size: 12px;
-          min-width: 36px;
-        }
-        .pagerNum.active {
-          background: rgba(0,0,0,0.06);
-          border-color: rgba(0,0,0,0.35);
-        }
-
-        /* Modal: 余白バグ対策（閉じるとカードの空間を詰める） */
-        .modalOverlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0,0,0,0.35);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 14px;
-          z-index: 50;
-          overflow-y: auto;
-          overflow-x: hidden;
-        }
-        .modalContent {
-          position: relative;
-          width: min(980px, 100%);
-          background: #fff;
-          border-radius: 18px;
-          padding: 14px;
-        }
-        .modalClose {
-          position: absolute;
-          right: 14px;
-          top: 14px;
-          z-index: 2;
-        }
-        .modalClose button {
-          border-radius: 999px;
-          padding: 8px 12px;
-          font-size: 12px;
-        }
-      `}</style>
-
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-        <h1 className="brandTitle" style={{ margin: 0 }}>AniMatch</h1>
-        <button className="pillBtn" type="button" onClick={() => setEvalHelpOpen(true)}>
-          評価の見方
-        </button>
-      </div>
-
-      <p className="subtitle" style={{ marginTop: 8 }}>あなたの好みから、今観るべきアニメを見つけます</p>
+      <h1 className="brandTitle">AniMatch</h1>
+      <p className="subtitle">あなたの好みから、今観るべきアニメを見つけます</p>
 
       {loadError ? (
-        <div className="section" style={{ border: "1px solid rgba(255,0,0,0.25)", background: "rgba(255,0,0,0.06)" }}>
-          <div style={{ marginBottom: 8 }}>データ取得に失敗しました</div>
-          <div style={{ fontSize: 12, whiteSpace: "pre-wrap" }}>{loadError}</div>
-          <button style={{ marginTop: 10 }} onClick={loadWorksAndVod}>
+        <div className="section errorBox">
+          <div className="errorTitle">データ取得に失敗しました</div>
+          <div className="errorText">{loadError}</div>
+          <button className="btn" onClick={loadWorksAndVod}>
             再読み込み
           </button>
         </div>
       ) : null}
 
-      <div style={{ marginTop: 8, fontSize: 12, opacity: 0.75 }}>
+      <div className="statusLine">
         {loadingWorks ? "作品データ取得中…" : "作品データOK"}
         {loadingVod ? " / VOD反映中…" : " / VOD反映OK（watch_url判定）"}
       </div>
 
-      <select id="mode" value={mode} onChange={(e) => onChangeMode(e.target.value as any)}>
+      <select className="select" value={mode} onChange={(e) => onChangeMode(e.target.value as any)}>
         <option value="work">① 作品から探す（おすすめ）</option>
         <option value="genre">② ジャンル重視で探す</option>
         <option value="keyword">③ キーワードから探す</option>
@@ -1652,25 +1419,25 @@ export default function Home() {
         <option value="title">⑤ 作品そのものを検索</option>
       </select>
 
-      <div className="section" style={{ marginTop: 12 }}>
-        <h3 style={{ marginBottom: 8 }}>VODで絞り込み</h3>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+      <div className="section">
+        <div className="secTitle">VODで絞り込み</div>
+        <div className="chipGrid">
           {vodServices.map((s) => (
-            <label key={s} style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+            <label key={s} className="chip">
               <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-              {s}
+              <span>{s}</span>
             </label>
           ))}
         </div>
-        <div style={{ marginTop: 8, fontSize: 12, opacity: 0.75 }}>
+        <div className="small muted" style={{ marginTop: 8 }}>
           絞り込み条件：{VOD_FILTER_MODE === "OR" ? "どれか1つでも配信" : "チェックした全てで配信"}
         </div>
       </div>
 
-      <div id="searchArea" className="section">
+      <div className="section" id="searchArea">
         {mode === "work" ? (
           <>
-            <h3>最大5作品まで入力（入力途中で候補が出ます）</h3>
+            <div className="secTitle">最大5作品まで入力（入力途中で候補が出ます）</div>
             {workInputs.map((val, idx) => (
               <div key={idx} style={{ position: "relative" }}>
                 <input
@@ -1691,7 +1458,9 @@ export default function Home() {
                     {suggestions.map((t) => (
                       <div
                         key={t}
-                        onClick={() => {
+                        className="suggestItem"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
                           const next = [...workInputs];
                           next[idx] = t;
                           setWorkInputs(next);
@@ -1705,60 +1474,68 @@ export default function Home() {
                 ) : null}
               </div>
             ))}
-            <button onClick={searchByWorks}>検索</button>
+            <button className="btn" onClick={searchByWorks}>
+              検索
+            </button>
           </>
         ) : null}
 
         {mode === "genre" ? (
           <>
-            <h3>重視したいポイントを選択</h3>
-            {genreOptions.map((g) => (
-              <label key={g.value}>
-                <input type="checkbox" checked={genreChecked.has(g.value)} onChange={() => toggleSet(setGenreChecked, g.value)} /> {g.label}
-              </label>
-            ))}
-            <br />
-            <br />
-            <button onClick={searchByGenre}>検索</button>
+            <div className="secTitle">重視したいポイントを選択</div>
+            <div className="checkList">
+              {genreOptions.map((g) => (
+                <label key={g.value} className="checkItem">
+                  <input type="checkbox" checked={genreChecked.has(g.value)} onChange={() => toggleSet(setGenreChecked, g.value)} />
+                  <span>{g.label}</span>
+                </label>
+              ))}
+            </div>
+            <button className="btn" onClick={searchByGenre}>
+              検索
+            </button>
           </>
         ) : null}
 
         {mode === "keyword" ? (
           <>
-            <h3>キーワードを選択</h3>
-            {keywordList.map((k) => (
-              <div key={k}>
-                <label>
-                  <input type="checkbox" checked={keywordChecked.has(k)} onChange={() => toggleSet(setKeywordChecked, k)} /> {k}
+            <div className="secTitle">キーワードを選択</div>
+            <div className="checkList">
+              {keywordList.map((k) => (
+                <label key={k} className="checkItem">
+                  <input type="checkbox" checked={keywordChecked.has(k)} onChange={() => toggleSet(setKeywordChecked, k)} />
+                  <span>{k}</span>
                 </label>
-              </div>
-            ))}
-            <br />
-            <button onClick={searchByKeyword}>検索</button>
+              ))}
+            </div>
+            <button className="btn" onClick={searchByKeyword}>
+              検索
+            </button>
           </>
         ) : null}
 
         {mode === "free" ? (
           <>
-            <h3>フリーワードで探す（AI判定）</h3>
+            <div className="secTitle">フリーワードで探す（AI判定）</div>
             <input
               type="text"
               className="workInput"
-              placeholder="例：異世界もの / 女の子が可愛い / ダークで考察したい"
+              placeholder="例：異世界 / 女の子が可愛い / ダークで考察したい"
               value={freeQuery}
               onChange={(e) => setFreeQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") searchByFreeword();
               }}
             />
-            <button onClick={searchByFreeword}>検索</button>
+            <button className="btn" onClick={searchByFreeword}>
+              検索
+            </button>
           </>
         ) : null}
 
         {mode === "title" ? (
           <>
-            <h3>作品そのものを検索（シリーズ名でもOK）</h3>
-
+            <div className="secTitle">作品そのものを検索（シリーズ名でもOK）</div>
             <div style={{ position: "relative" }}>
               <input
                 type="text"
@@ -1766,9 +1543,7 @@ export default function Home() {
                 placeholder="例：進撃の巨人 / ガンダム / 物語"
                 value={titleQuery}
                 onFocus={() => setTitleSuggestOpen(true)}
-                onBlur={() => {
-                  window.setTimeout(() => setTitleSuggestOpen(false), 120);
-                }}
+                onBlur={() => window.setTimeout(() => setTitleSuggestOpen(false), 120)}
                 onChange={(e) => {
                   setTitleQuery(e.target.value);
                   setTitleSuggestOpen(true);
@@ -1777,12 +1552,12 @@ export default function Home() {
                   if (e.key === "Enter") searchByTitle();
                 }}
               />
-
               {titleSuggestOpen && titleSuggestions.length > 0 ? (
                 <div className="suggest">
                   {titleSuggestions.map((t) => (
                     <div
                       key={t}
+                      className="suggestItem"
                       onMouseDown={(e) => {
                         e.preventDefault();
                         setTitleQuery(t);
@@ -1795,49 +1570,89 @@ export default function Home() {
                 </div>
               ) : null}
             </div>
-
-            <button onClick={searchByTitle}>検索</button>
+            <button className="btn" onClick={searchByTitle}>
+              検索
+            </button>
           </>
         ) : null}
       </div>
 
-      <h2>おすすめ結果</h2>
+      <h2 className="h2">おすすめ結果</h2>
 
-      {/* ✅ ページ番号で移動（1 2 3 … last） */}
       {resultAll.length ? (
-        <div className="section" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
-          <Pagination
-            current={resultPageShown}
-            total={totalResultPages}
-            onChange={(p) => {
-              setResultPageShown(p);
-              jumpToResult();
-            }}
-          />
+        <div className="section pagerBox">
+          <div className="pagerTop">
+            <div className="pager">
+              <button
+                className="btn btnGhost"
+                onClick={() => {
+                  setResultPageShown((p) => Math.max(1, p - 1));
+                  jumpToResult();
+                }}
+                disabled={resultPageShown <= 1}
+                aria-label="prev"
+              >
+                ←
+              </button>
 
-          <button
-            type="button"
-            className="pillBtn"
-            onClick={() => {
-              setResultAll((prev) => shuffleArray(prev));
-              setResultPageShown(1);
-              try {
-                trackEvent({ event_name: "result_shuffle", meta: { mode } });
-              } catch {}
-              jumpToResult();
-            }}
-            disabled={resultAll.length < 2}
-          >
-            別の10作品（シャッフル）
-          </button>
+              {pageItems.map((it, idx) =>
+                it === "…" ? (
+                  <div key={`dots-${idx}`} className="pagerDots">
+                    …
+                  </div>
+                ) : (
+                  <button
+                    key={it}
+                    className={`btn btnGhost pagerBtn ${it === resultPageShown ? "active" : ""}`}
+                    onClick={() => {
+                      setResultPageShown(it);
+                      jumpToResult();
+                    }}
+                  >
+                    {it}
+                  </button>
+                )
+              )}
 
-          <div style={{ fontSize: 12, opacity: 0.75 }}>{resultRangeText}</div>
+              <button
+                className="btn btnGhost"
+                onClick={() => {
+                  setResultPageShown((p) => Math.min(pageCount, p + 1));
+                  jumpToResult();
+                }}
+                disabled={resultPageShown >= pageCount}
+                aria-label="next"
+              >
+                →
+              </button>
+            </div>
+
+            <div className="muted small">{resultRangeText}</div>
+          </div>
+
+          <div className="pagerBottom">
+            <button
+              type="button"
+              className="btn btnGhost"
+              onClick={() => {
+                setResultAll((prev) => shuffleArray(prev));
+                setResultPageShown(1);
+                try {
+                  trackEvent({ event_name: "result_shuffle", meta: { mode } });
+                } catch {}
+                jumpToResult();
+              }}
+              disabled={resultAll.length < 2}
+            >
+              別の10作品（シャッフル）
+            </button>
+          </div>
         </div>
       ) : null}
 
       <div id="result" ref={resultRef} className={resultFlash ? "flashCard" : ""}>
         {lastSearchedAt ? (
-          <div className="section" style={{ marginBottom: 14 }}>
+          <div className="section small muted" style={{ marginBottom: 14 }}>
             検索を更新しました：{new Date(lastSearchedAt).toLocaleTimeString()}
           </div>
         ) : null}
@@ -1845,14 +1660,17 @@ export default function Home() {
         {visibleResults.map((a) => {
           const img = pickWorkImage(a);
           const vods = getVodServices(a);
+          const r5 = rating5FromWork(a);
+          const p5 = passiveRating5(a);
 
           return (
             <div
-              className="card clickable cardMobileStack"
+              className="card clickable"
               key={a.id ?? a.title}
               onClick={() => {
                 openAnimeModal(a);
                 logClick(a.id);
+
                 trackEvent({
                   event_name: "work_open",
                   work_id: Number(a.id || 0),
@@ -1860,46 +1678,61 @@ export default function Home() {
                 });
               }}
             >
-              <div className="cardTop">
-                <h3 className="cardTitle">{a.title}</h3>
-              </div>
+              <img className="poster" src={img} alt={a.title} />
 
-              <img className="poster cardImageWide" src={img} alt={a.title} />
+              <div className="cardBody">
+                <div className="cardTop">
+                  <h3 className="cardTitle">{a.title}</h3>
+                  <button
+                    type="button"
+                    className="btn btnGhost"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openAnimeModal(a);
+                      logClick(a.id);
+                    }}
+                  >
+                    開く
+                  </button>
+                </div>
 
-              <div className="cardBodyWide">
                 <div className="genres">{formatGenre(a.genre)}</div>
                 <div className="meta">制作：{a.studio || "—"}</div>
                 <div className="meta">放送年：{a.start_year ? `${a.start_year}年` : "—"}</div>
                 <div className="meta">話数：{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</div>
 
-                {/* ✅ ① 合計のみ＋開くで詳細 */}
-                <ScoreSection work={a} defaultCollapsed />
+                {/* ④：説明を短く（カードは常に短文） */}
+                {a.summary ? <div className="desc">{truncateText(a.summary, 100)}</div> : null}
+
+                {/* ①②：評価は星 + 4.2/5（50/60は表示しない） */}
+                <div className="metaRow">
+                  <div className="metaLabel">評価：</div>
+                  <StarRating value={r5} showText size={16} />
+                </div>
+
+                {/* 詳細は開くボタンで（ScoreSection内） */}
+                <ScoreSection work={a} defaultOpen={false} />
 
                 <VodIconsRow services={vods} watchUrls={a.vod_watch_urls} workId={Number(a.id || 0)} />
 
-                {/* ✅ ⑦ Passive（星5 / 日本語なし） */}
-                <div className="meta" style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ opacity: 0.75 }}>Passive</span>
-                  {passiveStars(a.passive_viewing)}
+                <div className="metaRow">
+                  <div className="metaLabel">ながら見適正：</div>
+                  <StarRating value={p5} showText={false} size={16} />
                 </div>
-
-                {/* ✅ ⑨ 説明は約100文字 */}
-                <p style={{ marginTop: 10 }}>{ellipsize(a.summary, 110)}</p>
-
-                {Number(a.gore || 0) >= 4 ? <div className="warning">⚠ グロ表現が強めです</div> : null}
               </div>
             </div>
           );
         })}
       </div>
 
-      <h2>人気アニメランキング</h2>
+      <h2 className="h2">人気アニメランキング</h2>
       <div id="ranking" className="section">
         {visibleRanking.map((a, i) => (
           <div className="rankLine" key={`${a.id ?? a.title}-${i}`}>
             {i + 1}位：{" "}
             <button
               type="button"
+              className="linkBtn"
               onClick={() => {
                 openAnimeModal(a);
                 trackEvent({
@@ -1907,16 +1740,6 @@ export default function Home() {
                   work_id: Number(a.id || 0),
                   meta: { from: "ranking", rank: i + 1 },
                 });
-              }}
-              style={{
-                border: "none",
-                background: "transparent",
-                padding: 0,
-                margin: 0,
-                cursor: "pointer",
-                textDecoration: "underline",
-                font: "inherit",
-                color: "#111",
               }}
             >
               {a.title || "（タイトル不明）"}
@@ -1926,118 +1749,706 @@ export default function Home() {
       </div>
 
       {canShowMoreRank ? (
-        <button id="moreRank" onClick={() => setRankPagesShown((p) => p + 1)}>
+        <button className="btn" id="moreRank" onClick={() => setRankPagesShown((p) => p + 1)}>
           {nextRankStart}位から{nextRankEnd}位を表示
         </button>
       ) : null}
 
-      {/* ✅ 評価の見方（③） */}
-      {evalHelpOpen ? (
-        <div className="modalOverlay" onClick={() => setEvalHelpOpen(false)}>
-          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
-            <div className="modalClose">
-              <button onClick={() => setEvalHelpOpen(false)}>閉じる（Esc）</button>
-            </div>
-
-            <div className="section" style={{ marginTop: 8 }}>
-              <h3 style={{ marginTop: 0 }}>評価の見方</h3>
-              <div style={{ fontSize: 13, opacity: 0.9, lineHeight: 1.8 }}>
-                <div>合計点：6項目（各0〜10）を合算して 0〜60 で表示</div>
-                <div>星：合計点（0〜60）を 5段階へ換算（合計÷12）</div>
-                <div style={{ marginTop: 10 }}>評価項目：シナリオ / 作画 / 世界観 / 心が動く / テンポ / 音楽</div>
-                <div>注意点：グロ / 鬱 / 叡智</div>
-                <div style={{ marginTop: 10, opacity: 0.75 }}>
-                  ※「開く」で棒グラフ（詳細）が表示されます
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {/* 詳細モーダル */}
+      {/* 詳細モーダル（③：二重枠に見える原因を排除） */}
       {selectedAnime ? (
         <div className="modalOverlay" onClick={() => setSelectedAnime(null)}>
           <div className="modalContent" onClick={(e) => e.stopPropagation()}>
-            <div className="modalClose">
-              <button onClick={() => setSelectedAnime(null)}>閉じる（Esc）</button>
-            </div>
+            <div className="modalCard">
+              <button className="btn btnGhost modalCloseBtn" onClick={() => setSelectedAnime(null)}>
+                閉じる（Esc）
+              </button>
 
-            <div className="card cardMobileStack" style={{ cursor: "default" }}>
-              <div className="cardTop">
-                <h3 className="cardTitle">{selectedAnime.title}</h3>
-              </div>
+              <div className="modalGrid">
+                <img className="poster modalPoster" src={pickWorkImage(selectedAnime)} alt={selectedAnime.title} />
 
-              <img className="poster cardImageWide" src={pickWorkImage(selectedAnime)} alt={selectedAnime.title} />
+                <div className="modalBody">
+                  <h3 className="modalTitle">{selectedAnime.title}</h3>
+                  <div className="genres">{formatGenre(selectedAnime.genre)}</div>
 
-              <div className="cardBodyWide">
-                <div className="genres">{formatGenre(selectedAnime.genre)}</div>
-                <div className="meta">制作：{selectedAnime.studio || "—"}</div>
-                <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
-                <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
+                  <div className="meta">制作：{selectedAnime.studio || "—"}</div>
+                  <div className="meta">放送年：{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
+                  <div className="meta">話数：{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
 
-                {/* ✅ ⑧ シリーズ認識を強化＆アニメ/劇場版で改行 */}
-                {selectedSeriesLines && selectedSeriesBundle ? (
-                  <div className="meta" style={{ marginTop: 10 }}>
-                    <div style={{ marginBottom: 6, opacity: 0.92 }}>シリーズ情報</div>
-                    <div style={{ borderTop: "1px solid rgba(0,0,0,0.08)", margin: "6px 0 8px" }} />
-                    {selectedSeriesLines.map((x) => (
-                      <div key={x.label} style={{ marginTop: 6 }}>
-                        {x.label}：{x.text}
-                      </div>
-                    ))}
-                    {selectedSeriesBundle.animeTotalEpisodes !== null &&
-                    selectedSeriesBundle.animeCountedWorks < selectedSeriesBundle.animeWorks.length ? (
-                      <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>
-                        ※ 話数未登録の作品があるため、合計話数は登録済み分のみ
-                      </div>
-                    ) : null}
-                  </div>
-                ) : (
-                  <div className="meta" style={{ fontSize: 12, opacity: 0.7, marginTop: 10 }}>
-                    シリーズ情報：—
-                  </div>
-                )}
+                  {/* ④：作品説明をシリーズ情報より上へ（100字程度） */}
+                  {selectedAnime.summary ? <div className="desc">{truncateText(selectedAnime.summary, 100)}</div> : null}
 
-                {/* ✅ ① 合計のみ＋開くで詳細（モーダルも同仕様） */}
-                <ScoreSection work={selectedAnime} defaultCollapsed />
-
-                <div className="meta" style={{ marginTop: 10 }}>テーマ：{formatList(selectedAnime.themes)}</div>
-
-                <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} workId={Number(selectedAnime.id || 0)} />
-
-                <div className="meta" style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ opacity: 0.75 }}>Passive</span>
-                  {passiveStars(selectedAnime.passive_viewing)}
-                </div>
-
-                <div className="meta" style={{ marginTop: 10 }}>
-                  原作：{sourceLoading ? "読み込み中..." : formatOriginalInfo(sourceLinks)}
-                </div>
-
-                <div className="meta" style={{ marginTop: 10 }}>
-                  公式サイト：
-                  {selectedAnime.official_url ? (
-                    <>
-                      {" "}
-                      <a href={selectedAnime.official_url} target="_blank" rel="noreferrer">
-                        開く
-                      </a>
-                    </>
+                  {/* シリーズ情報 */}
+                  {selectedSeriesLines ? (
+                    <div className="metaBlock">
+                      <div className="blockTitle">シリーズ情報</div>
+                      {selectedSeriesLines.map((x) => (
+                        <div key={x.label} className="meta">
+                          {x.label}：{x.text}
+                        </div>
+                      ))}
+                      {selectedSeriesBundle?.animeTotalEpisodes !== null &&
+                      selectedSeriesBundle.animeCountedWorks < selectedSeriesBundle.animeWorks.length ? (
+                        <div className="small muted" style={{ marginTop: 6 }}>
+                          ※ 話数未登録の作品があるため、合計話数は登録済み分のみ
+                        </div>
+                      ) : null}
+                    </div>
                   ) : (
-                    " —"
+                    <div className="small muted" style={{ marginTop: 8 }}>
+                      シリーズ情報：—
+                    </div>
                   )}
+
+                  {/* ①：評価は星 + 4.2/5（50/60は出さない） */}
+                  <div className="metaRow" style={{ marginTop: 8 }}>
+                    <div className="metaLabel">評価：</div>
+                    <StarRating value={rating5FromWork(selectedAnime)} showText size={18} />
+                  </div>
+
+                  {/* ②：開くで項目表示 */}
+                  <ScoreSection work={selectedAnime} defaultOpen={false} />
+
+                  <div className="meta" style={{ marginTop: 10 }}>
+                    テーマ：{formatList(selectedAnime.themes)}
+                  </div>
+
+                  <VodIconsRow services={getVodServices(selectedAnime)} watchUrls={selectedAnime.vod_watch_urls} workId={Number(selectedAnime.id || 0)} />
+
+                  <div className="metaRow" style={{ marginTop: 10 }}>
+                    <div className="metaLabel">ながら見適正：</div>
+                    <StarRating value={passiveRating5(selectedAnime)} showText={false} size={18} />
+                  </div>
+
+                  <div className="meta" style={{ marginTop: 10 }}>
+                    原作：{sourceLoading ? "読み込み中..." : formatOriginalInfo(sourceLinks)}
+                  </div>
+
+                  <div className="meta" style={{ marginTop: 10 }}>
+                    公式サイト：
+                    {selectedAnime.official_url ? (
+                      <>
+                        {" "}
+                        <a className="link" href={selectedAnime.official_url} target="_blank" rel="noreferrer">
+                          開く
+                        </a>
+                      </>
+                    ) : (
+                      " —"
+                    )}
+                  </div>
                 </div>
-
-                {/* ✅ ⑨ 100文字程度 */}
-                <p style={{ marginTop: 10 }}>{ellipsize(selectedAnime.summary, 110)}</p>
-
-                {Number(selectedAnime.gore || 0) >= 4 ? <div className="warning">⚠ グロ表現が強めです</div> : null}
               </div>
             </div>
           </div>
         </div>
       ) : null}
+
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+        :root {
+          --bg: #f2f2f2;
+          --card: #ffffff;
+          --text: #111111;
+          --muted: rgba(0, 0, 0, 0.62);
+          --border: rgba(0, 0, 0, 0.09);
+          --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          background: var(--bg);
+          color: var(--text);
+          font-family: "Meiryo", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+          font-size: 15px;
+          font-weight: 400;
+        }
+
+        /* ⑥：PCは落ち着いたサイズ感に（今の雰囲気を少し戻す） */
+        @media (min-width: 521px) {
+          html,
+          body {
+            font-size: 15px;
+          }
+        }
+        @media (max-width: 520px) {
+          html,
+          body {
+            font-size: 14px;
+          }
+        }
+
+        .container {
+          width: 100%;
+          max-width: 100%;
+          padding: 16px 14px 40px; /* ⑤：左余白を削減 */
+          box-sizing: border-box;
+        }
+
+        /* ⑤：ロゴのみ続け字フォント */
+        .brandTitle {
+          font-family: "Pacifico", cursive;
+          font-size: 52px;
+          margin: 0;
+          letter-spacing: 0.5px;
+          font-weight: 400; /* フォント自体が太く見える */
+        }
+        @media (max-width: 520px) {
+          .brandTitle {
+            font-size: 44px;
+          }
+        }
+
+        .subtitle {
+          margin: 4px 0 16px;
+          color: var(--muted);
+        }
+
+        .h2 {
+          margin: 18px 0 10px;
+          font-size: 18px;
+          font-weight: 400; /* ⑤：太字禁止（ロゴ以外） */
+        }
+
+        .statusLine {
+          margin: 10px 0 10px;
+          font-size: 12px;
+          color: var(--muted);
+        }
+
+        .section {
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          padding: 16px;
+          box-shadow: var(--shadow);
+          margin-bottom: 14px;
+        }
+        @media (max-width: 520px) {
+          .section {
+            padding: 14px;
+            border-radius: 16px;
+          }
+        }
+
+        .secTitle {
+          font-size: 14px;
+          margin-bottom: 10px;
+          font-weight: 400;
+        }
+
+        .select {
+          width: 100%;
+          padding: 12px 12px;
+          border-radius: 14px;
+          border: 1px solid var(--border);
+          background: #fff;
+          outline: none;
+          box-sizing: border-box;
+        }
+
+        .workInput {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 12px 12px;
+          border-radius: 14px;
+          border: 1px solid var(--border);
+          margin-bottom: 10px;
+          outline: none;
+        }
+
+        .suggest {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 44px;
+          background: #fff;
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          box-shadow: var(--shadow);
+          overflow: hidden;
+          z-index: 10;
+        }
+        .suggestItem {
+          padding: 10px 12px;
+          cursor: pointer;
+        }
+        .suggestItem:hover {
+          background: rgba(0, 0, 0, 0.04);
+        }
+
+        .chipGrid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px 14px;
+        }
+        .chip {
+          display: inline-flex;
+          gap: 8px;
+          align-items: center;
+          font-size: 13px;
+        }
+
+        .checkList {
+          display: grid;
+          gap: 10px;
+          margin: 10px 0 12px;
+        }
+        .checkItem {
+          display: inline-flex;
+          gap: 8px;
+          align-items: center;
+        }
+
+        .btn {
+          border: 1px solid var(--border);
+          background: #fff; /* ①：白統一 */
+          color: #111;
+          border-radius: 14px;
+          padding: 10px 14px;
+          cursor: pointer;
+        }
+        .btn:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
+        .btnGhost {
+          background: #fff; /* ①：白統一 */
+          border: 1px solid var(--border);
+          padding: 8px 12px;
+          border-radius: 999px;
+        }
+
+        .muted {
+          color: var(--muted);
+        }
+        .small {
+          font-size: 12px;
+        }
+
+        .errorBox {
+          border-color: rgba(255, 0, 0, 0.25);
+          background: rgba(255, 0, 0, 0.04);
+        }
+        .errorTitle {
+          margin-bottom: 8px;
+        }
+        .errorText {
+          font-size: 12px;
+          white-space: pre-wrap;
+          color: rgba(0, 0, 0, 0.75);
+        }
+
+        .card {
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          padding: 14px;
+          box-shadow: var(--shadow);
+          display: grid;
+          grid-template-columns: 160px 1fr;
+          gap: 14px;
+          margin-bottom: 14px;
+        }
+        @media (max-width: 520px) {
+          .card {
+            grid-template-columns: 128px 1fr;
+            padding: 12px;
+            border-radius: 16px;
+            gap: 12px;
+          }
+        }
+
+        .clickable {
+          cursor: pointer;
+        }
+
+        .poster {
+          width: 100%;
+          height: auto;
+          border-radius: 14px;
+          object-fit: cover;
+          display: block;
+        }
+
+        .cardTop {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        .cardTitle {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 400; /* 太字禁止 */
+          line-height: 1.3;
+        }
+
+        .modalTitle {
+          margin: 0 0 6px;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 1.35;
+        }
+
+        .genres {
+          color: var(--muted);
+          font-size: 12px;
+          margin: 4px 0 10px;
+        }
+
+        .meta {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.72);
+          margin-top: 4px;
+        }
+        .meta.small {
+          margin-top: 8px;
+        }
+
+        .desc {
+          margin-top: 10px;
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.78);
+          line-height: 1.6;
+        }
+
+        .metaRow {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 10px;
+          flex-wrap: wrap;
+        }
+        .metaLabel {
+          color: rgba(0, 0, 0, 0.72);
+          font-size: 13px;
+        }
+
+        /* Stars */
+        .starRow {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .stars {
+          position: relative;
+          line-height: 1;
+          letter-spacing: 2px;
+          user-select: none;
+        }
+        .starsBase {
+          color: rgba(0, 0, 0, 0.18);
+        }
+        .starsFill {
+          position: absolute;
+          left: 0;
+          top: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          color: #111;
+        }
+        .starText {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Score details */
+        .scoreBoxWrap {
+          margin-top: 10px;
+        }
+        .scoreHead {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+        }
+        .scoreHeadTitle {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.78);
+        }
+        .scoreBox {
+          margin-top: 10px;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          background: rgba(0, 0, 0, 0.02);
+          border-radius: 16px;
+          padding: 12px;
+        }
+        .scoreSecTitle {
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.7);
+          margin-bottom: 8px;
+        }
+        .scoreRow {
+          display: grid;
+          grid-template-columns: 90px 1fr 52px;
+          align-items: center;
+          gap: 10px;
+          margin-top: 8px;
+        }
+        @media (max-width: 520px) {
+          .scoreRow {
+            grid-template-columns: 78px 1fr 48px;
+            gap: 8px;
+          }
+        }
+        .scoreLabel {
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.75);
+          white-space: nowrap;
+        }
+        .scoreTrack {
+          height: 10px;
+          border-radius: 999px;
+          background: rgba(0, 0, 0, 0.12);
+          overflow: hidden;
+        }
+        .scoreFill {
+          height: 100%;
+          border-radius: 999px;
+          background: rgba(0, 0, 0, 0.75);
+          transition: width 200ms ease;
+        }
+        .scoreVal {
+          font-size: 12px;
+          text-align: right;
+          color: rgba(0, 0, 0, 0.75);
+        }
+        .scoreDivider {
+          height: 1px;
+          background: rgba(0, 0, 0, 0.08);
+          margin: 12px 0;
+        }
+
+        /* ②：VODは囲みを撤去（旧スタイル寄せ） */
+        .vodRow {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 12px;
+          flex-wrap: wrap;
+        }
+        .vodLabel {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.72);
+          white-space: nowrap;
+        }
+        .vodIcons {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .vodIconLink {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          border: none;
+          background: transparent;
+          padding: 0; /* 囲みをなくす */
+        }
+        .vodIconLink.disabled {
+          pointer-events: none;
+        }
+        .vodIconImg {
+          width: 34px;
+          height: 34px;
+          border-radius: 8px;
+          object-fit: cover;
+          display: block;
+        }
+        @media (max-width: 520px) {
+          .vodIconImg {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+          }
+        }
+
+        .vodText {
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Pager */
+        .pagerBox {
+          padding: 14px;
+        }
+        .pagerTop {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+        .pager {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .pagerBtn {
+          padding: 8px 12px;
+          border-radius: 12px;
+        }
+        .pagerBtn.active {
+          background: rgba(0, 0, 0, 0.06);
+        }
+        .pagerDots {
+          padding: 0 6px;
+          color: rgba(0, 0, 0, 0.5);
+        }
+        .pagerBottom {
+          margin-top: 10px;
+          display: flex;
+          justify-content: flex-start;
+        }
+        /* ④：スマホで2行になりやすいので横スクロール + 小さめ */
+        @media (max-width: 520px) {
+          .pagerTop {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+          }
+          .pager {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            max-width: 100%;
+          }
+          .pagerBtn {
+            padding: 7px 10px;
+            font-size: 12px;
+            border-radius: 12px;
+            white-space: nowrap;
+          }
+          .pagerDots {
+            font-size: 12px;
+          }
+        }
+
+        .flashCard {
+          animation: flash 800ms ease;
+        }
+        @keyframes flash {
+          0% {
+            filter: brightness(1);
+          }
+          30% {
+            filter: brightness(1.06);
+          }
+          100% {
+            filter: brightness(1);
+          }
+        }
+
+        /* Ranking */
+        .rankLine {
+          padding: 10px 0;
+          border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+        .rankLine:last-child {
+          border-bottom: none;
+        }
+        .linkBtn {
+          border: none;
+          background: transparent;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+          text-decoration: underline;
+          font: inherit;
+          color: #111;
+          font-weight: 400;
+        }
+
+        /* Modal (③：二重枠をなくす) */
+        .modalOverlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.35);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 14px;
+          z-index: 1000;
+        }
+
+        .modalContent {
+          width: min(980px, 96vw);
+          max-height: 92vh;
+          overflow: auto;
+          background: transparent; /* 外側の白枠を消す */
+          border: none;
+          box-shadow: none;
+        }
+
+        .modalCard {
+          background: #fff;
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          box-shadow: var(--shadow);
+          position: relative;
+          padding: 16px;
+        }
+
+        .modalCloseBtn {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+        }
+
+        .modalGrid {
+          display: grid;
+          grid-template-columns: 220px 1fr;
+          gap: 16px;
+          padding-top: 22px; /* 閉じるボタン分 */
+        }
+
+        .modalPoster {
+          border-radius: 16px;
+        }
+
+        .modalBody {
+          min-width: 0;
+        }
+
+        .metaBlock {
+          margin-top: 12px;
+          padding-top: 10px;
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .blockTitle {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.78);
+          margin-bottom: 8px;
+        }
+
+        .link {
+          color: #111;
+          text-decoration: underline;
+          font-weight: 400;
+        }
+
+        @media (max-width: 520px) {
+          .modalContent {
+            width: 96vw;
+          }
+          .modalCard {
+            padding: 14px;
+            border-radius: 16px;
+          }
+          .modalGrid {
+            grid-template-columns: 1fr;
+            padding-top: 22px;
+          }
+          .modalPoster {
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
 }
