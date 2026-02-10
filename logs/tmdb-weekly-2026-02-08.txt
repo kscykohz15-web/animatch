@@ -1,0 +1,22 @@
+===== START 2026/02/08 12:56:48.41 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+✅ enqueue-tmdb-vod start { LIMIT: 5000, OFFSET: 0, REGION: 'JP', ONLY_STALE: false }
+✅ queued=1000
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ worker tmdb start {
+  WORKER_ID: 'tmdb-weekly',
+  LOOP_LIMIT: 5000,
+  FORCE_OVERWRITE_MANUAL: false
+}
+   対象サービス: danime, disney, hulu, netflix, prime
+❌ 失敗: {
+  message: 'TypeError: fetch failed',
+  details: 'TypeError: fetch failed\n' +
+    '\n' +
+    'Caused by: Error: read ECONNRESET (ECONNRESET)\n' +
+    'Error: read ECONNRESET\n' +
+    '    at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20)',
+  hint: '',
+  code: ''
+}
+===== END 2026/02/08 13:39:52.58 ===== 

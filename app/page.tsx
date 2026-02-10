@@ -89,6 +89,9 @@ const RANK_PAGE_SIZE = 10;
 
 const VOD_FILTER_MODE: "OR" | "AND" = "OR";
 
+// ✅ Supabase REST のページング（最大1000件ずつ）
+const REST_PAGE_LIMIT = 1000;
+
 const keywordList = [
   "泣ける",
   "テンションが上がる",
@@ -329,12 +332,12 @@ function passiveToStar5(v: number | null | undefined) {
  *  - 欠損がある場合：存在する項目の重み合計で正規化して 0..100 にする
  * ========================= */
 const OVERALL_WEIGHTS: { key: keyof AnimeWork; w: number; label: string }[] = [
-  { key: "story_10", w: 2.5, label: "シナリオ" },
+  { key: "story_10", w: 4.0, label: "シナリオ" },
   { key: "animation_10", w: 1.0, label: "作画" },
-  { key: "world_10", w: 2.0, label: "世界観" },
-  { key: "emotion_10", w: 2.5, label: "心" },
+  { key: "world_10", w: 1.5, label: "世界観" },
+  { key: "emotion_10", w: 2.0, label: "心" },
   { key: "tempo_10", w: 1.0, label: "テンポ" },
-  { key: "music_10", w: 1.0, label: "音楽" },
+  { key: "music_10", w: 0.5, label: "音楽" },
 ];
 
 function overallScore100(a: AnimeWork): number | null {
@@ -349,7 +352,6 @@ function overallScore100(a: AnimeWork): number | null {
   }
   if (sumW <= 0) return null;
 
-  // v は 0..10 なので、満点は sumW*10
   const score = (sum / (sumW * 10)) * 100;
   return Math.round(score * 10) / 10;
 }
@@ -433,7 +435,6 @@ function getGenreArray(genre: AnimeWork["genre"]): string[] {
 
   const s = String(genre || "").trim();
   if (!s) return [];
-  // よくある区切りに対応
   const parts = s
     .replace(/[｜|]/g, "/")
     .replace(/[、,]/g, "/")
@@ -713,7 +714,8 @@ async function buildSafeSelectCols(supabaseUrl: string, headers: Record<string, 
     "ai_score_note",
   ];
 
-  const probe = await fetch(`${supabaseUrl}/rest/v1/anime_works?select=*&limit=1`, { headers });
+  // ✅ order固定 & limit=1 で安定
+  const probe = await fetch(`${supabaseUrl}/rest/v1/anime_works?select=*&order=id.asc&limit=1`, { headers });
   if (!probe.ok) {
     const t = await probe.text().catch(() => "");
     throw new Error(`anime_works probe failed: ${probe.status} ${t}`.slice(0, 300));
@@ -754,6 +756,32 @@ function buildPageButtons(current: number, total: number) {
   if (right < last - 1) push("...");
 
   if (last !== 1) push(last);
+  return out;
+}
+
+/** =========================
+ *  ✅ Supabase REST: 全件ページング取得（limit/offset）
+ * ========================= */
+async function fetchAllWithOffset<T>(makeUrl: (offset: number) => string, headers: Record<string, string>): Promise<T[]> {
+  const out: T[] = [];
+  let offset = 0;
+  const hardCap = 200000; // 念のため無限ループ防止
+
+  while (true) {
+    const url = makeUrl(offset);
+    const res = await fetch(url, { headers });
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      throw new Error(`fetch failed: ${res.status} ${t}`.slice(0, 300));
+    }
+    const batch = (await res.json()) as T[];
+    if (Array.isArray(batch) && batch.length) out.push(...batch);
+
+    if (!Array.isArray(batch) || batch.length < REST_PAGE_LIMIT) break;
+
+    offset += REST_PAGE_LIMIT;
+    if (offset > hardCap) break;
+  }
   return out;
 }
 
@@ -888,18 +916,25 @@ export default function Home() {
     setLoadError(null);
     const headers = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` };
 
+    // ======================
+    // ✅ Works（全件ページング）
+    // ======================
     setLoadingWorks(true);
     let works: AnimeWork[] = [];
     try {
       const selectCols = await buildSafeSelectCols(SUPABASE_URL, headers);
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/anime_works?select=${encodeURIComponent(selectCols)}`, { headers });
-      if (!res.ok) {
-        const t = await res.text().catch(() => "");
-        throw new Error(`anime_works取得失敗: ${res.status} ${t}`.slice(0, 300));
-      }
-      works = (await res.json()) as AnimeWork[];
+
+      const base = `${SUPABASE_URL}/rest/v1/anime_works?select=${encodeURIComponent(selectCols)}&order=id.asc`;
+      works = await fetchAllWithOffset<AnimeWork>(
+        (offset) => `${base}&limit=${REST_PAGE_LIMIT}&offset=${offset}`,
+        headers
+      );
+
       setAnimeList(Array.isArray(works) ? works : []);
       setRankPagesShown(1);
+
+      // ✅ 念のため：id=2 が入ってるかログ（ローカル確認用）
+      // console.log("works loaded:", works.length, "has id=2?", works.some((w) => Number(w.id) === 2));
     } catch (e: any) {
       setLoadError(e?.message || "作品取得に失敗しました（URL/KEY/RLS/ネットワーク）");
       setLoadingWorks(false);
@@ -908,22 +943,22 @@ export default function Home() {
       setLoadingWorks(false);
     }
 
-    // VOD
+    // ======================
+    // ✅ VOD（全件ページング）
+    // ======================
     setLoadingVod(true);
     try {
-      const url =
+      const base =
         `${SUPABASE_URL}/rest/v1/anime_vod_availability` +
         `?select=anime_id,service,watch_url,region` +
         `&region=eq.JP` +
-        `&watch_url=not.is.null`;
+        `&watch_url=not.is.null` +
+        `&order=anime_id.asc`;
 
-      const res = await fetch(url, { headers });
-      if (!res.ok) {
-        const t = await res.text().catch(() => "");
-        throw new Error(`anime_vod_availability取得失敗: ${res.status} ${t}`.slice(0, 300));
-      }
-
-      const rows = (await res.json()) as VodAvailRow[];
+      const rows = await fetchAllWithOffset<VodAvailRow>(
+        (offset) => `${base}&limit=${REST_PAGE_LIMIT}&offset=${offset}`,
+        headers
+      );
 
       const mapServices = new Map<number, string[]>();
       const mapUrls = new Map<number, Record<string, string>>();
@@ -952,14 +987,15 @@ export default function Home() {
       vodMapRef.current = mapServices;
       vodUrlMapRef.current = mapUrls;
 
-      setAnimeList((prev) =>
-        prev.map((w) => {
-          const id = Number(w.id || 0);
-          const vods = id ? mapServices.get(id) ?? [] : [];
-          const urls = id ? mapUrls.get(id) ?? {} : {};
-          return { ...w, vod_services: vods, vod_watch_urls: urls };
-        })
-      );
+      // ✅ works ベースで統合して set（prev依存をやめる）
+      const merged = works.map((w) => {
+        const id = Number(w.id || 0);
+        const vods = id ? mapServices.get(id) ?? [] : [];
+        const urls = id ? mapUrls.get(id) ?? {} : {};
+        return { ...w, vod_services: vods, vod_watch_urls: urls };
+      });
+
+      setAnimeList(merged);
     } catch (e: any) {
       console.warn("VOD load failed:", e?.message);
     } finally {
@@ -1221,10 +1257,7 @@ export default function Home() {
         const stN = normalizeForCompare(st);
         if (!stN) return { ...a, _score: -1, _ok: false } as any;
 
-        // チェックがあれば優先一致（OR）
         const hitByCheck = selectedN.length ? selectedN.some((x) => stN.includes(x) || x.includes(stN) || ngramJaccard(x, stN) >= 0.52) : false;
-
-        // 入力があれば類似度
         const sim = qN ? (stN.includes(qN) ? 1 : 0) + ngramJaccard(st, q) : 0;
 
         const ok = hitByCheck || sim >= 0.45;
@@ -1300,7 +1333,6 @@ export default function Home() {
 
     let scored = animeList
       .map((a) => {
-        // keyword hit
         const kws = normalizeKeywords(a.keywords);
         let groupsHit = 0;
 
@@ -1331,7 +1363,6 @@ export default function Home() {
         const fw = freewordScore(a);
         const freeOk = q ? fw > 0 : true;
 
-        // 両方指定なら “両方” を優先
         const ok = (selected.length ? keywordOk : true) && (q ? freeOk : true) && (selected.length || q ? true : false);
 
         const ov = overallScore100(a) ?? 0;
@@ -2081,7 +2112,6 @@ export default function Home() {
                           </div>
                         ))}
 
-                        {/* ✅ buildエラー回避（null対策） */}
                         {selectedSeriesBundle &&
                         selectedSeriesBundle.animeTotalEpisodes !== null &&
                         selectedSeriesBundle.animeCountedWorks < selectedSeriesBundle.animeWorks.length ? (
@@ -2118,7 +2148,11 @@ export default function Home() {
                         <div className="scoreBar" aria-label={`${ax.label} ${toScore10((selectedAnime as any)[ax.key]) ?? "—"} / 10`}>
                           <div
                             className="scoreBarFill"
-                            style={{ width: `${toScore10((selectedAnime as any)[ax.key]) === null ? 0 : (toScore10((selectedAnime as any)[ax.key])! / 10) * 100}%` }}
+                            style={{
+                              width: `${
+                                toScore10((selectedAnime as any)[ax.key]) === null ? 0 : (toScore10((selectedAnime as any)[ax.key])! / 10) * 100
+                              }%`,
+                            }}
                           />
                         </div>
                         <div className="scoreVal">{toScore10((selectedAnime as any)[ax.key]) === null ? "—" : `${toScore10((selectedAnime as any)[ax.key])}/10`}</div>

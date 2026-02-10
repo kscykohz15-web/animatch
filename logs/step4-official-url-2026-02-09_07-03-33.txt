@@ -1,0 +1,18 @@
+===== START step4-official-url 2026/02/09  7:03:33.76 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ fill official_url (AniList only / skip-unresolved / cursor mode)
+   dry-run: false
+   page: 60
+   limit: ∞
+   state: C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json
+   cursorId: 12209
+   skipped: 6393
+- updated: id=12494 title=異世界のんびり農家２ -> https://nonbiri-nouka2.com/
+- updated: id=12520 title=自称悪役令嬢な婚約者の観察記録。 -> https://jisho-akuyaku-anime.jp/
+- updated: id=12546 title=淫獄団地 -> https://ingoku-danchi.deregula.com/
+—
+🎉 終了：cursor以降の official_url=NULL がありません
+—
+📌 summary: scanned=3 updated=3 skipped=0 failed=0
+📝 状態は C:\Users\kouhe\Desktop\animatch-work\animatch\scripts\official_url_state.json に保存されています（次回は続きから再開します）
+===== END step4-official-url 2026/02/09  7:03:40.48 ===== 

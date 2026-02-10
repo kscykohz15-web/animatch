@@ -1,19 +1,29 @@
 @echo off
-cd /d C:\Users\kouhe\Desktop\animatch-work\animatch
+chcp 65001 >nul
+setlocal enabledelayedexpansion
 
+cd /d C:\Users\kouhe\Desktop\animatch-work\animatch
 if not exist logs mkdir logs
 
-set LOG=logs\tmdb-backdrop-16x9-%date:~0,4%-%date:~5,2%-%date:~8,2%.txt
+set TS=%date:~0,4%-%date:~5,2%-%date:~8,2%_%time:~0,2%-%time:~3,2%-%time:~6,2%
+set TS=%TS: =0%
+set "LOG=logs\tmdb-backdrop-16x9-%TS%.txt"
 
-echo ===== START %date% %time% ===== >> %LOG%
+echo ===== START %date% %time% =====> "%LOG%"
 
-set LIMIT=5000
-set OFFSET=0
-set ONLY_MISSING=true
-set FORCE=false
-set MIN_INTERVAL_MS=350
-set TMDB_IMG_SIZE=w1280
+set "BATCH=1000"
+set "OFFSET=8000"
 
-call node scripts\fill-tmdb-backdrop-16x9.mjs >> %LOG% 2>&1
+:LOOP
+set "LIMIT=%BATCH%"
+set "ONLY_MISSING=true"
+set "FORCE=false"
+set "MIN_INTERVAL_MS=350"
+set "TMDB_IMG_SIZE=w1280"
 
-echo ===== END %date% %time% ===== >> %LOG%
+echo --- batch offset=!OFFSET! limit=!LIMIT! --- >> "%LOG%"
+call node scripts\fill-tmdb-backdrop-16x9.mjs >> "%LOG%" 2>&1
+
+rem ここは手動停止でもOK（CTRL+C）
+set /a OFFSET+=BATCH
+goto LOOP

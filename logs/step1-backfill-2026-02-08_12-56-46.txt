@@ -1,0 +1,11 @@
+===== START step1-backfill 2026/02/08 12:56:46.59 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ AniList backfill start {
+  start_page: 192,
+  end_page: 196,
+  PER_PAGE: 50,
+  ALLOW_UPDATE_EXISTING: false,
+  state: 'C:\\Users\\kouhe\\Desktop\\animatch-work\\animatch\\scripts\\anilist_backfill_state.json'
+}
+❌ 失敗: duplicate key value violates unique constraint "anime_works_anilist_id_uq"
+===== END step1-backfill 2026/02/08 12:56:47.60 ===== 

@@ -1,0 +1,2614 @@
+===== START step5-ai-score10 2026/02/09 22:04:53.54 ===== 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+✅ step5-ai-score10-fill-empty start {
+  LIMIT: 200,
+  OFFSET: 0,
+  MODEL: 'gpt-4o-mini',
+  DRY_RUN: true,
+  ONLY_MISSING: true,
+  FORCE: false,
+  MIN_INTERVAL_MS: 1200
+}
+targets=200
+→ {
+  id: 213,
+  title: '魔乳秘剣帖',
+  story_10: 5,
+  animation_10: 4,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 52,
+  confidence: 0.7,
+  rationale: 'シナリオは過激な要素が強調されているが、深みは薄い。作画は平凡で、世界観は時代劇としては一般的。'
+}
+→ {
+  id: 214,
+  title: '魔法少女まどか☆マギカ',
+  story_10: 10,
+  animation_10: 9,
+  world_10: 9,
+  emotion_10: 10,
+  tempo_10: 8,
+  music_10: 9,
+  score_100: 94,
+  confidence: 0.9,
+  rationale: 'シナリオは願いと絶望の循環を巧みに描き、感情を強く揺さぶる。作画と音楽も高水準で、世界観も独自性が高い。'
+}
+→ {
+  id: 215,
+  title: 'まよチキ!',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61.5,
+  confidence: 0.8,
+  rationale: '軽快な会話や関係性の変化は良いが、ストーリーは平凡で深みが不足。作画も特筆すべき点は少ない。'
+}
+→ {
+  id: 216,
+  title: '輪るピングドラム',
+  story_10: 9,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 86,
+  confidence: 0.9,
+  rationale: '運命や因果をテーマにした深いストーリーが魅力的。感情表現が強く、視聴者を引き込むが、音楽はやや控えめ。'
+}
+→ {
+  id: 217,
+  title: '未来日記',
+  story_10: 8,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは緊張感があり引き込まれるが、キャラクターの深みがやや不足。作画は平凡で、音楽は印象に残りにくい。'
+}
+→ {
+  id: 218,
+  title: '夢喰いメリー',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 68.5,
+  confidence: 0.8,
+  rationale: '設定や雰囲気は魅力的だが、ストーリー展開がやや平凡。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 219,
+  title: 'ゆるゆり',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 9,
+  music_10: 5,
+  score_100: 62,
+  confidence: 0.8,
+  rationale: '日常系のギャグアニメとしては楽しめるが、ストーリーや世界観は平凡。テンポが良く、キャラの掛け合いが癒しになる。'
+}
+→ {
+  id: 220,
+  title: '+チック姉さん',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 5,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 56.5,
+  confidence: 0.7,
+  rationale: '短尺のギャグアニメでストーリーは単純。テンポは良いが、感情や世界観は薄め。'
+}
+→ {
+  id: 221,
+  title: '放課後のプレアデス',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: '感情の積み上げが良く、心に響く場面が多い。作画は良好だが特に突出した点はない。'
+}
+→ {
+  id: 222,
+  title: 'アクセル・ワールド',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 73.5,
+  confidence: 0.8,
+  rationale: '成長譚としてのテーマは良いが、ストーリー展開にやや平凡さを感じる。作画は高水準で、感情を引き出す要素もあり。'
+}
+→ {
+  id: 223,
+  title: 'Another',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 72,
+  confidence: 0.8,
+  rationale: 'ストーリーは緊張感がありつつもやや予測可能。作画は高水準で、世界観はホラーとしての独自性があるが、テンポは時折ダレる。音楽は雰囲気を盛り上げるが特別印象的ではない。'
+}
+→ {
+  id: 224,
+  title: 'あの夏で待ってる',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 73.5,
+  confidence: 0.8,
+  rationale: '青春群像劇としての魅力はあるが、ストーリーはやや平凡。作画は良好で、感情的なシーンも多いが、独自性には欠ける。'
+}
+→ {
+  id: 225,
+  title: '妖狐×僕SS',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 73.5,
+  confidence: 0.8,
+  rationale: '恋愛と感情の描写が強く、心を動かされるシーンが多い。作画は平均的だが、世界観は魅力的で独自性がある。'
+}
+→ {
+  id: 226,
+  title: '宇宙兄弟',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '兄弟の挑戦を描いた感動的なストーリーが強い。作画は良好だが特別な印象は薄い。テンポも良く、感情を動かす要素が多い。'
+}
+→ {
+  id: 227,
+  title: 'エリアの騎士',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: '王道スポ根で成長物語がしっかり描かれているが、特に新鮮さは感じられない。感情移入はできるが、作画や音楽は平凡。'
+}
+→ {
+  id: 228,
+  title: '織田信奈の野望',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64,
+  confidence: 0.8,
+  rationale: '戦国時代を美少女武将で再構成したアイデアは面白いが、ストーリーは平凡。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 229,
+  title: 'お兄ちゃんだけど愛さえあれば関係ないよねっ',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 5,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55.5,
+  confidence: 0.8,
+  rationale: 'ラブコメとしては平凡なストーリーで、特に印象的な要素は少ない。作画は良いが特筆すべき点はなし。テンポは良好で軽く楽しめる。'
+}
+→ {
+  id: 230,
+  title: 'ガールズ&パンツァー',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは青春と成長を描きつつも、特に突出した点は少ない。作画は良好で試合シーンが魅力的。テンポも良く、感情を引き出す要素が多い。'
+}
+→ {
+  id: 231,
+  title: 'カンピオーネ!',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 63,
+  confidence: 0.7,
+  rationale: '設定は面白いがストーリーは平凡。テンポは良く、バトルシーンは楽しめるが、感情的な深みは不足。'
+}
+→ {
+  id: 232,
+  title: '銀河へキックオフ!!',
+  story_10: 7,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: '青春スポーツものとしては良いが、シナリオはやや平凡。感情移入しやすく、テンポも良好。'
+}
+→ {
+  id: 233,
+  title: 'キルミーベイベー',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 60.5,
+  confidence: 0.8,
+  rationale: '日常系ギャグとしての楽しさはあるが、ストーリーは平凡。作画は良好で、テンポも良いが、感情的な深みは薄い。'
+}
+→ {
+  id: 234,
+  title: '黒子のバスケ',
+  story_10: 8,
+  animation_10: 9,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 78,
+  confidence: 0.9,
+  rationale: 'ストーリーは熱いバトルと成長が描かれ、感情を引き出す。作画は高水準で、テンポも良好だが、世界観はやや一般的。'
+}
+→ {
+  id: 235,
+  title: 'K',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: 'シナリオは興味深いがやや複雑で分かりにくい部分も。作画はスタイリッシュで高評価。世界観は魅力的だが独自性はやや薄い。'
+}
+→ {
+  id: 236,
+  title: '恋と選挙とチョコレート',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 62.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは恋愛と選挙のテーマが面白いが、深みは薄い。作画は平凡で、感情的な描写は良いが突出した点は少ない。'
+}
+→ {
+  id: 237,
+  title: 'ココロコネクト',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: '青春群像劇としての感情のぶつかり合いが強く、emotionは高め。ストーリーは良いが特に突出した点はない。作画は平凡で、音楽も印象に残りにくい。'
+}
+→ {
+  id: 238,
+  title: '坂道のアポロン',
+  story_10: 8,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 10,
+  score_100: 85.5,
+  confidence: 0.9,
+  rationale: 'ジャズを通じた友情と恋の描写が感情を強く揺さぶる。音楽がシーンを引き立て、世界観も魅力的。テンポはやや落ちる場面もあるが全体的に高評価。'
+}
+→ {
+  id: 239,
+  title: 'さくら荘のペットな彼女',
+  story_10: 7,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 73.5,
+  confidence: 0.8,
+  rationale: '青春と努力のテーマがしっかり描かれており、感情移入しやすい。作画は安定しているが特別な印象は薄い。'
+}
+→ {
+  id: 240,
+  title: 'さんかれあ',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: '切なさとブラックさのバランスが良いが、ストーリー展開にやや弱さを感じる。世界観は独特で没入感がある。'
+}
+→ {
+  id: 241,
+  title: 'ジョジョの奇妙な冒険',
+  story_10: 9,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 83.5,
+  confidence: 0.9,
+  rationale: '濃い台詞と決めポーズが印象的で、ストーリーは強い。世界観も独特で没入感があるが、テンポはややダレる部分も。'
+}
+→ {
+  id: 242,
+  title: '人類は衰退しました',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71,
+  confidence: 0.8,
+  rationale: '独特の言葉回しとユーモアが魅力的で、シナリオは面白いが深みはやや不足。世界観はユニークで没入感がある。'
+}
+→ {
+  id: 243,
+  title: '好きっていいなよ。',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 68.5,
+  confidence: 0.8,
+  rationale: '恋愛と感情の描写がストレートで心に響くが、シナリオや世界観は平凡。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 244,
+  title: '絶園のテンペスト',
+  story_10: 8,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 75.5,
+  confidence: 0.8,
+  rationale: '復讐劇の展開が魅力的で、論理的な会話が効果的。作画と演出も良好だが、感情の動きはやや控えめ。'
+}
+→ {
+  id: 245,
+  title: 'ソードアート・オンライン',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 72,
+  confidence: 0.9,
+  rationale: '全体的に高水準だが、ストーリーの独自性や深みがやや不足。作画は良いが、特に印象的なシーンが少ない。'
+}
+→ {
+  id: 246,
+  title: '戦姫絶唱シンフォギア',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 9,
+  score_100: 74,
+  confidence: 0.8,
+  rationale: '王道のストーリーだが新鮮味は薄い。作画は良好で、音楽が感情を高める要素として強い。'
+}
+→ {
+  id: 247,
+  title: 'だから僕は、Hができない。',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: 'ストーリーはエロを動力にした設定だが、深みは薄い。作画は平凡で、感情の動きも弱め。'
+}
+→ {
+  id: 248,
+  title: 'TARI TARI',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: '青春群像劇としての感動があり、音楽が作品を引き立てる。ストーリーは良いが特に突出した点はない。'
+}
+→ {
+  id: 249,
+  title: '黄昏乙女×アムネジア',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 79.5,
+  confidence: 0.8,
+  rationale: '切なさと謎解きがうまく融合しており、感情が強く動かされる。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 250,
+  title: '男子高校生の日常',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 64.5,
+  confidence: 0.8,
+  rationale: '日常ギャグとしての面白さはあるが、ストーリーは平凡。テンポは良好で、感情的な刺さりもあるが、音楽は印象に残らない。'
+}
+→ {
+  id: 251,
+  title: '中二病でも恋がしたい！',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: '恋愛と青春のテーマがしっかり描かれ、感情の回収も丁寧。作画は高水準だが、世界観は特に独自性が強いわけではない。'
+}
+→ {
+  id: 252,
+  title: 'となりの怪物くん',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: '恋愛要素がしっかり描かれており、感情移入しやすい。テンポも良く、視聴ストレスは少ないが、作画や音楽は平凡。'
+}
+→ {
+  id: 253,
+  title: 'ハイスクールD×D',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 59.5,
+  confidence: 0.8,
+  rationale: 'ストーリーはバトルとハーレム要素が中心で平凡。作画は良いが特筆すべき点は少ない。世界観は異能バトルとしては楽しめるが独自性は弱い。'
+}
+→ {
+  id: 254,
+  title: '這いよれ！ ニャル子さん',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 63,
+  confidence: 0.8,
+  rationale: 'パロディ要素が強く、元ネタに依存したストーリーは一般的な魅力に欠ける。テンポは良好だが、作画は平凡。'
+}
+→ {
+  id: 255,
+  title: 'はぐれ勇者の鬼畜美学',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: 'ストーリーは異世界ものとして平凡で、キャラクターの倫理観も特に新鮮さがない。作画は平均的で、音楽も印象に残らない。'
+}
+→ {
+  id: 256,
+  title: 'パパのいうことを聞きなさい！',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 65,
+  confidence: 0.8,
+  rationale: '家族の温かさが感情に効くが、ストーリーは平凡で独自性に欠ける。作画は普通で、テンポは良好。'
+}
+→ {
+  id: 257,
+  title: '氷菓',
+  story_10: 8,
+  animation_10: 9,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 82,
+  confidence: 0.9,
+  rationale: '日常の謎を解くストーリーが魅力的で、キャラクターの関係性が深い。作画は非常に高水準で、世界観も独特。音楽は良いが、感情の増幅にはやや弱い。'
+}
+→ {
+  id: 258,
+  title: 'BTOOOM!',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64,
+  confidence: 0.8,
+  rationale: 'デスゲームの設定は面白いが、ストーリー展開は平凡。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 259,
+  title: 'マギ',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 77,
+  confidence: 0.8,
+  rationale: '王道バトルと友情のテーマがしっかりしており、感情を動かす場面も多い。作画は良いが特別優れた点は少ない。'
+}
+→ {
+  id: 260,
+  title: 'めだかボックス',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 59.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは学園ものとしては面白いが、特に印象的な点は少ない。作画は良好だが特別ではなく、感情的な深みも薄い。'
+}
+→ {
+  id: 261,
+  title: 'ヨルムンガンド',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: 'シナリオは戦場の倫理を描きつつテンポが良い。作画は良いが特別ではなく、音楽は平凡。'
+}
+→ {
+  id: 262,
+  title: 'リトルバスターズ!',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '友情と感情の描写が強く、心を動かされるシーンが多い。作画は良いが特に突出した点はない。'
+}
+→ {
+  id: 263,
+  title: 'アウトブレイク・カンパニー 萌える侵略者',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61,
+  confidence: 0.7,
+  rationale: '異世界とオタク文化の融合は面白いが、ストーリーは平凡。作画は普通で、感情的な深みはやや不足。'
+}
+→ {
+  id: 264,
+  title: '惡の華',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 9,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '心理描写が深く、テーマが刺さる。世界観は独特で没入感が高いが、テンポはややダレる部分がある。'
+}
+→ {
+  id: 265,
+  title: '犬とハサミは使いよう',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: 'カオスコメディとしてのノリはあるが、シナリオや感情の深みは薄い。作画は平凡で、世界観も特に独自性は感じられない。'
+}
+→ {
+  id: 266,
+  title: '有頂天家族',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 79,
+  confidence: 0.9,
+  rationale: '家族の再生を描くストーリーが魅力的で、情緒豊かな会話が心を動かす。世界観は独特で高評価だが、作画はやや平凡。'
+}
+→ {
+  id: 267,
+  title: '俺の脳内選択肢が、学園ラブコメを全力で邪魔している',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61.5,
+  confidence: 0.8,
+  rationale: 'ギャグ要素が強いが、ストーリーは平凡で深みが少ない。テンポは良好だが、音楽は印象に残らない。'
+}
+→ {
+  id: 268,
+  title: '俺の彼女と幼なじみが修羅場すぎる',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: 'ラブコメとしての会話の勢いは良いが、ストーリーは平凡。テンポは良く、視聴ストレスは少ない。'
+}
+→ {
+  id: 269,
+  title: '革命機ヴァルヴレイヴ',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 68.5,
+  confidence: 0.8,
+  rationale: 'シナリオは勢いがあるが深みには欠ける。作画は良好で、テンポもまずまず。音楽はシーンを盛り上げるが特筆すべき点は少ない。'
+}
+→ {
+  id: 270,
+  title: '神さまのいない日曜日',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 80,
+  confidence: 0.8,
+  rationale: '死なない世界のテーマが深く、感情に訴える描写が多い。作画は良いが特別な印象は薄い。'
+}
+→ {
+  id: 271,
+  title: '君のいる町',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: '恋愛のすれ違いをテーマにした感情的なストーリーが良いが、作画は平凡。テンポは良好で感情を揺さぶる要素が強い。'
+}
+→ {
+  id: 272,
+  title: '境界の彼方',
+  story_10: 7,
+  animation_10: 9,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 77.5,
+  confidence: 0.8,
+  rationale: 'シナリオは良いが特に突出した点はない。作画と音楽が強く、感情を引き立てる。世界観も魅力的だが独自性はやや弱め。'
+}
+→ {
+  id: 273,
+  title: 'キルラキル',
+  story_10: 7,
+  animation_10: 9,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 9,
+  music_10: 7,
+  score_100: 78.5,
+  confidence: 0.8,
+  rationale: '勢いと演出が強く、テンポも良好。ストーリーは面白いが深みには欠ける。作画はTRIGGERらしく高水準。'
+}
+→ {
+  id: 274,
+  title: '銀の匙 Silver Spoon',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '青春と成長を描いたストーリーが感動的でemotion高め。作画は良好だが特別ではなく、世界観は農業に根ざした独自性がある。'
+}
+→ {
+  id: 275,
+  title: 'ゴールデンタイム',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: '恋愛ドラマとしての感情描写は良いが、ストーリーは一般的。作画は平凡で、音楽も特に印象的ではない。'
+}
+→ {
+  id: 276,
+  title: '琴浦さん',
+  story_10: 8,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 77.5,
+  confidence: 0.8,
+  rationale: '心の孤独と救いのテーマが強く、感情に訴える描写が多い。作画は平凡だが、テンポは良好。'
+}
+→ {
+  id: 277,
+  title: 'サーバント×サービス',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: '日常コメディとしては良好だが、ストーリーや世界観は平凡。テンポは良く、感情移入もしやすい。'
+}
+→ {
+  id: 279,
+  title: 'ストライク・ザ・ブラッド',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 63,
+  confidence: 0.8,
+  rationale: '学園と吸血鬼の設定は一般的で新鮮味に欠けるが、テンポは良好。感情的な深みは薄め。'
+}
+→ {
+  id: 280,
+  title: 'ダイヤのA',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 75,
+  confidence: 0.8,
+  rationale: '成長物語としてのシナリオは良好で、感情を引き出す要素が多い。作画は安定しているが特別な印象は薄い。テンポも良く、視聴ストレスは少ない。'
+}
+→ {
+  id: 281,
+  title: 'ダンガンロンパ 希望の学園と絶望の高校生 The Animation',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは興味深いが、展開がやや予測可能。作画は平凡で、世界観は独特だが特別感は薄い。テンポは良好で、感情的な要素もある。'
+}
+→ {
+  id: 282,
+  title: 'デート・ア・ライブ',
+  story_10: 6,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 66.5,
+  confidence: 0.8,
+  rationale: 'ラブコメとバトルの融合は面白いが、ストーリーは平凡。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 283,
+  title: '東京レイヴンズ',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64,
+  confidence: 0.8,
+  rationale: 'シナリオはバトルと相棒関係に焦点を当てているが、特に新鮮さは感じられない。作画は良好で、テンポもまずまずだが、感情的な深みはやや不足。'
+}
+→ {
+  id: 284,
+  title: '凪のあすから',
+  story_10: 8,
+  animation_10: 9,
+  world_10: 10,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 86.5,
+  confidence: 0.9,
+  rationale: '感情の波が大きく、恋愛や成長の描写が強い。世界観が独特で没入感が高いが、テンポはややダレる部分もある。'
+}
+→ {
+  id: 285,
+  title: 'はたらく魔王さま！',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: 'ギャグと日常が中心でストーリーは平凡だが楽しめる。作画は良いが特筆すべき点は少ない。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 286,
+  title: 'Fate/kaleid liner プリズマ☆イリヤ',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 66,
+  confidence: 0.8,
+  rationale: 'ストーリーは可もなく不可もなくで6。作画は良いが特別ではなく、世界観は一般的な魔法少女もの。テンポは良く、音楽もシーンを盛り上げる。'
+}
+→ {
+  id: 287,
+  title: 'フォトカノ',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 57.5,
+  confidence: 0.7,
+  rationale: '恋愛要素はあるが、シナリオは平凡で感情の動きも限定的。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 288,
+  title: '変態王子と笑わない猫。',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは面白いが特に印象的ではなく、感情の動きはあるが深みには欠ける。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 289,
+  title: 'まおゆう魔王勇者',
+  story_10: 8,
+  animation_10: 6,
+  world_10: 9,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: '政治経済をテーマにした独自のストーリーが魅力的で、世界観も高評価。作画は平凡で、音楽は感情を増幅するほどではない。'
+}
+→ {
+  id: 290,
+  title: '機巧少女は傷つかない',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 66,
+  confidence: 0.8,
+  rationale: '設定は面白いがストーリーは平凡。作画は良好で、スチームパンクの世界観が魅力的。感情的な深みはやや不足。'
+}
+→ {
+  id: 291,
+  title: '問題児たちが異世界から来るそうですよ？',
+  story_10: 6,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 5,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 61.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは異世界ものとしては平凡で、キャラクターの個性はあるが深みには欠ける。テンポは良好で視聴ストレスは少ないが、感情的な引き込みは弱め。'
+}
+→ {
+  id: 292,
+  title: 'やはり俺の青春ラブコメはまちがっている。',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '会話劇が魅力的で心に響くシーンが多い。作画は良いが特別ではなく、音楽は感情を引き立てるが突出はしない。'
+}
+→ {
+  id: 293,
+  title: '勇者になれなかった俺はしぶしぶ就職を決意しました。',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: 'コメディ要素はあるが、ストーリーは平凡で感情の動きは弱い。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 294,
+  title: '恋愛ラボ',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 58.5,
+  confidence: 0.8,
+  rationale: '日常ギャグとしては楽しめるが、ストーリーや世界観は平凡。テンポは良好で安心して視聴できる。'
+}
+→ {
+  id: 295,
+  title: 'ラブライブ！ School idol project',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 9,
+  score_100: 76.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは感情の積み上げが良いが、特に新鮮さは感じない。作画と音楽は高水準で、特に音楽が感情を引き立てている。'
+}
+→ {
+  id: 296,
+  title: '夜桜四重奏 ～ヨザクラカルテット～',
+  story_10: 6,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 65,
+  confidence: 0.8,
+  rationale: 'アクションと演出は良いが、ストーリーは平凡で感情の動きが弱い。世界観は魅力的だが独自性はやや不足。'
+}
+→ {
+  id: 297,
+  title: 'ログ・ホライズン',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 76.5,
+  confidence: 0.8,
+  rationale: 'シナリオは戦略と交渉が中心で面白いが、感情的な深みはやや薄い。世界観は独自性が高く、テンポも良好。作画は安定しているが特筆すべき点は少ない。'
+}
+→ {
+  id: 298,
+  title: '私がモテないのはどう考えてもお前らが悪い!',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 69.5,
+  confidence: 0.8,
+  rationale: '主人公の独白が共感を呼ぶが、ストーリーはやや単調。作画は平凡で、音楽は印象に残らない。'
+}
+→ {
+  id: 299,
+  title: 'ワルキューレ ロマンツェ',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: '恋愛と競技要素の組み合わせは面白いが、ストーリーは平凡。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 300,
+  title: 'いなり、こんこん、恋いろは。',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: '恋愛と成長のテーマがしっかり描かれているが、ストーリーはやや平凡。感情表現は良好で、テンポも良い。作画は可もなく不可もなく。'
+}
+→ {
+  id: 301,
+  title: 'ウィッチクラフトワークス',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64,
+  confidence: 0.8,
+  rationale: 'ストーリーはバトルとギャグの組み合わせで楽しめるが、特に印象的な点は少ない。作画は良好だが特筆すべき点はなし。'
+}
+→ {
+  id: 302,
+  title: 'Wake Up, Girls!',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: '地方アイドルのリアルな苦労が描かれており、感情に刺さる部分が強い。作画は平凡だが、音楽が感情を引き立てている。'
+}
+→ {
+  id: 303,
+  title: '最近、妹のようすがちょっとおかしいんだが。',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: '設定は突飛だが、ストーリーは平凡で感情移入が薄い。テンポは良好だが、全体的に印象が弱い。'
+}
+→ {
+  id: 304,
+  title: 'GJ部',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 64.5,
+  confidence: 0.8,
+  rationale: '会話中心のストーリーは平凡だが、日常コメディとしてのテンポは良好。作画は安定しており、感情的な要素もあるが、音楽は印象に残りにくい。'
+}
+→ {
+  id: 305,
+  title: '桜Trick',
+  story_10: 6,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 66.5,
+  confidence: 0.8,
+  rationale: '友情と恋の境界を描くテーマは興味深いが、ストーリーは平凡。作画は良いが特筆すべき点は少ない。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 306,
+  title: 'ディーふらぐ！',
+  story_10: 6,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 59.5,
+  confidence: 0.8,
+  rationale: 'コメディ要素が強く、ストーリーは平凡。世界観は学園ものとしては良いが独自性は低め。テンポは良好だが感情的な深みは薄い。'
+}
+→ {
+  id: 307,
+  title: 'ニセコイ',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: '王道ラブコメでストーリーは平凡だが、キャラクターのやり取りが楽しめる。作画はシャフトらしいスタイリッシュさがあるが、特に突出した点は少ない。'
+}
+→ {
+  id: 308,
+  title: 'となりの関くん',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 64.5,
+  confidence: 0.8,
+  rationale: 'コメディとしてのシンプルなストーリーは楽しめるが、深みは薄い。テンポは良好で、作画は安定しているが特筆すべき点は少ない。'
+}
+→ {
+  id: 309,
+  title: 'のうりん',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: '農業とアイドルの組み合わせは面白いが、ストーリーは平凡。作画は良好で、テンポも良いが、音楽は特筆すべき点が少ない。'
+}
+→ {
+  id: 310,
+  title: 'ノラガミ',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 75.5,
+  confidence: 0.8,
+  rationale: 'キャラクターの成長や友情が描かれ、感情移入しやすい。作画は高水準だが、特に突出した点はない。世界観は魅力的だが、独自性はやや低め。'
+}
+→ {
+  id: 311,
+  title: 'バディ・コンプレックス',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64,
+  confidence: 0.8,
+  rationale: 'ストーリーは友情と絆をテーマにしているが、特に新鮮さは感じられない。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 312,
+  title: 'ハマトラ',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 62,
+  confidence: 0.8,
+  rationale: 'ストーリーはバトルサスペンスとしては平凡で、特に印象的な展開が少ない。作画は普通で、世界観は能力者ものとしては良いが独自性に欠ける。'
+}
+→ {
+  id: 313,
+  title: '鬼灯の冷徹',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 73.5,
+  confidence: 0.8,
+  rationale: '地獄を舞台にした独特の世界観が魅力的でworld高め。ストーリーは面白いが感情的な深みはやや弱い。作画は良好でテンポも良い。'
+}
+→ {
+  id: 314,
+  title: '魔法戦争',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: 'ストーリーは平凡で新鮮味が薄い。作画はマッドハウスらしいが特筆すべき点は少ない。全体的に中庸で感情を強く動かす要素が不足している。'
+}
+→ {
+  id: 315,
+  title: '未確認で進行形',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: 'ラブコメとしてのストーリーは可もなく不可もなく。キャラクターの関係性は面白いが、特に印象的な世界観は感じられない。テンポは良好で、視聴ストレスは少ない。'
+}
+→ {
+  id: 316,
+  title: '悪魔のリドル',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70,
+  confidence: 0.8,
+  rationale: 'シナリオは興味深いが、展開にやや平凡さを感じる。世界観は独特で魅力的だが、作画は平均的。'
+}
+→ {
+  id: 317,
+  title: '一週間フレンズ。',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '感情的な描写が強く、心を動かされるシーンが多い。ストーリーは良いが、独自性はやや欠ける。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 318,
+  title: '彼女がフラグをおられたら',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61.5,
+  confidence: 0.8,
+  rationale: 'フラグが見える設定は面白いが、ストーリーは平凡。作画は普通で、感情的なシーンはあるが突出したものではない。'
+}
+→ {
+  id: 319,
+  title: '極黒のブリュンヒルデ',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 62,
+  confidence: 0.8,
+  rationale: 'ダークSFサスペンスとしての設定は面白いが、ストーリー展開が平凡で感情移入が弱い。作画は平均的で、音楽はシーンを盛り上げるが特筆すべき点は少ない。'
+}
+→ {
+  id: 320,
+  title: '健全ロボ ダイミダラー',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: '下ネタと熱血の組み合わせはユニークだが、ストーリーは平凡。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 321,
+  title: 'ご注文はうさぎですか？',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 70,
+  confidence: 0.8,
+  rationale: '日常系の癒し要素が強く、心が温まるが、ストーリーは平凡。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 322,
+  title: 'シドニアの騎士',
+  story_10: 8,
+  animation_10: 9,
+  world_10: 9,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 79.5,
+  confidence: 0.8,
+  rationale: '硬派なSFと戦闘の緊張感が魅力的で、シナリオと世界観が高評価。感情の動きはやや弱めだが、テンポは良好。'
+}
+→ {
+  id: 323,
+  title: '星刻の竜騎士',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: 'シナリオは平凡で、特に印象的な展開が少ない。作画は良いが特筆すべき点はなし。世界観は一般的なファンタジーで独自性が薄い。'
+}
+→ {
+  id: 324,
+  title: 'selector infected WIXOSS',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 80,
+  confidence: 0.8,
+  rationale: '心理的なダークさが強く、ストーリーは引き込まれる。世界観は独自性が高いが、作画はやや平凡。音楽は感情を増幅する良さがある。'
+}
+→ {
+  id: 325,
+  title: 'それでも世界は美しい',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: '王道ロマンスの展開が魅力的でemotion高め。作画は良いが特筆すべき点は少なく、世界観も一般的。'
+}
+→ {
+  id: 326,
+  title: 'ノーゲーム・ノーライフ',
+  story_10: 7,
+  animation_10: 9,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 8,
+  score_100: 76,
+  confidence: 0.8,
+  rationale: 'シナリオは面白いが独創性に欠ける部分があり、作画は非常に高水準。音楽もシーンを盛り上げるが、感情の動きはやや控えめ。'
+}
+→ {
+  id: 327,
+  title: 'ハイキュー!!',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 10,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 74.5,
+  confidence: 0.9,
+  rationale: '感動的な成長物語でemotionは高いが、ストーリーや世界観は特に独自性が強くない。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 328,
+  title: '棺姫のチャイカ',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 74,
+  confidence: 0.8,
+  rationale: 'シナリオは興味深いが特に突出した点はない。作画は高水準で、世界観も魅力的。感情的な要素はあるが、深い感動には至らない。'
+}
+→ {
+  id: 329,
+  title: 'ピンポン THE ANIMATION',
+  story_10: 9,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 10,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 88.5,
+  confidence: 0.9,
+  rationale: '青春群像劇としての深い人間ドラマが心を動かす。作画は高水準だが特に突出はせず。世界観は独自性が高い。'
+}
+→ {
+  id: 330,
+  title: 'ブラック・ブレット',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 68.5,
+  confidence: 0.8,
+  rationale: 'ダークな世界観が魅力的で没入感があるが、ストーリーはやや平凡。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 331,
+  title: 'ブレイドアンドソウル',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 6,
+  score_100: 63.5,
+  confidence: 0.8,
+  rationale: '復讐譚としてのドラマはあるが、シナリオは平凡。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 332,
+  title: 'ベイビーステップ',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: 'リアルな成長物語が魅力的でemotion高め。作画は平凡だが、テンポは良好。'
+}
+→ {
+  id: 333,
+  title: '僕らはみんな河合荘',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: 'ラブコメとしてのストーリーは良好だが、特に突出した点はない。キャラクターの個性が強く、感情移入しやすいが、作画は平凡。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 334,
+  title: '魔法科高校の劣等生',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 68.5,
+  confidence: 0.8,
+  rationale: 'シナリオは興味深いが、特に新鮮さに欠ける。作画は良好で、音楽もシーンを盛り上げるが、感情的な深みはやや不足。'
+}
+→ {
+  id: 335,
+  title: 'マンガ家さんとアシスタントさんと',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 60,
+  confidence: 0.7,
+  rationale: 'コメディ要素は楽しめるが、ストーリーやキャラクターの深みは薄い。テンポは良く、短尺で気軽に見やすい。'
+}
+→ {
+  id: 336,
+  title: 'メカクシティアクターズ',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 72,
+  confidence: 0.8,
+  rationale: '群像劇としてのストーリーは面白いが、全体的にやや散漫。作画は独特で魅力的だが、テンポが時折ダレる。音楽は雰囲気を引き立てるが、特に印象的ではない。'
+}
+→ {
+  id: 337,
+  title: '龍ヶ嬢七々々の埋蔵金',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 63,
+  confidence: 0.8,
+  rationale: '宝探しのテーマは面白いが、ストーリーは平凡で深みが不足。作画は良好でテンポも良いが、感情的なインパクトは弱め。'
+}
+→ {
+  id: 338,
+  title: 'アオハライド',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 77,
+  confidence: 0.8,
+  rationale: '恋愛要素が強く、感情が動かされる描写が多い。作画は良好だが、世界観は一般的な青春ものに留まる。'
+}
+→ {
+  id: 339,
+  title: 'アカメが斬る！',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: '仲間との絆や運命に抗うテーマが感情を引き出す。作画は良好だが特筆すべき点は少なく、音楽は平凡。'
+}
+→ {
+  id: 340,
+  title: 'アルドノア・ゼロ',
+  story_10: 9,
+  animation_10: 8,
+  world_10: 6,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 10,
+  score_100: 79.5,
+  confidence: 0.9,
+  rationale: 'ストーリーは戦術的で引き込まれるが、世界観は一般的な宇宙戦争に留まる。音楽は非常に効果的で感情を高める。'
+}
+→ {
+  id: 341,
+  title: 'グラスリップ',
+  story_10: 5,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 6,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 63.5,
+  confidence: 0.8,
+  rationale: '青春ドラマとしての雰囲気は良いが、ストーリーは掴みどころが少なく平凡。作画はP.A.WORKSらしく高水準。音楽は感情を引き立てるが、全体的に印象が薄い。'
+}
+→ {
+  id: 342,
+  title: '月刊少女野崎くん',
+  story_10: 7,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 8,
+  tempo_10: 9,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: 'コメディ要素が強く、テンポが良い。ストーリーは面白いが深みは薄め。感情移入しやすいが、世界観は一般的。'
+}
+→ {
+  id: 343,
+  title: 'さばげぶっ!',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 61,
+  confidence: 0.8,
+  rationale: 'ギャグが中心でストーリーは薄め。テンポは良く、笑いの要素が強いが、音楽は印象に残らない。'
+}
+→ {
+  id: 344,
+  title: '精霊使いの剣舞',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: '王道の学園ファンタジーでストーリーは平凡。作画は可もなく不可もなく。テンポは良いが感情に訴える要素が弱い。'
+}
+→ {
+  id: 345,
+  title: '東京喰種 トーキョーグール',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 80,
+  confidence: 0.9,
+  rationale: 'シナリオは人間と喰種の葛藤を描き深いが、展開にやや平凡さも。世界観は独特で没入感が高い。音楽が感情を引き立てる。'
+}
+→ {
+  id: 346,
+  title: '東京ESP',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 59.5,
+  confidence: 0.8,
+  rationale: '能力アクションとしては楽しめるが、ストーリーやキャラクターの深みが不足。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 347,
+  title: 'ばらかもん',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '心温まる成長物語でemotion高め。作画は良いが特別ではない。世界観は田舎の癒しが感じられ、テンポも良好。'
+}
+→ {
+  id: 348,
+  title: 'Fate/kaleid liner プリズマ☆イリヤ ツヴァイ!',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 66,
+  confidence: 0.8,
+  rationale: 'ストーリーは続編としての強化が見られるが、特に目新しさは薄い。作画は良好だが特出した点は少ない。テンポは良く、音楽もシーンに合っている。'
+}
+→ {
+  id: 349,
+  title: '普通の女子校生が【ろこどる】やってみた。',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61,
+  confidence: 0.8,
+  rationale: '日常系のストーリーは平凡だが、等身大の青春を描いている。作画は平凡で、音楽も特に印象的ではないが、テンポは良好。'
+}
+→ {
+  id: 350,
+  title: 'RAIL WARS!',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 5,
+  emotion_10: 4,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 50.5,
+  confidence: 0.7,
+  rationale: '軽めのアクションとコメディでストーリーは平凡。作画は可もなく不可もなく。テンポは良いが感情を動かす要素は弱い。'
+}
+→ {
+  id: 351,
+  title: '六畳間の侵略者!?',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: 'キャラの掛け合いは楽しめるが、ストーリーは平凡で感情移入が薄い。テンポは良好だが、音楽や世界観は特筆すべき点が少ない。'
+}
+→ {
+  id: 352,
+  title: '暁のヨナ',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '姫の成長と仲間集めの物語が感情を動かす。作画は良いが特別ではない。世界観はファンタジーとして魅力的。'
+}
+→ {
+  id: 353,
+  title: '甘城ブリリアントパーク',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: 'テーマパーク再建のストーリーは面白いが特別な深みはない。作画は高水準で、感情の盛り上がりも良好。'
+}
+→ {
+  id: 354,
+  title: '異能バトルは日常系のなかで',
+  story_10: 6,
+  animation_10: 8,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 66.5,
+  confidence: 0.8,
+  rationale: 'キャラの会話や関係性が楽しめるが、ストーリーは平凡。作画はTRIGGERらしく高水準で、テンポも良好。'
+}
+→ {
+  id: 355,
+  title: '失われた未来を求めて',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 64,
+  confidence: 0.8,
+  rationale: 'シナリオは興味深いが、深みが不足。作画は良好だが特筆すべき点は少ない。感情移入はできるが、強い印象には欠ける。'
+}
+→ {
+  id: 356,
+  title: 'オオカミ少女と黒王子',
+  story_10: 6,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 66.5,
+  confidence: 0.8,
+  rationale: '学園恋愛のテーマは一般的だが、キャラクターの駆け引きが面白い。作画は平凡で音楽も印象に残らないが、テンポは良好。'
+}
+→ {
+  id: 357,
+  title: '俺、ツインテールになります。',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 59.5,
+  confidence: 0.7,
+  rationale: 'バトルとコメディの要素は楽しめるが、ストーリーは平凡で深みが不足。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 358,
+  title: 'ガールフレンド(仮)',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: '日常系の群像劇で深みは薄いが、気軽に楽しめる。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 359,
+  title: '寄生獣 セイの格率',
+  story_10: 9,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 83.5,
+  confidence: 0.9,
+  rationale: '緊迫したストーリー展開が魅力的で、テーマも深い。作画は高水準だが、時折平凡さも感じる。音楽が感情を引き立てる。'
+}
+→ {
+  id: 360,
+  title: 'グリザイアの果実',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: 'トラウマを抱えたキャラクターたちの物語は感情的で引き込まれるが、テンポがややダレる部分がある。作画は平凡で、音楽はシーンを盛り上げるが特別な印象は薄い。'
+}
+→ {
+  id: 361,
+  title: 'クロスアンジュ 天使と竜の輪舞',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 72,
+  confidence: 0.8,
+  rationale: '差別と反逆をテーマにしたストーリーは興味深いが、展開にやや平凡さを感じる。作画は良好で、音楽もシーンを盛り上げるが、テンポが時折ダレる。'
+}
+→ {
+  id: 362,
+  title: '四月は君の嘘',
+  story_10: 9,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 10,
+  tempo_10: 8,
+  music_10: 9,
+  score_100: 88.5,
+  confidence: 0.9,
+  rationale: '感動的な成長物語でemotion10。音楽が重要な役割を果たし、musicも高評価。作画は良いが特別ではない。'
+}
+→ {
+  id: 363,
+  title: 'SHIROBAKO',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.9,
+  rationale: 'アニメ制作のリアルな描写が感情を動かし、成長物語としても魅力的。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 364,
+  title: '天体のメソッド',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 72,
+  confidence: 0.8,
+  rationale: 'シナリオは感情の回収が良いが、やや平凡。作画は高水準で、世界観も魅力的。テンポは少しダレる部分がある。'
+}
+→ {
+  id: 365,
+  title: '旦那が何を言っているかわからない件',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 62.5,
+  confidence: 0.8,
+  rationale: 'コメディとしての軽快さはあるが、ストーリーや作画は平凡。感情移入はできるが、特に印象的な要素は少ない。'
+}
+→ {
+  id: 366,
+  title: 'トリニティセブン',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 59.5,
+  confidence: 0.8,
+  rationale: 'ストーリーはバトルと掛け合いが中心で平凡。作画は良好だが特筆すべき点は少ない。感情的な深みは薄く、テンポは良好。'
+}
+→ {
+  id: 367,
+  title: 'Fate/stay night [Unlimited Blade Works]',
+  story_10: 9,
+  animation_10: 10,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 9,
+  score_100: 88,
+  confidence: 0.9,
+  rationale: 'シナリオは深く、正義のテーマが強く描かれている。作画はufotableの最高峰で、戦闘シーンが特に印象的。音楽も感情を引き立てるが、世界観はやや一般的。'
+}
+→ {
+  id: 368,
+  title: '残響のテロル',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 9,
+  score_100: 81,
+  confidence: 0.8,
+  rationale: '社会派サスペンスとしてのテーマが強く、音楽が感情を増幅。作画は良いが特別ではない。'
+}
+→ {
+  id: 369,
+  title: 'まじっく快斗1412',
+  story_10: 7,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 69.5,
+  confidence: 0.8,
+  rationale: 'トリックや駆け引きが楽しめるが、感情的な深みはやや不足。作画は安定しているが特筆すべき点は少ない。'
+}
+→ {
+  id: 370,
+  title: '魔弾の王と戦姫',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 6,
+  score_100: 58.5,
+  confidence: 0.8,
+  rationale: 'ストーリーは戦記ファンタジーとしては平凡で、感情的な深みが不足。作画は良好だが特別ではない。'
+}
+→ {
+  id: 371,
+  title: '結城友奈は勇者である',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 80.5,
+  confidence: 0.85,
+  rationale: '仲間の絆と喪失の感情描写が強く、心を動かされる。作画は良いが特に突出はしない。'
+}
+→ {
+  id: 372,
+  title: 'ワールドトリガー（1stシーズン）',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71,
+  confidence: 0.8,
+  rationale: '戦術や連携がテーマで面白いが、ストーリーはやや平凡。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 373,
+  title: 'アイドルマスター シンデレラガールズ',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: '群像劇としての成長物語は良いが、独自性はやや弱い。作画と音楽は高水準で感情を引き立てる。'
+}
+→ {
+  id: 374,
+  title: 'アブソリュート・デュオ',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 62,
+  confidence: 0.8,
+  rationale: '学園バトルとラブコメの要素はあるが、ストーリーは平凡で感情的な深みが不足。作画は良好だが特筆すべき点は少ない。'
+}
+→ {
+  id: 375,
+  title: '暗殺教室（第1期）',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '教育と自己肯定の物語が感動的でemotion高め。作画は良いが特別ではない。テンポも良好でダレずに視聴できる。'
+}
+→ {
+  id: 376,
+  title: '艦隊これくしょん -艦これ-',
+  story_10: 6,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 6,
+  score_100: 59.5,
+  confidence: 0.7,
+  rationale: 'キャラクターと雰囲気重視だが、ストーリーは平凡で感情移入が弱い。作画は可もなく不可もなく。'
+}
+→ {
+  id: 377,
+  title: '幸腹グラフィティ',
+  story_10: 6,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70,
+  confidence: 0.8,
+  rationale: '料理を通じた心の距離感が良いが、ストーリーは平凡。作画はシャフトらしい独特なスタイルで高評価。'
+}
+→ {
+  id: 378,
+  title: '冴えない彼女の育てかた',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 72.5,
+  confidence: 0.8,
+  rationale: 'ラブコメとしてのストーリーは良好だが、特に突出した点はない。作画は安定しており、感情描写も効果的だが、音楽は平凡。'
+}
+→ {
+  id: 379,
+  title: '銃皇無尽のファフニール',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 5,
+  emotion_10: 4,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 49.5,
+  confidence: 0.7,
+  rationale: 'ストーリーは平凡であり、特に印象的な要素が少ない。作画は可もなく不可もなく、音楽も特に感情を高めるものではない。'
+}
+→ {
+  id: 380,
+  title: '純潔のマリア',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 79,
+  confidence: 0.8,
+  rationale: 'シナリオは戦争と信仰のテーマを深く掘り下げており、感情的な描写も多い。作画は良好だが、特に突出した点はない。世界観は独自性が高く、没入感を与える。'
+}
+→ {
+  id: 381,
+  title: '新妹魔王の契約者',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: 'ストーリーはバトルとサービス重視で平凡。作画は良いが特筆すべき点は少ない。世界観は一般的なファンタジーで独自性に欠ける。'
+}
+→ {
+  id: 382,
+  title: '聖剣使いの禁呪詠唱＜ワールドブレイク＞',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 5,
+  score_100: 54,
+  confidence: 0.7,
+  rationale: '異能バトルとしては平凡なストーリーで、感情的な深みが不足。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 384,
+  title: '夜ノヤッターマン',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70,
+  confidence: 0.8,
+  rationale: '復讐と旅の要素がドラマを生むが、シナリオはやや平凡。世界観は魅力的で、子ども向け以上の深みがある。'
+}
+→ {
+  id: 385,
+  title: '食戟のソーマ（第1期）',
+  story_10: 7,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 8,
+  tempo_10: 9,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: '料理対決の構成が魅力的でテンポが良い。ストーリーは面白いが深みには欠ける。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 386,
+  title: '終わりのセラフ（第1期）',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 72,
+  confidence: 0.8,
+  rationale: 'ダークファンタジーの設定が魅力的で、戦闘シーンも良好。ストーリーは復讐がテーマだが、やや平凡な印象。テンポは時折ダレる部分がある。'
+}
+→ {
+  id: 387,
+  title: 'ガンスリンガー ストラトス -THE ANIMATION-',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 6,
+  music_10: 7,
+  score_100: 59.5,
+  confidence: 0.7,
+  rationale: 'ストーリーはバトル中心で平凡。作画は良好だが特筆すべき点は少ない。音楽はシーンを盛り上げるが、感情的な深みは不足。'
+}
+→ {
+  id: 388,
+  title: '境界のRINNE（第1シリーズ）',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61,
+  confidence: 0.8,
+  rationale: 'ストーリーはゆるいコメディで楽しめるが、深みは薄い。作画は平凡で、音楽も特に印象に残らない。'
+}
+→ {
+  id: 389,
+  title: '血界戦線',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 9,
+  music_10: 8,
+  score_100: 80.5,
+  confidence: 0.8,
+  rationale: '異界と日常が交錯する独特の世界観が魅力的で高評価。ストーリーは面白いがやや平凡な部分も。テンポが良く、音楽もシーンを引き立てている。'
+}
+→ {
+  id: 390,
+  title: 'ダンジョンに出会いを求めるのは間違っているだろうか（第1期）',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: '王道の冒険ストーリーで楽しめるが、特に新しさは感じられない。作画は安定しているが特筆すべき点は少ない。'
+}
+→ {
+  id: 391,
+  title: '電波教師',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 62,
+  confidence: 0.8,
+  rationale: 'ストーリーは軽いノリで見やすいが深みは薄い。作画は良好だが特筆すべき点は少ない。テンポは良く、視聴ストレスは少ない。'
+}
+→ {
+  id: 392,
+  title: 'トリアージX',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 55,
+  confidence: 0.7,
+  rationale: 'ストーリーは刺激的だが深みが薄く、感情的な引きも弱い。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 393,
+  title: 'パンチライン',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 67.5,
+  confidence: 0.8,
+  rationale: 'ギャグとSFの融合が面白いが、ストーリーの深みはやや不足。作画は良好で、テンポも悪くないが感情的なインパクトは弱め。'
+}
+→ {
+  id: 394,
+  title: '響け！ユーフォニアム（第1期）',
+  story_10: 8,
+  animation_10: 9,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 8,
+  music_10: 9,
+  score_100: 84.5,
+  confidence: 0.9,
+  rationale: '青春と部活のリアルな描写が感情を揺さぶる。作画と音楽のクオリティが高く、テンポも良好。'
+}
+→ {
+  id: 395,
+  title: 'プラスティック・メモリーズ',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 80.5,
+  confidence: 0.9,
+  rationale: '感動的なテーマと恋愛要素が強く、心を動かす描写が多い。作画は良いが特別優れた点は少ない。'
+}
+→ {
+  id: 397,
+  title: '山田くんと7人の魔女',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 71.5,
+  confidence: 0.8,
+  rationale: '体入れ替わりの設定が面白く、恋愛要素が楽しめる。テンポも良いが、作画や音楽は平凡。'
+}
+→ {
+  id: 398,
+  title: '青春×機関銃',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: 'サバゲーをテーマにした青春物語は面白いが、ストーリーは平凡。作画は良いが特筆すべき点は少ない。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 399,
+  title: '赤髪の白雪姫（第1期）',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 8,
+  music_10: 7,
+  score_100: 74.5,
+  confidence: 0.8,
+  rationale: '恋愛と自立をテーマにしたストーリーは魅力的だが、特に突出した点はない。作画は良好で、感情的なシーンも多いが、音楽はやや平凡。'
+}
+→ {
+  id: 400,
+  title: 'うしおととら（第1期）',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 70.5,
+  confidence: 0.8,
+  rationale: '王道の熱いバトルが展開されるが、ストーリーはやや平凡。感情的な描写が強く、テンポも良好。作画は平均的。'
+}
+→ {
+  id: 401,
+  title: 'オーバーロード（第1期）',
+  story_10: 8,
+  animation_10: 9,
+  world_10: 9,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 8,
+  score_100: 80.5,
+  confidence: 0.85,
+  rationale: '異世界転移の設定が魅力的で、主人公の強さが物語を引き立てる。作画は高水準で、音楽もシーンを盛り上げるが、感情の動きはやや控えめ。'
+}
+→ {
+  id: 402,
+  title: 'おくさまが生徒会長！',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 5,
+  emotion_10: 6,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 56.5,
+  confidence: 0.7,
+  rationale: 'ラブコメとしては平凡なストーリーだが、テンポは良好。作画や音楽は特筆すべき点が少ない。'
+}
+→ {
+  id: 403,
+  title: 'がっこうぐらし！',
+  story_10: 8,
+  animation_10: 7,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 79,
+  confidence: 0.8,
+  rationale: 'シナリオは日常とサバイバルの対比が効いており高評価。世界観は独特で没入感があるが、作画は平凡。'
+}
+→ {
+  id: 404,
+  title: 'GANGSTA.',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 9,
+  emotion_10: 8,
+  tempo_10: 7,
+  music_10: 7,
+  score_100: 77.5,
+  confidence: 0.8,
+  rationale: '裏社会のリアルな描写が魅力的で、世界観が強い。ストーリーは良いが、やや暗さが強調されすぎている印象。'
+}
+→ {
+  id: 405,
+  title: '空戦魔導士候補生の教官',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 5,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 56.5,
+  confidence: 0.7,
+  rationale: '王道的な展開で新鮮味に欠けるが、軽快なテンポで視聴しやすい。作画や音楽は平凡で特筆すべき点が少ない。'
+}
+→ {
+  id: 406,
+  title: 'GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり',
+  story_10: 7,
+  animation_10: 6,
+  world_10: 8,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 6,
+  score_100: 67.5,
+  confidence: 0.8,
+  rationale: '異世界と現代軍事の交渉が面白いが、ストーリーはやや平凡。作画は良いが特筆すべき点は少ない。'
+}
+→ {
+  id: 407,
+  title: 'ケイオスドラゴン 赤竜戦役',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 5,
+  music_10: 6,
+  score_100: 60,
+  confidence: 0.7,
+  rationale: 'シナリオは重いテーマを扱っているが、展開が平凡で感情移入が弱い。作画は平均的で、世界観は良いが特別感は薄い。'
+}
+→ {
+  id: 408,
+  title: '実は私は',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 5,
+  score_100: 62.5,
+  confidence: 0.7,
+  rationale: 'ラブコメとしての楽しさはあるが、ストーリーや作画は平凡。テンポは良く、視聴しやすいが、音楽は特に印象に残らない。'
+}
+→ {
+  id: 409,
+  title: '下ネタという概念が存在しない退屈な世界',
+  story_10: 6,
+  animation_10: 5,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 61,
+  confidence: 0.7,
+  rationale: 'テーマはユニークだがストーリーは平凡。作画は普通で、世界観は面白いが独自性は弱め。'
+}
+→ {
+  id: 410,
+  title: 'Charlotte(シャーロット)',
+  story_10: 7,
+  animation_10: 8,
+  world_10: 7,
+  emotion_10: 9,
+  tempo_10: 7,
+  music_10: 8,
+  score_100: 77,
+  confidence: 0.8,
+  rationale: '感情の起伏が強く、特に後半の展開が印象的でemotion高め。ストーリーは良いがやや平凡な部分もあり。'
+}
+→ {
+  id: 411,
+  title: '城下町のダンデライオン',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: '家族コメディとして安心感があるが、ストーリーは平凡。作画は良いが特筆すべき点は少ない。テンポは良好で視聴しやすい。'
+}
+→ {
+  id: 412,
+  title: 'ビキニ・ウォリアーズ',
+  story_10: 3,
+  animation_10: 5,
+  world_10: 6,
+  emotion_10: 4,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 46.5,
+  confidence: 0.7,
+  rationale: 'ギャグとサービス重視のためストーリーは薄い。作画は平凡だが、テンポは良好。世界観はファンタジーとしては一般的。'
+}
+→ {
+  id: 413,
+  title: '干物妹！うまるちゃん',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 6,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 65.5,
+  confidence: 0.8,
+  rationale: '日常コメディとしての楽しさはあるが、ストーリーは平凡。テンポは良く、ながら見に適しているが、音楽や世界観は特に印象的ではない。'
+}
+→ {
+  id: 414,
+  title: '監獄学園(プリズンスクール)',
+  story_10: 6,
+  animation_10: 7,
+  world_10: 8,
+  emotion_10: 7,
+  tempo_10: 8,
+  music_10: 6,
+  score_100: 69.5,
+  confidence: 0.8,
+  rationale: 'ギャグと狂気のバランスが良いが、ストーリーはやや単調。作画は良好で、世界観は独特で没入感がある。'
+}
+→ {
+  id: 415,
+  title: 'モンスター娘のいる日常',
+  story_10: 5,
+  animation_10: 6,
+  world_10: 7,
+  emotion_10: 6,
+  tempo_10: 7,
+  music_10: 5,
+  score_100: 59.5,
+  confidence: 0.8,
+  rationale: '設定は面白いがストーリーは平凡。作画は良いが特筆すべき点は少ない。テンポは良好で視聴しやすい。'
+}
+🎉 done
+===== END step5-ai-score10 2026/02/09 22:15:14.56 ===== 

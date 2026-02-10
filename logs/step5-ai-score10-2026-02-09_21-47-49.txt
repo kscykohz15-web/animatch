@@ -1,0 +1,13 @@
+===== START step5-ai-score10 2026/02/09 21:47:49.16 ===== 
+file:///C:/Users/kouhe/Desktop/animatch-work/animatch/scripts/step5-ai-score10-fill-empty.mjs:22
+if (!SUPABASE_URL || !SERVICE_ROLE) throw new Error("Missing SUPABASE env");
+                                          ^
+
+Error: Missing SUPABASE env
+    at file:///C:/Users/kouhe/Desktop/animatch-work/animatch/scripts/step5-ai-score10-fill-empty.mjs:22:43
+    at ModuleJob.run (node:internal/modules/esm/module_job:413:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:660:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.12.0
+===== END step5-ai-score10 2026/02/09 21:47:49.45 ===== 

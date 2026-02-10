@@ -1,0 +1,22 @@
+===== START 2026/02/07  3:20:31.13 ===== 
+[env] LIMIT=5000 OFFSET=0 ONLY_MISSING= STALE_DAYS= 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ enqueue official_vod_3 {
+  LIMIT: 5000,
+  OFFSET: 0,
+  ONLY_MISSING: false,
+  STALE_DAYS: 7,
+  PROTECT_MANUAL: true
+}
+🎉 投入完了: 3000 件
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ worker official_vod_3 start {
+  WORKER_ID: 'official3-weekly',
+  LOOP_LIMIT: 5000,
+  HEADLESS: true,
+  ONLY_MISSING: false,
+  UNKNOWN_AS_FALSE: true
+}
+🟡 queue empty (official_vod_3)
+🎉 worker official_vod_3 end { processed: 0 }
+===== END 2026/02/07  5:09:34.13 ===== 
