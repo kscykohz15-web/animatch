@@ -1,0 +1,23 @@
+===== START 2026/02/11  7:28:07.16 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\old\step5-fill-tempo-music-depression-until-done.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ start {
+  BATCH_LIMIT: 50,
+  LOOP_MAX: 999999,
+  ROW_RETRY_MAX: 3,
+  DRY_RUN: false,
+  MIN_INTERVAL_MS: 1200,
+  MODEL: 'gpt-4o-mini'
+}
+
+===== loop=1 remaining_nulls=4231 =====
+→ {
+  id: 213,
+  title: '魔乳秘剣帖',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'アクション中心でテンポは中程度。音楽は効果的だが特に突出していない。明るい要素が強い。'
+}
+^C

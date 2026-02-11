@@ -1,0 +1,4525 @@
+===== START 2026/02/10 22:28:29.75 ===== 
+RUNNING: C:\Users\kouhe\Desktop\animatch-work\animatch\bat\old\step5-fill-tempo-music-depression-all.bat 
+[dotenv@17.2.3] injecting env (12) from .env.local -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ step5-ai-fill-tempo-music-depression-all start {
+  BATCH_LIMIT: 100,
+  MAX_WORKS: 500,
+  DRY_RUN: true,
+  MODEL: 'gpt-4o-mini',
+  MIN_INTERVAL_MS: 1200,
+  STATE_PATH: 'C:\\Users\\kouhe\\Desktop\\animatch-work\\animatch\\scripts\\state\\tempo_music_depression_state.json',
+  state: { last_id: 0, failed_ids: [] }
+}
+
+===== batch after_id=0 size=100 =====
+→ {
+  id: 213,
+  title: '魔乳秘剣帖',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポはアクションが中心でダレることは少ないが、全体的に軽快さは欠ける。音楽は特に印象的ではなく、鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 214,
+  title: '魔法少女まどか☆マギカ',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 9,
+  confidence: 0.9,
+  rationale: 'テンポは中盤にかけてややダレるが、全体的には良好。音楽は感情を強く引き立て、鬱度は非常に高い。'
+}
+→ {
+  id: 215,
+  title: 'まよチキ!',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレることは少ない。音楽は平凡で、感情の増幅には寄与しない。全体的に明るい雰囲気で鬱度は低め。'
+}
+→ {
+  id: 216,
+  title: '輪るピングドラム',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 7,
+  confidence: 0.8,
+  rationale: 'テンポはややダレ気味で6。音楽は感情を強く引き立てるため9。物語の重さから鬱度は7。'
+}
+→ {
+  id: 217,
+  title: '未来日記',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 218,
+  title: '夢喰いメリー',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は雰囲気を盛り上げる。暗さは軽めで救いもある。'
+}
+→ {
+  id: 219,
+  title: 'ゆるゆり',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いているわけではない。全体的に明るく軽い内容。'
+}
+→ {
+  id: 220,
+  title: '+チック姉さん',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'ハイテンポのギャグアニメでダレることは少ない。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 221,
+  title: '放課後のプレアデス',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは穏やかでダレる部分もあり、音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 222,
+  title: 'アクセル・ワールド',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。鬱度は軽めの暗さがあるが、救いも感じられる。'
+}
+→ {
+  id: 223,
+  title: 'Another',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は効果的に感情を引き立てている。鬱度は高く、救いのない展開が続く。'
+}
+→ {
+  id: 224,
+  title: 'あの夏で待ってる',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポはゆったりしており、ダレる部分もある。音楽は感情を引き立てるが、特に突出してはいない。鬱度は軽めで、明るい青春の要素が強い。'
+}
+→ {
+  id: 225,
+  title: '妖狐×僕SS',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレる部分があるが、全体的にはスムーズ。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は軽めの暗さが感じられる。'
+}
+→ {
+  id: 226,
+  title: '宇宙兄弟',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 227,
+  title: 'エリアの騎士',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好で視聴ストレスは少ない。音楽は普通に効くが特別ではない。鬱度は軽めの挫折と成長を描いているため。'
+}
+→ {
+  id: 228,
+  title: '織田信奈の野望',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で効きは少なめ。全体的に明るい雰囲気で鬱度は低い。'
+}
+→ {
+  id: 229,
+  title: 'お兄ちゃんだけど愛さえあれば関係ないよねっ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は特に印象的ではないが、ラブコメとしては適切。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 230,
+  title: 'ガールズ&パンツァー',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も効果的だが突出はしない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 231,
+  title: 'カンピオーネ!',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは良く回るが、音楽は平凡。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 232,
+  title: '銀河へキックオフ!!',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレることなく進行。音楽は普通で感情の増幅は控えめ。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 233,
+  title: 'キルミーベイベー',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進むため8。音楽は日常系としては平凡で5。鬱度はほぼ無しで1。'
+}
+→ {
+  id: 234,
+  title: '黒子のバスケ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 235,
+  title: 'K',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレる部分があるが、全体的には良好。音楽は雰囲気を盛り上げるが、特に突出してはいない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 236,
+  title: '恋と選挙とチョコレート',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は平凡で、感情の増幅にはあまり寄与しない。ストーリーは軽めの暗さがある。'
+}
+→ {
+  id: 237,
+  title: 'ココロコネクト',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 238,
+  title: '坂道のアポロン',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあるが、演奏シーンが多く感情が強い。音楽は非常に効いており、鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 239,
+  title: 'さくら荘のペットな彼女',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレる部分があるが、全体的には良好。音楽は感情を引き立てるが、突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 240,
+  title: 'さんかれあ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが突出はしない。鬱度は中程度で、切なさとブラックさが共存している。'
+}
+→ {
+  id: 241,
+  title: 'ジョジョの奇妙な冒険',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポはスピーディでダレが少ない。音楽は非常に効果的で感情を高める。鬱度は低めで明るさがある。'
+}
+→ {
+  id: 242,
+  title: '人類は衰退しました',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は効果的だが突出はしない。鬱度は低めでユーモアが強い。'
+}
+→ {
+  id: 243,
+  title: '好きっていいなよ。',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で効きは少なめ。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 244,
+  title: '絶園のテンペスト',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは会話中心でややダレる部分があるため6。音楽は物語を引き立てるが突出はしないため7。鬱度は復讐と悲劇のテーマから中程度の5。'
+}
+→ {
+  id: 245,
+  title: 'ソードアート・オンライン',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は感情を引き立てるが、突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 246,
+  title: '戦姫絶唱シンフォギア',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポはライブ感が強く、ダレることは少ない。音楽は感情を高める要素が強い。鬱度は軽めの暗さがあるが、全体的には明るい印象。'
+}
+→ {
+  id: 247,
+  title: 'だから僕は、Hができない。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で、感情の増幅には寄与しない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 248,
+  title: 'TARI TARI',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポはややゆっくりでダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。鬱度は軽めで、感動的な要素が強い。'
+}
+→ {
+  id: 249,
+  title: '黄昏乙女×アムネジア',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は重めで救いが少ない。'
+}
+→ {
+  id: 250,
+  title: '男子高校生の日常',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は普通で特に効くわけではない。鬱度はほぼ無しの明るい作品。'
+}
+→ {
+  id: 251,
+  title: '中二病でも恋がしたい！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は低く、明るい雰囲気が強い。'
+}
+→ {
+  id: 252,
+  title: 'となりの怪物くん',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く、視聴ストレスは少ない。音楽は感情を高めるが、特に突出した印象はない。鬱度は低めで、明るい青春恋愛の要素が強い。'
+}
+→ {
+  id: 253,
+  title: 'ハイスクールD×D',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に効いているわけではない。ストーリーは軽めで鬱度は低い。'
+}
+→ {
+  id: 254,
+  title: '這いよれ！ ニャル子さん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは速く、視聴ストレスは少ない。音楽はパロディに合った軽いもので、感情の増幅はあまりない。鬱度はほぼ無し。'
+}
+→ {
+  id: 255,
+  title: 'はぐれ勇者の鬼畜美学',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は平凡で特に効いているわけではない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 256,
+  title: 'パパのいうことを聞きなさい！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレず、音楽は感情に効くが突出はしない。鬱度は低めで明るいコメディ要素が強い。'
+}
+→ {
+  id: 257,
+  title: '氷菓',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 258,
+  title: 'BTOOOM!',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は効果的に感情を引き立てている。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 259,
+  title: 'マギ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。暗さは軽めで、救いの要素も存在する。'
+}
+→ {
+  id: 260,
+  title: 'めだかボックス',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポはテンポ良く進むが、バトル要素でややダレる部分も。音楽は普通で、感情の増幅には寄与しない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 261,
+  title: 'ヨルムンガンド',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは良好でストレス少なめ。音楽は効果的だが突出はしない。テーマは重めで中程度の鬱度。'
+}
+→ {
+  id: 262,
+  title: 'リトルバスターズ!',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語は重いテーマを扱い、救いが少ない部分がある。'
+}
+→ {
+  id: 263,
+  title: 'アウトブレイク・カンパニー 萌える侵略者',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で、感情の増幅はあまり感じられない。鬱度は軽めで明るい雰囲気。'
+}
+→ {
+  id: 264,
+  title: '惡の華',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポはややダレ気味で6。音楽は感情を引き立てるが突出はせず7。鬱度は強く、救いが少ないため8。'
+}
+→ {
+  id: 265,
+  title: '犬とハサミは使いよう',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進むため8。音楽は平凡で特に効いているわけではないため5。ストーリーは明るく軽いコメディなので鬱度は1。'
+}
+→ {
+  id: 266,
+  title: '有頂天家族',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは会話中心でややゆったり。音楽は情緒を高めるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 267,
+  title: '俺の脳内選択肢が、学園ラブコメを全力で邪魔している',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で、感情の増幅はあまり感じられない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 268,
+  title: '俺の彼女と幼なじみが修羅場すぎる',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは会話の勢いで進むため高め。音楽は平凡で、鬱度は軽めのラブコメに適している。'
+}
+→ {
+  id: 269,
+  title: '革命機ヴァルヴレイヴ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは勢いがあるが、時折ダレる部分もあり。音楽は感情を引き立てるが、特に突出した印象はない。ストーリーには重いテーマが含まれている。'
+}
+→ {
+  id: 270,
+  title: '神さまのいない日曜日',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは静かでダレる部分もあり、6と評価。音楽は感情を引き立てるため8。物語のテーマから鬱度は高めで7と判断。'
+}
+→ {
+  id: 271,
+  title: '君のいる町',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポはややダレ気味で6。音楽は感情を引き立てるが突出はせず7。ストーリーはすれ違いの痛さがあり、中程度の鬱度で5。'
+}
+→ {
+  id: 272,
+  title: '境界の彼方',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレる部分があるが、全体的には良好。音楽は感情を盛り上げる要素が強い。暗さは軽めで救いもある。'
+}
+→ {
+  id: 273,
+  title: 'キルラキル',
+  tempo_10: 9,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは非常に速く、視聴ストレスは少ない。音楽は良いが、特に突出しているわけではない。暗さは軽めで、明るい要素が強い。'
+}
+→ {
+  id: 274,
+  title: '銀の匙 Silver Spoon',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが突出はしない。鬱度は軽めで、感動的な要素が強い。'
+}
+→ {
+  id: 275,
+  title: 'ゴールデンタイム',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあるが、全体的には流れが良い。音楽は感情を引き立てるが、特に突出した印象はない。過去の揺れがあるため、軽めの暗さが感じられる。'
+}
+→ {
+  id: 276,
+  title: '琴浦さん',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは序盤の落差からの回復があるため、ややダレ気味。音楽は感情を引き立てるが、突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 277,
+  title: 'サーバント×サービス',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く、視聴ストレスは少ない。音楽は平凡で、感情の増幅は弱め。鬱度はほぼ無しで明るいコメディ。'
+}
+→ {
+  id: 279,
+  title: 'ストライク・ザ・ブラッド',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは良く、事件が続くため8。音楽は平凡で5。暗さは軽めで3。'
+}
+→ {
+  id: 280,
+  title: 'ダイヤのA',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: '試合の熱量が強く、テンポは良好。音楽は感情を高めるが、突出した印象はない。ストーリーには挫折があるが、全体的には明るい。'
+}
+→ {
+  id: 281,
+  title: 'ダンガンロンパ 希望の学園と絶望の高校生 The Animation',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.9,
+  rationale: 'テンポは重視されており、視聴ストレスは少ない。音楽は効果的だが突出はしない。物語の重さは中程度で救いが少ない。'
+}
+→ {
+  id: 282,
+  title: 'デート・ア・ライブ',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'ラブコメ要素が強く、視聴しやすい。テンポは良好で、音楽は普通。鬱度は低め。'
+}
+→ {
+  id: 283,
+  title: '東京レイヴンズ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は効果的だが突出はしない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 284,
+  title: '凪のあすから',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポはややダレがあるが、音楽は感情を強く増幅している。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 285,
+  title: 'はたらく魔王さま！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で特に効いているわけではない。全体的に明るく軽い内容。'
+}
+→ {
+  id: 286,
+  title: 'Fate/kaleid liner プリズマ☆イリヤ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが特に突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 287,
+  title: 'フォトカノ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '恋愛作品で軽めの内容。テンポは良好で、音楽は普通。鬱度は低い。'
+}
+→ {
+  id: 288,
+  title: '変態王子と笑わない猫。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあるが、全体的にはスムーズ。音楽は感情を引き立てるが、特に突出した印象はない。ストーリーには軽めの暗さがある。'
+}
+→ {
+  id: 289,
+  title: 'まおゆう魔王勇者',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは政治経済パートが中心でややダレる部分があるため6。音楽は感情を引き立てるが突出した印象はないため7。テーマの暗さから軽めの鬱度を4と評価。'
+}
+→ {
+  id: 290,
+  title: '機巧少女は傷つかない',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはバトル中心でややダレる部分があるため6。音楽は雰囲気を盛り上げるが突出はしないため7。鬱度は軽めの暗さがあるが、救いもあるため4。'
+}
+→ {
+  id: 291,
+  title: '問題児たちが異世界から来るそうですよ？',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く、視聴ストレスは少ない。音楽は平凡で、感情の増幅は弱め。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 292,
+  title: 'やはり俺の青春ラブコメはまちがっている。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは会話劇の特性上、ややダレる部分がある。音楽は感情を引き立てるが、特に突出してはいない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 293,
+  title: '勇者になれなかった俺はしぶしぶ就職を決意しました。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で特に効いている印象はない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 294,
+  title: '恋愛ラボ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良く、安心して楽しめる。音楽は普通で、感情の増幅は少ない。鬱度はほぼ無し。'
+}
+→ {
+  id: 295,
+  title: 'ラブライブ！ School idol project',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き出すが突出した印象は少ない。ストーリーは明るめで軽い暗さがある。'
+}
+→ {
+  id: 296,
+  title: '夜桜四重奏 ～ヨザクラカルテット～',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を高めるが突出はしない。暗さは軽めで救いがある。'
+}
+→ {
+  id: 297,
+  title: 'ログ・ホライズン',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレにくい。音楽は効果的だが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 298,
+  title: '私がモテないのはどう考えてもお前らが悪い!',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で、鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 299,
+  title: 'ワルキューレ ロマンツェ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で、感情の増幅は弱め。鬱度は低く、明るい雰囲気。'
+}
+→ {
+  id: 300,
+  title: 'いなり、こんこん、恋いろは。',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は良いが特に突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 301,
+  title: 'ウィッチクラフトワークス',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で、感情の増幅はあまり感じられない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 302,
+  title: 'Wake Up, Girls!',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情に刺さるが突出はしない。テーマに苦さがあるため、鬱度は軽めに暗さがある。'
+}
+→ {
+  id: 303,
+  title: '最近、妹のようすがちょっとおかしいんだが。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは比較的良好でダレにくい。音楽は普通で特に効いているわけではない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 304,
+  title: 'GJ部',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に効いているわけではない。鬱度はほぼ無しの軽いコメディ。'
+}
+→ {
+  id: 305,
+  title: '桜Trick',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 306,
+  title: 'ディーふらぐ！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るいコメディ作品。'
+}
+→ {
+  id: 307,
+  title: 'ニセコイ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で、感情の増幅は弱め。鬱度は低く、明るいラブコメのため救いが多い。'
+}
+→ {
+  id: 308,
+  title: 'となりの関くん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るいコメディ。'
+}
+→ {
+  id: 309,
+  title: 'のうりん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレることなく進行。音楽は平凡で特に効いているわけではない。全体的に明るく軽い内容。'
+}
+→ {
+  id: 310,
+  title: 'ノラガミ',
+  tempo_10: 7,
+  music_10: 8,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは適度に進行し、ダレることは少ない。音楽は感情を引き立てるが、ストーリーの暗さは軽め。'
+}
+→ {
+  id: 311,
+  title: 'バディ・コンプレックス',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は感情を引き立てるが、特に突出はしない。ストーリーには暗さがあるが、救いも存在する。'
+}
+→ {
+  id: 312,
+  title: 'ハマトラ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあるが、全体的にスムーズ。音楽は効果的で、ストーリーの緊張感を高めている。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 313,
+  title: '鬼灯の冷徹',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は効果的だが突出はしない。鬱度は軽めのブラックコメディで救いがある。'
+}
+
+===== batch after_id=313 size=100 =====
+→ {
+  id: 314,
+  title: '魔法戦争',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは普通でダレる部分もあり、音楽は平凡。ストーリーには軽めの暗さがある。'
+}
+→ {
+  id: 315,
+  title: '未確認で進行形',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で、感情の増幅には寄与しない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 316,
+  title: '悪魔のリドル',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがちで6。音楽は効果的で7。ストーリーは重めで救いが少ないため5。'
+}
+→ {
+  id: 317,
+  title: '一週間フレンズ。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポはややダレ気味で6。音楽は感情を引き立てるが突出はせず7。鬱度は軽めの暗さがあり4。'
+}
+→ {
+  id: 318,
+  title: '彼女がフラグをおられたら',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で効きは弱め。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 319,
+  title: '極黒のブリュンヒルデ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが突出はしない。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 320,
+  title: '健全ロボ ダイミダラー',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは勢いがあり、ダレることは少ない。音楽は平凡で、感情の増幅には寄与しない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 321,
+  title: 'ご注文はうさぎですか？',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレることなく進行。音楽は心地よいが、特に強く効くわけではない。鬱度はほぼ無しで明るい日常を描いている。'
+}
+→ {
+  id: 322,
+  title: 'シドニアの騎士',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は作品の緊張感を高めているが、特に突出してはいない。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 323,
+  title: '星刻の竜騎士',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は平凡で特に印象に残らない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 324,
+  title: 'selector infected WIXOSS',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語のダークさから鬱度は高め。'
+}
+→ {
+  id: 325,
+  title: 'それでも世界は美しい',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 326,
+  title: 'ノーゲーム・ノーライフ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も楽しめるが、全体的に明るい内容なので鬱度は低め。'
+}
+→ {
+  id: 327,
+  title: 'ハイキュー!!',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレることが少ない。音楽は感情を盛り上げるが突出した印象はない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 328,
+  title: '棺姫のチャイカ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは軽妙さがあるが、時折ダレる部分がある。音楽は感情を引き立てるが、特に突出してはいない。鬱度は軽めの暗さが感じられる。'
+}
+→ {
+  id: 329,
+  title: 'ピンポン THE ANIMATION',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。テーマにより中程度の鬱度を感じる。'
+}
+→ {
+  id: 330,
+  title: 'ブラック・ブレット',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。物語は非常に重く、救いが少ない。'
+}
+→ {
+  id: 331,
+  title: 'ブレイドアンドソウル',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは戦闘シーンが中心で中程度のダレ感。音楽は感情を高めるが、特に突出はしていない。物語は復讐をテーマにしており、救いが少ない部分がある。'
+}
+→ {
+  id: 332,
+  title: 'ベイビーステップ',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で感情の増幅は限定的。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 333,
+  title: '僕らはみんな河合荘',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡だが、ストーリーに寄り添う。鬱度は低く、明るい雰囲気が強い。'
+}
+→ {
+  id: 334,
+  title: '魔法科高校の劣等生',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは比較的良好でダレにくい。音楽は効果的だが突出した印象はない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 335,
+  title: 'マンガ家さんとアシスタントさんと',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良く、短尺で軽快。音楽は平凡で、ストーリーも明るいコメディなので鬱度は低い。'
+}
+→ {
+  id: 336,
+  title: 'メカクシティアクターズ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出してはいない。物語には重いテーマが含まれており、救いが少ない。'
+}
+→ {
+  id: 337,
+  title: '龍ヶ嬢七々々の埋蔵金',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '軽快で見やすい作品でテンポは良好。音楽は平凡寄りで、鬱度はほぼ無し。'
+}
+→ {
+  id: 338,
+  title: 'アオハライド',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは恋愛ドラマとしては適度に進行するが、ややダレる部分もあり。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は軽めの暗さがあり、救いも少なめ。'
+}
+→ {
+  id: 339,
+  title: 'アカメが斬る！',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は仲間の喪失が多く、かなり重い印象を与える。'
+}
+→ {
+  id: 340,
+  title: 'アルドノア・ゼロ',
+  tempo_10: 7,
+  music_10: 10,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは展開が引っ張るため7。音楽は非常に効果的で10。ストーリーは中程度の重さを持つ。'
+}
+→ {
+  id: 341,
+  title: 'グラスリップ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレる部分があるが、全体的には流れが良い。音楽は感情を引き立てるが、突出した印象はない。テーマには軽めの暗さが感じられる。'
+}
+→ {
+  id: 342,
+  title: '月刊少女野崎くん',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは非常に良く、視聴ストレスが少ない。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るいコメディ作品。'
+}
+→ {
+  id: 343,
+  title: 'さばげぶっ!',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは非常に良く、ギャグがテンポよく進む。音楽は普通で、感情の増幅には寄与しない。鬱度はほぼ無し。'
+}
+→ {
+  id: 344,
+  title: '精霊使いの剣舞',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いているわけではない。ストーリーは明るめで救いもある。'
+}
+→ {
+  id: 345,
+  title: '東京喰種 トーキョーグール',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を強く引き立てている。物語は重く、喪失感が強い。'
+}
+→ {
+  id: 346,
+  title: '東京ESP',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはアクションが中心でダレることは少ないが、時折ペースが落ちる。音楽は平凡で特に印象に残らない。ストーリーには暗さがあるが、救いの要素も存在する。'
+}
+→ {
+  id: 347,
+  title: 'ばらかもん',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も心地よいが突出はしない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 348,
+  title: 'Fate/kaleid liner プリズマ☆イリヤ ツヴァイ!',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは戦闘シーンが多く、ややダレる部分もあるため6。音楽は感情を引き立てるが突出はしないため7。鬱度は軽めの暗さがあるため3。'
+}
+→ {
+  id: 349,
+  title: '普通の女子校生が【ろこどる】やってみた。',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効いているわけではない。全体的に明るい雰囲気で鬱度は低め。'
+}
+→ {
+  id: 350,
+  title: 'RAIL WARS!',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '軽めのアクションとコメディでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 351,
+  title: '六畳間の侵略者!?',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効いているわけではない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 352,
+  title: '暁のヨナ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる場面もあり。音楽は感情を引き立てるが、突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 353,
+  title: '甘城ブリリアントパーク',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は低く、明るいコメディ要素が強い。'
+}
+→ {
+  id: 354,
+  title: '異能バトルは日常系のなかで',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレることが少ない。音楽は普通で特に印象に残らない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 355,
+  title: '失われた未来を求めて',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は重めの選択を扱っている。'
+}
+→ {
+  id: 356,
+  title: 'オオカミ少女と黒王子',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で特に効いているわけではない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 357,
+  title: '俺、ツインテールになります。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは勢いがあり、ダレることは少ない。音楽は普通で、特に効いているわけではない。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 358,
+  title: 'ガールフレンド(仮)',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '日常系でテンポは良好。音楽は平凡で特に効いているわけではない。鬱度はほぼ無し。'
+}
+→ {
+  id: 359,
+  title: '寄生獣 セイの格率',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあるが、音楽は感情を強く引き立てている。物語は重く、喪失感や苦悩が強調されているため鬱度は高め。'
+}
+→ {
+  id: 360,
+  title: 'グリザイアの果実',
+  tempo_10: 5,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。物語は重めで救いが少ない。'
+}
+→ {
+  id: 361,
+  title: 'クロスアンジュ 天使と竜の輪舞',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語のテーマは重く、救いが少ない。'
+}
+→ {
+  id: 362,
+  title: '四月は君の嘘',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポはややダレる部分があるが、音楽は非常に感情を引き立てる。物語の重さから鬱度は高め。'
+}
+→ {
+  id: 363,
+  title: 'SHIROBAKO',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポはややゆっくりでダレる部分がある。音楽は感情を引き立てるが突出した印象はない。ストーリーは明るさがあり、軽めの暗さを感じる。'
+}
+→ {
+  id: 364,
+  title: '天体のメソッド',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは静かな青春を描いているため、ダレる部分もあり6。音楽は感情を引き立てるが突出はせず7。鬱度は軽めの暗さがあり4。'
+}
+→ {
+  id: 365,
+  title: '旦那が何を言っているかわからない件',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは短尺でサクサク進むため高評価。音楽は平凡で効きは弱め。鬱度はほぼ無しの明るいコメディ。'
+}
+→ {
+  id: 366,
+  title: 'トリニティセブン',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポはバトルと掛け合いで進むため良好。音楽は平凡で、ストーリーは明るめ。'
+}
+→ {
+  id: 367,
+  title: 'Fate/stay night [Unlimited Blade Works]',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を強く引き立てている。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 368,
+  title: '残響のテロル',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は非常に効果的で感情を引き立てる。物語は重く、救いが少ない印象。'
+}
+→ {
+  id: 369,
+  title: 'まじっく快斗1412',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で、感情の増幅はあまり感じられない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 370,
+  title: '魔弾の王と戦姫',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出した印象はない。暗さは軽めで救いが少しある。'
+}
+→ {
+  id: 371,
+  title: '結城友奈は勇者である',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中盤に少しダレがあり、音楽は感情を強く引き立てている。物語の喪失感が強く、重いテーマが描かれている。'
+}
+→ {
+  id: 372,
+  title: 'ワールドトリガー（1stシーズン）',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は効果的に感情を引き立てている。鬱度は軽めで明るい要素が多い。'
+}
+→ {
+  id: 373,
+  title: 'アイドルマスター シンデレラガールズ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはややゆっくりでダレる部分がある。音楽は感情を引き立てるが、特に突出した印象はない。ストーリーには軽い暗さがあるが、全体的には明るい雰囲気。'
+}
+→ {
+  id: 374,
+  title: 'アブソリュート・デュオ',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは学園バトルのため比較的スムーズだが、時折ダレる部分もあり。音楽は平凡で、感情の増幅には寄与しきれていない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 375,
+  title: '暗殺教室（第1期）',
+  tempo_10: 7,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは比較的良好でダレにくい。音楽は感情を引き立てるが、特に突出はしない。物語には暗さがあるが、救いも感じられる。'
+}
+→ {
+  id: 376,
+  title: '艦隊これくしょん -艦これ-',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は平凡寄り。暗さは軽めで、救いのある展開が多い。'
+}
+→ {
+  id: 377,
+  title: '幸腹グラフィティ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も心地よく効いている。鬱度はほぼ無しで癒し系の作品。'
+}
+→ {
+  id: 378,
+  title: '冴えない彼女の育てかた',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは比較的良好で、視聴ストレスは少ない。音楽は感情を引き立てるが、特に突出した印象はない。テーマには軽い暗さがあるが、全体的には明るい印象。'
+}
+→ {
+  id: 379,
+  title: '銃皇無尽のファフニール',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは学園バトルのため中程度のダレ感があり、音楽は平凡。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 380,
+  title: '純潔のマリア',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしていない。物語は重いテーマを扱っており、救いが少ない。'
+}
+→ {
+  id: 381,
+  title: '新妹魔王の契約者',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポはバトルとサービスシーンで一定のリズムを保っているが、ややダレる部分も。音楽は平凡で、感情を強く引き立てるほどではない。鬱度は軽めで、明るい要素が多い。'
+}
+→ {
+  id: 382,
+  title: '聖剣使いの禁呪詠唱＜ワールドブレイク＞',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは勢いがあり、ダレることは少ない。音楽は平凡で、感情を大きく増幅するほどではない。ストーリーは軽めで、鬱度は低い。'
+}
+→ {
+  id: 384,
+  title: '夜ノヤッターマン',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語には暗い要素があるが、軽めの鬱度。'
+}
+→ {
+  id: 385,
+  title: '食戟のソーマ（第1期）',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く、視聴ストレスは少ない。音楽は平凡で、感情の増幅は弱め。鬱度はほぼ無し。'
+}
+→ {
+  id: 386,
+  title: '終わりのセラフ（第1期）',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.8,
+  rationale: 'テンポは戦闘シーンが多く、ややダレる部分もあるため6。音楽は感情を引き立てるが突出はしないため7。物語は重いテーマを扱っており、救いが少ないため6。'
+}
+→ {
+  id: 387,
+  title: 'ガンスリンガー ストラトス -THE ANIMATION-',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはバトル中心でややダレる部分がある。音楽は平凡で、感情を強く引き立てるほどではない。暗さは軽めで、救いの要素も存在する。'
+}
+→ {
+  id: 388,
+  title: '境界のRINNE（第1シリーズ）',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポはゆるい怪異回が多く、ダレる部分があるため6。音楽は平凡で効きが弱めなため5。鬱度は軽めのコメディなので2。'
+}
+→ {
+  id: 389,
+  title: '血界戦線',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポはキャラの掛け合いが強く、ダレることなく進行。音楽は良いが突出はしない。暗さはあるが、救いも感じられる。'
+}
+→ {
+  id: 390,
+  title: 'ダンジョンに出会いを求めるのは間違っているだろうか（第1期）',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 391,
+  title: '電波教師',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '軽いノリで視聴しやすく、テンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 392,
+  title: 'トリアージX',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'スピード感が強くテンポは良好。音楽は平凡で、暗さは軽めながら暴力的な要素がある。'
+}
+→ {
+  id: 393,
+  title: 'パンチライン',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはギャグとSFの要素でスムーズ。音楽は平凡で、軽めの暗さがある。'
+}
+→ {
+  id: 394,
+  title: '響け！ユーフォニアム（第1期）',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポはややダレる部分があるが、全体的には良好。音楽は感情を引き立てており、鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 395,
+  title: 'プラスティック・メモリーズ',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を強く引き立てている。物語のテーマから鬱度はかなり重い。'
+}
+→ {
+  id: 397,
+  title: '山田くんと7人の魔女',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く進むが、音楽は特に効いているわけではない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 398,
+  title: '青春×機関銃',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレにくい。音楽は効果的だが特に突出していない。暗さは軽めで明るい雰囲気が強い。'
+}
+→ {
+  id: 399,
+  title: '赤髪の白雪姫（第1期）',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を高めるが突出はしない。鬱度は軽めで明るい要素が強い。'
+}
+→ {
+  id: 400,
+  title: 'うしおととら（第1期）',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポはバトルが続くため比較的良好。音楽は効果的だが突出はしない。暗さは軽めで、明るい要素もある。'
+}
+→ {
+  id: 401,
+  title: 'オーバーロード（第1期）',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もある。音楽は効果的だが突出した印象はない。暗さはあるが、救いの要素も感じられる。'
+}
+→ {
+  id: 402,
+  title: 'おくさまが生徒会長！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは短尺でサクサク進むため高評価。音楽は特に印象的ではないが、全体的に明るい内容で鬱度は低い。'
+}
+→ {
+  id: 403,
+  title: 'がっこうぐらし！',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは日常の中に緊張感があり、ダレることは少ない。音楽は感情を引き立てるが、突出した印象はない。鬱度は高く、残酷な現実が描かれているため評価が高い。'
+}
+→ {
+  id: 404,
+  title: 'GANGSTA.',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は重めで救いが少ない。'
+}
+→ {
+  id: 405,
+  title: '空戦魔導士候補生の教官',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進むため8。音楽は普通で特に効いているわけではないため5。ストーリーは明るく軽めなので鬱度は低めの2。'
+}
+→ {
+  id: 406,
+  title: 'GATE(ゲート) 自衛隊 彼の地にて、斯く戦えり',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは戦闘と外交のバランスが取れており、ダレることは少ない。音楽は効果的だが特に印象的ではない。暗さは軽めで、救いの要素も存在する。'
+}
+→ {
+  id: 407,
+  title: 'ケイオスドラゴン 赤竜戦役',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語の重さと救いのなさから鬱度は高め。'
+}
+→ {
+  id: 408,
+  title: '実は私は',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行するため8。音楽は普通で特に効いているわけではないため5。鬱度は軽めでほぼ無しと判断し2。'
+}
+→ {
+  id: 409,
+  title: '下ネタという概念が存在しない退屈な世界',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は平凡で、感情の増幅にはあまり寄与しない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 410,
+  title: 'Charlotte(シャーロット)',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。物語は重めで救いが少ない。'
+}
+→ {
+  id: 411,
+  title: '城下町のダンデライオン',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 412,
+  title: 'ビキニ・ウォリアーズ',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは非常に良く、軽快に楽しめる。音楽は普通で、特に印象に残らない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 413,
+  title: '干物妹！うまるちゃん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに楽しめる。音楽は普通で特に印象に残らない。鬱度はほぼ無しで明るいコメディ。'
+}
+→ {
+  id: 414,
+  title: '監獄学園(プリズンスクール)',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはテンポ良く進行するが、ギャグ要素が強い。音楽は平凡で、鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 415,
+  title: 'モンスター娘のいる日常',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効く部分は少ない。鬱度はほぼ無しで明るい雰囲気。'
+}
+
+===== batch after_id=415 size=100 =====
+→ {
+  id: 619,
+  title: 'ブギーポップは笑わない',
+  tempo_10: 5,
+  music_10: 7,
+  depression_10: 6,
+  confidence: 0.8,
+  rationale: '断片的な構成でテンポは中程度。音楽は感情を引き立てるが、突出した印象はない。テーマの重さから鬱度は中程度。'
+}
+→ {
+  id: 620,
+  title: '約束のネバーランド',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を強く引き立て、鬱度はかなり重い。'
+}
+→ {
+  id: 621,
+  title: '私に天使が舞い降りた！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレることが少ない。音楽は良いが突出した印象はない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 622,
+  title: '鬼滅の刃',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽は感情を強く引き立てる。物語には重い要素もあるが、救いも感じられる。'
+}
+→ {
+  id: 623,
+  title: '異世界かるてっと',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で効きは弱め。全体的に明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 624,
+  title: '賢者の孫',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いているわけではない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 625,
+  title: 'この音とまれ！',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは部活ドラマとしてはややゆっくりめ。音楽は感情を引き立てるが、突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 626,
+  title: '川柳少女',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で、感情の増幅には寄与しない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 627,
+  title: 'なんでここに先生が!?',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は特に印象的ではないが、作品の雰囲気には合っている。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 628,
+  title: 'フルーツバスケット',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: '物語は感情的な瞬間が多く、テンポは中程度。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は中程度で、救いの少ない場面も存在する。'
+}
+→ {
+  id: 629,
+  title: 'ぼくたちは勉強ができない',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスなく視聴できる。音楽は平凡で感情の増幅には寄与しない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 630,
+  title: 'みだらな青ちゃんは勉強ができない',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は普通で特に印象に残らない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 631,
+  title: '荒ぶる季節の乙女どもよ。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあり、音楽は感情を引き立てる。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 632,
+  title: 'ありふれた職業で世界最強',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は復讐をテーマにしており、軽めの暗さがある。'
+}
+→ {
+  id: 633,
+  title: '異世界チート魔術師',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポはスムーズでダレにくい。音楽は平凡で特に効いているわけではない。ストーリーは軽快で明るく、鬱度は低め。'
+}
+→ {
+  id: 634,
+  title: '炎炎ノ消防隊',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語には重いテーマが含まれており、救いが少ない。'
+}
+→ {
+  id: 635,
+  title: '彼方のアストラ',
+  tempo_10: 9,
+  music_10: 6,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポはワンクール完結で強く、音楽は平凡寄り。ストーリーには軽めの暗さがある。'
+}
+→ {
+  id: 636,
+  title: '可愛ければ変態でも好きになってくれますか？',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '軽いノリで進むラブコメなのでテンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 637,
+  title: '女子高生の無駄づかい',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスなく視聴できる。音楽は平凡で特に印象に残らない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 638,
+  title: 'ソウナンですか？',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るいコメディ。'
+}
+→ {
+  id: 639,
+  title: 'ダンベル何キロ持てる？',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効いているわけではない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 640,
+  title: '通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で特に効いているわけではない。全体的に明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 641,
+  title: 'とある科学の一方通行',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはバトル中心で適度に進行。音楽は平凡寄りで効きは弱め。暗さは軽めで救いもある。'
+}
+→ {
+  id: 642,
+  title: '手品先輩',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は普通で特に効いているわけではない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 643,
+  title: 'Dr.STONE',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は低めで明るい冒険物語。'
+}
+→ {
+  id: 644,
+  title: 'ナカノヒトゲノム【実況中】',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: '軽いノリとサスペンスが混在しており、テンポは中程度。音楽は特に効いているわけではない。鬱度は低め。'
+}
+→ {
+  id: 646,
+  title: '魔王様、リトライ！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は普通で特に効いているわけではない。全体的に明るく軽い内容。'
+}
+→ {
+  id: 647,
+  title: 'ロード・エルメロイⅡ世の事件簿 -魔眼蒐集列車 Grace note-',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは推理要素があるためややゆっくり。音楽は雰囲気を高めるが突出はしない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 648,
+  title: 'ケンガンアシュラ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポはアクションが続くため良好。音楽は普通で、ストーリーは明るくないが重くはない。'
+}
+→ {
+  id: 649,
+  title: 'アサシンズプライド',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は平凡で、感情の増幅には寄与していない。ストーリーには軽めの暗さがある。'
+}
+→ {
+  id: 650,
+  title: 'あひるの空',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレる部分があるが、全体的には見やすい。音楽は感情を引き立てるが、特に突出した印象はない。テーマには暗さがあるが、救いも感じられる。'
+}
+→ {
+  id: 651,
+  title: '俺を好きなのはお前だけかよ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に効いているわけではない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 652,
+  title: '慎重勇者～この勇者が俺TUEEEくせに慎重すぎる～',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は良いが突出した印象はない。感情回収はあるが、全体的には軽めの暗さ。'
+}
+→ {
+  id: 653,
+  title: '超人高校生たちは異世界でも余裕で生き抜くようです！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で効きは弱め。全体的に明るく軽い内容。'
+}
+→ {
+  id: 654,
+  title: 'バビロン',
+  tempo_10: 5,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は効果的に感情を引き立てる。物語の重さから鬱度は高め。'
+}
+→ {
+  id: 655,
+  title: 'BEASTARS',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を強く引き立てる。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 656,
+  title: '本好きの下剋上 司書になるためには手段を選んでいられません',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 657,
+  title: '私、能力は平均値でって言ったよね！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '軽めの冒険コメディでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 658,
+  title: '異種族レビュアーズ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で、感情の増幅はあまり感じられない。鬱度は低めで明るいコメディ要素が強い。'
+}
+→ {
+  id: 659,
+  title: '痛いのは嫌なので防御力に極振りしたいと思います。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良く、ストレスなく楽しめる。音楽は平凡で特に効いているわけではない。全体的に明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 661,
+  title: 'インフィニット・デンドログラム',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好で流し見でも楽しめる。音楽は普通で、感情の増幅は少なめ。鬱度は低く、明るい冒険が中心。'
+}
+→ {
+  id: 662,
+  title: '映像研には手を出すな！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は軽めで明るい雰囲気。'
+}
+→ {
+  id: 663,
+  title: '推しが武道館いってくれたら死ぬ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが突出はしない。鬱度は低く、明るい雰囲気が強い。'
+}
+→ {
+  id: 664,
+  title: 'おーばーふろぉ～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは短編で軽快なので高め。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 665,
+  title: '虚構推理',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは会話中心でややダレ気味。音楽は効果的だが突出はしない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 666,
+  title: '地縛少年花子くん',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが突出はしない。切なさが強く、救いが少ないストーリー。'
+}
+→ {
+  id: 667,
+  title: 'ダーウィンズゲーム',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は効果的に感情を引き立てている。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 668,
+  title: 'ドロヘドロ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレ気味で6。音楽はユーモアとカオスを引き立てており7。鬱度は軽めの暗さがあり4。'
+}
+→ {
+  id: 669,
+  title: 'プランダラ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: '前半はノリが良いが後半でテンポが落ちる。音楽は感情を引き立てるが突出はしない。物語には重いテーマが含まれている。'
+}
+→ {
+  id: 670,
+  title: '魔術士オーフェン はぐれ旅',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは王道ファンタジーでスムーズ。音楽は平凡で効きは少なめ。暗さは軽めで明るい雰囲気。'
+}
+→ {
+  id: 671,
+  title: 'ランウェイで笑って',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが突出はしない。鬱度は低めで明るいテーマ。'
+}
+→ {
+  id: 672,
+  title: '理系が恋に落ちたので証明してみた。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効いているわけではない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 673,
+  title: 'イエスタデイをうたって',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは静かでダレる部分もあるが、全体的には流れが良い。音楽は感情を引き立てるが、特に突出はしない。物語は中程度の重さを持つ。'
+}
+→ {
+  id: 674,
+  title: '乙女ゲームの破滅フラグしかない悪役令嬢に転生してしまった…',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '明るいコメディ作品でテンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 675,
+  title: 'かくしごと',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが突出はしない。軽めの暗さがあるが、全体的には明るい雰囲気。'
+}
+→ {
+  id: 676,
+  title: 'グレイプニル',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 7,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレがある。音楽は感情を引き立てるが突出はしない。心理的な重さが強く、救いが少ない印象。'
+}
+→ {
+  id: 677,
+  title: '神之塔 -Tower of God-',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは試練形式で進むためややダレる部分がある。音楽は感情を引き立てるが突出した印象はない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 678,
+  title: '球詠',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '部活スポ根で流し見しやすく、テンポは良好。音楽は普通で、鬱度は低め。'
+}
+→ {
+  id: 679,
+  title: '八男って、それはないでしょう！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快で視聴しやすい。音楽は普通で特に印象に残らない。鬱度は低めで明るい内容。'
+}
+→ {
+  id: 680,
+  title: '宇崎ちゃんは遊びたい！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '軽いノリのラブコメでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 681,
+  title: '彼女、お借りします',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: '恋愛要素が強く、テンポは中程度。音楽は平凡で、軽めの暗さがある。'
+}
+→ {
+  id: 682,
+  title: 'GREAT PRETENDER',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは強く、一気見に適しているため8。音楽は良いが特に突出していないため7。暗さは軽めで救いもあるため3。'
+}
+→ {
+  id: 683,
+  title: 'デカダンス',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 684,
+  title: 'ド級編隊エグゼロス',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに楽しめる。音楽は特に印象的ではないが、作品の雰囲気には合っている。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 685,
+  title: '魔王学院の不適合者～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く、ストレスなく視聴できる。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 686,
+  title: '日本沈没2020',
+  tempo_10: 5,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。内容は非常に重く、精神的ダメージが強い。'
+}
+→ {
+  id: 687,
+  title: 'アクダマドライブ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'アクションがテンポよく進むため、テンポは高め。音楽は効果的だが突出はしない。暗さは軽めで、全体的に明るい印象。'
+}
+→ {
+  id: 688,
+  title: '神様になった日',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: '日常から感情へ落とす構成で、テンポはややダレる部分がある。音楽は感情を強く引き立て、鬱度はかなり重い。'
+}
+→ {
+  id: 689,
+  title: '神達に拾われた男',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '癒し系で争いが少なく、テンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 690,
+  title: 'キミと僕の最後の戦場、あるいは世界が始まる聖戦',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはバトルと恋愛の展開でややダレ気味。音楽は感情を引き立てるが、特に突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 691,
+  title: 'くまクマ熊ベアー',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進むため8。音楽は癒し系だが特に効いているわけではないため5。鬱度はほぼ無しで1。'
+}
+→ {
+  id: 692,
+  title: '呪術廻戦',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。物語は重いテーマを扱っており、救いが少ない。'
+}
+→ {
+  id: 693,
+  title: 'トニカクカワイイ',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡だが雰囲気を壊さない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 694,
+  title: '100万の命の上に俺は立っている',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは良く、視聴ストレスは少ない。音楽は平凡で、感情の増幅には寄与しない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 695,
+  title: '魔王城でおやすみ',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で特に効いているわけではない。全体的に明るく軽い内容。'
+}
+→ {
+  id: 696,
+  title: '魔女の旅々',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは旅のエピソードに合わせてゆったりしているが、ダレるほどではない。音楽は感情を引き立てるが、特に突出した印象はない。倫理や残酷さがあるため、軽めの暗さを感じる。'
+}
+→ {
+  id: 697,
+  title: '無能なナナ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが突出はしない。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 698,
+  title: '憂国のモリアーティ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは会話劇中心でややダレ気味。音楽は効果的だが突出はしない。暗さは軽めで救いが少しある。'
+}
+→ {
+  id: 699,
+  title: 'IDOLY PRIDE',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 700,
+  title: 'EX-ARM エクスアーム',
+  tempo_10: 4,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはダレがちで4。音楽は平凡で5。暗さは軽めで3。'
+}
+→ {
+  id: 701,
+  title: 'オルタンシア・サーガ',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: '王道ファンタジーでテンポは良好。音楽は平凡寄りで、暗さは軽め。'
+}
+→ {
+  id: 702,
+  title: '俺だけ入れる隠しダンジョン',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレることが少ないため8。音楽は平凡で特に印象に残らないため5。ストーリーは明るく軽い内容で鬱度は低い。'
+}
+→ {
+  id: 703,
+  title: '回復術士のやり直し',
+  tempo_10: 5,
+  music_10: 7,
+  depression_10: 9,
+  confidence: 0.8,
+  rationale: 'テンポは復讐劇の展開に合わせてやや遅め。音楽は感情を引き立てるが、全体的に重いテーマが支配的で鬱度は高い。'
+}
+→ {
+  id: 704,
+  title: '蜘蛛ですが、なにか？',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは比較的良好で、ギャグ要素もあり。音楽は普通で、暗さは軽め。'
+}
+→ {
+  id: 705,
+  title: '怪物事変',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 706,
+  title: '弱キャラ友崎くん',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でストレス少なめ。音楽は平凡寄りだが、感情の増幅には寄与。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 707,
+  title: 'たとえばラストダンジョン前の村の少年が序盤の街で暮らすような物語',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスが少ない。音楽は平凡で効きは弱め。ストーリーはコメディで明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 708,
+  title: 'ホリミヤ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが、特に突出はしない。鬱度は軽めの切なさがある。'
+}
+→ {
+  id: 709,
+  title: '天空侵犯',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は効果的だが突出はしない。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 710,
+  title: 'イジらないで、長瀞さん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '軽快なラブコメでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 712,
+  title: 'EDENS ZERO',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く進むが、音楽は平凡寄り。ストーリーは明るく軽快で、鬱度は低め。'
+}
+→ {
+  id: 713,
+  title: '幼なじみが絶対に負けないラブコメ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で、感情の増幅は少なめ。鬱度はほぼ無しの明るい作品。'
+}
+→ {
+  id: 715,
+  title: '究極進化したフルダイブRPGが現実よりもクソゲーだったら',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'ギャグ寄りでテンポは良く、視聴ストレスは少ない。音楽は平凡で、鬱度は軽め。'
+}
+→ {
+  id: 716,
+  title: '灼熱カバディ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に効いているわけではない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 717,
+  title: 'シャドーハウス',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポはじわじわと進むが、ダークな雰囲気が強く、音楽も効果的に使われている。ストーリーは中程度の重さを持つ。'
+}
+→ {
+  id: 718,
+  title: 'スライム倒して300年、知らないうちにレベルMAXになってました',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレず、視聴ストレスは少ない。音楽は平凡で効きは弱め。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 719,
+  title: '聖女の魔力は万能です',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは落ち着いていてダレにくい。音楽は平凡で効きは弱め。全体的に明るく、鬱度は低い。'
+}
+→ {
+  id: 720,
+  title: '戦闘員、派遣します！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で特に効いているわけではない。全体的に明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 721,
+  title: 'SSSS.DYNAZENON',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは会話の間が良く、ややゆっくりめ。音楽は感情を引き立てるが、突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 722,
+  title: '東京リベンジャーズ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。物語は重めで救いが少ない。'
+}
+
+===== batch after_id=722 size=100 =====
+→ {
+  id: 723,
+  title: 'ひげを剃る。そして女子高生を拾う。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややゆっくりでダレる部分がある。音楽は感情を引き立てるが、特に突出した印象はない。テーマは軽めの暗さがある。'
+}
+→ {
+  id: 725,
+  title: '不滅のあなたへ',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を強く引き立てている。物語のテーマから鬱度はかなり重い。'
+}
+→ {
+  id: 726,
+  title: 'かげきしょうじょ!!',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは適度に進行し、ダレることは少ない。音楽は感情を引き立てるが、特に突出した印象はない。物語には軽めの暗さがあり、救いの要素も存在する。'
+}
+→ {
+  id: 727,
+  title: 'カノジョも彼女',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは速く、視聴ストレスは少ない。音楽は普通で、感情の増幅は弱い。鬱度はほぼ無し。'
+}
+→ {
+  id: 728,
+  title: 'Sonny Boy',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 7,
+  confidence: 0.8,
+  rationale: 'テンポは思索的でダレる部分があり、音楽は感情を強く引き立てる。物語は重く、救いが少ない印象。'
+}
+→ {
+  id: 729,
+  title: '現実主義勇者の王国再建記',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは会話が多く進行がゆっくりで6。音楽は特に印象的ではなく5。物語は暗さが軽めで3。'
+}
+→ {
+  id: 730,
+  title: '死神坊ちゃんと黒メイド',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は感情を引き立てるが突出はしない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 731,
+  title: '精霊幻想記',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は平凡で特に効いているわけではない。暗さは軽めで、救いも少しある。'
+}
+→ {
+  id: 732,
+  title: '白い砂のアクアトープ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 733,
+  title: '月が導く異世界道中',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に印象に残らない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 734,
+  title: '探偵はもう、死んでいる。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。物語のテーマから中程度の鬱度を感じる。'
+}
+→ {
+  id: 735,
+  title: '出会って5秒でバトル',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは駆け引き重視でスムーズ。音楽は平凡で特に効いている印象は薄い。暗さは軽めで救いもある。'
+}
+→ {
+  id: 736,
+  title: 'チート薬師のスローライフ〜異世界に作ろうドラッグストア〜',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは非常に良く、ダレることなく進行。音楽は平凡で特に効いているわけではない。全体的に明るく、重さはほぼ感じられない。'
+}
+→ {
+  id: 737,
+  title: '海賊王女',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは冒険の進行に合わせてややゆっくり。音楽は良く効いているが、特に突出はしない。暗さは軽めで救いの要素もある。'
+}
+→ {
+  id: 738,
+  title: '明日ちゃんのセーラー服',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を高めるが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 739,
+  title: 'オリエント',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはバトル中心でややダレる部分がある。音楽は平凡で効きは弱め。暗さは軽めで救いもある。'
+}
+→ {
+  id: 740,
+  title: '殺し愛',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり。音楽は感情を引き立てるが突出はしない。ストーリーは重めで救いが少ない。'
+}
+→ {
+  id: 741,
+  title: '錆喰いビスコ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは冒険活劇としてはややダレ気味。音楽は雰囲気を盛り上げるが突出はしない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 742,
+  title: '時光代理人 -LINK CLICK-',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが突出はしない。後悔に向き合うテーマから中程度の鬱度を感じる。'
+}
+→ {
+  id: 743,
+  title: '失格紋の最強賢者',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で、感情の増幅は少なめ。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 744,
+  title: '終末のハーレム',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は平凡で、感情の増幅にはあまり寄与しない。暗さは軽めで救いもある。'
+}
+→ {
+  id: 745,
+  title: 'その着せ替え人形は恋をする',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を高めるが突出はしない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 746,
+  title: '天才王子の赤字国家再生術',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは会話劇が心地よく進むため高め。音楽は平凡で効きが弱い。鬱度は軽めのコメディ要素が強い。'
+}
+→ {
+  id: 747,
+  title: 'ハコヅメ～交番女子の逆襲～',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡だが、ストーリーの重さは軽めで明るい印象。'
+}
+→ {
+  id: 748,
+  title: '異世界美少女受肉おじさんと',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポはギャグ寄りで軽快なので8。音楽は普通で5。鬱度はほぼ無しで1。'
+}
+→ {
+  id: 749,
+  title: '平家物語',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 7,
+  confidence: 0.8,
+  rationale: '静かな重さがあり、テンポはやや遅め。音楽は感情を増幅し、鬱度はかなり重い。'
+}
+→ {
+  id: 750,
+  title: 'リアデイルの大地にて',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは穏やかでダレにくい。音楽は普通で特に効くわけではない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 751,
+  title: 'アオアシ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '成長を描くスポ根でテンポは良好。音楽は感情を盛り上げるが突出はしない。鬱度は低め。'
+}
+→ {
+  id: 752,
+  title: '阿波連さんははかれない',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で特に効いているわけではない。ストーリーは明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 753,
+  title: '乙女ゲー世界はモブに厳しい世界です',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡だが、作品のテーマに合った軽快さがある。鬱度は低めで、明るい要素が強い。'
+}
+→ {
+  id: 754,
+  title: '骸骨騎士様、只今異世界へお出掛け中',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は軽めの冒険物語。'
+}
+→ {
+  id: 755,
+  title: 'カッコウの許嫁',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '軽快なラブコメで視聴ストレスは少なく、テンポは良好。音楽は普通で、鬱度は低め。'
+}
+→ {
+  id: 756,
+  title: '可愛いだけじゃない式守さん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に効いているわけではない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 757,
+  title: 'サマータイムレンダ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.9,
+  rationale: 'テンポは緊張感があり、ダレることなく進行。音楽は効果的だが突出はしない。ストーリーは中程度の重さを持つ。'
+}
+→ {
+  id: 758,
+  title: '史上最強の大魔王、村人Aに転生する',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効きはしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 759,
+  title: '処刑少女の生きる道（バージンロード）',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語は重めで救いが少ない。'
+}
+→ {
+  id: 760,
+  title: 'SPY×FAMILY',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 761,
+  title: 'トモダチゲーム',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは会話中心でややダレる部分があるため6。音楽は心理戦を盛り上げるが突出はしないため7。テーマの重さから中程度の鬱度5。'
+}
+→ {
+  id: 762,
+  title: 'パリピ孔明',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは爽快でダレずに進行。音楽は良いが特に突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 763,
+  title: '魔法使い黎明期',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を高めるが突出はしない。暗さは軽めで明るい要素が多い。'
+}
+→ {
+  id: 764,
+  title: '名探偵コナン ゼロの日常',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '日常を描いた軽いスピンオフでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 765,
+  title: '勇者、辞めます',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスが少ない。音楽は平凡で効きが弱め。全体的に明るく、救いもある。'
+}
+→ {
+  id: 766,
+  title: '異世界おじさん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るいコメディ作品。'
+}
+→ {
+  id: 767,
+  title: '異世界迷宮でハーレムを',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは比較的良好でダレにくい。音楽は普通で、エロ要素が強調されているため鬱度は低め。'
+}
+→ {
+  id: 768,
+  title: '異世界薬局',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好で視聴ストレスが少ない。音楽は効果的だが突出はしない。鬱度は低めで明るいテーマが中心。'
+}
+→ {
+  id: 769,
+  title: 'Engage Kiss',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは戦闘と恋愛のバランスでややダレ気味。音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 770,
+  title: '黒の召喚士',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で効きは少なめ。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 771,
+  title: '最近雇ったメイドが怪しい',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は普通で、鬱度は低め。'
+}
+→ {
+  id: 772,
+  title: 'それでも歩は寄せてくる',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いている印象は薄い。全体的に明るく軽い内容。'
+}
+→ {
+  id: 773,
+  title: '転生賢者の異世界ライフ～第二の職業を得て、世界最強になりました～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポはスムーズでダレにくい。音楽は平凡で感情の増幅には寄与しない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 774,
+  title: '風都探偵',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあるが、全体的にはスムーズ。音楽は雰囲気を引き立てており、少し暗いテーマがある。'
+}
+→ {
+  id: 775,
+  title: 'プリマドール',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは穏やかでダレる部分もあるが、全体的に心地よい。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は軽めで、救いのあるストーリー展開。'
+}
+→ {
+  id: 776,
+  title: '継母の連れ子が元カノだった',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で感情の増幅は限定的。軽めの暗さがあるが、全体的には明るい雰囲気。'
+}
+→ {
+  id: 777,
+  title: 'よふかしのうた',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはゆったりしており、視聴ストレスは少なめ。音楽は雰囲気を高めるが、特に突出はしない。テーマには軽めの暗さがある。'
+}
+→ {
+  id: 778,
+  title: 'サイバーパンク エッジランナーズ',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは速く、全体的に引き込まれるが、ストーリーの重さからダレる部分もある。音楽は感情を強く引き立てている。鬱度はかなり重い内容で救いが少ない。'
+}
+→ {
+  id: 779,
+  title: 'アキバ冥途戦争',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは比較的良好でダレにくい。音楽は普通で、感情の増幅には寄与していない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 780,
+  title: '悪役令嬢なのでラスボスを飼ってみました',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く進むが、音楽は平凡。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 781,
+  title: 'ある朝ダミーヘッドマイクになっていた俺クンの人生',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は特に印象的ではないが、全体的に明るい雰囲気。'
+}
+→ {
+  id: 782,
+  title: '陰の実力者になりたくて！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いているわけではない。鬱度は軽めで明るいコメディ要素が強い。'
+}
+→ {
+  id: 783,
+  title: '後宮の烏',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は雰囲気を高めるが突出はしない。テーマから中程度の鬱度を感じる。'
+}
+→ {
+  id: 784,
+  title: '機動戦士ガンダム 水星の魔女',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は重い選択を扱っており、救いが少ない。'
+}
+→ {
+  id: 785,
+  title: '新米錬金術師の店舗経営',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '穏やかなスローライフ系でテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 786,
+  title: 'チェンソーマン',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 7,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は非常に効果的で感情を高める。物語は重く、喪失感が強い。'
+}
+→ {
+  id: 787,
+  title: '転生したら剣でした',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く進むが、音楽は特に印象的ではない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 788,
+  title: '夫婦以上、恋人未満。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスを感じさせない。音楽は平凡で、感情の増幅には寄与していない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 789,
+  title: 'ブルーロック',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは熱量があり、視聴ストレスは少ない。音楽は効果的だが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 790,
+  title: 'ぼっち・ざ・ろっく！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが、特に突出はしない。鬱度は軽めで、自己肯定感の回復がテーマのため。'
+}
+→ {
+  id: 791,
+  title: '名探偵コナン 犯人の犯沢さん',
+  tempo_10: 9,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは短編でサクサク進むため高評価。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 792,
+  title: '僕とロボコ',
+  tempo_10: 9,
+  music_10: 4,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '短尺ギャグでテンポは非常に速い。音楽はあまり効かず、鬱度はほぼ無し。'
+}
+→ {
+  id: 793,
+  title: '勇者パーティーを追放されたビーストテイマー、最強種の猫耳少女と出会う',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で感情の増幅は弱め。ストーリーは明るく、救いのある内容。'
+}
+→ {
+  id: 794,
+  title: 'アルスの巨獣',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。物語は重めで救いが少ない。'
+}
+→ {
+  id: 795,
+  title: '異世界のんびり農家',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポはスローライフで心地よく、ダレることは少ない。音楽は平凡で効きは弱め。全体的に明るく、鬱度は低い。'
+}
+→ {
+  id: 796,
+  title: '英雄王、武を極めるため転生す そして、世界最強の見習い騎士♀',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは戦闘比重が高くサクサク進むため高め。音楽は平凡で効きは弱め。鬱度は軽めの明るい内容。'
+}
+→ {
+  id: 797,
+  title: '犬になったら好きな人に拾われた。',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でダレず、音楽は普通。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 798,
+  title: 'お隣の天使様にいつの間にか駄目人間にされていた件',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽は感情を引き立てるが突出はしない。鬱度は低めで癒しが強い。'
+}
+→ {
+  id: 799,
+  title: 'お兄ちゃんはおしまい！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で、感情の増幅は限定的。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 800,
+  title: '氷属性男子とクールな同僚女子',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で効きは弱め。全体的に明るく、鬱度はほぼ無し。'
+}
+→ {
+  id: 801,
+  title: '最強陰陽師の異世界転生記',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で、感情の増幅は限定的。全体的に明るいストーリーで鬱度は低め。'
+}
+→ {
+  id: 802,
+  title: 'スパイ教室',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはキャラ重視で進行がスムーズ。音楽は平凡で感情の増幅には寄与しない。暗さは軽め。'
+}
+→ {
+  id: 803,
+  title: 'ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良く、視聴ストレスが少ない。音楽は普通で、感情の増幅は弱め。鬱度は低く、明るいラブコメのため救いがある。'
+}
+→ {
+  id: 804,
+  title: '転生王女と天才令嬢の魔法革命',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは比較的スムーズでダレにくい。音楽は感情を高めるが特に強くはない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 805,
+  title: 'トモちゃんは女の子！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に効いているわけではない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 806,
+  title: 'とんでもスキルで異世界放浪メシ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は低く、癒しの要素が強い。'
+}
+→ {
+  id: 807,
+  title: 'NieR:Automata Ver1.1a',
+  tempo_10: 6,
+  music_10: 9,
+  depression_10: 8,
+  confidence: 0.9,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を強く引き立てており、鬱度はかなり重いテーマが含まれている。'
+}
+→ {
+  id: 808,
+  title: 'HIGH CARD',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポはノリが良く、視聴ストレスは少ない。音楽は効果的だが突出はしない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 809,
+  title: '冰剣の魔術師が世界を統べる',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: '学園ものの軽めのストーリーでテンポは良好。音楽は平凡で、鬱度は低め。'
+}
+→ {
+  id: 810,
+  title: 'Buddy Daddies',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがあり、救いも感じられる。'
+}
+→ {
+  id: 811,
+  title: '便利屋斎藤さん、異世界に行く',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で、感情の高まりには寄与しない。全体的に明るい雰囲気で鬱度は低め。'
+}
+→ {
+  id: 812,
+  title: 'もういっぽん！',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは部活の成長を描く中でややゆっくりめ。音楽は感情を引き立てるが突出はしない。暗さは軽めで、希望が感じられる。'
+}
+→ {
+  id: 813,
+  title: '青のオーケストラ',
+  tempo_10: 6,
+  music_10: 8,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を強く引き立てている。暗さは軽めで、救いのある展開が見られる。'
+}
+→ {
+  id: 814,
+  title: 'スキップとローファー',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 815,
+  title: '君は放課後インソムニア',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは静かな空気感があり、ダレる部分もあるため6。音楽は感情を引き立てるが突出はせず7。鬱度は軽めの暗さがあるため4。'
+}
+→ {
+  id: 816,
+  title: '久保さんは僕を許さない',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は心地よく効いているが、特に突出はしない。鬱度は低く、安心して見られる内容。'
+}
+→ {
+  id: 817,
+  title: 'この素晴らしい世界に爆焔を！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は良いが突出はしない。鬱度はほぼ無しで明るい雰囲気。'
+}
+→ {
+  id: 818,
+  title: '天国大魔境',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。物語の重さは中程度で救いが少ない印象。'
+}
+→ {
+  id: 819,
+  title: 'デッドマウント・デスプレイ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。物語は重めのテーマを扱っている。'
+}
+→ {
+  id: 820,
+  title: 'マッシュル-MASHLE-',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスが少ないため8。音楽は普通で効きは弱めのため5。鬱度はほぼ無しで1。'
+}
+→ {
+  id: 821,
+  title: '僕の心のヤバイやつ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、鬱度は低めで明るい恋愛要素が強い。'
+}
+→ {
+  id: 822,
+  title: 'ゾン100～ゾンビになるまでにしたい100のこと～',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.9,
+  rationale: 'テンポは爽快感があり、ダレることなく進行。音楽は効果的だが突出はしない。鬱度は軽めで、全体的に明るい雰囲気。'
+}
+→ {
+  id: 823,
+  title: '異世界召喚は二度目です',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは比較的良く、ストレスを感じさせない。音楽は平凡で、感情の増幅には寄与しない。暗さは軽めで、救いの要素もある。'
+}
+
+===== batch after_id=823 size=100 =====
+→ {
+  id: 2685,
+  title: '名探偵プリキュア！',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポはアクション要素が強く、ダレることなく進行するため高評価。音楽は平凡で、感情の増幅には寄与しない。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 2686,
+  title: 'ハイスクール！奇面組 (2026)',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ作品でテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2687,
+  title: '最推しの義兄を愛でるため、長生きします！',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡だが感情を引き立てる。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2688,
+  title: '銀河特急 ミルキー☆サブウェイ 各駅停車劇場行き',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は良いが特に突出した印象はない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2689,
+  title: 'お前はまだグンマを知らない～令和版～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ作品でテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2690,
+  title: 'プリンセス・プリンシパル Crown Handler 第4章「Fabulous Platypus」',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはスパイ活動に合わせてスムーズで、ダレることは少ない。音楽は感情を引き立てるが、特に突出してはいない。ストーリーは友情や成長がテーマで、暗さは軽め。'
+}
+→ {
+  id: 2691,
+  title: '天穂のサクナヒメ ココロワ稲作日誌',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を高めるが、突出した印象はない。鬱度は低めで明るい内容。'
+}
+→ {
+  id: 2692,
+  title: "CHOPPER's",
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: '冒険と友情の物語でテンポは良好。音楽は感情を高めるが突出はしない。鬱度は低め。'
+}
+→ {
+  id: 2693,
+  title: '#神奈川に住んでるエルフ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスなく視聴できる。音楽は平凡で特に印象に残らない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 2694,
+  title: '闇芝居 十六期',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは短編アニメの特性上、ややダレる部分がある。音楽は雰囲気を高めるが、特に突出した印象はない。物語の内容から中程度の鬱度を感じる。'
+}
+→ {
+  id: 2695,
+  title: 'アイドルマスター ミリオンライブ！～いつか、真ん中で～',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出した印象はない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2696,
+  title: '北斗の拳 拳王軍ザコたちの挽歌',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。ストーリーは苦悩を描いており、救いが少ない。'
+}
+→ {
+  id: 2697,
+  title: 'カードファイト!! ヴァンガード Divinez 幻真星戦編',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレにくい。音楽は平凡で感情の増幅は少なめ。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 2698,
+  title: '有栖川煉ってホントは女なんだよね。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もある。音楽は感情を引き立てるが、特に突出はしない。テーマは自己探求で軽めの暗さがある。'
+}
+→ {
+  id: 2699,
+  title: 'mofusand',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で特に効いているわけではない。全体的に明るく、鬱度は低い。'
+}
+→ {
+  id: 2700,
+  title: '映画ドラえもん 新・のび太の海底鬼岩城',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も冒険感を盛り上げるが、全体的に明るい内容で鬱度は低い。'
+}
+→ {
+  id: 2701,
+  title: '制服は着たままで',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: '青春を描いた作品でテンポは良好。音楽は普通で、鬱度は軽め。'
+}
+→ {
+  id: 2702,
+  title: 'Duel Masters LOST ～忘却の太陽～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポはバトル中心でスムーズ。音楽は平凡で特に効いているわけではない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2703,
+  title: 'もう一度、してみたい。',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはややダレがあるが、全体的に流れは良い。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は軽めの暗さが感じられる。'
+}
+→ {
+  id: 2704,
+  title: 'ほっぺちゃん ～サン王国と黒ほっぺ団の秘密～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いているわけではない。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 2705,
+  title: "L'amour fou de l'automate",
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはスムーズでダレにくいが、感情の深さを感じる。音楽は良いが、特に突出した印象はない。テーマに暗さがあるが、全体的には軽め。'
+}
+→ {
+  id: 2706,
+  title: '蛇と蜘蛛',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分があり、音楽は感情を引き立てる。物語の重さは中程度で救いが少ない。'
+}
+→ {
+  id: 2707,
+  title: '聖光閃姫ポニーセレス',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレにくい。音楽は効果的だが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2708,
+  title: '剣鬼バルゴ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'アクションファンタジーでテンポは良好。音楽は効果的だが突出はしない。暗さは軽め。'
+}
+→ {
+  id: 2709,
+  title: 'ファントム・アルケミア ～シルヴィアのドキドキ搾精都市計画～',
+  tempo_10: 6,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は特に印象的ではないが、作品の雰囲気には寄与している。鬱度はほぼ無しで明るい冒険が中心。'
+}
+→ {
+  id: 2710,
+  title: 'ブラックジャックやねん',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは医療ドラマとしては適度に進行するが、ややダレる部分もある。音楽は感情を引き立てるが、特に突出した印象はない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 2711,
+  title: 'ゲルぴよ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で感情の増幅には寄与しない。物語は明るく、鬱度は非常に低い。'
+}
+→ {
+  id: 2712,
+  title: '秘密結社 鷹の爪XX（ダブルエックス）',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2713,
+  title: 'とんがり帽子のアトリエ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '物語は成長と友情を描いており、テンポは良好。音楽は効果的だが特に突出はしていない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 2714,
+  title: 'Re:ゼロから始める異世界生活 4th season',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。物語は重いテーマを扱っており、救いが少ない。'
+}
+→ {
+  id: 2715,
+  title: '転生したらスライムだった件 第4期',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進む。音楽は平凡で、感情の増幅には寄与しない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2716,
+  title: 'ようこそ実力至上主義の教室へ 4th Season 2年生編1学期',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。ストーリーには軽めの暗さがある。'
+}
+→ {
+  id: 2717,
+  title: 'お隣の天使様にいつの間にか駄目人間にされていた件 第2期',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスなく視聴できる。音楽は平凡で、感情の増幅にはあまり寄与しない。鬱度は低く、明るい雰囲気が強い。'
+}
+→ {
+  id: 2718,
+  title: '杖と剣のウィストリア Season2',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは冒険の進行に合わせて適度に保たれている。音楽は感情を引き立てるが、特に突出した印象はない。ストーリーは明るめで、軽い暗さが感じられる。'
+}
+→ {
+  id: 2719,
+  title: 'Dr.STONE SCIENCE FUTURE 3クール',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度はほぼ無しで明るい冒険が中心。'
+}
+→ {
+  id: 2720,
+  title: 'ドロヘドロ (新シーズン)',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出してはいない。暗さは軽めで救いの要素もある。'
+}
+→ {
+  id: 2721,
+  title: '黄泉のツガイ',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしていない。物語は愛と絆をテーマにしているが、試練があるため軽めの暗さがある。'
+}
+→ {
+  id: 2722,
+  title: '魔入りました！入間くん 第4シリーズ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は低く、明るいテーマが中心。'
+}
+→ {
+  id: 2723,
+  title: '本好きの下剋上 領主の養女',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレることなく進行。音楽は感情を引き立てるが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2724,
+  title: '最強の王様、二度目の人生は 何をする? 第2期',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は普通で特に印象に残らない。ストーリーは明るく軽快で、鬱度は低め。'
+}
+→ {
+  id: 2725,
+  title: '僕のヒーローアカデミア No. 170+1 「More」',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を高めるが突出はしない。鬱度は低めで明るい成長と友情のテーマ。'
+}
+→ {
+  id: 2726,
+  title: '劇場版 魔法科高校の劣等生 四葉継承編',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポはアクションが多くスムーズで8。音楽は良いが特に突出した印象はなく7。ストーリーは明るめで軽い暗さがあるため3。'
+}
+→ {
+  id: 2727,
+  title: '姫騎士は蛮族の嫁',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポはスムーズでダレずに進行。音楽は平凡で特に印象に残らない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2728,
+  title: '夜桜さんちの大作戦 第2期',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は感情を引き立てるが突出はしない。鬱度は低めで明るい内容。'
+}
+→ {
+  id: 2729,
+  title: 'クラスで２番目に可愛い女の子と友だちになった',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '青春と友情をテーマにした作品で、テンポは良好。音楽は平凡で、鬱度は低め。'
+}
+→ {
+  id: 2730,
+  title: 'マリッジトキシン',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはファンタジー要素があるため軽快さがあり、ダレることは少ない。音楽は感情を引き立てるが、特に突出した印象はない。ストーリーには暗さがあるが、全体的には軽めの鬱度。'
+}
+→ {
+  id: 2731,
+  title: 'カナン様はあくまでチョロい',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で感情の増幅には寄与しない。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 2732,
+  title: 'LIAR GAME',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは心理戦の緊張感を維持しつつも、時折ダレる部分がある。音楽は効果的だが突出した印象はない。鬱度は軽めの暗さがあるが、全体的には救いが感じられる。'
+}
+→ {
+  id: 2733,
+  title: 'あかね噺',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが、突出した印象はない。ストーリーは成長を描いており、鬱度は低め。'
+}
+→ {
+  id: 2734,
+  title: '愛してるゲームを終わらせたい',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てる。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 2735,
+  title: 'NEEDY GIRL OVERDOSE',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 8,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレがある。音楽は感情を引き立てるが、突出した印象はない。物語のテーマから鬱度はかなり重い。'
+}
+→ {
+  id: 2736,
+  title: '悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします。Season2',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もある。音楽は感情を引き立てるが突出はしない。鬱度は軽めの暗さがある。'
+}
+→ {
+  id: 2737,
+  title: '彼女、お借りします 第5期',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'ラブコメ要素が強く、テンポは良好。音楽は平凡で、鬱度は低め。'
+}
+→ {
+  id: 2738,
+  title: 'リィンカーネーションの花弁',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、突出した印象はない。物語には軽めの暗さがある。'
+}
+→ {
+  id: 2739,
+  title: '春夏秋冬代行者 春の舞',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 2740,
+  title: '最終楽章 響け！ユーフォニアム 前編',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '青春と友情を描いた作品で、テンポは良好。音楽が感情を高めており、鬱度は低め。'
+}
+→ {
+  id: 2741,
+  title: 'ニワトリ・ファイター',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で特に効いている印象はない。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 2742,
+  title: 'オタクに優しいギャルはいない!?',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ作品でテンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2743,
+  title: '上伊那ぼたん、酔へる姿は百合の花',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '物語は心温まる内容で、テンポは良好。音楽も感情を引き立てるが、特に突出した印象はない。鬱度は低めで、明るい雰囲気が強い。'
+}
+→ {
+  id: 2744,
+  title: 'ダイヤのA actII -Second Season-',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は感情を引き立てるが突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2745,
+  title: 'モノノ怪 蛇神',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポはスムーズで視聴ストレスは少ない。音楽は効果的だが突出はしない。暗さは軽めで救いがある。'
+}
+→ {
+  id: 2746,
+  title: '氷の城壁',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは冒険の進行に合わせてスムーズで、視聴ストレスは少ない。音楽は感情を高めるが、特に突出した印象はない。ストーリーは成長を描いており、暗さはほとんど感じられない。'
+}
+→ {
+  id: 2747,
+  title: 'よわよわ先生',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で、感情の増幅には寄与しない。物語は心温まるもので、鬱度は低め。'
+}
+→ {
+  id: 2748,
+  title: 'ふつつかな悪女ではございますが ~雛宮蝶鼠とりかえ伝~',
+  tempo_10: 8,
+  music_10: 6,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でダレにくい。音楽は普通で、感情の増幅はあまり感じられない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2749,
+  title: '転生した大聖女は、聖女であることをひた隠す',
+  tempo_10: 7,
+  music_10: 6,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'テンポは冒険の進行に合わせて適度に保たれており、音楽は平凡寄り。物語は成長や友情をテーマにしており、暗さは軽め。'
+}
+→ {
+  id: 2750,
+  title: '黒猫と魔女の教室',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 2751,
+  title: 'MAO',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'アクションと冒険が中心でテンポは良好。音楽は効果的だが突出はしない。暗さは軽め。'
+}
+→ {
+  id: 2752,
+  title: '淡島百景',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: '日常の美しさを描く作品で、テンポはゆったりめ。音楽は感情を引き立てるが、特に突出はしていない。暗さは軽め。'
+}
+→ {
+  id: 2753,
+  title: '最強の職業は勇者でも賢者でもなく鑑定士（仮）らしいですよ？',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でストレスが少ない。音楽は平凡で効きは弱め。ストーリーは明るく、鬱度は低い。'
+}
+→ {
+  id: 2754,
+  title: 'ここは俺に任せて先に行けと言ってから１０年がたったら伝説になっていた。',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが特に突出はしない。ストーリーは成長と友情がテーマで明るい印象。'
+}
+→ {
+  id: 2755,
+  title: 'ラブライブ！蓮ノ空女学院スクールアイドルクラブ Bloom Garden Party',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 2756,
+  title: '神の庭付き楠木邸',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレにくい。音楽は感情を引き立てるが、特に突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2757,
+  title: 'キルアオ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: '冒険と友情を描いた明るい作品で、テンポは良好。音楽も効果的だが、特に突出はしない。鬱度は低め。'
+}
+→ {
+  id: 2758,
+  title: '逃がした魚は大きかったが釣りあげた魚が大きすぎた件',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが特に突出はしない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2759,
+  title: 'メイドさんは食べるだけ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ作品でテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2760,
+  title: '灰原くんの強くて青春ニューゲーム',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '青春と友情をテーマにした作品で、テンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2761,
+  title: '嫌な顔されながらおパンツ見せてもらいたいR（リターンズ）',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2762,
+  title: 'スノウボールアース',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もある。音楽は感情を引き立てるが突出はしない。暗さは軽めで希望も感じられる。'
+}
+→ {
+  id: 2763,
+  title: '一畳間まんきつ暮らし！',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でストレスが少ない。音楽は平凡で、感情の増幅には寄与しない。鬱度はほぼ無しで明るい日常を描いている。'
+}
+→ {
+  id: 2764,
+  title: '霧尾ファンクラブ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレずに進行。音楽は平凡で感情の増幅には寄与しない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2765,
+  title: '左ききのエレン',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もあり、音楽は感情を引き立てるが突出はしない。テーマに暗さがあるが、全体的には軽めの鬱度。'
+}
+→ {
+  id: 2766,
+  title: '魔法の姉妹ルルットリリィ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は良いが特に突出はしない。物語は明るく、鬱度は低め。'
+}
+→ {
+  id: 2767,
+  title: 'クジマ歌えば家ほろろ',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: '日常の小さな幸せを描いた作品で、テンポは良好。音楽は感情を高めるが、突出した印象はない。鬱度は低め。'
+}
+→ {
+  id: 2768,
+  title: 'また殺されてしまったのですね、探偵様',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 5,
+  confidence: 0.8,
+  rationale: 'テンポは中程度で、ストーリーの進行に合わせてダレる部分がある。音楽は感情を引き立てるが、特に突出した印象はない。物語は死をテーマにしており、中程度の鬱度を感じる。'
+}
+→ {
+  id: 2769,
+  title: '名探偵コナン ハイウェイの堕天使',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは緊迫感があり、ダレることなく進行。音楽は効果的だが突出はしない。ストーリーはミステリー中心で暗さは少ない。'
+}
+→ {
+  id: 2770,
+  title: '転生悪女の黒歴史 OVA',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは良好でダレずに進行。音楽は効果的だが突出はしない。鬱度は低めで明るい雰囲気。'
+}
+→ {
+  id: 2771,
+  title: 'リラックマ',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'リラックマはのんびりしたストーリーでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2772,
+  title: 'えんとつ町のプペル 〜約束の時計台〜',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でダレず、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 2773,
+  title: 'おでかけ子ザメ シーズン2',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'テンポは軽快でダレずに進行。音楽は平凡で特に効いているわけではない。鬱度はほぼ無しで明るい内容。'
+}
+→ {
+  id: 2774,
+  title: 'ひみつのアイプリ まんかいバズリウムライブ！',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 2,
+  confidence: 0.9,
+  rationale: 'テンポは良好でストレスが少なく、音楽も感情を引き立てるが、全体的に明るいテーマで鬱度は低め。'
+}
+→ {
+  id: 2775,
+  title: 'アナルマニアオタクとアナニー大好きなお嬢様～奇跡のマッチング～',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2776,
+  title: '百姓貴族 3rd Season OVA',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2777,
+  title: 'キャンディーカリエス',
+  tempo_10: 8,
+  music_10: 7,
+  depression_10: 3,
+  confidence: 0.8,
+  rationale: 'ファンタジー要素が強く、テンポは良好でストレスを感じにくい。音楽は感情を高めるが、特に突出した印象はない。暗さは軽めで、全体的に明るい雰囲気。'
+}
+→ {
+  id: 2778,
+  title: 'おしりダンディ ザ・ヤング',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: 'コメディ要素が強く、テンポは良好。音楽は普通で、鬱度はほぼ無し。'
+}
+→ {
+  id: 2779,
+  title: 'ラブはギャルから始まる運命',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 2,
+  confidence: 0.8,
+  rationale: 'テンポは軽快でダレずに進行。音楽は普通で、感情の増幅はあまり感じられない。ストーリーは明るく、鬱度は低め。'
+}
+→ {
+  id: 2780,
+  title: '痴魅悶凌',
+  tempo_10: 6,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分がある。音楽は感情を引き立てるが、特に突出はしない。鬱度は軽めの暗さが感じられる。'
+}
+→ {
+  id: 2781,
+  title: '小3アシベ QQゴマちゃん',
+  tempo_10: 8,
+  music_10: 5,
+  depression_10: 1,
+  confidence: 0.9,
+  rationale: '子供向けの心温まるストーリーでテンポは良好。音楽は平凡で、鬱度はほぼ無し。'
+}
+→ {
+  id: 3122,
+  title: 'カウボーイビバップ',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポは全体的に良好で、ダレることは少ない。音楽は非常に効果的で感情を引き立てる。鬱度は軽めの暗さがあるが、救いも感じられる。'
+}
+→ {
+  id: 3123,
+  title: 'カウボーイビバップ天国の扉',
+  tempo_10: 8,
+  music_10: 9,
+  depression_10: 4,
+  confidence: 0.9,
+  rationale: 'テンポはスリリングで引き込まれるが、時折落ち着く場面もあり8。音楽は非常に効果的で9。物語には暗さがあるが、救いも感じられるため4。'
+}
+→ {
+  id: 3124,
+  title: 'TRIGUN',
+  tempo_10: 7,
+  music_10: 7,
+  depression_10: 4,
+  confidence: 0.8,
+  rationale: 'テンポは中程度でダレる部分もある。音楽は良いが特に突出してはいない。テーマに暗さがあるが、全体的には軽め。'
+}
+
+🎉 done { processed: 500, state: { last_id: 3124, failed_ids: [] } }
+===== END 2026/02/10 22:56:27.69 ===== 
