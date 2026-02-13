@@ -22,6 +22,7 @@ type AnimeWork = {
 
   episode_count?: number | null;
 
+  // シリーズ（DBにあれば優先）
   series_key?: string | null;
   series_title?: string | null;
   series_id?: number | null;
@@ -35,6 +36,7 @@ type AnimeWork = {
   passive_viewing?: number | null;
   popularity_score?: number | null;
 
+  // 旧スコア（残っていても互換のため残す）
   battle?: number | null;
   story?: number | null;
   world?: number | null;
@@ -44,6 +46,7 @@ type AnimeWork = {
   emotion?: number | null;
   ero?: number | null;
 
+  // 新スコア（0-10）
   story_10?: number | null;
   animation_10?: number | null;
   world_10?: number | null;
@@ -58,6 +61,7 @@ type AnimeWork = {
 
   keywords?: string[] | string | null;
 
+  // 作品ごとの配信サービス配列（正規化済み名）
   vod_services?: string[] | string | null;
   vod_watch_urls?: Record<string, string> | null;
 
@@ -83,6 +87,7 @@ type VodAvailRow = {
  * ========================= */
 const RESULT_PAGE_SIZE = 10;
 const RANK_PAGE_SIZE = 10;
+const ANALYZE_REC_PAGE_SIZE = 10;
 
 const REST_PAGE_LIMIT = 1000;
 
@@ -332,7 +337,6 @@ function normalizeKeywords(k: AnimeWork["keywords"]) {
 /** 見た目改善：変な空白（"ド ラ マ" みたいな）をつぶす */
 function squashInnerSpaces(s: string) {
   const t = String(s || "");
-  // 連続スペース/全角スペースを1回消す（日本語ジャンルの「縦に割れる」原因になりやすい）
   return t.replace(/[ 　\t\r\n]+/g, "");
 }
 
@@ -436,6 +440,21 @@ function StarRating({
     </span>
   );
 }
+
+/** =========================
+ *  シリーズ集計（カード詳細用）
+ * ========================= */
+function getSeriesGroupKey(w: AnimeWork): string | null {
+  const sid = Number(w.series_id ?? 0);
+  if (sid) return `id:${sid}`;
+  const sk = String(w.series_key || "").trim();
+  if (sk) return `key:${sk}`;
+  const st = String(w.series_title || "").trim();
+  if (st) return `title:${normalizeForCompare(st)}`;
+  return null;
+}
+
+const MOVIE_RE = /劇場版|映画|movie/i;
 
 /** =========================
  *  DB: 既存カラムだけselect
@@ -986,9 +1005,15 @@ export default function Home() {
     return resultAll.slice(start, start + RESULT_PAGE_SIZE);
   }, [resultAll, resultPage]);
 
+  /** ① view/モード切替時は結果を消す（ホーム復帰・他モード変更で残らない） */
+  const [recMode, setRecMode] = useState<RecommendMode>("byWorks");
+  useEffect(() => {
+    setResultAll([]);
+    setResultPage(1);
+  }, [view, recMode]);
+
   /** =========================
    *  Filters (collapsible)
-   *  - 開いていない or 何も選択していない => 全て対象
    * ========================= */
   const [vodFilterOpen, setVodFilterOpen] = useState(false);
   const [studioFilterOpen, setStudioFilterOpen] = useState(false);
@@ -1014,11 +1039,9 @@ export default function Home() {
   }, [allStudios, studioFilterText]);
 
   function applyCollapsedFilters(list: AnimeWork[]) {
-    // VOD
     const vodSelected = vodFilterOpen ? Array.from(vodChecked).map(canonicalVodName) : [];
     const vodActive = vodFilterOpen && vodSelected.length > 0;
 
-    // Studio
     const studioSelected = studioFilterOpen ? Array.from(studioChecked).map((s) => String(s).trim()) : [];
     const studioActive = studioFilterOpen && studioSelected.length > 0;
 
@@ -1041,11 +1064,24 @@ export default function Home() {
     });
   }
 
+  function resetResultsAndFiltersSoft() {
+    setResultAll([]);
+    setResultPage(1);
+  }
+
+  function goTo(viewNext: View) {
+    setView(viewNext);
+    resetResultsAndFiltersSoft();
+    setVodFilterOpen(false);
+    setStudioFilterOpen(false);
+    setVodChecked(new Set());
+    setStudioChecked(new Set());
+    setStudioFilterText("");
+  }
+
   /** =========================
    *  View: Recommend
    * ========================= */
-  const [recMode, setRecMode] = useState<RecommendMode>("byWorks");
-
   // byWorks inputs (up to 5)
   const [workInputs, setWorkInputs] = useState<string[]>(["", "", "", "", ""]);
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
@@ -1074,21 +1110,6 @@ export default function Home() {
   // byMood
   const [keywordChecked, setKeywordChecked] = useState<Set<string>>(new Set());
   const [freeQuery, setFreeQuery] = useState("");
-
-  function resetResultsAndFiltersSoft() {
-    setResultAll([]);
-    setResultPage(1);
-  }
-
-  function goTo(viewNext: View) {
-    setView(viewNext);
-    resetResultsAndFiltersSoft();
-    setVodFilterOpen(false);
-    setStudioFilterOpen(false);
-    setVodChecked(new Set());
-    setStudioChecked(new Set());
-    setStudioFilterText("");
-  }
 
   function searchByWorks() {
     const titles = workInputs.map((s) => s.trim()).filter(Boolean);
@@ -1263,8 +1284,25 @@ export default function Home() {
     usedWorks: AnimeWork[];
     profile: { label: string; value: number }[];
     summaryLines: string[];
-    recommendations: { work: AnimeWork; reasons: string[] }[];
+    recommendations: { work: AnimeWork; reasons: string[] }[]; // ⑥: 30件
   } | null>(null);
+
+  // ⑥: 分析モード専用ページング
+  const [analysisRecPage, setAnalysisRecPage] = useState(1);
+  const analysisTotalPages = useMemo(() => {
+    const n = analysis?.recommendations?.length ?? 0;
+    return Math.max(1, Math.ceil(n / ANALYZE_REC_PAGE_SIZE));
+  }, [analysis?.recommendations?.length]);
+
+  const visibleAnalysisRecs = useMemo(() => {
+    if (!analysis) return [];
+    const start = (analysisRecPage - 1) * ANALYZE_REC_PAGE_SIZE;
+    return analysis.recommendations.slice(start, start + ANALYZE_REC_PAGE_SIZE);
+  }, [analysis, analysisRecPage]);
+
+  useEffect(() => {
+    setAnalysisRecPage(1);
+  }, [analysis?.recommendations?.length]);
 
   function findBestWorkByInputTitle(input: string) {
     const q = input.trim();
@@ -1365,7 +1403,6 @@ export default function Home() {
     if (missed.length) summaryLines.push(`※ 見つからなかった作品：${missed.slice(0, 3).join(" / ")}${missed.length > 3 ? " ほか" : ""}`);
 
     const inputTitlesSet = new Set(uniq.map((w) => w.title));
-
     const candidates = animeList.filter((w) => !inputTitlesSet.has(w.title));
 
     const scored = candidates
@@ -1388,19 +1425,24 @@ export default function Home() {
         return { a, score };
       })
       .sort((x, y) => y.score - x.score)
-      .slice(0, 30)
+      .slice(0, 120)
       .map((x) => x.a);
 
     const filtered = applyCollapsedFilters(scored);
 
-    const recommendations = filtered.slice(0, 10).map((w) => ({
+    // ⑥: 30作品に増やす（ページングで10ずつ）
+    const top30 = filtered.slice(0, 30);
+    const recommendations = top30.map((w) => ({
       work: w,
       reasons: buildMatchReasons(userAvg, w),
     }));
 
     setAnalysis({ usedWorks: uniq, profile, summaryLines, recommendations });
+    setAnalysisRecPage(1);
 
-    setResults(recommendations.map((x) => x.work));
+    // ⑥: 普通の結果カードは分析モードでは出さない
+    setResultAll([]);
+
     try {
       trackEvent({ event_name: "analyze_run", meta: { used_count: uniq.length } });
     } catch {}
@@ -1440,7 +1482,7 @@ export default function Home() {
   }
 
   /** =========================
-   *  Card UI（結果カードを“詳細（モーダル）に近い”フォーマットへ）
+   *  Card UI（結果カード）
    * ========================= */
   function WorkCard({ a }: { a: AnimeWork }) {
     const img = pickWorkImage(a);
@@ -1515,13 +1557,44 @@ export default function Home() {
             </div>
 
             <div className="metaRow" style={{ marginTop: 6 }}>
-              ながら見：<StarRating value={passiveToStar5(a.passive_viewing)} showText={false} size={15} />
+              ながら見適正：<StarRating value={passiveToStar5(a.passive_viewing)} showText={false} size={15} />
             </div>
           </div>
         </div>
       </div>
     );
   }
+
+  /** =========================
+   *  シリーズ情報（詳細用の表示文字列）
+   * ========================= */
+  const seriesInfoText = useMemo(() => {
+    if (!selectedAnime) return null;
+    const key = getSeriesGroupKey(selectedAnime);
+    const seriesName = String(selectedAnime.series_title || "").trim();
+    if (!key) {
+      // シリーズ情報がない場合でも、わかる範囲（話数/劇場版0など）は出す
+      const ep = getEpisodeCount(selectedAnime);
+      return {
+        seriesName: seriesName || "—",
+        animeSeriesLine: ep ? `全1シリーズ / 合計${ep}話` : "—",
+        movieLine: "合計0作品",
+      };
+    }
+    const group = animeList.filter((w) => getSeriesGroupKey(w) === key);
+    const tv = group.filter((w) => !MOVIE_RE.test(String(w.title || "")));
+    const movies = group.filter((w) => MOVIE_RE.test(String(w.title || "")));
+
+    const seriesCount = tv.length || 1;
+    const epSum = tv.reduce((s, w) => s + (getEpisodeCount(w) ?? 0), 0);
+    const epText = epSum ? `合計${epSum}話` : "合計—話";
+
+    return {
+      seriesName: seriesName || "—",
+      animeSeriesLine: `全${seriesCount}シリーズ / ${epText}`,
+      movieLine: `合計${movies.length}作品`,
+    };
+  }, [selectedAnime, animeList]);
 
   /** =========================
    *  Render
@@ -1632,7 +1705,7 @@ export default function Home() {
         {view === "recommend" ? (
           <>
             <div className="topRow">
-              <button className="btnGhost" onClick={() => setView("home")}>
+              <button className="btnGhost" onClick={() => goTo("home")}>
                 ← ホームへ
               </button>
               <div className="small muted">おすすめを探す</div>
@@ -1640,13 +1713,28 @@ export default function Home() {
 
             <div className="panel">
               <div className="tabs">
-                <PillTab active={recMode === "byWorks"} onClick={() => setRecMode("byWorks")}>
+                <PillTab
+                  active={recMode === "byWorks"}
+                  onClick={() => {
+                    setRecMode("byWorks");
+                  }}
+                >
                   好きな作品
                 </PillTab>
-                <PillTab active={recMode === "byGenre"} onClick={() => setRecMode("byGenre")}>
+                <PillTab
+                  active={recMode === "byGenre"}
+                  onClick={() => {
+                    setRecMode("byGenre");
+                  }}
+                >
                   ジャンル
                 </PillTab>
-                <PillTab active={recMode === "byMood"} onClick={() => setRecMode("byMood")}>
+                <PillTab
+                  active={recMode === "byMood"}
+                  onClick={() => {
+                    setRecMode("byMood");
+                  }}
+                >
                   気分（キーワード）
                 </PillTab>
               </div>
@@ -1820,7 +1908,7 @@ export default function Home() {
         {view === "analyze" ? (
           <>
             <div className="topRow">
-              <button className="btnGhost" onClick={() => setView("home")}>
+              <button className="btnGhost" onClick={() => goTo("home")}>
                 ← ホームへ
               </button>
               <div className="small muted">好みを分析</div>
@@ -1914,8 +2002,29 @@ export default function Home() {
                   おすすめ（マッチ理由つき）
                 </div>
 
+                {/* ⑥: 30件を10件ずつページング表示 */}
+                <div className="pager" style={{ marginTop: 10 }}>
+                  <button
+                    className="btnGhost"
+                    disabled={analysisRecPage <= 1}
+                    onClick={() => setAnalysisRecPage((p) => Math.max(1, p - 1))}
+                  >
+                    ←
+                  </button>
+                  <div className="small muted" style={{ alignSelf: "center" }}>
+                    {analysis.recommendations.length}件（{analysisRecPage}/{analysisTotalPages}）
+                  </div>
+                  <button
+                    className="btnGhost"
+                    disabled={analysisRecPage >= analysisTotalPages}
+                    onClick={() => setAnalysisRecPage((p) => Math.min(analysisTotalPages, p + 1))}
+                  >
+                    →
+                  </button>
+                </div>
+
                 <div className="recExplainList">
-                  {analysis.recommendations.map((r) => (
+                  {visibleAnalysisRecs.map((r) => (
                     <div key={String(r.work.id ?? r.work.title)} className="recExplain">
                       <button className="recExplainTitle" type="button" onClick={() => openAnimeModal(r.work)}>
                         {r.work.title}
@@ -1930,6 +2039,23 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+
+                <div className="pager" style={{ marginTop: 12 }}>
+                  <button
+                    className="btnGhost"
+                    disabled={analysisRecPage <= 1}
+                    onClick={() => setAnalysisRecPage((p) => Math.max(1, p - 1))}
+                  >
+                    ←
+                  </button>
+                  <button
+                    className="btnGhost"
+                    disabled={analysisRecPage >= analysisTotalPages}
+                    onClick={() => setAnalysisRecPage((p) => Math.min(analysisTotalPages, p + 1))}
+                  >
+                    →
+                  </button>
+                </div>
               </div>
             ) : null}
           </>
@@ -1938,7 +2064,7 @@ export default function Home() {
         {view === "info" ? (
           <>
             <div className="topRow">
-              <button className="btnGhost" onClick={() => setView("home")}>
+              <button className="btnGhost" onClick={() => goTo("home")}>
                 ← ホームへ
               </button>
               <div className="small muted">作品の情報を検索</div>
@@ -1989,31 +2115,63 @@ export default function Home() {
           </>
         ) : null}
 
-        <div ref={resultRef} className={resultFlash ? "flashRing" : ""} style={{ marginTop: 14 }}>
-          {resultAll.length ? (
-            <div className="panel">
-              <div className="panelTitleRow">
-                <div className="panelTitle">結果</div>
-                <div className="small muted">
-                  {resultAll.length}件（{resultPage}/{totalPages}）
+        {/* 検索結果（分析モードでは表示しない） */}
+        {view !== "analyze" ? (
+          <div ref={resultRef} className={resultFlash ? "flashRing" : ""} style={{ marginTop: 14 }}>
+            {resultAll.length ? (
+              <div className="panel">
+                <div className="panelTitleRow">
+                  <div className="panelTitle">結果</div>
+                  <div className="small muted">
+                    {resultAll.length}件（{resultPage}/{totalPages}）
+                  </div>
+                </div>
+
+                {/* ②: 上部ページャ（現状のまま） */}
+                <div className="pager">
+                  <button
+                    className="btnGhost"
+                    disabled={resultPage <= 1}
+                    onClick={() => setResultPage((p) => Math.max(1, p - 1))}
+                  >
+                    ←
+                  </button>
+                  <button
+                    className="btnGhost"
+                    disabled={resultPage >= totalPages}
+                    onClick={() => setResultPage((p) => Math.min(totalPages, p + 1))}
+                  >
+                    →
+                  </button>
                 </div>
               </div>
+            ) : null}
 
-              <div className="pager">
-                <button className="btnGhost" disabled={resultPage <= 1} onClick={() => setResultPage((p) => Math.max(1, p - 1))}>
+            {visibleResults.map((a) => (
+              <WorkCard key={String(a.id ?? a.title)} a={a} />
+            ))}
+
+            {/* ②: 下部にも同じページャ */}
+            {resultAll.length ? (
+              <div className="pager pagerBottom">
+                <button
+                  className="btnGhost"
+                  disabled={resultPage <= 1}
+                  onClick={() => setResultPage((p) => Math.max(1, p - 1))}
+                >
                   ←
                 </button>
-                <button className="btnGhost" disabled={resultPage >= totalPages} onClick={() => setResultPage((p) => Math.min(totalPages, p + 1))}>
+                <button
+                  className="btnGhost"
+                  disabled={resultPage >= totalPages}
+                  onClick={() => setResultPage((p) => Math.min(totalPages, p + 1))}
+                >
                   →
                 </button>
               </div>
-            </div>
-          ) : null}
-
-          {visibleResults.map((a) => (
-            <WorkCard key={String(a.id ?? a.title)} a={a} />
-          ))}
-        </div>
+            ) : null}
+          </div>
+        ) : null}
 
         {selectedAnime ? (
           <div className="modalOverlay" onClick={closeAnimeModal}>
@@ -2045,6 +2203,16 @@ export default function Home() {
                     <div className="metaLine">
                       <span className="metaLabel">話数</span>
                       <span className="metaText">{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</span>
+                    </div>
+
+                    {/* ③: シリーズ情報 */}
+                    <div className="metaLine" style={{ marginTop: 6 }}>
+                      <span className="metaLabel">アニメシリーズ</span>
+                      <span className="metaText">{seriesInfoText?.animeSeriesLine ?? "—"}</span>
+                    </div>
+                    <div className="metaLine">
+                      <span className="metaLabel">劇場版</span>
+                      <span className="metaText">{seriesInfoText?.movieLine ?? "—"}</span>
                     </div>
 
                     <div className="metaRow" style={{ marginTop: 10 }}>
@@ -2094,15 +2262,18 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <VodIconsRow
-                      services={getVodServices(selectedAnime)}
-                      watchUrls={selectedAnime.vod_watch_urls}
-                      workId={Number(selectedAnime.id || 0)}
-                      onAnyClickStopPropagation
-                    />
+                    {/* ④: VODアイコンの上に余白を入れて重なり防止 */}
+                    <div style={{ marginTop: 10 }}>
+                      <VodIconsRow
+                        services={getVodServices(selectedAnime)}
+                        watchUrls={selectedAnime.vod_watch_urls}
+                        workId={Number(selectedAnime.id || 0)}
+                        onAnyClickStopPropagation
+                      />
+                    </div>
 
-                    <div className="metaRow" style={{ marginTop: 8 }}>
-                      ながら見：<StarRating value={passiveToStar5(selectedAnime.passive_viewing)} showText={false} size={15} />
+                    <div className="metaRow" style={{ marginTop: 10 }}>
+                      ながら見適正：<StarRating value={passiveToStar5(selectedAnime.passive_viewing)} showText={false} size={15} />
                     </div>
                   </div>
                 </div>
@@ -2127,7 +2298,7 @@ export default function Home() {
           padding: 0 !important;
           background: #f6f6f6;
           color: #111;
-          font-weight: 400; /* ここが基本：太字を消す */
+          font-weight: 400;
         }
         * {
           box-sizing: border-box;
@@ -2164,7 +2335,7 @@ export default function Home() {
           text-indent: 0 !important;
           transform: none !important;
           color: #111;
-          font-weight: 800; /* ロゴは太字OK */
+          font-weight: 800; /* ロゴだけ太字OK */
         }
         .brandSub {
           margin-top: 6px;
@@ -2197,7 +2368,7 @@ export default function Home() {
         .panelTitle {
           font-size: 14px;
           letter-spacing: 0.2px;
-          font-weight: 400; /* 太字なし */
+          font-weight: 400;
         }
         .errorBox {
           border-color: rgba(255, 80, 80, 0.35);
@@ -2221,7 +2392,7 @@ export default function Home() {
           color: #fff;
           cursor: pointer;
           font-size: 14px;
-          font-weight: 500; /* 太字ではない */
+          font-weight: 500;
         }
         .btn:hover {
           filter: brightness(0.98);
@@ -2287,7 +2458,7 @@ export default function Home() {
         .featureTitle {
           font-size: 15px;
           letter-spacing: 0.2px;
-          font-weight: 400; /* 太字なし */
+          font-weight: 400;
         }
         .featureSub {
           margin-top: 3px;
@@ -2330,7 +2501,7 @@ export default function Home() {
           background: #111;
           color: #fff;
           border-color: rgba(0, 0, 0, 0.2);
-          font-weight: 400; /* 太字にしない */
+          font-weight: 400;
         }
 
         /* Inputs */
@@ -2400,7 +2571,7 @@ export default function Home() {
           height: 22px;
           border-radius: 999px;
           display: grid;
-          place-items: center; /* ○の中の記号/数字を中央 */
+          place-items: center;
           border: 1px solid rgba(0, 0, 0, 0.16);
           background: rgba(0, 0, 0, 0.03);
           font-weight: 400;
@@ -2408,7 +2579,7 @@ export default function Home() {
         }
         .collapseTitle {
           font-size: 13px;
-          font-weight: 400; /* 太字なし */
+          font-weight: 400;
         }
         .collapseMeta {
           font-size: 12px;
@@ -2467,7 +2638,7 @@ export default function Home() {
           border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        /* Cards（結果カードを詳細寄りに） */
+        /* Cards */
         .card {
           margin-top: 12px;
           background: rgba(255, 255, 255, 0.98);
@@ -2519,7 +2690,7 @@ export default function Home() {
           color: #111;
           cursor: pointer;
           font-size: 12px;
-          font-weight: 400; /* 太字なし */
+          font-weight: 400;
           flex: 0 0 auto;
         }
 
@@ -2530,7 +2701,7 @@ export default function Home() {
         }
         .metaLine {
           display: grid;
-          grid-template-columns: 58px 1fr;
+          grid-template-columns: 88px 1fr;
           gap: 10px;
           align-items: baseline;
         }
@@ -2538,6 +2709,7 @@ export default function Home() {
           font-size: 12px;
           opacity: 0.7;
           font-weight: 400;
+          white-space: nowrap;
         }
         .metaText {
           font-size: 13px;
@@ -2611,7 +2783,7 @@ export default function Home() {
           align-items: center;
         }
 
-        /* Ranking list */
+        /* Ranking */
         .rankLine {
           display: grid;
           grid-template-columns: 28px 1fr;
@@ -2639,7 +2811,7 @@ export default function Home() {
           text-decoration: underline;
           text-underline-offset: 3px;
           opacity: 0.95;
-          font-weight: 700; /* 作品タイトル扱い */
+          font-weight: 700; /* タイトル扱い */
         }
 
         /* Analyze */
@@ -2719,7 +2891,7 @@ export default function Home() {
           cursor: pointer;
           padding: 0;
           font-size: 14px;
-          font-weight: 700; /* 作品タイトル扱い */
+          font-weight: 700; /* タイトル扱い */
           text-decoration: underline;
           text-underline-offset: 3px;
         }
@@ -2729,7 +2901,7 @@ export default function Home() {
           gap: 4px;
         }
 
-        /* Score panel (modal) */
+        /* Score panel */
         .scorePanel {
           border: 1px solid rgba(0, 0, 0, 0.10);
           border-radius: 14px;
@@ -2773,6 +2945,9 @@ export default function Home() {
           display: flex;
           gap: 10px;
           justify-content: flex-end;
+        }
+        .pagerBottom {
+          margin-top: 14px;
         }
 
         /* Flash ring */
@@ -2839,7 +3014,7 @@ export default function Home() {
         }
         .modalTitle {
           font-size: 18px;
-          font-weight: 800; /* 作品タイトルだけ太字 */
+          font-weight: 800; /* タイトルだけ太字 */
           margin-bottom: 6px;
         }
         .link {
@@ -2874,6 +3049,9 @@ export default function Home() {
           .modalPoster {
             width: 100%;
             aspect-ratio: 16 / 9;
+          }
+          .metaLine {
+            grid-template-columns: 92px 1fr;
           }
         }
       `}</style>
