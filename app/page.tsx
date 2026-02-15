@@ -2859,7 +2859,8 @@ export default function Home() {
       </main>
 
       {/* ===== Part2 はここから style jsx global が続きます ===== */}
-    <style jsx global>{`
+// ===== AniMatch: 完全版コード（Part 2/2）=====
+      <style jsx global>{`
         html,
         body {
           margin: 0;
@@ -2869,10 +2870,9 @@ export default function Home() {
         }
         * {
           box-sizing: border-box;
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08); /* ③ タップ時の黒塗りを防止 */
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
         }
 
-        /* ① どの選択でも “薄いグレー” に統一 */
         ::selection {
           background: rgba(0, 0, 0, 0.08);
           color: inherit;
@@ -2882,7 +2882,6 @@ export default function Home() {
           color: inherit;
         }
 
-        /* iOS: 長押し選択で黒くなりやすいので、UI部品は選択不可に */
         button,
         label,
         .pill,
@@ -2892,7 +2891,8 @@ export default function Home() {
         .pagerArrow,
         .recExplainTitle,
         .inlineTitleLink,
-        .openBtn {
+        .openBtn,
+        .headerProfileBtn {
           -webkit-user-select: none;
           user-select: none;
         }
@@ -2914,15 +2914,49 @@ export default function Home() {
           background: rgba(246, 247, 249, 0.86);
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
+
+        /* ★変更：左(ロゴ+文言) と 右(プロフィール) を分離してズレを防止 */
         .headerInner {
           max-width: 980px;
           margin: 0 auto;
           padding: 16px 16px 14px;
-          display: flex; /* ② PCでもロゴ直下に文言 */
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 14px;
+        }
+        .brandBlock {
+          display: flex;
           flex-direction: column;
           align-items: flex-start;
           gap: 6px;
+          min-width: 0;
         }
+        .headerActions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex: 0 0 auto;
+          padding-top: 4px;
+        }
+        .headerProfileBtn {
+          padding: 8px 12px;
+          border-radius: 999px;
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          background: rgba(0, 0, 0, 0.02);
+          color: #111;
+          cursor: pointer;
+          font-size: 13px;
+          font-weight: 400;
+          white-space: nowrap;
+        }
+        .headerProfileBtn:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
+        .headerProfileBtn:active {
+          background: rgba(0, 0, 0, 0.08);
+        }
+
         .brandTitle {
           font-size: 40px;
           letter-spacing: 0.5px;
@@ -2934,6 +2968,7 @@ export default function Home() {
           border: none;
           cursor: pointer;
           display: block;
+          text-align: left;
         }
         .brandTitle:focus-visible {
           outline: 2px solid rgba(0, 0, 0, 0.16);
@@ -2944,6 +2979,8 @@ export default function Home() {
           font-size: 13px;
           opacity: 0.75;
           display: block;
+          text-align: left;
+          margin-left: 2px; /* ★視覚的な左揃え補正 */
         }
 
         .container {
@@ -3244,7 +3281,7 @@ export default function Home() {
           border-radius: 10px;
         }
         .checkItem:active {
-          background: rgba(0, 0, 0, 0.06); /* ③ 黒塗りにならない */
+          background: rgba(0, 0, 0, 0.06);
         }
         .checkLabel {
           display: inline-flex;
@@ -3341,7 +3378,7 @@ export default function Home() {
           opacity: 0.9;
           font-weight: 400;
           word-break: break-word;
-          user-select: text; /* 説明文は選択可 */
+          user-select: text;
         }
 
         .metaGrid {
@@ -3629,11 +3666,15 @@ export default function Home() {
           overflow: hidden;
           z-index: 50;
         }
+
+        /* ★重要：高さを固定（詳細カードがスクロールできない問題を確実に潰す） */
         .modalDialog {
           width: 100%;
           max-width: 980px;
+          height: calc(100dvh - 24px);
           max-height: calc(100dvh - 24px);
         }
+
         .modalCard {
           background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.10);
@@ -3645,23 +3686,38 @@ export default function Home() {
           flex-direction: column;
           overflow: hidden;
         }
+
+        /* ★閉じるボタンは常に見える（スクロールしても固定） */
         .modalHeader {
           flex: 0 0 auto;
           padding: 10px;
-          background: #fff; /* ① 閉じるボタン周りもカードと同色 */
+          background: #fff;
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           display: flex;
-          justify-content: flex-end;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          position: sticky;
+          top: 0;
+          z-index: 2;
         }
+        .modalHeaderTitle {
+          font-size: 13px;
+          opacity: 0.75;
+          font-weight: 400;
+          white-space: nowrap;
+        }
+
         .modalCloseBtn {
           padding: 10px 14px;
           border-radius: 999px;
           border: 1px solid rgba(0, 0, 0, 0.12);
-          background: #ffffff; /* ① ボタンも白に */
+          background: #ffffff;
           color: #111;
           cursor: pointer;
           font-size: 13px;
           font-weight: 400;
+          white-space: nowrap;
         }
         .modalCloseBtn:hover {
           background: rgba(0, 0, 0, 0.03);
@@ -3669,12 +3725,14 @@ export default function Home() {
         .modalCloseBtn:active {
           background: rgba(0, 0, 0, 0.08);
         }
+
+        /* ★ここがスクロール領域（縦だけスライド） */
         .modalBody {
           flex: 1 1 auto;
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
-          touch-action: auto; /* ④ 詳細でも拡大縮小を邪魔しない */
+          touch-action: pan-y pinch-zoom;
           padding: 14px;
         }
 
@@ -3708,6 +3766,87 @@ export default function Home() {
           font-weight: 400;
         }
 
+        /* 管理人プロフィール */
+        .adminProfileHero {
+          display: grid;
+          grid-template-columns: 64px 1fr;
+          gap: 12px;
+          align-items: center;
+          padding: 10px 2px 4px;
+        }
+        .adminAvatar {
+          width: 64px;
+          height: 64px;
+          border-radius: 999px;
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          background: rgba(0, 0, 0, 0.04);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.5px;
+        }
+        .adminProfileText {
+          min-width: 0;
+        }
+        .adminName {
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+        .adminBio {
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 1.6;
+          opacity: 0.85;
+        }
+        .adminLinkRow {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+          margin-top: 14px;
+        }
+        .adminLinkBtn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 12px 14px;
+          border-radius: 16px;
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          background: rgba(0, 0, 0, 0.02);
+          color: #111;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 400;
+          cursor: pointer;
+        }
+        .adminLinkBtn:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
+        .adminLinkBtn:active {
+          background: rgba(0, 0, 0, 0.08);
+        }
+        .adminLinkBtnPrimary {
+          background: #111;
+          color: #fff;
+          border-color: rgba(0, 0, 0, 0.18);
+        }
+        .adminLinkBtnPrimary:hover {
+          filter: brightness(1.05);
+        }
+        .adminLinkBtnPrimary:active {
+          filter: brightness(0.98);
+        }
+        .adminNoteBox {
+          margin-top: 12px;
+          border: 1px dashed rgba(0, 0, 0, 0.14);
+          border-radius: 14px;
+          padding: 10px 12px;
+          background: rgba(0, 0, 0, 0.01);
+        }
+
         /* Mobile */
         @media (max-width: 520px) {
           .brandTitle {
@@ -3733,8 +3872,16 @@ export default function Home() {
             width: 100%;
             aspect-ratio: 16 / 9;
           }
+          .headerInner {
+            padding: 14px 12px 12px;
+          }
+          .headerProfileBtn {
+            padding: 7px 10px;
+            font-size: 12px;
+          }
         }
       `}</style>
     </div>
   );
 }
+
