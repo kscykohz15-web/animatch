@@ -22,6 +22,7 @@ type AnimeWork = {
 
   episode_count?: number | null;
 
+  // シリーズ（DBにあれば優先）
   series_key?: string | null;
   series_title?: string | null;
   series_id?: number | null;
@@ -87,7 +88,7 @@ const RANK_PAGE_SIZE = 10;
 
 const REST_PAGE_LIMIT = 800;
 
-// ⑥ 体感高速化：キャッシュ（失敗しても無害）
+// 体感高速化：キャッシュ（失敗しても無害）
 const WORKS_CACHE_TTL_MS = 1000 * 60 * 60 * 6; // 6h
 
 const keywordList = [
@@ -363,7 +364,7 @@ function normalizeVodServicesField(v: AnimeWork["vod_services"]): string[] {
 }
 
 /** =========================
- *  Series grouping (精度向上)
+ *  Series grouping
  * ========================= */
 function isMovieTitle(title: string) {
   const t = String(title || "");
@@ -436,6 +437,7 @@ function overallScore100(a: AnimeWork): number | null {
   }
   if (sumW <= 0) return null;
   const score = (sum / (sumW * 10)) * 100;
+  // ★ ③：常に小数1桁まで（89.0 のように出せるように、ここは丸めすぎない）
   return Math.round(score * 10) / 10;
 }
 
@@ -477,6 +479,7 @@ function StarRating({
   return (
     <span className="stars" style={{ fontSize: size, lineHeight: 1 }}>
       <span className="starsGlyph">{stars}</span>
+      {/* ③：必ず1桁 */}
       {showText ? <span className="starsText">{` ${v.toFixed(1)}/5`}</span> : null}
     </span>
   );
@@ -720,7 +723,12 @@ function Pagination({ page, totalPages, onChange }: { page: number; totalPages: 
 
       <div className="pagerNums" aria-label="pages">
         {items.map((it, idx) => {
-          if (it === "…") return <span key={`dots-${idx}`} className="pagerDots" aria-hidden="true">…</span>;
+          if (it === "…")
+            return (
+              <span key={`dots-${idx}`} className="pagerDots" aria-hidden="true">
+                …
+              </span>
+            );
           const n = it;
           const active = n === page;
           return (
@@ -884,7 +892,13 @@ export default function Home() {
 
   /** iOS: scroll lock */
   const scrollYRef = useRef(0);
-  const bodyPrevRef = useRef<{ position: string; top: string; width: string; overflow: string }>({ position: "", top: "", width: "", overflow: "" });
+  const bodyPrevRef = useRef<{ position: string; top: string; width: string; overflow: string }>({
+    position: "",
+    top: "",
+    width: "",
+    overflow: "",
+  });
+
   useEffect(() => {
     if (!selectedAnime) return;
 
@@ -973,7 +987,7 @@ export default function Home() {
   }
 
   /** =========================
-   *  Load works（⑥ 体感高速化：最初の1ページだけでloading解除→残りは追加で反映）
+   *  Load works（最初の1ページだけでloading解除→残りは追加で反映）
    * ========================= */
   const worksAbortRef = useRef<AbortController | null>(null);
 
@@ -1027,7 +1041,7 @@ export default function Home() {
     const cached = !opts?.force ? readWorksCache() : null;
     const hadCache = !!(cached && cached.length);
 
-    // ⑥：まずキャッシュを即表示
+    // まずキャッシュを即表示
     if (hadCache) setAnimeList(cached!);
 
     // loaderは「初回のみ」重く見せない
@@ -1061,13 +1075,12 @@ export default function Home() {
           all = all.concat(batch);
           setAnimeList(all);
 
-          // ⑥：最初の1ページが来たら、待ちを解除（残りは随時追加）
+          // 最初の1ページが来たら、待ちを解除（残りは随時追加）
           if (!firstBatchDone) {
             firstBatchDone = true;
             setLoadingWorks(false);
           }
         } else {
-          // 0件ならここで終了
           if (!firstBatchDone) setLoadingWorks(false);
         }
 
@@ -1080,10 +1093,8 @@ export default function Home() {
         await new Promise((r) => setTimeout(r, 0));
       }
 
-      // 完了：キャッシュ保存（大きすぎる時は無視される）
       if (all.length) writeWorksCache(all);
     } catch (e: any) {
-      // キャッシュがある場合は、表示は維持しつつエラーだけ出す
       setLoadError(e?.message || "作品取得に失敗しました（URL/KEY/RLS/ネットワーク）");
     } finally {
       setLoadingWorks(false);
@@ -1246,7 +1257,7 @@ export default function Home() {
   /** =========================
    *  Recommend
    * ========================= */
-  const [recMode, setRecMode] = useState<RecommendMode>("byWorks");
+  const [recMode, setRecMode] = useState<"byWorks" | "byGenre" | "byMood">("byWorks");
   useEffect(() => {
     resetResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1519,7 +1530,7 @@ export default function Home() {
   function runAnalysis() {
     const rawTitles = anInputs.map((s) => s.trim()).filter(Boolean);
 
-    // ④ 最低1作品に変更（他はそのまま）
+    // 最低1作品
     if (rawTitles.length < 1) return alert("1作品以上入力してください（作品数が多いほど精度が上がります）");
 
     const used: AnimeWork[] = [];
@@ -1822,6 +1833,7 @@ export default function Home() {
                 <span className="metaLabel">評価</span>
                 <span className="metaText">
                   <StarRating value={star} showText />
+                  {/* ③：必ず小数1桁 */}
                   {score100 !== null ? <span className="small muted">{`（${score100.toFixed(1)}/100）`}</span> : null}
                 </span>
               </div>
@@ -1869,15 +1881,19 @@ export default function Home() {
    * ========================= */
   const isLoading = loadingWorks;
 
+  // ★ ③：モーダル内での表示も常に1桁（計算は1回だけ）
+  const modalScore100 = selectedAnime ? overallScore100(selectedAnime) : null;
+  const modalStar = score100ToStar5(modalScore100);
+
   return (
     <div className="page">
       <header className="topHeader">
+        {/* ②：PCでもロゴ直下にサブコピーが来るように、縦積み固定 */}
         <div className="headerInner">
           <button type="button" className={`brandTitle ${logoFont.className}`} aria-label="AniMatch（ホームへ）" onClick={() => goTo("home")}>
             AniMatch
           </button>
 
-          {/* ⑤ 文言変更 */}
           <div className="brandSub">
             あなたにぴったりなアニメを紹介します。
             {bgSyncingWorks && !isLoading ? <span className="syncBadge">更新中…</span> : null}
@@ -2487,7 +2503,7 @@ export default function Home() {
         {/* =========================
          *  Results area (Recommend / Info only)
          * ========================= */}
-        {(view === "recommend" || view === "info") ? (
+        {view === "recommend" || view === "info" ? (
           <div ref={resultRef} className={resultFlash ? "flashRing" : ""} style={{ marginTop: 14 }}>
             {resultAll.length ? (
               <div className="panel">
@@ -2515,7 +2531,6 @@ export default function Home() {
 
         {/* =========================
          *  Modal
-         *  ①ボタン白 / ②ボタンとカードの重なり防止（ボタンをスクロール領域外へ分離）
          * ========================= */}
         {selectedAnime ? (
           <div className="modalOverlay" onClick={closeAnimeModal} role="dialog" aria-modal="true">
@@ -2526,6 +2541,7 @@ export default function Home() {
                 </button>
               </div>
 
+              {/* ④：モーダル内でも「タップで拡大縮小（ダブルタップ/ピンチ）」を邪魔しない */}
               <div className="modalScroll">
                 <div className="modalCard">
                   <div className="modalTop">
@@ -2553,8 +2569,8 @@ export default function Home() {
                       <div className="metaLine">
                         <span className="metaLabel">評価</span>
                         <span className="metaText">
-                          <StarRating value={score100ToStar5(overallScore100(selectedAnime))} showText />
-                          {overallScore100(selectedAnime) !== null ? <span className="small muted">{`（${overallScore100(selectedAnime)!.toFixed(1)}/100）`}</span> : null}
+                          <StarRating value={modalStar} showText />
+                          {modalScore100 !== null ? <span className="small muted">{`（${modalScore100.toFixed(1)}/100）`}</span> : null}
                         </span>
                       </div>
 
@@ -2660,18 +2676,47 @@ export default function Home() {
           background: #f6f7f9;
           color: #111;
         }
+
+        /* ①：タップ/選択時の黒ハイライトを全体で抑止し、淡いグレーに統一 */
         * {
           box-sizing: border-box;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0.12);
+          tap-highlight-color: rgba(0, 0, 0, 0.12);
         }
 
-        /* ③ 文字が見える選択色（黒ベタ回避） */
+        /* ①：テキスト選択（全要素）を淡い灰色へ */
         ::selection {
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.12);
+          color: inherit;
+        }
+        *::selection {
+          background: rgba(0, 0, 0, 0.12);
           color: inherit;
         }
         ::-moz-selection {
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.12);
           color: inherit;
+        }
+
+        /* ①：押下(:active) の瞬間に黒く見えるケースも淡い灰色へ */
+        button:active,
+        a:active,
+        .pill:active,
+        .btnGhost:active,
+        .btnTiny:active,
+        .pagerNum:active,
+        .pagerArrow:active,
+        .openBtn:active,
+        .featureCard:active,
+        .collapseHead:active,
+        .suggestItem:active,
+        .rankTitleBtn:active,
+        .recExplainTitle:active,
+        .inlineTitleLink:active,
+        .checkLabel:active,
+        .vodIconLink:active,
+        .modalCloseBtn:active {
+          background: rgba(0, 0, 0, 0.08) !important;
         }
 
         .page {
@@ -2691,11 +2736,18 @@ export default function Home() {
           background: rgba(246, 247, 249, 0.86);
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
+
+        /* ②：常に縦積みにする */
         .headerInner {
           max-width: 980px;
           margin: 0 auto;
           padding: 16px 16px 14px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
         }
+
         .brandTitle {
           font-size: 40px;
           letter-spacing: 0.5px;
@@ -2705,31 +2757,33 @@ export default function Home() {
           text-indent: 0 !important;
           transform: none !important;
           color: #111;
-          background: transparent;
+          background: transparent !important;
           border: none;
           cursor: pointer;
+          display: block; /* ② */
         }
         .brandTitle:focus-visible {
           outline: 2px solid rgba(0, 0, 0, 0.16);
           outline-offset: 6px;
           border-radius: 10px;
         }
+
         .brandSub {
-          margin-top: 6px;
+          margin-top: 0; /* ② */
           font-size: 13px;
           opacity: 0.75;
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          flex-wrap: wrap;
+          display: block; /* ② */
         }
+
         .syncBadge {
           font-size: 12px;
           opacity: 0.8;
           padding: 4px 10px;
           border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: rgba(255, 255, 255, 0.6);
+          margin-left: 10px;
+          display: inline-block;
         }
 
         .container {
@@ -2824,7 +2878,7 @@ export default function Home() {
           gap: 12px;
           padding: 14px;
           border-radius: 18px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: #fff;
           cursor: pointer;
           color: #111;
@@ -2886,12 +2940,10 @@ export default function Home() {
           font-size: 13px;
           font-weight: 400;
         }
-
-        /* ③：選択中が真っ黒にならないよう、淡いグレーに */
         .pill.active {
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           color: #111;
-          border-color: rgba(0, 0, 0, 0.20);
+          border-color: rgba(0, 0, 0, 0.2);
         }
 
         /* Inputs */
@@ -2921,11 +2973,11 @@ export default function Home() {
           right: 0;
           top: calc(100% + 6px);
           background: #fff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           overflow: hidden;
           z-index: 20;
-          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
         }
         .suggestItem {
           padding: 10px 12px;
@@ -2942,7 +2994,7 @@ export default function Home() {
           gap: 10px;
         }
         .collapseBox {
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           background: rgba(0, 0, 0, 0.015);
         }
@@ -3010,8 +3062,6 @@ export default function Home() {
         .checkItem input[type="checkbox"] {
           accent-color: #111;
         }
-
-        /* ③：選択中でも文字が読める淡いグレー */
         .checkLabel {
           display: inline-flex;
           align-items: center;
@@ -3022,8 +3072,8 @@ export default function Home() {
           background: rgba(0, 0, 0, 0.02);
         }
         .checkItem input:checked + .checkLabel {
-          background: rgba(0, 0, 0, 0.10);
-          border-color: rgba(0, 0, 0, 0.20);
+          background: rgba(0, 0, 0, 0.1);
+          border-color: rgba(0, 0, 0, 0.2);
         }
         .checkText {
           opacity: 0.95;
@@ -3032,7 +3082,7 @@ export default function Home() {
 
         .optionBox {
           margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 10px;
           max-height: 240px;
@@ -3055,7 +3105,7 @@ export default function Home() {
         .card {
           margin-top: 12px;
           background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 18px;
           padding: 14px;
           box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
@@ -3074,7 +3124,7 @@ export default function Home() {
           object-fit: cover;
           border-radius: 16px;
           background: rgba(0, 0, 0, 0.02);
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .cardInfo {
           min-width: 0;
@@ -3167,11 +3217,12 @@ export default function Home() {
           height: 34px;
           border-radius: 10px;
           display: block;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .vodIconLink {
           display: inline-flex;
           align-items: center;
+          background: transparent !important;
         }
 
         /* Ranking list */
@@ -3197,17 +3248,20 @@ export default function Home() {
           background: transparent;
           color: #111;
           cursor: pointer;
-          padding: 0;
+          padding: 6px 8px;
           font-size: 14px;
           text-decoration: underline;
           text-underline-offset: 3px;
           opacity: 0.95;
           font-weight: 400;
+          border-radius: 10px;
+        }
+        .rankTitleBtn:hover {
+          background: rgba(0, 0, 0, 0.03);
         }
         .rankTitleBtn:focus-visible {
           outline: 2px solid rgba(0, 0, 0, 0.16);
           outline-offset: 4px;
-          border-radius: 8px;
           background: rgba(0, 0, 0, 0.04);
         }
 
@@ -3220,7 +3274,11 @@ export default function Home() {
           text-underline-offset: 3px;
           font-size: 13px;
           font-weight: 700;
-          padding: 0;
+          padding: 6px 8px;
+          border-radius: 10px;
+        }
+        .inlineTitleLink:hover {
+          background: rgba(0, 0, 0, 0.03);
         }
 
         /* Analyze */
@@ -3238,7 +3296,7 @@ export default function Home() {
         }
         .profileBox {
           margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 12px;
           background: rgba(0, 0, 0, 0.015);
@@ -3261,7 +3319,7 @@ export default function Home() {
         .profileBar {
           height: 10px;
           border-radius: 999px;
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           overflow: hidden;
         }
         .profileFill {
@@ -3290,7 +3348,7 @@ export default function Home() {
         .recExplain {
           padding: 12px;
           border-radius: 14px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: rgba(0, 0, 0, 0.015);
         }
         .recExplainTitle {
@@ -3298,16 +3356,19 @@ export default function Home() {
           background: transparent;
           color: #111;
           cursor: pointer;
-          padding: 0;
+          padding: 6px 8px;
           font-size: 14px;
           font-weight: 400;
           text-decoration: underline;
           text-underline-offset: 3px;
+          border-radius: 10px;
+        }
+        .recExplainTitle:hover {
+          background: rgba(0, 0, 0, 0.03);
         }
         .recExplainTitle:focus-visible {
           outline: 2px solid rgba(0, 0, 0, 0.16);
           outline-offset: 4px;
-          border-radius: 8px;
           background: rgba(0, 0, 0, 0.04);
         }
         .recExplainReasons {
@@ -3318,7 +3379,7 @@ export default function Home() {
 
         /* Score panel (modal) */
         .scorePanel {
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 12px;
           background: rgba(0, 0, 0, 0.015);
@@ -3339,7 +3400,7 @@ export default function Home() {
         .scoreBar {
           height: 10px;
           border-radius: 999px;
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           overflow: hidden;
         }
         .scoreBarFill {
@@ -3398,11 +3459,10 @@ export default function Home() {
           align-items: center;
           justify-content: center;
         }
-        /* ③：アクティブページも黒ベタにしない */
         .pagerNum.active {
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           color: #111;
-          border-color: rgba(0, 0, 0, 0.20);
+          border-color: rgba(0, 0, 0, 0.2);
         }
         .pagerDots {
           opacity: 0.6;
@@ -3412,7 +3472,7 @@ export default function Home() {
 
         /* Flash ring */
         .flashRing {
-          outline: 2px solid rgba(0, 0, 0, 0.10);
+          outline: 2px solid rgba(0, 0, 0, 0.1);
           outline-offset: 6px;
           border-radius: 18px;
         }
@@ -3429,15 +3489,16 @@ export default function Home() {
           padding: 12px;
           overflow: hidden;
           z-index: 50;
+          /* ④：ズーム動作を妨げない */
+          touch-action: auto;
         }
-
-        /* ①②：ボタンをスクロール領域の外に分離して、重なりを防止 */
         .modalShell {
           width: 100%;
           max-width: 980px;
           max-height: calc(100dvh - 24px);
           display: flex;
           flex-direction: column;
+          touch-action: auto; /* ④ */
         }
         .modalCloseBar {
           flex: 0 0 auto;
@@ -3445,12 +3506,11 @@ export default function Home() {
           justify-content: flex-end;
           padding: 6px 0 10px;
         }
-        /* ①：閉じるボタンはカードと同じ白 */
         .modalCloseBtn {
           padding: 8px 12px;
           border-radius: 999px;
           border: 1px solid rgba(0, 0, 0, 0.12);
-          background: #ffffff;
+          background: #ffffff !important;
           color: #111;
           cursor: pointer;
           font-size: 13px;
@@ -3470,12 +3530,13 @@ export default function Home() {
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
-          touch-action: pan-y;
+          /* ④：ここが pan-y だとダブルタップ/ピンチが効かない端末があるので auto に戻す */
+          touch-action: auto;
         }
 
         .modalCard {
           background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 18px;
           padding: 14px;
           box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
@@ -3493,7 +3554,7 @@ export default function Home() {
           height: auto;
           object-fit: cover;
           border-radius: 16px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .modalInfo {
           min-width: 0;
@@ -3509,6 +3570,7 @@ export default function Home() {
           text-decoration: underline;
           text-underline-offset: 3px;
           font-weight: 400;
+          background: transparent !important;
         }
 
         /* Mobile */
