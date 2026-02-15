@@ -294,8 +294,6 @@ function toScore10(v: any): number | null {
   if (v === null || v === undefined) return null;
   const n = Number(v);
   if (!Number.isFinite(n)) return null;
-  // DBはsmallint想定だが、表示は小数1桁で統一したいので「四捨五入しない」
-  // （ただし範囲だけ丸める）
   return clamp(n, 0, 10);
 }
 function fmt10(v: number | null) {
@@ -435,7 +433,7 @@ function overallScore100(a: AnimeWork): number | null {
   }
   if (sumW <= 0) return null;
   const score = (sum / (sumW * 10)) * 100;
-  return Math.round(score * 10) / 10; // 0.1刻み
+  return Math.round(score * 10) / 10;
 }
 
 function score100ToStar5(score100: number | null): number | null {
@@ -852,10 +850,24 @@ export default function Home() {
     return img || titleImage(work.title);
   }
 
-  // modal
+  // modal（作品詳細）
   const [selectedAnime, setSelectedAnime] = useState<AnimeWork | null>(null);
   const [sourceLinks, setSourceLinks] = useState<SourceLink[]>([]);
   const [sourceLoading, setSourceLoading] = useState(false);
+
+  // ⑤ 管理人プロフィール（右上ボタン → モーダル）
+  const [profileOpen, setProfileOpen] = useState(false);
+  function openProfileModal() {
+    // 作品詳細を開いている場合は閉じてから
+    setSelectedAnime(null);
+    setProfileOpen(true);
+    try {
+      trackEvent({ event_name: "profile_open" });
+    } catch {}
+  }
+  function closeProfileModal() {
+    setProfileOpen(false);
+  }
 
   // VOD cache（必要な分だけ取得して高速化）
   const vodMapRef = useRef<Map<number, string[]>>(new Map());
@@ -951,6 +963,9 @@ export default function Home() {
   }
 
   function openAnimeModal(base: AnimeWork) {
+    // プロフィールを開いているなら閉じる
+    if (profileOpen) setProfileOpen(false);
+
     const id = Number(base.id || 0);
     const vod = getVodForWork(base);
 
@@ -971,8 +986,12 @@ export default function Home() {
   const bodyPrevRef = useRef<{ overflow: string; overflowX: string; overflowY: string } | null>(null);
   const htmlPrevRef = useRef<{ overflow: string; overflowX: string; overflowY: string } | null>(null);
 
+  // ✅ ① 詳細カード/プロフィールの “中だけスクロール” を確実にするため、
+  //    「どちらかのモーダルが開いている時」に背景スクロールのみ停止
+  const isAnyModalOpen = !!selectedAnime || profileOpen;
+
   useEffect(() => {
-    if (!selectedAnime) return;
+    if (!isAnyModalOpen) return;
 
     scrollYRef.current = window.scrollY || 0;
 
@@ -987,12 +1006,14 @@ export default function Home() {
       overflowY: document.documentElement.style.overflowY,
     };
 
-    // 背景スクロールのみ止める（ズーム操作を邪魔しにくい）
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeAnimeModal();
+      if (e.key === "Escape") {
+        if (selectedAnime) closeAnimeModal();
+        if (profileOpen) closeProfileModal();
+      }
     };
     window.addEventListener("keydown", onKeyDown);
 
@@ -1012,7 +1033,7 @@ export default function Home() {
       window.scrollTo(0, scrollYRef.current);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedAnime]);
+  }, [isAnyModalOpen, selectedAnime, profileOpen]);
 
   /** source links */
   useEffect(() => {
@@ -1122,7 +1143,7 @@ export default function Home() {
         const url = `${SUPABASE_URL}/rest/v1/anime_works?select=${encodeURIComponent(selectCols)}&order=id.asc&limit=${limit}&offset=${offset}`;
         const res = await fetch(url, { headers });
 
-        // 最初の1回だけ：もし select がコケたら fallback してやり直す（余計な事前リクエストを省略）
+        // 最初の1回だけ：もし select がコケたら fallback してやり直す
         if (!res.ok && first) {
           selectCols = await buildSelectColsFallback(SUPABASE_URL, headers);
           selectColsRef.current = selectCols;
@@ -1312,6 +1333,7 @@ export default function Home() {
     setStudioFilterText("");
 
     closeAnimeModal();
+    closeProfileModal();
   }
 
   /** =========================
@@ -1860,7 +1882,14 @@ export default function Home() {
           <div className="cardInfo">
             <div className="cardTitleRow">
               <div className="cardTitle">{a.title}</div>
-              <button type="button" className="openBtn" onClick={() => openAnimeModal(a)}>
+              <button
+                type="button"
+                className="openBtn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openAnimeModal(a);
+                }}
+              >
                 開く
               </button>
             </div>
@@ -1948,10 +1977,21 @@ export default function Home() {
     <div className="page">
       <header className="topHeader">
         <div className="headerInner">
-          <button type="button" className={`brandTitle ${logoFont.className}`} aria-label="AniMatch（ホームへ）" onClick={() => goTo("home")}>
-            AniMatch
-          </button>
-          <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
+          {/* ② ロゴと文言の左揃えを安定化 + ⑤ 右上にプロフィール導線 */}
+          <div className="headerBar">
+            <div className="brandBox">
+              <button type="button" className={`brandTitle ${logoFont.className}`} aria-label="AniMatch（ホームへ）" onClick={() => goTo("home")}>
+                AniMatch
+              </button>
+              <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
+            </div>
+
+            <div className="headerNav">
+              <button type="button" className="navBtn" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
+                管理人プロフィール
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -1968,7 +2008,6 @@ export default function Home() {
           </div>
         ) : null}
 
-        {/* 体感：ホームではうるさく出しすぎない */}
         {isLoading && view !== "home" ? (
           <div className="panel">
             <div className="small muted">読み込み中…（作品 {loadedCount} 件）</div>
@@ -2026,7 +2065,8 @@ export default function Home() {
                 </div>
                 <div className="featureText">
                   <div className="featureTitle">管理人のおすすめアニメ</div>
-                  <div className="featureSub">おすすめ判定 true のみ</div>
+                  {/* ③ ここを変更 */}
+                  <div className="featureSub">とりあえず何か見たい人へ</div>
                 </div>
                 <div className="featureArrow">→</div>
               </button>
@@ -2450,8 +2490,9 @@ export default function Home() {
 
             <div className="panel">
               <div className="panelTitle">管理人のおすすめアニメ</div>
+              {/* ④ 文言をこれだけに変更 */}
               <div className="small muted" style={{ marginTop: 6 }}>
-                ※ランキングではありません（ランダム表示）／作品名タップで詳細
+                ※ランキングではありません
               </div>
 
               <div className="filters" style={{ marginTop: 10 }}>
@@ -2609,7 +2650,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  Modal（カード枠と閉じる位置を固定／中身だけスクロール）
+         *  Modal（作品詳細）— ① 中身だけスクロール（CSSはPart2で修正）
          * ========================= */}
         {selectedAnime ? (
           <div className="modalOverlay" onClick={closeAnimeModal}>
@@ -2726,7 +2767,11 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {selectedAnime.summary ? <div className="desc" style={{ marginTop: 12 }}>{shortSummary(selectedAnime.summary, 260)}</div> : null}
+                  {selectedAnime.summary ? (
+                    <div className="desc" style={{ marginTop: 12 }}>
+                      {shortSummary(selectedAnime.summary, 260)}
+                    </div>
+                  ) : null}
 
                   <div style={{ height: 14 }} />
                 </div>
@@ -2734,9 +2779,87 @@ export default function Home() {
             </div>
           </div>
         ) : null}
+
+        {/* =========================
+         *  ⑤ 管理人プロフィール Modal（YouTube & ブログへワンクリック）
+         * ========================= */}
+        {profileOpen ? (
+          <div className="modalOverlay" onClick={closeProfileModal}>
+            <div className="modalDialog" onClick={(e) => e.stopPropagation()}>
+              <div className="modalCard">
+                <div className="modalHeader profileHeader">
+                  <div className="modalHeaderTitle">管理人プロフィール</div>
+                  <button className="modalCloseBtn" type="button" onClick={closeProfileModal} aria-label="閉じる">
+                    閉じる（Esc）
+                  </button>
+                </div>
+
+                <div className="modalBody">
+                  <div className="adminProfileHero">
+                    <div className="adminAvatar" aria-hidden="true">
+                      か
+                    </div>
+                    <div className="adminHeroText">
+                      <div className="adminName">かさ【ゆるオタ】</div>
+                      <div className="adminTag">YouTubeでアニメ紹介／AniMatch運営</div>
+                    </div>
+                  </div>
+
+                  <div className="adminProfileCard" style={{ marginTop: 12 }}>
+                    <div className="adminProfileCardTitle">リンク</div>
+
+                    <div className="adminLinkGrid">
+                      <a
+                        className="adminLinkBtn"
+                        href="https://youtube.com/@kasa-yuruota"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          try {
+                            trackEvent({ event_name: "profile_click", meta: { to: "youtube" } });
+                          } catch {}
+                        }}
+                      >
+                        YouTubeチャンネルへ
+                      </a>
+
+                      <a
+                        className="adminLinkBtn"
+                        href="https://kasa-yuruotablog.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          try {
+                            trackEvent({ event_name: "profile_click", meta: { to: "blog" } });
+                          } catch {}
+                        }}
+                      >
+                        ブログへ
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="adminProfileCard" style={{ marginTop: 12 }}>
+                    <div className="adminProfileCardTitle">ひとこと</div>
+                    <div className="adminAbout">
+                      「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
+                      <br />
+                      好きな作品が見つかったら、YouTubeやブログでも深掘りして紹介しています。
+                    </div>
+                  </div>
+
+                  <div style={{ height: 10 }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </main>
 
-      <style jsx global>{`
+      {/* ===== Part2 はここから style jsx global が続きます ===== */}
+    <style jsx global>{`
         html,
         body {
           margin: 0;
