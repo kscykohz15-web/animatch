@@ -294,13 +294,7 @@ function toScore10(v: any): number | null {
   if (v === null || v === undefined) return null;
   const n = Number(v);
   if (!Number.isFinite(n)) return null;
-  // DBはsmallint想定だが、表示は小数1桁で統一したいので「四捨五入しない」
-  // （ただし範囲だけ丸める）
   return clamp(n, 0, 10);
-}
-function fmt10(v: number | null) {
-  if (v === null) return "—";
-  return v.toFixed(1);
 }
 
 function shortSummary(s?: string | null, max = 110) {
@@ -847,6 +841,7 @@ export default function Home() {
     return () => (mq as any)[rm]("change", apply);
   }, []);
 
+  // ✅ スマホ時だけ wide を優先（指定通り）
   function pickWorkImage(work: AnimeWork) {
     const img = isMobile ? work.image_url_wide ?? work.image_url : work.image_url;
     return img || titleImage(work.title);
@@ -987,9 +982,10 @@ export default function Home() {
       overflowY: document.documentElement.style.overflowY,
     };
 
-    // 背景スクロールのみ止める（ズーム操作を邪魔しにくい）
+    // 背景スクロールのみ止める
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeAnimeModal();
@@ -1122,7 +1118,7 @@ export default function Home() {
         const url = `${SUPABASE_URL}/rest/v1/anime_works?select=${encodeURIComponent(selectCols)}&order=id.asc&limit=${limit}&offset=${offset}`;
         const res = await fetch(url, { headers });
 
-        // 最初の1回だけ：もし select がコケたら fallback してやり直す（余計な事前リクエストを省略）
+        // 最初の1回だけ：もし select がコケたら fallback してやり直す
         if (!res.ok && first) {
           selectCols = await buildSelectColsFallback(SUPABASE_URL, headers);
           selectColsRef.current = selectCols;
@@ -1804,8 +1800,29 @@ export default function Home() {
 
   /** =========================
    *  Admin recommended（管理人のおすすめ）
+   *  ✅ “次の10件”で前の10件は残さず切替（ページ切替）
    * ========================= */
-  const adminSeedRef = useRef<number>(Math.floor(Date.now() / 1000));
+  const [adminSeed, setAdminSeed] = useState(() => Math.floor(Date.now() / 1000));
+  const [adminPage, setAdminPage] = useState(1);
+
+  const adminRecsRaw = useMemo(() => animeList.filter((a) => a.is_recommended === true), [animeList]);
+
+  const adminRecs = useMemo(() => {
+    const shuffled = shuffleWithSeed(adminRecsRaw, adminSeed);
+    const filtered = applyCollapsedFilters(shuffled);
+    return filtered;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adminRecsRaw, adminSeed, vodFilterOpen, studioFilterOpen, vodChecked, studioChecked, studioFilterText]);
+
+  const adminTotalPages = useMemo(() => Math.max(1, Math.ceil(adminRecs.length / RESULT_PAGE_SIZE)), [adminRecs.length]);
+  const adminVisible = useMemo(() => {
+    const start = (adminPage - 1) * RESULT_PAGE_SIZE;
+    return adminRecs.slice(start, start + RESULT_PAGE_SIZE);
+  }, [adminRecs, adminPage]);
+
+  useEffect(() => {
+    setAdminPage(1);
+  }, [adminSeed, vodFilterOpen, studioFilterOpen, vodChecked, studioChecked, studioFilterText]);
 
   function buildAdminReasons(a: AnimeWork) {
     const axes = OVERALL_WEIGHTS.map((ax) => {
@@ -1825,15 +1842,6 @@ export default function Home() {
 
     return lines.slice(0, 3);
   }
-
-  const adminRecsRaw = useMemo(() => animeList.filter((a) => a.is_recommended === true), [animeList]);
-
-  const adminRecs = useMemo(() => {
-    const shuffled = shuffleWithSeed(adminRecsRaw, adminSeedRef.current);
-    const filtered = applyCollapsedFilters(shuffled);
-    return filtered;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adminRecsRaw, vodFilterOpen, studioFilterOpen, vodChecked, studioChecked, studioFilterText]);
 
   /** =========================
    *  Card UI（結果カード：詳細寄せ）
@@ -1860,7 +1868,16 @@ export default function Home() {
           <div className="cardInfo">
             <div className="cardTitleRow">
               <div className="cardTitle">{a.title}</div>
-              <button type="button" className="openBtn" onClick={() => openAnimeModal(a)}>
+
+              {/* ✅ 二重発火防止（card onClick と分離） */}
+              <button
+                type="button"
+                className="openBtn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openAnimeModal(a);
+                }}
+              >
                 開く
               </button>
             </div>
@@ -2449,9 +2466,15 @@ export default function Home() {
             </div>
 
             <div className="panel">
-              <div className="panelTitle">管理人のおすすめアニメ</div>
+              <div className="panelTitleRow">
+                <div className="panelTitle">管理人のおすすめアニメ</div>
+                <div className="small muted">
+                  {adminRecs.length}件（{adminPage}/{adminTotalPages}）
+                </div>
+              </div>
+
               <div className="small muted" style={{ marginTop: 6 }}>
-                ※ランキングではありません（ランダム表示）／作品名タップで詳細
+                ※ランキングではありません（ランダム表示）／「次の10件」で前の10件は残しません
               </div>
 
               <div className="filters" style={{ marginTop: 10 }}>
@@ -2495,9 +2518,36 @@ export default function Home() {
                 </CollapsibleFilter>
               </div>
 
+              <div className="rowActions" style={{ marginTop: 10 }}>
+                <button
+                  className="btnTiny"
+                  type="button"
+                  onClick={() => setAdminSeed(Math.floor(Date.now() / 1000))}
+                  title="並び替え（ランダムを更新）"
+                >
+                  シャッフル
+                </button>
+
+                <button
+                  className="btnTiny"
+                  type="button"
+                  onClick={() => {
+                    if (adminTotalPages <= 1) return;
+                    setAdminPage((p) => (p >= adminTotalPages ? 1 : p + 1));
+                  }}
+                  title="次の10件へ（前の10件は表示しません）"
+                >
+                  次の10件 →
+                </button>
+              </div>
+
+              <div style={{ marginTop: 10 }}>
+                <Pagination page={adminPage} totalPages={adminTotalPages} onChange={setAdminPage} />
+              </div>
+
               <div className="recExplainList" style={{ marginTop: 12 }}>
-                {adminRecs.length ? (
-                  adminRecs.map((w) => (
+                {adminVisible.length ? (
+                  adminVisible.map((w) => (
                     <div key={String(w.id ?? w.title)} className="recExplain">
                       <button className="recExplainTitle" type="button" onClick={() => openAnimeModal(w)}>
                         {w.title}
@@ -2516,6 +2566,10 @@ export default function Home() {
                     おすすめ作品が見つかりませんでした（is_recommended=true を確認）
                   </div>
                 )}
+              </div>
+
+              <div style={{ marginTop: 10 }}>
+                <Pagination page={adminPage} totalPages={adminTotalPages} onChange={setAdminPage} />
               </div>
             </div>
           </>
@@ -2609,7 +2663,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  Modal（カード枠と閉じる位置を固定／中身だけスクロール）
+         *  Modal（閉じる固定／中身だけ縦スクロール）
          * ========================= */}
         {selectedAnime ? (
           <div className="modalOverlay" onClick={closeAnimeModal}>
@@ -2681,7 +2735,15 @@ export default function Home() {
                         <span className="metaLabel">公式サイト</span>
                         <span className="metaText">
                           {selectedAnime.official_url ? (
-                            <a className="link" href={selectedAnime.official_url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                            <a
+                              className="link"
+                              href={selectedAnime.official_url}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
                               開く
                             </a>
                           ) : (
@@ -2712,7 +2774,12 @@ export default function Home() {
                         <div className="metaLine">
                           <span className="metaLabel">配信</span>
                           <span className="metaText">
-                            <VodIcons services={getVodForWork(selectedAnime).services} watchUrls={getVodForWork(selectedAnime).urls} workId={Number(selectedAnime.id || 0)} onAnyClickStopPropagation />
+                            <VodIcons
+                              services={getVodForWork(selectedAnime).services}
+                              watchUrls={getVodForWork(selectedAnime).urls}
+                              workId={Number(selectedAnime.id || 0)}
+                              onAnyClickStopPropagation
+                            />
                           </span>
                         </div>
                       </div>
@@ -2726,7 +2793,11 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {selectedAnime.summary ? <div className="desc" style={{ marginTop: 12 }}>{shortSummary(selectedAnime.summary, 260)}</div> : null}
+                  {selectedAnime.summary ? (
+                    <div className="desc" style={{ marginTop: 12 }}>
+                      {shortSummary(selectedAnime.summary, 260)}
+                    </div>
+                  ) : null}
 
                   <div style={{ height: 14 }} />
                 </div>
@@ -2743,13 +2814,13 @@ export default function Home() {
           padding: 0 !important;
           background: #f6f7f9;
           color: #111;
+          overflow-x: hidden; /* ✅ 横にはみ出しても横スクロールさせない */
         }
         * {
           box-sizing: border-box;
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08); /* ③ タップ時の黒塗りを防止 */
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
         }
 
-        /* ① どの選択でも “薄いグレー” に統一 */
         ::selection {
           background: rgba(0, 0, 0, 0.08);
           color: inherit;
@@ -2759,7 +2830,6 @@ export default function Home() {
           color: inherit;
         }
 
-        /* iOS: 長押し選択で黒くなりやすいので、UI部品は選択不可に */
         button,
         label,
         .pill,
@@ -2782,7 +2852,6 @@ export default function Home() {
           color: #111;
         }
 
-        /* Header */
         .topHeader {
           position: sticky;
           top: 0;
@@ -2795,7 +2864,7 @@ export default function Home() {
           max-width: 980px;
           margin: 0 auto;
           padding: 16px 16px 14px;
-          display: flex; /* ② PCでもロゴ直下に文言 */
+          display: flex;
           flex-direction: column;
           align-items: flex-start;
           gap: 6px;
@@ -2829,7 +2898,6 @@ export default function Home() {
           padding: 14px 16px 30px;
         }
 
-        /* Panels */
         .panel {
           background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.09);
@@ -2861,7 +2929,6 @@ export default function Home() {
           opacity: 0.7;
         }
 
-        /* Buttons */
         .btn {
           margin-top: 12px;
           padding: 10px 14px;
@@ -2909,7 +2976,6 @@ export default function Home() {
           background: rgba(0, 0, 0, 0.08);
         }
 
-        /* Home cards */
         .homeGrid {
           display: grid;
           grid-template-columns: 1fr;
@@ -2924,7 +2990,7 @@ export default function Home() {
           gap: 12px;
           padding: 14px;
           border-radius: 18px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: #fff;
           cursor: pointer;
           color: #111;
@@ -2964,7 +3030,6 @@ export default function Home() {
           font-weight: 400;
         }
 
-        /* Top row */
         .topRow {
           display: flex;
           justify-content: space-between;
@@ -2973,7 +3038,6 @@ export default function Home() {
           margin-bottom: 12px;
         }
 
-        /* Tabs */
         .tabs {
           display: flex;
           gap: 8px;
@@ -2999,7 +3063,6 @@ export default function Home() {
           font-weight: 400;
         }
 
-        /* Inputs */
         .input {
           width: 100%;
           padding: 12px 12px;
@@ -3026,11 +3089,11 @@ export default function Home() {
           right: 0;
           top: calc(100% + 6px);
           background: #fff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           overflow: hidden;
           z-index: 20;
-          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
         }
         .suggestItem {
           padding: 10px 12px;
@@ -3044,13 +3107,12 @@ export default function Home() {
           background: rgba(0, 0, 0, 0.08);
         }
 
-        /* Collapsible filters */
         .filters {
           display: grid;
           gap: 10px;
         }
         .collapseBox {
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           background: rgba(0, 0, 0, 0.015);
         }
@@ -3103,7 +3165,6 @@ export default function Home() {
           padding: 0 12px 12px;
         }
 
-        /* Options */
         .checkGrid {
           display: flex;
           flex-wrap: wrap;
@@ -3121,7 +3182,7 @@ export default function Home() {
           border-radius: 10px;
         }
         .checkItem:active {
-          background: rgba(0, 0, 0, 0.06); /* ③ 黒塗りにならない */
+          background: rgba(0, 0, 0, 0.06);
         }
         .checkLabel {
           display: inline-flex;
@@ -3135,7 +3196,7 @@ export default function Home() {
 
         .optionBox {
           margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 10px;
           max-height: 240px;
@@ -3154,11 +3215,10 @@ export default function Home() {
           border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        /* Cards */
         .card {
           margin-top: 12px;
           background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 18px;
           padding: 14px;
           box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
@@ -3166,18 +3226,18 @@ export default function Home() {
         }
         .cardTop {
           display: grid;
-          grid-template-columns: 220px 1fr;
+          grid-template-columns: 210px 1fr; /* ✅ 横長画像を一回り小さく */
           gap: 14px;
           align-items: start;
         }
         .poster {
-          width: 220px;
+          width: 210px; /* ✅ 一回り小さく */
           aspect-ratio: 16 / 9;
           height: auto;
           object-fit: cover;
           border-radius: 16px;
           background: rgba(0, 0, 0, 0.02);
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .cardInfo {
           min-width: 0;
@@ -3189,7 +3249,7 @@ export default function Home() {
           gap: 10px;
         }
         .cardTitle {
-          font-size: 18px;
+          font-size: 17px; /* ✅ 文字を少し戻す */
           font-weight: 700;
           letter-spacing: 0.2px;
           line-height: 1.25;
@@ -3218,7 +3278,7 @@ export default function Home() {
           opacity: 0.9;
           font-weight: 400;
           word-break: break-word;
-          user-select: text; /* 説明文は選択可 */
+          user-select: text;
         }
 
         .metaGrid {
@@ -3262,7 +3322,6 @@ export default function Home() {
           font-weight: 400;
         }
 
-        /* VOD */
         .vodIcons {
           display: inline-flex;
           gap: 10px;
@@ -3274,7 +3333,7 @@ export default function Home() {
           height: 34px;
           border-radius: 10px;
           display: block;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .vodIconLink {
           display: inline-flex;
@@ -3293,7 +3352,6 @@ export default function Home() {
           padding: 0;
         }
 
-        /* Analyze */
         .grid2 {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -3308,7 +3366,7 @@ export default function Home() {
         }
         .profileBox {
           margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 12px;
           background: rgba(0, 0, 0, 0.015);
@@ -3331,7 +3389,7 @@ export default function Home() {
         .profileBar {
           height: 10px;
           border-radius: 999px;
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           overflow: hidden;
         }
         .profileFill {
@@ -3360,7 +3418,7 @@ export default function Home() {
         .recExplain {
           padding: 12px;
           border-radius: 14px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: rgba(0, 0, 0, 0.015);
         }
         .recExplainTitle {
@@ -3386,9 +3444,8 @@ export default function Home() {
           gap: 4px;
         }
 
-        /* Score panel (modal) */
         .scorePanel {
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 12px;
           background: rgba(0, 0, 0, 0.015);
@@ -3409,7 +3466,7 @@ export default function Home() {
         .scoreBar {
           height: 10px;
           border-radius: 999px;
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           overflow: hidden;
         }
         .scoreBarFill {
@@ -3425,7 +3482,6 @@ export default function Home() {
           font-variant-numeric: tabular-nums;
         }
 
-        /* Pagination */
         .pagerBar {
           margin-top: 10px;
           display: flex;
@@ -3486,14 +3542,13 @@ export default function Home() {
           padding: 0 6px;
         }
 
-        /* Flash ring */
         .flashRing {
-          outline: 2px solid rgba(0, 0, 0, 0.10);
+          outline: 2px solid rgba(0, 0, 0, 0.1);
           outline-offset: 6px;
           border-radius: 18px;
         }
 
-        /* Modal（枠固定 + 中身スクロール） */
+        /* ✅ Modal：ヘッダー固定／中身だけ縦スクロール（はみ出し時は縦のみスワイプ） */
         .modalOverlay {
           position: fixed;
           inset: 0;
@@ -3513,7 +3568,7 @@ export default function Home() {
         }
         .modalCard {
           background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 18px;
           box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
           color: #111;
@@ -3525,7 +3580,7 @@ export default function Home() {
         .modalHeader {
           flex: 0 0 auto;
           padding: 10px;
-          background: #fff; /* ① 閉じるボタン周りもカードと同色 */
+          background: #fff;
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           display: flex;
           justify-content: flex-end;
@@ -3534,7 +3589,7 @@ export default function Home() {
           padding: 10px 14px;
           border-radius: 999px;
           border: 1px solid rgba(0, 0, 0, 0.12);
-          background: #ffffff; /* ① ボタンも白に */
+          background: #ffffff;
           color: #111;
           cursor: pointer;
           font-size: 13px;
@@ -3549,25 +3604,27 @@ export default function Home() {
         .modalBody {
           flex: 1 1 auto;
           overflow-y: auto;
+          overflow-x: hidden; /* ✅ 横スクロール禁止 */
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
-          touch-action: auto; /* ④ 詳細でも拡大縮小を邪魔しない */
+          touch-action: pan-y pinch-zoom; /* ✅ 縦スクロール + ピンチ許可 */
           padding: 14px;
         }
 
         .modalTop {
           display: grid;
-          grid-template-columns: 260px 1fr;
+          grid-template-columns: 240px 1fr; /* ✅ 横長画像を一回り小さく */
           gap: 14px;
           align-items: start;
         }
         .modalPoster {
-          width: 260px;
+          width: 240px; /* ✅ 一回り小さく */
           aspect-ratio: 16 / 9;
           height: auto;
           object-fit: cover;
           border-radius: 16px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          touch-action: pinch-zoom;
         }
         .modalInfo {
           min-width: 0;
@@ -3590,16 +3647,33 @@ export default function Home() {
           .brandTitle {
             font-size: 34px;
           }
+
+          /* ✅ スマホ表示のみ：横幅を広く（余白を戻す） */
           .container {
-            padding: 12px 12px 26px;
+            padding: 10px 8px 24px;
           }
+          .modalOverlay {
+            padding: 8px;
+          }
+
           .cardTop {
             grid-template-columns: 1fr;
           }
           .poster {
             width: 100%;
             aspect-ratio: 16 / 9;
+            max-height: 210px; /* ✅ 横長画像を少し小さく */
           }
+          .cardTitle {
+            font-size: 16px; /* ✅ 文字サイズ戻し */
+          }
+          .desc {
+            font-size: 12.5px; /* ✅ 文字サイズ戻し */
+          }
+          .metaText {
+            font-size: 12.5px; /* ✅ 文字サイズ戻し */
+          }
+
           .grid2 {
             grid-template-columns: 1fr;
           }
@@ -3609,6 +3683,11 @@ export default function Home() {
           .modalPoster {
             width: 100%;
             aspect-ratio: 16 / 9;
+            max-height: 230px; /* ✅ 横長画像を少し小さく */
+          }
+          .vodIconImg {
+            width: 30px;
+            height: 30px;
           }
         }
       `}</style>
