@@ -1864,7 +1864,7 @@ export default function Home() {
       return { label: ax.label, v: v ?? -1 };
     }).filter((x) => x.v >= 0);
 
-    axes.sort((x, y) => y.v - x.v);
+    axes.sort((x, y) => y.v - y.v);
     const top = axes.slice(0, 2);
 
     const lines: string[] = [];
@@ -2899,1126 +2899,1139 @@ export default function Home() {
       </main>
 
       {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
-      <style jsx global>{`
-        html,
-        body {
-          margin: 0;
-          padding: 0 !important;
-          background: #f6f7f9;
-          color: #111;
-        }
-        * {
-          box-sizing: border-box;
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
-        }
+<style jsx global>{`
+  html,
+  body {
+    margin: 0;
+    padding: 0 !important;
+    background: #f6f7f9;
+    color: #111;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
+  }
 
-        ::selection {
-          background: rgba(0, 0, 0, 0.08);
-          color: inherit;
-        }
-        ::-moz-selection {
-          background: rgba(0, 0, 0, 0.08);
-          color: inherit;
-        }
+  ::selection {
+    background: rgba(0, 0, 0, 0.08);
+    color: inherit;
+  }
+  ::-moz-selection {
+    background: rgba(0, 0, 0, 0.08);
+    color: inherit;
+  }
 
-        button,
-        label,
-        .pill,
-        .featureCard,
-        .collapseHead,
-        .pagerNum,
-        .pagerArrow,
-        .recExplainTitle,
-        .inlineTitleLink,
-        .openBtn,
-        .headerProfileBtn,
-        .navBtn,
-        .adminProfileLink {
-          -webkit-user-select: none;
-          user-select: none;
-        }
+  button,
+  label,
+  .pill,
+  .featureCard,
+  .collapseHead,
+  .pagerNum,
+  .pagerArrow,
+  .recExplainTitle,
+  .inlineTitleLink,
+  .openBtn,
+  .headerProfileBtn,
+  .navBtn,
+  .adminProfileLink {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
-        .page {
-          min-height: 100vh;
-          background: radial-gradient(900px 520px at 50% -10%, rgba(0, 0, 0, 0.05), transparent 55%),
-            radial-gradient(900px 520px at 20% 10%, rgba(0, 0, 0, 0.035), transparent 55%),
-            linear-gradient(180deg, #f6f7f9, #f6f7f9);
-          color: #111;
-        }
+  .page {
+    min-height: 100vh;
+    background: radial-gradient(900px 520px at 50% -10%, rgba(0, 0, 0, 0.05), transparent 55%),
+      radial-gradient(900px 520px at 20% 10%, rgba(0, 0, 0, 0.035), transparent 55%),
+      linear-gradient(180deg, #f6f7f9, #f6f7f9);
+    color: #111;
+  }
 
-        /* Header */
-        .topHeader {
-          position: sticky;
-          top: 0;
-          z-index: 20;
-          backdrop-filter: blur(10px);
-          background: rgba(246, 247, 249, 0.86);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
+  /* Header */
+  .topHeader {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    background: rgba(246, 247, 249, 0.86);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
 
-        /* ロゴ + サブ文言：左揃えを固定（DOMゆれ対策で両対応） */
-        .headerInner {
-          max-width: 980px;
-          margin: 0 auto;
-          padding: 16px 16px 14px;
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 14px;
-        }
+  /* ロゴ + サブ文言：左揃えを固定（DOMゆれ対策で両対応） */
+  .headerInner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 16px 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
 
-        /* new structure */
-        .brandBlock {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 6px;
-          min-width: 0;
-        }
-        .headerActions {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          flex: 0 0 auto;
-          padding-top: 4px;
-        }
+  /* new structure */
+  .brandBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
 
-        /* old structure */
-        .headerBar {
-          width: 100%;
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 14px;
-        }
-        .brandBox {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 6px;
-          min-width: 0;
-        }
-        .headerNav {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          flex: 0 0 auto;
-          padding-top: 4px;
-        }
+  /* old structure */
+  .headerBar {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .brandBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+  .headerNav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
 
-        /* （右上導線が残っていても崩れないよう残置） */
-        .headerProfileBtn,
-        .navBtn {
-          padding: 8px 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-          white-space: nowrap;
-        }
-        .headerProfileBtn:hover,
-        .navBtn:hover {
-          background: rgba(0, 0, 0, 0.05);
-        }
-        .headerProfileBtn:active,
-        .navBtn:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
+  /* （右上導線が残っていても崩れないよう残置） */
+  .headerProfileBtn,
+  .navBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .headerProfileBtn:hover,
+  .navBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  .headerProfileBtn:active,
+  .navBtn:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
 
-        .brandTitle {
-          font-size: 40px;
-          letter-spacing: 0.5px;
-          line-height: 1.05;
-          margin: 0 !important;
-          padding: 0 !important;
-          color: #111;
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          display: block;
-          text-align: left;
-        }
-        .brandTitle:focus-visible {
-          outline: 2px solid rgba(0, 0, 0, 0.16);
-          outline-offset: 6px;
-          border-radius: 10px;
-        }
-        .brandSub {
-          font-size: 13px;
-          opacity: 0.78;
-          display: block;
-          text-align: left;
-          margin-left: 0;
-          padding-left: 2px; /* 視覚的に左端を揃える微調整 */
-        }
+  .brandTitle {
+    font-size: 40px;
+    letter-spacing: 0.5px;
+    line-height: 1.05;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #111;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+  }
+  .brandTitle:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.16);
+    outline-offset: 6px;
+    border-radius: 10px;
+  }
+  /* ✅ ロゴとサブ文言の左端を完全に揃える */
+  .brandSub {
+    font-size: 13px;
+    opacity: 0.78;
+    display: block;
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0; /* ←ここを0に */
+  }
 
-        .container {
-          max-width: 980px;
-          margin: 0 auto;
-          padding: 14px 16px 30px;
-        }
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 16px 30px;
+  }
 
-        /* Panels */
-        .panel {
-          background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.09);
-          border-radius: 16px;
-          padding: 14px;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
-        }
-        .panelTitleRow {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
-        .panelTitle {
-          font-size: 14px;
-          font-weight: 400;
-          letter-spacing: 0.2px;
-        }
-        .errorBox {
-          border-color: rgba(220, 60, 60, 0.25);
-          background: rgba(220, 60, 60, 0.06);
-        }
+  /* Panels */
+  .panel {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  }
+  .panelTitleRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .panelTitle {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .errorBox {
+    border-color: rgba(220, 60, 60, 0.25);
+    background: rgba(220, 60, 60, 0.06);
+  }
 
-        .small {
-          font-size: 12px;
-        }
-        .muted {
-          opacity: 0.7;
-        }
+  .small {
+    font-size: 12px;
+  }
+  .muted {
+    opacity: 0.7;
+  }
 
-        /* Buttons */
-        .btn {
-          margin-top: 12px;
-          padding: 10px 14px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: #111;
-          color: #fff;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 400;
-        }
-        .btn:hover {
-          filter: brightness(1.05);
-        }
-        .btn:active {
-          filter: brightness(0.98);
-        }
-        .btnGhost {
-          padding: 8px 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-        }
-        .btnGhost:hover {
-          background: rgba(0, 0, 0, 0.05);
-        }
-        .btnGhost:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
-        .btnTiny {
-          padding: 7px 10px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 12px;
-          font-weight: 400;
-        }
-        .btnTiny:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
+  /* Buttons */
+  .btn {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .btn:hover {
+    filter: brightness(1.05);
+  }
+  .btn:active {
+    filter: brightness(1.0); /* ✅ 押下で“真っ黒化”しにくく */
+  }
+  .btnGhost {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .btnGhost:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  .btnGhost:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .btnTiny {
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .btnTiny:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
 
-        /* Home cards */
-        .homeGrid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-        .featureCard {
-          width: 100%;
-          text-align: left;
-          display: grid;
-          grid-template-columns: 44px 1fr auto;
-          align-items: center;
-          gap: 12px;
-          padding: 14px;
-          border-radius: 18px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          background: #fff;
-          cursor: pointer;
-          color: #111;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-        }
-        .featureCard:hover {
-          background: rgba(0, 0, 0, 0.02);
-        }
-        .featureCard:active {
-          background: rgba(0, 0, 0, 0.06);
-        }
-        .featureIcon {
-          width: 44px;
-          height: 44px;
-          border-radius: 14px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(0, 0, 0, 0.03);
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          color: #111;
-        }
-        .featureTitle {
-          font-size: 15px;
-          font-weight: 400;
-          letter-spacing: 0.2px;
-        }
-        .featureSub {
-          margin-top: 3px;
-          font-size: 12px;
-          opacity: 0.7;
-          font-weight: 400;
-        }
-        .featureArrow {
-          opacity: 0.7;
-          font-size: 16px;
-          font-weight: 400;
-        }
+  /* Home cards */
+  .homeGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .featureCard {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    cursor: pointer;
+    color: #111;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+  }
+  .featureCard:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  .featureCard:active {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .featureIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #111;
+  }
+  .featureTitle {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .featureSub {
+    margin-top: 3px;
+    font-size: 12px;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+  .featureArrow {
+    opacity: 0.7;
+    font-size: 16px;
+    font-weight: 400;
+  }
 
-        /* ② HOME下：管理人プロフィール（文字だけ / 別フォーマットでおしゃれ） */
-        .adminProfileLink {
-          width: 100%;
-          margin-top: 12px;
-          padding: 16px 14px;
-          border-radius: 18px;
-          border: 1px dashed rgba(0, 0, 0, 0.18);
-          background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
-          color: #111;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 400;
-          letter-spacing: 0.35px;
-          text-align: left;
-          position: relative;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
-        }
-        .adminProfileLink:hover {
-          background: rgba(0, 0, 0, 0.03);
-        }
-        .adminProfileLink:active {
-          background: rgba(0, 0, 0, 0.06);
-        }
-        .adminProfileLink:focus-visible {
-          outline: 2px solid rgba(0, 0, 0, 0.16);
-          outline-offset: 4px;
-        }
-        .adminProfileLink::after {
-          content: "";
-          position: absolute;
-          right: 16px;
-          top: 50%;
-          width: 8px;
-          height: 8px;
-          border-right: 2px solid rgba(0, 0, 0, 0.45);
-          border-bottom: 2px solid rgba(0, 0, 0, 0.45);
-          transform: translateY(-50%) rotate(-45deg);
-          opacity: 0.9;
-        }
+  /* ② HOME下：管理人プロフィール（暗すぎ対策で白/灰に寄せる） */
+  .adminProfileLink {
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px 14px;
+    border-radius: 18px;
+    border: 1px dashed rgba(0, 0, 0, 0.18);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+    color: rgba(0, 0, 0, 0.72); /* ✅ #111 → 見えやすいグレー */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
+  }
+  .adminProfileLink:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  .adminProfileLink:active {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .adminProfileLink:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.16);
+    outline-offset: 4px;
+  }
+  .adminProfileLink::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid rgba(0, 0, 0, 0.45);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.45);
+    transform: translateY(-50%) rotate(-45deg);
+    opacity: 0.9;
+  }
 
-        /* Top row */
-        .topRow {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 12px;
-        }
+  /* Top row */
+  .topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
 
-        /* Tabs */
-        .tabs {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-        .pill {
-          padding: 8px 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-        }
-        .pill:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
-        .pill.active {
-          background: #111;
-          color: #fff;
-          border-color: rgba(0, 0, 0, 0.18);
-          font-weight: 400;
-        }
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .pill:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .pill.active {
+    background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.18);
+    font-weight: 400;
+  }
 
-        /* Inputs */
-        .input {
-          width: 100%;
-          padding: 12px 12px;
-          border-radius: 14px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          font-size: 14px;
-          margin-top: 10px;
-          outline: none;
-          font-weight: 400;
-        }
-        .input::placeholder {
-          color: rgba(0, 0, 0, 0.45);
-        }
-        .input:focus {
-          border-color: rgba(0, 0, 0, 0.22);
-          box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
-        }
+  /* Inputs */
+  .input {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    font-size: 14px;
+    margin-top: 10px;
+    outline: none;
+    font-weight: 400;
+  }
+  .input::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .input:focus {
+    border-color: rgba(0, 0, 0, 0.22);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  }
 
-        .suggest {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: calc(100% + 6px);
-          background: #fff;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 14px;
-          overflow: hidden;
-          z-index: 20;
-          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
-        }
-        .suggestItem {
-          padding: 10px 12px;
-          cursor: pointer;
-          font-weight: 400;
-        }
-        .suggestItem:hover {
-          background: rgba(0, 0, 0, 0.04);
-        }
-        .suggestItem:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
+  .suggest {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    z-index: 20;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+  }
+  .suggestItem {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .suggestItem:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .suggestItem:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
 
-        /* Collapsible filters */
-        .filters {
-          display: grid;
-          gap: 10px;
-        }
-        .collapseBox {
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 14px;
-          background: rgba(0, 0, 0, 0.015);
-        }
-        .collapseHead {
-          width: 100%;
-          display: grid;
-          grid-template-columns: 26px 1fr auto;
-          gap: 10px;
-          align-items: center;
-          padding: 12px;
-          cursor: pointer;
-          border: none;
-          background: transparent;
-          color: #111;
-          text-align: left;
-          font-weight: 400;
-        }
-        .collapseHead:active {
-          background: rgba(0, 0, 0, 0.06);
-          border-radius: 14px;
-        }
-        .collapseHead:focus-visible {
-          outline: 2px solid rgba(0, 0, 0, 0.16);
-          outline-offset: 4px;
-          border-radius: 14px;
-        }
-        .collapsePlus {
-          width: 22px;
-          height: 22px;
-          border-radius: 999px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          font-weight: 400;
-          line-height: 1;
-        }
-        .collapseTitle {
-          font-size: 13px;
-          font-weight: 400;
-        }
-        .collapseMeta {
-          font-size: 12px;
-          opacity: 0.65;
-          white-space: nowrap;
-          font-weight: 400;
-        }
-        .collapseBody {
-          padding: 0 12px 12px;
-        }
+  /* Collapsible filters */
+  .filters {
+    display: grid;
+    gap: 10px;
+  }
+  .collapseBox {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.015);
+  }
+  .collapseHead {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #111;
+    text-align: left;
+    font-weight: 400;
+  }
+  .collapseHead:active {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+  }
+  .collapseHead:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.16);
+    outline-offset: 4px;
+    border-radius: 14px;
+  }
+  .collapsePlus {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .collapseTitle {
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .collapseMeta {
+    font-size: 12px;
+    opacity: 0.65;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+  .collapseBody {
+    padding: 0 12px 12px;
+  }
 
-        /* Options */
-        .checkGrid {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px 14px;
-          margin-top: 10px;
-        }
-        .checkItem {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 13px;
-          opacity: 0.95;
-          font-weight: 400;
-          padding: 4px 6px;
-          border-radius: 10px;
-        }
-        .checkItem:active {
-          background: rgba(0, 0, 0, 0.06);
-        }
-        .checkLabel {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .checkText {
-          opacity: 0.95;
-          font-weight: 400;
-        }
+  /* Options */
+  .checkGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 10px;
+  }
+  .checkItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0.95;
+    font-weight: 400;
+    padding: 4px 6px;
+    border-radius: 10px;
+  }
+  .checkItem:active {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .checkLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checkText {
+    opacity: 0.95;
+    font-weight: 400;
+  }
 
-        .optionBox {
-          margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 14px;
-          padding: 10px;
-          max-height: 240px;
-          overflow: auto;
-          background: rgba(0, 0, 0, 0.02);
-        }
-        .miniActions {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 10px;
-        }
+  .optionBox {
+    margin-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 10px;
+    max-height: 240px;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.02);
+  }
+  .miniActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
 
-        .modeBox {
-          margin-top: 12px;
-          padding-top: 10px;
-          border-top: 1px solid rgba(0, 0, 0, 0.08);
-        }
+  .modeBox {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
 
-        /* Cards */
-        .card {
-          margin-top: 12px;
-          background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 18px;
-          padding: 14px;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
-          cursor: pointer;
-        }
-        .cardTop {
-          display: grid;
-          grid-template-columns: 220px 1fr;
-          gap: 14px;
-          align-items: start;
-        }
-        .poster {
-          width: 220px;
-          aspect-ratio: 16 / 9;
-          height: auto;
-          object-fit: cover;
-          border-radius: 16px;
-          background: rgba(0, 0, 0, 0.02);
-          border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .cardInfo {
-          min-width: 0;
-        }
-        .cardTitleRow {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-        .cardTitle {
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.2px;
-          line-height: 1.25;
-        }
-        .openBtn {
-          padding: 8px 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-        }
-        .openBtn:hover {
-          background: rgba(0, 0, 0, 0.05);
-        }
-        .openBtn:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
+  /* Cards */
+  .card {
+    margin-top: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+  }
+  .cardTop {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .poster {
+    width: 220px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .cardInfo {
+    min-width: 0;
+  }
+  .cardTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .cardTitle {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+  }
+  .openBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .openBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  .openBtn:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
 
-        .desc {
-          margin-top: 10px;
-          font-size: 13px;
-          line-height: 1.65;
-          opacity: 0.9;
-          font-weight: 400;
-          word-break: break-word;
-          user-select: text;
-        }
+  .desc {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.65;
+    opacity: 0.9;
+    font-weight: 400;
+    word-break: break-word;
+    user-select: text;
+  }
 
-        .metaGrid {
-          margin-top: 12px;
-          display: grid;
-          gap: 8px;
-        }
-        .metaLine {
-          display: grid;
-          grid-template-columns: 92px 1fr;
-          gap: 10px;
-          align-items: start;
-        }
-        .metaLabel {
-          font-size: 12px;
-          opacity: 0.7;
-          font-weight: 400;
-          white-space: nowrap;
-        }
-        .metaText {
-          font-size: 13px;
-          opacity: 0.92;
-          font-weight: 400;
-          min-width: 0;
-          word-break: break-word;
-        }
+  .metaGrid {
+    margin-top: 12px;
+    display: grid;
+    gap: 8px;
+  }
+  .metaLine {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  .metaLabel {
+    font-size: 12px;
+    opacity: 0.7;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .metaText {
+    font-size: 13px;
+    opacity: 0.92;
+    font-weight: 400;
+    min-width: 0;
+    word-break: break-word;
+  }
 
-        .stars {
-          display: inline-flex;
-          align-items: baseline;
-          gap: 6px;
-          margin-left: 8px;
-        }
-        .starsGlyph {
-          letter-spacing: 1px;
-          font-weight: 400;
-        }
-        .starsText {
-          font-size: 12px;
-          opacity: 0.7;
-          font-weight: 400;
-        }
+  .stars {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-left: 8px;
+  }
+  .starsGlyph {
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+  .starsText {
+    font-size: 12px;
+    opacity: 0.7;
+    font-weight: 400;
+  }
 
-        /* VOD */
-        .vodIcons {
-          display: inline-flex;
-          gap: 10px;
-          align-items: center;
-          flex-wrap: wrap;
-        }
-        .vodIconImg {
-          width: 34px;
-          height: 34px;
-          border-radius: 10px;
-          display: block;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .vodIconLink {
-          display: inline-flex;
-          align-items: center;
-        }
+  /* VOD */
+  .vodIcons {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .vodIconImg {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .vodIconLink {
+    display: inline-flex;
+    align-items: center;
+  }
 
-        .inlineTitleLink {
-          border: none;
-          background: transparent;
-          cursor: pointer;
-          color: #111;
-          text-decoration: underline;
-          text-underline-offset: 3px;
-          font-size: 13px;
-          font-weight: 700;
-          padding: 0;
-        }
+  .inlineTitleLink {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0;
+  }
 
-        /* Analyze */
-        .grid2 {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
-        .rowActions {
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-          align-items: center;
-          margin-top: 10px;
-        }
-        .profileBox {
-          margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 14px;
-          padding: 12px;
-          background: rgba(0, 0, 0, 0.015);
-        }
-        .profileRow {
-          display: grid;
-          grid-template-columns: 74px 1fr 44px;
-          gap: 10px;
-          align-items: center;
-          margin-top: 10px;
-        }
-        .profileRow:first-child {
-          margin-top: 0;
-        }
-        .profileLabel {
-          font-size: 12px;
-          opacity: 0.85;
-          font-weight: 400;
-        }
-        .profileBar {
-          height: 10px;
-          border-radius: 999px;
-          background: rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-        }
-        .profileFill {
-          height: 100%;
-          background: rgba(0, 0, 0, 0.45);
-          border-radius: 999px;
-        }
-        .profileVal {
-          font-size: 12px;
-          text-align: right;
-          opacity: 0.85;
-          font-weight: 400;
-        }
-        .noteBox {
-          margin-top: 10px;
-          border: 1px dashed rgba(0, 0, 0, 0.14);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(0, 0, 0, 0.01);
-        }
-        .recExplainList {
-          margin-top: 8px;
-          display: grid;
-          gap: 10px;
-        }
-        .recExplain {
-          padding: 12px;
-          border-radius: 14px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          background: rgba(0, 0, 0, 0.015);
-        }
-        .recExplainTitle {
-          border: none;
-          background: transparent;
-          color: #111;
-          cursor: pointer;
-          padding: 0;
-          font-size: 14px;
-          font-weight: 400;
-          text-decoration: underline;
-          text-underline-offset: 3px;
-        }
-        .recExplainTitle:focus-visible {
-          outline: 2px solid rgba(0, 0, 0, 0.16);
-          outline-offset: 4px;
-          border-radius: 8px;
-          background: rgba(0, 0, 0, 0.04);
-        }
-        .recExplainReasons {
-          margin-top: 8px;
-          display: grid;
-          gap: 4px;
-        }
+  /* Analyze */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .rowActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .profileBox {
+    margin-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.015);
+  }
+  .profileRow {
+    display: grid;
+    grid-template-columns: 74px 1fr 44px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .profileRow:first-child {
+    margin-top: 0;
+  }
+  .profileLabel {
+    font-size: 12px;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  .profileBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  .profileFill {
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 999px;
+  }
+  .profileVal {
+    font-size: 12px;
+    text-align: right;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  .noteBox {
+    margin-top: 10px;
+    border: 1px dashed rgba(0, 0, 0, 0.14);
+    border-radius: 14px;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.01);
+  }
+  .recExplainList {
+    margin-top: 8px;
+    display: grid;
+    gap: 10px;
+  }
+  .recExplain {
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.015);
+  }
+  .recExplainTitle {
+    border: none;
+    background: transparent;
+    color: #111;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .recExplainTitle:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.16);
+    outline-offset: 4px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .recExplainReasons {
+    margin-top: 8px;
+    display: grid;
+    gap: 4px;
+  }
 
-        /* Score panel (modal) */
-        .scorePanel {
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 14px;
-          padding: 12px;
-          background: rgba(0, 0, 0, 0.015);
-        }
-        .scoreRow {
-          display: grid;
-          grid-template-columns: 74px 1fr 70px;
-          gap: 10px;
-          align-items: center;
-          margin-top: 8px;
-        }
-        .scoreLabel {
-          font-size: 12px;
-          opacity: 0.85;
-          white-space: nowrap;
-          font-weight: 400;
-        }
-        .scoreBar {
-          height: 10px;
-          border-radius: 999px;
-          background: rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-        }
-        .scoreBarFill {
-          height: 100%;
-          background: rgba(0, 0, 0, 0.45);
-          border-radius: 999px;
-        }
-        .scoreVal {
-          font-size: 12px;
-          text-align: right;
-          opacity: 0.85;
-          font-weight: 400;
-          font-variant-numeric: tabular-nums;
-        }
+  /* Score panel (modal) */
+  .scorePanel {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.015);
+  }
+  .scoreRow {
+    display: grid;
+    grid-template-columns: 74px 1fr 70px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .scoreLabel {
+    font-size: 12px;
+    opacity: 0.85;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+  .scoreBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  .scoreBarFill {
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 999px;
+  }
+  .scoreVal {
+    font-size: 12px;
+    text-align: right;
+    opacity: 0.85;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+  }
 
-        /* Pagination */
-        .pagerBar {
-          margin-top: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-        .pagerArrow {
-          padding: 8px 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-        }
-        .pagerArrow:disabled {
-          opacity: 0.35;
-          cursor: not-allowed;
-        }
-        .pagerArrow:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
-        .pagerNums {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          flex-wrap: wrap;
-        }
-        .pagerNum {
-          min-width: 34px;
-          height: 34px;
-          padding: 0 10px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .pagerNum:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
-        .pagerNum.active {
-          background: #111;
-          color: #fff;
-          border-color: rgba(0, 0, 0, 0.18);
-        }
-        .pagerDots {
-          opacity: 0.6;
-          font-size: 13px;
-          padding: 0 6px;
-        }
+  /* Pagination */
+  .pagerBar {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pagerArrow {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .pagerArrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .pagerArrow:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .pagerNums {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .pagerNum {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pagerNum:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .pagerNum.active {
+    background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.18);
+  }
+  .pagerDots {
+    opacity: 0.6;
+    font-size: 13px;
+    padding: 0 6px;
+  }
 
-        /* Flash ring */
-        .flashRing {
-          outline: 2px solid rgba(0, 0, 0, 0.1);
-          outline-offset: 6px;
-          border-radius: 18px;
-        }
+  /* Flash ring */
+  .flashRing {
+    outline: 2px solid rgba(0, 0, 0, 0.1);
+    outline-offset: 6px;
+    border-radius: 18px;
+  }
 
-        /* Modal（枠固定 + 中身スクロール） */
-        .modalOverlay {
-          position: fixed;
-          inset: 0;
-          height: 100dvh;
-          background: rgba(0, 0, 0, 0.45);
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-          padding: 12px;
-          overflow: hidden;
-          z-index: 50;
-        }
+  /* Modal（枠固定 + 中身スクロール） */
+  .modalOverlay {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12px;
+    overflow: hidden;
+    z-index: 50;
+  }
 
-        /* 高さ固定（詳細カードの中だけスクロール） */
-        .modalDialog {
-          width: 100%;
-          max-width: 980px;
-          height: calc(100dvh - 24px);
-          max-height: calc(100dvh - 24px);
-        }
+  /* 高さ固定（詳細カードの中だけスクロール） */
+  .modalDialog {
+    width: 100%;
+    max-width: 980px;
+    height: calc(100dvh - 24px);
+    max-height: calc(100dvh - 24px);
+  }
 
-        .modalCard {
-          background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 18px;
-          box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
-          color: #111;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-        }
+  .modalCard {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+    color: #111;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-        /* 閉じるボタン固定 */
-        .modalHeader {
-          flex: 0 0 auto;
-          padding: 10px;
-          background: #fff;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          position: sticky;
-          top: 0;
-          z-index: 2;
-        }
+  /* 閉じるボタン固定 */
+  .modalHeader {
+    flex: 0 0 auto;
+    padding: 10px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 
-        /* プロフィール：黒ベース＋白灰文字 */
-        .profileHeader {
-          background: #111;
-          border-bottom-color: rgba(255, 255, 255, 0.12);
-          color: #f2f2f2;
-        }
-        .profileHeader .modalHeaderTitle {
-          color: rgba(255, 255, 255, 0.82);
-        }
-        .profileHeader .modalCloseBtn {
-          background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 255, 255, 0.16);
-          color: #fff;
-        }
-        .profileHeader .modalCloseBtn:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-        .profileHeader .modalCloseBtn:active {
-          background: rgba(255, 255, 255, 0.14);
-        }
+  /* プロフィール：黒ベース＋白灰文字 */
+  .profileHeader {
+    background: #111;
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    color: #f2f2f2;
+  }
+  .profileHeader .modalHeaderTitle {
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .profileHeader .modalCloseBtn {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+  .profileHeader .modalCloseBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .profileHeader .modalCloseBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
 
-        .modalHeaderTitle {
-          font-size: 13px;
-          opacity: 0.75;
-          font-weight: 400;
-          white-space: nowrap;
-        }
+  .modalHeaderTitle {
+    font-size: 13px;
+    opacity: 0.75;
+    font-weight: 400;
+    white-space: nowrap;
+  }
 
-        .modalCloseBtn {
-          padding: 10px 14px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: #ffffff;
-          color: #111;
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 400;
-          white-space: nowrap;
-        }
-        .modalCloseBtn:hover {
-          background: rgba(0, 0, 0, 0.03);
-        }
-        .modalCloseBtn:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
+  .modalCloseBtn {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    color: #111;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .modalCloseBtn:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  .modalCloseBtn:active {
+    background: rgba(0, 0, 0, 0.08);
+  }
 
-        /* スクロール領域（縦だけ） */
-        .modalBody {
-          flex: 1 1 auto;
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
-          overscroll-behavior: contain;
-          touch-action: pan-y pinch-zoom;
-          padding: 14px;
-        }
+  /* スクロール領域（縦だけ） */
+  .modalBody {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y pinch-zoom;
+    padding: 14px;
+  }
 
-        .modalTop {
-          display: grid;
-          grid-template-columns: 260px 1fr;
-          gap: 14px;
-          align-items: start;
-        }
-        .modalPoster {
-          width: 260px;
-          aspect-ratio: 16 / 9;
-          height: auto;
-          object-fit: cover;
-          border-radius: 16px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .modalInfo {
-          min-width: 0;
-        }
-        .modalTitle {
-          font-size: 20px;
-          font-weight: 700;
-          margin-bottom: 6px;
-        }
-        .link {
-          margin-left: 8px;
-          color: #111;
-          text-decoration: underline;
-          text-underline-offset: 3px;
-          font-weight: 400;
-        }
+  .modalTop {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .modalPoster {
+    width: 260px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .modalInfo {
+    min-width: 0;
+  }
+  .modalTitle {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .link {
+    margin-left: 8px;
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 400;
+  }
 
-        /* ③ プロフィール：アイコンは空白（＝非表示） */
-        .adminAvatar {
-          display: none;
-        }
+  /* ③ プロフィール：アイコンは空白（＝非表示） */
+  .adminAvatar {
+    display: none;
+  }
 
-        .adminProfileHero {
-          display: grid;
-          grid-template-columns: 1fr; /* アイコン無し前提 */
-          gap: 12px;
-          align-items: center;
-          padding: 10px 2px 4px;
-        }
-        .adminProfileText,
-        .adminHeroText {
-          min-width: 0;
-        }
-        .adminName {
-          font-size: 16px;
-          font-weight: 800;
-          line-height: 1.2;
-        }
-        .adminBio,
-        .adminTag {
-          margin-top: 6px;
-          font-size: 13px;
-          line-height: 1.6;
-          opacity: 0.85;
-        }
+  .adminProfileHero {
+    display: grid;
+    grid-template-columns: 1fr; /* アイコン無し前提 */
+    gap: 12px;
+    align-items: center;
+    padding: 10px 2px 4px;
+  }
+  .adminProfileText,
+  .adminHeroText {
+    min-width: 0;
+  }
+  .adminName {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .adminBio,
+  .adminTag {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
 
-        .adminLinkRow,
-        .adminLinkGrid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin-top: 12px;
-        }
+  .adminLinkRow,
+  .adminLinkGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 360px) minmax(0, 360px); /* ✅ 幅を揃えて締める */
+    justify-content: center; /* ✅ 中央寄せ */
+    gap: 10px;
+    margin-top: 12px;
+  }
 
-        /* ③ YouTube/ブログ：少し“締まる”見た目に（色味は現状踏襲） */
-        .adminLinkBtn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          padding: 12px 14px;
-          border-radius: 16px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.02);
-          color: #111;
-          text-decoration: none;
-          font-size: 14px;
-          font-weight: 400;
-          cursor: pointer;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-        }
-        .adminLinkBtn:hover {
-          background: rgba(0, 0, 0, 0.05);
-        }
-        .adminLinkBtn:active {
-          background: rgba(0, 0, 0, 0.08);
-        }
-        .adminLinkBtnPrimary {
-          background: rgba(0, 0, 0, 0.06);
-          border-color: rgba(0, 0, 0, 0.16);
-        }
-        .adminLinkIcon {
-          width: 20px;
-          height: 20px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.92;
-        }
-        .adminNoteBox {
-          margin-top: 12px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 14px;
-          padding: 12px;
-          background: rgba(0, 0, 0, 0.015);
-        }
+  /* ③ YouTube/ブログ：横長すぎる→幅統一＆押下で黒くしない */
+  .adminLinkBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 16px;
 
-        /* Mobile */
-        @media (max-width: 520px) {
-          .brandTitle {
-            font-size: 34px;
-          }
-          .container {
-            padding: 12px 12px 26px;
-          }
-          .cardTop {
-            grid-template-columns: 1fr;
-          }
-          .poster {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-          }
-          .grid2 {
-            grid-template-columns: 1fr;
-          }
-          .modalTop {
-            grid-template-columns: 1fr;
-          }
-          .modalPoster {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-          }
-          .headerInner {
-            padding: 14px 12px 12px;
-          }
-          .headerProfileBtn,
-          .navBtn {
-            padding: 7px 10px;
-            font-size: 12px;
-          }
-          .adminLinkRow,
-          .adminLinkGrid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
-    </div>
-  );
-}
+    width: 100%;
+    max-width: 360px; /* ✅ 横幅を揃える */
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+  }
+  .adminLinkBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  .adminLinkBtn:active {
+    background: rgba(0, 0, 0, 0.06); /* ✅ 真っ黒化しにくい */
+  }
+  .adminLinkBtnPrimary {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.16);
+  }
+  .adminLinkBtnPrimary:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .adminLinkBtnPrimary:active {
+    background: rgba(0, 0, 0, 0.1); /* ✅ 真っ黒化しにくい */
+  }
+  .adminLinkIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.92;
+  }
+  .adminNoteBox {
+    margin-top: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.015);
+  }
+
+  /* Mobile */
+  @media (max-width: 520px) {
+    .brandTitle {
+      font-size: 34px;
+    }
+    .container {
+      padding: 12px 12px 26px;
+    }
+    .cardTop {
+      grid-template-columns: 1fr;
+    }
+    .poster {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+    .modalTop {
+      grid-template-columns: 1fr;
+    }
+    .modalPoster {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+    .headerInner {
+      padding: 14px 12px 12px;
+    }
+    .headerProfileBtn,
+    .navBtn {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+    .adminLinkRow,
+    .adminLinkGrid {
+      grid-template-columns: 1fr; /* ✅ スマホは1列 */
+      justify-content: stretch;
+    }
+    .adminLinkBtn {
+      max-width: 100%;
+    }
+  }
+`}</style>
