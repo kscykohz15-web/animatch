@@ -533,14 +533,7 @@ function IconSpark() {
   return (
     <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
       <path d="M12 2l1.2 5.4L18 9l-4.8 1.6L12 16l-1.2-5.4L6 9l4.8-1.6L12 2Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path
-        d="M19.5 13l.7 3.1 2.8.9-2.8.9-.7 3.1-.7-3.1-2.8-.9 2.8-.9.7-3.1Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-        opacity="0.9"
-      />
+      <path d="M19.5 13l.7 3.1 2.8.9-2.8.9-.7 3.1-.7-3.1-2.8-.9 2.8-.9.7-3.1Z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" opacity="0.9" />
     </svg>
   );
 }
@@ -582,7 +575,7 @@ function IconBadge() {
   );
 }
 
-/** ★追加：モノトーン YouTube / Blog アイコン */
+/** ★モノトーン YouTube / Blog アイコン（少し洗練） */
 function IconYouTubeMono({ size = 18 }: { size?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
@@ -610,15 +603,7 @@ function IconBlogMono({ size = 18 }: { size?: number }) {
 /** =========================
  *  Small UI parts
  * ========================= */
-function PillTab({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
+function PillTab({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button type="button" className={`pill ${active ? "active" : ""}`} onClick={onClick}>
       {children}
@@ -761,15 +746,7 @@ function buildPageItems(current: number, total: number) {
   return items;
 }
 
-function Pagination({
-  page,
-  totalPages,
-  onChange,
-}: {
-  page: number;
-  totalPages: number;
-  onChange: (p: number) => void;
-}) {
+function Pagination({ page, totalPages, onChange }: { page: number; totalPages: number; onChange: (p: number) => void }) {
   if (totalPages <= 1) return null;
 
   const items = buildPageItems(page, totalPages);
@@ -792,13 +769,7 @@ function Pagination({
           const n = it;
           const active = n === page;
           return (
-            <button
-              key={n}
-              type="button"
-              className={`pagerNum ${active ? "active" : ""}`}
-              onClick={() => onChange(n)}
-              aria-current={active ? "page" : undefined}
-            >
+            <button key={n} type="button" className={`pagerNum ${active ? "active" : ""}`} onClick={() => onChange(n)} aria-current={active ? "page" : undefined}>
               {n}
             </button>
           );
@@ -840,6 +811,7 @@ function shuffleWithSeed<T>(arr: T[], seed: number) {
  * ========================= */
 type View = "home" | "recommend" | "similar" | "analyze" | "admin" | "info";
 type RecommendMode = "byGenre" | "byMood";
+const VIEW_LIST: View[] = ["home", "recommend", "similar", "analyze", "admin", "info"];
 
 export default function Home() {
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -880,7 +852,7 @@ export default function Home() {
   const [sourceLinks, setSourceLinks] = useState<SourceLink[]>([]);
   const [sourceLoading, setSourceLoading] = useState(false);
 
-  // 管理人プロフィール（ホーム下 → モーダル）
+  // 管理人プロフィール（モーダル）
   const [profileOpen, setProfileOpen] = useState(false);
   function openProfileModal() {
     setSelectedAnime(null);
@@ -1339,7 +1311,10 @@ export default function Home() {
     setResultPage(1);
   }
 
-  function goTo(next: View) {
+  /** =========================
+   *  ④ ブラウザの戻る（popstate）でも画面遷移できるように
+   * ========================= */
+  function applyNav(next: View) {
     setView(next);
     resetResults();
 
@@ -1352,6 +1327,43 @@ export default function Home() {
     closeAnimeModal();
     closeProfileModal();
   }
+
+  function parseHashToView(): View {
+    if (typeof window === "undefined") return "home";
+    const h = (window.location.hash || "").replace("#", "").trim();
+    return (VIEW_LIST as string[]).includes(h) ? (h as View) : "home";
+  }
+
+  function goTo(next: View, push = true) {
+    if (typeof window !== "undefined" && push) {
+      try {
+        window.history.pushState({ view: next }, "", `#${next}`);
+      } catch {}
+    }
+    applyNav(next);
+  }
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // 初期：hashがあれば復元（なければhome）
+    const initial = parseHashToView();
+    try {
+      window.history.replaceState({ view: initial }, "", `#${initial}`);
+    } catch {}
+    applyNav(initial);
+
+    const onPop = (e: PopStateEvent) => {
+      const st = (e.state || {}) as any;
+      const v = st?.view;
+      const next = (VIEW_LIST as string[]).includes(String(v)) ? (v as View) : parseHashToView();
+      applyNav(next);
+    };
+
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /** =========================
    *  Recommend（ジャンル / 気分 のみ）
@@ -1852,7 +1864,6 @@ export default function Home() {
       return { label: ax.label, v: v ?? -1 };
     }).filter((x) => x.v >= 0);
 
-    axes.sort((x, y) => y.v - y.v);
     axes.sort((x, y) => y.v - x.v);
     const top = axes.slice(0, 2);
 
@@ -1995,7 +2006,7 @@ export default function Home() {
     <div className="page">
       <header className="topHeader">
         <div className="headerInner">
-          {/* ① ロゴと文言：同じ左端に揃える（ズレない構造に） */}
+          {/* ① ロゴと文言：同じ左端に揃える */}
           <div className="brandBlock">
             <button
               type="button"
@@ -2030,7 +2041,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  HOME（順番変更）
+         *  HOME
          * ========================= */}
         {view === "home" ? (
           <>
@@ -2095,71 +2106,12 @@ export default function Home() {
                 </div>
                 <div className="featureArrow">→</div>
               </button>
-            </div>
 
-            {/* ② ③ 管理人プロフィール：ホーム最下部へ移動 + モノトーンでおしゃれに */}
-            <div className="homeBottom">
-              <div
-                className="adminHomeCard"
-                role="button"
-                tabIndex={0}
-                onClick={openProfileModal}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") openProfileModal();
-                }}
-              >
-                <div className="adminHomeHead">
-                  <div className="adminHomeAvatar" aria-hidden="true">
-                    か
-                  </div>
-                  <div className="adminHomeMeta">
-                    <div className="adminHomeName">かさ【ゆるオタ】</div>
-                    <div className="adminHomeTag">YouTubeでアニメ紹介／AniMatch運営</div>
-                  </div>
-                  <div className="adminHomeCta">プロフィール →</div>
-                </div>
-
-                <div className="adminHomeLinks">
-                  <a
-                    className="adminHomeLink"
-                    href="https://youtube.com/@kasa-yuruota"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      try {
-                        trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "home_bottom" } });
-                      } catch {}
-                    }}
-                  >
-                    <span className="adminHomeLinkIcon">
-                      <IconYouTubeMono />
-                    </span>
-                    <span className="adminHomeLinkText">YouTube</span>
-                  </a>
-
-                  <a
-                    className="adminHomeLink"
-                    href="https://kasa-yuruotablog.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      try {
-                        trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "home_bottom" } });
-                      } catch {}
-                    }}
-                  >
-                    <span className="adminHomeLinkIcon">
-                      <IconBlogMono />
-                    </span>
-                    <span className="adminHomeLinkText">ブログ</span>
-                  </a>
-                </div>
-
-                <div className="adminHomeNote">
-                  ※ タップで詳細プロフィール（モノトーンで見やすく改善）
-                </div>
+              {/* ②：ホーム最下部は「管理人のプロフィール」のワードだけ（infoの直下に配置） */}
+              <div className="profileLinkWrap">
+                <button className="profileLink" type="button" onClick={openProfileModal} aria-label="管理人のプロフィールを開く">
+                  管理人のプロフィール
+                </button>
               </div>
             </div>
           </>
@@ -2832,7 +2784,12 @@ export default function Home() {
                         <div className="metaLine">
                           <span className="metaLabel">配信</span>
                           <span className="metaText">
-                            <VodIcons services={getVodForWork(selectedAnime).services} watchUrls={getVodForWork(selectedAnime).urls} workId={Number(selectedAnime.id || 0)} onAnyClickStopPropagation />
+                            <VodIcons
+                              services={getVodForWork(selectedAnime).services}
+                              watchUrls={getVodForWork(selectedAnime).urls}
+                              workId={Number(selectedAnime.id || 0)}
+                              onAnyClickStopPropagation
+                            />
                           </span>
                         </div>
                       </div>
@@ -2860,7 +2817,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  管理人プロフィール Modal（モノトーンで改善）
+         *  ③ 管理人プロフィール Modal（アイコンは空白 / YouTube & Blogをおしゃれに）
          * ========================= */}
         {profileOpen ? (
           <div className="modalOverlay" onClick={closeProfileModal}>
@@ -2875,9 +2832,8 @@ export default function Home() {
 
                 <div className="modalBody">
                   <div className="adminProfileHero">
-                    <div className="adminAvatar" aria-hidden="true">
-                      か
-                    </div>
+                    {/* ★「〇か」ではなく、空白 */}
+                    <div className="adminAvatar" aria-hidden="true" />
                     <div className="adminProfileText">
                       <div className="adminName">かさ【ゆるオタ】</div>
                       <div className="adminBio">
@@ -2902,7 +2858,7 @@ export default function Home() {
                       }}
                     >
                       <span className="adminLinkIcon" aria-hidden="true">
-                        <IconYouTubeMono />
+                        <IconYouTubeMono size={20} />
                       </span>
                       <span>YouTubeチャンネルへ</span>
                     </a>
@@ -2920,7 +2876,7 @@ export default function Home() {
                       }}
                     >
                       <span className="adminLinkIcon" aria-hidden="true">
-                        <IconBlogMono />
+                        <IconBlogMono size={20} />
                       </span>
                       <span>ブログへ</span>
                     </a>
@@ -2942,8 +2898,7 @@ export default function Home() {
         ) : null}
       </main>
 
-      {/* ===== Part2 はここから style jsx global が続きます ===== */}
-// ===== AniMatch: 完全版コード（Part 2/2）=====
+      {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
       <style jsx global>{`
         html,
         body {
@@ -2977,7 +2932,8 @@ export default function Home() {
         .inlineTitleLink,
         .openBtn,
         .headerProfileBtn,
-        .navBtn {
+        .navBtn,
+        .adminProfileLink {
           -webkit-user-select: none;
           user-select: none;
         }
@@ -3000,7 +2956,7 @@ export default function Home() {
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        /* ===== ロゴ + サブ文言：左揃えを固定（旧/新どちらのDOMにも効くように両対応） ===== */
+        /* ロゴ + サブ文言：左揃えを固定（DOMゆれ対策で両対応） */
         .headerInner {
           max-width: 980px;
           margin: 0 auto;
@@ -3050,7 +3006,7 @@ export default function Home() {
           padding-top: 4px;
         }
 
-        /* 右上プロフィール導線（※ホーム下部に移動済みなら非表示でもOK） */
+        /* （右上導線が残っていても崩れないよう残置） */
         .headerProfileBtn,
         .navBtn {
           padding: 8px 12px;
@@ -3083,7 +3039,7 @@ export default function Home() {
           border: none;
           cursor: pointer;
           display: block;
-          text-align: left; /* ★左揃え */
+          text-align: left;
         }
         .brandTitle:focus-visible {
           outline: 2px solid rgba(0, 0, 0, 0.16);
@@ -3094,9 +3050,9 @@ export default function Home() {
           font-size: 13px;
           opacity: 0.78;
           display: block;
-          text-align: left; /* ★左揃え */
-          margin-left: 0; /* ★ズレ防止 */
-          padding-left: 2px; /* ★視覚的な左揃え補正（ロゴの曲線分） */
+          text-align: left;
+          margin-left: 0;
+          padding-left: 2px; /* 視覚的に左端を揃える微調整 */
         }
 
         .container {
@@ -3200,7 +3156,7 @@ export default function Home() {
           gap: 12px;
           padding: 14px;
           border-radius: 18px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: #fff;
           cursor: pointer;
           color: #111;
@@ -3240,109 +3196,44 @@ export default function Home() {
           font-weight: 400;
         }
 
-        /* ===== ② 管理人プロフィール：ホーム最下部カード（モノトーン/白灰で見やすく） ===== */
-        .homeProfileCard {
-          margin-top: 14px;
+        /* ② HOME下：管理人プロフィール（文字だけ / 別フォーマットでおしゃれ） */
+        .adminProfileLink {
+          width: 100%;
+          margin-top: 12px;
+          padding: 16px 14px;
           border-radius: 18px;
-          border: 1px solid rgba(0, 0, 0, 0.14);
-          background: linear-gradient(180deg, #111, #0c0c0c);
-          box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
-          color: #f2f2f2;
-          overflow: hidden;
-        }
-        .homeProfileInner {
-          padding: 14px;
-          display: grid;
-          gap: 12px;
-        }
-        .homeProfileTop {
-          display: grid;
-          grid-template-columns: 56px 1fr;
-          gap: 12px;
-          align-items: center;
-        }
-        .homeProfileAvatar {
-          width: 56px;
-          height: 56px;
-          border-radius: 999px;
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          background: rgba(255, 255, 255, 0.06);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 700;
-          font-size: 20px;
-          color: #fff;
-          letter-spacing: 0.5px;
-        }
-        .homeProfileName {
-          font-size: 15px;
-          font-weight: 700;
-          line-height: 1.2;
-          color: #fff;
-        }
-        .homeProfileTag {
-          margin-top: 4px;
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.78);
-          line-height: 1.5;
-        }
-        .homeProfileDesc {
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.78);
-          line-height: 1.6;
-        }
-        .homeProfileActions {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
-        .homeProfileBtn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          padding: 12px 12px;
-          border-radius: 14px;
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          background: rgba(255, 255, 255, 0.06);
-          color: #f5f5f5;
-          text-decoration: none;
-          font-size: 13px;
-          font-weight: 400;
+          border: 1px dashed rgba(0, 0, 0, 0.18);
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+          color: #111;
           cursor: pointer;
+          font-size: 14px;
+          font-weight: 400;
+          letter-spacing: 0.35px;
+          text-align: left;
+          position: relative;
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
         }
-        .homeProfileBtn:hover {
-          background: rgba(255, 255, 255, 0.10);
+        .adminProfileLink:hover {
+          background: rgba(0, 0, 0, 0.03);
         }
-        .homeProfileBtn:active {
-          background: rgba(255, 255, 255, 0.14);
+        .adminProfileLink:active {
+          background: rgba(0, 0, 0, 0.06);
         }
-        .homeProfileBtnPrimary {
-          background: rgba(255, 255, 255, 0.14);
-          border-color: rgba(255, 255, 255, 0.24);
-          color: #fff;
+        .adminProfileLink:focus-visible {
+          outline: 2px solid rgba(0, 0, 0, 0.16);
+          outline-offset: 4px;
         }
-        .homeProfileBtnPrimary:hover {
-          background: rgba(255, 255, 255, 0.18);
-        }
-        .homeProfileIcon {
-          width: 18px;
-          height: 18px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.92;
-        }
-        .homeProfileFooter {
-          border-top: 1px solid rgba(255, 255, 255, 0.12);
-          padding: 10px 14px;
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.66);
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          flex-wrap: wrap;
+        .adminProfileLink::after {
+          content: "";
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          width: 8px;
+          height: 8px;
+          border-right: 2px solid rgba(0, 0, 0, 0.45);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.45);
+          transform: translateY(-50%) rotate(-45deg);
+          opacity: 0.9;
         }
 
         /* Top row */
@@ -3407,11 +3298,11 @@ export default function Home() {
           right: 0;
           top: calc(100% + 6px);
           background: #fff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           overflow: hidden;
           z-index: 20;
-          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
         }
         .suggestItem {
           padding: 10px 12px;
@@ -3431,7 +3322,7 @@ export default function Home() {
           gap: 10px;
         }
         .collapseBox {
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           background: rgba(0, 0, 0, 0.015);
         }
@@ -3516,7 +3407,7 @@ export default function Home() {
 
         .optionBox {
           margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 10px;
           max-height: 240px;
@@ -3539,7 +3430,7 @@ export default function Home() {
         .card {
           margin-top: 12px;
           background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 18px;
           padding: 14px;
           box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
@@ -3558,7 +3449,7 @@ export default function Home() {
           object-fit: cover;
           border-radius: 16px;
           background: rgba(0, 0, 0, 0.02);
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .cardInfo {
           min-width: 0;
@@ -3655,7 +3546,7 @@ export default function Home() {
           height: 34px;
           border-radius: 10px;
           display: block;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .vodIconLink {
           display: inline-flex;
@@ -3689,7 +3580,7 @@ export default function Home() {
         }
         .profileBox {
           margin-top: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 12px;
           background: rgba(0, 0, 0, 0.015);
@@ -3712,7 +3603,7 @@ export default function Home() {
         .profileBar {
           height: 10px;
           border-radius: 999px;
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           overflow: hidden;
         }
         .profileFill {
@@ -3741,7 +3632,7 @@ export default function Home() {
         .recExplain {
           padding: 12px;
           border-radius: 14px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           background: rgba(0, 0, 0, 0.015);
         }
         .recExplainTitle {
@@ -3769,7 +3660,7 @@ export default function Home() {
 
         /* Score panel (modal) */
         .scorePanel {
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 14px;
           padding: 12px;
           background: rgba(0, 0, 0, 0.015);
@@ -3790,7 +3681,7 @@ export default function Home() {
         .scoreBar {
           height: 10px;
           border-radius: 999px;
-          background: rgba(0, 0, 0, 0.10);
+          background: rgba(0, 0, 0, 0.1);
           overflow: hidden;
         }
         .scoreBarFill {
@@ -3869,7 +3760,7 @@ export default function Home() {
 
         /* Flash ring */
         .flashRing {
-          outline: 2px solid rgba(0, 0, 0, 0.10);
+          outline: 2px solid rgba(0, 0, 0, 0.1);
           outline-offset: 6px;
           border-radius: 18px;
         }
@@ -3898,7 +3789,7 @@ export default function Home() {
 
         .modalCard {
           background: #ffffff;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 18px;
           box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
           color: #111;
@@ -3923,7 +3814,7 @@ export default function Home() {
           z-index: 2;
         }
 
-        /* ★プロフィールはモノトーンで“黒ベース＋白灰文字” */
+        /* プロフィール：黒ベース＋白灰文字 */
         .profileHeader {
           background: #111;
           border-bottom-color: rgba(255, 255, 255, 0.12);
@@ -3938,7 +3829,7 @@ export default function Home() {
           color: #fff;
         }
         .profileHeader .modalCloseBtn:hover {
-          background: rgba(255, 255, 255, 0.10);
+          background: rgba(255, 255, 255, 0.1);
         }
         .profileHeader .modalCloseBtn:active {
           background: rgba(255, 255, 255, 0.14);
@@ -3991,7 +3882,7 @@ export default function Home() {
           height: auto;
           object-fit: cover;
           border-radius: 16px;
-          border: 1px solid rgba(0, 0, 0, 0.10);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .modalInfo {
           min-width: 0;
@@ -4009,26 +3900,17 @@ export default function Home() {
           font-weight: 400;
         }
 
-        /* ===== ③ プロフィール（アイコン付きでオシャレに / クラス名ゆれに両対応） ===== */
+        /* ③ プロフィール：アイコンは空白（＝非表示） */
+        .adminAvatar {
+          display: none;
+        }
+
         .adminProfileHero {
           display: grid;
-          grid-template-columns: 64px 1fr;
+          grid-template-columns: 1fr; /* アイコン無し前提 */
           gap: 12px;
           align-items: center;
           padding: 10px 2px 4px;
-        }
-        .adminAvatar {
-          width: 64px;
-          height: 64px;
-          border-radius: 999px;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.04);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 800;
-          font-size: 22px;
-          letter-spacing: 0.5px;
         }
         .adminProfileText,
         .adminHeroText {
@@ -4047,18 +3929,6 @@ export default function Home() {
           opacity: 0.85;
         }
 
-        .adminProfileCard {
-          border: 1px solid rgba(0, 0, 0, 0.10);
-          border-radius: 16px;
-          background: rgba(0, 0, 0, 0.015);
-          padding: 12px;
-        }
-        .adminProfileCardTitle {
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.2px;
-        }
-
         .adminLinkRow,
         .adminLinkGrid {
           display: grid;
@@ -4067,6 +3937,7 @@ export default function Home() {
           margin-top: 12px;
         }
 
+        /* ③ YouTube/ブログ：少し“締まる”見た目に（色味は現状踏襲） */
         .adminLinkBtn {
           display: inline-flex;
           align-items: center;
@@ -4081,6 +3952,7 @@ export default function Home() {
           font-size: 14px;
           font-weight: 400;
           cursor: pointer;
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
         }
         .adminLinkBtn:hover {
           background: rgba(0, 0, 0, 0.05);
@@ -4088,20 +3960,24 @@ export default function Home() {
         .adminLinkBtn:active {
           background: rgba(0, 0, 0, 0.08);
         }
+        .adminLinkBtnPrimary {
+          background: rgba(0, 0, 0, 0.06);
+          border-color: rgba(0, 0, 0, 0.16);
+        }
         .adminLinkIcon {
-          width: 18px;
-          height: 18px;
+          width: 20px;
+          height: 20px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          opacity: 0.86; /* ★モノトーン */
+          opacity: 0.92;
         }
-        .adminAbout {
-          margin-top: 10px;
-          font-size: 13px;
-          line-height: 1.7;
-          opacity: 0.9;
-          user-select: text;
+        .adminNoteBox {
+          margin-top: 12px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 14px;
+          padding: 12px;
+          background: rgba(0, 0, 0, 0.015);
         }
 
         /* Mobile */
@@ -4137,12 +4013,8 @@ export default function Home() {
             padding: 7px 10px;
             font-size: 12px;
           }
-
           .adminLinkRow,
           .adminLinkGrid {
-            grid-template-columns: 1fr;
-          }
-          .homeProfileActions {
             grid-template-columns: 1fr;
           }
         }
