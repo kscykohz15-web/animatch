@@ -582,6 +582,31 @@ function IconBadge() {
   );
 }
 
+/** ★追加：モノトーン YouTube / Blog アイコン */
+function IconYouTubeMono({ size = 18 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
+      <path
+        d="M21 8.2a3 3 0 0 0-2.1-2.1C17.3 5.6 12 5.6 12 5.6s-5.3 0-6.9.5A3 3 0 0 0 3 8.2 31 31 0 0 0 2.6 12c0 1.3.1 2.6.4 3.8a3 3 0 0 0 2.1 2.1c1.6.5 6.9.5 6.9.5s5.3 0 6.9-.5a3 3 0 0 0 2.1-2.1c.3-1.2.4-2.5.4-3.8 0-1.3-.1-2.6-.4-3.8Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path d="M10.3 9.7v4.6L14.7 12l-4.4-2.3Z" fill="currentColor" />
+    </svg>
+  );
+}
+function IconBlogMono({ size = 18 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
+      <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M14 3v4h4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M8 11h8M8 15h8M8 19h6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 /** =========================
  *  Small UI parts
  * ========================= */
@@ -855,10 +880,9 @@ export default function Home() {
   const [sourceLinks, setSourceLinks] = useState<SourceLink[]>([]);
   const [sourceLoading, setSourceLoading] = useState(false);
 
-  // ⑤ 管理人プロフィール（右上ボタン → モーダル）
+  // 管理人プロフィール（ホーム下 → モーダル）
   const [profileOpen, setProfileOpen] = useState(false);
   function openProfileModal() {
-    // 作品詳細を開いている場合は閉じてから
     setSelectedAnime(null);
     setProfileOpen(true);
     try {
@@ -963,7 +987,6 @@ export default function Home() {
   }
 
   function openAnimeModal(base: AnimeWork) {
-    // プロフィールを開いているなら閉じる
     if (profileOpen) setProfileOpen(false);
 
     const id = Number(base.id || 0);
@@ -986,8 +1009,6 @@ export default function Home() {
   const bodyPrevRef = useRef<{ overflow: string; overflowX: string; overflowY: string } | null>(null);
   const htmlPrevRef = useRef<{ overflow: string; overflowX: string; overflowY: string } | null>(null);
 
-  // ✅ ① 詳細カード/プロフィールの “中だけスクロール” を確実にするため、
-  //    「どちらかのモーダルが開いている時」に背景スクロールのみ停止
   const isAnyModalOpen = !!selectedAnime || profileOpen;
 
   useEffect(() => {
@@ -1095,7 +1116,6 @@ export default function Home() {
    * ========================= */
   const selectColsRef = useRef<string>(WANTED_COLS.join(","));
 
-  // ① 可能ならキャッシュを即反映（体感高速）
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -1119,7 +1139,6 @@ export default function Home() {
     setLoadError(null);
     setLoadingWorks(true);
 
-    // caches reset
     vodMapRef.current = new Map();
     vodUrlMapRef.current = new Map();
     vodFetchedIdsRef.current = new Set();
@@ -1143,7 +1162,6 @@ export default function Home() {
         const url = `${SUPABASE_URL}/rest/v1/anime_works?select=${encodeURIComponent(selectCols)}&order=id.asc&limit=${limit}&offset=${offset}`;
         const res = await fetch(url, { headers });
 
-        // 最初の1回だけ：もし select がコケたら fallback してやり直す
         if (!res.ok && first) {
           selectCols = await buildSelectColsFallback(SUPABASE_URL, headers);
           selectColsRef.current = selectCols;
@@ -1188,7 +1206,6 @@ export default function Home() {
         await new Promise((r) => setTimeout(r, 0));
       }
 
-      // ② キャッシュ保存（サイズが大きすぎる時は諦める）
       try {
         if (typeof window !== "undefined" && all.length) {
           const payload = JSON.stringify({ savedAt: Date.now(), data: all });
@@ -1835,6 +1852,7 @@ export default function Home() {
       return { label: ax.label, v: v ?? -1 };
     }).filter((x) => x.v >= 0);
 
+    axes.sort((x, y) => y.v - y.v);
     axes.sort((x, y) => y.v - x.v);
     const top = axes.slice(0, 2);
 
@@ -1977,20 +1995,17 @@ export default function Home() {
     <div className="page">
       <header className="topHeader">
         <div className="headerInner">
-          {/* ② ロゴと文言の左揃えを安定化 + ⑤ 右上にプロフィール導線 */}
-          <div className="headerBar">
-            <div className="brandBox">
-              <button type="button" className={`brandTitle ${logoFont.className}`} aria-label="AniMatch（ホームへ）" onClick={() => goTo("home")}>
-                AniMatch
-              </button>
-              <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
-            </div>
-
-            <div className="headerNav">
-              <button type="button" className="navBtn" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
-                管理人プロフィール
-              </button>
-            </div>
+          {/* ① ロゴと文言：同じ左端に揃える（ズレない構造に） */}
+          <div className="brandBlock">
+            <button
+              type="button"
+              className={`brandTitle ${logoFont.className}`}
+              aria-label="AniMatch（ホームへ）"
+              onClick={() => goTo("home")}
+            >
+              AniMatch
+            </button>
+            <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
           </div>
         </div>
       </header>
@@ -2065,7 +2080,6 @@ export default function Home() {
                 </div>
                 <div className="featureText">
                   <div className="featureTitle">管理人のおすすめアニメ</div>
-                  {/* ③ ここを変更 */}
                   <div className="featureSub">とりあえず何か見たい人へ</div>
                 </div>
                 <div className="featureArrow">→</div>
@@ -2081,6 +2095,72 @@ export default function Home() {
                 </div>
                 <div className="featureArrow">→</div>
               </button>
+            </div>
+
+            {/* ② ③ 管理人プロフィール：ホーム最下部へ移動 + モノトーンでおしゃれに */}
+            <div className="homeBottom">
+              <div
+                className="adminHomeCard"
+                role="button"
+                tabIndex={0}
+                onClick={openProfileModal}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") openProfileModal();
+                }}
+              >
+                <div className="adminHomeHead">
+                  <div className="adminHomeAvatar" aria-hidden="true">
+                    か
+                  </div>
+                  <div className="adminHomeMeta">
+                    <div className="adminHomeName">かさ【ゆるオタ】</div>
+                    <div className="adminHomeTag">YouTubeでアニメ紹介／AniMatch運営</div>
+                  </div>
+                  <div className="adminHomeCta">プロフィール →</div>
+                </div>
+
+                <div className="adminHomeLinks">
+                  <a
+                    className="adminHomeLink"
+                    href="https://youtube.com/@kasa-yuruota"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "home_bottom" } });
+                      } catch {}
+                    }}
+                  >
+                    <span className="adminHomeLinkIcon">
+                      <IconYouTubeMono />
+                    </span>
+                    <span className="adminHomeLinkText">YouTube</span>
+                  </a>
+
+                  <a
+                    className="adminHomeLink"
+                    href="https://kasa-yuruotablog.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "home_bottom" } });
+                      } catch {}
+                    }}
+                  >
+                    <span className="adminHomeLinkIcon">
+                      <IconBlogMono />
+                    </span>
+                    <span className="adminHomeLinkText">ブログ</span>
+                  </a>
+                </div>
+
+                <div className="adminHomeNote">
+                  ※ タップで詳細プロフィール（モノトーンで見やすく改善）
+                </div>
+              </div>
             </div>
           </>
         ) : null}
@@ -2490,7 +2570,6 @@ export default function Home() {
 
             <div className="panel">
               <div className="panelTitle">管理人のおすすめアニメ</div>
-              {/* ④ 文言をこれだけに変更 */}
               <div className="small muted" style={{ marginTop: 6 }}>
                 ※ランキングではありません
               </div>
@@ -2650,7 +2729,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  Modal（作品詳細）— ① 中身だけスクロール（CSSはPart2で修正）
+         *  Modal（作品詳細）
          * ========================= */}
         {selectedAnime ? (
           <div className="modalOverlay" onClick={closeAnimeModal}>
@@ -2781,7 +2860,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  ⑤ 管理人プロフィール Modal（YouTube & ブログへワンクリック）
+         *  管理人プロフィール Modal（モノトーンで改善）
          * ========================= */}
         {profileOpen ? (
           <div className="modalOverlay" onClick={closeProfileModal}>
@@ -2799,54 +2878,59 @@ export default function Home() {
                     <div className="adminAvatar" aria-hidden="true">
                       か
                     </div>
-                    <div className="adminHeroText">
+                    <div className="adminProfileText">
                       <div className="adminName">かさ【ゆるオタ】</div>
-                      <div className="adminTag">YouTubeでアニメ紹介／AniMatch運営</div>
+                      <div className="adminBio">
+                        YouTubeでアニメ紹介／AniMatch運営。
+                        <br />
+                        「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
+                      </div>
                     </div>
                   </div>
 
-                  <div className="adminProfileCard" style={{ marginTop: 12 }}>
-                    <div className="adminProfileCardTitle">リンク</div>
+                  <div className="adminLinkRow">
+                    <a
+                      className="adminLinkBtn adminLinkBtnPrimary"
+                      href="https://youtube.com/@kasa-yuruota"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        try {
+                          trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "profile_modal" } });
+                        } catch {}
+                      }}
+                    >
+                      <span className="adminLinkIcon" aria-hidden="true">
+                        <IconYouTubeMono />
+                      </span>
+                      <span>YouTubeチャンネルへ</span>
+                    </a>
 
-                    <div className="adminLinkGrid">
-                      <a
-                        className="adminLinkBtn"
-                        href="https://youtube.com/@kasa-yuruota"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          try {
-                            trackEvent({ event_name: "profile_click", meta: { to: "youtube" } });
-                          } catch {}
-                        }}
-                      >
-                        YouTubeチャンネルへ
-                      </a>
-
-                      <a
-                        className="adminLinkBtn"
-                        href="https://kasa-yuruotablog.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          try {
-                            trackEvent({ event_name: "profile_click", meta: { to: "blog" } });
-                          } catch {}
-                        }}
-                      >
-                        ブログへ
-                      </a>
-                    </div>
+                    <a
+                      className="adminLinkBtn"
+                      href="https://kasa-yuruotablog.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        try {
+                          trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "profile_modal" } });
+                        } catch {}
+                      }}
+                    >
+                      <span className="adminLinkIcon" aria-hidden="true">
+                        <IconBlogMono />
+                      </span>
+                      <span>ブログへ</span>
+                    </a>
                   </div>
 
-                  <div className="adminProfileCard" style={{ marginTop: 12 }}>
-                    <div className="adminProfileCardTitle">ひとこと</div>
-                    <div className="adminAbout">
-                      「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
-                      <br />
+                  <div className="adminNoteBox">
+                    <div className="small">
                       好きな作品が見つかったら、YouTubeやブログでも深掘りして紹介しています。
+                      <br />
+                      （リンクは別タブで開きます）
                     </div>
                   </div>
 
@@ -2892,7 +2976,8 @@ export default function Home() {
         .recExplainTitle,
         .inlineTitleLink,
         .openBtn,
-        .headerProfileBtn {
+        .headerProfileBtn,
+        .navBtn {
           -webkit-user-select: none;
           user-select: none;
         }
@@ -2915,7 +3000,7 @@ export default function Home() {
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        /* ★変更：左(ロゴ+文言) と 右(プロフィール) を分離してズレを防止 */
+        /* ===== ロゴ + サブ文言：左揃えを固定（旧/新どちらのDOMにも効くように両対応） ===== */
         .headerInner {
           max-width: 980px;
           margin: 0 auto;
@@ -2925,6 +3010,8 @@ export default function Home() {
           justify-content: space-between;
           gap: 14px;
         }
+
+        /* new structure */
         .brandBlock {
           display: flex;
           flex-direction: column;
@@ -2939,7 +3026,33 @@ export default function Home() {
           flex: 0 0 auto;
           padding-top: 4px;
         }
-        .headerProfileBtn {
+
+        /* old structure */
+        .headerBar {
+          width: 100%;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 14px;
+        }
+        .brandBox {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+          min-width: 0;
+        }
+        .headerNav {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex: 0 0 auto;
+          padding-top: 4px;
+        }
+
+        /* 右上プロフィール導線（※ホーム下部に移動済みなら非表示でもOK） */
+        .headerProfileBtn,
+        .navBtn {
           padding: 8px 12px;
           border-radius: 999px;
           border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2950,10 +3063,12 @@ export default function Home() {
           font-weight: 400;
           white-space: nowrap;
         }
-        .headerProfileBtn:hover {
+        .headerProfileBtn:hover,
+        .navBtn:hover {
           background: rgba(0, 0, 0, 0.05);
         }
-        .headerProfileBtn:active {
+        .headerProfileBtn:active,
+        .navBtn:active {
           background: rgba(0, 0, 0, 0.08);
         }
 
@@ -2968,7 +3083,7 @@ export default function Home() {
           border: none;
           cursor: pointer;
           display: block;
-          text-align: left;
+          text-align: left; /* ★左揃え */
         }
         .brandTitle:focus-visible {
           outline: 2px solid rgba(0, 0, 0, 0.16);
@@ -2977,10 +3092,11 @@ export default function Home() {
         }
         .brandSub {
           font-size: 13px;
-          opacity: 0.75;
+          opacity: 0.78;
           display: block;
-          text-align: left;
-          margin-left: 2px; /* ★視覚的な左揃え補正 */
+          text-align: left; /* ★左揃え */
+          margin-left: 0; /* ★ズレ防止 */
+          padding-left: 2px; /* ★視覚的な左揃え補正（ロゴの曲線分） */
         }
 
         .container {
@@ -3122,6 +3238,111 @@ export default function Home() {
           opacity: 0.7;
           font-size: 16px;
           font-weight: 400;
+        }
+
+        /* ===== ② 管理人プロフィール：ホーム最下部カード（モノトーン/白灰で見やすく） ===== */
+        .homeProfileCard {
+          margin-top: 14px;
+          border-radius: 18px;
+          border: 1px solid rgba(0, 0, 0, 0.14);
+          background: linear-gradient(180deg, #111, #0c0c0c);
+          box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
+          color: #f2f2f2;
+          overflow: hidden;
+        }
+        .homeProfileInner {
+          padding: 14px;
+          display: grid;
+          gap: 12px;
+        }
+        .homeProfileTop {
+          display: grid;
+          grid-template-columns: 56px 1fr;
+          gap: 12px;
+          align-items: center;
+        }
+        .homeProfileAvatar {
+          width: 56px;
+          height: 56px;
+          border-radius: 999px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          background: rgba(255, 255, 255, 0.06);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 20px;
+          color: #fff;
+          letter-spacing: 0.5px;
+        }
+        .homeProfileName {
+          font-size: 15px;
+          font-weight: 700;
+          line-height: 1.2;
+          color: #fff;
+        }
+        .homeProfileTag {
+          margin-top: 4px;
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.78);
+          line-height: 1.5;
+        }
+        .homeProfileDesc {
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.78);
+          line-height: 1.6;
+        }
+        .homeProfileActions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .homeProfileBtn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 12px 12px;
+          border-radius: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          background: rgba(255, 255, 255, 0.06);
+          color: #f5f5f5;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 400;
+          cursor: pointer;
+        }
+        .homeProfileBtn:hover {
+          background: rgba(255, 255, 255, 0.10);
+        }
+        .homeProfileBtn:active {
+          background: rgba(255, 255, 255, 0.14);
+        }
+        .homeProfileBtnPrimary {
+          background: rgba(255, 255, 255, 0.14);
+          border-color: rgba(255, 255, 255, 0.24);
+          color: #fff;
+        }
+        .homeProfileBtnPrimary:hover {
+          background: rgba(255, 255, 255, 0.18);
+        }
+        .homeProfileIcon {
+          width: 18px;
+          height: 18px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.92;
+        }
+        .homeProfileFooter {
+          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          padding: 10px 14px;
+          font-size: 11px;
+          color: rgba(255, 255, 255, 0.66);
+          display: flex;
+          justify-content: space-between;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         /* Top row */
@@ -3667,7 +3888,7 @@ export default function Home() {
           z-index: 50;
         }
 
-        /* ★重要：高さを固定（詳細カードがスクロールできない問題を確実に潰す） */
+        /* 高さ固定（詳細カードの中だけスクロール） */
         .modalDialog {
           width: 100%;
           max-width: 980px;
@@ -3687,7 +3908,7 @@ export default function Home() {
           overflow: hidden;
         }
 
-        /* ★閉じるボタンは常に見える（スクロールしても固定） */
+        /* 閉じるボタン固定 */
         .modalHeader {
           flex: 0 0 auto;
           padding: 10px;
@@ -3701,6 +3922,28 @@ export default function Home() {
           top: 0;
           z-index: 2;
         }
+
+        /* ★プロフィールはモノトーンで“黒ベース＋白灰文字” */
+        .profileHeader {
+          background: #111;
+          border-bottom-color: rgba(255, 255, 255, 0.12);
+          color: #f2f2f2;
+        }
+        .profileHeader .modalHeaderTitle {
+          color: rgba(255, 255, 255, 0.82);
+        }
+        .profileHeader .modalCloseBtn {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.16);
+          color: #fff;
+        }
+        .profileHeader .modalCloseBtn:hover {
+          background: rgba(255, 255, 255, 0.10);
+        }
+        .profileHeader .modalCloseBtn:active {
+          background: rgba(255, 255, 255, 0.14);
+        }
+
         .modalHeaderTitle {
           font-size: 13px;
           opacity: 0.75;
@@ -3726,7 +3969,7 @@ export default function Home() {
           background: rgba(0, 0, 0, 0.08);
         }
 
-        /* ★ここがスクロール領域（縦だけスライド） */
+        /* スクロール領域（縦だけ） */
         .modalBody {
           flex: 1 1 auto;
           overflow-y: auto;
@@ -3766,7 +4009,7 @@ export default function Home() {
           font-weight: 400;
         }
 
-        /* 管理人プロフィール */
+        /* ===== ③ プロフィール（アイコン付きでオシャレに / クラス名ゆれに両対応） ===== */
         .adminProfileHero {
           display: grid;
           grid-template-columns: 64px 1fr;
@@ -3783,35 +4026,52 @@ export default function Home() {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-weight: 700;
+          font-weight: 800;
           font-size: 22px;
           letter-spacing: 0.5px;
         }
-        .adminProfileText {
+        .adminProfileText,
+        .adminHeroText {
           min-width: 0;
         }
         .adminName {
           font-size: 16px;
-          font-weight: 700;
+          font-weight: 800;
           line-height: 1.2;
         }
-        .adminBio {
+        .adminBio,
+        .adminTag {
           margin-top: 6px;
           font-size: 13px;
           line-height: 1.6;
           opacity: 0.85;
         }
-        .adminLinkRow {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 10px;
-          margin-top: 14px;
+
+        .adminProfileCard {
+          border: 1px solid rgba(0, 0, 0, 0.10);
+          border-radius: 16px;
+          background: rgba(0, 0, 0, 0.015);
+          padding: 12px;
         }
+        .adminProfileCardTitle {
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.2px;
+        }
+
+        .adminLinkRow,
+        .adminLinkGrid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-top: 12px;
+        }
+
         .adminLinkBtn {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
+          gap: 10px;
           padding: 12px 14px;
           border-radius: 16px;
           border: 1px solid rgba(0, 0, 0, 0.12);
@@ -3828,23 +4088,20 @@ export default function Home() {
         .adminLinkBtn:active {
           background: rgba(0, 0, 0, 0.08);
         }
-        .adminLinkBtnPrimary {
-          background: #111;
-          color: #fff;
-          border-color: rgba(0, 0, 0, 0.18);
+        .adminLinkIcon {
+          width: 18px;
+          height: 18px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.86; /* ★モノトーン */
         }
-        .adminLinkBtnPrimary:hover {
-          filter: brightness(1.05);
-        }
-        .adminLinkBtnPrimary:active {
-          filter: brightness(0.98);
-        }
-        .adminNoteBox {
-          margin-top: 12px;
-          border: 1px dashed rgba(0, 0, 0, 0.14);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(0, 0, 0, 0.01);
+        .adminAbout {
+          margin-top: 10px;
+          font-size: 13px;
+          line-height: 1.7;
+          opacity: 0.9;
+          user-select: text;
         }
 
         /* Mobile */
@@ -3875,13 +4132,21 @@ export default function Home() {
           .headerInner {
             padding: 14px 12px 12px;
           }
-          .headerProfileBtn {
+          .headerProfileBtn,
+          .navBtn {
             padding: 7px 10px;
             font-size: 12px;
+          }
+
+          .adminLinkRow,
+          .adminLinkGrid {
+            grid-template-columns: 1fr;
+          }
+          .homeProfileActions {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
     </div>
   );
 }
-
