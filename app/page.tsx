@@ -2110,11 +2110,12 @@ export default function Home() {
               </button>
 
               {/* ②：ホーム最下部は「管理人のプロフィール」のワードだけ（infoの直下に配置） */}
-              <div className="profileLinkWrap">
-                <button className="profileLink" type="button" onClick={openProfileModal} aria-label="管理人のプロフィールを開く">
-                  管理人のプロフィール
-                </button>
-              </div>
+<div className="profileLinkWrap">
+  <button className="adminProfileLink" type="button" onClick={openProfileModal} aria-label="管理人のプロフィールを開く">
+    管理人のプロフィール
+  </button>
+</div>
+
             </div>
           </>
         ) : null}
@@ -2935,7 +2936,9 @@ export default function Home() {
   .openBtn,
   .headerProfileBtn,
   .navBtn,
-  .adminProfileLink {
+  .adminProfileLink,
+  .profileLink,
+  .adminLinkBtn {
     -webkit-user-select: none;
     user-select: none;
   }
@@ -2958,24 +2961,24 @@ export default function Home() {
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
-  /* ロゴ + サブ文言：左揃えを固定（DOMゆれ対策で両対応） */
+  /* ✅ ① ロゴ（ヘッダー）と下（本文コンテナ）の左端を揃える */
   .headerInner {
     max-width: 980px;
     margin: 0 auto;
-    padding: 16px 16px 14px 0; /* ✅ ① 左端の空白を無くす */
+    padding: 16px 16px 14px; /* ← 左を 16px に戻して container と揃える */
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 14px;
   }
 
-  /* new structure */
   .brandBlock {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
     min-width: 0;
+    padding-left: 0;
   }
   .headerActions {
     display: flex;
@@ -2985,7 +2988,7 @@ export default function Home() {
     padding-top: 4px;
   }
 
-  /* old structure */
+  /* old structure（残置） */
   .headerBar {
     width: 100%;
     display: flex;
@@ -3008,7 +3011,6 @@ export default function Home() {
     padding-top: 4px;
   }
 
-  /* （右上導線が残っていても崩れないよう残置） */
   .headerProfileBtn,
   .navBtn {
     padding: 8px 12px;
@@ -3048,14 +3050,16 @@ export default function Home() {
     outline-offset: 6px;
     border-radius: 10px;
   }
-  /* ✅ ロゴとサブ文言の左端を完全に揃える */
+
+  /* ✅ ① ロゴとサブ文言の左端を完全に揃える */
   .brandSub {
     font-size: 13px;
     opacity: 0.78;
     display: block;
     text-align: left;
-    margin-left: 0;
-    padding-left: 0; /* ←ここを0に */
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
   }
 
   .container {
@@ -3112,8 +3116,9 @@ export default function Home() {
     filter: brightness(1.05);
   }
   .btn:active {
-    filter: brightness(1.0); /* ✅ 押下で“真っ黒化”しにくく */
+    filter: brightness(1);
   }
+
   .btnGhost {
     padding: 8px 12px;
     border-radius: 999px;
@@ -3130,6 +3135,7 @@ export default function Home() {
   .btnGhost:active {
     background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
+
   .btnTiny {
     padding: 7px 10px;
     border-radius: 999px;
@@ -3169,7 +3175,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.02);
   }
   .featureCard:active {
-    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
   }
   .featureIcon {
     width: 44px;
@@ -3199,15 +3205,18 @@ export default function Home() {
     font-weight: 400;
   }
 
-  /* ② HOME下：管理人プロフィール（暗すぎ対策で白/灰に寄せる） */
-  .adminProfileLink {
+  /* ✅ ② HOME下：管理人のプロフィール（暗すぎ対策：白〜薄灰） */
+  .profileLinkWrap {
     width: 100%;
-    margin-top: 12px;
+    margin-top: 6px;
+  }
+  .profileLink {
+    width: 100%;
     padding: 16px 14px;
     border-radius: 18px;
     border: 1px dashed rgba(0, 0, 0, 0.18);
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
-    color: rgba(0, 0, 0, 0.58); /* ✅ ② もっと明るいグレーへ */
+    color: rgba(0, 0, 0, 0.62); /* ← 見える明るさ */
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
@@ -3216,15 +3225,48 @@ export default function Home() {
     position: relative;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
   }
-  .adminProfileLink:hover {
+  .profileLink:hover {
     background: rgba(0, 0, 0, 0.03);
   }
-  .adminProfileLink:active {
-    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
+  .profileLink:active {
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
   }
-  .adminProfileLink:focus-visible {
+  .profileLink:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.16);
     outline-offset: 4px;
+  }
+  .profileLink::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid rgba(0, 0, 0, 0.38);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.38);
+    transform: translateY(-50%) rotate(-45deg);
+    opacity: 0.9;
+  }
+
+  /*（旧クラス残置：もしどこかで使っていても同じ見た目）*/
+  .adminProfileLink {
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px 14px;
+    border-radius: 18px;
+    border: 1px dashed rgba(0, 0, 0, 0.18);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+    color: rgba(0, 0, 0, 0.62);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
+  }
+  .adminProfileLink:active {
+    background: rgba(120, 120, 120, 0.1);
   }
   .adminProfileLink::after {
     content: "";
@@ -3233,8 +3275,8 @@ export default function Home() {
     top: 50%;
     width: 8px;
     height: 8px;
-    border-right: 2px solid rgba(0, 0, 0, 0.38); /* ✅ ② 少し明るく */
-    border-bottom: 2px solid rgba(0, 0, 0, 0.38); /* ✅ ② 少し明るく */
+    border-right: 2px solid rgba(0, 0, 0, 0.38);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.38);
     transform: translateY(-50%) rotate(-45deg);
     opacity: 0.9;
   }
@@ -3344,7 +3386,7 @@ export default function Home() {
     font-weight: 400;
   }
   .collapseHead:active {
-    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
     border-radius: 14px;
   }
   .collapseHead:focus-visible {
@@ -3396,8 +3438,9 @@ export default function Home() {
     border-radius: 10px;
   }
   .checkItem:active {
-    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
   }
+
   .checkLabel {
     display: inline-flex;
     align-items: center;
@@ -3555,6 +3598,9 @@ export default function Home() {
     display: inline-flex;
     align-items: center;
   }
+  .vodIconLink:active {
+    filter: brightness(0.98);
+  }
 
   .inlineTitleLink {
     border: none;
@@ -3566,6 +3612,9 @@ export default function Home() {
     font-size: 13px;
     font-weight: 700;
     padding: 0;
+  }
+  .inlineTitleLink:active {
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ */
   }
 
   /* Analyze */
@@ -3649,6 +3698,9 @@ export default function Home() {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
+  .recExplainTitle:active {
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ */
+  }
   .recExplainTitle:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.16);
     outline-offset: 4px;
@@ -3724,7 +3776,7 @@ export default function Home() {
     cursor: not-allowed;
   }
   .pagerArrow:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ */
   }
   .pagerNums {
     display: inline-flex;
@@ -3748,10 +3800,10 @@ export default function Home() {
     justify-content: center;
   }
   .pagerNum:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ */
   }
   .pagerNum.active {
-    background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
+    background: #3a3a3a;
     color: #fff;
     border-color: rgba(0, 0, 0, 0.18);
   }
@@ -3782,7 +3834,6 @@ export default function Home() {
     z-index: 50;
   }
 
-  /* 高さ固定（詳細カードの中だけスクロール） */
   .modalDialog {
     width: 100%;
     max-width: 980px;
@@ -3802,7 +3853,6 @@ export default function Home() {
     overflow: hidden;
   }
 
-  /* 閉じるボタン固定 */
   .modalHeader {
     flex: 0 0 auto;
     padding: 10px;
@@ -3817,7 +3867,7 @@ export default function Home() {
     z-index: 2;
   }
 
-  /* プロフィール：黒ベース＋白灰文字 */
+  /* プロフィール：黒ベース＋白灰文字（※HOMEのリンクとは別） */
   .profileHeader {
     background: #111;
     border-bottom-color: rgba(255, 255, 255, 0.12);
@@ -3857,34 +3907,32 @@ export default function Home() {
     white-space: nowrap;
   }
   .modalCloseBtn:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0.04);
   }
   .modalCloseBtn:active {
     background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
 
-  /* スクロール領域（縦だけ） */
   .modalBody {
     flex: 1 1 auto;
-    overflow-y: auto;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    touch-action: pan-y pinch-zoom;
-    padding: 14px;
+    padding: 12px;
   }
 
   .modalTop {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 340px 1fr;
     gap: 14px;
     align-items: start;
   }
   .modalPoster {
-    width: 260px;
+    width: 100%;
     aspect-ratio: 16 / 9;
     height: auto;
     object-fit: cover;
     border-radius: 16px;
+    background: rgba(0, 0, 0, 0.02);
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
   .modalInfo {
@@ -3893,109 +3941,127 @@ export default function Home() {
   .modalTitle {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 6px;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    margin-bottom: 10px;
   }
+
   .link {
-    margin-left: 8px;
     color: #111;
     text-decoration: underline;
     text-underline-offset: 3px;
-    font-weight: 400;
+  }
+  .link:active {
+    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ */
   }
 
-  /* ③ プロフィール：アイコンは空白（＝非表示） */
-  .adminAvatar {
-    display: none;
-  }
-
+  /* Admin profile modal */
   .adminProfileHero {
-    display: grid;
-    grid-template-columns: 1fr; /* アイコン無し前提 */
+    display: flex;
     gap: 12px;
     align-items: center;
-    padding: 10px 2px 4px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.015);
   }
-  .adminProfileText,
-  .adminHeroText {
+  .adminAvatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.03);
+    flex: 0 0 auto;
+  }
+  .adminProfileText {
     min-width: 0;
   }
   .adminName {
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1.2;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
   }
-  .adminBio,
-  .adminTag {
+  .adminBio {
     margin-top: 6px;
     font-size: 13px;
-    line-height: 1.6;
-    opacity: 0.85;
+    line-height: 1.65;
+    opacity: 0.9;
+    word-break: break-word;
   }
 
-  .adminLinkRow,
-  .adminLinkGrid {
-    display: grid;
-    grid-template-columns: minmax(0, 320px) minmax(0, 320px); /* ✅ ③ 横幅を少し小さく＆同幅 */
-    justify-content: center; /* ✅ 中央寄せ */
-    gap: 10px;
+  /* ✅ ③ YouTube/ブログ枠：横長すぎる→幅を少し小さく＆2つ同幅 */
+  .adminLinkRow {
     margin-top: 12px;
+    display: grid;
+    gap: 10px;
+    justify-items: center; /* 中央寄せ */
   }
-
-  /* ③ YouTube/ブログ：横長すぎる→幅統一＆押下で黒くしない */
   .adminLinkBtn {
+    width: min(560px, 100%); /* ← 少し幅を抑える */
+    padding: 14px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #fff;
+    color: #111;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 12px 14px;
-    border-radius: 16px;
-
-    width: 100%;
-    max-width: 320px; /* ✅ ③ 横幅を少し小さく＆同幅 */
-
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
     text-decoration: none;
     font-size: 14px;
     font-weight: 400;
-    cursor: pointer;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
   }
   .adminLinkBtn:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.02);
   }
   .adminLinkBtn:active {
     background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
   .adminLinkBtnPrimary {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.16);
-  }
-  .adminLinkBtnPrimary:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-  .adminLinkBtnPrimary:active {
-    background: rgba(120, 120, 120, 0.14); /* ✅ ⑤ 黒→灰 */
+    background: rgba(0, 0, 0, 0.02);
   }
   .adminLinkIcon {
-    width: 20px;
-    height: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.92;
-  }
-  .adminNoteBox {
-    margin-top: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 14px;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.015);
   }
 
-  /* ④ PC（大きめ画面）では文字をもう一段階大きく */
-  @media (min-width: 960px) {
+  .adminNoteBox {
+    margin-top: 12px;
+    border: 1px dashed rgba(0, 0, 0, 0.14);
+    border-radius: 14px;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.01);
+  }
+
+  /* Responsive */
+  @media (max-width: 820px) {
+    .modalTop {
+      grid-template-columns: 1fr;
+    }
+    .modalPoster {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .cardTop {
+      grid-template-columns: 1fr;
+    }
+    .poster {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ✅ ④ PC：文字をもう一段階大きく（デスクトップのみ） */
+  @media (min-width: 900px) {
     .brandTitle {
       font-size: 44px;
     }
@@ -4016,16 +4082,6 @@ export default function Home() {
     .btnGhost {
       font-size: 14px;
     }
-    .btnTiny {
-      font-size: 13px;
-    }
-
-    .featureTitle {
-      font-size: 16px;
-    }
-    .featureSub {
-      font-size: 13px;
-    }
     .pill {
       font-size: 14px;
     }
@@ -4033,14 +4089,11 @@ export default function Home() {
       font-size: 15px;
     }
 
-    .collapseTitle {
-      font-size: 14px;
+    .featureTitle {
+      font-size: 16px;
     }
-    .collapseMeta {
+    .featureSub {
       font-size: 13px;
-    }
-    .checkItem {
-      font-size: 14px;
     }
 
     .cardTitle {
@@ -4055,86 +4108,27 @@ export default function Home() {
     .metaText {
       font-size: 14px;
     }
-    .inlineTitleLink {
-      font-size: 14px;
+    .starsText {
+      font-size: 13px;
     }
-
     .recExplainTitle {
       font-size: 15px;
     }
-    .modalHeaderTitle {
-      font-size: 14px;
-    }
-    .modalCloseBtn {
-      font-size: 14px;
-    }
+
     .modalTitle {
       font-size: 22px;
     }
-
     .adminName {
-      font-size: 17px;
+      font-size: 16px;
     }
-    .adminBio,
-    .adminTag {
+    .adminBio {
       font-size: 14px;
-    }
-
-    .profileLabel,
-    .profileVal,
-    .scoreLabel,
-    .scoreVal {
-      font-size: 13px;
-    }
-    .pagerArrow,
-    .pagerNum {
-      font-size: 14px;
-    }
-  }
-
-  /* Mobile */
-  @media (max-width: 520px) {
-    .brandTitle {
-      font-size: 34px;
-    }
-    .container {
-      padding: 12px 12px 26px;
-    }
-    .cardTop {
-      grid-template-columns: 1fr;
-    }
-    .poster {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-    }
-    .grid2 {
-      grid-template-columns: 1fr;
-    }
-    .modalTop {
-      grid-template-columns: 1fr;
-    }
-    .modalPoster {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-    }
-    .headerInner {
-      padding: 14px 12px 12px 0; /* ✅ ① 左端の空白を無くす（スマホ） */
-    }
-    .headerProfileBtn,
-    .navBtn {
-      padding: 7px 10px;
-      font-size: 12px;
-    }
-    .adminLinkRow,
-    .adminLinkGrid {
-      grid-template-columns: 1fr; /* ✅ スマホは1列 */
-      justify-content: stretch;
     }
     .adminLinkBtn {
-      max-width: 100%;
+      font-size: 15px;
     }
   }
-      `}</style>
+`}</style>
     </div>
   );
 }
