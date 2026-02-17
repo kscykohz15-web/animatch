@@ -1859,10 +1859,12 @@ export default function Home() {
   const adminSeedRef = useRef<number>(Math.floor(Date.now() / 1000));
 
   function buildAdminReasons(a: AnimeWork) {
-    const axes = OVERALL_WEIGHTS.map((ax) => {
-      const v = toScore10((a as any)[ax.key]);
-      return { label: ax.label, v: v ?? -1 };
-    }).filter((x) => x.v >= 0);
+    const axes = OVERALL_WEIGHTS
+      .map((ax) => {
+        const v = toScore10((a as any)[ax.key]);
+        return { label: ax.label, v: v ?? -1 };
+      })
+      .filter((x) => x.v >= 0);
 
     axes.sort((x, y) => y.v - y.v);
     const top = axes.slice(0, 2);
@@ -2909,7 +2911,7 @@ export default function Home() {
   }
   * {
     box-sizing: border-box;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
+    -webkit-tap-highlight-color: rgba(120, 120, 120, 0.22); /* ✅ ⑤ 黒→灰 */
   }
 
   ::selection {
@@ -2960,7 +2962,7 @@ export default function Home() {
   .headerInner {
     max-width: 980px;
     margin: 0 auto;
-    padding: 16px 16px 14px;
+    padding: 16px 16px 14px 0; /* ✅ ① 左端の空白を無くす */
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -3025,7 +3027,7 @@ export default function Home() {
   }
   .headerProfileBtn:active,
   .navBtn:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
 
   .brandTitle {
@@ -3126,7 +3128,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.05);
   }
   .btnGhost:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
   .btnTiny {
     padding: 7px 10px;
@@ -3139,7 +3141,7 @@ export default function Home() {
     font-weight: 400;
   }
   .btnTiny:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
 
   /* Home cards */
@@ -3167,7 +3169,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.02);
   }
   .featureCard:active {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
   }
   .featureIcon {
     width: 44px;
@@ -3205,7 +3207,7 @@ export default function Home() {
     border-radius: 18px;
     border: 1px dashed rgba(0, 0, 0, 0.18);
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
-    color: rgba(0, 0, 0, 0.72); /* ✅ #111 → 見えやすいグレー */
+    color: rgba(0, 0, 0, 0.58); /* ✅ ② もっと明るいグレーへ */
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
@@ -3218,7 +3220,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.03);
   }
   .adminProfileLink:active {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
   }
   .adminProfileLink:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.16);
@@ -3231,8 +3233,8 @@ export default function Home() {
     top: 50%;
     width: 8px;
     height: 8px;
-    border-right: 2px solid rgba(0, 0, 0, 0.45);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.45);
+    border-right: 2px solid rgba(0, 0, 0, 0.38); /* ✅ ② 少し明るく */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.38); /* ✅ ② 少し明るく */
     transform: translateY(-50%) rotate(-45deg);
     opacity: 0.9;
   }
@@ -3263,7 +3265,7 @@ export default function Home() {
     font-weight: 400;
   }
   .pill:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
   .pill.active {
     background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
@@ -3314,7 +3316,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.04);
   }
   .suggestItem:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
 
   /* Collapsible filters */
@@ -3342,7 +3344,7 @@ export default function Home() {
     font-weight: 400;
   }
   .collapseHead:active {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
     border-radius: 14px;
   }
   .collapseHead:focus-visible {
@@ -3394,7 +3396,7 @@ export default function Home() {
     border-radius: 10px;
   }
   .checkItem:active {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(120, 120, 120, 0.10); /* ✅ ⑤ 黒→灰 */
   }
   .checkLabel {
     display: inline-flex;
@@ -3481,7 +3483,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.05);
   }
   .openBtn:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
 
   .desc {
@@ -3722,7 +3724,7 @@ export default function Home() {
     cursor: not-allowed;
   }
   .pagerArrow:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
   .pagerNums {
     display: inline-flex;
@@ -3746,7 +3748,7 @@ export default function Home() {
     justify-content: center;
   }
   .pagerNum:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
   .pagerNum.active {
     background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
@@ -3858,7 +3860,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.03);
   }
   .modalCloseBtn:active {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
 
   /* スクロール領域（縦だけ） */
@@ -3933,7 +3935,7 @@ export default function Home() {
   .adminLinkRow,
   .adminLinkGrid {
     display: grid;
-    grid-template-columns: minmax(0, 360px) minmax(0, 360px); /* ✅ 幅を揃えて締める */
+    grid-template-columns: minmax(0, 320px) minmax(0, 320px); /* ✅ ③ 横幅を少し小さく＆同幅 */
     justify-content: center; /* ✅ 中央寄せ */
     gap: 10px;
     margin-top: 12px;
@@ -3949,7 +3951,7 @@ export default function Home() {
     border-radius: 16px;
 
     width: 100%;
-    max-width: 360px; /* ✅ 横幅を揃える */
+    max-width: 320px; /* ✅ ③ 横幅を少し小さく＆同幅 */
 
     border: 1px solid rgba(0, 0, 0, 0.12);
     background: rgba(0, 0, 0, 0.02);
@@ -3964,7 +3966,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.05);
   }
   .adminLinkBtn:active {
-    background: rgba(0, 0, 0, 0.06); /* ✅ 真っ黒化しにくい */
+    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
   }
   .adminLinkBtnPrimary {
     background: rgba(0, 0, 0, 0.06);
@@ -3974,7 +3976,7 @@ export default function Home() {
     background: rgba(0, 0, 0, 0.08);
   }
   .adminLinkBtnPrimary:active {
-    background: rgba(0, 0, 0, 0.1); /* ✅ 真っ黒化しにくい */
+    background: rgba(120, 120, 120, 0.14); /* ✅ ⑤ 黒→灰 */
   }
   .adminLinkIcon {
     width: 20px;
@@ -3990,6 +3992,104 @@ export default function Home() {
     border-radius: 14px;
     padding: 12px;
     background: rgba(0, 0, 0, 0.015);
+  }
+
+  /* ④ PC（大きめ画面）では文字をもう一段階大きく */
+  @media (min-width: 960px) {
+    .brandTitle {
+      font-size: 44px;
+    }
+    .brandSub {
+      font-size: 14px;
+    }
+
+    .panelTitle {
+      font-size: 15px;
+    }
+    .small {
+      font-size: 13px;
+    }
+
+    .btn {
+      font-size: 15px;
+    }
+    .btnGhost {
+      font-size: 14px;
+    }
+    .btnTiny {
+      font-size: 13px;
+    }
+
+    .featureTitle {
+      font-size: 16px;
+    }
+    .featureSub {
+      font-size: 13px;
+    }
+    .pill {
+      font-size: 14px;
+    }
+    .input {
+      font-size: 15px;
+    }
+
+    .collapseTitle {
+      font-size: 14px;
+    }
+    .collapseMeta {
+      font-size: 13px;
+    }
+    .checkItem {
+      font-size: 14px;
+    }
+
+    .cardTitle {
+      font-size: 20px;
+    }
+    .desc {
+      font-size: 14px;
+    }
+    .metaLabel {
+      font-size: 13px;
+    }
+    .metaText {
+      font-size: 14px;
+    }
+    .inlineTitleLink {
+      font-size: 14px;
+    }
+
+    .recExplainTitle {
+      font-size: 15px;
+    }
+    .modalHeaderTitle {
+      font-size: 14px;
+    }
+    .modalCloseBtn {
+      font-size: 14px;
+    }
+    .modalTitle {
+      font-size: 22px;
+    }
+
+    .adminName {
+      font-size: 17px;
+    }
+    .adminBio,
+    .adminTag {
+      font-size: 14px;
+    }
+
+    .profileLabel,
+    .profileVal,
+    .scoreLabel,
+    .scoreVal {
+      font-size: 13px;
+    }
+    .pagerArrow,
+    .pagerNum {
+      font-size: 14px;
+    }
   }
 
   /* Mobile */
@@ -4018,7 +4118,7 @@ export default function Home() {
       aspect-ratio: 16 / 9;
     }
     .headerInner {
-      padding: 14px 12px 12px;
+      padding: 14px 12px 12px 0; /* ✅ ① 左端の空白を無くす（スマホ） */
     }
     .headerProfileBtn,
     .navBtn {
