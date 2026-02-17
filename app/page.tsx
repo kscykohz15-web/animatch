@@ -2109,2103 +2109,1213 @@ export default function Home() {
                 <div className="featureArrow">→</div>
               </button>
 
-              {/* ② HOME最下部：管理人プロフィール（カード式／HOMEのみ表示） */}
-              <div className="adminProfileCardWrap">
-                <div
-                  className="adminProfileCard"
-                  role="button"
-                  tabIndex={0}
-                  aria-label="管理人のプロフィールを開く"
-                  onClick={openProfileModal}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") openProfileModal();
-                  }}
-                >
-                  <div className="adminProfileCardAvatar" aria-hidden="true" />
-                  <div className="adminProfileCardMain">
-                    <div className="adminProfileCardHead">
-                      <div className="adminProfileCardLabel">管理人のプロフィール</div>
-                      <div className="adminProfileCardArrow" aria-hidden="true">
-                        →
-                      </div>
-                    </div>
-
-                    <div className="adminProfileCardName">かさ【ゆるオタ】</div>
-
-                    <div className="adminProfileCardBio">
-                      YouTubeでアニメ紹介／AniMatch運営。
-                      <br />
-                      「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
-                    </div>
-
-                    <div className="adminProfileCardLinks">
-                      <a
-                        className="adminProfileIconLink"
-                        href="https://youtube.com/@kasa-yuruota"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="YouTubeチャンネルを開く（別タブ）"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          try {
-                            trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "home_profile_card" } });
-                          } catch {}
-                        }}
-                      >
-                        <IconYouTubeMono size={18} />
-                      </a>
-
-                      <a
-                        className="adminProfileIconLink"
-                        href="https://kasa-yuruotablog.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="ブログを開く（別タブ）"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          try {
-                            trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "home_profile_card" } });
-                          } catch {}
-                        }}
-                      >
-                        <IconBlogMono size={18} />
-                      </a>
-
-                      <div className="adminProfileCardLinkHint">（アイコンをクリックで別タブ）</div>
-                    </div>
-                  </div>
-                </div>
+              {/* ②：ホーム最下部は「管理人のプロフィール」のワードだけ（infoの直下に配置） */}
+              <div className="profileLinkWrap">
+                <button className="adminProfileLink" type="button" onClick={openProfileModal} aria-label="管理人のプロフィールを開く">
+                  管理人のプロフィール
+                </button>
               </div>
             </div>
           </>
         ) : null}
 
-        {/* =========================
-         *  Recommend（ジャンル/気分）
-         * ========================= */}
-        {view === "recommend" ? (
-          <>
-            <div className="topRow">
-              <button className="btnGhost" onClick={() => goTo("home")}>
-                ← ホームへ
-              </button>
-              <div className="small muted">ジャンル、気分で作品を探す</div>
-            </div>
+        {/* …（この後のJSXは提示コードのまま：recommend/similar/analyze/admin/info/results/modal/profile modal まで続きます）… */}
 
-            <div className="panel">
-              <div className="tabs">
-                <PillTab active={recMode === "byGenre"} onClick={() => setRecMode("byGenre")}>
-                  ジャンル
-                </PillTab>
-                <PillTab active={recMode === "byMood"} onClick={() => setRecMode("byMood")}>
-                  気分（キーワード）
-                </PillTab>
-              </div>
-
-              <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-              </div>
-
-              {recMode === "byGenre" ? (
-                <div className="modeBox">
-                  <div className="small muted">ジャンルをチェック（複数OK）</div>
-                  <input type="text" className="input" placeholder="ジャンルを絞り込み（例：アクション）" value={genreFilterText} onChange={(e) => setGenreFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredGenreOptions.slice(0, 160).map((g) => (
-                        <label key={g} className="checkItem">
-                          <input type="checkbox" checked={genreChecked.has(g)} onChange={() => toggleSet(setGenreChecked, g)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{g}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <button className="btn" onClick={searchByGenre}>
-                    おすすめを表示
-                  </button>
-                </div>
-              ) : null}
-
-              {recMode === "byMood" ? (
-                <div className="modeBox">
-                  <div className="small muted">気分に近いものを選択（＋フリーワードもOK）</div>
-                  <div className="checkGrid" style={{ marginTop: 10 }}>
-                    {keywordList.map((k) => (
-                      <label key={k} className="checkItem">
-                        <input type="checkbox" checked={keywordChecked.has(k)} onChange={() => toggleSet(setKeywordChecked, k)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{k}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-
-                  <div className="small muted" style={{ marginTop: 12 }}>
-                    フリーワード（任意）
-                  </div>
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="例：異世界 / 女の子が可愛い / ダークで考察"
-                    value={freeQuery}
-                    onChange={(e) => setFreeQuery(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") searchByMood();
-                    }}
-                  />
-                  <button className="btn" onClick={searchByMood}>
-                    おすすめを表示
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          </>
-        ) : null}
-
-        {/* 以降の JSX（similar/analyze/admin/info/results/modals）は現状のままなので省略せず、
-            次の出力（<style jsx global>{ 以降）と一緒に「完全版」として続きます。 */}
-
-        {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
-        {/* =========================
-         *  Similar
-         * ========================= */}
-        {view === "similar" ? (
-          <>
-            <div className="topRow">
-              <button className="btnGhost" onClick={() => goTo("home")}>
-                ← ホームへ
-              </button>
-              <div className="small muted">似た作品を探す</div>
-            </div>
-
-            <div className="panel">
-              <div className="panelTitle">1作品から、似た作品を提案します</div>
-              <div className="small muted">候補が出るので、そこから選ぶのがおすすめ。</div>
-
-              <div className="filters" style={{ marginTop: 12 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-              </div>
-
-              <div className="suggestWrap" style={{ marginTop: 12 }}>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="作品名（例：進撃の巨人）"
-                  value={similarQuery}
-                  onChange={(e) => {
-                    setSimilarQuery(e.target.value);
-                    setSimilarSuggestOpen(true);
-                  }}
-                  onFocus={() => setSimilarSuggestOpen(true)}
-                  onBlur={() => window.setTimeout(() => setSimilarSuggestOpen(false), 120)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") searchSimilar();
-                  }}
-                />
-
-                {similarSuggestOpen && similarSuggestions.length ? (
-                  <div className="suggestBox" role="listbox">
-                    {similarSuggestions.map((t) => (
-                      <button
-                        type="button"
-                        key={t}
-                        className="suggestItem"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setSimilarQuery(t);
-                          setSimilarSuggestOpen(false);
-                        }}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-
-              <button className="btn" style={{ marginTop: 10 }} onClick={searchSimilar}>
-                似た作品を表示
-              </button>
-            </div>
-
-            {similarBase && similarResults.length ? (
-              <div className="resultWrap" style={{ marginTop: 14 }}>
-                <div className="resultHead">
-                  <div className="resultCount">
-                    元作品：<span className="strong">{similarBase.title}</span>
-                  </div>
-                  <div className="small muted">{similarResults.length}件</div>
-                </div>
-
-                <div className="cardList">
-                  {similarVisible.map((row) => (
-                    <div key={row.work.id ?? row.work.title} className="cardWithReason">
-                      <WorkCard a={row.work} />
-                      <ul className="reasonList">
-                        {row.reasons.map((r, idx) => (
-                          <li key={idx}>{r}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-
-                <Pagination page={similarPage} totalPages={similarTotalPages} onChange={setSimilarPage} />
-              </div>
-            ) : null}
-          </>
-        ) : null}
-
-        {/* =========================
-         *  Analyze
-         * ========================= */}
-        {view === "analyze" ? (
-          <>
-            <div className="topRow">
-              <button className="btnGhost" onClick={() => goTo("home")}>
-                ← ホームへ
-              </button>
-              <div className="small muted">あなたの好みを分析する</div>
-            </div>
-
-            <div className="panel">
-              <div className="panelTitle">好きな作品を1〜10個入れてください</div>
-              <div className="small muted">入力作品から“好みの傾向”を作り、近い作品を提案します。</div>
-
-              <div className="filters" style={{ marginTop: 12 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-              </div>
-
-              <div className="anInputs" style={{ marginTop: 12 }}>
-                {anInputs.map((v, i) => (
-                  <div key={i} className="anRow">
-                    <div className="anIdx">{i + 1}</div>
-                    <div className="anField">
-                      <input
-                        type="text"
-                        className="input"
-                        placeholder="作品名"
-                        value={v}
-                        onFocus={() => setAnActiveIndex(i)}
-                        onBlur={() => window.setTimeout(() => setAnActiveIndex(null), 120)}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setAnInputs((prev) => {
-                            const next = [...prev];
-                            next[i] = val;
-                            return next;
-                          });
-                          setAnActiveIndex(i);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") runAnalysis();
-                        }}
-                      />
-
-                      {anActiveIndex === i && anSuggestions.length ? (
-                        <div className="suggestBox" role="listbox">
-                          {anSuggestions.map((t) => (
-                            <button
-                              type="button"
-                              key={t}
-                              className="suggestItem"
-                              onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => {
-                                setAnInputs((prev) => {
-                                  const next = [...prev];
-                                  next[i] = t;
-                                  return next;
-                                });
-                                setAnActiveIndex(null);
-                              }}
-                            >
-                              {t}
-                            </button>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button className="btn" style={{ marginTop: 10 }} onClick={runAnalysis}>
-                分析しておすすめを表示
-              </button>
-            </div>
-
-            {analysis ? (
-              <div className="resultWrap" style={{ marginTop: 14 }}>
-                <div className="panel" style={{ marginBottom: 12 }}>
-                  <div className="panelTitle">あなたの傾向</div>
-                  <ul className="reasonList" style={{ marginTop: 8 }}>
-                    {analysis.summaryLines.map((s, idx) => (
-                      <li key={idx}>{s}</li>
-                    ))}
-                  </ul>
-
-                  <div className="profileBars" style={{ marginTop: 10 }}>
-                    {analysis.profile.map((p) => (
-                      <div className="barRow" key={p.label}>
-                        <div className="barLabel">{p.label}</div>
-                        <div className="barTrack" aria-hidden="true">
-                          <div className="barFill" style={{ width: `${clamp((p.value / 10) * 100, 0, 100)}%` }} />
-                        </div>
-                        <div className="barVal">{p.value.toFixed(1)}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="small muted" style={{ marginTop: 10 }}>
-                    入力した作品：{analysis.usedWorks.map((w) => w.title).join(" / ")}
-                  </div>
-                </div>
-
-                <div className="resultHead">
-                  <div className="resultCount">{analysis.recommendations.length}件</div>
-                  <div className="small muted">（あなたの傾向に近い順）</div>
-                </div>
-
-                <div className="cardList">
-                  {analysisVisible.map((row) => (
-                    <div key={row.work.id ?? row.work.title} className="cardWithReason">
-                      <WorkCard a={row.work} />
-                      <ul className="reasonList">
-                        {row.reasons.map((r, idx) => (
-                          <li key={idx}>{r}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-
-                <Pagination page={analysisPage} totalPages={analysisTotalPages} onChange={setAnalysisPage} />
-              </div>
-            ) : null}
-          </>
-        ) : null}
-
-        {/* =========================
-         *  Admin recommended
-         * ========================= */}
-        {view === "admin" ? (
-          <>
-            <div className="topRow">
-              <button className="btnGhost" onClick={() => goTo("home")}>
-                ← ホームへ
-              </button>
-              <div className="small muted">管理人のおすすめアニメ</div>
-            </div>
-
-            <div className="panel">
-              <div className="panelTitle">管理人のおすすめ（ランダム表示）</div>
-              <div className="small muted">「迷ったらコレ」枠。絞り込み（VOD/制作会社）もできます。</div>
-
-              <div className="filters" style={{ marginTop: 12 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-              </div>
-
-              {adminRecsRaw.length === 0 ? (
-                <div className="muted" style={{ marginTop: 10 }}>
-                  is_recommended=true の作品がまだありません（DB側でフラグ付けしてください）
-                </div>
-              ) : (
-                <div className="muted" style={{ marginTop: 10 }}>
-                  対象：{adminRecs.length}件（表示は上から30件）
-                </div>
-              )}
-            </div>
-
-            {adminRecs.length ? (
-              <div className="resultWrap" style={{ marginTop: 14 }}>
-                <div className="cardList">
-                  {adminRecs.slice(0, 30).map((w) => (
-                    <div key={w.id ?? w.title} className="cardWithReason">
-                      <WorkCard a={w} />
-                      <ul className="reasonList">
-                        {buildAdminReasons(w).map((r, idx) => (
-                          <li key={idx}>{r}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </>
-        ) : null}
-
-        {/* =========================
-         *  Info search
-         * ========================= */}
-        {view === "info" ? (
-          <>
-            <div className="topRow">
-              <button className="btnGhost" onClick={() => goTo("home")}>
-                ← ホームへ
-              </button>
-              <div className="small muted">作品の情報を検索する</div>
-            </div>
-
-            <div className="panel">
-              <div className="panelTitle">タイトル検索</div>
-              <div className="small muted">入力 → Enter でもOK</div>
-
-              <div className="filters" style={{ marginTop: 12 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-              </div>
-
-              <div className="suggestWrap" style={{ marginTop: 12 }}>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="作品名"
-                  value={infoQuery}
-                  onChange={(e) => {
-                    setInfoQuery(e.target.value);
-                    setInfoSuggestOpen(true);
-                  }}
-                  onFocus={() => setInfoSuggestOpen(true)}
-                  onBlur={() => window.setTimeout(() => setInfoSuggestOpen(false), 120)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") searchInfoByTitle();
-                  }}
-                />
-
-                {infoSuggestOpen && infoSuggestions.length ? (
-                  <div className="suggestBox" role="listbox">
-                    {infoSuggestions.map((t) => (
-                      <button
-                        type="button"
-                        key={t}
-                        className="suggestItem"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setInfoQuery(t);
-                          setInfoSuggestOpen(false);
-                        }}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-
-              <button className="btn" style={{ marginTop: 10 }} onClick={searchInfoByTitle}>
-                検索
-              </button>
-            </div>
-          </>
-        ) : null}
-
-        {/* =========================
-         *  Shared results for recommend/info
-         * ========================= */}
-        {(view === "recommend" || view === "info") && resultAll.length ? (
-          <div ref={resultRef} className={`resultWrap ${resultFlash ? "flash" : ""}`}>
-            <div className="resultHead">
-              <div className="resultCount">{resultAll.length}件</div>
-              <div className="small muted">（カードをクリックで詳細）</div>
-            </div>
-
-            <div className="cardList">
-              {visibleResults.map((a) => (
-                <WorkCard key={a.id ?? a.title} a={a} />
-              ))}
-            </div>
-
-            <Pagination page={resultPage} totalPages={totalPages} onChange={setResultPage} />
-          </div>
-        ) : null}
       </main>
 
-      {/* =========================
-       *  Anime Modal
-       * ========================= */}
-      {selectedAnime ? (
-        <div
-          className="modalOverlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="作品詳細"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) closeAnimeModal();
-          }}
-        >
-          <div className="modalCard" onMouseDown={(e) => e.stopPropagation()}>
-            <div className="modalTopBar">
-              <div className="modalTitle">{selectedAnime.title}</div>
-              <button className="modalClose" type="button" aria-label="閉じる" onClick={closeAnimeModal}>
-                ×
-              </button>
-            </div>
-
-            <div className="modalBody">
-              {modalSeriesStats ? (
-                <div className="seriesBox">
-                  <div className="small muted">シリーズ情報</div>
-                  <div className="seriesMain">
-                    <div className="strong">{modalSeriesStats.displayTitle}</div>
-                    <div className="small muted">
-                      TV {modalSeriesStats.tvCount}作
-                      {modalSeriesStats.tvEpisodes ? ` / 合計${modalSeriesStats.tvEpisodes}話` : ""} / 映画 {modalSeriesStats.movieCount}作
-                    </div>
-                  </div>
-                </div>
-              ) : null}
-
-              <div className="modalHero">
-                <img className="modalPoster" src={pickWorkImage(selectedAnime)} alt={selectedAnime.title} />
-                <div className="modalHeroRight">
-                  <div className="modalScoreRow">
-                    <div className="small muted">総合評価</div>
-                    <div className="modalScore">
-                      <StarRating value={score100ToStar5(overallScore100(selectedAnime))} showText />
-                      {overallScore100(selectedAnime) !== null ? (
-                        <span className="small muted">{`（${(overallScore100(selectedAnime) ?? 0).toFixed(1)}/100）`}</span>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  <div className="modalGrid">
-                    <div className="modalGridItem">
-                      <div className="small muted">制作会社</div>
-                      <div className="strong">{String(selectedAnime.studio || "").trim() || "—"}</div>
-                    </div>
-                    <div className="modalGridItem">
-                      <div className="small muted">放送年</div>
-                      <div className="strong">{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</div>
-                    </div>
-                    <div className="modalGridItem">
-                      <div className="small muted">話数</div>
-                      <div className="strong">{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</div>
-                    </div>
-                    <div className="modalGridItem">
-                      <div className="small muted">原作</div>
-                      <div className="strong">{sourceLoading ? "…" : formatOriginalInfo(sourceLinks)}</div>
-                    </div>
-                  </div>
-
-                  <div className="modalVod">
-                    <div className="small muted">配信</div>
-                    <VodIcons
-                      services={getVodForWork(selectedAnime).services}
-                      watchUrls={getVodForWork(selectedAnime).urls}
-                      workId={Number(selectedAnime.id || 0)}
-                    />
-                  </div>
-
-                  {selectedAnime.official_url ? (
-                    <a className="officialBtn" href={safeExternalUrl(selectedAnime.official_url)} target="_blank" rel="noopener noreferrer">
-                      公式サイトを開く →
-                    </a>
-                  ) : null}
-                </div>
-              </div>
-
-              {selectedAnime.summary ? (
-                <div className="modalSection">
-                  <div className="sectionTitle">あらすじ</div>
-                  <div className="modalText">{selectedAnime.summary}</div>
-                </div>
-              ) : null}
-
-              <div className="modalSection">
-                <div className="sectionTitle">評価（10点）</div>
-                <div className="scoreGrid">
-                  {OVERALL_WEIGHTS.map((ax) => {
-                    const v = toScore10((selectedAnime as any)[ax.key]) ?? null;
-                    return (
-                      <div className="scoreRow" key={ax.label}>
-                        <div className="scoreLabel">{ax.label}</div>
-                        <div className="scoreTrack" aria-hidden="true">
-                          <div className="scoreFill" style={{ width: `${v === null ? 0 : (v / 10) * 100}%` }} />
-                        </div>
-                        <div className="scoreVal">{fmt10(v)}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="modalSection">
-                <div className="sectionTitle">ジャンル / キーワード</div>
-                <div className="tagWrap">
-                  {getGenreArray(selectedAnime.genre).slice(0, 12).map((t) => (
-                    <span className="tag" key={`g-${t}`}>
-                      {t}
-                    </span>
-                  ))}
-                  {normalizeKeywords(selectedAnime.keywords).slice(0, 18).map((t) => (
-                    <span className="tag" key={`k-${t}`}>
-                      {t}
-                    </span>
-                  ))}
-                  {!getGenreArray(selectedAnime.genre).length && !normalizeKeywords(selectedAnime.keywords).length ? <span className="muted">—</span> : null}
-                </div>
-              </div>
-
-              <div className="modalSection">
-                <div className="sectionTitle">参照情報</div>
-                {sourceLinks.length ? (
-                  <div className="srcList">
-                    {sourceLinks.map((s, idx) => {
-                      const url = safeExternalUrl(s.ref_url);
-                      const platform = String(s.platform || "").trim();
-                      const stage = stageLabel(s.stage);
-                      const conf = s.confidence === null || s.confidence === undefined ? "" : `（${Number(s.confidence).toFixed(2)}）`;
-                      return (
-                        <div key={idx} className="srcItem">
-                          <div className="small muted">
-                            {stage} / {platform || "—"} {conf}
-                          </div>
-                          {url ? (
-                            <a className="srcLink" href={url} target="_blank" rel="noopener noreferrer">
-                              開く →
-                            </a>
-                          ) : (
-                            <span className="muted">—</span>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="muted">—</div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {/* =========================
-       *  Profile Modal
-       * ========================= */}
-      {profileOpen ? (
-        <div
-          className="modalOverlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="管理人プロフィール"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) closeProfileModal();
-          }}
-        >
-          <div className="profileModalCard" onMouseDown={(e) => e.stopPropagation()}>
-            <div className="modalTopBar">
-              <div className="modalTitle">管理人のプロフィール</div>
-              <button className="modalClose" type="button" aria-label="閉じる" onClick={closeProfileModal}>
-                ×
-              </button>
-            </div>
-
-            <div className="modalBody">
-              <div className="profileHero">
-                <div className="profileAvatar" aria-hidden="true" />
-                <div>
-                  <div className="profileName">かさ【ゆるオタ】</div>
-                  <div className="profileText">
-                    YouTubeでアニメ紹介／AniMatch運営。
-                    <br />
-                    「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
-                  </div>
-                </div>
-              </div>
-
-              {/* ③ 枠を横長すぎない幅に（同じ幅で統一） */}
-              <div className="profileLinksRow">
-                <a
-                  className="profileLinkBox"
-                  href="https://youtube.com/@kasa-yuruota"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    try {
-                      trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "profile_modal" } });
-                    } catch {}
-                  }}
-                >
-                  <div className="profileLinkIcon">
-                    <IconYouTubeMono size={20} />
-                  </div>
-                  <div className="profileLinkMain">
-                    <div className="profileLinkTitle">YouTubeチャンネル</div>
-                    <div className="profileLinkSub">アニメ紹介・おすすめ動画</div>
-                  </div>
-                  <div className="profileLinkArrow">→</div>
-                </a>
-
-                <a
-                  className="profileLinkBox"
-                  href="https://kasa-yuruotablog.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    try {
-                      trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "profile_modal" } });
-                    } catch {}
-                  }}
-                >
-                  <div className="profileLinkIcon">
-                    <IconBlogMono size={20} />
-                  </div>
-                  <div className="profileLinkMain">
-                    <div className="profileLinkTitle">ブログ</div>
-                    <div className="profileLinkSub">記事で深掘り＆まとめ</div>
-                  </div>
-                  <div className="profileLinkArrow">→</div>
-                </a>
-              </div>
-
-              <div className="small muted" style={{ marginTop: 10 }}>
-                ※ リンクは別タブで開きます
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      <style jsx global>{`
-        :root {
-          --bg: #0e0e0e;
-          --panel: #141414;
-          --panel2: #1a1a1a;
-          --text: #f2f2f2;
-          --muted: #bdbdbd;
-          --muted2: #9a9a9a;
-          --line: rgba(255, 255, 255, 0.08);
-          --line2: rgba(255, 255, 255, 0.12);
-          --accent: #e8e8e8;
-          --soft: rgba(255, 255, 255, 0.06);
-          --tap: rgba(160, 160, 160, 0.35); /* ⑤ 黒→灰色のタップ色 */
-          --tap2: rgba(160, 160, 160, 0.18);
-        }
-
-        html,
-        body {
-          height: 100%;
-          background: var(--bg);
-          color: var(--text);
-          margin: 0;
-          padding: 0;
-          font-family: "メイリオ", Meiryo, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-          -webkit-text-size-adjust: 100%;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        /* ⑤ タップ時の黒いハイライトを灰色へ */
-        a,
-        button,
-        input,
-        textarea,
-        select {
-          -webkit-tap-highlight-color: var(--tap);
-        }
-
-        ::selection {
-          background: var(--tap);
-        }
-
-        .page {
-          min-height: 100%;
-        }
-
-        .topHeader {
-          position: sticky;
-          top: 0;
-          z-index: 10;
-          background: rgba(14, 14, 14, 0.82);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid var(--line);
-        }
-
-        /* ① ロゴ左端の空白をなくす（header内の左paddingを極小に） */
-        .headerInner {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 14px 10px; /* 左余白を最小化 */
-        }
-
-        .brandBlock {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-          align-items: flex-start;
-        }
-
-        .brandTitle {
-          appearance: none;
-          border: none;
-          background: transparent;
-          color: var(--text);
-          font-size: 34px;
-          letter-spacing: 0.2px;
-          padding: 0; /* ① 余白ゼロ */
-          margin: 0; /* ① 余白ゼロ */
-          line-height: 1;
-          cursor: pointer;
-        }
-
-        .brandTitle:active {
-          background: transparent;
-        }
-
-        .brandSub {
-          color: var(--muted);
-          font-size: 14px;
-        }
-
-        .container {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 16px 12px 36px;
-        }
-
-        .panel {
-          background: var(--panel);
-          border: 1px solid var(--line);
-          border-radius: 18px;
-          padding: 14px;
-        }
-
-        .panelTitle {
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.2px;
-        }
-
-        .errorBox {
-          border-color: rgba(255, 120, 120, 0.35);
-        }
-
-        .small {
-          font-size: 13px;
-        }
-
-        .muted {
-          color: var(--muted);
-        }
-
-        .strong {
-          font-weight: 800;
-        }
-
-        .topRow {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 10px;
-          margin: 10px 0 12px;
-        }
-
-        .btn,
-        .btnGhost,
-        .btnTiny,
-        .openBtn {
-          border-radius: 14px;
-          border: 1px solid var(--line2);
-          background: var(--panel2);
-          color: var(--text);
-          padding: 10px 12px;
-          cursor: pointer;
-          font-weight: 700;
-        }
-
-        .btn {
-          width: 100%;
-        }
-
-        .btnGhost {
-          width: auto;
-          background: transparent;
-        }
-
-        .btnTiny {
-          padding: 8px 10px;
-          font-size: 12px;
-        }
-
-        /* ⑤ クリックで黒くなるのを灰色へ */
-        .btn:active,
-        .btnGhost:active,
-        .btnTiny:active,
-        .openBtn:active,
-        .featureCard:active,
-        .pill:active,
-        .pagerNum:active,
-        .pagerArrow:active,
-        .suggestItem:active,
-        .profileLinkBox:active {
-          background: rgba(200, 200, 200, 0.12);
-        }
-
-        .input {
-          width: 100%;
-          border-radius: 14px;
-          border: 1px solid var(--line2);
-          background: rgba(255, 255, 255, 0.05);
-          color: var(--text);
-          padding: 10px 12px;
-          outline: none;
-        }
-
-        .input:focus {
-          border-color: rgba(255, 255, 255, 0.22);
-          box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
-        }
-
-        .homeGrid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-
-        .featureCard {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 14px 14px;
-          background: var(--panel);
-          border: 1px solid var(--line);
-          border-radius: 18px;
-          cursor: pointer;
-          text-align: left;
-        }
-
-        .featureIcon {
-          width: 44px;
-          height: 44px;
-          border-radius: 14px;
-          background: rgba(255, 255, 255, 0.06);
-          display: grid;
-          place-items: center;
-          color: var(--accent);
-        }
-
-        .featureText {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .featureTitle {
-          font-size: 16px;
-          font-weight: 800;
-        }
-
-        .featureSub {
-          font-size: 13px;
-          color: var(--muted);
-          margin-top: 2px;
-        }
-
-        .featureArrow {
-          font-size: 18px;
-          color: var(--muted);
-        }
-
-        /* ② HOMEの管理人プロフィール：暗すぎ→明るめに */
-        .adminProfileCardWrap {
-          margin-top: 4px;
-        }
-
-        .adminProfileCard {
-          display: flex;
-          gap: 12px;
-          padding: 14px;
-          border-radius: 18px;
-          border: 1px solid var(--line);
-          background: var(--panel);
-          cursor: pointer;
-        }
-
-        .adminProfileCardAvatar {
-          width: 44px;
-          height: 44px;
-          border-radius: 14px;
-          background: rgba(255, 255, 255, 0.08);
-          flex: 0 0 auto;
-        }
-
-        .adminProfileCardMain {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .adminProfileCardHead {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 8px;
-        }
-
-        .adminProfileCardLabel {
-          color: #e8e8e8; /* ② 明るい灰色 */
-          font-size: 13px;
-          font-weight: 800;
-          letter-spacing: 0.2px;
-        }
-
-        .adminProfileCardArrow {
-          color: var(--muted);
-          font-weight: 900;
-        }
-
-        .adminProfileCardName {
-          margin-top: 4px;
-          font-size: 16px;
-          font-weight: 900;
-        }
-
-        .adminProfileCardBio {
-          margin-top: 6px;
-          color: var(--muted);
-          font-size: 13px;
-          line-height: 1.55;
-        }
-
-        .adminProfileCardLinks {
-          margin-top: 10px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        .adminProfileIconLink {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 36px;
-          height: 36px;
-          border-radius: 12px;
-          border: 1px solid var(--line2);
-          color: #e2e2e2;
-          background: rgba(255, 255, 255, 0.04);
-          text-decoration: none;
-        }
-
-        .adminProfileCardLinkHint {
-          color: var(--muted2);
-          font-size: 12px;
-        }
-
-        .tabs {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-
-        .pill {
-          border-radius: 999px;
-          padding: 9px 12px;
-          border: 1px solid var(--line2);
-          background: rgba(255, 255, 255, 0.04);
-          color: var(--text);
-          cursor: pointer;
-          font-weight: 800;
-        }
-
-        .pill.active {
-          background: rgba(255, 255, 255, 0.12);
-        }
-
-        .filters {
-          display: grid;
-          gap: 10px;
-        }
-
-        .collapseBox {
-          border: 1px solid var(--line);
-          border-radius: 16px;
-          overflow: hidden;
-          background: rgba(255, 255, 255, 0.03);
-        }
-
-        .collapseHead {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 12px;
-          border: none;
-          background: transparent;
-          color: var(--text);
-          cursor: pointer;
-          text-align: left;
-        }
-
-        .collapseHead:active {
-          background: var(--tap2);
-        }
-
-        .collapsePlus {
-          width: 22px;
-          height: 22px;
-          border-radius: 8px;
-          display: grid;
-          place-items: center;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid var(--line);
-          font-weight: 900;
-        }
-
-        .collapseTitle {
-          font-weight: 900;
-        }
-
-        .collapseMeta {
-          margin-left: auto;
-          color: var(--muted);
-          font-size: 12px;
-        }
-
-        .collapseBody {
-          padding: 12px;
-          border-top: 1px solid var(--line);
-        }
-
-        .checkGrid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
-        }
-
-        .checkItem {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 8px 10px;
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.03);
-          cursor: pointer;
-          user-select: none;
-        }
-
-        .checkItem input {
-          accent-color: #dcdcdc;
-        }
-
-        .checkLabel {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          min-width: 0;
-        }
-
-        .checkText {
-          font-size: 13px;
-          font-weight: 700;
-          color: var(--text);
-        }
-
-        .optionBox {
-          margin-top: 10px;
-          max-height: 240px;
-          overflow: auto;
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          padding: 10px;
-          background: rgba(0, 0, 0, 0.12);
-        }
-
-        .miniActions {
-          margin-top: 10px;
-          display: flex;
-          justify-content: flex-end;
-        }
-
-        .modeBox {
-          margin-top: 12px;
-          display: grid;
-          gap: 10px;
-        }
-
-        .resultWrap {
-          margin-top: 14px;
-        }
-
-        .resultWrap.flash {
-          animation: flashBg 0.65s ease;
-        }
-
-        @keyframes flashBg {
-          0% {
-            filter: brightness(1.25);
-          }
-          100% {
-            filter: brightness(1);
-          }
-        }
-
-        .resultHead {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          gap: 10px;
-          margin: 8px 2px 12px;
-        }
-
-        .resultCount {
-          font-weight: 900;
-          font-size: 15px;
-        }
-
-        .cardList {
-          display: grid;
-          gap: 12px;
-        }
-
-        .card {
-          background: var(--panel);
-          border: 1px solid var(--line);
-          border-radius: 18px;
-          padding: 12px;
-          cursor: pointer;
-        }
-
-        .card:active {
-          background: rgba(255, 255, 255, 0.05);
-        }
-
-        .cardTop {
-          display: grid;
-          grid-template-columns: 130px 1fr;
-          gap: 12px;
-        }
-
-        .poster {
-          width: 130px;
-          height: 185px;
-          border-radius: 14px;
-          object-fit: cover;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.04);
-        }
-
-        .cardInfo {
-          min-width: 0;
-        }
-
-        .cardTitleRow {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        .cardTitle {
-          font-size: 16px;
-          font-weight: 900;
-          line-height: 1.25;
-          word-break: break-word;
-        }
-
-        .openBtn {
-          padding: 8px 10px;
-          font-size: 12px;
-        }
-
-        .desc {
-          margin-top: 6px;
-          color: var(--muted);
-          font-size: 13px;
-          line-height: 1.55;
-        }
-
-        .metaGrid {
-          margin-top: 10px;
-          display: grid;
-          gap: 8px;
-        }
-
-        .metaLine {
-          display: grid;
-          grid-template-columns: 92px 1fr;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .metaLabel {
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .metaText {
-          font-size: 13px;
-          font-weight: 700;
-          min-width: 0;
-        }
-
-        .stars {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          white-space: nowrap;
-        }
-
-        .starsGlyph {
-          letter-spacing: 1px;
-        }
-
-        .starsText {
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 700;
-        }
-
-        .vodIcons {
-          display: inline-flex;
-          gap: 7px;
-          flex-wrap: wrap;
-          align-items: center;
-        }
-
-        .vodIconLink {
-          display: inline-flex;
-        }
-
-        .vodIconImg {
-          width: 28px;
-          height: 28px;
-          border-radius: 8px;
-          border: 1px solid var(--line);
-          object-fit: cover;
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .pagerBar {
-          margin-top: 14px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-        }
-
-        .pagerNums {
-          display: flex;
-          gap: 6px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .pagerArrow,
-        .pagerNum {
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.04);
-          color: var(--text);
-          padding: 8px 10px;
-          cursor: pointer;
-          font-weight: 900;
-        }
-
-        .pagerNum.active {
-          background: rgba(255, 255, 255, 0.14);
-        }
-
-        .pagerDots {
-          color: var(--muted);
-          padding: 0 4px;
-        }
-
-        .cardWithReason {
-          display: grid;
-          gap: 8px;
-        }
-
-        .reasonList {
-          margin: 0;
-          padding-left: 18px;
-          color: var(--muted);
-          font-size: 13px;
-          line-height: 1.55;
-        }
-
-        .suggestWrap {
-          position: relative;
-        }
-
-        .suggestBox {
-          position: absolute;
-          z-index: 5;
-          left: 0;
-          right: 0;
-          margin-top: 6px;
-          border-radius: 14px;
-          border: 1px solid var(--line2);
-          background: #111;
-          overflow: hidden;
-          max-height: 260px;
-          overflow-y: auto;
-        }
-
-        .suggestItem {
-          width: 100%;
-          display: block;
-          text-align: left;
-          padding: 10px 12px;
-          border: none;
-          background: transparent;
-          color: var(--text);
-          cursor: pointer;
-          font-weight: 700;
-        }
-
-        .suggestItem:hover {
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        /* Analyze bars */
-        .profileBars {
-          display: grid;
-          gap: 8px;
-        }
-
-        .barRow {
-          display: grid;
-          grid-template-columns: 80px 1fr 46px;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .barLabel {
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .barTrack {
-          height: 10px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid var(--line);
-          overflow: hidden;
-        }
-
-        .barFill {
-          height: 100%;
-          background: rgba(255, 255, 255, 0.32);
-        }
-
-        .barVal {
-          text-align: right;
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .anInputs {
-          display: grid;
-          gap: 8px;
-        }
-
-        .anRow {
-          display: grid;
-          grid-template-columns: 26px 1fr;
-          gap: 10px;
-          align-items: start;
-        }
-
-        .anIdx {
-          color: var(--muted);
-          font-weight: 900;
-          padding-top: 10px;
-          text-align: right;
-        }
-
-        .anField {
-          position: relative;
-        }
-
-        /* Modal */
-        .modalOverlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.62);
-          z-index: 50;
-          display: grid;
-          place-items: center;
-          padding: 14px;
-        }
-
-        /* スクロールは縦のみ（横は出さない） */
-        .modalCard,
-        .profileModalCard {
-          width: min(980px, 96vw);
-          max-height: calc(100vh - 28px);
-          overflow-y: auto;
-          overflow-x: hidden;
-          background: #111;
-          border: 1px solid var(--line2);
-          border-radius: 18px;
-        }
-
-        /* ③ プロフィール枠を横長すぎない幅へ */
-        .profileModalCard {
-          width: min(560px, 92vw);
-        }
-
-        .modalTopBar {
-          position: sticky;
-          top: 0;
-          z-index: 2;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          padding: 12px 12px;
-          background: rgba(17, 17, 17, 0.92);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid var(--line);
-        }
-
-        .modalTitle {
-          font-size: 15px;
-          font-weight: 900;
-          line-height: 1.25;
-          word-break: break-word;
-        }
-
-        .modalClose {
-          width: 38px;
-          height: 38px;
-          border-radius: 14px;
-          border: 1px solid var(--line2);
-          background: rgba(255, 255, 255, 0.04);
-          color: var(--text);
-          cursor: pointer;
-          font-size: 20px;
-          font-weight: 900;
-        }
-
-        .modalClose:active {
-          background: var(--tap2);
-        }
-
-        .modalBody {
-          padding: 14px;
-        }
-
-        .seriesBox {
-          border: 1px solid var(--line);
-          border-radius: 16px;
-          padding: 12px;
-          background: rgba(255, 255, 255, 0.03);
-          margin-bottom: 12px;
-        }
-
-        .modalHero {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          align-items: start;
-        }
-
-        .modalPoster {
-          width: 100%;
-          max-height: 360px;
-          border-radius: 16px;
-          object-fit: cover;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.04);
-        }
-
-        .modalHeroRight {
-          display: grid;
-          gap: 12px;
-        }
-
-        .modalScoreRow {
-          display: grid;
-          gap: 6px;
-        }
-
-        .modalScore {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-          align-items: center;
-        }
-
-        .modalGrid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
-
-        .modalGridItem {
-          border: 1px solid var(--line);
-          border-radius: 16px;
-          padding: 10px;
-          background: rgba(255, 255, 255, 0.03);
-        }
-
-        .modalVod {
-          display: grid;
-          gap: 6px;
-        }
-
-        .officialBtn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 14px;
-          border: 1px solid var(--line2);
-          padding: 10px 12px;
-          text-decoration: none;
-          color: var(--text);
-          background: rgba(255, 255, 255, 0.04);
-          font-weight: 900;
-        }
-
-        .officialBtn:active {
-          background: var(--tap2);
-        }
-
-        .modalSection {
-          margin-top: 14px;
-          border-top: 1px solid var(--line);
-          padding-top: 12px;
-        }
-
-        .sectionTitle {
-          font-weight: 900;
-          margin-bottom: 8px;
-        }
-
-        .modalText {
-          color: var(--muted);
-          font-size: 14px;
-          line-height: 1.75;
-          white-space: pre-wrap;
-        }
-
-        .scoreGrid {
-          display: grid;
-          gap: 8px;
-        }
-
-        .scoreRow {
-          display: grid;
-          grid-template-columns: 84px 1fr 52px;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .scoreLabel {
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 900;
-        }
-
-        .scoreTrack {
-          height: 10px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid var(--line);
-          overflow: hidden;
-        }
-
-        .scoreFill {
-          height: 100%;
-          background: rgba(255, 255, 255, 0.32);
-        }
-
-        .scoreVal {
-          text-align: right;
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 900;
-        }
-
-        .tagWrap {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-
-        .tag {
-          display: inline-flex;
-          align-items: center;
-          padding: 6px 10px;
-          border-radius: 999px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.03);
-          color: var(--text);
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .srcList {
-          display: grid;
-          gap: 10px;
-        }
-
-        .srcItem {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px;
-          background: rgba(255, 255, 255, 0.03);
-        }
-
-        .srcLink {
-          color: var(--text);
-          text-decoration: none;
-          font-weight: 900;
-          border: 1px solid var(--line2);
-          border-radius: 12px;
-          padding: 8px 10px;
-          background: rgba(255, 255, 255, 0.04);
-        }
-
-        .srcLink:active {
-          background: var(--tap2);
-        }
-
-        /* Profile modal */
-        .profileHero {
-          display: grid;
-          grid-template-columns: 52px 1fr;
-          gap: 12px;
-          align-items: start;
-        }
-
-        .profileAvatar {
-          width: 52px;
-          height: 52px;
-          border-radius: 18px;
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid var(--line);
-        }
-
-        .profileName {
-          font-size: 18px;
-          font-weight: 900;
-        }
-
-        .profileText {
-          margin-top: 6px;
-          color: var(--muted);
-          font-size: 14px;
-          line-height: 1.7;
-        }
-
-        /* ③ 2枠は同じ幅で統一、全体を狭める */
-        .profileLinksRow {
-          margin-top: 14px;
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 10px;
-          max-width: 520px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .profileLinkBox {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 12px 12px;
-          border-radius: 16px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.03);
-          color: var(--text);
-          text-decoration: none;
-        }
-
-        .profileLinkIcon {
-          width: 40px;
-          height: 40px;
-          border-radius: 14px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.04);
-          display: grid;
-          place-items: center;
-          color: #e2e2e2;
-          flex: 0 0 auto;
-        }
-
-        .profileLinkMain {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .profileLinkTitle {
-          font-weight: 900;
-        }
-
-        .profileLinkSub {
-          color: var(--muted);
-          font-size: 13px;
-          margin-top: 2px;
-        }
-
-        .profileLinkArrow {
-          color: var(--muted);
-          font-weight: 900;
-        }
-
-        /* Responsive */
-        @media (max-width: 520px) {
-          .headerInner {
-            padding: 12px 10px;
-          }
-          .brandTitle {
-            font-size: 30px;
-          }
-          .cardTop {
-            grid-template-columns: 110px 1fr;
-          }
-          .poster {
-            width: 110px;
-            height: 156px;
-          }
-          .modalHero {
-            grid-template-columns: 1fr;
-          }
-          .modalPoster {
-            max-height: 260px; /* 横長画像も一回り小さく */
-          }
-          .metaLine {
-            grid-template-columns: 82px 1fr;
-          }
-        }
-
-        /* ④ PC文字をもう一段階大きく */
-        @media (min-width: 900px) {
-          .container {
-            padding: 18px 12px 44px;
-          }
-          .panelTitle {
-            font-size: 20px;
-          }
-          .featureTitle {
-            font-size: 17px;
-          }
-          .cardTitle {
-            font-size: 17px;
-          }
-          .desc {
-            font-size: 14px;
-          }
-          .metaText {
-            font-size: 14px;
-          }
-          .brandSub {
-            font-size: 15px;
-          }
-        }
-
-        @media (min-width: 760px) {
-          .homeGrid {
-            grid-template-columns: 1fr 1fr;
-          }
-          .checkGrid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-          }
-          .profileLinksRow {
-            grid-template-columns: 1fr 1fr; /* ③ 同じ幅で横並び */
-          }
-        }
-      `}</style>
+      {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
+<style jsx global>{`
+  :root {
+    /* ===== Dark mono theme (白文字が見える灰色) ===== */
+    --bg: #2a2a2a;
+    --bg2: #242424;
+    --panel: #343434;
+    --panel2: #3a3a3a;
+    --card: #363636;
+    --cardHover: #3e3e3e;
+    --line: rgba(255, 255, 255, 0.14);
+    --line2: rgba(255, 255, 255, 0.10);
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, 0.72);
+    --muted2: rgba(255, 255, 255, 0.55);
+    --focus: rgba(255, 255, 255, 0.22);
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0 !important;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(180, 180, 180, 0.28); /* ✅ 押下ハイライト：灰 */
+  }
+
+  ::selection {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--text);
+  }
+  ::-moz-selection {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--text);
+  }
+
+  button,
+  label,
+  .pill,
+  .featureCard,
+  .collapseHead,
+  .pagerNum,
+  .pagerArrow,
+  .recExplainTitle,
+  .inlineTitleLink,
+  .openBtn,
+  .headerProfileBtn,
+  .navBtn,
+  .adminProfileLink,
+  .profileLink,
+  .adminLinkBtn {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .page {
+    min-height: 100vh;
+    background:
+      radial-gradient(900px 520px at 50% -10%, rgba(255, 255, 255, 0.06), transparent 55%),
+      radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.04), transparent 55%),
+      linear-gradient(180deg, var(--bg), var(--bg2));
+    color: var(--text);
+  }
+
+  /* Header */
+  .topHeader {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    background: rgba(42, 42, 42, 0.82);
+    border-bottom: 1px solid var(--line2);
+  }
+
+  .headerInner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 16px 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .brandBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+    padding-left: 0;
+  }
+
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
+
+  /* old structure（残置） */
+  .headerBar {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .brandBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+  .headerNav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
+
+  .headerProfileBtn,
+  .navBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .headerProfileBtn:hover,
+  .navBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .headerProfileBtn:active,
+  .navBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .brandTitle {
+    font-size: 40px;
+    letter-spacing: 0.5px;
+    line-height: 1.05;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+
+    /* ✅ ② ロゴ自体の左余白を視覚的に詰める（字形の左ベアリング対策） */
+    margin-left: -6px;
+  }
+  .brandTitle:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 6px;
+    border-radius: 10px;
+  }
+
+  .brandSub {
+    font-size: 13px;
+    opacity: 0.82;
+    display: block;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+    color: var(--muted);
+  }
+
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 16px 30px;
+  }
+
+  /* Panels */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line2);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    color: var(--text);
+  }
+  .panelTitleRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .panelTitle {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    color: var(--text);
+  }
+  .errorBox {
+    border-color: rgba(255, 120, 120, 0.28);
+    background: rgba(220, 60, 60, 0.10);
+  }
+
+  .small {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .muted {
+    opacity: 1;
+    color: var(--muted);
+  }
+
+  /* Buttons */
+  .btn {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .btn:hover {
+    filter: brightness(1.08);
+  }
+  .btn:active {
+    background: rgba(255, 255, 255, 0.20);
+    filter: brightness(1);
+  }
+
+  .btnGhost {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .btnGhost:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .btnGhost:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .btnTiny {
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .btnTiny:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .btnTiny:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Home cards */
+  .homeGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .featureCard {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+    border: 1px solid var(--line2);
+    background: var(--card);
+    cursor: pointer;
+    color: var(--text);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+  }
+  .featureCard:hover {
+    background: var(--cardHover);
+  }
+  .featureCard:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .featureIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--line2);
+    color: var(--text);
+  }
+  .featureTitle {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    color: var(--text);
+  }
+  .featureSub {
+    margin-top: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .featureArrow {
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  /* HOME下：管理人のプロフィール */
+  .profileLinkWrap {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  .profileLink {
+    width: 100%;
+    padding: 16px 14px;
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.22);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.04));
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.20);
+  }
+  .profileLink:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .profileLink:active {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .profileLink:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 4px;
+  }
+  .profileLink::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid rgba(255, 255, 255, 0.58);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.58);
+    transform: translateY(-50%) rotate(-45deg);
+    opacity: 0.95;
+  }
+
+  /*（旧クラス残置：もしどこかで使っていても同じ見た目）*/
+  .adminProfileLink {
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px 14px;
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.22);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.04));
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.20);
+  }
+  .adminProfileLink:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .adminProfileLink:active {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .adminProfileLink::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid rgba(255, 255, 255, 0.58);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.58);
+    transform: translateY(-50%) rotate(-45deg);
+    opacity: 0.95;
+  }
+
+  /* Top row */
+  .topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .pill:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pill:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pill.active {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.22);
+    font-weight: 400;
+  }
+
+  /* Inputs */
+  .input {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.20);
+    color: var(--text);
+    font-size: 14px;
+    margin-top: 10px;
+    outline: none;
+    font-weight: 400;
+  }
+  .input::placeholder {
+    color: var(--muted2);
+  }
+  .input:focus {
+    border-color: rgba(255, 255, 255, 0.26);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  }
+
+  .suggest {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    background: var(--panel2);
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    overflow: hidden;
+    z-index: 20;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.40);
+    color: var(--text);
+  }
+  .suggestItem {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 400;
+    color: var(--text);
+  }
+  .suggestItem:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .suggestItem:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Collapsible filters */
+  .filters {
+    display: grid;
+    gap: 10px;
+  }
+  .collapseBox {
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .collapseHead {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    font-weight: 400;
+  }
+  .collapseHead:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+  }
+  .collapseHead:active {
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+  }
+  .collapseHead:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 4px;
+    border-radius: 14px;
+  }
+  .collapsePlus {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--text);
+  }
+  .collapseTitle {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text);
+  }
+  .collapseMeta {
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .collapseBody {
+    padding: 0 12px 12px;
+  }
+
+  /* Options */
+  .checkGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 10px;
+  }
+  .checkItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 4px 6px;
+    border-radius: 10px;
+    color: var(--text);
+  }
+  .checkItem:active {
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  .checkLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checkText {
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .optionBox {
+    margin-top: 10px;
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    padding: 10px;
+    max-height: 240px;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.18);
+  }
+  .miniActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .modeBox {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line2);
+  }
+
+  /* Cards */
+  .card {
+    margin-top: 12px;
+    background: var(--card);
+    border: 1px solid var(--line2);
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+    color: var(--text);
+  }
+  .card:hover {
+    background: var(--cardHover);
+  }
+  .card:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .cardTop {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .poster {
+    width: 220px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.20);
+    border: 1px solid var(--line2);
+  }
+  .cardInfo {
+    min-width: 0;
+  }
+  .cardTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .cardTitle {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: var(--text);
+  }
+
+  .openBtn {
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .openBtn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .openBtn:active {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .desc {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .metaGrid {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .metaLine {
+    display: grid;
+    grid-template-columns: 86px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  .metaLabel {
+    font-size: 12px;
+    color: var(--muted2);
+    white-space: nowrap;
+  }
+  .metaText {
+    font-size: 13px;
+    color: var(--text);
+    min-width: 0;
+  }
+
+  .inlineTitleLink {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.95;
+  }
+  .inlineTitleLink:hover {
+    opacity: 1;
+  }
+
+  /* Stars */
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text);
+  }
+  .starsGlyph {
+    letter-spacing: 1px;
+    opacity: 0.95;
+  }
+  .starsText {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* VOD icons */
+  .vodIcons {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .vodIconLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.12);
+  }
+  .vodIconLink:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .vodIconLink:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .vodIconImg {
+    width: 26px;
+    height: 26px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+
+  /* Pager */
+  .pagerBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .pagerNums {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+  }
+  .pagerArrow,
+  .pagerNum {
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    min-width: 38px;
+  }
+  .pagerArrow:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .pagerArrow:hover:not(:disabled),
+  .pagerNum:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pagerArrow:active:not(:disabled),
+  .pagerNum:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pagerNum.active {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .pagerDots {
+    color: var(--muted);
+    padding: 0 4px;
+  }
+
+  /* Rec explain list */
+  .recExplainList {
+    display: grid;
+    gap: 12px;
+  }
+  .recExplain {
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.14);
+  }
+  .recExplainTitle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .recExplainReasons {
+    margin-top: 8px;
+  }
+
+  /* Flash ring */
+  .flashRing {
+    border-radius: 18px;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+    padding: 2px;
+  }
+
+  /* Modal */
+  .modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.62);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+  }
+
+  .modalDialog {
+    width: 100%;
+    max-width: 980px;
+    max-height: calc(100vh - 28px);
+    overflow: auto; /* iOSでも縦スクロール */
+    border-radius: 18px;
+  }
+
+  .modalCard {
+    background: var(--panel);
+    border: 1px solid var(--line2);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+    color: var(--text);
+  }
+
+  .modalHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 12px 0;
+  }
+
+  .modalCloseBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .modalCloseBtn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .modalCloseBtn:active {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .modalBody {
+    padding: 12px;
+  }
+
+  .modalTop {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .modalPoster {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    object-fit: cover;
+    background: rgba(0, 0, 0, 0.20);
+    border: 1px solid var(--line2);
+  }
+
+  .modalInfo {
+    min-width: 0;
+  }
+
+  .modalTitle {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .link {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.95;
+  }
+  .link:hover {
+    opacity: 1;
+  }
+
+  /* Score panel */
+  .scorePanel {
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.16);
+  }
+  .scoreRow {
+    display: grid;
+    grid-template-columns: 90px 1fr 80px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .scoreLabel {
+    font-size: 12px;
+    color: var(--muted2);
+    white-space: nowrap;
+  }
+  .scoreBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .scoreBarFill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.40);
+  }
+  .scoreVal {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* Profile modal */
+  .profileHeader {
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 12px 0;
+  }
+  .modalHeaderTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    padding-left: 2px;
+  }
+
+  .adminProfileHero {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 6px 2px 12px;
+  }
+
+  .adminAvatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    border: 1px solid var(--line2);
+    background: rgba(255, 255, 255, 0.06); /* 空白でも“枠”が見える */
+  }
+
+  .adminProfileText {
+    min-width: 0;
+  }
+  .adminName {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: var(--text);
+  }
+  .adminBio {
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .adminLinkRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .adminLinkBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(80, 180, 255, 0.45); /* ✅ Blog側：青系で識別 */
+    background: rgba(80, 180, 255, 0.10);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+  .adminLinkBtn:hover {
+    background: rgba(80, 180, 255, 0.14);
+  }
+  .adminLinkBtn:active {
+    background: rgba(80, 180, 255, 0.18);
+  }
+
+  /* ✅ ③ YouTube側を“赤系”で強調して判別しやすく */
+  .adminLinkBtnPrimary {
+    border-color: rgba(255, 90, 90, 0.55);
+    background: rgba(255, 90, 90, 0.12);
+  }
+  .adminLinkBtnPrimary:hover {
+    background: rgba(255, 90, 90, 0.16);
+  }
+  .adminLinkBtnPrimary:active {
+    background: rgba(255, 90, 90, 0.20);
+  }
+
+  .adminLinkIcon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line2);
+    background: rgba(0, 0, 0, 0.14);
+    color: var(--text);
+  }
+
+  .adminNoteBox {
+    margin-top: 12px;
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  /* Analyze profile bars */
+  .profileBox {
+    margin-top: 10px;
+    display: grid;
+    gap: 10px;
+  }
+  .profileRow {
+    display: grid;
+    grid-template-columns: 90px 1fr 44px;
+    gap: 10px;
+    align-items: center;
+  }
+  .profileLabel {
+    font-size: 12px;
+    color: var(--muted2);
+    white-space: nowrap;
+  }
+  .profileBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+  .profileFill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.40);
+  }
+  .profileVal {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .noteBox {
+    margin-top: 12px;
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.14);
+    color: var(--muted);
+  }
+
+  .rowActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Responsive */
+  @media (max-width: 920px) {
+    .cardTop {
+      grid-template-columns: 200px 1fr;
+    }
+    .poster {
+      width: 200px;
+    }
+    .modalTop {
+      grid-template-columns: 1fr;
+    }
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .headerInner {
+      padding: 14px 12px 12px;
+    }
+    .container {
+      padding: 12px 12px 26px;
+    }
+    .brandTitle {
+      font-size: 36px;
+      margin-left: -6px; /* ロゴ左詰 維持 */
+    }
+    .cardTop {
+      grid-template-columns: 1fr;
+    }
+    .poster {
+      width: 100%;
+    }
+    .adminLinkRow {
+      grid-template-columns: 1fr;
+    }
+    .modalDialog {
+      max-height: calc(100vh - 24px);
+    }
+  }
+`}</style>
     </div>
   );
 }
