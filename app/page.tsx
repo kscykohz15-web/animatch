@@ -4034,4 +4034,7 @@ export default function Home() {
       max-width: 100%;
     }
   }
-`}</style>
+      `}</style>
+    </div>
+  );
+}
