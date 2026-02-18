@@ -2015,9 +2015,7 @@ export default function Home() {
               className={`brandTitle ${logoFont.className}`}
               aria-label="AniMatch（ホームへ）"
               onClick={() => goTo("home")}
-            >
-              {"AniMatch"}
-            </button>
+            >AniMatch</button>
             <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
           </div>
         </div>
@@ -4125,7 +4123,7 @@ export default function Home() {
   /* Responsive tweaks */
   @media (max-width: 520px) {
     .headerInner {
-      padding-left: 0;
+      padding: 16px 16px 14px;
     }
     .container {
       padding: 12px 14px 26px;
