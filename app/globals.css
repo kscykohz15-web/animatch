@@ -173,7 +173,7 @@ button:hover { background:#000; }
   color: #111;
   font-size: 34px;
   margin: 0 0 6px;
-  text-indent: 1em; /* ✅ ここ */
+  text: indent 0;; /* ✅ ここ */
 }
 @media (max-width: 520px){
   .brandTitle{ font-size: 30px; }
