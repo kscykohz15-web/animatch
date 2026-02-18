@@ -2109,13 +2109,66 @@ export default function Home() {
                 <div className="featureArrow">→</div>
               </button>
 
-              {/* ②：ホーム最下部は「管理人のプロフィール」のワードだけ（infoの直下に配置） */}
-<div className="profileLinkWrap">
-  <button className="adminProfileLink" type="button" onClick={openProfileModal} aria-label="管理人のプロフィールを開く">
-    管理人のプロフィール
-  </button>
-</div>
+              {/* ✅ ① HOME最下部：管理人プロフィールをカード式（ホームのみ表示） */}
+              <div className="homeProfileCard" role="region" aria-label="管理人のプロフィール">
+                <div className="homeProfileHead">
+                  <div className="homeProfileAvatar" aria-hidden="true" />
+                  <div className="homeProfileInfo">
+                    <div className="homeProfileName">かさ【ゆるオタ】</div>
+                    <div className="homeProfileBio">
+                      YouTubeでアニメ紹介／AniMatch運営。
+                      <br />
+                      「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
+                    </div>
+                  </div>
+                </div>
 
+                <div className="homeProfileLinks">
+                  <a
+                    className="homeProfileLinkBtn homeProfileLinkBtnPrimary"
+                    href="https://youtube.com/@kasa-yuruota"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "home_profile_card" } });
+                      } catch {}
+                    }}
+                    aria-label="YouTubeチャンネルへ"
+                    title="YouTubeチャンネルへ"
+                  >
+                    <span className="homeProfileLinkIcon" aria-hidden="true">
+                      <IconYouTubeMono size={20} />
+                    </span>
+                    <span className="homeProfileLinkText">YouTube</span>
+                  </a>
+
+                  <a
+                    className="homeProfileLinkBtn"
+                    href="https://kasa-yuruotablog.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "home_profile_card" } });
+                      } catch {}
+                    }}
+                    aria-label="ブログへ"
+                    title="ブログへ"
+                  >
+                    <span className="homeProfileLinkIcon" aria-hidden="true">
+                      <IconBlogMono size={20} />
+                    </span>
+                    <span className="homeProfileLinkText">Blog</span>
+                  </a>
+                </div>
+
+                <div className="homeProfileNote">
+                  <div className="small muted">※リンクは別タブで開きます</div>
+                </div>
+              </div>
             </div>
           </>
         ) : null}
@@ -2656,7 +2709,7 @@ export default function Home() {
         {/* =========================
          *  Results area (Recommend / Info only)
          * ========================= */}
-        {(view === "recommend" || view === "info") ? (
+        {view === "recommend" || view === "info" ? (
           <div ref={resultRef} className={resultFlash ? "flashRing" : ""} style={{ marginTop: 14 }}>
             {resultAll.length ? (
               <div className="panel">
@@ -2907,20 +2960,25 @@ export default function Home() {
   body {
     margin: 0;
     padding: 0 !important;
-    background: #f6f7f9;
-    color: #111;
+    /* ✅ ② 全体背景：白文字が見える明るめグレー */
+    background: #6f6f6f;
+    color: #fff;
   }
   * {
     box-sizing: border-box;
-    -webkit-tap-highlight-color: rgba(120, 120, 120, 0.22); /* ✅ ⑤ 黒→灰 */
+    -webkit-tap-highlight-color: rgba(180, 180, 180, 0.22);
   }
 
   ::selection {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.18);
     color: inherit;
   }
   ::-moz-selection {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.18);
+    color: inherit;
+  }
+
+  a {
     color: inherit;
   }
 
@@ -2945,10 +3003,11 @@ export default function Home() {
 
   .page {
     min-height: 100vh;
-    background: radial-gradient(900px 520px at 50% -10%, rgba(0, 0, 0, 0.05), transparent 55%),
-      radial-gradient(900px 520px at 20% 10%, rgba(0, 0, 0, 0.035), transparent 55%),
-      linear-gradient(180deg, #f6f7f9, #f6f7f9);
-    color: #111;
+    /* ✅ ② 背景：暗すぎないモノトーン */
+    background: radial-gradient(900px 520px at 50% -10%, rgba(255, 255, 255, 0.10), transparent 55%),
+      radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.06), transparent 55%),
+      linear-gradient(180deg, #6f6f6f, #676767);
+    color: #fff;
   }
 
   /* Header */
@@ -2957,15 +3016,15 @@ export default function Home() {
     top: 0;
     z-index: 20;
     backdrop-filter: blur(10px);
-    background: rgba(246, 247, 249, 0.86);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(95, 95, 95, 0.86);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   }
 
-  /* ✅ ① ロゴ（ヘッダー）と下（本文コンテナ）の左端を揃える */
+  /* ✅ ロゴ（ヘッダー）と下（本文コンテナ）の左端を揃える */
   .headerInner {
     max-width: 980px;
     margin: 0 auto;
-    padding: 16px 16px 14px; /* ← 左を 16px に戻して container と揃える */
+    padding: 16px 16px 14px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -2980,6 +3039,7 @@ export default function Home() {
     min-width: 0;
     padding-left: 0;
   }
+
   .headerActions {
     display: flex;
     align-items: center;
@@ -3015,9 +3075,9 @@ export default function Home() {
   .navBtn {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
@@ -3025,11 +3085,11 @@ export default function Home() {
   }
   .headerProfileBtn:hover,
   .navBtn:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.10);
   }
   .headerProfileBtn:active,
   .navBtn:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .brandTitle {
@@ -3038,7 +3098,7 @@ export default function Home() {
     line-height: 1.05;
     margin: 0 !important;
     padding: 0 !important;
-    color: #111;
+    color: #fff;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -3046,20 +3106,20 @@ export default function Home() {
     text-align: left;
   }
   .brandTitle:focus-visible {
-    outline: 2px solid rgba(0, 0, 0, 0.16);
+    outline: 2px solid rgba(255, 255, 255, 0.18);
     outline-offset: 6px;
     border-radius: 10px;
   }
 
-  /* ✅ ① ロゴとサブ文言の左端を完全に揃える */
   .brandSub {
     font-size: 13px;
-    opacity: 0.78;
+    opacity: 0.82;
     display: block;
     text-align: left;
     margin: 0;
     padding: 0;
     text-indent: 0;
+    color: rgba(255, 255, 255, 0.86);
   }
 
   .container {
@@ -3070,11 +3130,12 @@ export default function Home() {
 
   /* Panels */
   .panel {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.09);
+    background: rgba(40, 40, 40, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 16px;
     padding: 14px;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    color: #fff;
   }
   .panelTitleRow {
     display: flex;
@@ -3089,15 +3150,15 @@ export default function Home() {
     letter-spacing: 0.2px;
   }
   .errorBox {
-    border-color: rgba(220, 60, 60, 0.25);
-    background: rgba(220, 60, 60, 0.06);
+    border-color: rgba(255, 130, 130, 0.35);
+    background: rgba(255, 120, 120, 0.12);
   }
 
   .small {
     font-size: 12px;
   }
   .muted {
-    opacity: 0.7;
+    opacity: 0.75;
   }
 
   /* Buttons */
@@ -3105,49 +3166,52 @@ export default function Home() {
     margin-top: 12px;
     padding: 10px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.14);
     color: #fff;
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
   }
   .btn:hover {
-    filter: brightness(1.05);
+    background: rgba(255, 255, 255, 0.18);
   }
   .btn:active {
-    filter: brightness(1);
+    background: rgba(255, 255, 255, 0.22);
   }
 
   .btnGhost {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
   }
   .btnGhost:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.10);
   }
   .btnGhost:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .btnTiny {
     padding: 7px 10px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
     cursor: pointer;
     font-size: 12px;
     font-weight: 400;
   }
+  .btnTiny:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
   .btnTiny:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
 
   /* Home cards */
@@ -3165,17 +3229,17 @@ export default function Home() {
     gap: 12px;
     padding: 14px;
     border-radius: 18px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(40, 40, 40, 0.72);
     cursor: pointer;
-    color: #111;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
   }
   .featureCard:hover {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(50, 50, 50, 0.78);
   }
   .featureCard:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.10);
   }
   .featureIcon {
     width: 44px;
@@ -3184,9 +3248,9 @@ export default function Home() {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    color: #111;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
   }
   .featureTitle {
     font-size: 15px;
@@ -3196,89 +3260,132 @@ export default function Home() {
   .featureSub {
     margin-top: 3px;
     font-size: 12px;
-    opacity: 0.7;
+    opacity: 0.78;
     font-weight: 400;
   }
   .featureArrow {
-    opacity: 0.7;
+    opacity: 0.8;
     font-size: 16px;
     font-weight: 400;
   }
 
-  /* ✅ ② HOME下：管理人のプロフィール（暗すぎ対策：白〜薄灰） */
+  /* ✅ ① HOME最下部：管理人プロフィール（カード式） */
   .profileLinkWrap {
     width: 100%;
-    margin-top: 6px;
-  }
-  .profileLink {
-    width: 100%;
-    padding: 16px 14px;
-    border-radius: 18px;
-    border: 1px dashed rgba(0, 0, 0, 0.18);
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
-    color: rgba(0, 0, 0, 0.62); /* ← 見える明るさ */
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.35px;
-    text-align: left;
-    position: relative;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
-  }
-  .profileLink:hover {
-    background: rgba(0, 0, 0, 0.03);
-  }
-  .profileLink:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
-  }
-  .profileLink:focus-visible {
-    outline: 2px solid rgba(0, 0, 0, 0.16);
-    outline-offset: 4px;
-  }
-  .profileLink::after {
-    content: "";
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid rgba(0, 0, 0, 0.38);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.38);
-    transform: translateY(-50%) rotate(-45deg);
-    opacity: 0.9;
+    margin-top: 8px;
   }
 
-  /*（旧クラス残置：もしどこかで使っていても同じ見た目）*/
-  .adminProfileLink {
+  /* 旧ボタンが残っていても崩れないように残置（白文字化） */
+  .adminProfileLink,
+  .profileLink {
     width: 100%;
-    margin-top: 12px;
+    margin-top: 0;
     padding: 16px 14px;
     border-radius: 18px;
-    border: 1px dashed rgba(0, 0, 0, 0.18);
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
-    color: rgba(0, 0, 0, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(30, 30, 30, 0.68);
+    color: #fff;
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.35px;
     text-align: left;
     position: relative;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
   }
-  .adminProfileLink:active {
-    background: rgba(120, 120, 120, 0.1);
+  .adminProfileLink:hover,
+  .profileLink:hover {
+    background: rgba(40, 40, 40, 0.74);
   }
-  .adminProfileLink::after {
-    content: "";
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid rgba(0, 0, 0, 0.38);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.38);
-    transform: translateY(-50%) rotate(-45deg);
+  .adminProfileLink:active,
+  .profileLink:active {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .adminProfileLink:focus-visible,
+  .profileLink:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline-offset: 4px;
+  }
+
+  /* ✅ 新カード用（JSXで使っている場合） */
+  .homeProfileCardWrap {
+    width: 100%;
+    margin-top: 10px;
+  }
+  /* “ホームのみ固定”のためのクラス（stickyで下に居続ける） */
+  .homeProfileFixed {
+    position: sticky;
+    bottom: 14px;
+    z-index: 5;
+  }
+
+  .adminProfileCard {
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: linear-gradient(180deg, rgba(30, 30, 30, 0.78), rgba(20, 20, 20, 0.62));
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+  }
+  .adminProfileCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+  }
+  .adminProfileCardTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .adminProfileCardName {
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .adminProfileCardSub {
+    font-size: 12px;
+    opacity: 0.78;
+  }
+  .adminProfileCardLinks {
+    display: flex;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+  .adminMiniIconBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .adminMiniIconBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .adminMiniIconBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .adminProfileCardBody {
+    font-size: 12px;
+    line-height: 1.55;
     opacity: 0.9;
+  }
+  .adminProfileCardCta {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 12px;
+    opacity: 0.75;
   }
 
   /* Top row */
@@ -3299,20 +3406,23 @@ export default function Home() {
   .pill {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
   }
+  .pill:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
   .pill:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
   .pill.active {
-    background: #3a3a3a; /* ✅ 黒(#111) → 濃いグレー */
+    background: rgba(255, 255, 255, 0.18);
     color: #fff;
-    border-color: rgba(0, 0, 0, 0.18);
+    border-color: rgba(255, 255, 255, 0.22);
     font-weight: 400;
   }
 
@@ -3321,20 +3431,20 @@ export default function Home() {
     width: 100%;
     padding: 12px 12px;
     border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.18);
+    color: #fff;
     font-size: 14px;
     margin-top: 10px;
     outline: none;
     font-weight: 400;
   }
   .input::placeholder {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(255, 255, 255, 0.55);
   }
   .input:focus {
-    border-color: rgba(0, 0, 0, 0.22);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+    border-color: rgba(255, 255, 255, 0.26);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10);
   }
 
   .suggest {
@@ -3342,23 +3452,25 @@ export default function Home() {
     left: 0;
     right: 0;
     top: calc(100% + 6px);
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(40, 40, 40, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 14px;
     overflow: hidden;
     z-index: 20;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
   }
   .suggestItem {
     padding: 10px 12px;
     cursor: pointer;
     font-weight: 400;
+    color: #fff;
   }
   .suggestItem:hover {
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.08);
   }
   .suggestItem:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.12);
   }
 
   /* Collapsible filters */
@@ -3367,9 +3479,9 @@ export default function Home() {
     gap: 10px;
   }
   .collapseBox {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 14px;
-    background: rgba(0, 0, 0, 0.015);
+    background: rgba(0, 0, 0, 0.14);
   }
   .collapseHead {
     width: 100%;
@@ -3381,121 +3493,209 @@ export default function Home() {
     cursor: pointer;
     border: none;
     background: transparent;
-    color: #111;
+    color: #fff;
     text-align: left;
     font-weight: 400;
   }
+  .collapseHead:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+  }
   .collapseHead:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.10);
     border-radius: 14px;
   }
   .collapseHead:focus-visible {
-    outline: 2px solid rgba(0, 0, 0, 0.16);
+    outline: 2px solid rgba(255, 255, 255, 0.18);
     outline-offset: 4px;
     border-radius: 14px;
   }
   .collapsePlus {
-    width: 22px;
-    height: 22px;
-    border-radius: 999px;
-    display: flex;
+    width: 26px;
+    height: 26px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    font-weight: 400;
-    line-height: 1;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
   }
   .collapseTitle {
     font-size: 13px;
-    font-weight: 400;
+    letter-spacing: 0.2px;
   }
   .collapseMeta {
     font-size: 12px;
-    opacity: 0.65;
+    opacity: 0.75;
     white-space: nowrap;
-    font-weight: 400;
   }
   .collapseBody {
-    padding: 0 12px 12px;
+    padding: 10px 12px 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  /* Options */
+  /* Check grid */
   .checkGrid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 14px;
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (min-width: 700px) {
+    .checkGrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
   .checkItem {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    opacity: 0.95;
-    font-weight: 400;
-    padding: 4px 6px;
-    border-radius: 10px;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+  }
+  .checkItem:hover {
+    background: rgba(255, 255, 255, 0.10);
   }
   .checkItem:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
-
+  .checkItem input {
+    width: 16px;
+    height: 16px;
+    accent-color: #e6e6e6;
+  }
   .checkLabel {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
+    color: #fff;
   }
   .checkText {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     opacity: 0.95;
-    font-weight: 400;
+  }
+
+  .miniActions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .optionBox {
     margin-top: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 14px;
     padding: 10px;
-    max-height: 240px;
-    overflow: auto;
-    background: rgba(0, 0, 0, 0.02);
-  }
-  .miniActions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
   }
 
   .modeBox {
     margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
   }
 
-  /* Cards */
+  /* Results flash ring */
+  .flashRing {
+    border-radius: 18px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+  }
+
+  /* Pager */
+  .pagerBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .pagerArrow {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .pagerArrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .pagerArrow:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pagerArrow:active:not(:disabled) {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pagerNums {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1 1 auto;
+  }
+  .pagerNum {
+    min-width: 36px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .pagerNum:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pagerNum:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pagerNum.active {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .pagerDots {
+    opacity: 0.7;
+    padding: 6px 6px;
+  }
+
+  /* Work cards */
   .card {
     margin-top: 12px;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 18px;
-    padding: 14px;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(40, 40, 40, 0.74);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+    padding: 12px;
+    color: #fff;
     cursor: pointer;
+  }
+  .card:active {
+    background: rgba(255, 255, 255, 0.10);
   }
   .cardTop {
     display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 14px;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
     align-items: start;
   }
+  @media (max-width: 520px) {
+    .cardTop {
+      grid-template-columns: 110px 1fr;
+    }
+  }
   .poster {
-    width: 220px;
-    aspect-ratio: 16 / 9;
-    height: auto;
+    width: 100%;
+    aspect-ratio: 2 / 3;
     object-fit: cover;
-    border-radius: 16px;
-    background: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.15);
   }
   .cardInfo {
     min-width: 0;
@@ -3507,205 +3707,130 @@ export default function Home() {
     gap: 10px;
   }
   .cardTitle {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 15px;
     letter-spacing: 0.2px;
     line-height: 1.25;
+    font-weight: 400;
   }
   .openBtn {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 12px;
+    flex: 0 0 auto;
   }
   .openBtn:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.10);
   }
   .openBtn:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .desc {
-    margin-top: 10px;
-    font-size: 13px;
-    line-height: 1.65;
-    opacity: 0.9;
-    font-weight: 400;
-    word-break: break-word;
-    user-select: text;
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.55;
+    opacity: 0.92;
   }
 
   .metaGrid {
-    margin-top: 12px;
+    margin-top: 10px;
     display: grid;
     gap: 8px;
   }
   .metaLine {
     display: grid;
-    grid-template-columns: 92px 1fr;
+    grid-template-columns: 110px 1fr;
     gap: 10px;
     align-items: start;
   }
+  @media (max-width: 520px) {
+    .metaLine {
+      grid-template-columns: 92px 1fr;
+    }
+  }
   .metaLabel {
     font-size: 12px;
-    opacity: 0.7;
-    font-weight: 400;
-    white-space: nowrap;
+    opacity: 0.75;
+    letter-spacing: 0.2px;
   }
   .metaText {
-    font-size: 13px;
-    opacity: 0.92;
-    font-weight: 400;
+    font-size: 12px;
+    opacity: 0.95;
     min-width: 0;
-    word-break: break-word;
   }
 
   .stars {
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     gap: 6px;
-    margin-left: 8px;
   }
   .starsGlyph {
     letter-spacing: 1px;
-    font-weight: 400;
   }
   .starsText {
     font-size: 12px;
-    opacity: 0.7;
-    font-weight: 400;
+    opacity: 0.8;
   }
 
-  /* VOD */
+  /* VOD icons */
   .vodIcons {
     display: inline-flex;
-    gap: 10px;
-    align-items: center;
     flex-wrap: wrap;
-  }
-  .vodIconImg {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    display: block;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    gap: 6px;
+    align-items: center;
   }
   .vodIconLink {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    outline: none;
   }
-  .vodIconLink:active {
-    filter: brightness(0.98);
+  .vodIconLink:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline-offset: 3px;
   }
-
-  .inlineTitleLink {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: #111;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 0;
-  }
-  .inlineTitleLink:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ */
+  .vodIconImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.12);
   }
 
-  /* Analyze */
-  .grid2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .rowActions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-  }
-  .profileBox {
-    margin-top: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 14px;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.015);
-  }
-  .profileRow {
-    display: grid;
-    grid-template-columns: 74px 1fr 44px;
-    gap: 10px;
-    align-items: center;
-    margin-top: 10px;
-  }
-  .profileRow:first-child {
-    margin-top: 0;
-  }
-  .profileLabel {
-    font-size: 12px;
-    opacity: 0.85;
-    font-weight: 400;
-  }
-  .profileBar {
-    height: 10px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  .profileFill {
-    height: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    border-radius: 999px;
-  }
-  .profileVal {
-    font-size: 12px;
-    text-align: right;
-    opacity: 0.85;
-    font-weight: 400;
-  }
-  .noteBox {
-    margin-top: 10px;
-    border: 1px dashed rgba(0, 0, 0, 0.14);
-    border-radius: 14px;
-    padding: 10px 12px;
-    background: rgba(0, 0, 0, 0.01);
-  }
+  /* Rec explain list */
   .recExplainList {
-    margin-top: 8px;
     display: grid;
     gap: 10px;
   }
   .recExplain {
     padding: 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.015);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.12);
   }
   .recExplainTitle {
+    width: 100%;
+    text-align: left;
     border: none;
     background: transparent;
-    color: #111;
+    color: #fff;
     cursor: pointer;
     padding: 0;
     font-size: 14px;
     font-weight: 400;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    letter-spacing: 0.2px;
+  }
+  .recExplainTitle:hover {
+    opacity: 0.9;
   }
   .recExplainTitle:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ */
-  }
-  .recExplainTitle:focus-visible {
-    outline: 2px solid rgba(0, 0, 0, 0.16);
-    outline-offset: 4px;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.04);
+    opacity: 0.85;
   }
   .recExplainReasons {
     margin-top: 8px;
@@ -3713,419 +3838,306 @@ export default function Home() {
     gap: 4px;
   }
 
-  /* Score panel (modal) */
-  .scorePanel {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+  .inlineTitleLink {
+    border: none;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .inlineTitleLink:hover {
+    opacity: 0.9;
+  }
+
+  /* Grid2 + actions */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 520px) {
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  .rowActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  /* Profile (analysis) */
+  .profileBox {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .profileRow {
+    display: grid;
+    grid-template-columns: 80px 1fr 46px;
+    gap: 10px;
+    align-items: center;
+  }
+  .profileLabel {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  .profileBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .profileFill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.26);
+  }
+  .profileVal {
+    font-size: 12px;
+    opacity: 0.85;
+    text-align: right;
+  }
+  .noteBox {
+    margin-top: 10px;
+    padding: 10px 12px;
     border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
+  }
+
+  /* Modal */
+  .modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+  }
+  .modalDialog {
+    width: min(980px, 100%);
+    max-height: calc(100vh - 28px);
+    overflow-y: auto; /* ✅ 画面はみ出し時は縦スクロール */
+    overflow-x: hidden;
+    border-radius: 18px;
+  }
+  .modalCard {
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(35, 35, 35, 0.92);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.40);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    overflow: hidden;
+  }
+  .modalHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    gap: 10px;
+  }
+  .profileHeader {
+    justify-content: space-between;
+  }
+  .modalHeaderTitle {
+    font-size: 14px;
+    opacity: 0.95;
+    letter-spacing: 0.2px;
+  }
+  .modalCloseBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .modalCloseBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .modalCloseBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .modalBody {
     padding: 12px;
-    background: rgba(0, 0, 0, 0.015);
+  }
+
+  .modalTop {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .modalTop {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .modalPoster {
+    width: 100%;
+    /* ✅ 横長画像でも大きすぎないように */
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .modalInfo {
+    min-width: 0;
+  }
+  .modalTitle {
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .link {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    opacity: 0.9;
+  }
+
+  .scorePanel {
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
+    padding: 12px;
   }
   .scoreRow {
     display: grid;
-    grid-template-columns: 74px 1fr 70px;
+    grid-template-columns: 72px 1fr 68px;
     gap: 10px;
     align-items: center;
     margin-top: 8px;
   }
   .scoreLabel {
     font-size: 12px;
-    opacity: 0.85;
-    white-space: nowrap;
-    font-weight: 400;
+    opacity: 0.82;
   }
   .scoreBar {
     height: 10px;
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.10);
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .scoreBarFill {
     height: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.26);
   }
   .scoreVal {
     font-size: 12px;
-    text-align: right;
     opacity: 0.85;
-    font-weight: 400;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Pagination */
-  .pagerBar {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .pagerArrow {
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 400;
-  }
-  .pagerArrow:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-  .pagerArrow:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ */
-  }
-  .pagerNums {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .pagerNum {
-    min-width: 34px;
-    height: 34px;
-    padding: 0 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.02);
-    color: #111;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 400;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .pagerNum:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ */
-  }
-  .pagerNum.active {
-    background: #3a3a3a;
-    color: #fff;
-    border-color: rgba(0, 0, 0, 0.18);
-  }
-  .pagerDots {
-    opacity: 0.6;
-    font-size: 13px;
-    padding: 0 6px;
-  }
-
-  /* Flash ring */
-  .flashRing {
-    outline: 2px solid rgba(0, 0, 0, 0.1);
-    outline-offset: 6px;
-    border-radius: 18px;
-  }
-
-  /* Modal（枠固定 + 中身スクロール） */
-  .modalOverlay {
-    position: fixed;
-    inset: 0;
-    height: 100dvh;
-    background: rgba(0, 0, 0, 0.45);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 12px;
-    overflow: hidden;
-    z-index: 50;
-  }
-
-  .modalDialog {
-    width: 100%;
-    max-width: 980px;
-    height: calc(100dvh - 24px);
-    max-height: calc(100dvh - 24px);
-  }
-
-  .modalCard {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 18px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
-    color: #111;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .modalHeader {
-    flex: 0 0 auto;
-    padding: 10px;
-    background: #fff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-
-  /* プロフィール：黒ベース＋白灰文字（※HOMEのリンクとは別） */
-  .profileHeader {
-    background: #111;
-    border-bottom-color: rgba(255, 255, 255, 0.12);
-    color: #f2f2f2;
-  }
-  .profileHeader .modalHeaderTitle {
-    color: rgba(255, 255, 255, 0.82);
-  }
-  .profileHeader .modalCloseBtn {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.16);
-    color: #fff;
-  }
-  .profileHeader .modalCloseBtn:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  .profileHeader .modalCloseBtn:active {
-    background: rgba(255, 255, 255, 0.14);
-  }
-
-  .modalHeaderTitle {
-    font-size: 13px;
-    opacity: 0.75;
-    font-weight: 400;
-    white-space: nowrap;
-  }
-
-  .modalCloseBtn {
-    padding: 10px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: #ffffff;
-    color: #111;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 400;
-    white-space: nowrap;
-  }
-  .modalCloseBtn:hover {
-    background: rgba(0, 0, 0, 0.04);
-  }
-  .modalCloseBtn:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
-  }
-
-  .modalBody {
-    flex: 1 1 auto;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 12px;
-  }
-
-  .modalTop {
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 14px;
-    align-items: start;
-  }
-  .modalPoster {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto;
-    object-fit: cover;
-    border-radius: 16px;
-    background: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  .modalInfo {
-    min-width: 0;
-  }
-  .modalTitle {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-    margin-bottom: 10px;
-  }
-
-  .link {
-    color: #111;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .link:active {
-    background: rgba(120, 120, 120, 0.1); /* ✅ ⑤ */
+    text-align: right;
   }
 
   /* Admin profile modal */
   .adminProfileHero {
-    display: flex;
+    display: grid;
+    grid-template-columns: 72px 1fr;
     gap: 12px;
     align-items: center;
-    padding: 12px;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.015);
+    padding: 10px 0 8px;
   }
   .adminAvatar {
-    width: 54px;
-    height: 54px;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.03);
-    flex: 0 0 auto;
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
   }
   .adminProfileText {
     min-width: 0;
   }
   .adminName {
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 14px;
     letter-spacing: 0.2px;
+    margin-bottom: 6px;
   }
   .adminBio {
-    margin-top: 6px;
-    font-size: 13px;
-    line-height: 1.65;
+    font-size: 12px;
+    line-height: 1.55;
     opacity: 0.9;
-    word-break: break-word;
   }
-
-  /* ✅ ③ YouTube/ブログ枠：横長すぎる→幅を少し小さく＆2つ同幅 */
   .adminLinkRow {
     margin-top: 12px;
     display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
-    justify-items: center; /* 中央寄せ */
+  }
+  @media (max-width: 520px) {
+    .adminLinkRow {
+      grid-template-columns: 1fr;
+    }
   }
   .adminLinkBtn {
-    width: min(560px, 100%); /* ← 少し幅を抑える */
-    padding: 14px 14px;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: #fff;
-    color: #111;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 400;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
   }
   .adminLinkBtn:hover {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(255, 255, 255, 0.10);
   }
   .adminLinkBtn:active {
-    background: rgba(120, 120, 120, 0.12); /* ✅ ⑤ 黒→灰 */
+    background: rgba(255, 255, 255, 0.14);
   }
   .adminLinkBtnPrimary {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(255, 255, 255, 0.10);
   }
   .adminLinkIcon {
+    width: 28px;
+    height: 28px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
-
   .adminNoteBox {
     margin-top: 12px;
-    border: 1px dashed rgba(0, 0, 0, 0.14);
-    border-radius: 14px;
     padding: 10px 12px;
-    background: rgba(0, 0, 0, 0.01);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
   }
 
-  /* Responsive */
-  @media (max-width: 820px) {
-    .modalTop {
-      grid-template-columns: 1fr;
+  /* Responsive tweaks */
+  @media (max-width: 520px) {
+    .headerInner {
+      padding: 14px 14px 12px;
+    }
+    .container {
+      padding: 12px 14px 26px;
+    }
+    .brandTitle {
+      font-size: 36px;
+    }
+    .modalOverlay {
+      padding: 12px;
     }
     .modalPoster {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .cardTop {
-      grid-template-columns: 1fr;
-    }
-    .poster {
-      width: 100%;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    .grid2 {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ✅ ④ PC：文字をもう一段階大きく（デスクトップのみ） */
-  @media (min-width: 900px) {
-    .brandTitle {
-      font-size: 44px;
-    }
-    .brandSub {
-      font-size: 14px;
-    }
-
-    .panelTitle {
-      font-size: 15px;
-    }
-    .small {
-      font-size: 13px;
-    }
-
-    .btn {
-      font-size: 15px;
-    }
-    .btnGhost {
-      font-size: 14px;
-    }
-    .pill {
-      font-size: 14px;
-    }
-    .input {
-      font-size: 15px;
-    }
-
-    .featureTitle {
-      font-size: 16px;
-    }
-    .featureSub {
-      font-size: 13px;
-    }
-
-    .cardTitle {
-      font-size: 20px;
-    }
-    .desc {
-      font-size: 14px;
-    }
-    .metaLabel {
-      font-size: 13px;
-    }
-    .metaText {
-      font-size: 14px;
-    }
-    .starsText {
-      font-size: 13px;
-    }
-    .recExplainTitle {
-      font-size: 15px;
-    }
-
-    .modalTitle {
-      font-size: 22px;
-    }
-    .adminName {
-      font-size: 16px;
-    }
-    .adminBio {
-      font-size: 14px;
-    }
-    .adminLinkBtn {
-      font-size: 15px;
+      max-height: 320px;
     }
   }
 `}</style>
