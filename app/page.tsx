@@ -2016,7 +2016,7 @@ export default function Home() {
               aria-label="AniMatch（ホームへ）"
               onClick={() => goTo("home")}
             >
-              AniMatch
+              {"AniMatch"}
             </button>
             <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
           </div>
