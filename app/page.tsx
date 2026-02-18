@@ -4125,7 +4125,7 @@ export default function Home() {
   /* Responsive tweaks */
   @media (max-width: 520px) {
     .headerInner {
-      padding: 14px 14px 12px;
+      padding-left: 0;
     }
     .container {
       padding: 12px 14px 26px;
