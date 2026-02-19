@@ -575,7 +575,7 @@ function IconBadge() {
   );
 }
 
-/** ★モノトーン YouTube / Blog アイコン（少し洗練） */
+/** ★モノトーン YouTube / Blog アイコン */
 function IconYouTubeMono({ size = 18 }: { size?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
@@ -1227,7 +1227,7 @@ export default function Home() {
   }, [animeList]);
 
   /** =========================
-   *  Results (Recommend / Info only)
+   *  Results (Recommend / Info / Admin only)
    * ========================= */
   const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
   const [resultPage, setResultPage] = useState(1);
@@ -1312,7 +1312,7 @@ export default function Home() {
   }
 
   /** =========================
-   *  ④ ブラウザの戻る（popstate）でも画面遷移できるように
+   *  ナビ
    * ========================= */
   function applyNav(next: View) {
     setView(next);
@@ -1346,7 +1346,6 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // 初期：hashがあれば復元（なければhome）
     const initial = parseHashToView();
     try {
       window.history.replaceState({ view: initial }, "", `#${initial}`);
@@ -1858,27 +1857,6 @@ export default function Home() {
    * ========================= */
   const adminSeedRef = useRef<number>(Math.floor(Date.now() / 1000));
 
-  function buildAdminReasons(a: AnimeWork) {
-    const axes = OVERALL_WEIGHTS
-      .map((ax) => {
-        const v = toScore10((a as any)[ax.key]);
-        return { label: ax.label, v: v ?? -1 };
-      })
-      .filter((x) => x.v >= 0);
-
-    axes.sort((x, y) => y.v - y.v);
-    const top = axes.slice(0, 2);
-
-    const lines: string[] = [];
-    if (top[0]) lines.push(`おすすめポイント：${top[0].label}が強い（${top[0].v.toFixed(1)}/10）`);
-    if (top[1]) lines.push(`次に：${top[1].label}（${top[1].v.toFixed(1)}/10）`);
-
-    const ov = overallScore100(a);
-    if (ov !== null) lines.push(`総合評価：${ov.toFixed(1)}/100（★${(score100ToStar5(ov) ?? 0).toFixed(1)}）`);
-
-    return lines.slice(0, 3);
-  }
-
   const adminRecsRaw = useMemo(() => animeList.filter((a) => a.is_recommended === true), [animeList]);
 
   const adminRecs = useMemo(() => {
@@ -2008,7 +1986,6 @@ export default function Home() {
     <div className="page">
       <header className="topHeader">
         <div className="headerInner">
-          {/* ① ロゴと文言：同じ左端に揃える */}
           <div className="brandBlock">
             <button
               type="button"
@@ -2109,85 +2086,7 @@ export default function Home() {
                 <div className="featureArrow">→</div>
               </button>
 
-              {/* ✅ ② HOME最下部：管理人プロフィールカード（デザイン改良） */}
-              <div className="homeProfileCard" role="region" aria-label="管理人のプロフィール">
-                <div className="homeProfileBanner" aria-hidden="true">
-                  <div className="homeProfilePaw paw1" />
-                  <div className="homeProfilePaw paw2" />
-                  <div className="homeProfilePaw paw3" />
-                  <div className="homeProfilePaw paw4" />
-
-                  <div className="homeProfileAvatarWrap">
-                    <div className="homeProfileAvatar" aria-hidden="true" />
-                  </div>
-                </div>
-
-                <div className="homeProfileBody">
-                  <div className="homeProfileNameRow">
-                    <div className="homeProfileName">かさ【ゆるオタ】</div>
-                    <button
-                      type="button"
-                      className="homeProfileMoreBtn"
-                      onClick={() => {
-                        try {
-                          trackEvent({ event_name: "profile_open", meta: { from: "home_profile_card" } });
-                        } catch {}
-                        openProfileModal();
-                      }}
-                      aria-label="管理人プロフィールを開く"
-                      title="プロフィールを開く"
-                    >
-                      プロフィール
-                    </button>
-                  </div>
-
-                  <div className="homeProfileBio">
-                    YouTubeでアニメ紹介／AniMatch運営。
-                    <br />
-                    「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
-                  </div>
-
-                  <div className="homeProfileIconLinks">
-                    <a
-                      className="homeProfileIconBtn homeProfileIconBtnPrimary"
-                      href="https://youtube.com/@kasa-yuruota"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        try {
-                          trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "home_profile_card" } });
-                        } catch {}
-                      }}
-                      aria-label="YouTubeチャンネルへ（別タブ）"
-                      title="YouTube"
-                    >
-                      <IconYouTubeMono size={20} />
-                    </a>
-
-                    <a
-                      className="homeProfileIconBtn"
-                      href="https://kasa-yuruotablog.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        try {
-                          trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "home_profile_card" } });
-                        } catch {}
-                      }}
-                      aria-label="ブログへ（別タブ）"
-                      title="Blog"
-                    >
-                      <IconBlogMono size={20} />
-                    </a>
-                  </div>
-
-                  <div className="homeProfileNote">
-                    <div className="small muted">※リンクは別タブで開きます</div>
-                  </div>
-                </div>
-              </div>
+              {/* ✅ ホーム下部のプロフィールカードは削除（固定ボタンのみ） */}
             </div>
           </>
         ) : null}
@@ -2313,7 +2212,7 @@ export default function Home() {
           </>
         ) : null}
 
-              {/* =========================
+        {/* =========================
          *  Similar（1作品 → 似た作品）
          * ========================= */}
         {view === "similar" ? (
@@ -2365,12 +2264,7 @@ export default function Home() {
               </div>
 
               <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter
-                  open={vodFilterOpen}
-                  onToggle={() => setVodFilterOpen((v) => !v)}
-                  title="VODを絞り込む"
-                  selectedCount={vodChecked.size}
-                >
+                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
                   <div className="checkGrid">
                     {vodServices.map((s) => (
                       <label key={s} className="checkItem">
@@ -2388,19 +2282,8 @@ export default function Home() {
                   </div>
                 </CollapsibleFilter>
 
-                <CollapsibleFilter
-                  open={studioFilterOpen}
-                  onToggle={() => setStudioFilterOpen((v) => !v)}
-                  title="制作会社を絞り込む"
-                  selectedCount={studioChecked.size}
-                >
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="制作会社を絞り込み（例：MAPPA）"
-                    value={studioFilterText}
-                    onChange={(e) => setStudioFilterText(e.target.value)}
-                  />
+                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
+                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
                   <div className="optionBox">
                     <div className="checkGrid">
                       {filteredStudioOptions.slice(0, 140).map((s) => (
@@ -2425,9 +2308,7 @@ export default function Home() {
             {similarBase ? (
               <div className="panel" style={{ marginTop: 12 }}>
                 <div className="panelTitle">元作品</div>
-                <div className="small">
-                  <b>{similarBase.title}</b>
-                </div>
+                <div className="workTitleStrong">{similarBase.title}</div>
                 <div className="small muted">{getGenreArray(similarBase.genre).slice(0, 5).join(" / ") || "—"}</div>
               </div>
             ) : null}
@@ -2523,12 +2404,7 @@ export default function Home() {
               </div>
 
               <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter
-                  open={vodFilterOpen}
-                  onToggle={() => setVodFilterOpen((v) => !v)}
-                  title="VODを絞り込む"
-                  selectedCount={vodChecked.size}
-                >
+                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
                   <div className="checkGrid">
                     {vodServices.map((s) => (
                       <label key={s} className="checkItem">
@@ -2546,19 +2422,8 @@ export default function Home() {
                   </div>
                 </CollapsibleFilter>
 
-                <CollapsibleFilter
-                  open={studioFilterOpen}
-                  onToggle={() => setStudioFilterOpen((v) => !v)}
-                  title="制作会社を絞り込む"
-                  selectedCount={studioChecked.size}
-                >
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="制作会社を絞り込み（例：MAPPA）"
-                    value={studioFilterText}
-                    onChange={(e) => setStudioFilterText(e.target.value)}
-                  />
+                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
+                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
                   <div className="optionBox">
                     <div className="checkGrid">
                       {filteredStudioOptions.slice(0, 140).map((s) => (
@@ -2650,16 +2515,11 @@ export default function Home() {
             </div>
 
             <div className="panel">
-              <div className="panelTitle">管理人おすすめ（ランダム表示）</div>
+              <div className="panelTitle">管理人のおすすめアニメ</div>
               <div className="small muted">「とりあえず何か観たい」人向け。ボタンでシャッフルできます。</div>
 
               <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter
-                  open={vodFilterOpen}
-                  onToggle={() => setVodFilterOpen((v) => !v)}
-                  title="VODを絞り込む"
-                  selectedCount={vodChecked.size}
-                >
+                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
                   <div className="checkGrid">
                     {vodServices.map((s) => (
                       <label key={s} className="checkItem">
@@ -2677,19 +2537,8 @@ export default function Home() {
                   </div>
                 </CollapsibleFilter>
 
-                <CollapsibleFilter
-                  open={studioFilterOpen}
-                  onToggle={() => setStudioFilterOpen((v) => !v)}
-                  title="制作会社を絞り込む"
-                  selectedCount={studioChecked.size}
-                >
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="制作会社を絞り込み（例：MAPPA）"
-                    value={studioFilterText}
-                    onChange={(e) => setStudioFilterText(e.target.value)}
-                  />
+                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
+                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
                   <div className="optionBox">
                     <div className="checkGrid">
                       {filteredStudioOptions.slice(0, 140).map((s) => (
@@ -2724,6 +2573,9 @@ export default function Home() {
                 </button>
                 <button className="btnGhost" onClick={() => setResults(applyCollapsedFilters(adminRecsRaw))}>
                   シャッフルなしで表示
+                </button>
+                <button className="btnGhost" onClick={() => setResults(adminRecs)}>
+                  今の条件で表示
                 </button>
               </div>
             </div>
@@ -2782,12 +2634,7 @@ export default function Home() {
               </div>
 
               <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter
-                  open={vodFilterOpen}
-                  onToggle={() => setVodFilterOpen((v) => !v)}
-                  title="VODを絞り込む"
-                  selectedCount={vodChecked.size}
-                >
+                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
                   <div className="checkGrid">
                     {vodServices.map((s) => (
                       <label key={s} className="checkItem">
@@ -2805,19 +2652,8 @@ export default function Home() {
                   </div>
                 </CollapsibleFilter>
 
-                <CollapsibleFilter
-                  open={studioFilterOpen}
-                  onToggle={() => setStudioFilterOpen((v) => !v)}
-                  title="制作会社を絞り込む"
-                  selectedCount={studioChecked.size}
-                >
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="制作会社を絞り込み（例：MAPPA）"
-                    value={studioFilterText}
-                    onChange={(e) => setStudioFilterText(e.target.value)}
-                  />
+                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
+                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
                   <div className="optionBox">
                     <div className="checkGrid">
                       {filteredStudioOptions.slice(0, 140).map((s) => (
@@ -2862,7 +2698,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  ③ 管理人プロフィール Modal（アイコンは空白 / YouTube & Blogをおしゃれに）
+         *  管理人プロフィール Modal
          * ========================= */}
         {profileOpen ? (
           <div className="modalOverlay" onClick={closeProfileModal}>
@@ -2997,12 +2833,9 @@ export default function Home() {
                   {modalSeriesStats ? (
                     <div className="seriesBox">
                       <div className="seriesTitle">シリーズ情報</div>
-                      <div className="small">
-                        <b>{modalSeriesStats.displayTitle}</b>
-                      </div>
+                      <div className="seriesName">{modalSeriesStats.displayTitle}</div>
                       <div className="small muted">
-                        TV: {modalSeriesStats.tvCount}作品 / 話数合計: {modalSeriesStats.tvEpisodes ? `${modalSeriesStats.tvEpisodes}話` : "—"}　
-                        映画: {modalSeriesStats.movieCount}本
+                        TV: {modalSeriesStats.tvCount}作品 / 話数合計: {modalSeriesStats.tvEpisodes ? `${modalSeriesStats.tvEpisodes}話` : "—"}　映画: {modalSeriesStats.movieCount}本
                       </div>
                     </div>
                   ) : null}
@@ -3052,27 +2885,27 @@ export default function Home() {
                   <div className="scoreGrid">
                     <div className="scoreItem">
                       <span>シナリオ</span>
-                      <b>{fmt10(toScore10(selectedAnime.story_10))}</b>
+                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.story_10))}</span>
                     </div>
                     <div className="scoreItem">
                       <span>世界観</span>
-                      <b>{fmt10(toScore10(selectedAnime.world_10))}</b>
+                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.world_10))}</span>
                     </div>
                     <div className="scoreItem">
                       <span>心</span>
-                      <b>{fmt10(toScore10(selectedAnime.emotion_10))}</b>
+                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.emotion_10))}</span>
                     </div>
                     <div className="scoreItem">
                       <span>テンポ</span>
-                      <b>{fmt10(toScore10(selectedAnime.tempo_10))}</b>
+                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.tempo_10))}</span>
                     </div>
                     <div className="scoreItem">
                       <span>音楽</span>
-                      <b>{fmt10(toScore10(selectedAnime.music_10))}</b>
+                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.music_10))}</span>
                     </div>
                     <div className="scoreItem">
                       <span>作画</span>
-                      <b>{fmt10(toScore10(selectedAnime.animation_10))}</b>
+                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.animation_10))}</span>
                     </div>
                   </div>
                 </div>
@@ -3087,7 +2920,8 @@ export default function Home() {
                       {sourceLinks.map((s, i) => (
                         <div key={i} className="sourceRow">
                           <div className="small">
-                            <b>{stageLabel(s.stage)}</b> {s.platform ? ` / ${s.platform}` : ""}{" "}
+                            {stageLabel(s.stage)}
+                            {s.platform ? ` / ${s.platform}` : ""}
                             {typeof s.confidence === "number" ? <span className="muted">（信頼度 {s.confidence.toFixed(2)}）</span> : null}
                           </div>
                           {safeExternalUrl(s.ref_url) ? (
@@ -3108,23 +2942,30 @@ export default function Home() {
         </div>
       ) : null}
 
+      {/* ✅ 右下固定：管理人プロフィール（全ページ共通） */}
+      <button className="floatingProfileBtn" type="button" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
+        プロフィール
+      </button>
+
       <footer className="footer">
         <div className="footerInner">
           <div className="small muted">© AniMatch</div>
-          <button className="footerProfileBtn" type="button" onClick={openProfileModal}>
-            管理人プロフィール
-          </button>
         </div>
       </footer>
 
+      {/* ===== ここから下（<style jsx global>{）を後半で出力します ===== */}
+    </div>
+  );
+}
       <style jsx global>{`
         :root {
-          --bg: #f6f6f6;
-          --panel: #ffffff;
-          --text: #111;
-          --muted: #6b6b6b;
-          --line: rgba(0, 0, 0, 0.09);
-          --shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+          /* ① 全体：背景 #ADADAD / 文字色 白 */
+          --bg: #adadad;
+          --panel: rgba(0, 0, 0, 0.22);
+          --text: #fff;
+          --muted: rgba(255, 255, 255, 0.72);
+          --line: rgba(255, 255, 255, 0.18);
+          --shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
           --radius: 16px;
         }
 
@@ -3134,6 +2975,7 @@ export default function Home() {
           margin: 0;
           background: var(--bg);
           color: var(--text);
+          font-weight: 400; /* ③ デフォルトは太字にしない */
         }
 
         * {
@@ -3143,6 +2985,12 @@ export default function Home() {
         a {
           color: inherit;
           text-decoration: none;
+        }
+
+        /* ③ 作品名とロゴ以外：太字を無効化（JSX内の <b>/<strong> も含む） */
+        b,
+        strong {
+          font-weight: 500;
         }
 
         .page {
@@ -3156,7 +3004,7 @@ export default function Home() {
           position: sticky;
           top: 0;
           z-index: 50;
-          background: rgba(255, 255, 255, 0.92);
+          background: rgba(0, 0, 0, 0.28);
           backdrop-filter: blur(10px);
           border-bottom: 1px solid var(--line);
         }
@@ -3176,18 +3024,20 @@ export default function Home() {
         .brandTitle {
           background: none;
           border: none;
-          padding: 0; /* ← 左の空白対策（最重要） */
+          padding: 0; /* 左の空白対策 */
           margin: 0;
           font-size: 30px;
           line-height: 1;
           letter-spacing: 0.3px;
           cursor: pointer;
-          color: #111;
+          color: var(--text);
+          font-weight: 700; /* ロゴは太字OK */
         }
 
         .brandSub {
           font-size: 12px;
           color: var(--muted);
+          font-weight: 400;
         }
 
         /* ===== Layout ===== */
@@ -3203,17 +3053,19 @@ export default function Home() {
           border: 1px solid var(--line);
           border-radius: var(--radius);
           padding: 14px;
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
 
         .panelTitle {
-          font-weight: 800;
+          font-weight: 400; /* ③ 太字にしない */
           margin-bottom: 8px;
         }
 
         .small {
           font-size: 12px;
+          font-weight: 400;
         }
+
         .muted {
           color: var(--muted);
         }
@@ -3235,32 +3087,33 @@ export default function Home() {
         .btnGhost,
         .btnTiny,
         .openBtn,
-        .footerProfileBtn,
-        .homeProfileMoreBtn {
+        .homeProfileMoreBtn,
+        .footerProfileBtn {
           border-radius: 12px;
           border: 1px solid var(--line);
           background: #111;
           color: #fff;
           padding: 10px 12px;
           cursor: pointer;
-          font-weight: 700;
+          font-weight: 400; /* ③ 太字にしない */
         }
 
         .btnGhost {
-          background: #fff;
-          color: #111;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
         }
 
         .btnTiny {
           padding: 8px 10px;
           font-size: 12px;
-          background: #fff;
-          color: #111;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
         }
 
         .openBtn {
           padding: 8px 10px;
           font-size: 12px;
+          background: rgba(255, 255, 255, 0.08);
         }
 
         .btn:disabled {
@@ -3285,7 +3138,7 @@ export default function Home() {
           border-radius: var(--radius);
           padding: 14px;
           background: var(--panel);
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
           cursor: pointer;
         }
 
@@ -3296,246 +3149,60 @@ export default function Home() {
           border: 1px solid var(--line);
           display: grid;
           place-items: center;
-          background: #fafafa;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
         }
 
         .featureText {
           flex: 1;
         }
+
         .featureTitle {
-          font-weight: 900;
+          font-weight: 400; /* ③ 太字にしない */
         }
+
         .featureSub {
           font-size: 12px;
           color: var(--muted);
           margin-top: 2px;
+          font-weight: 400;
         }
+
         .featureArrow {
-          font-weight: 900;
+          font-weight: 400; /* ③ 太字にしない */
           color: var(--muted);
         }
 
-        /* ===== Profile card (home bottom) ===== */
+        /* （HOME最下部プロフィールカードは ④ で削除済み想定のため、CSSは残しても影響なし） */
         .homeProfileCard {
           grid-column: 1 / -1;
           border: 1px solid var(--line);
           border-radius: var(--radius);
           background: var(--panel);
           overflow: hidden;
-          box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
         }
 
-        .homeProfileBanner {
-          position: relative;
-          height: 86px;
-          background: linear-gradient(135deg, #111, #444);
-        }
-
-        .homeProfileAvatarWrap {
-          position: absolute;
-          left: 14px;
-          bottom: -18px;
-          width: 52px;
-          height: 52px;
-          border-radius: 16px;
-          background: #fff;
-          border: 1px solid var(--line);
-          display: grid;
-          place-items: center;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
-        }
-
-        .homeProfileAvatar {
-          width: 44px;
-          height: 44px;
-          border-radius: 14px;
-          background: radial-gradient(circle at 30% 30%, #cfcfcf, #9a9a9a);
-          border: 1px solid rgba(0, 0, 0, 0.12);
-        }
-
-        .homeProfilePaw {
-          position: absolute;
-          width: 26px;
-          height: 26px;
-          border-radius: 8px;
-          background: rgba(255, 255, 255, 0.08);
-          transform: rotate(12deg);
-        }
-        .paw1 {
-          left: 160px;
-          top: 12px;
-        }
-        .paw2 {
-          left: 200px;
-          top: 34px;
-        }
-        .paw3 {
-          left: 246px;
-          top: 16px;
-        }
-        .paw4 {
-          left: 290px;
-          top: 40px;
-        }
-
-        .homeProfileBody {
-          padding: 28px 14px 14px;
-        }
-
-        .homeProfileNameRow {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        .homeProfileName {
-          font-weight: 900;
-          font-size: 16px;
-        }
-
-        .homeProfileMoreBtn {
-          background: #111;
-          color: #fff;
-          padding: 8px 10px;
-          font-size: 12px;
-        }
-
-        .homeProfileBio {
-          margin-top: 8px;
-          font-size: 12px;
-          color: var(--muted);
-          line-height: 1.55;
-        }
-
-        .homeProfileIconLinks {
-          display: flex;
-          gap: 10px;
-          margin-top: 10px;
-        }
-
-        .homeProfileIconBtn {
-          width: 44px;
-          height: 44px;
-          border-radius: 14px;
-          border: 1px solid var(--line);
-          display: grid;
-          place-items: center;
-          background: #fff;
-          color: #111;
-          box-shadow: 0 10px 18px rgba(0, 0, 0, 0.06);
-        }
-
-        .homeProfileIconBtnPrimary {
-          background: #111;
-          color: #fff;
-          border-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .homeProfileNote {
-          margin-top: 8px;
-        }
-
-        /* ===== Tabs / pills ===== */
+        /* ===== Tabs / Filters ===== */
         .tabs {
           display: flex;
           gap: 8px;
+          flex-wrap: wrap;
         }
+
         .pill {
           border: 1px solid var(--line);
-          background: #fff;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
           border-radius: 999px;
           padding: 8px 12px;
           cursor: pointer;
-          font-weight: 800;
-          font-size: 12px;
+          font-weight: 400; /* ③ */
         }
+
         .pill.active {
           background: #111;
-          color: #fff;
-        }
-
-        /* ===== Inputs ===== */
-        .input {
-          width: 100%;
-          border: 1px solid var(--line);
-          background: #fff;
-          border-radius: 12px;
-          padding: 10px 12px;
-          font-size: 14px;
-          outline: none;
-        }
-
-        .searchRow {
-          display: flex;
-          gap: 10px;
-          align-items: flex-start;
-          margin-top: 8px;
-        }
-        .searchCol {
-          flex: 1;
-          position: relative;
-        }
-
-        .suggestBox {
-          position: absolute;
-          top: calc(100% + 6px);
-          left: 0;
-          right: 0;
-          background: #fff;
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: var(--shadow);
-          z-index: 30;
-        }
-
-        .suggestItem {
-          width: 100%;
-          text-align: left;
-          padding: 10px 12px;
-          border: 0;
-          background: #fff;
-          cursor: pointer;
-          font-size: 13px;
-        }
-        .suggestItem:hover {
-          background: #f2f2f2;
-        }
-
-        /* ===== Collapse filters ===== */
-        .collapseBox {
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          overflow: hidden;
-          background: #fff;
-        }
-        .collapseHead {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 10px 12px;
-          border: 0;
-          background: #fafafa;
-          cursor: pointer;
-          text-align: left;
-        }
-        .collapsePlus {
-          width: 20px;
-          display: inline-block;
-          font-weight: 900;
-        }
-        .collapseTitle {
-          font-weight: 900;
-        }
-        .collapseMeta {
-          margin-left: auto;
-          font-size: 12px;
-          color: var(--muted);
-        }
-        .collapseBody {
-          padding: 10px 12px;
+          border-color: rgba(255, 255, 255, 0.28);
         }
 
         .filters {
@@ -3543,67 +3210,229 @@ export default function Home() {
           gap: 10px;
         }
 
-        .checkGrid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
+        .collapseBox {
+          border: 1px solid var(--line);
+          border-radius: var(--radius);
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.06);
         }
-        .checkItem {
+
+        .collapseHead {
+          width: 100%;
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
+          padding: 12px 12px;
+          background: rgba(0, 0, 0, 0.12);
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          text-align: left;
+          font-weight: 400; /* ③ */
+        }
+
+        .collapsePlus {
+          width: 22px;
+          height: 22px;
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          display: grid;
+          place-items: center;
+          background: rgba(255, 255, 255, 0.06);
+          flex: 0 0 auto;
+          font-weight: 400;
+        }
+
+        .collapseTitle {
+          font-weight: 400; /* ③ */
+        }
+
+        .collapseMeta {
+          margin-left: auto;
+          font-size: 12px;
+          color: var(--muted);
+          font-weight: 400;
+        }
+
+        .collapseBody {
+          padding: 12px;
+        }
+
+        .input {
+          width: 100%;
           border: 1px solid var(--line);
           border-radius: 12px;
-          padding: 8px 10px;
-          background: #fff;
+          padding: 10px 12px;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+          outline: none;
+          font-weight: 400;
         }
-        .checkText {
-          font-size: 13px;
-        }
-        .miniActions {
-          margin-top: 10px;
-          display: flex;
-          justify-content: flex-end;
+
+        .input::placeholder {
+          color: rgba(255, 255, 255, 0.55);
         }
 
         .optionBox {
           margin-top: 10px;
-          max-height: 220px;
+          max-height: 240px;
           overflow: auto;
           border: 1px solid var(--line);
           border-radius: 12px;
           padding: 10px;
-          background: #fff;
+          background: rgba(0, 0, 0, 0.12);
         }
 
-        /* ===== Cards ===== */
+        .checkGrid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px 10px;
+        }
+
+        .checkItem {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          font-size: 13px;
+          color: #fff;
+          user-select: none;
+          font-weight: 400;
+        }
+
+        .checkItem input {
+          accent-color: #111;
+        }
+
+        .checkLabel {
+          display: inline-flex;
+          gap: 6px;
+          align-items: center;
+        }
+
+        .checkText {
+          font-weight: 400;
+        }
+
+        .miniActions {
+          margin-top: 10px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .modeBox {
+          margin-top: 12px;
+          border-top: 1px solid var(--line);
+          padding-top: 12px;
+        }
+
+        /* ===== Search / Suggest ===== */
+        .searchRow {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+          align-items: flex-start;
+        }
+
+        .searchCol {
+          position: relative;
+          flex: 1;
+        }
+
+        .suggestBox {
+          position: absolute;
+          top: calc(100% + 6px);
+          left: 0;
+          right: 0;
+          z-index: 20;
+          background: rgba(0, 0, 0, 0.72);
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 18px 30px rgba(0, 0, 0, 0.28);
+        }
+
+        .suggestItem {
+          width: 100%;
+          text-align: left;
+          padding: 10px 12px;
+          border: none;
+          background: transparent;
+          color: #fff;
+          cursor: pointer;
+          font-weight: 400;
+        }
+
+        .suggestItem:hover {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ===== Results ===== */
+        .resultArea {
+          margin-top: 14px;
+        }
+
+        .resultArea.flash {
+          animation: flash 0.65s ease;
+        }
+
+        @keyframes flash {
+          0% {
+            filter: brightness(1.12);
+          }
+          100% {
+            filter: brightness(1);
+          }
+        }
+
+        .resultHead {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
+
+        .resultTitle {
+          font-weight: 400; /* ③ */
+        }
+
+        .resultSub {
+          font-size: 12px;
+          color: var(--muted);
+          font-weight: 400;
+        }
+
         .cards {
           display: grid;
-          gap: 12px;
-          margin-top: 10px;
+          gap: 10px;
         }
 
+        /* ===== Card ===== */
         .card {
           border: 1px solid var(--line);
           border-radius: var(--radius);
-          background: #fff;
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-          padding: 12px;
+          overflow: hidden;
+          background: var(--panel);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
           cursor: pointer;
         }
 
         .cardTop {
           display: flex;
           gap: 12px;
+          padding: 12px;
         }
 
         .poster {
-          width: 140px;
-          height: 90px;
+          width: 130px;
+          height: 88px;
           object-fit: cover;
-          border-radius: 14px;
+          border-radius: 12px;
           border: 1px solid var(--line);
-          flex-shrink: 0;
+          background: rgba(255, 255, 255, 0.06);
+          flex: 0 0 auto;
         }
 
         .cardInfo {
@@ -3619,139 +3448,87 @@ export default function Home() {
         }
 
         .cardTitle {
-          font-weight: 900;
+          font-weight: 700; /* 作品名は太字OK */
           font-size: 16px;
-          line-height: 1.2;
+          line-height: 1.25;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .desc {
           margin-top: 6px;
           font-size: 12px;
-          color: var(--muted);
-          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.92);
+          font-weight: 400;
         }
 
         .metaGrid {
-          margin-top: 8px;
+          margin-top: 10px;
           display: grid;
           gap: 6px;
         }
 
         .metaLine {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
+          display: grid;
+          grid-template-columns: 72px 1fr;
+          gap: 8px;
+          align-items: center;
         }
 
         .metaLabel {
-          width: 80px;
-          font-size: 12px;
           color: var(--muted);
-          flex-shrink: 0;
+          font-size: 12px;
+          font-weight: 400; /* ③ */
         }
 
         .metaText {
           font-size: 12px;
-          line-height: 1.45;
-          min-width: 0;
+          color: #fff;
+          font-weight: 400;
+        }
+
+        /* ===== Stars ===== */
+        .stars {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 6px;
         }
 
         .starsGlyph {
-          letter-spacing: 1px;
+          letter-spacing: 0.8px;
         }
 
+        .starsText {
+          font-size: 12px;
+          color: var(--muted);
+          font-weight: 400;
+        }
+
+        /* ===== VOD Icons ===== */
         .vodIcons {
           display: flex;
-          flex-wrap: wrap;
           gap: 6px;
           align-items: center;
+          flex-wrap: wrap;
         }
 
         .vodIconImg {
           width: 28px;
           height: 28px;
-          border-radius: 8px;
+          border-radius: 9px;
           border: 1px solid var(--line);
           object-fit: cover;
+          background: rgba(255, 255, 255, 0.06);
         }
 
         .vodIconLink {
           display: inline-flex;
+          border-radius: 10px;
         }
 
-        /* ===== Result area & pager ===== */
-        .resultArea {
-          margin-top: 14px;
-          background: var(--panel);
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          padding: 12px;
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-        }
-
-        .resultArea.flash {
-          outline: 2px solid rgba(0, 0, 0, 0.25);
-        }
-
-        .resultHead {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        .resultTitle {
-          font-weight: 900;
-        }
-
-        .resultSub {
-          font-size: 12px;
+        .small.muted {
           color: var(--muted);
-        }
-
-        .pagerBar {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          margin-top: 12px;
-        }
-
-        .pagerArrow {
-          border: 1px solid var(--line);
-          background: #fff;
-          border-radius: 12px;
-          padding: 8px 12px;
-          cursor: pointer;
-        }
-
-        .pagerNums {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .pagerNum {
-          border: 1px solid var(--line);
-          background: #fff;
-          border-radius: 12px;
-          padding: 8px 10px;
-          cursor: pointer;
-          font-size: 12px;
-          min-width: 36px;
-          text-align: center;
-        }
-
-        .pagerNum.active {
-          background: #111;
-          color: #fff;
-        }
-
-        .pagerDots {
-          color: var(--muted);
-          padding: 0 4px;
         }
 
         /* ===== Reasons ===== */
@@ -3761,88 +3538,117 @@ export default function Home() {
         }
 
         .reasonBox {
-          border: 1px dashed rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--line);
           border-radius: 14px;
           padding: 10px 12px;
-          background: #fafafa;
+          background: rgba(255, 255, 255, 0.06);
         }
 
         .reasonLine {
           font-size: 12px;
-          color: #333;
-          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.9);
+          font-weight: 400;
         }
 
-        /* ===== Analyze bars ===== */
-        .anGrid {
-          margin-top: 10px;
-          display: grid;
-          gap: 10px;
-        }
-
-        .anRow {
+        /* ===== Pagination ===== */
+        .pagerBar {
+          margin-top: 12px;
           display: flex;
-          gap: 10px;
           align-items: center;
+          justify-content: center;
+          gap: 10px;
         }
 
-        .anIndex {
-          width: 22px;
-          text-align: center;
-          font-weight: 900;
+        .pagerArrow {
+          border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+          border-radius: 12px;
+          padding: 8px 10px;
+          cursor: pointer;
+          font-weight: 400;
+        }
+
+        .pagerArrow:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
+
+        .pagerNums {
+          display: flex;
+          gap: 6px;
+          align-items: center;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .pagerNum {
+          border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.06);
+          color: #fff;
+          border-radius: 12px;
+          padding: 7px 10px;
+          cursor: pointer;
+          font-weight: 400;
+        }
+
+        .pagerNum.active {
+          background: #111;
+          border-color: rgba(255, 255, 255, 0.28);
+        }
+
+        .pagerDots {
           color: var(--muted);
+          font-size: 12px;
         }
 
-        .anInputWrap {
-          position: relative;
-          flex: 1;
-        }
-
+        /* ===== Analyze Bars ===== */
         .barBox {
           margin-top: 12px;
           display: grid;
-          gap: 10px;
+          gap: 8px;
         }
 
         .barRow {
-          display: flex;
+          display: grid;
+          grid-template-columns: 70px 1fr 70px;
           gap: 10px;
           align-items: center;
         }
 
         .barLabel {
-          width: 80px;
           font-size: 12px;
           color: var(--muted);
+          font-weight: 400;
         }
 
         .barTrack {
-          flex: 1;
           height: 10px;
           border-radius: 999px;
-          background: #e9e9e9;
+          background: rgba(255, 255, 255, 0.12);
           overflow: hidden;
-          border: 1px solid rgba(0, 0, 0, 0.06);
+          border: 1px solid var(--line);
         }
 
         .barFill {
           height: 100%;
-          background: #111;
+          background: #fff;
+          opacity: 0.9;
         }
 
         .barVal {
-          width: 62px;
-          text-align: right;
           font-size: 12px;
-          color: var(--muted);
+          color: rgba(255, 255, 255, 0.92);
+          text-align: right;
+          font-weight: 400;
         }
 
         /* ===== Modal ===== */
         .modalOverlay {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.5);
-          z-index: 999;
+          background: rgba(0, 0, 0, 0.55);
+          z-index: 90;
           display: grid;
           place-items: center;
           padding: 14px;
@@ -3851,23 +3657,17 @@ export default function Home() {
         .modalDialog {
           width: 100%;
           max-width: 760px;
-          max-height: 92vh;
-          overflow: hidden; /* ← 背景ではなく中だけスクロール */
         }
 
         .modalDialogWide {
-          max-width: 860px;
+          max-width: 980px;
         }
 
         .modalCard {
-          width: 100%;
-          height: 100%;
-          background: #fff;
-          border-radius: 18px;
           border: 1px solid var(--line);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
-          display: flex;
-          flex-direction: column;
+          border-radius: var(--radius);
+          background: rgba(0, 0, 0, 0.62);
+          box-shadow: 0 22px 46px rgba(0, 0, 0, 0.35);
           overflow: hidden;
         }
 
@@ -3876,65 +3676,47 @@ export default function Home() {
           align-items: center;
           justify-content: space-between;
           gap: 10px;
-          padding: 12px 12px;
+          padding: 12px 14px;
           border-bottom: 1px solid var(--line);
-          background: #fafafa;
-        }
-
-        .profileHeader {
-          background: linear-gradient(135deg, #111, #444);
-          color: #fff;
-          border-bottom-color: rgba(255, 255, 255, 0.18);
+          background: rgba(255, 255, 255, 0.06);
         }
 
         .modalHeaderTitle {
-          font-weight: 900;
-          font-size: 14px;
-          line-height: 1.3;
+          font-weight: 700; /* 作品名（モーダルタイトル）は太字OK */
+          color: #fff;
         }
 
         .modalCloseBtn {
           border: 1px solid var(--line);
-          background: #fff;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
           border-radius: 12px;
           padding: 8px 10px;
           cursor: pointer;
-          font-weight: 800;
-          font-size: 12px;
-        }
-
-        .profileHeader .modalCloseBtn {
-          background: rgba(255, 255, 255, 0.12);
-          border-color: rgba(255, 255, 255, 0.25);
-          color: #fff;
+          font-weight: 400; /* ③ */
         }
 
         .modalBody {
-          padding: 12px;
-          overflow-y: auto; /* ← 縦だけスクロール */
-          overflow-x: hidden;
-          -webkit-overflow-scrolling: touch;
+          padding: 14px;
         }
 
         .modalPoster {
           width: 100%;
           height: auto;
-          max-height: 300px; /* ← 横長画像を一回り小さく */
-          object-fit: cover;
-          border-radius: 16px;
+          border-radius: 14px;
           border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.06);
+          object-fit: cover;
         }
 
         .modalSection {
-          margin-top: 12px;
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          padding: 12px;
-          background: #fff;
+          margin-top: 14px;
+          border-top: 1px solid var(--line);
+          padding-top: 12px;
         }
 
         .sectionTitle {
-          font-weight: 900;
+          font-weight: 400; /* ③ */
           margin-bottom: 8px;
         }
 
@@ -3944,16 +3726,23 @@ export default function Home() {
         }
 
         .modalLine {
-          display: flex;
+          display: grid;
+          grid-template-columns: 92px 1fr;
           gap: 10px;
-          align-items: flex-start;
+          align-items: start;
+        }
+
+        .link {
+          text-decoration: underline;
+          text-underline-offset: 3px;
         }
 
         .summaryText {
           font-size: 13px;
-          line-height: 1.7;
-          color: #222;
+          line-height: 1.75;
+          color: rgba(255, 255, 255, 0.92);
           white-space: pre-wrap;
+          font-weight: 400;
         }
 
         .scoreGrid {
@@ -3963,14 +3752,15 @@ export default function Home() {
         }
 
         .scoreItem {
+          border: 1px solid var(--line);
+          border-radius: 14px;
+          padding: 10px 12px;
+          background: rgba(255, 255, 255, 0.06);
           display: flex;
           justify-content: space-between;
           gap: 10px;
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          padding: 10px 12px;
-          background: #fafafa;
-          font-size: 13px;
+          font-size: 12px;
+          font-weight: 400;
         }
 
         .sourceList {
@@ -3979,63 +3769,55 @@ export default function Home() {
         }
 
         .sourceRow {
+          border: 1px solid var(--line);
+          border-radius: 14px;
+          padding: 10px 12px;
+          background: rgba(255, 255, 255, 0.06);
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 10px;
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          padding: 10px 12px;
-          background: #fff;
-        }
-
-        .link {
-          text-decoration: underline;
         }
 
         .seriesBox {
-          margin-top: 12px;
+          margin-top: 10px;
           border: 1px solid var(--line);
           border-radius: 14px;
           padding: 10px 12px;
-          background: #fafafa;
+          background: rgba(255, 255, 255, 0.06);
         }
 
         .seriesTitle {
-          font-weight: 900;
-          margin-bottom: 4px;
+          font-weight: 400; /* ③ */
+          margin-bottom: 6px;
         }
 
-        /* ===== Profile modal ===== */
+        /* ===== Profile Modal parts ===== */
         .adminProfileHero {
           display: flex;
           gap: 12px;
           align-items: center;
-          border: 1px solid var(--line);
-          border-radius: 16px;
-          padding: 12px;
-          background: #fafafa;
         }
 
         .adminAvatar {
-          width: 52px;
-          height: 52px;
-          border-radius: 16px;
-          background: radial-gradient(circle at 30% 30%, #cfcfcf, #9a9a9a);
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          flex-shrink: 0;
+          width: 56px;
+          height: 56px;
+          border-radius: 18px;
+          border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.12);
+          flex: 0 0 auto;
         }
 
         .adminName {
-          font-weight: 900;
-          font-size: 15px;
+          font-weight: 400; /* ③ */
         }
 
         .adminBio {
           margin-top: 6px;
           font-size: 12px;
-          color: var(--muted);
-          line-height: 1.55;
+          line-height: 1.7;
+          color: rgba(255, 255, 255, 0.92);
+          font-weight: 400;
         }
 
         .adminLinkRow {
@@ -4048,49 +3830,44 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 10px;
-          border-radius: 14px;
           border: 1px solid var(--line);
-          padding: 12px 12px;
-          background: #fff;
-          font-weight: 900;
-          cursor: pointer;
-          box-shadow: 0 10px 18px rgba(0, 0, 0, 0.06);
+          border-radius: 14px;
+          padding: 10px 12px;
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+          font-weight: 400; /* ③ */
         }
 
         .adminLinkBtnPrimary {
           background: #111;
-          color: #fff;
-          border-color: rgba(0, 0, 0, 0.2);
         }
 
         .adminLinkIcon {
-          width: 26px;
-          height: 26px;
           display: grid;
           place-items: center;
         }
 
         .adminNoteBox {
           margin-top: 12px;
-          border: 1px dashed rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--line);
           border-radius: 14px;
           padding: 10px 12px;
-          background: #fafafa;
+          background: rgba(255, 255, 255, 0.06);
         }
 
+        /* ===== Admin actions ===== */
         .adminActions {
+          margin-top: 12px;
           display: flex;
           gap: 10px;
-          margin-top: 12px;
           flex-wrap: wrap;
         }
 
-        /* ===== Footer ===== */
+        /* ===== Footer (④ 削除済み想定：CSS残しても影響なし) ===== */
         .footer {
           margin-top: auto;
           border-top: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.75);
-          backdrop-filter: blur(10px);
+          background: rgba(0, 0, 0, 0.18);
         }
 
         .footerInner {
@@ -4103,36 +3880,72 @@ export default function Home() {
           gap: 10px;
         }
 
-        .footerProfileBtn {
-          background: #fff;
-          color: #111;
+        /* ===== ④ 右下固定プロフィールボタン（全ページ共通） ===== */
+        .floatingProfileBtn {
+          position: fixed;
+          right: 16px;
+          bottom: 16px;
+          z-index: 95;
+          width: 54px;
+          height: 54px;
+          border-radius: 18px;
+          border: 1px solid var(--line);
+          background: #111;
+          color: #fff;
+          display: grid;
+          place-items: center;
+          cursor: pointer;
+          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+          font-weight: 400; /* ③ */
+        }
+
+        .floatingProfileBtn:active {
+          transform: translateY(1px);
         }
 
         /* ===== Responsive ===== */
-        @media (max-width: 520px) {
-          .container {
-            padding: 10px; /* ← スマホで横幅を広く見せる */
-          }
-
+        @media (max-width: 760px) {
           .homeGrid {
             grid-template-columns: 1fr;
           }
-
+          .cardTop {
+            flex-direction: column;
+          }
           .poster {
-            width: 132px;
-            height: 82px;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
           }
-
-          .modalPoster {
-            max-height: 220px; /* ← スマホでさらに一回り小さく */
+          .metaLine {
+            grid-template-columns: 64px 1fr;
           }
+          .modalLine {
+            grid-template-columns: 80px 1fr;
+          }
+        }
 
+        @media (max-width: 520px) {
+          .container {
+            padding: 12px;
+          }
+          .headerInner {
+            padding: 10px 12px;
+          }
+          .brandTitle {
+            font-size: 28px;
+          }
           .checkGrid {
             grid-template-columns: 1fr;
           }
-
-          .metaLabel {
-            width: 74px;
+          .searchRow {
+            flex-direction: column;
+          }
+          .floatingProfileBtn {
+            right: 12px;
+            bottom: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 18px;
           }
         }
       `}</style>
