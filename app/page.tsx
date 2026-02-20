@@ -566,11 +566,11 @@ function IconSimilar() {
     </svg>
   );
 }
-function IconBadge() {
+function IconUserMono({ size = 18 }: { size?: number }) {
   return (
-    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
-      <path d="M12 2l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 7.2l5-.7L12 2Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M9 14.8v6.2l3-1.6 3 1.6v-6.2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" opacity="0.9" />
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
+      <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M20 21a8 8 0 0 0-16 0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -2891,13 +2891,13 @@ export default function Home() {
           </div>
         ) : null}
 
-        {/* =========================
-         *  ③ 管理人プロフィール Modal（アイコンは空白 / YouTube & Blogをおしゃれに）
+               {/* =========================
+         *  ③ 管理人プロフィール Modal（カード式：YouTube & Blog）
          * ========================= */}
         {profileOpen ? (
           <div className="modalOverlay" onClick={closeProfileModal}>
             <div className="modalDialog" onClick={(e) => e.stopPropagation()}>
-              <div className="modalCard">
+              <div className="modalCard profileModalCard">
                 <div className="modalHeader profileHeader">
                   <div className="modalHeaderTitle">管理人プロフィール</div>
                   <button className="modalCloseBtn" type="button" onClick={closeProfileModal} aria-label="閉じる">
@@ -2906,62 +2906,70 @@ export default function Home() {
                 </div>
 
                 <div className="modalBody">
-                  <div className="adminProfileHero">
-                    {/* ★「〇か」ではなく、空白 */}
-                    <div className="adminAvatar" aria-hidden="true" />
-                    <div className="adminProfileText">
-                      <div className="adminName">かさ【ゆるオタ】</div>
-                      <div className="adminBio">
-                        YouTubeでアニメ紹介／AniMatch運営。
-                        <br />
-                        「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
+                  <div className="profileSheetCard" role="region" aria-label="管理人プロフィールカード">
+                    <div className="profileSheetBanner" aria-hidden="true">
+                      <div className="profileSheetPaw paw1" />
+                      <div className="profileSheetPaw paw2" />
+                      <div className="profileSheetPaw paw3" />
+                      <div className="profileSheetPaw paw4" />
+
+                      <div className="profileSheetAvatarWrap">
+                        <div className="profileSheetAvatar" aria-hidden="true" />
                       </div>
                     </div>
-                  </div>
 
-                  <div className="adminLinkRow">
-                    <a
-                      className="adminLinkBtn adminLinkBtnPrimary"
-                      href="https://youtube.com/@kasa-yuruota"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        try {
-                          trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "profile_modal" } });
-                        } catch {}
-                      }}
-                    >
-                      <span className="adminLinkIcon" aria-hidden="true">
-                        <IconYouTubeMono size={20} />
-                      </span>
-                      <span>YouTubeチャンネルへ</span>
-                    </a>
+                    <div className="profileSheetBody">
+                      <div className="profileSheetName">かさ【ゆるオタ】</div>
 
-                    <a
-                      className="adminLinkBtn"
-                      href="https://kasa-yuruotablog.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        try {
-                          trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "profile_modal" } });
-                        } catch {}
-                      }}
-                    >
-                      <span className="adminLinkIcon" aria-hidden="true">
-                        <IconBlogMono size={20} />
-                      </span>
-                      <span>ブログへ</span>
-                    </a>
-                  </div>
+                      <div className="profileSheetBio">
+                        YouTubeチャンネル「かさ【ゆるオタ】」を運営。
+                        <br />
+                        10年以上アニメを見続けた知識と感性から、個人的におすすめのアニメを紹介しています。
+                        <br />
+                        ゆるっと楽しくアニメライフを過ごすことをモットーに生活しております。
+                        <br />
+                        プロフィールとトップ画は猫愛の象徴です。
+                      </div>
 
-                  <div className="adminNoteBox">
-                    <div className="small">
-                      好きな作品が見つかったら、YouTubeやブログでも深掘りして紹介しています。
-                      <br />
-                      （リンクは別タブで開きます）
+                      <div className="profileSheetLinks" aria-label="リンク">
+                        <a
+                          className="profileSheetIconBtn profileSheetIconBtnPrimary"
+                          href="https://youtube.com/@kasa-yuruota"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            try {
+                              trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "profile_modal_card" } });
+                            } catch {}
+                          }}
+                          aria-label="YouTubeへ（別タブ）"
+                          title="YouTube"
+                        >
+                          <IconYouTubeMono size={20} />
+                        </a>
+
+                        <a
+                          className="profileSheetIconBtn"
+                          href="https://kasa-yuruotablog.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            try {
+                              trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "profile_modal_card" } });
+                            } catch {}
+                          }}
+                          aria-label="ブログへ（別タブ）"
+                          title="Blog"
+                        >
+                          <IconBlogMono size={20} />
+                        </a>
+                      </div>
+
+                      <div className="profileSheetNote">
+                        <div className="small muted">※リンクは別タブで開きます</div>
+                      </div>
                     </div>
                   </div>
 
@@ -2971,7 +2979,19 @@ export default function Home() {
             </div>
           </div>
         ) : null}
-      </main>
+            </main>
+
+      {/* ✅ ① フッター（全ページ共通）：左下ⓒAniMatch / 右下 管理人プロフィール（固定） */}
+      <footer className="fixedFooter" role="contentinfo" aria-label="footer">
+        <div className="fixedFooterLeft">ⓒAniMatch</div>
+
+        <button type="button" className="fixedFooterProfileBtn" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
+          <span className="fixedFooterProfileIcon" aria-hidden="true">
+            <IconUserMono size={18} />
+          </span>
+          <span className="fixedFooterProfileText">管理人プロフィール</span>
+        </button>
+      </footer>
 
       {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
 <style jsx global>{`
@@ -4159,6 +4179,306 @@ export default function Home() {
       max-height: 320px;
     }
   }
+
+  /* =========================================================
+   ✅ 追加上書き：固定フッター / プロフィール / 背景白 / 太字禁止
+   （<style jsx global>{` ... ここの末尾に追記 ... `}</style>）
+========================================================= */
+
+/* ③ 背景を真っ白 */
+html,
+body {
+  background: #ffffff !important;
+}
+
+/* フッター分だけ下に余白（コンテンツが隠れないように） */
+body {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+}
+
+/* ④ 太字禁止（全体） */
+*,
+*::before,
+*::after {
+  font-weight: 400 !important;
+}
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+thead {
+  font-weight: 400 !important;
+}
+
+/* ① 左下ⓒAniMatch / 右下 管理人プロフィール（固定フッター） */
+.fixedFooter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 10px 14px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+
+  background: rgba(255, 255, 255, 0.88);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+
+  z-index: 9999;
+}
+
+.fixedFooterLeft {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.fixedFooterProfileBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 999px;
+  padding: 8px 12px;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+
+  cursor: pointer;
+  user-select: none;
+
+  color: rgba(0, 0, 0, 0.84);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.fixedFooterProfileBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.fixedFooterProfileBtn:active {
+  transform: translateY(0);
+}
+
+.fixedFooterProfileBtn:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.28);
+  outline-offset: 2px;
+}
+
+.fixedFooterProfileIcon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+}
+
+.fixedFooterProfileText {
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .fixedFooterProfileText {
+    display: none;
+  }
+}
+
+/* ② 管理人プロフィール Modal（プロフィール専用クラスで安全に適用） */
+.profileModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 10000;
+}
+
+.profileModalDialog {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 32px - env(safe-area-inset-bottom));
+  overflow: auto;
+}
+
+.profileModalCard {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+}
+
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.profileHeader .modalHeaderTitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.modalCloseBtn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.modalCloseBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.profileModalCard .modalBody {
+  padding: 14px;
+}
+
+/* プロフィールカード本体（添付イメージ寄せ） */
+.profileSheetCard {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
+
+.profileSheetBanner {
+  position: relative;
+  height: 90px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.08));
+}
+
+.profileSheetPaw {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.12);
+  filter: blur(0.2px);
+}
+
+.profileSheetPaw.paw1 { left: 14px; top: 18px; }
+.profileSheetPaw.paw2 { left: 30px; top: 34px; opacity: 0.85; }
+.profileSheetPaw.paw3 { right: 22px; top: 22px; opacity: 0.75; }
+.profileSheetPaw.paw4 { right: 40px; top: 40px; opacity: 0.6; }
+
+.profileSheetAvatarWrap {
+  position: absolute;
+  left: 16px;
+  bottom: -26px;
+
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.10);
+
+  display: grid;
+  place-items: center;
+}
+
+.profileSheetAvatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.02));
+}
+
+.profileSheetBody {
+  padding: 40px 16px 16px;
+}
+
+.profileSheetName {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.profileSheetBio {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.70);
+}
+
+.profileSheetLinks {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.profileSheetIconBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+
+  color: rgba(0, 0, 0, 0.85);
+  text-decoration: none;
+
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.profileSheetIconBtn:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+}
+
+.profileSheetIconBtn:active {
+  transform: translateY(0);
+}
+
+.profileSheetIconBtnPrimary {
+  background: rgba(0, 0, 0, 0.055);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+.profileSheetNote {
+  margin-top: 10px;
+}
+
+.profileSheetNote .small {
+  font-size: 12px;
+}
+
+.profileSheetNote .muted {
+  color: rgba(0, 0, 0, 0.55);
+}
+  
 `}</style>
     </div>
   );
