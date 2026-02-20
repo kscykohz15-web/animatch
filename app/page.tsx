@@ -1853,6 +1853,34 @@ export default function Home() {
     setResults(scored);
   }
 
+  // --- アイコン：バッジ（IconBadge が未定義エラー対策）---
+function IconBadge({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 2l2.2 3.4 4 .9-2.6 3.1.3 4.1L12 12.8 8.1 13.5l.3-4.1L5.8 6.3l4-.9L12 2z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.7 21.5l3.3-2 3.3 2-.8-3.8 2.9-2.5-3.9-.4L12 11.5 10.5 14.8l-3.9.4 2.9 2.5-.8 3.8z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+        opacity="0.35"
+      />
+    </svg>
+  );
+}
+
   /** =========================
    *  Admin recommended（管理人のおすすめ）
    * ========================= */
