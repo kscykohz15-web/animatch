@@ -1,4 +1,4 @@
-use client;
+"use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Dancing_Script } from "next/font/google";
