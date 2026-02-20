@@ -3028,7 +3028,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     margin: 0;
     padding: 0 !important;
     /* ✅ ② 全体背景：白文字が見える明るめグレー */
-    background: #6f6f6f;
+    background: #b8b8b8;
     color: #fff;
   }
   * {
@@ -3071,9 +3071,9 @@ function IconBadge({ className = "" }: { className?: string }) {
   .page {
     min-height: 100vh;
     /* ✅ ② 背景：暗すぎないモノトーン */
-    background: radial-gradient(900px 520px at 50% -10%, rgba(255, 255, 255, 0.10), transparent 55%),
-      radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.06), transparent 55%),
-      linear-gradient(180deg, #6f6f6f, #676767);
+    background: radial-gradient(900px 520px at 50% -10%, rgba(255, 255, 255, 0.18), transparent 55%),
+      radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.12), transparent 55%),
+      linear-gradient(180deg, #bdbdbd, #b2b2b2);
     color: #fff;
   }
 
@@ -3083,7 +3083,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     top: 0;
     z-index: 20;
     backdrop-filter: blur(10px);
-    background: rgba(95, 95, 95, 0.86);
+    background: rgba(140, 140, 140, 0.78);
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   }
 
@@ -3340,6 +3340,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   .profileLinkWrap {
     width: 100%;
     margin-top: 8px;
+    display: none !important;
   }
 
   /* 旧ボタンが残っていても崩れないように残置（白文字化） */
@@ -3359,6 +3360,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     text-align: left;
     position: relative;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+    display: none !important;
   }
   .adminProfileLink:hover,
   .profileLink:hover {
@@ -3378,12 +3380,14 @@ function IconBadge({ className = "" }: { className?: string }) {
   .homeProfileCardWrap {
     width: 100%;
     margin-top: 10px;
+    display: none !important;
   }
   /* “ホームのみ固定”のためのクラス（stickyで下に居続ける） */
   .homeProfileFixed {
     position: sticky;
     bottom: 14px;
     z-index: 5;
+    display: none !important;
   }
 
   .adminProfileCard {
@@ -3393,7 +3397,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     background: linear-gradient(180deg, rgba(30, 30, 30, 0.78), rgba(20, 20, 20, 0.62));
     box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
     padding: 14px;
-    display: grid;
+    display: none !important;
     gap: 10px;
   }
   .adminProfileCardTop {
@@ -4211,7 +4215,7 @@ function IconBadge({ className = "" }: { className?: string }) {
 /* ③ 背景を真っ白 */
 html,
 body {
-  background: #ffffff !important;
+  background: #b8b8b8 !important;
 }
 
 /* フッター分だけ下に余白（コンテンツが隠れないように） */
@@ -4253,7 +4257,7 @@ thead {
   padding: 10px 14px;
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
 
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(245, 245, 245, 0.92);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(10px);
 
@@ -4276,7 +4280,7 @@ thead {
   padding: 8px 12px;
 
   border: 1px solid rgba(0, 0, 0, 0.12);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(248, 248, 248, 0.96);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
 
   cursor: pointer;
@@ -4289,7 +4293,7 @@ thead {
 .fixedFooterProfileBtn:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(250, 250, 250, 0.98);
 }
 
 .fixedFooterProfileBtn:active {
@@ -4342,7 +4346,7 @@ thead {
 }
 
 .profileModalCard {
-  background: #ffffff;
+  background: #f7f7f7;
   border: 1px solid rgba(0, 0, 0, 0.10);
   border-radius: 18px;
   overflow: hidden;
@@ -4385,7 +4389,7 @@ thead {
 .profileSheetCard {
   border-radius: 18px;
   border: 1px solid rgba(0, 0, 0, 0.10);
-  background: #ffffff;
+  background: #f7f7f7;
   overflow: hidden;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 }
@@ -4419,7 +4423,7 @@ thead {
   height: 72px;
   border-radius: 18px;
 
-  background: #ffffff;
+  background: #f7f7f7;
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.10);
 
@@ -4503,6 +4507,6 @@ thead {
 }
   
 `}</style>
-    </div>
+</div>
   );
 }
