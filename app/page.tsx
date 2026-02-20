@@ -575,7 +575,7 @@ function IconBadge() {
   );
 }
 
-/** ★モノトーン YouTube / Blog アイコン */
+/** ★モノトーン YouTube / Blog アイコン（少し洗練） */
 function IconYouTubeMono({ size = 18 }: { size?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
@@ -1227,7 +1227,7 @@ export default function Home() {
   }, [animeList]);
 
   /** =========================
-   *  Results (Recommend / Info / Admin only)
+   *  Results (Recommend / Info only)
    * ========================= */
   const [resultAll, setResultAll] = useState<AnimeWork[]>([]);
   const [resultPage, setResultPage] = useState(1);
@@ -1312,7 +1312,7 @@ export default function Home() {
   }
 
   /** =========================
-   *  ナビ
+   *  ④ ブラウザの戻る（popstate）でも画面遷移できるように
    * ========================= */
   function applyNav(next: View) {
     setView(next);
@@ -1346,6 +1346,7 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // 初期：hashがあれば復元（なければhome）
     const initial = parseHashToView();
     try {
       window.history.replaceState({ view: initial }, "", `#${initial}`);
@@ -1857,6 +1858,27 @@ export default function Home() {
    * ========================= */
   const adminSeedRef = useRef<number>(Math.floor(Date.now() / 1000));
 
+  function buildAdminReasons(a: AnimeWork) {
+    const axes = OVERALL_WEIGHTS
+      .map((ax) => {
+        const v = toScore10((a as any)[ax.key]);
+        return { label: ax.label, v: v ?? -1 };
+      })
+      .filter((x) => x.v >= 0);
+
+    axes.sort((x, y) => y.v - y.v);
+    const top = axes.slice(0, 2);
+
+    const lines: string[] = [];
+    if (top[0]) lines.push(`おすすめポイント：${top[0].label}が強い（${top[0].v.toFixed(1)}/10）`);
+    if (top[1]) lines.push(`次に：${top[1].label}（${top[1].v.toFixed(1)}/10）`);
+
+    const ov = overallScore100(a);
+    if (ov !== null) lines.push(`総合評価：${ov.toFixed(1)}/100（★${(score100ToStar5(ov) ?? 0).toFixed(1)}）`);
+
+    return lines.slice(0, 3);
+  }
+
   const adminRecsRaw = useMemo(() => animeList.filter((a) => a.is_recommended === true), [animeList]);
 
   const adminRecs = useMemo(() => {
@@ -1986,15 +2008,14 @@ export default function Home() {
     <div className="page">
       <header className="topHeader">
         <div className="headerInner">
+          {/* ① ロゴと文言：同じ左端に揃える */}
           <div className="brandBlock">
             <button
               type="button"
               className={`brandTitle ${logoFont.className}`}
               aria-label="AniMatch（ホームへ）"
               onClick={() => goTo("home")}
-            >
-              AniMatch
-            </button>
+            >AniMatch</button>
             <div className="brandSub">あなたにぴったりなアニメを紹介します。</div>
           </div>
         </div>
@@ -2086,7 +2107,66 @@ export default function Home() {
                 <div className="featureArrow">→</div>
               </button>
 
-              {/* ✅ ホーム下部のプロフィールカードは削除（固定ボタンのみ） */}
+              {/* ✅ ① HOME最下部：管理人プロフィールをカード式（ホームのみ表示） */}
+              <div className="homeProfileCard" role="region" aria-label="管理人のプロフィール">
+                <div className="homeProfileHead">
+                  <div className="homeProfileAvatar" aria-hidden="true" />
+                  <div className="homeProfileInfo">
+                    <div className="homeProfileName">かさ【ゆるオタ】</div>
+                    <div className="homeProfileBio">
+                      YouTubeでアニメ紹介／AniMatch運営。
+                      <br />
+                      「とりあえず何か観たい」を最短で解決するために、作品データと“気分”で探せる AniMatch を作っています。
+                    </div>
+                  </div>
+                </div>
+
+                <div className="homeProfileLinks">
+                  <a
+                    className="homeProfileLinkBtn homeProfileLinkBtnPrimary"
+                    href="https://youtube.com/@kasa-yuruota"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        trackEvent({ event_name: "profile_click", meta: { to: "youtube", from: "home_profile_card" } });
+                      } catch {}
+                    }}
+                    aria-label="YouTubeチャンネルへ"
+                    title="YouTubeチャンネルへ"
+                  >
+                    <span className="homeProfileLinkIcon" aria-hidden="true">
+                      <IconYouTubeMono size={20} />
+                    </span>
+                    <span className="homeProfileLinkText">YouTube</span>
+                  </a>
+
+                  <a
+                    className="homeProfileLinkBtn"
+                    href="https://kasa-yuruotablog.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      try {
+                        trackEvent({ event_name: "profile_click", meta: { to: "blog", from: "home_profile_card" } });
+                      } catch {}
+                    }}
+                    aria-label="ブログへ"
+                    title="ブログへ"
+                  >
+                    <span className="homeProfileLinkIcon" aria-hidden="true">
+                      <IconBlogMono size={20} />
+                    </span>
+                    <span className="homeProfileLinkText">Blog</span>
+                  </a>
+                </div>
+
+                <div className="homeProfileNote">
+                  <div className="small muted">※リンクは別タブで開きます</div>
+                </div>
+              </div>
             </div>
           </>
         ) : null}
@@ -2213,7 +2293,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  Similar（1作品 → 似た作品）
+         *  Similar
          * ========================= */}
         {view === "similar" ? (
           <>
@@ -2225,43 +2305,7 @@ export default function Home() {
             </div>
 
             <div className="panel">
-              <div className="small muted">作品名を入力（候補から選ぶのがおすすめ）</div>
-              <div className="searchRow">
-                <div className="searchCol">
-                  <input
-                    className="input"
-                    value={similarQuery}
-                    onChange={(e) => setSimilarQuery(e.target.value)}
-                    placeholder="例：進撃の巨人"
-                    onFocus={() => setSimilarSuggestOpen(true)}
-                    onBlur={() => setTimeout(() => setSimilarSuggestOpen(false), 120)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") searchSimilar();
-                    }}
-                  />
-                  {similarSuggestOpen && similarSuggestions.length ? (
-                    <div className="suggestBox">
-                      {similarSuggestions.map((t) => (
-                        <button
-                          key={t}
-                          type="button"
-                          className="suggestItem"
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => {
-                            setSimilarQuery(t);
-                            setSimilarSuggestOpen(false);
-                          }}
-                        >
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-                <button className="btn" onClick={searchSimilar}>
-                  似た作品を表示
-                </button>
-              </div>
+              <div className="panelTitle">1作品から、似た作品を探す</div>
 
               <div className="filters" style={{ marginTop: 10 }}>
                 <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
@@ -2303,30 +2347,78 @@ export default function Home() {
                   </div>
                 </CollapsibleFilter>
               </div>
+
+              <div style={{ position: "relative", marginTop: 10 }}>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="例：進撃の巨人"
+                  value={similarQuery}
+                  onFocus={() => setSimilarSuggestOpen(true)}
+                  onBlur={() => window.setTimeout(() => setSimilarSuggestOpen(false), 120)}
+                  onChange={(e) => {
+                    setSimilarQuery(e.target.value);
+                    setSimilarSuggestOpen(true);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") searchSimilar();
+                  }}
+                />
+                {similarSuggestOpen && similarSuggestions.length > 0 ? (
+                  <div className="suggest">
+                    {similarSuggestions.map((t) => (
+                      <div
+                        key={t}
+                        className="suggestItem"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setSimilarQuery(t);
+                          setSimilarSuggestOpen(false);
+                        }}
+                      >
+                        {t}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <button className="btn" onClick={searchSimilar}>
+                似た作品を表示
+              </button>
             </div>
 
             {similarBase ? (
               <div className="panel" style={{ marginTop: 12 }}>
                 <div className="panelTitle">元作品</div>
-                <div className="workTitleStrong">{similarBase.title}</div>
-                <div className="small muted">{getGenreArray(similarBase.genre).slice(0, 5).join(" / ") || "—"}</div>
+                <div className="small" style={{ marginTop: 6 }}>
+                  <button className="inlineTitleLink" type="button" onClick={() => openAnimeModal(similarBase)}>
+                    {similarBase.title}
+                  </button>
+                </div>
               </div>
             ) : null}
 
             {similarResults.length ? (
-              <div className="resultArea" style={{ marginTop: 12 }}>
-                <div className="resultHead">
-                  <div className="resultTitle">結果 {similarResults.length}件</div>
-                  <div className="resultSub">カードをタップで詳細</div>
+              <div className="panel" style={{ marginTop: 12 }}>
+                <div className="panelTitleRow">
+                  <div className="panelTitle">結果</div>
+                  <div className="small muted">
+                    {similarResults.length}件（{similarPage}/{similarTotalPages}）
+                  </div>
                 </div>
 
-                <div className="cards">
+                <Pagination page={similarPage} totalPages={similarTotalPages} onChange={setSimilarPage} />
+
+                <div className="recExplainList" style={{ marginTop: 10 }}>
                   {similarVisible.map((r) => (
-                    <div key={r.work.id ?? r.work.title} className="cardWrap">
-                      <WorkCard a={r.work} />
-                      <div className="reasonBox">
+                    <div key={String(r.work.id ?? r.work.title)} className="recExplain">
+                      <button className="recExplainTitle" type="button" onClick={() => openAnimeModal(r.work)}>
+                        {r.work.title}
+                      </button>
+                      <div className="recExplainReasons">
                         {r.reasons.map((x, i) => (
-                          <div key={i} className="reasonLine">
+                          <div key={i} className="small muted">
                             ・{x}
                           </div>
                         ))}
@@ -2342,7 +2434,7 @@ export default function Home() {
         ) : null}
 
         {/* =========================
-         *  Analyze（好み分析）
+         *  Analyze
          * ========================= */}
         {view === "analyze" ? (
           <>
@@ -2350,160 +2442,128 @@ export default function Home() {
               <button className="btnGhost" onClick={() => goTo("home")}>
                 ← ホームへ
               </button>
-              <div className="small muted">あなたの好みを分析する</div>
+              <div className="small muted">好みを分析</div>
             </div>
 
             <div className="panel">
-              <div className="panelTitle">好きな作品を 1〜10 作品入力</div>
-              <div className="small muted">タイトルの一部を入れて候補から選ぶと確実です。</div>
+              <div className="panelTitle">好きなアニメを入力（1〜10作品）</div>
+              <div className="small muted">作品数が多いほど精度が上がります。</div>
 
-              <div className="anGrid">
-                {anInputs.map((v, idx) => (
-                  <div key={idx} className="anRow">
-                    <div className="anIndex">{idx + 1}</div>
-                    <div className="anInputWrap">
-                      <input
-                        className="input"
-                        value={v}
-                        onChange={(e) =>
-                          setAnInputs((prev) => {
-                            const next = [...prev];
-                            next[idx] = e.target.value;
-                            return next;
-                          })
-                        }
-                        placeholder="作品名"
-                        onFocus={() => setAnActiveIndex(idx)}
-                        onBlur={() => setTimeout(() => setAnActiveIndex(null), 150)}
-                      />
-                      {anActiveIndex === idx && anSuggestions.length ? (
-                        <div className="suggestBox">
-                          {anSuggestions.map((t) => (
-                            <button
-                              key={t}
-                              type="button"
-                              className="suggestItem"
-                              onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => {
-                                setAnInputs((prev) => {
-                                  const next = [...prev];
-                                  next[idx] = t;
-                                  return next;
-                                });
-                                setAnActiveIndex(null);
-                              }}
-                            >
-                              {t}
-                            </button>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
+              <div className="grid2" style={{ marginTop: 10 }}>
+                {anInputs.map((val, idx) => (
+                  <div key={idx} style={{ position: "relative" }}>
+                    <input
+                      type="text"
+                      className="input"
+                      placeholder={idx < 1 ? `必須 ${idx + 1}` : `任意 ${idx + 1}`}
+                      value={val}
+                      onFocus={() => setAnActiveIndex(idx)}
+                      onChange={(e) => {
+                        const next = [...anInputs];
+                        next[idx] = e.target.value;
+                        setAnInputs(next);
+                        setAnActiveIndex(idx);
+                      }}
+                    />
+                    {anActiveIndex === idx && anSuggestions.length > 0 ? (
+                      <div className="suggest">
+                        {anSuggestions.map((t) => (
+                          <div
+                            key={t}
+                            className="suggestItem"
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              const next = [...anInputs];
+                              next[idx] = t;
+                              setAnInputs(next);
+                              setAnActiveIndex(null);
+                            }}
+                          >
+                            {t}
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 ))}
               </div>
 
-              <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
+              <div className="rowActions">
+                <button className="btn" onClick={runAnalysis}>
+                  分析しておすすめを見る
+                </button>
+                <button
+                  className="btnGhost"
+                  onClick={() => {
+                    setAnInputs(Array.from({ length: 10 }, () => ""));
+                    setAnalysis(null);
+                    setAnalysisPage(1);
+                  }}
+                >
+                  入力をリセット
+                </button>
               </div>
-
-              <button className="btn" style={{ marginTop: 10 }} onClick={runAnalysis}>
-                分析しておすすめを表示
-              </button>
             </div>
 
             {analysis ? (
-              <>
-                <div className="panel" style={{ marginTop: 12 }}>
-                  <div className="panelTitle">分析結果（傾向）</div>
-                  <div className="miniList">
-                    {analysis.summaryLines.map((s, i) => (
-                      <div key={i} className="miniLine">
-                        ・{s}
-                      </div>
-                    ))}
-                  </div>
+              <div className="panel" style={{ marginTop: 12 }}>
+                <div className="panelTitle">あなたの好み（ざっくりプロファイル）</div>
 
-                  <div className="barBox">
-                    {analysis.profile.map((p) => (
-                      <div key={p.label} className="barRow">
-                        <div className="barLabel">{p.label}</div>
-                        <div className="barTrack">
-                          <div className="barFill" style={{ width: `${clamp(p.value, 0, 10) * 10}%` }} />
-                        </div>
-                        <div className="barVal">{p.value.toFixed(1)}/10</div>
+                <div className="profileBox">
+                  {analysis.profile.map((p) => (
+                    <div className="profileRow" key={p.label}>
+                      <div className="profileLabel">{p.label}</div>
+                      <div className="profileBar">
+                        <div className="profileFill" style={{ width: `${clamp(p.value, 0, 10) * 10}%` }} />
                       </div>
-                    ))}
-                  </div>
+                      <div className="profileVal">{p.value.toFixed(1)}</div>
+                    </div>
+                  ))}
                 </div>
 
-                <div className="resultArea" style={{ marginTop: 12 }}>
-                  <div className="resultHead">
-                    <div className="resultTitle">おすすめ {analysis.recommendations.length}件</div>
-                    <div className="resultSub">カードをタップで詳細</div>
-                  </div>
+                <div className="noteBox">
+                  {analysis.summaryLines.map((s, i) => (
+                    <div key={i} className="small">
+                      {s}
+                    </div>
+                  ))}
+                </div>
 
-                  <div className="cards">
-                    {analysisVisible.map((r) => (
-                      <div key={r.work.id ?? r.work.title} className="cardWrap">
-                        <WorkCard a={r.work} />
-                        <div className="reasonBox">
-                          {r.reasons.map((x, i) => (
-                            <div key={i} className="reasonLine">
-                              ・{x}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                <div className="panelTitle" style={{ marginTop: 14 }}>
+                  おすすめ（マッチ理由つき）
+                </div>
 
+                <div style={{ marginTop: 10 }}>
                   <Pagination page={analysisPage} totalPages={analysisTotalPages} onChange={setAnalysisPage} />
                 </div>
-              </>
+
+                <div className="recExplainList" style={{ marginTop: 10 }}>
+                  {analysisVisible.map((r) => (
+                    <div key={String(r.work.id ?? r.work.title)} className="recExplain">
+                      <button className="recExplainTitle" type="button" onClick={() => openAnimeModal(r.work)}>
+                        {r.work.title}
+                      </button>
+                      <div className="recExplainReasons">
+                        {r.reasons.map((x, i) => (
+                          <div key={i} className="small muted">
+                            ・{x}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: 10 }}>
+                  <Pagination page={analysisPage} totalPages={analysisTotalPages} onChange={setAnalysisPage} />
+                </div>
+              </div>
             ) : null}
           </>
         ) : null}
 
         {/* =========================
-         *  Admin（管理人おすすめ）
+         *  Admin recommended
          * ========================= */}
         {view === "admin" ? (
           <>
@@ -2516,7 +2576,9 @@ export default function Home() {
 
             <div className="panel">
               <div className="panelTitle">管理人のおすすめアニメ</div>
-              <div className="small muted">「とりあえず何か観たい」人向け。ボタンでシャッフルできます。</div>
+              <div className="small muted" style={{ marginTop: 6 }}>
+                ※ランキングではありません
+              </div>
 
               <div className="filters" style={{ marginTop: 10 }}>
                 <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
@@ -2559,31 +2621,34 @@ export default function Home() {
                 </CollapsibleFilter>
               </div>
 
-              <div className="adminActions">
-                <button
-                  className="btn"
-                  onClick={() => {
-                    adminSeedRef.current = Math.floor(Date.now() / 1000);
-                    const shuffled = shuffleWithSeed(adminRecsRaw, adminSeedRef.current);
-                    const filtered = applyCollapsedFilters(shuffled);
-                    setResults(filtered);
-                  }}
-                >
-                  シャッフルして表示
-                </button>
-                <button className="btnGhost" onClick={() => setResults(applyCollapsedFilters(adminRecsRaw))}>
-                  シャッフルなしで表示
-                </button>
-                <button className="btnGhost" onClick={() => setResults(adminRecs)}>
-                  今の条件で表示
-                </button>
+              <div className="recExplainList" style={{ marginTop: 12 }}>
+                {adminRecs.length ? (
+                  adminRecs.map((w) => (
+                    <div key={String(w.id ?? w.title)} className="recExplain">
+                      <button className="recExplainTitle" type="button" onClick={() => openAnimeModal(w)}>
+                        {w.title}
+                      </button>
+                      <div className="recExplainReasons">
+                        {buildAdminReasons(w).map((x, i) => (
+                          <div key={i} className="small muted">
+                            ・{x}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="small muted" style={{ marginTop: 10 }}>
+                    おすすめ作品が見つかりませんでした（is_recommended=true を確認）
+                  </div>
+                )}
               </div>
             </div>
           </>
         ) : null}
 
         {/* =========================
-         *  Info（作品情報検索）
+         *  Info
          * ========================= */}
         {view === "info" ? (
           <>
@@ -2591,114 +2656,222 @@ export default function Home() {
               <button className="btnGhost" onClick={() => goTo("home")}>
                 ← ホームへ
               </button>
-              <div className="small muted">作品の情報を検索する</div>
+              <div className="small muted">作品の情報を検索</div>
             </div>
 
             <div className="panel">
-              <div className="small muted">タイトル検索（あいまいでもOK）</div>
-              <div className="searchRow">
-                <div className="searchCol">
-                  <input
-                    className="input"
-                    value={infoQuery}
-                    onChange={(e) => setInfoQuery(e.target.value)}
-                    placeholder="例：フリーレン"
-                    onFocus={() => setInfoSuggestOpen(true)}
-                    onBlur={() => setTimeout(() => setInfoSuggestOpen(false), 120)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") searchInfoByTitle();
-                    }}
-                  />
-                  {infoSuggestOpen && infoSuggestions.length ? (
-                    <div className="suggestBox">
-                      {infoSuggestions.map((t) => (
-                        <button
-                          key={t}
-                          type="button"
-                          className="suggestItem"
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => {
-                            setInfoQuery(t);
-                            setInfoSuggestOpen(false);
-                          }}
-                        >
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-                <button className="btn" onClick={searchInfoByTitle}>
-                  検索
-                </button>
-              </div>
+              <div className="panelTitle">タイトル検索</div>
 
-              <div className="filters" style={{ marginTop: 10 }}>
-                <CollapsibleFilter open={vodFilterOpen} onToggle={() => setVodFilterOpen((v) => !v)} title="VODを絞り込む" selectedCount={vodChecked.size}>
-                  <div className="checkGrid">
-                    {vodServices.map((s) => (
-                      <label key={s} className="checkItem">
-                        <input type="checkbox" checked={vodChecked.has(s)} onChange={() => toggleSet(setVodChecked, s)} />
-                        <span className="checkLabel">
-                          <span className="checkText">{s}</span>
-                        </span>
-                      </label>
+              <div style={{ position: "relative", marginTop: 10 }}>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="例：進撃の巨人 / ガンダム / 物語"
+                  value={infoQuery}
+                  onFocus={() => setInfoSuggestOpen(true)}
+                  onBlur={() => window.setTimeout(() => setInfoSuggestOpen(false), 120)}
+                  onChange={(e) => {
+                    setInfoQuery(e.target.value);
+                    setInfoSuggestOpen(true);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") searchInfoByTitle();
+                  }}
+                />
+                {infoSuggestOpen && infoSuggestions.length > 0 ? (
+                  <div className="suggest">
+                    {infoSuggestions.map((t) => (
+                      <div
+                        key={t}
+                        className="suggestItem"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setInfoQuery(t);
+                          setInfoSuggestOpen(false);
+                        }}
+                      >
+                        {t}
+                      </div>
                     ))}
                   </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setVodChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
-
-                <CollapsibleFilter open={studioFilterOpen} onToggle={() => setStudioFilterOpen((v) => !v)} title="制作会社を絞り込む" selectedCount={studioChecked.size}>
-                  <input type="text" className="input" placeholder="制作会社を絞り込み（例：MAPPA）" value={studioFilterText} onChange={(e) => setStudioFilterText(e.target.value)} />
-                  <div className="optionBox">
-                    <div className="checkGrid">
-                      {filteredStudioOptions.slice(0, 140).map((s) => (
-                        <label key={s} className="checkItem">
-                          <input type="checkbox" checked={studioChecked.has(s)} onChange={() => toggleSet(setStudioChecked, s)} />
-                          <span className="checkLabel">
-                            <span className="checkText">{s}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="miniActions">
-                    <button className="btnTiny" type="button" onClick={() => setStudioChecked(new Set())}>
-                      選択をクリア（＝全て対象）
-                    </button>
-                  </div>
-                </CollapsibleFilter>
+                ) : null}
               </div>
+
+              <button className="btn" onClick={searchInfoByTitle}>
+                検索
+              </button>
             </div>
           </>
         ) : null}
 
         {/* =========================
-         *  Results（Recommend / Info / Admin 共通）
+         *  Results area (Recommend / Info only)
          * ========================= */}
-        {resultAll.length ? (
-          <div ref={resultRef} className={`resultArea ${resultFlash ? "flash" : ""}`}>
-            <div className="resultHead">
-              <div className="resultTitle">結果 {resultAll.length}件</div>
-              <div className="resultSub">カードをタップで詳細</div>
-            </div>
+        {view === "recommend" || view === "info" ? (
+          <div ref={resultRef} className={resultFlash ? "flashRing" : ""} style={{ marginTop: 14 }}>
+            {resultAll.length ? (
+              <div className="panel">
+                <div className="panelTitleRow">
+                  <div className="panelTitle">結果</div>
+                  <div className="small muted">
+                    {resultAll.length}件（{resultPage}/{totalPages}）
+                  </div>
+                </div>
 
-            <div className="cards">
-              {visibleResults.map((a) => (
-                <WorkCard key={a.id ?? a.title} a={a} />
-              ))}
-            </div>
+                <Pagination page={resultPage} totalPages={totalPages} onChange={setResultPage} />
+              </div>
+            ) : null}
 
-            <Pagination page={resultPage} totalPages={totalPages} onChange={setResultPage} />
+            {visibleResults.map((a) => (
+              <WorkCard key={String(a.id ?? a.title)} a={a} />
+            ))}
+
+            {resultAll.length ? (
+              <div className="panel" style={{ marginTop: 12 }}>
+                <Pagination page={resultPage} totalPages={totalPages} onChange={setResultPage} />
+              </div>
+            ) : null}
           </div>
         ) : null}
 
         {/* =========================
-         *  管理人プロフィール Modal
+         *  Modal（作品詳細）
+         * ========================= */}
+        {selectedAnime ? (
+          <div className="modalOverlay" onClick={closeAnimeModal}>
+            <div className="modalDialog" onClick={(e) => e.stopPropagation()}>
+              <div className="modalCard">
+                <div className="modalHeader">
+                  <button className="modalCloseBtn" type="button" onClick={closeAnimeModal} aria-label="閉じる">
+                    閉じる（Esc）
+                  </button>
+                </div>
+
+                <div className="modalBody">
+                  <div className="modalTop">
+                    <img className="modalPoster" src={pickWorkImage(selectedAnime)} alt={selectedAnime.title} />
+                    <div className="modalInfo">
+                      <div className="modalTitle">{selectedAnime.title}</div>
+
+                      <div className="metaLine">
+                        <span className="metaLabel">ジャンル</span>
+                        <span className="metaText">{getGenreArray(selectedAnime.genre).slice(0, 6).join(" / ") || "—"}</span>
+                      </div>
+                      <div className="metaLine">
+                        <span className="metaLabel">制作</span>
+                        <span className="metaText">{String(selectedAnime.studio || "").trim() || "—"}</span>
+                      </div>
+                      <div className="metaLine">
+                        <span className="metaLabel">放送年</span>
+                        <span className="metaText">{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</span>
+                      </div>
+                      <div className="metaLine">
+                        <span className="metaLabel">話数</span>
+                        <span className="metaText">{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</span>
+                      </div>
+
+                      <div className="metaLine">
+                        <span className="metaLabel">評価</span>
+                        <span className="metaText">
+                          <StarRating value={score100ToStar5(overallScore100(selectedAnime))} showText />
+                          {overallScore100(selectedAnime) !== null ? <span className="small muted">{`（${overallScore100(selectedAnime)!.toFixed(1)}/100）`}</span> : null}
+                        </span>
+                      </div>
+
+                      <div className="metaLine">
+                        <span className="metaLabel">原作</span>
+                        <span className="metaText">{sourceLoading ? "読み込み中…" : formatOriginalInfo(sourceLinks)}</span>
+                      </div>
+
+                      {modalSeriesStats ? (
+                        <>
+                          <div className="metaLine">
+                            <span className="metaLabel">シリーズ</span>
+                            <span className="metaText">{modalSeriesStats.displayTitle}</span>
+                          </div>
+                          <div className="metaLine">
+                            <span className="metaLabel">アニメシリーズ</span>
+                            <span className="metaText">
+                              {modalSeriesStats.tvCount}作品
+                              {modalSeriesStats.tvEpisodes !== null ? ` / 合計${modalSeriesStats.tvEpisodes}話` : " / 合計話数：—"}
+                            </span>
+                          </div>
+                          <div className="metaLine">
+                            <span className="metaLabel">劇場版</span>
+                            <span className="metaText">{modalSeriesStats.movieCount}作品</span>
+                          </div>
+                        </>
+                      ) : null}
+
+                      <div className="metaLine">
+                        <span className="metaLabel">公式サイト</span>
+                        <span className="metaText">
+                          {selectedAnime.official_url ? (
+                            <a className="link" href={selectedAnime.official_url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                              開く
+                            </a>
+                          ) : (
+                            <span className="muted">—</span>
+                          )}
+                        </span>
+                      </div>
+
+                      <div className="scorePanel" style={{ marginTop: 12 }}>
+                        <div className="small" style={{ marginBottom: 8 }}>
+                          評価項目（0〜10）
+                        </div>
+                        {OVERALL_WEIGHTS.map((ax) => {
+                          const v = toScore10((selectedAnime as any)[ax.key]);
+                          return (
+                            <div className="scoreRow" key={String(ax.key)}>
+                              <div className="scoreLabel">{ax.label}</div>
+                              <div className="scoreBar">
+                                <div className="scoreBarFill" style={{ width: `${v === null ? 0 : (v / 10) * 100}%` }} />
+                              </div>
+                              <div className="scoreVal">{v === null ? "—" : `${v.toFixed(1)}/10`}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div style={{ marginTop: 12 }}>
+                        <div className="metaLine">
+                          <span className="metaLabel">配信</span>
+                          <span className="metaText">
+                            <VodIcons
+                              services={getVodForWork(selectedAnime).services}
+                              watchUrls={getVodForWork(selectedAnime).urls}
+                              workId={Number(selectedAnime.id || 0)}
+                              onAnyClickStopPropagation
+                            />
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="metaLine" style={{ marginTop: 8 }}>
+                        <span className="metaLabel">ながら見適正</span>
+                        <span className="metaText">
+                          <StarRating value={passiveToStar5(selectedAnime.passive_viewing)} showText={false} size={15} />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {selectedAnime.summary ? (
+                    <div className="desc" style={{ marginTop: 12 }}>
+                      {shortSummary(selectedAnime.summary, 260)}
+                    </div>
+                  ) : null}
+
+                  <div style={{ height: 14 }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {/* =========================
+         *  ③ 管理人プロフィール Modal（アイコンは空白 / YouTube & Blogをおしゃれに）
          * ========================= */}
         {profileOpen ? (
           <div className="modalOverlay" onClick={closeProfileModal}>
@@ -2713,6 +2886,7 @@ export default function Home() {
 
                 <div className="modalBody">
                   <div className="adminProfileHero">
+                    {/* ★「〇か」ではなく、空白 */}
                     <div className="adminAvatar" aria-hidden="true" />
                     <div className="adminProfileText">
                       <div className="adminName">かさ【ゆるオタ】</div>
@@ -2778,1174 +2952,1196 @@ export default function Home() {
         ) : null}
       </main>
 
-      {/* =========================
-       *  作品詳細 Modal
-       * ========================= */}
-      {selectedAnime ? (
-        <div className="modalOverlay" onClick={closeAnimeModal}>
-          <div className="modalDialog modalDialogWide" onClick={(e) => e.stopPropagation()}>
-            <div className="modalCard">
-              <div className="modalHeader">
-                <div className="modalHeaderTitle">{selectedAnime.title}</div>
-                <button className="modalCloseBtn" type="button" onClick={closeAnimeModal} aria-label="閉じる">
-                  閉じる（Esc）
-                </button>
-              </div>
+      {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
+<style jsx global>{`
+  html,
+  body {
+    margin: 0;
+    padding: 0 !important;
+    /* ✅ ② 全体背景：白文字が見える明るめグレー */
+    background: #6f6f6f;
+    color: #fff;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(180, 180, 180, 0.22);
+  }
 
-              <div className="modalBody">
-                <img className="modalPoster" src={pickWorkImage(selectedAnime)} alt={selectedAnime.title} />
+  ::selection {
+    background: rgba(255, 255, 255, 0.18);
+    color: inherit;
+  }
+  ::-moz-selection {
+    background: rgba(255, 255, 255, 0.18);
+    color: inherit;
+  }
 
-                <div className="modalSection">
-                  <div className="modalGrid">
-                    <div className="modalLine">
-                      <span className="metaLabel">ジャンル</span>
-                      <span className="metaText">{getGenreArray(selectedAnime.genre).join(" / ") || "—"}</span>
-                    </div>
-                    <div className="modalLine">
-                      <span className="metaLabel">制作</span>
-                      <span className="metaText">{String(selectedAnime.studio || "").trim() || "—"}</span>
-                    </div>
-                    <div className="modalLine">
-                      <span className="metaLabel">放送年</span>
-                      <span className="metaText">{selectedAnime.start_year ? `${selectedAnime.start_year}年` : "—"}</span>
-                    </div>
-                    <div className="modalLine">
-                      <span className="metaLabel">話数</span>
-                      <span className="metaText">{getEpisodeCount(selectedAnime) ? `全${getEpisodeCount(selectedAnime)}話` : "—"}</span>
-                    </div>
-                    <div className="modalLine">
-                      <span className="metaLabel">総合評価</span>
-                      <span className="metaText">
-                        <StarRating value={score100ToStar5(overallScore100(selectedAnime))} showText />
-                        {overallScore100(selectedAnime) !== null ? (
-                          <span className="small muted">{`（${(overallScore100(selectedAnime) as number).toFixed(1)}/100）`}</span>
-                        ) : null}
-                      </span>
-                    </div>
-                    <div className="modalLine">
-                      <span className="metaLabel">ながら見適正</span>
-                      <span className="metaText">
-                        <StarRating value={passiveToStar5(selectedAnime.passive_viewing)} showText />
-                      </span>
-                    </div>
-                  </div>
+  a {
+    color: inherit;
+  }
 
-                  {modalSeriesStats ? (
-                    <div className="seriesBox">
-                      <div className="seriesTitle">シリーズ情報</div>
-                      <div className="seriesName">{modalSeriesStats.displayTitle}</div>
-                      <div className="small muted">
-                        TV: {modalSeriesStats.tvCount}作品 / 話数合計: {modalSeriesStats.tvEpisodes ? `${modalSeriesStats.tvEpisodes}話` : "—"}　映画: {modalSeriesStats.movieCount}本
-                      </div>
-                    </div>
-                  ) : null}
+  button,
+  label,
+  .pill,
+  .featureCard,
+  .collapseHead,
+  .pagerNum,
+  .pagerArrow,
+  .recExplainTitle,
+  .inlineTitleLink,
+  .openBtn,
+  .headerProfileBtn,
+  .navBtn,
+  .adminProfileLink,
+  .profileLink,
+  .adminLinkBtn {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
-                  <div className="modalLine" style={{ marginTop: 10 }}>
-                    <span className="metaLabel">配信</span>
-                    <span className="metaText">
-                      <VodIcons
-                        services={getVodForWork(selectedAnime).services}
-                        watchUrls={getVodForWork(selectedAnime).urls}
-                        workId={Number(selectedAnime.id || 0)}
-                      />
-                      <div className="small muted" style={{ marginTop: 6 }}>
-                        ※アイコンが薄い場合はURL未取得（詳細を開くと取得されることがあります）
-                      </div>
-                    </span>
-                  </div>
+  .page {
+    min-height: 100vh;
+    /* ✅ ② 背景：暗すぎないモノトーン */
+    background: radial-gradient(900px 520px at 50% -10%, rgba(255, 255, 255, 0.10), transparent 55%),
+      radial-gradient(900px 520px at 20% 10%, rgba(255, 255, 255, 0.06), transparent 55%),
+      linear-gradient(180deg, #6f6f6f, #676767);
+    color: #fff;
+  }
 
-                  <div className="modalLine" style={{ marginTop: 10 }}>
-                    <span className="metaLabel">原作</span>
-                    <span className="metaText">{formatOriginalInfo(sourceLinks)}</span>
-                  </div>
+  /* Header */
+  .topHeader {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    background: rgba(95, 95, 95, 0.86);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
 
-                  <div className="modalLine" style={{ marginTop: 10 }}>
-                    <span className="metaLabel">公式</span>
-                    <span className="metaText">
-                      {safeExternalUrl(selectedAnime.official_url) ? (
-                        <a className="link" href={safeExternalUrl(selectedAnime.official_url)} target="_blank" rel="noopener noreferrer">
-                          公式サイトを開く
-                        </a>
-                      ) : (
-                        "—"
-                      )}
-                    </span>
-                  </div>
-                </div>
+  /* ✅ ロゴ（ヘッダー）と下（本文コンテナ）の左端を揃える */
+  .headerInner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 16px 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
 
-                {selectedAnime.summary ? (
-                  <div className="modalSection">
-                    <div className="sectionTitle">あらすじ</div>
-                    <div className="summaryText">{selectedAnime.summary}</div>
-                  </div>
-                ) : null}
+  .brandBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+    padding-left: 0;
+  }
 
-                <div className="modalSection">
-                  <div className="sectionTitle">スコア（10点）</div>
-                  <div className="scoreGrid">
-                    <div className="scoreItem">
-                      <span>シナリオ</span>
-                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.story_10))}</span>
-                    </div>
-                    <div className="scoreItem">
-                      <span>世界観</span>
-                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.world_10))}</span>
-                    </div>
-                    <div className="scoreItem">
-                      <span>心</span>
-                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.emotion_10))}</span>
-                    </div>
-                    <div className="scoreItem">
-                      <span>テンポ</span>
-                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.tempo_10))}</span>
-                    </div>
-                    <div className="scoreItem">
-                      <span>音楽</span>
-                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.music_10))}</span>
-                    </div>
-                    <div className="scoreItem">
-                      <span>作画</span>
-                      <span className="scoreVal">{fmt10(toScore10(selectedAnime.animation_10))}</span>
-                    </div>
-                  </div>
-                </div>
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
 
-                <div className="modalSection">
-                  <div className="sectionTitle">参考リンク</div>
-                  {sourceLoading ? <div className="small muted">読み込み中…</div> : null}
-                  {!sourceLoading && !sourceLinks.length ? <div className="small muted">—</div> : null}
+  /* old structure（残置） */
+  .headerBar {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .brandBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+  .headerNav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
 
-                  {sourceLinks.length ? (
-                    <div className="sourceList">
-                      {sourceLinks.map((s, i) => (
-                        <div key={i} className="sourceRow">
-                          <div className="small">
-                            {stageLabel(s.stage)}
-                            {s.platform ? ` / ${s.platform}` : ""}
-                            {typeof s.confidence === "number" ? <span className="muted">（信頼度 {s.confidence.toFixed(2)}）</span> : null}
-                          </div>
-                          {safeExternalUrl(s.ref_url) ? (
-                            <a className="link small" href={safeExternalUrl(s.ref_url)} target="_blank" rel="noopener noreferrer">
-                              参照元を開く
-                            </a>
-                          ) : null}
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
+  .headerProfileBtn,
+  .navBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .headerProfileBtn:hover,
+  .navBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .headerProfileBtn:active,
+  .navBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
 
-                <div style={{ height: 6 }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
+  .brandTitle {
+    font-size: 40px;
+    letter-spacing: 0.5px;
+    line-height: 1.05;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #fff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+  }
+  .brandTitle:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline-offset: 6px;
+    border-radius: 10px;
+  }
 
-      {/* ✅ 右下固定：管理人プロフィール（全ページ共通） */}
-      <button className="floatingProfileBtn" type="button" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
-        プロフィール
-      </button>
+  .brandSub {
+    font-size: 13px;
+    opacity: 0.82;
+    display: block;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+    color: rgba(255, 255, 255, 0.86);
+  }
 
-      <footer className="footer">
-        <div className="footerInner">
-          <div className="small muted">© AniMatch</div>
-        </div>
-      </footer>
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 16px 30px;
+  }
 
-      {/* ===== ここから下（<style jsx global>{）を後半で出力します ===== */}
+  /* Panels */
+  .panel {
+    background: rgba(40, 40, 40, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    color: #fff;
+  }
+  .panelTitleRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .panelTitle {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .errorBox {
+    border-color: rgba(255, 130, 130, 0.35);
+    background: rgba(255, 120, 120, 0.12);
+  }
+
+  .small {
+    font-size: 12px;
+  }
+  .muted {
+    opacity: 0.75;
+  }
+
+  /* Buttons */
+  .btn {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .btn:active {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .btnGhost {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .btnGhost:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .btnGhost:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .btnTiny {
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .btnTiny:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .btnTiny:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Home cards */
+  .homeGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .featureCard {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(40, 40, 40, 0.72);
+    cursor: pointer;
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+  }
+  .featureCard:hover {
+    background: rgba(50, 50, 50, 0.78);
+  }
+  .featureCard:active {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .featureIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+  .featureTitle {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .featureSub {
+    margin-top: 3px;
+    font-size: 12px;
+    opacity: 0.78;
+    font-weight: 400;
+  }
+  .featureArrow {
+    opacity: 0.8;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  /* ✅ ① HOME最下部：管理人プロフィール（カード式） */
+  .profileLinkWrap {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  /* 旧ボタンが残っていても崩れないように残置（白文字化） */
+  .adminProfileLink,
+  .profileLink {
+    width: 100%;
+    margin-top: 0;
+    padding: 16px 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(30, 30, 30, 0.68);
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+  }
+  .adminProfileLink:hover,
+  .profileLink:hover {
+    background: rgba(40, 40, 40, 0.74);
+  }
+  .adminProfileLink:active,
+  .profileLink:active {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .adminProfileLink:focus-visible,
+  .profileLink:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline-offset: 4px;
+  }
+
+  /* ✅ 新カード用（JSXで使っている場合） */
+  .homeProfileCardWrap {
+    width: 100%;
+    margin-top: 10px;
+  }
+  /* “ホームのみ固定”のためのクラス（stickyで下に居続ける） */
+  .homeProfileFixed {
+    position: sticky;
+    bottom: 14px;
+    z-index: 5;
+  }
+
+  .adminProfileCard {
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: linear-gradient(180deg, rgba(30, 30, 30, 0.78), rgba(20, 20, 20, 0.62));
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+  }
+  .adminProfileCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+  }
+  .adminProfileCardTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .adminProfileCardName {
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .adminProfileCardSub {
+    font-size: 12px;
+    opacity: 0.78;
+  }
+  .adminProfileCardLinks {
+    display: flex;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+  .adminMiniIconBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .adminMiniIconBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .adminMiniIconBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .adminProfileCardBody {
+    font-size: 12px;
+    line-height: 1.55;
+    opacity: 0.9;
+  }
+  .adminProfileCardCta {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 12px;
+    opacity: 0.75;
+  }
+
+  /* Top row */
+  .topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .pill:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pill:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pill.active {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.22);
+    font-weight: 400;
+  }
+
+  /* Inputs */
+  .input {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.18);
+    color: #fff;
+    font-size: 14px;
+    margin-top: 10px;
+    outline: none;
+    font-weight: 400;
+  }
+  .input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .input:focus {
+    border-color: rgba(255, 255, 255, 0.26);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10);
+  }
+
+  .suggest {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    background: rgba(40, 40, 40, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    overflow: hidden;
+    z-index: 20;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
+  }
+  .suggestItem {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 400;
+    color: #fff;
+  }
+  .suggestItem:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .suggestItem:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Collapsible filters */
+  .filters {
+    display: grid;
+    gap: 10px;
+  }
+  .collapseBox {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.14);
+  }
+  .collapseHead {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    font-weight: 400;
+  }
+  .collapseHead:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+  }
+  .collapseHead:active {
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+  }
+  .collapseHead:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline-offset: 4px;
+    border-radius: 14px;
+  }
+  .collapsePlus {
+    width: 26px;
+    height: 26px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+  .collapseTitle {
+    font-size: 13px;
+    letter-spacing: 0.2px;
+  }
+  .collapseMeta {
+    font-size: 12px;
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+  .collapseBody {
+    padding: 10px 12px 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* Check grid */
+  .checkGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (min-width: 700px) {
+    .checkGrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .checkItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+  }
+  .checkItem:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .checkItem:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .checkItem input {
+    width: 16px;
+    height: 16px;
+    accent-color: #e6e6e6;
+  }
+  .checkLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    color: #fff;
+  }
+  .checkText {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.95;
+  }
+
+  .miniActions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .optionBox {
+    margin-top: 10px;
+    border-radius: 14px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
+  }
+
+  .modeBox {
+    margin-top: 12px;
+  }
+
+  /* Results flash ring */
+  .flashRing {
+    border-radius: 18px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+  }
+
+  /* Pager */
+  .pagerBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .pagerArrow {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .pagerArrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .pagerArrow:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pagerArrow:active:not(:disabled) {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pagerNums {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1 1 auto;
+  }
+  .pagerNum {
+    min-width: 36px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .pagerNum:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .pagerNum:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .pagerNum.active {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .pagerDots {
+    opacity: 0.7;
+    padding: 6px 6px;
+  }
+
+  /* Work cards */
+  .card {
+    margin-top: 12px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(40, 40, 40, 0.74);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+    padding: 12px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .card:active {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .cardTop {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  @media (max-width: 520px) {
+    .cardTop {
+      grid-template-columns: 110px 1fr;
+    }
+  }
+  .poster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.15);
+  }
+  .cardInfo {
+    min-width: 0;
+  }
+  .cardTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .cardTitle {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    font-weight: 400;
+  }
+  .openBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    flex: 0 0 auto;
+  }
+  .openBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .openBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .desc {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.55;
+    opacity: 0.92;
+  }
+
+  .metaGrid {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .metaLine {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  @media (max-width: 520px) {
+    .metaLine {
+      grid-template-columns: 92px 1fr;
+    }
+  }
+  .metaLabel {
+    font-size: 12px;
+    opacity: 0.75;
+    letter-spacing: 0.2px;
+  }
+  .metaText {
+    font-size: 12px;
+    opacity: 0.95;
+    min-width: 0;
+  }
+
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .starsGlyph {
+    letter-spacing: 1px;
+  }
+  .starsText {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* VOD icons */
+  .vodIcons {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .vodIconLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    outline: none;
+  }
+  .vodIconLink:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline-offset: 3px;
+  }
+  .vodIconImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  /* Rec explain list */
+  .recExplainList {
+    display: grid;
+    gap: 10px;
+  }
+  .recExplain {
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.12);
+  }
+  .recExplainTitle {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .recExplainTitle:hover {
+    opacity: 0.9;
+  }
+  .recExplainTitle:active {
+    opacity: 0.85;
+  }
+  .recExplainReasons {
+    margin-top: 8px;
+    display: grid;
+    gap: 4px;
+  }
+
+  .inlineTitleLink {
+    border: none;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .inlineTitleLink:hover {
+    opacity: 0.9;
+  }
+
+  /* Grid2 + actions */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 520px) {
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  .rowActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  /* Profile (analysis) */
+  .profileBox {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .profileRow {
+    display: grid;
+    grid-template-columns: 80px 1fr 46px;
+    gap: 10px;
+    align-items: center;
+  }
+  .profileLabel {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  .profileBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .profileFill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.26);
+  }
+  .profileVal {
+    font-size: 12px;
+    opacity: 0.85;
+    text-align: right;
+  }
+  .noteBox {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
+  }
+
+  /* Modal */
+  .modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+  }
+  .modalDialog {
+    width: min(980px, 100%);
+    max-height: calc(100vh - 28px);
+    overflow-y: auto; /* ✅ 画面はみ出し時は縦スクロール */
+    overflow-x: hidden;
+    border-radius: 18px;
+  }
+  .modalCard {
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(35, 35, 35, 0.92);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.40);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    overflow: hidden;
+  }
+  .modalHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 12px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    gap: 10px;
+  }
+  .profileHeader {
+    justify-content: space-between;
+  }
+  .modalHeaderTitle {
+    font-size: 14px;
+    opacity: 0.95;
+    letter-spacing: 0.2px;
+  }
+  .modalCloseBtn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .modalCloseBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .modalCloseBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .modalBody {
+    padding: 12px;
+  }
+
+  .modalTop {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .modalTop {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .modalPoster {
+    width: 100%;
+    /* ✅ 横長画像でも大きすぎないように */
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .modalInfo {
+    min-width: 0;
+  }
+  .modalTitle {
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .link {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    opacity: 0.9;
+  }
+
+  .scorePanel {
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
+    padding: 12px;
+  }
+  .scoreRow {
+    display: grid;
+    grid-template-columns: 72px 1fr 68px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .scoreLabel {
+    font-size: 12px;
+    opacity: 0.82;
+  }
+  .scoreBar {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .scoreBarFill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.26);
+  }
+  .scoreVal {
+    font-size: 12px;
+    opacity: 0.85;
+    text-align: right;
+  }
+
+  /* Admin profile modal */
+  .adminProfileHero {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0 8px;
+  }
+  .adminAvatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .adminProfileText {
+    min-width: 0;
+  }
+  .adminName {
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    margin-bottom: 6px;
+  }
+  .adminBio {
+    font-size: 12px;
+    line-height: 1.55;
+    opacity: 0.9;
+  }
+  .adminLinkRow {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 520px) {
+    .adminLinkRow {
+      grid-template-columns: 1fr;
+    }
+  }
+  .adminLinkBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .adminLinkBtn:hover {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .adminLinkBtn:active {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .adminLinkBtnPrimary {
+    background: rgba(255, 255, 255, 0.10);
+  }
+  .adminLinkIcon {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .adminNoteBox {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.10);
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 520px) {
+    .headerInner {
+      padding: 16px 16px 14px;
+    }
+    .container {
+      padding: 12px 14px 26px;
+    }
+    .brandTitle {
+      font-size: 36px;
+    }
+    .modalOverlay {
+      padding: 12px;
+    }
+    .modalPoster {
+      max-height: 320px;
+    }
+  }
+`}</style>
     </div>
   );
 }
-      <style jsx global>{`
-        :root {
-          /* ① 全体：背景 #ADADAD / 文字色 白 */
-          --bg: #adadad;
-          --panel: rgba(0, 0, 0, 0.22);
-          --text: #fff;
-          --muted: rgba(255, 255, 255, 0.72);
-          --line: rgba(255, 255, 255, 0.18);
-          --shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
-          --radius: 16px;
-        }
 
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          background: var(--bg);
-          color: var(--text);
-          font-weight: 400; /* ③ デフォルトは太字にしない */
-        }
 
-        * {
-          box-sizing: border-box;
-        }
 
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        /* ③ 作品名とロゴ以外：太字を無効化（JSX内の <b>/<strong> も含む） */
-        b,
-        strong {
-          font-weight: 500;
-        }
-
-        .page {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-        }
-
-        /* ===== Header ===== */
-        .topHeader {
-          position: sticky;
-          top: 0;
-          z-index: 50;
-          background: rgba(0, 0, 0, 0.28);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid var(--line);
-        }
-
-        .headerInner {
-          width: 100%;
-          padding: 12px 14px;
-        }
-
-        .brandBlock {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 2px;
-        }
-
-        .brandTitle {
-          background: none;
-          border: none;
-          padding: 0; /* 左の空白対策 */
-          margin: 0;
-          font-size: 30px;
-          line-height: 1;
-          letter-spacing: 0.3px;
-          cursor: pointer;
-          color: var(--text);
-          font-weight: 700; /* ロゴは太字OK */
-        }
-
-        .brandSub {
-          font-size: 12px;
-          color: var(--muted);
-          font-weight: 400;
-        }
-
-        /* ===== Layout ===== */
-        .container {
-          width: 100%;
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 14px;
-        }
-
-        .panel {
-          background: var(--panel);
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          padding: 14px;
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .panelTitle {
-          font-weight: 400; /* ③ 太字にしない */
-          margin-bottom: 8px;
-        }
-
-        .small {
-          font-size: 12px;
-          font-weight: 400;
-        }
-
-        .muted {
-          color: var(--muted);
-        }
-
-        .errorBox {
-          border-color: rgba(220, 38, 38, 0.35);
-        }
-
-        .topRow {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
-
-        /* ===== Buttons ===== */
-        .btn,
-        .btnGhost,
-        .btnTiny,
-        .openBtn,
-        .homeProfileMoreBtn,
-        .footerProfileBtn {
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          background: #111;
-          color: #fff;
-          padding: 10px 12px;
-          cursor: pointer;
-          font-weight: 400; /* ③ 太字にしない */
-        }
-
-        .btnGhost {
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-        }
-
-        .btnTiny {
-          padding: 8px 10px;
-          font-size: 12px;
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-        }
-
-        .openBtn {
-          padding: 8px 10px;
-          font-size: 12px;
-          background: rgba(255, 255, 255, 0.08);
-        }
-
-        .btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        /* ===== Home cards ===== */
-        .homeGrid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 12px;
-        }
-
-        .featureCard {
-          width: 100%;
-          text-align: left;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          padding: 14px;
-          background: var(--panel);
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-          cursor: pointer;
-        }
-
-        .featureIcon {
-          width: 44px;
-          height: 44px;
-          border-radius: 14px;
-          border: 1px solid var(--line);
-          display: grid;
-          place-items: center;
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-        }
-
-        .featureText {
-          flex: 1;
-        }
-
-        .featureTitle {
-          font-weight: 400; /* ③ 太字にしない */
-        }
-
-        .featureSub {
-          font-size: 12px;
-          color: var(--muted);
-          margin-top: 2px;
-          font-weight: 400;
-        }
-
-        .featureArrow {
-          font-weight: 400; /* ③ 太字にしない */
-          color: var(--muted);
-        }
-
-        /* （HOME最下部プロフィールカードは ④ で削除済み想定のため、CSSは残しても影響なし） */
-        .homeProfileCard {
-          grid-column: 1 / -1;
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          background: var(--panel);
-          overflow: hidden;
-          box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
-        }
-
-        /* ===== Tabs / Filters ===== */
-        .tabs {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-
-        .pill {
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-          border-radius: 999px;
-          padding: 8px 12px;
-          cursor: pointer;
-          font-weight: 400; /* ③ */
-        }
-
-        .pill.active {
-          background: #111;
-          border-color: rgba(255, 255, 255, 0.28);
-        }
-
-        .filters {
-          display: grid;
-          gap: 10px;
-        }
-
-        .collapseBox {
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          overflow: hidden;
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .collapseHead {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 12px 12px;
-          background: rgba(0, 0, 0, 0.12);
-          border: none;
-          color: #fff;
-          cursor: pointer;
-          text-align: left;
-          font-weight: 400; /* ③ */
-        }
-
-        .collapsePlus {
-          width: 22px;
-          height: 22px;
-          border: 1px solid var(--line);
-          border-radius: 8px;
-          display: grid;
-          place-items: center;
-          background: rgba(255, 255, 255, 0.06);
-          flex: 0 0 auto;
-          font-weight: 400;
-        }
-
-        .collapseTitle {
-          font-weight: 400; /* ③ */
-        }
-
-        .collapseMeta {
-          margin-left: auto;
-          font-size: 12px;
-          color: var(--muted);
-          font-weight: 400;
-        }
-
-        .collapseBody {
-          padding: 12px;
-        }
-
-        .input {
-          width: 100%;
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-          outline: none;
-          font-weight: 400;
-        }
-
-        .input::placeholder {
-          color: rgba(255, 255, 255, 0.55);
-        }
-
-        .optionBox {
-          margin-top: 10px;
-          max-height: 240px;
-          overflow: auto;
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          padding: 10px;
-          background: rgba(0, 0, 0, 0.12);
-        }
-
-        .checkGrid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px 10px;
-        }
-
-        .checkItem {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          font-size: 13px;
-          color: #fff;
-          user-select: none;
-          font-weight: 400;
-        }
-
-        .checkItem input {
-          accent-color: #111;
-        }
-
-        .checkLabel {
-          display: inline-flex;
-          gap: 6px;
-          align-items: center;
-        }
-
-        .checkText {
-          font-weight: 400;
-        }
-
-        .miniActions {
-          margin-top: 10px;
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        .modeBox {
-          margin-top: 12px;
-          border-top: 1px solid var(--line);
-          padding-top: 12px;
-        }
-
-        /* ===== Search / Suggest ===== */
-        .searchRow {
-          display: flex;
-          gap: 10px;
-          margin-top: 10px;
-          align-items: flex-start;
-        }
-
-        .searchCol {
-          position: relative;
-          flex: 1;
-        }
-
-        .suggestBox {
-          position: absolute;
-          top: calc(100% + 6px);
-          left: 0;
-          right: 0;
-          z-index: 20;
-          background: rgba(0, 0, 0, 0.72);
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 18px 30px rgba(0, 0, 0, 0.28);
-        }
-
-        .suggestItem {
-          width: 100%;
-          text-align: left;
-          padding: 10px 12px;
-          border: none;
-          background: transparent;
-          color: #fff;
-          cursor: pointer;
-          font-weight: 400;
-        }
-
-        .suggestItem:hover {
-          background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* ===== Results ===== */
-        .resultArea {
-          margin-top: 14px;
-        }
-
-        .resultArea.flash {
-          animation: flash 0.65s ease;
-        }
-
-        @keyframes flash {
-          0% {
-            filter: brightness(1.12);
-          }
-          100% {
-            filter: brightness(1);
-          }
-        }
-
-        .resultHead {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
-
-        .resultTitle {
-          font-weight: 400; /* ③ */
-        }
-
-        .resultSub {
-          font-size: 12px;
-          color: var(--muted);
-          font-weight: 400;
-        }
-
-        .cards {
-          display: grid;
-          gap: 10px;
-        }
-
-        /* ===== Card ===== */
-        .card {
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          overflow: hidden;
-          background: var(--panel);
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-          cursor: pointer;
-        }
-
-        .cardTop {
-          display: flex;
-          gap: 12px;
-          padding: 12px;
-        }
-
-        .poster {
-          width: 130px;
-          height: 88px;
-          object-fit: cover;
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.06);
-          flex: 0 0 auto;
-        }
-
-        .cardInfo {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .cardTitleRow {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        .cardTitle {
-          font-weight: 700; /* 作品名は太字OK */
-          font-size: 16px;
-          line-height: 1.25;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .desc {
-          margin-top: 6px;
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.92);
-          font-weight: 400;
-        }
-
-        .metaGrid {
-          margin-top: 10px;
-          display: grid;
-          gap: 6px;
-        }
-
-        .metaLine {
-          display: grid;
-          grid-template-columns: 72px 1fr;
-          gap: 8px;
-          align-items: center;
-        }
-
-        .metaLabel {
-          color: var(--muted);
-          font-size: 12px;
-          font-weight: 400; /* ③ */
-        }
-
-        .metaText {
-          font-size: 12px;
-          color: #fff;
-          font-weight: 400;
-        }
-
-        /* ===== Stars ===== */
-        .stars {
-          display: inline-flex;
-          align-items: baseline;
-          gap: 6px;
-        }
-
-        .starsGlyph {
-          letter-spacing: 0.8px;
-        }
-
-        .starsText {
-          font-size: 12px;
-          color: var(--muted);
-          font-weight: 400;
-        }
-
-        /* ===== VOD Icons ===== */
-        .vodIcons {
-          display: flex;
-          gap: 6px;
-          align-items: center;
-          flex-wrap: wrap;
-        }
-
-        .vodIconImg {
-          width: 28px;
-          height: 28px;
-          border-radius: 9px;
-          border: 1px solid var(--line);
-          object-fit: cover;
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .vodIconLink {
-          display: inline-flex;
-          border-radius: 10px;
-        }
-
-        .small.muted {
-          color: var(--muted);
-        }
-
-        /* ===== Reasons ===== */
-        .cardWrap {
-          display: grid;
-          gap: 8px;
-        }
-
-        .reasonBox {
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .reasonLine {
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.9);
-          font-weight: 400;
-        }
-
-        /* ===== Pagination ===== */
-        .pagerBar {
-          margin-top: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-        }
-
-        .pagerArrow {
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-          border-radius: 12px;
-          padding: 8px 10px;
-          cursor: pointer;
-          font-weight: 400;
-        }
-
-        .pagerArrow:disabled {
-          opacity: 0.45;
-          cursor: not-allowed;
-        }
-
-        .pagerNums {
-          display: flex;
-          gap: 6px;
-          align-items: center;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .pagerNum {
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.06);
-          color: #fff;
-          border-radius: 12px;
-          padding: 7px 10px;
-          cursor: pointer;
-          font-weight: 400;
-        }
-
-        .pagerNum.active {
-          background: #111;
-          border-color: rgba(255, 255, 255, 0.28);
-        }
-
-        .pagerDots {
-          color: var(--muted);
-          font-size: 12px;
-        }
-
-        /* ===== Analyze Bars ===== */
-        .barBox {
-          margin-top: 12px;
-          display: grid;
-          gap: 8px;
-        }
-
-        .barRow {
-          display: grid;
-          grid-template-columns: 70px 1fr 70px;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .barLabel {
-          font-size: 12px;
-          color: var(--muted);
-          font-weight: 400;
-        }
-
-        .barTrack {
-          height: 10px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.12);
-          overflow: hidden;
-          border: 1px solid var(--line);
-        }
-
-        .barFill {
-          height: 100%;
-          background: #fff;
-          opacity: 0.9;
-        }
-
-        .barVal {
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.92);
-          text-align: right;
-          font-weight: 400;
-        }
-
-        /* ===== Modal ===== */
-        .modalOverlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.55);
-          z-index: 90;
-          display: grid;
-          place-items: center;
-          padding: 14px;
-        }
-
-        .modalDialog {
-          width: 100%;
-          max-width: 760px;
-        }
-
-        .modalDialogWide {
-          max-width: 980px;
-        }
-
-        .modalCard {
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          background: rgba(0, 0, 0, 0.62);
-          box-shadow: 0 22px 46px rgba(0, 0, 0, 0.35);
-          overflow: hidden;
-        }
-
-        .modalHeader {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          padding: 12px 14px;
-          border-bottom: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .modalHeaderTitle {
-          font-weight: 700; /* 作品名（モーダルタイトル）は太字OK */
-          color: #fff;
-        }
-
-        .modalCloseBtn {
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-          border-radius: 12px;
-          padding: 8px 10px;
-          cursor: pointer;
-          font-weight: 400; /* ③ */
-        }
-
-        .modalBody {
-          padding: 14px;
-        }
-
-        .modalPoster {
-          width: 100%;
-          height: auto;
-          border-radius: 14px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.06);
-          object-fit: cover;
-        }
-
-        .modalSection {
-          margin-top: 14px;
-          border-top: 1px solid var(--line);
-          padding-top: 12px;
-        }
-
-        .sectionTitle {
-          font-weight: 400; /* ③ */
-          margin-bottom: 8px;
-        }
-
-        .modalGrid {
-          display: grid;
-          gap: 8px;
-        }
-
-        .modalLine {
-          display: grid;
-          grid-template-columns: 92px 1fr;
-          gap: 10px;
-          align-items: start;
-        }
-
-        .link {
-          text-decoration: underline;
-          text-underline-offset: 3px;
-        }
-
-        .summaryText {
-          font-size: 13px;
-          line-height: 1.75;
-          color: rgba(255, 255, 255, 0.92);
-          white-space: pre-wrap;
-          font-weight: 400;
-        }
-
-        .scoreGrid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 10px;
-        }
-
-        .scoreItem {
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.06);
-          display: flex;
-          justify-content: space-between;
-          gap: 10px;
-          font-size: 12px;
-          font-weight: 400;
-        }
-
-        .sourceList {
-          display: grid;
-          gap: 10px;
-        }
-
-        .sourceRow {
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.06);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        .seriesBox {
-          margin-top: 10px;
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .seriesTitle {
-          font-weight: 400; /* ③ */
-          margin-bottom: 6px;
-        }
-
-        /* ===== Profile Modal parts ===== */
-        .adminProfileHero {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-        }
-
-        .adminAvatar {
-          width: 56px;
-          height: 56px;
-          border-radius: 18px;
-          border: 1px solid var(--line);
-          background: rgba(255, 255, 255, 0.12);
-          flex: 0 0 auto;
-        }
-
-        .adminName {
-          font-weight: 400; /* ③ */
-        }
-
-        .adminBio {
-          margin-top: 6px;
-          font-size: 12px;
-          line-height: 1.7;
-          color: rgba(255, 255, 255, 0.92);
-          font-weight: 400;
-        }
-
-        .adminLinkRow {
-          margin-top: 12px;
-          display: grid;
-          gap: 10px;
-        }
-
-        .adminLinkBtn {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-          font-weight: 400; /* ③ */
-        }
-
-        .adminLinkBtnPrimary {
-          background: #111;
-        }
-
-        .adminLinkIcon {
-          display: grid;
-          place-items: center;
-        }
-
-        .adminNoteBox {
-          margin-top: 12px;
-          border: 1px solid var(--line);
-          border-radius: 14px;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        /* ===== Admin actions ===== */
-        .adminActions {
-          margin-top: 12px;
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        /* ===== Footer (④ 削除済み想定：CSS残しても影響なし) ===== */
-        .footer {
-          margin-top: auto;
-          border-top: 1px solid var(--line);
-          background: rgba(0, 0, 0, 0.18);
-        }
-
-        .footerInner {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 12px 14px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        /* ===== ④ 右下固定プロフィールボタン（全ページ共通） ===== */
-        .floatingProfileBtn {
-          position: fixed;
-          right: 16px;
-          bottom: 16px;
-          z-index: 95;
-          width: 54px;
-          height: 54px;
-          border-radius: 18px;
-          border: 1px solid var(--line);
-          background: #111;
-          color: #fff;
-          display: grid;
-          place-items: center;
-          cursor: pointer;
-          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
-          font-weight: 400; /* ③ */
-        }
-
-        .floatingProfileBtn:active {
-          transform: translateY(1px);
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 760px) {
-          .homeGrid {
-            grid-template-columns: 1fr;
-          }
-          .cardTop {
-            flex-direction: column;
-          }
-          .poster {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 16 / 9;
-          }
-          .metaLine {
-            grid-template-columns: 64px 1fr;
-          }
-          .modalLine {
-            grid-template-columns: 80px 1fr;
-          }
-        }
-
-        @media (max-width: 520px) {
-          .container {
-            padding: 12px;
-          }
-          .headerInner {
-            padding: 10px 12px;
-          }
-          .brandTitle {
-            font-size: 28px;
-          }
-          .checkGrid {
-            grid-template-columns: 1fr;
-          }
-          .searchRow {
-            flex-direction: column;
-          }
-          .floatingProfileBtn {
-            right: 12px;
-            bottom: 12px;
-            width: 52px;
-            height: 52px;
-            border-radius: 18px;
-          }
-        }
-      `}</style>
