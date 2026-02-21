@@ -2924,28 +2924,18 @@ function IconBadge({ className = "" }: { className?: string }) {
             </div>
           </div>
         ) : null}
-          </main>
+            </main>
 
-      {/* ✅ ① フッター（全ページ共通）：左下ⓒAniMatch / 右下 管理人プロフィール（固定） */}
-      <footer className="fixedFooter" role="contentinfo" aria-label="footer">
-        <div className="fixedFooterLeft">ⓒAniMatch</div>
-
-        <button type="button" className="fixedFooterProfileBtn" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
-          <span className="fixedFooterProfileIcon" aria-hidden="true">
-            <IconUserMono size={18} />
-          </span>
-          <span className="fixedFooterProfileText">管理人プロフィール</span>
-        </button>
-      </footer>
-
-      {/* ✅ グローバルCSSは “returnの中で” かつ “最後に” 置くのが安全 */}
-      <style jsx global>{`
-        /* ここにあなたのCSS全文（今のもの）をそのまま貼る */
-      `}</style>
-    </div>
-  );
-}
-
+    <footer className="fixedFooter" role="contentinfo" aria-label="footer">
+      <div className="fixedFooterLeft">ⓒAniMatch</div>
+      <button type="button" className="fixedFooterProfileBtn" onClick={openProfileModal} aria-label="管理人プロフィールを開く">
+        <span className="fixedFooterProfileIcon" aria-hidden="true">
+          <IconUserMono size={18} />
+        </span>
+        <span className="fixedFooterProfileText">管理人プロフィール</span>
+      </button>
+    </footer>
+    
       {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
 <style jsx global>{`
   html,
