@@ -3588,15 +3588,21 @@ function IconBadge({ className = "" }: { className?: string }) {
     border: 1px solid rgba(0, 0, 0, 0.12);
     background: #ffffff;
     border-radius: 14px;
-    padding: 10px;
-    gap: 8px 14px;
+    padding: 8px;
+    gap: 6px 10px;
+    display: flex; /* ✅ 左詰 + 可変列 */
+    flex-wrap: wrap; /* ✅ 文字の長さで2〜3列/1列へ自然に変化 */
+    justify-content: flex-start;
+    align-items: flex-start;
   }
   .optionBox .checkItem,
   .modeBox .checkItem {
     border: none;
     background: transparent;
-    padding: 6px 4px;
+    padding: 4px 6px; /* ✅ 間隔を最小限に（ゼロではない） */
     border-radius: 0;
+    flex: 0 1 auto;
+    max-width: 100%;
   }
   .optionBox .checkItem:hover,
   .modeBox .checkItem:hover {
@@ -3606,6 +3612,14 @@ function IconBadge({ className = "" }: { className?: string }) {
   .optionBox .checkLabel,
   .modeBox .checkLabel {
     color: rgba(0, 0, 0, 0.88);
+    align-items: flex-start;
+  }
+  .optionBox .checkText,
+  .modeBox .checkText {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.25;
   }
 
   .miniActions {
@@ -3698,18 +3712,18 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .cardTop {
     display: grid;
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 200px 1fr;
     gap: 12px;
     align-items: start;
   }
   @media (max-width: 520px) {
     .cardTop {
-      grid-template-columns: 140px 1fr; /* ✅ スマホは横長画像が映える幅に */
+      grid-template-columns: 160px 1fr; /* ✅ スマホも横長が見やすい幅に */
     }
   }
   .poster {
     width: 100%;
-    aspect-ratio: 2 / 3; /* ✅ PCは縦長 */
+    aspect-ratio: 16 / 9; /* ✅ ② 縦長ではなく横長へ（PCも） */
     object-fit: cover;
     border-radius: 14px;
     border: 1px solid rgba(0, 0, 0, 0.10);
@@ -3968,7 +3982,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   .modalOverlay {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 10000; /* ✅ ① 詳細カード表示中はフッターより前面 */
     background: rgba(0, 0, 0, 0.35);
     display: flex;
     align-items: flex-start; /* ✅ ④ 閉じるボタンが見えない問題を回避 */
@@ -4254,6 +4268,13 @@ thead {
   backdrop-filter: blur(10px);
 
   z-index: 9999;
+}
+
+@supports selector(:has(*)) {
+  /* ✅ ① 詳細カード（modalPosterがあるモーダル）表示中はフッターを非表示 */
+  .page:has(.modalPoster) .fixedFooter {
+    display: none;
+  }
 }
 
 .fixedFooterLeft {
