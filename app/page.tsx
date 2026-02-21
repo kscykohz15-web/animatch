@@ -2136,9 +2136,10 @@ function IconBadge({ className = "" }: { className?: string }) {
                 </div>
                 <div className="featureArrow">→</div>
               </button>
-　　　　　</div>   {/* ← homeGrid を閉じる */}
-</>      {/* ← Fragment を閉じる */}
-) : null} {/* ← view === "home" の三項演算子を閉じる */}
+　　　　　</div>
+{/* ← homeGrid を閉じる */}
+</>
+) : null}
         {/* =========================
          *  Recommend（ジャンル/気分）
          * ========================= */}
