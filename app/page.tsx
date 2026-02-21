@@ -3533,12 +3533,12 @@ function IconBadge({ className = "" }: { className?: string }) {
   /* Check grid */
   .checkGrid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 6px 10px;
   }
   @media (min-width: 700px) {
     .checkGrid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
   }
   .checkItem {
@@ -3571,10 +3571,11 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .checkText {
     font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
     opacity: 0.95;
+    line-height: 1.25;
   }
 
   /* ✅ ④ ジャンル/気分の見え方：個別の丸囲いをやめて「一つの箱に羅列」 */
@@ -3709,7 +3710,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .cardTop {
     display: grid;
-    grid-template-columns: 200px 1fr; /* ✅ PC：縦長(9:16)を左、右は1列で上から順 */
+    grid-template-columns: 220px 1fr; /* ✅ ② 詳細カード画像サイズに統一 */
     gap: 12px;
     align-items: start;
   }
@@ -3720,9 +3721,10 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .poster {
     width: 100%;
-    aspect-ratio: 9 / 16; /* ✅ PC：縦長(9:16) */
+    aspect-ratio: 16 / 9; /* ✅ ② 詳細カードと同じ比率に統一 */
+    max-height: 380px; /* ✅ ② 詳細カードと同じ上限 */
     object-fit: cover;
-    border-radius: 14px;
+    border-radius: 16px; /* ✅ ② 詳細カードと同じ */
     border: 1px solid rgba(0, 0, 0, 0.10);
     background: rgba(0, 0, 0, 0.02);
   }
@@ -3753,6 +3755,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     justify-content: space-between;
     gap: 10px;
     grid-area: title;
+    order: 1; /* ✅ ③ 説明文を一番上に */
   }
   .cardTitle {
     font-size: 15px;
@@ -3785,6 +3788,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     opacity: 0.92;
     grid-area: desc;
     color: rgba(0, 0, 0, 0.72);
+    order: 0; /* ✅ ③ 説明文を一番上に */
   }
   .cardInfo .desc {
     margin-top: 0;
@@ -3795,6 +3799,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     display: grid;
     gap: 8px;
     grid-area: meta;
+    order: 2; /* ✅ ③ */
   }
   .cardInfo .metaGrid {
     margin-top: 0;
@@ -4041,7 +4046,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     background: rgba(0, 0, 0, 0.07);
   }
   .modalBody {
-    padding: 12px;
+    padding: 12px 12px calc(12px + 84px + env(safe-area-inset-bottom)); /* ✅ ④ もう少し下までスクロールできる余白 */
     flex: 1 1 auto; /* ✅ ③ */
     overflow-y: auto; /* ✅ ③ 線より下だけ自由にスクロール */
     -webkit-overflow-scrolling: touch; /* iOS */
@@ -4062,6 +4067,7 @@ function IconBadge({ className = "" }: { className?: string }) {
 
   .modalPoster {
     width: 100%;
+    aspect-ratio: 16 / 9; /* ✅ ② 簡易カードと統一 */
     /* ✅ 横長画像でも大きすぎないように */
     max-height: 380px;
     object-fit: cover;
