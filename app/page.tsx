@@ -3526,6 +3526,8 @@ function IconBadge({ className = "" }: { className?: string }) {
   .collapseBody {
     padding: 10px 12px 12px;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
+    /* ✅ ② 追加の枠を重ねず、背景色で区切る（選択肢の横幅を広く使う） */
+    background: rgba(0, 0, 0, 0.01);
   }
 
   /* Check grid */
@@ -3583,7 +3585,6 @@ function IconBadge({ className = "" }: { className?: string }) {
     border: none;
     background: transparent;
   }
-  .optionBox .checkGrid,
   .modeBox .checkGrid {
     border: 1px solid rgba(0, 0, 0, 0.12);
     background: #ffffff;
@@ -3595,7 +3596,6 @@ function IconBadge({ className = "" }: { className?: string }) {
     justify-content: flex-start;
     align-items: flex-start;
   }
-  .optionBox .checkItem,
   .modeBox .checkItem {
     border: none;
     background: transparent;
@@ -3604,17 +3604,14 @@ function IconBadge({ className = "" }: { className?: string }) {
     flex: 0 1 auto;
     max-width: 100%;
   }
-  .optionBox .checkItem:hover,
   .modeBox .checkItem:hover {
     background: rgba(0, 0, 0, 0.03);
     border-radius: 10px;
   }
-  .optionBox .checkLabel,
   .modeBox .checkLabel {
     color: rgba(0, 0, 0, 0.88);
     align-items: flex-start;
   }
-  .optionBox .checkText,
   .modeBox .checkText {
     white-space: normal;
     overflow: visible;
@@ -3712,18 +3709,18 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .cardTop {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 200px 1fr; /* ✅ PC：縦長(9:16)を左、右は1列で上から順 */
     gap: 12px;
     align-items: start;
   }
   @media (max-width: 520px) {
     .cardTop {
-      grid-template-columns: 160px 1fr; /* ✅ スマホも横長が見やすい幅に */
+      grid-template-columns: 1fr; /* ✅ スマホ：画像を上、その下に情報（列にしない） */
     }
   }
   .poster {
     width: 100%;
-    aspect-ratio: 16 / 9; /* ✅ ② 縦長ではなく横長へ（PCも） */
+    aspect-ratio: 9 / 16; /* ✅ PC：縦長(9:16) */
     object-fit: cover;
     border-radius: 14px;
     border: 1px solid rgba(0, 0, 0, 0.10);
@@ -3731,28 +3728,22 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   @media (max-width: 520px) {
     .poster {
-      aspect-ratio: 16 / 9; /* ✅ スマホは横長 */
+      aspect-ratio: 16 / 9; /* ✅ スマホ：横長 */
     }
   }
 
   .cardInfo {
     min-width: 0;
-    /* ✅ ③ 添付イメージ寄せ：右側に要素がまとまる配置 */
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    grid-template-areas:
-      "title title"
-      "desc meta";
-    column-gap: 14px;
-    row-gap: 8px;
+    /* ✅ ① PC/スマホ共通：右側は「1列」で上から順（列分割しない） */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
   @media (max-width: 720px) {
     .cardInfo {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "title"
-        "desc"
-        "meta";
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
   }
 
@@ -3993,11 +3984,13 @@ function IconBadge({ className = "" }: { className?: string }) {
   .modalDialog {
     width: min(980px, 100%);
     max-height: calc(100vh - 28px);
-    overflow-y: auto; /* ✅ 画面はみ出し時は縦スクロール */
+    overflow: hidden; /* ✅ ③ スクロールは中（modalBody）に寄せる */
     overflow-x: hidden;
     border-radius: 18px;
     -webkit-overflow-scrolling: touch; /* iOS */
     overscroll-behavior: contain;
+    display: flex; /* ✅ ③ */
+    flex-direction: column; /* ✅ ③ */
   }
   .modalCard {
     border-radius: 18px;
@@ -4007,6 +4000,9 @@ function IconBadge({ className = "" }: { className?: string }) {
     backdrop-filter: blur(10px);
     color: rgba(0, 0, 0, 0.88);
     overflow: hidden;
+    display: flex; /* ✅ ③ */
+    flex-direction: column; /* ✅ ③ */
+    max-height: 100%; /* ✅ ③ */
   }
   .modalHeader {
     display: flex;
@@ -4019,6 +4015,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     top: 0;
     z-index: 2;
     background: #ffffff;
+    flex: 0 0 auto; /* ✅ ③ 閉じる直下の線より上は固定 */
   }
   .profileHeader {
     justify-content: space-between;
@@ -4045,6 +4042,10 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .modalBody {
     padding: 12px;
+    flex: 1 1 auto; /* ✅ ③ */
+    overflow-y: auto; /* ✅ ③ 線より下だけ自由にスクロール */
+    -webkit-overflow-scrolling: touch; /* iOS */
+    overscroll-behavior: contain;
   }
 
   .modalTop {
