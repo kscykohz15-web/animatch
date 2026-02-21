@@ -2956,11 +2956,11 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
 
   ::selection {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.12);
     color: inherit;
   }
   ::-moz-selection {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.12);
     color: inherit;
   }
 
@@ -3000,10 +3000,10 @@ function IconBadge({ className = "" }: { className?: string }) {
     top: 0;
     z-index: 20;
     backdrop-filter: blur(10px);
-    /* ✅ ① ヘッダー色（白背景でも同じ見え方になるよう少し濃く） */
-    background: rgba(140, 140, 140, 0.92);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-    color: #fff;
+    /* ✅ 白背景 + 黒文字へ */
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    color: #111;
   }
 
   /* ✅ ロゴ（ヘッダー）と下（本文コンテナ）の左端を揃える */
@@ -3061,9 +3061,9 @@ function IconBadge({ className = "" }: { className?: string }) {
   .navBtn {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.84);
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
@@ -3071,11 +3071,11 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .headerProfileBtn:hover,
   .navBtn:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.06);
   }
   .headerProfileBtn:active,
   .navBtn:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.08);
   }
 
   .brandTitle {
@@ -3084,7 +3084,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     line-height: 1.05;
     margin: 0 !important;
     padding: 0 !important;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -3092,7 +3092,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     text-align: left;
   }
   .brandTitle:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline: 2px solid rgba(0, 0, 0, 0.22);
     outline-offset: 6px;
     border-radius: 10px;
   }
@@ -3105,7 +3105,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     margin: 0;
     padding: 0;
     text-indent: 0;
-    color: rgba(255, 255, 255, 0.86);
+    color: rgba(0, 0, 0, 0.62);
   }
 
   .container {
@@ -3116,13 +3116,13 @@ function IconBadge({ className = "" }: { className?: string }) {
 
   /* Panels */
   .panel {
-    /* ✅ ① 各機能（赤部分）＝ヘッダーと同色 */
-    background: rgba(140, 140, 140, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    /* ✅ ① 全体を白基調へ（カードも白） */
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.10);
     border-radius: 16px;
     padding: 14px;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
-    color: #fff;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+    color: #111;
   }
   .panelTitleRow {
     display: flex;
@@ -3153,52 +3153,52 @@ function IconBadge({ className = "" }: { className?: string }) {
     margin-top: 12px;
     padding: 10px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.14);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.86);
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
   }
   .btn:hover {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.06);
   }
   .btn:active {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(0, 0, 0, 0.08);
   }
 
   .btnGhost {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.84);
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
   }
   .btnGhost:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .btnGhost:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
 
   .btnTiny {
     padding: 7px 10px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.84);
     cursor: pointer;
     font-size: 12px;
     font-weight: 400;
   }
   .btnTiny:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .btnTiny:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
 
   /* Home cards */
@@ -3216,18 +3216,18 @@ function IconBadge({ className = "" }: { className?: string }) {
     gap: 12px;
     padding: 14px;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    /* ✅ ① 各機能（赤部分）＝ヘッダーと同色 */
-    background: rgba(140, 140, 140, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    /* ✅ 白カードへ */
+    background: #ffffff;
     cursor: pointer;
-    color: #fff;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+    color: rgba(0, 0, 0, 0.88);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
   }
   .featureCard:hover {
-    background: rgba(140, 140, 140, 0.96);
+    background: rgba(0, 0, 0, 0.02);
   }
   .featureCard:active {
-    background: rgba(140, 140, 140, 0.88);
+    background: rgba(0, 0, 0, 0.04);
   }
   .featureIcon {
     width: 44px;
@@ -3236,9 +3236,9 @@ function IconBadge({ className = "" }: { className?: string }) {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    color: #fff;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.88);
   }
   .featureTitle {
     font-size: 15px;
@@ -3264,36 +3264,36 @@ function IconBadge({ className = "" }: { className?: string }) {
     display: none !important;
   }
 
-  /* 旧ボタンが残っていても崩れないように残置（白文字化） */
+  /* 旧ボタンが残っていても崩れないように残置 */
   .adminProfileLink,
   .profileLink {
     width: 100%;
     margin-top: 0;
     padding: 16px 14px;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(30, 30, 30, 0.68);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.84);
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.35px;
     text-align: left;
     position: relative;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
     display: none !important;
   }
   .adminProfileLink:hover,
   .profileLink:hover {
-    background: rgba(40, 40, 40, 0.74);
+    background: rgba(0, 0, 0, 0.05);
   }
   .adminProfileLink:active,
   .profileLink:active {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.07);
   }
   .adminProfileLink:focus-visible,
   .profileLink:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline: 2px solid rgba(0, 0, 0, 0.22);
     outline-offset: 4px;
   }
 
@@ -3314,12 +3314,13 @@ function IconBadge({ className = "" }: { className?: string }) {
   .adminProfileCard {
     width: 100%;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: linear-gradient(180deg, rgba(30, 30, 30, 0.78), rgba(20, 20, 20, 0.62));
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
     padding: 14px;
     display: none !important;
     gap: 10px;
+    color: rgba(0, 0, 0, 0.88);
   }
   .adminProfileCardTop {
     display: flex;
@@ -3353,9 +3354,9 @@ function IconBadge({ className = "" }: { className?: string }) {
     width: 40px;
     height: 40px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.85);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3363,10 +3364,10 @@ function IconBadge({ className = "" }: { className?: string }) {
     cursor: pointer;
   }
   .adminMiniIconBtn:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .adminMiniIconBtn:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
   .adminProfileCardBody {
     font-size: 12px;
@@ -3398,23 +3399,23 @@ function IconBadge({ className = "" }: { className?: string }) {
   .pill {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.84);
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
   }
   .pill:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .pill:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
   .pill.active {
-    background: rgba(255, 255, 255, 0.18);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(0, 0, 0, 0.07);
+    color: rgba(0, 0, 0, 0.88);
+    border-color: rgba(0, 0, 0, 0.16);
     font-weight: 400;
   }
 
@@ -3423,20 +3424,20 @@ function IconBadge({ className = "" }: { className?: string }) {
     width: 100%;
     padding: 12px 12px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(0, 0, 0, 0.18);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    background: #ffffff;
+    color: rgba(0, 0, 0, 0.88);
     font-size: 14px;
     margin-top: 10px;
     outline: none;
     font-weight: 400;
   }
   .input::placeholder {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(0, 0, 0, 0.45);
   }
   .input:focus {
-    border-color: rgba(255, 255, 255, 0.26);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10);
+    border-color: rgba(0, 0, 0, 0.22);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
   }
 
   .suggest {
@@ -3444,25 +3445,25 @@ function IconBadge({ className = "" }: { className?: string }) {
     left: 0;
     right: 0;
     top: calc(100% + 6px);
-    background: rgba(40, 40, 40, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 14px;
     overflow: hidden;
     z-index: 20;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.10);
     backdrop-filter: blur(8px);
   }
   .suggestItem {
     padding: 10px 12px;
     cursor: pointer;
     font-weight: 400;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
   }
   .suggestItem:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.04);
   }
   .suggestItem:active {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.06);
   }
 
   /* Collapsible filters */
@@ -3471,9 +3472,9 @@ function IconBadge({ className = "" }: { className?: string }) {
     gap: 10px;
   }
   .collapseBox {
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 14px;
-    background: rgba(0, 0, 0, 0.14);
+    background: #ffffff;
   }
   .collapseHead {
     width: 100%;
@@ -3485,20 +3486,20 @@ function IconBadge({ className = "" }: { className?: string }) {
     cursor: pointer;
     border: none;
     background: transparent;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     text-align: left;
     font-weight: 400;
   }
   .collapseHead:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.03);
     border-radius: 14px;
   }
   .collapseHead:active {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 14px;
   }
   .collapseHead:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline: 2px solid rgba(0, 0, 0, 0.22);
     outline-offset: 4px;
     border-radius: 14px;
   }
@@ -3506,12 +3507,12 @@ function IconBadge({ className = "" }: { className?: string }) {
     width: 26px;
     height: 26px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.88);
   }
   .collapseTitle {
     font-size: 13px;
@@ -3524,7 +3525,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .collapseBody {
     padding: 10px 12px 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   /* Check grid */
@@ -3544,27 +3545,27 @@ function IconBadge({ className = "" }: { className?: string }) {
     gap: 10px;
     padding: 10px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
     cursor: pointer;
   }
   .checkItem:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.04);
   }
   .checkItem:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.06);
   }
   .checkItem input {
     width: 16px;
     height: 16px;
-    accent-color: #e6e6e6;
+    accent-color: #111;
   }
   .checkLabel {
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 0;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
   }
   .checkText {
     font-size: 13px;
@@ -3574,18 +3575,43 @@ function IconBadge({ className = "" }: { className?: string }) {
     opacity: 0.95;
   }
 
+  /* ✅ ④ ジャンル/気分の見え方：個別の丸囲いをやめて「一つの箱に羅列」 */
+  .optionBox {
+    margin-top: 10px;
+    border-radius: 14px;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+  .optionBox .checkGrid,
+  .modeBox .checkGrid {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 10px;
+    gap: 8px 14px;
+  }
+  .optionBox .checkItem,
+  .modeBox .checkItem {
+    border: none;
+    background: transparent;
+    padding: 6px 4px;
+    border-radius: 0;
+  }
+  .optionBox .checkItem:hover,
+  .modeBox .checkItem:hover {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
+  }
+  .optionBox .checkLabel,
+  .modeBox .checkLabel {
+    color: rgba(0, 0, 0, 0.88);
+  }
+
   .miniActions {
     margin-top: 10px;
     display: flex;
     justify-content: flex-end;
-  }
-
-  .optionBox {
-    margin-top: 10px;
-    border-radius: 14px;
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(0, 0, 0, 0.10);
   }
 
   .modeBox {
@@ -3595,7 +3621,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   /* Results flash ring */
   .flashRing {
     border-radius: 18px;
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
   }
 
   /* Pager */
@@ -3608,9 +3634,9 @@ function IconBadge({ className = "" }: { className?: string }) {
   .pagerArrow {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.86);
     cursor: pointer;
     font-weight: 400;
   }
@@ -3619,10 +3645,10 @@ function IconBadge({ className = "" }: { className?: string }) {
     cursor: not-allowed;
   }
   .pagerArrow:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .pagerArrow:active:not(:disabled) {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
   .pagerNums {
     display: flex;
@@ -3635,21 +3661,21 @@ function IconBadge({ className = "" }: { className?: string }) {
     min-width: 36px;
     padding: 8px 10px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.86);
     cursor: pointer;
     font-size: 13px;
   }
   .pagerNum:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .pagerNum:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
   .pagerNum.active {
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(0, 0, 0, 0.07);
+    border-color: rgba(0, 0, 0, 0.16);
   }
   .pagerDots {
     opacity: 0.7;
@@ -3660,15 +3686,15 @@ function IconBadge({ className = "" }: { className?: string }) {
   .card {
     margin-top: 12px;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(40, 40, 40, 0.74);
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: #ffffff;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
     padding: 12px;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     cursor: pointer;
   }
   .card:active {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.02);
   }
   .cardTop {
     display: grid;
@@ -3678,47 +3704,73 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   @media (max-width: 520px) {
     .cardTop {
-      grid-template-columns: 110px 1fr;
+      grid-template-columns: 140px 1fr; /* ✅ スマホは横長画像が映える幅に */
     }
   }
   .poster {
     width: 100%;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 2 / 3; /* ✅ PCは縦長 */
     object-fit: cover;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.02);
   }
+  @media (max-width: 520px) {
+    .poster {
+      aspect-ratio: 16 / 9; /* ✅ スマホは横長 */
+    }
+  }
+
   .cardInfo {
     min-width: 0;
+    /* ✅ ③ 添付イメージ寄せ：右側に要素がまとまる配置 */
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    grid-template-areas:
+      "title title"
+      "desc meta";
+    column-gap: 14px;
+    row-gap: 8px;
   }
+  @media (max-width: 720px) {
+    .cardInfo {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "title"
+        "desc"
+        "meta";
+    }
+  }
+
   .cardTitleRow {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    grid-area: title;
   }
   .cardTitle {
     font-size: 15px;
     letter-spacing: 0.2px;
     line-height: 1.25;
     font-weight: 400;
+    color: rgba(0, 0, 0, 0.90);
   }
   .openBtn {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.84);
     cursor: pointer;
     font-size: 12px;
     flex: 0 0 auto;
   }
   .openBtn:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .openBtn:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
 
   .desc {
@@ -3726,13 +3778,23 @@ function IconBadge({ className = "" }: { className?: string }) {
     font-size: 12px;
     line-height: 1.55;
     opacity: 0.92;
+    grid-area: desc;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  .cardInfo .desc {
+    margin-top: 0;
   }
 
   .metaGrid {
     margin-top: 10px;
     display: grid;
     gap: 8px;
+    grid-area: meta;
   }
+  .cardInfo .metaGrid {
+    margin-top: 0;
+  }
+
   .metaLine {
     display: grid;
     grid-template-columns: 110px 1fr;
@@ -3748,11 +3810,13 @@ function IconBadge({ className = "" }: { className?: string }) {
     font-size: 12px;
     opacity: 0.75;
     letter-spacing: 0.2px;
+    color: rgba(0, 0, 0, 0.60);
   }
   .metaText {
     font-size: 12px;
     opacity: 0.95;
     min-width: 0;
+    color: rgba(0, 0, 0, 0.86);
   }
 
   .stars {
@@ -3783,7 +3847,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     outline: none;
   }
   .vodIconLink:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.18);
+    outline: 2px solid rgba(0, 0, 0, 0.22);
     outline-offset: 3px;
   }
   .vodIconImg {
@@ -3791,8 +3855,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     height: 32px;
     border-radius: 10px;
     object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   /* Rec explain list */
@@ -3803,15 +3867,15 @@ function IconBadge({ className = "" }: { className?: string }) {
   .recExplain {
     padding: 12px;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.02);
   }
   .recExplainTitle {
     width: 100%;
     text-align: left;
     border: none;
     background: transparent;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     cursor: pointer;
     padding: 0;
     font-size: 14px;
@@ -3833,7 +3897,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   .inlineTitleLink {
     border: none;
     background: transparent;
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     cursor: pointer;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -3879,13 +3943,13 @@ function IconBadge({ className = "" }: { className?: string }) {
   .profileBar {
     height: 10px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.06);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.10);
   }
   .profileFill {
     height: 100%;
-    background: rgba(255, 255, 255, 0.26);
+    background: rgba(0, 0, 0, 0.18);
   }
   .profileVal {
     font-size: 12px;
@@ -3896,8 +3960,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     margin-top: 10px;
     padding: 10px 12px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   /* Modal */
@@ -3905,11 +3969,12 @@ function IconBadge({ className = "" }: { className?: string }) {
     position: fixed;
     inset: 0;
     z-index: 50;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.35);
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* ✅ ④ 閉じるボタンが見えない問題を回避 */
     justify-content: center;
     padding: 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
   }
   .modalDialog {
     width: min(980px, 100%);
@@ -3917,14 +3982,16 @@ function IconBadge({ className = "" }: { className?: string }) {
     overflow-y: auto; /* ✅ 画面はみ出し時は縦スクロール */
     overflow-x: hidden;
     border-radius: 18px;
+    -webkit-overflow-scrolling: touch; /* iOS */
+    overscroll-behavior: contain;
   }
   .modalCard {
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(35, 35, 35, 0.92);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.40);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: #ffffff;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     overflow: hidden;
   }
   .modalHeader {
@@ -3932,8 +3999,12 @@ function IconBadge({ className = "" }: { className?: string }) {
     justify-content: flex-end;
     align-items: center;
     padding: 12px 12px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     gap: 10px;
+    position: sticky; /* ✅ スクロールしても閉じるが押せる */
+    top: 0;
+    z-index: 2;
+    background: #ffffff;
   }
   .profileHeader {
     justify-content: space-between;
@@ -3946,17 +4017,17 @@ function IconBadge({ className = "" }: { className?: string }) {
   .modalCloseBtn {
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.78);
     cursor: pointer;
     font-size: 12px;
   }
   .modalCloseBtn:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .modalCloseBtn:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
   .modalBody {
     padding: 12px;
@@ -3980,8 +4051,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     max-height: 380px;
     object-fit: cover;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   .modalInfo {
@@ -3996,7 +4067,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
 
   .link {
-    color: #fff;
+    color: rgba(0, 0, 0, 0.88);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -4006,8 +4077,8 @@ function IconBadge({ className = "" }: { className?: string }) {
 
   .scorePanel {
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.02);
     padding: 12px;
   }
   .scoreRow {
@@ -4024,13 +4095,13 @@ function IconBadge({ className = "" }: { className?: string }) {
   .scoreBar {
     height: 10px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.06);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.10);
   }
   .scoreBarFill {
     height: 100%;
-    background: rgba(255, 255, 255, 0.26);
+    background: rgba(0, 0, 0, 0.18);
   }
   .scoreVal {
     font-size: 12px;
@@ -4050,8 +4121,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     width: 72px;
     height: 72px;
     border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.03);
   }
   .adminProfileText {
     min-width: 0;
@@ -4084,20 +4155,20 @@ function IconBadge({ className = "" }: { className?: string }) {
     gap: 10px;
     padding: 12px;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.88);
     text-decoration: none;
     cursor: pointer;
   }
   .adminLinkBtn:hover {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .adminLinkBtn:active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.07);
   }
   .adminLinkBtnPrimary {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.05);
   }
   .adminLinkIcon {
     width: 28px;
@@ -4110,8 +4181,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     margin-top: 12px;
     padding: 10px 12px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   /* Responsive tweaks */
