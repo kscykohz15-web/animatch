@@ -2136,7 +2136,9 @@ function IconBadge({ className = "" }: { className?: string }) {
                 </div>
                 <div className="featureArrow">→</div>
               </button>
-
+　　　　　</div>   {/* ← homeGrid を閉じる */}
+</>      {/* ← Fragment を閉じる */}
+) : null} {/* ← view === "home" の三項演算子を閉じる */}
         {/* =========================
          *  Recommend（ジャンル/気分）
          * ========================= */}
@@ -2935,6 +2937,7 @@ function IconBadge({ className = "" }: { className?: string }) {
         <span className="fixedFooterProfileText">管理人プロフィール</span>
       </button>
     </footer>
+
     
       {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
 <style jsx global>{`
