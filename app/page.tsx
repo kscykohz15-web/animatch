@@ -2924,7 +2924,7 @@ function IconBadge({ className = "" }: { className?: string }) {
             </div>
           </div>
         ) : null}
-            </main>
+          </main>
 
       {/* ✅ ① フッター（全ページ共通）：左下ⓒAniMatch / 右下 管理人プロフィール（固定） */}
       <footer className="fixedFooter" role="contentinfo" aria-label="footer">
@@ -2938,15 +2938,23 @@ function IconBadge({ className = "" }: { className?: string }) {
         </button>
       </footer>
 
+      {/* ✅ グローバルCSSは “returnの中で” かつ “最後に” 置くのが安全 */}
+      <style jsx global>{`
+        /* ここにあなたのCSS全文（今のもの）をそのまま貼る */
+      `}</style>
+    </div>
+  );
+}
+
       {/* ===== ここから下（<style jsx global>{）を次の出力に続けます ===== */}
 <style jsx global>{`
   html,
   body {
     margin: 0;
     padding: 0 !important;
-    /* ✅ 赤丸：ブラウザUIの透けも含めて「白」に統一 */
+    /* ✅ ② 囲いの背後（青部分）＝白 */
     background: #ffffff;
-    color: #fff;
+    color: #111;
   }
   * {
     box-sizing: border-box;
@@ -2987,9 +2995,9 @@ function IconBadge({ className = "" }: { className?: string }) {
 
   .page {
     min-height: 100vh;
-    /* ✅ 青丸：ロゴ（ヘッダー）背景と同色に統一（2色運用：白 / この色） */
-    background: #8c8c8c;
-    color: #fff;
+    /* ✅ ② 囲いの背後（青部分）＝白 */
+    background: #ffffff;
+    color: #111;
   }
 
   /* Header */
@@ -2998,9 +3006,10 @@ function IconBadge({ className = "" }: { className?: string }) {
     top: 0;
     z-index: 20;
     backdrop-filter: blur(10px);
-    /* ✅ ロゴ背景（黄色丸）＝この色を基準に */
+    /* ✅ ① ヘッダー色（白背景でも同じ見え方になるよう少し濃く） */
     background: rgba(140, 140, 140, 0.92);
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
   }
 
   /* ✅ ロゴ（ヘッダー）と下（本文コンテナ）の左端を揃える */
@@ -3113,7 +3122,8 @@ function IconBadge({ className = "" }: { className?: string }) {
 
   /* Panels */
   .panel {
-    background: rgba(40, 40, 40, 0.78);
+    /* ✅ ① 各機能（赤部分）＝ヘッダーと同色 */
+    background: rgba(140, 140, 140, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 16px;
     padding: 14px;
@@ -3213,16 +3223,17 @@ function IconBadge({ className = "" }: { className?: string }) {
     padding: 14px;
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(40, 40, 40, 0.72);
+    /* ✅ ① 各機能（赤部分）＝ヘッダーと同色 */
+    background: rgba(140, 140, 140, 0.92);
     cursor: pointer;
     color: #fff;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
   }
   .featureCard:hover {
-    background: rgba(50, 50, 50, 0.78);
+    background: rgba(140, 140, 140, 0.96);
   }
   .featureCard:active {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(140, 140, 140, 0.88);
   }
   .featureIcon {
     width: 44px;
@@ -4128,300 +4139,300 @@ function IconBadge({ className = "" }: { className?: string }) {
     }
   }
 
-  /* ③ 背景を真っ白（赤丸の指定に合わせて白へ） */
-  html,
-  body {
-    background: #ffffff !important;
-  }
+/* ③ 背景を真っ白 */
+html,
+body {
+  background: #ffffff !important;
+}
 
-  /* フッター分だけ下に余白（コンテンツが隠れないように） */
-  body {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom));
-  }
+/* フッター分だけ下に余白（コンテンツが隠れないように） */
+body {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+}
 
-  /* ④ 太字禁止（全体） */
-  *,
-  *::before,
-  *::after {
-    font-weight: 400 !important;
-  }
-  b,
-  strong,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  th,
-  thead {
-    font-weight: 400 !important;
-  }
+/* ④ 太字禁止（全体） */
+*,
+*::before,
+*::after {
+  font-weight: 400 !important;
+}
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+thead {
+  font-weight: 400 !important;
+}
 
-  /* ① 左下ⓒAniMatch / 右下 管理人プロフィール（固定フッター） */
-  .fixedFooter {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+/* ① 左下ⓒAniMatch / 右下 管理人プロフィール（固定フッター） */
+.fixedFooter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 
-    padding: 10px 14px;
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding: 10px 14px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
 
-    /* ✅ 青丸：フッターもロゴ背景色に統一 */
-    background: rgba(140, 140, 140, 0.92);
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(10px);
+  background: rgba(245, 245, 245, 0.92);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
 
-    z-index: 9999;
-  }
+  z-index: 9999;
+}
 
-  .fixedFooterLeft {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.78);
-    letter-spacing: 0.2px;
-    white-space: nowrap;
-  }
+.fixedFooterLeft {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
 
-  .fixedFooterProfileBtn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+.fixedFooterProfileBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 
-    border-radius: 999px;
-    padding: 8px 12px;
+  border-radius: 999px;
+  padding: 8px 12px;
 
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(248, 248, 248, 0.96);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
 
-    cursor: pointer;
-    user-select: none;
+  cursor: pointer;
+  user-select: none;
 
-    color: rgba(255, 255, 255, 0.92);
-    transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
-  }
+  color: rgba(0, 0, 0, 0.84);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
 
-  .fixedFooterProfileBtn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
-    background: rgba(255, 255, 255, 0.16);
-  }
+.fixedFooterProfileBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  background: rgba(250, 250, 250, 0.98);
+}
 
-  .fixedFooterProfileBtn:active {
-    transform: translateY(0);
-  }
+.fixedFooterProfileBtn:active {
+  transform: translateY(0);
+}
 
-  .fixedFooterProfileBtn:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.38);
-    outline-offset: 2px;
-  }
+.fixedFooterProfileBtn:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.28);
+  outline-offset: 2px;
+}
 
-  .fixedFooterProfileIcon {
-    display: grid;
-    place-items: center;
-    width: 22px;
-    height: 22px;
-  }
+.fixedFooterProfileIcon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+}
 
+.fixedFooterProfileText {
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
   .fixedFooterProfileText {
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    white-space: nowrap;
+    display: none;
   }
+}
 
-  @media (max-width: 360px) {
-    .fixedFooterProfileText {
-      display: none;
-    }
-  }
+/* ② 管理人プロフィール Modal（プロフィール専用クラスで安全に適用） */
+.profileModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
 
-  /* ② 管理人プロフィール Modal（プロフィール専用クラスで安全に適用） */
-  .profileModalOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 10000;
+}
 
-    padding: 16px;
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
-    z-index: 10000;
-  }
+.profileModalDialog {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 32px - env(safe-area-inset-bottom));
+  overflow: auto;
+}
 
-  .profileModalDialog {
-    width: min(560px, 100%);
-    max-height: calc(100vh - 32px - env(safe-area-inset-bottom));
-    overflow: auto;
-  }
+.profileModalCard {
+  background: #f7f7f7;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+}
 
-  .profileModalCard {
-    background: #f7f7f7;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
-  }
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 
-  .profileHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
 
-    padding: 14px 14px 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  }
+.profileHeader .modalHeaderTitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.72);
+}
 
-  .profileHeader .modalHeaderTitle {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.72);
-  }
+.modalCloseBtn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.75);
+}
 
-  .modalCloseBtn {
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.04);
-    padding: 6px 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    color: rgba(0, 0, 0, 0.75);
-  }
+.modalCloseBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
 
-  .modalCloseBtn:hover {
-    background: rgba(0, 0, 0, 0.06);
-  }
+.profileModalCard .modalBody {
+  padding: 14px;
+}
 
-  .profileModalCard .modalBody {
-    padding: 14px;
-  }
+/* プロフィールカード本体（添付イメージ寄せ） */
+.profileSheetCard {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #f7f7f7;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
 
-  /* プロフィールカード本体（添付イメージ寄せ） */
-  .profileSheetCard {
-    border-radius: 18px;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    background: #f7f7f7;
-    overflow: hidden;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
-  }
+.profileSheetBanner {
+  position: relative;
+  height: 90px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.08));
+}
 
-  .profileSheetBanner {
-    position: relative;
-    height: 90px;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.08));
-  }
+.profileSheetPaw {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.12);
+  filter: blur(0.2px);
+}
 
-  .profileSheetPaw {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.12);
-    filter: blur(0.2px);
-  }
+.profileSheetPaw.paw1 { left: 14px; top: 18px; }
+.profileSheetPaw.paw2 { left: 30px; top: 34px; opacity: 0.85; }
+.profileSheetPaw.paw3 { right: 22px; top: 22px; opacity: 0.75; }
+.profileSheetPaw.paw4 { right: 40px; top: 40px; opacity: 0.6; }
 
-  .profileSheetPaw.paw1 { left: 14px; top: 18px; }
-  .profileSheetPaw.paw2 { left: 30px; top: 34px; opacity: 0.85; }
-  .profileSheetPaw.paw3 { right: 22px; top: 22px; opacity: 0.75; }
-  .profileSheetPaw.paw4 { right: 40px; top: 40px; opacity: 0.6; }
+.profileSheetAvatarWrap {
+  position: absolute;
+  left: 16px;
+  bottom: -26px;
 
-  .profileSheetAvatarWrap {
-    position: absolute;
-    left: 16px;
-    bottom: -26px;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
 
-    width: 72px;
-    height: 72px;
-    border-radius: 18px;
+  background: #f7f7f7;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.10);
 
-    background: #f7f7f7;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.10);
+  display: grid;
+  place-items: center;
+}
 
-    display: grid;
-    place-items: center;
-  }
+.profileSheetAvatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.02));
+}
 
-  .profileSheetAvatar {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.02));
-  }
+.profileSheetBody {
+  padding: 40px 16px 16px;
+}
 
-  .profileSheetBody {
-    padding: 40px 16px 16px;
-  }
+.profileSheetName {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.88);
+}
 
-  .profileSheetName {
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.88);
-  }
+.profileSheetBio {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.70);
+}
 
-  .profileSheetBio {
-    margin-top: 10px;
-    font-size: 13.5px;
-    line-height: 1.75;
-    color: rgba(0, 0, 0, 0.70);
-  }
+.profileSheetLinks {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
 
-  .profileSheetLinks {
-    margin-top: 12px;
-    display: flex;
-    gap: 10px;
-  }
+.profileSheetIconBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
 
-  .profileSheetIconBtn {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+  display: grid;
+  place-items: center;
 
-    display: grid;
-    place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
 
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(0, 0, 0, 0.04);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.85);
+  text-decoration: none;
 
-    color: rgba(0, 0, 0, 0.85);
-    text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
 
-    transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
-  }
+.profileSheetIconBtn:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+}
 
-  .profileSheetIconBtn:hover {
-    transform: translateY(-1px);
-    background: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-  }
+.profileSheetIconBtn:active {
+  transform: translateY(0);
+}
 
-  .profileSheetIconBtn:active {
-    transform: translateY(0);
-  }
+.profileSheetIconBtnPrimary {
+  background: rgba(0, 0, 0, 0.055);
+  border-color: rgba(0, 0, 0, 0.16);
+}
 
-  .profileSheetIconBtnPrimary {
-    background: rgba(0, 0, 0, 0.055);
-    border-color: rgba(0, 0, 0, 0.16);
-  }
+.profileSheetNote {
+  margin-top: 10px;
+}
 
-  .profileSheetNote {
-    margin-top: 10px;
-  }
+.profileSheetNote .small {
+  font-size: 12px;
+}
 
-  .profileSheetNote .small {
-    font-size: 12px;
-  }
-
-  .profileSheetNote .muted {
-    color: rgba(0, 0, 0, 0.55);
-  }
+.profileSheetNote .muted {
+  color: rgba(0, 0, 0, 0.55);
+}
+  
 `}</style>
 </div>
   );
