@@ -3533,12 +3533,12 @@ function IconBadge({ className = "" }: { className?: string }) {
   /* Check grid */
   .checkGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 6px 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
   @media (min-width: 700px) {
     .checkGrid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .checkItem {
@@ -3571,11 +3571,10 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .checkText {
     font-size: 13px;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     opacity: 0.95;
-    line-height: 1.25;
   }
 
   /* ✅ ④ ジャンル/気分の見え方：個別の丸囲いをやめて「一つの箱に羅列」 */
@@ -3586,7 +3585,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     border: none;
     background: transparent;
   }
-  .modeBox .checkGrid {
+  .modeBox .checkGrid,
+  .collapseBody .checkGrid {
     border: 1px solid rgba(0, 0, 0, 0.12);
     background: #ffffff;
     border-radius: 14px;
@@ -3597,7 +3597,8 @@ function IconBadge({ className = "" }: { className?: string }) {
     justify-content: flex-start;
     align-items: flex-start;
   }
-  .modeBox .checkItem {
+  .modeBox .checkItem,
+  .collapseBody .checkItem {
     border: none;
     background: transparent;
     padding: 4px 6px; /* ✅ 間隔を最小限に（ゼロではない） */
@@ -3605,15 +3606,18 @@ function IconBadge({ className = "" }: { className?: string }) {
     flex: 0 1 auto;
     max-width: 100%;
   }
-  .modeBox .checkItem:hover {
+  .modeBox .checkItem:hover,
+  .collapseBody .checkItem:hover {
     background: rgba(0, 0, 0, 0.03);
     border-radius: 10px;
   }
-  .modeBox .checkLabel {
+  .modeBox .checkLabel,
+  .collapseBody .checkLabel {
     color: rgba(0, 0, 0, 0.88);
     align-items: flex-start;
   }
-  .modeBox .checkText {
+  .modeBox .checkText,
+  .collapseBody .checkText {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
@@ -3710,7 +3714,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .cardTop {
     display: grid;
-    grid-template-columns: 220px 1fr; /* ✅ ② 詳細カード画像サイズに統一 */
+    grid-template-columns: 200px 1fr; /* ✅ PC：縦長(9:16)を左、右は1列で上から順 */
     gap: 12px;
     align-items: start;
   }
@@ -3721,10 +3725,9 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
   .poster {
     width: 100%;
-    aspect-ratio: 16 / 9; /* ✅ ② 詳細カードと同じ比率に統一 */
-    max-height: 380px; /* ✅ ② 詳細カードと同じ上限 */
+    aspect-ratio: 9 / 16; /* ✅ PC：縦長(9:16) */
     object-fit: cover;
-    border-radius: 16px; /* ✅ ② 詳細カードと同じ */
+    border-radius: 14px;
     border: 1px solid rgba(0, 0, 0, 0.10);
     background: rgba(0, 0, 0, 0.02);
   }
@@ -3755,7 +3758,6 @@ function IconBadge({ className = "" }: { className?: string }) {
     justify-content: space-between;
     gap: 10px;
     grid-area: title;
-    order: 1; /* ✅ ③ 説明文を一番上に */
   }
   .cardTitle {
     font-size: 15px;
@@ -3788,7 +3790,6 @@ function IconBadge({ className = "" }: { className?: string }) {
     opacity: 0.92;
     grid-area: desc;
     color: rgba(0, 0, 0, 0.72);
-    order: 0; /* ✅ ③ 説明文を一番上に */
   }
   .cardInfo .desc {
     margin-top: 0;
@@ -3799,7 +3800,6 @@ function IconBadge({ className = "" }: { className?: string }) {
     display: grid;
     gap: 8px;
     grid-area: meta;
-    order: 2; /* ✅ ③ */
   }
   .cardInfo .metaGrid {
     margin-top: 0;
@@ -3989,6 +3989,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   .modalDialog {
     width: min(980px, 100%);
     max-height: calc(100vh - 28px);
+    max-height: calc(100dvh - 28px);
     overflow: hidden; /* ✅ ③ スクロールは中（modalBody）に寄せる */
     overflow-x: hidden;
     border-radius: 18px;
@@ -4046,7 +4047,7 @@ function IconBadge({ className = "" }: { className?: string }) {
     background: rgba(0, 0, 0, 0.07);
   }
   .modalBody {
-    padding: 12px 12px calc(12px + 84px + env(safe-area-inset-bottom)); /* ✅ ④ もう少し下までスクロールできる余白 */
+    padding: 12px;
     flex: 1 1 auto; /* ✅ ③ */
     overflow-y: auto; /* ✅ ③ 線より下だけ自由にスクロール */
     -webkit-overflow-scrolling: touch; /* iOS */
@@ -4067,9 +4068,9 @@ function IconBadge({ className = "" }: { className?: string }) {
 
   .modalPoster {
     width: 100%;
-    aspect-ratio: 16 / 9; /* ✅ ② 簡易カードと統一 */
     /* ✅ 横長画像でも大きすぎないように */
     max-height: 380px;
+    aspect-ratio: 9 / 16; /* ✅ ② PC：縦長(9:16) */
     object-fit: cover;
     border-radius: 16px;
     border: 1px solid rgba(0, 0, 0, 0.10);
@@ -4219,9 +4220,26 @@ function IconBadge({ className = "" }: { className?: string }) {
     }
     .modalOverlay {
       padding: 12px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom) + 56px); /* ✅ ④ 下が欠けないように余白 */
+    }
+    .modalDialog {
+      max-height: calc(100vh - 24px - 56px - env(safe-area-inset-bottom)); /* ✅ ④ 縦幅を少し狭める */
+      max-height: calc(100dvh - 24px - 56px - env(safe-area-inset-bottom)); /* ✅ ④ iOS対応 */
     }
     .modalPoster {
       max-height: 320px;
+      aspect-ratio: 16 / 9; /* ✅ ② スマホ：横長(16:9) */
+    }
+
+    /* ✅ ③ 簡易カード：画像直下に説明文（スマホのみ） */
+    .cardInfo .desc {
+      order: 0;
+    }
+    .cardInfo .cardTitleRow {
+      order: 1;
+    }
+    .cardInfo .metaGrid {
+      order: 2;
     }
   }
 
@@ -4417,7 +4435,11 @@ thead {
 .profileSheetBanner {
   position: relative;
   height: 90px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.03),
+    rgba(0, 0, 0, 0.08)
+  );
 }
 
 .profileSheetPaw {
@@ -4429,10 +4451,25 @@ thead {
   filter: blur(0.2px);
 }
 
-.profileSheetPaw.paw1 { left: 14px; top: 18px; }
-.profileSheetPaw.paw2 { left: 30px; top: 34px; opacity: 0.85; }
-.profileSheetPaw.paw3 { right: 22px; top: 22px; opacity: 0.75; }
-.profileSheetPaw.paw4 { right: 40px; top: 40px; opacity: 0.6; }
+.profileSheetPaw.paw1 {
+  left: 14px;
+  top: 18px;
+}
+.profileSheetPaw.paw2 {
+  left: 30px;
+  top: 34px;
+  opacity: 0.85;
+}
+.profileSheetPaw.paw3 {
+  right: 22px;
+  top: 22px;
+  opacity: 0.75;
+}
+.profileSheetPaw.paw4 {
+  right: 40px;
+  top: 40px;
+  opacity: 0.6;
+}
 
 .profileSheetAvatarWrap {
   position: absolute;
@@ -4456,7 +4493,11 @@ thead {
   height: 54px;
   border-radius: 14px;
   border: 1px solid rgba(0, 0, 0, 0.10);
-  background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.02));
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(0, 0, 0, 0.10),
+    rgba(0, 0, 0, 0.02)
+  );
 }
 
 .profileSheetBody {
@@ -4525,7 +4566,7 @@ thead {
 .profileSheetNote .muted {
   color: rgba(0, 0, 0, 0.55);
 }
-  
+
 `}</style>
 </div>
   );
