@@ -2722,6 +2722,12 @@ function IconBadge({ className = "" }: { className?: string }) {
                     <div className="modalInfo">
                       <div className="modalTitle">{selectedAnime.title}</div>
 
+{selectedAnime.summary ? (
+                    <div className="desc" style={{ marginTop: 12 }}>
+                      {shortSummary(selectedAnime.summary, 260)}
+                    </div>
+                  ) : null}
+                  
                       <div className="metaLine">
                         <span className="metaLabel">ジャンル</span>
                         <span className="metaText">{getGenreArray(selectedAnime.genre).slice(0, 6).join(" / ") || "—"}</span>
@@ -2825,12 +2831,6 @@ function IconBadge({ className = "" }: { className?: string }) {
                       </div>
                     </div>
                   </div>
-
-                  {selectedAnime.summary ? (
-                    <div className="desc" style={{ marginTop: 12 }}>
-                      {shortSummary(selectedAnime.summary, 260)}
-                    </div>
-                  ) : null}
 
                   <div style={{ height: 14 }} />
                 </div>
