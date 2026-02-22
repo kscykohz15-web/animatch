@@ -3724,19 +3724,21 @@ function IconBadge({ className = "" }: { className?: string }) {
     }
   }
   .poster {
-    width: 100%;
-    aspect-ratio: 9 / 16; /* ✅ PC：縦長(9:16) */
-    object-fit: cover;
-    border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    background: rgba(0, 0, 0, 0.02);
-  }
-  @media (max-width: 520px) {
-    .poster {
-      aspect-ratio: 16 / 9; /* ✅ スマホ：横長 */
-    }
-  }
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;   /* PCは9:16 */
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(0, 0, 0, 0.02);
+}
 
+@media (max-width: 520px) {
+  .poster {
+    aspect-ratio: 16 / 9; /* スマホは16:9 */
+  }
+}
   .cardInfo {
     min-width: 0;
     /* ✅ ① PC/スマホ共通：右側は「1列」で上から順（列分割しない） */
@@ -4067,15 +4069,23 @@ function IconBadge({ className = "" }: { className?: string }) {
   }
 
   .modalPoster {
-    width: 100%;
-    /* ✅ 横長画像でも大きすぎないように */
-    max-height: 380px;
-    aspect-ratio: 9 / 16; /* ✅ ② PC：縦長(9:16) */
-    object-fit: cover;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    background: rgba(0, 0, 0, 0.02);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;   /* PCは9:16 */
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(0, 0, 0, 0.02);
+  max-height: none;       /* ★これ重要（既存のmax-heightが比率を壊す） */
+}
+
+@media (max-width: 520px) {
+  .modalPoster {
+    aspect-ratio: 16 / 9; /* スマホは16:9 */
+    max-height: none;     /* ★ここも */
   }
+}
 
   .modalInfo {
     min-width: 0;
