@@ -2727,7 +2727,6 @@ function IconBadge({ className = "" }: { className?: string }) {
                       {shortSummary(selectedAnime.summary, 260)}
                     </div>
                   ) : null}
-                  
                       <div className="metaLine">
                         <span className="metaLabel">ジャンル</span>
                         <span className="metaText">{getGenreArray(selectedAnime.genre).slice(0, 6).join(" / ") || "—"}</span>
@@ -3796,6 +3795,11 @@ function IconBadge({ className = "" }: { className?: string }) {
   .cardInfo .desc {
     margin-top: 0;
   }
+
+  /* 詳細モーダル：説明文の直後に来る最初の metaLine だけ、少し隙間 */
+.modalBody .desc + .metaLine {
+  margin-top: 6px;
+}
 
   .metaGrid {
     margin-top: 10px;
