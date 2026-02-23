@@ -1792,7 +1792,7 @@ const scored = candidates
 
     const baseGenresN = new Set(getGenreArray(base.genre).map((x) => normalizeForCompare(x)));
 
-    const scored = animeList
+    const scoredRaw = animeList
   .filter((a) => String(a.id ?? a.title) !== String(base.id ?? base.title))
   .map((a) => {
     let sumW = 0;
@@ -1824,7 +1824,7 @@ const scored = candidates
   .slice(0, 80)
   .map((x) => x.a);
 
-    scored = applyCollapsedFilters(scored);
+const scored = applyCollapsedFilters(scoredRaw);
 
     const out = scored.slice(0, 30).map((w) => ({
       work: w,
