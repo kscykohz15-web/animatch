@@ -1649,29 +1649,46 @@ export default function Home() {
 
     const inputTitlesSet = new Set(uniq.map((w) => w.title));
     const candidates = animeList.filter((w) => !inputTitlesSet.has(w.title));
+    const userGenreCount = new Map<string, number>();
+for (const w of uniq) {
+  for (const g of getGenreArray(w.genre)) {
+    const k = normalizeForCompare(g);
+    if (!k) continue;
+    userGenreCount.set(k, (userGenreCount.get(k) ?? 0) + 1);
+  }
+}
 
-    const scored = candidates
-      .map((a) => {
-        let sum = 0;
-        let cnt = 0;
+const scored = candidates
+  .map((a) => {
+    let sum = 0;
+    let cnt = 0;
 
-        for (const ax of axes) {
-          const v = toScore10((a as any)[ax.key]);
-          if (v === null) continue;
-          const u = userAvg[ax.key as string] ?? 0;
-          sum += Math.abs(v - u);
-          cnt++;
-        }
+    for (const ax of axes) {
+      const v = toScore10((a as any)[ax.key]);
+      if (v === null) continue;
+      const u = userAvg[ax.key as string] ?? 0;
+      sum += Math.abs(v - u);
+      cnt++;
+    }
 
-        const axisScore = cnt ? Math.max(0, 100 - (sum / cnt) * 16) : 0;
-        const ov = overallScore100(a) ?? 0;
-        const score = axisScore + ov * 0.2;
+    const axisScore = cnt ? Math.max(0, 100 - (sum / cnt) * 16) : 0;
+    const ov = overallScore100(a) ?? 0;
 
-        return { a, score };
-      })
-      .sort((x, y) => y.score - x.score)
-      .slice(0, 60)
-      .map((x) => x.a);
+    // ✅ 入力作品のジャンル傾向にどれだけ乗ってるか（頻度も反映）
+    const gN = getGenreArray(a.genre).map((x) => normalizeForCompare(x));
+    let genreHit = 0;
+    for (const g of gN) genreHit += userGenreCount.get(g) ?? 0;
+
+    return { a, genreHit, axisScore, ov };
+  })
+  .sort((x, y) => {
+    // ✅ ジャンル最優先 → その上で点数の近さ → さらに総合評価
+    if (y.genreHit !== x.genreHit) return y.genreHit - x.genreHit;
+    if (y.axisScore !== x.axisScore) return y.axisScore - x.axisScore;
+    return y.ov - x.ov;
+  })
+  .slice(0, 60)
+  .map((x) => x.a);
 
     const filtered = applyCollapsedFilters(scored);
 
@@ -1775,34 +1792,37 @@ export default function Home() {
 
     const baseGenresN = new Set(getGenreArray(base.genre).map((x) => normalizeForCompare(x)));
 
-    let scored = animeList
-      .filter((a) => String(a.id ?? a.title) !== String(base.id ?? base.title))
-      .map((a) => {
-        let sumW = 0;
-        let sum = 0;
+    const scored = animeList
+  .filter((a) => String(a.id ?? a.title) !== String(base.id ?? base.title))
+  .map((a) => {
+    let sumW = 0;
+    let sum = 0;
 
-        for (const ax of axes) {
-          const bv = toScore10((base as any)[ax.key]);
-          const v = toScore10((a as any)[ax.key]);
-          if (bv === null || v === null) continue;
-          sumW += ax.w;
-          sum += Math.abs(v - bv) * ax.w;
-        }
+    for (const ax of axes) {
+      const bv = toScore10((base as any)[ax.key]);
+      const v = toScore10((a as any)[ax.key]);
+      if (bv === null || v === null) continue;
+      sumW += ax.w;
+      sum += Math.abs(v - bv) * ax.w;
+    }
 
-        const axisSim = sumW ? Math.max(0, 100 - (sum / sumW) * 14) : 0;
+    const axisSim = sumW ? Math.max(0, 100 - (sum / sumW) * 14) : 0;
 
-        const gN = getGenreArray(a.genre).map((x) => normalizeForCompare(x));
-        const common = gN.filter((x) => baseGenresN.has(x)).length;
-        const genreBoost = common ? Math.min(10, common * 4) : 0;
+    const gN = getGenreArray(a.genre).map((x) => normalizeForCompare(x));
+    const common = gN.filter((x) => baseGenresN.has(x)).length;
 
-        const ov = overallScore100(a) ?? 0;
-        const score = axisSim + genreBoost + ov * 0.12;
+    const ov = overallScore100(a) ?? 0;
 
-        return { a, score };
-      })
-      .sort((x, y) => y.score - x.score)
-      .slice(0, 80)
-      .map((x) => x.a);
+    return { a, common, axisSim, ov };
+  })
+  .sort((x, y) => {
+    // ✅ ジャンル最優先 → その上で点数の近さ → さらに総合評価
+    if (y.common !== x.common) return y.common - x.common;
+    if (y.axisSim !== x.axisSim) return y.axisSim - x.axisSim;
+    return y.ov - x.ov;
+  })
+  .slice(0, 80)
+  .map((x) => x.a);
 
     scored = applyCollapsedFilters(scored);
 
