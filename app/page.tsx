@@ -1953,8 +1953,9 @@ function IconBadge({ className = "" }: { className?: string }) {
               </button>
             </div>
 
-            <div className="metaGrid">
             {a.summary ? <div className="desc">{shortSummary(a.summary, 140)}</div> : null}
+              
+              <div className="metaGrid">
               <div className="metaLine">
                 <span className="metaLabel">ジャンル</span>
                 <span className="metaText">{getGenreArray(a.genre).slice(0, 4).join(" / ") || "—"}</span>
