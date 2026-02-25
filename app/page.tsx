@@ -2006,11 +2006,6 @@ function IconBadge({ className = "" }: { className?: string }) {
               </div>
 
               <div className="metaLine">
-                <span className="metaLabel">話数</span>
-                <span className="metaText">{getEpisodeCount(a) ? `全${getEpisodeCount(a)}話` : "—"}</span>
-              </div>
-
-              <div className="metaLine">
                 <span className="metaLabel">評価</span>
                 <span className="metaText">
                   <StarRating value={star} showText />
@@ -2785,31 +2780,6 @@ function IconBadge({ className = "" }: { className?: string }) {
                           {overallScore100(selectedAnime) !== null ? <span className="small muted">{`（${overallScore100(selectedAnime)!.toFixed(1)}/100）`}</span> : null}
                         </span>
                       </div>
-
-                      <div className="metaLine">
-                        <span className="metaLabel">原作</span>
-                        <span className="metaText">{sourceLoading ? "読み込み中…" : formatOriginalInfo(sourceLinks)}</span>
-                      </div>
-
-                      {modalSeriesStats ? (
-                        <>
-                          <div className="metaLine">
-                            <span className="metaLabel">シリーズ</span>
-                            <span className="metaText">{modalSeriesStats.displayTitle}</span>
-                          </div>
-                          <div className="metaLine">
-                            <span className="metaLabel">アニメシリーズ</span>
-                            <span className="metaText">
-                              {modalSeriesStats.tvCount}作品
-                              {modalSeriesStats.tvEpisodes !== null ? ` / 合計${modalSeriesStats.tvEpisodes}話` : " / 合計話数：—"}
-                            </span>
-                          </div>
-                          <div className="metaLine">
-                            <span className="metaLabel">劇場版</span>
-                            <span className="metaText">{modalSeriesStats.movieCount}作品</span>
-                          </div>
-                        </>
-                      ) : null}
 
                       <div className="metaLine">
                         <span className="metaLabel">公式サイト</span>
