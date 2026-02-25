@@ -847,6 +847,15 @@ export default function Home() {
     return img || titleImage(work.title);
   }
 
+  const MIN_START_YEAR = 2000;
+
+function yearOk(a: AnimeWork) {
+  const y = a.start_year ?? null;
+  // 放送年が入っている＆2000未満 → 除外
+  if (typeof y === "number" && Number.isFinite(y) && y < MIN_START_YEAR) return false;
+  return true; // null（不明）は表示する
+}
+
   // modal（作品詳細）
   const [selectedAnime, setSelectedAnime] = useState<AnimeWork | null>(null);
   const [sourceLinks, setSourceLinks] = useState<SourceLink[]>([]);
@@ -1235,13 +1244,13 @@ export default function Home() {
   const [resultFlash, setResultFlash] = useState(false);
 
   function setResults(list: AnimeWork[]) {
-    setResultAll(list);
-    setResultPage(1);
-    resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    setResultFlash(true);
-    window.setTimeout(() => setResultFlash(false), 650);
-  }
-
+  const filtered = list.filter(yearOk); // ✅ 追加
+  setResultAll(filtered);
+  setResultPage(1);
+  resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  setResultFlash(true);
+  window.setTimeout(() => setResultFlash(false), 650);
+}
   const totalPages = useMemo(() => Math.max(1, Math.ceil(resultAll.length / RESULT_PAGE_SIZE)), [resultAll.length]);
   const visibleResults = useMemo(() => {
     const start = (resultPage - 1) * RESULT_PAGE_SIZE;
@@ -1648,7 +1657,9 @@ export default function Home() {
     if (missed.length) summaryLines.push(`※ 見つからなかった作品：${missed.slice(0, 3).join(" / ")}${missed.length > 3 ? " ほか" : ""}`);
 
     const inputTitlesSet = new Set(uniq.map((w) => w.title));
-    const candidates = animeList.filter((w) => !inputTitlesSet.has(w.title));
+    const candidates = animeList
+  .filter((w) => !inputTitlesSet.has(w.title))
+  .filter(yearOk); // ✅ 追加
     const userGenreCount = new Map<string, number>();
 for (const w of uniq) {
   for (const g of getGenreArray(w.genre)) {
@@ -1826,10 +1837,10 @@ const scored = candidates
 
 const scored = applyCollapsedFilters(scoredRaw);
 
-    const out = scored.slice(0, 30).map((w) => ({
-      work: w,
-      reasons: buildSimilarReasons(base, w),
-    }));
+    const out = scored
+  .filter(yearOk) // ✅ 追加（作品側）
+  .slice(0, 30)
+  .map((w) => ({ work: w, reasons: buildSimilarReasons(base, w) }));
 
     setSimilarBase(base);
     setSimilarResults(out);
@@ -1927,7 +1938,10 @@ function IconBadge({ className = "" }: { className?: string }) {
     return lines.slice(0, 3);
   }
 
-  const adminRecsRaw = useMemo(() => animeList.filter((a) => a.is_recommended === true), [animeList]);
+  const adminRecsRaw = useMemo(
+  () => animeList.filter((a) => a.is_recommended === true).filter(yearOk),
+  [animeList]
+);
 
   const adminRecs = useMemo(() => {
     const shuffled = shuffleWithSeed(adminRecsRaw, adminSeedRef.current);
