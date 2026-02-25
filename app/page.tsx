@@ -3729,8 +3729,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   .poster {
   width: 100%;
   height: auto;
-  aspect-ratio: 9 / 16;   /* PCは9:16 */
-  object-fit: cover;
+  aspect-ratio: 3 / 4
   display: block;
   border-radius: 14px;
   border: 1px solid rgba(0, 0, 0, 0.10);
@@ -4079,7 +4078,7 @@ function IconBadge({ className = "" }: { className?: string }) {
   .modalPoster {
   width: 100%;
   height: auto;
-  aspect-ratio: 9 / 16;   /* PCは9:16 */
+  aspect-ratio: 3 / 4;   /* PCは9:16 */
   object-fit: cover;
   display: block;
   border-radius: 16px;
