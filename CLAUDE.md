@@ -42,6 +42,15 @@ U-NEXT、dアニメストア、DMM TV、Hulu、ABEMA、Lemino、Amazon Prime Vid
 - 自動化スクリプト：`voicepeak_all_in_one.py`、`make_srt.py`
 - VOICEPEAK辞書：`VOICEPEAK辞書登録リスト.txt`（表記＝読みのタブ区切り、一度登録すれば以降も有効）
 
+### 画像自動連動（video-pipeline/）
+- 台本テキストをシーン（空行区切り）に分割し、`video-pipeline/assets/images/<キーワード>/` の
+  画像フォルダをシーン本文とのキーワード一致で自動割り当てするツール
+- `node video-pipeline/scripts/plan-scenes.mjs <台本.txt>` で `video-pipeline/output/scene_plan.json` を生成
+- 音声（merged.wav）がまだ無くても文字数から時間を推定でき、実測秒数が分かったら
+  `--actual-duration-sec=` で比率を保ったまま補正できる
+- 詳細は `video-pipeline/README.md` を参照
+- 次のステップ：`scene_plan.json` を使ってffmpeg等で実際のmp4を組み立てるレンダリングは未実装
+
 ### 学び・原則
 - Filmoraは外部スクリプトから直接操作不可（API非公開）→ SRT生成で上流解決する方針が有効
 - 漢字とカタカナの文字数差異による140字分割のズレは、読み上げ用テキストを分割基準にすることで解消

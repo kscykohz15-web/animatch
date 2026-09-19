@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# video-pipeline: 生成物のみ無視。assets/images配下の画像・READMEは追跡する
+/video-pipeline/output/
