@@ -48,8 +48,10 @@ U-NEXT、dアニメストア、DMM TV、Hulu、ABEMA、Lemino、Amazon Prime Vid
 - `node video-pipeline/scripts/plan-scenes.mjs <台本.txt>` で `video-pipeline/output/scene_plan.json` を生成
 - 音声（merged.wav）がまだ無くても文字数から時間を推定でき、実測秒数が分かったら
   `--actual-duration-sec=` で比率を保ったまま補正できる
+- レンダリングは `node video-pipeline/scripts/render-video.mjs <scene_plan.json> --audio=merged.wav --bgm=bgm.mp3` で
+  ffmpegによる自動合成を行い最終mp4を書き出す（`--dry-run`でffmpeg実行前にコマンド確認可能。ffmpeg/ffprobeが必要）
+- 字幕は既存運用に合わせデフォルトでは焼き込まない。焼き込む場合のみ `--subtitles= --burn-subtitles`
 - 詳細は `video-pipeline/README.md` を参照
-- 次のステップ：`scene_plan.json` を使ってffmpeg等で実際のmp4を組み立てるレンダリングは未実装
 
 ### 学び・原則
 - Filmoraは外部スクリプトから直接操作不可（API非公開）→ SRT生成で上流解決する方針が有効
