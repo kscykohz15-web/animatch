@@ -264,6 +264,26 @@ else:
     if os.path.exists(out_ps1):
         os.remove(out_ps1)
 
+# ── ⑫ 台本に BOM が付いていないか ───────────────────
+midashi(u"⑫", u"台本の先頭に見えない文字(BOM)が付いていないか")
+# 付いていると、VOICEPEAK に渡す本人のスクリプトが
+# cp932 で書けずに落ちる（実際に落ちた）。
+warui_bom = []
+for m in re.finditer(r'\{name:"(台本_[^"]+\.txt)",\s*text:\s*([^,}]+)\}', src):
+    if u"ufeff" in m.group(2):
+        warui_bom.append(m.group(1))
+if warui_bom:
+    for f in sorted(set(warui_bom)):
+        warui.append(u"%s に BOM が付いています" % f)
+        print(u"× %s に BOM が付いています" % f)
+else:
+    print(u"○ 台本に BOM は付いていません")
+if u"$env:PYTHONIOENCODING = 'utf-8'" not in src:
+    warui.append(u"menu.ps1 が PYTHONIOENCODING を立てていません")
+    print(u"× menu.ps1 が PYTHONIOENCODING を立てていません")
+else:
+    print(u"○ 画面の文字コードを UTF-8 にそろえています")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
