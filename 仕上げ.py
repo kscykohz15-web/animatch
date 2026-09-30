@@ -16,7 +16,7 @@ u"""掲示板を出す前に、決めごとを全部きかいで確かめる。
 「老デウス以外のパックに設定が1つも入っていなかった」のは、
 ここを機械で見ていなかったからです。
 """
-import io, os, re, subprocess, sys
+import io, os, re, shutil, subprocess, sys
 
 def sagasu():
     u"""作業場所（scratchpad）を探す。
@@ -240,6 +240,29 @@ r = subprocess.run([sys.executable, os.path.join(V, u"演出あわせ.py")],
 print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"演出が本人の編集のクセから離れています")
+
+# ── ⑪ menu.ps1 の構造 ───────────────────────────────
+midashi(u"⑪", u"menu.ps1 が壊れていないか")
+node = shutil.which("node")
+if not node:
+    print(u"… node が無いので、この検査はとばします")
+else:
+    out_ps1 = os.path.join(HERE, "_menu.ps1")
+    r = subprocess.run([node, os.path.join(V, "menu_dump.js"),
+                        os.path.join(HERE, "board.src.html"), out_ps1],
+                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if r.returncode != 0:
+        print(r.stdout.decode("utf-8", "replace")[-800:])
+        warui.append(u"menu.ps1 を取り出せませんでした")
+    else:
+        r = subprocess.run([sys.executable, os.path.join(V, u"ps1検査.py"), out_ps1],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                           env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+        print(r.stdout.decode("utf-8", "replace").rstrip())
+        if r.returncode != 0:
+            warui.append(u"menu.ps1 の構造に問題があります")
+    if os.path.exists(out_ps1):
+        os.remove(out_ps1)
 
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
