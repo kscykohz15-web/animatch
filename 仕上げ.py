@@ -223,6 +223,15 @@ else:
     print(u"○ パック版 v%s（前回出したのは v%d）" % (m.group(1), dashita))
     print(u"   出したら .出した版.txt に %s を書くこと" % m.group(1))
 
+# ── ⑨ 演出が本人のクセに合っているか ────────────────
+midashi(u"⑨", u"演出が本人の編集のクセに合っているか")
+r = subprocess.run([sys.executable, os.path.join(V, u"演出あわせ.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"演出が本人の編集のクセから離れています")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
