@@ -223,6 +223,15 @@ else:
     print(u"○ パック版 v%s（前回出したのは v%d）" % (m.group(1), dashita))
     print(u"   出したら .出した版.txt に %s を書くこと" % m.group(1))
 
+# ── ⑩ 字幕が言葉の途中で折り返していないか ──────────
+midashi(u"⑩", u"字幕が言葉の途中で折り返していないか")
+r = subprocess.run([sys.executable, os.path.join(V, u"折り返し検査.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"字幕が言葉の途中で折り返しています")
+
 # ── ⑨ 演出が本人のクセに合っているか ────────────────
 midashi(u"⑨", u"演出が本人の編集のクセに合っているか")
 r = subprocess.run([sys.executable, os.path.join(V, u"演出あわせ.py")],

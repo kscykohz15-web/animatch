@@ -66,7 +66,7 @@ ENSHUTSU = u"""区切り\t。\tカメラ.mp3\t暗転\t0.12
 BGM\tてすと曲.wav
 BGMの音量\t0.25
 BGMのフェード\t2
-BGM控えめ\tはい
+BGM控えめ\tいいえ
 """
 
 
@@ -139,7 +139,8 @@ def main():
                            (u"右上のチャプター", u"章が出ていません"),
                            (u"字幕を焼き込みます", u"字幕が焼かれていません"),
                            (u"効果音:", u"効果音が入っていません"),
-                           (u"BGM:", u"BGMが入っていません")):
+                           (u"BGM:", u"BGMが入っていません"),
+                           (u"同じ絵は", u"同じ絵の上限が効いていません")):
         if shirushi not in out:
             komatta.append(nani)
     ookisa = os.path.getsize(kansei)
@@ -149,7 +150,7 @@ def main():
     for line in out.split(u"\n"):
         if any(k in line for k in (u"字幕を焼き込みます", u"左上の引用",
                                    u"右上のチャプター", u"効果音:", u"BGM:",
-                                   u"合計", u"タイミング")):
+                                   u"同じ絵は", u"合計", u"タイミング")):
             print(u"   " + line.strip())
     print(u"   完成.mp4 %.0fKB" % (ookisa / 1024.0))
 
