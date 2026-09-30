@@ -177,6 +177,52 @@ for d in DOUGA:
             warui.append(u"%s がありません" % os.path.basename(f))
             print(u"× %s がありません" % os.path.basename(f))
 
+# ── ⑥ 本体が最後まで走るか ──────────────────────────
+midashi(u"⑥", u"本体を小さな材料で本当に走らせる")
+r = subprocess.run([sys.executable, os.path.join(V, u"煙テスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"make_slideshow.py が最後まで走りません")
+
+# ── ⑦ 名前のぶつかり ────────────────────────────────
+midashi(u"⑦", u"同じ名前を2回定義していないか")
+ms = io.open(os.path.join(V, "make_slideshow.py"), encoding="utf-8").read()
+mita = {}
+for m in re.finditer(r"^([A-Z][A-Z0-9_]*)\s*=", ms, re.M):
+    mita.setdefault(m.group(1), []).append(ms[:m.start()].count("\n") + 1)
+butsu = {k: v for k, v in mita.items() if len(v) > 1}
+if butsu:
+    for k, v in sorted(butsu.items()):
+        warui.append(u"%s が %s 行目で2回定義されています" % (k, u"と".join(map(str, v))))
+        print(u"× %-14s %s 行目" % (k, u" / ".join(map(str, v))))
+    print(u"  （あとの定義が前を上書きします。--mitame が dict になった原因がこれ）")
+else:
+    print(u"○ 大文字の定数に、同じ名前の2回定義はありません")
+
+# ── ⑧ パック版 ──────────────────────────────────────
+midashi(u"⑧", u"パック版が掲示板の版と合っているか")
+src2 = io.open(os.path.join(HERE, "board.src.html"), encoding="utf-8").read()
+m = re.search(r'PACK_VERSION\s*=\s*"v(\d+)"', src2)
+oboe = os.path.join(HERE, u".出した版.txt")
+dashita = 0
+if os.path.exists(oboe):
+    try:
+        dashita = int(io.open(oboe, encoding="utf-8").read().strip() or 0)
+    except ValueError:
+        dashita = 0
+if not m:
+    warui.append(u"PACK_VERSION が見つかりません")
+    print(u"× PACK_VERSION が見つかりません")
+elif int(m.group(1)) <= dashita:
+    warui.append(u"パック版 v%s が前回出した v%d 以下です（上げ忘れ）"
+                 % (m.group(1), dashita))
+    print(u"× パック版 v%s は前回 v%d 以下。上げてください" % (m.group(1), dashita))
+else:
+    print(u"○ パック版 v%s（前回出したのは v%d）" % (m.group(1), dashita))
+    print(u"   出したら .出した版.txt に %s を書くこと" % m.group(1))
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
