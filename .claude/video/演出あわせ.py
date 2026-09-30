@@ -21,15 +21,34 @@ except Exception:
 FPS = 30.0
 SOKUDO = 6.46          # 実測の読み上げ速度（字/秒）
 
-# mane.py が本人の5本(127分)から測った数字
-HONNIN = {
-    u"切り替わりの間隔(まんなか)": 2.20,
+# ねらいの数字。
+#
+# 「演出が入る間隔」だけは mane.py の数字を使っていない。
+# mane.py はアニメ本編の音も効果音として拾うので(0.93秒に1個)、
+# 「切り替わりの65%で鳴る」は本人の編集を表していない
+# （でたらめでも42%出る計算）。本人の「多すぎる」が正しいので、
+# そちらに合わせて 14秒に1回 をねらいにしている。
+NERAI = {
+    u"演出が入る間隔": 14.0,          # ← 本人の感想から決めた
+    u"効果音のずれ": 0.093,           # ← mane.py の実測
+}
+# 参考に出すだけで、合否には使わない数字。
+#
+# 本人の動画はアニメ本編をつないだもので、mane.py はそこに写っている
+# 動き・本編の音・本編のフェードまで拾ってしまう。
+#   ・効果音 0.93秒に1個  … 編集で足した音ではなく本編の音
+#   ・はっきり溶かす 37%   … カメラの動きなど、編集の溶かしではないもの
+#   ・一瞬暗くなる 27%     … 本編の暗転も入っている
+# これらを目標にすると必ず多くなる。実際そうなった。
+# 使ってよいのは「エフェクトを何コマかけるか」の形と、効果音のずれだけ。
+SANKOU = {
     u"パッと切る(2コマ以内)": 62.0,
     u"はっきり溶かす(5コマ以上)": 37.0,
+    u"切り替わりの間隔(まんなか)": 2.20,
     u"一瞬暗くなる": 27.0,
-    u"効果音が鳴る": 65.0,
-    u"効果音のずれ": 0.093,
 }
+HONNIN = dict(NERAI)
+HONNIN.update(SANKOU)
 
 KUMI = [
     (u"老デウス", u"画面表示_老デウス.txt", u"../final/老デウス_壮絶な人生年表_字幕用_最終版.txt"),
@@ -92,9 +111,13 @@ def hakaru(en_path):
                 goukei[u"se"] += 1
     aida.sort()
     cut = max(1, goukei[u"cut"])
+    ensyutsu = goukei[u"fx"] + goukei[u"se"]     # どちらか入っている所の数
+    # 実際には同じ所に両方入るので、入った所の数はこの半分ではなく se の数でよい
+    ensyutsu = max(goukei[u"fx"], goukei[u"se"])
     # エフェクトの付かない切り替わりは「0コマ＝パッと切る」に数える
     mijikai = goukei[u"mijikai"] + (cut - goukei[u"fx"])
     return {
+        u"演出が入る間隔": goukei[u"byou"] / max(1, ensyutsu),
         u"切り替わりの間隔(まんなか)": aida[len(aida) // 2] if aida else 0.0,
         u"パッと切る(2コマ以内)": 100.0 * mijikai / cut,
         u"はっきり溶かす(5コマ以上)": 100.0 * goukei[u"nagai"] / cut,
@@ -110,20 +133,22 @@ def main():
     print(u"\n%s で、台本4本(切り替わり %d か所)を計算した結果\n" % (os.path.basename(p), cut))
     print(u"  %-26s %8s %8s %7s" % (u"", u"いまの設定", u"本人の実測", u"ちがい"))
     warui = 0
-    for k in (u"切り替わりの間隔(まんなか)", u"パッと切る(2コマ以内)",
-              u"はっきり溶かす(5コマ以上)", u"一瞬暗くなる", u"効果音が鳴る",
-              u"効果音のずれ"):
+    for k in (u"演出が入る間隔", u"効果音のずれ", u"パッと切る(2コマ以内)",
+              u"はっきり溶かす(5コマ以上)", u"切り替わりの間隔(まんなか)",
+              u"一瞬暗くなる"):
         a, b = kekka[k], HONNIN[k]
-        tan = u"秒" if u"間隔" in k or u"ずれ" in k else u"%"
+        tan = u"秒" if (u"間隔" in k or u"ずれ" in k) else u"%"
         sa = a - b
         # 秒のものは0.05秒、割合は8ポイントまで許す
         yurusu = 0.05 if tan == u"秒" else 8.0
+        if k == u"演出が入る間隔":
+            yurusu = 4.0          # 10〜18秒に1回なら良しとする
         ok = abs(sa) <= yurusu
         # 切り替わりの間隔は 演出.txt ではなく字幕の切り方で決まるので、
         # ここでは知らせるだけにして、合否には数えない。
-        if k != u"切り替わりの間隔(まんなか)":
+        if k in NERAI:
             warui += not ok
-        shirushi = u"○" if ok else (u"…" if k == u"切り替わりの間隔(まんなか)" else u"×")
+        shirushi = u"○" if ok else (u"×" if k in NERAI else u"…")
         print(u"  %s %-24s %7.2f%s %7.2f%s %+7.2f"
               % (shirushi, k, a, tan, b, tan, sa))
     print(u"\n%s" % (u"合っています。" if not warui else u"%d つ離れています。" % warui))
