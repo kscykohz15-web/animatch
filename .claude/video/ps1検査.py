@@ -94,10 +94,12 @@ def shiraberu(path):
             naka_func, d2 = True, 0
         if naka_func:
             d2 += s.count("{") - s.count("}")
-            if re.search(r"^\s*(python|ffmpeg|ffprobe)\b", s) \
-                    and "Out-Host" not in s and "Out-Null" not in s \
-                    and "=" not in s.split("|")[0]:
-                warui.append(u"%d行目: 関数の中の %s の出力が戻り値に混ざります"
+            # 外部コマンドをパイプに通すと、Python がためこんで
+            # 終わるまで画面に何も出なくなる。通さないこと。
+            if re.search(r"^\s*(python|ffmpeg|ffprobe)\b", s) and "|" in s \
+                    and "Out-String" not in s:
+                warui.append(u"%d行目: %s をパイプに通しています"
+                             u"（途中経過が出なくなります）"
                              % (n, s.strip().split()[0]))
             if d2 <= 0 and s.strip().endswith("}"):
                 naka_func = False
