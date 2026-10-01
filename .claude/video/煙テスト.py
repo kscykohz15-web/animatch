@@ -121,6 +121,22 @@ def main():
         print(u"\n× make_slideshow.py が最後まで走りませんでした。")
         return 1
 
+    # 採点に要る 一覧.txt が、--cuts なしでも出ていること
+    ichi = os.path.join(SAGYOU, u"確認用", u"一覧.txt")
+    if not os.path.exists(ichi):
+        print(out[-2000:])
+        print(u"\n× 確認用/一覧.txt ができていません（採点ができません）。")
+        return 1
+    gyou = len([x for x in io.open(ichi, encoding="utf-8-sig").read()
+                .replace("\r\n", "\n").split("\n") if x.strip()])
+    mp4 = len([x for x in os.listdir(os.path.join(SAGYOU, u"確認用"))
+               if x.endswith(".mp4")])
+    print(u"   確認用/一覧.txt %d行 / 短い動画 %d本 (--cuts なしなので0が正しい)"
+          % (gyou, mp4))
+    if mp4:
+        print(u"× --cuts を付けていないのに短い動画ができています。")
+        return 1
+
     kansei = os.path.join(SAGYOU, u"完成.mp4")
     if not os.path.exists(kansei):
         print(out[-2000:])

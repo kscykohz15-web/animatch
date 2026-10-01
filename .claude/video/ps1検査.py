@@ -57,6 +57,11 @@ def shiraberu(path):
         # この行が始まる時点の深さで判定する
         if re.search(r"\b(continue|break)\b", s) and not loops:
             warui.append(u"%d行目: continue/break がループの外にあります" % n)
+        # 「{」だけの行は、PowerShell では「置いただけの塊」になり、
+        # 中身が一度も動かない。見た目は正しいので気づけない。
+        if s.strip() == "{":
+            warui.append(u"%d行目: { だけの行。中身が動きません"
+                         u"（if や foreach の後ろに付けてください）" % n)
         if m:
             funcs.append(fukasa)
         elif LOOP.search(s):
