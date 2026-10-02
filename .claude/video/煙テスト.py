@@ -129,15 +129,35 @@ def main():
         return 1
     gyou = len([x for x in io.open(ichi, encoding="utf-8-sig").read()
                 .replace("\r\n", "\n").split("\n") if x.strip()])
-    mp4 = len([x for x in os.listdir(os.path.join(SAGYOU, u"確認用"))
-               if x.endswith(".mp4")])
+    bun = os.path.join(SAGYOU, u"動画", u"分割版")
+    mp4 = len([x for x in os.listdir(bun) if x.endswith(".mp4")]) \
+        if os.path.isdir(bun) else 0
     print(u"   確認用/一覧.txt %d行 / 短い動画 %d本 (--cuts なしなので0が正しい)"
           % (gyou, mp4))
     if mp4:
         print(u"× --cuts を付けていないのに短い動画ができています。")
         return 1
 
-    kansei = os.path.join(SAGYOU, u"完成.mp4")
+    # フォルダ分けができているか
+    machigai = []
+    for d in (u"音声", u"動画", u"確認用", u"その他"):
+        if not os.path.isdir(os.path.join(SAGYOU, d)):
+            machigai.append(u"%s フォルダがありません" % d)
+    for nm, d in ((u"一覧.txt", u"確認用"),):
+        if not os.path.exists(os.path.join(SAGYOU, d, nm)):
+            machigai.append(u"%s が %s にありません" % (nm, d))
+    nokori = [x for x in os.listdir(SAGYOU)
+              if x.endswith((".mp4", ".tsv")) or x == "_work"]
+    if nokori:
+        machigai.append(u"いちばん上に残っています: " + u" ".join(nokori))
+    if machigai:
+        print(out[-1500:])
+        for x in machigai:
+            print(u"× " + x)
+        return 1
+    print(u"   フォルダ分け: 音声 / 動画 / 確認用 / その他 … できています")
+
+    kansei = os.path.join(SAGYOU, u"動画", u"完成.mp4")
     if not os.path.exists(kansei):
         print(out[-2000:])
         print(u"\n× 完成.mp4 ができていません。")
