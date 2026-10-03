@@ -2246,6 +2246,24 @@ def kyara_nuku(moto, out, yoyuu=0.04, shikii=48):
         return None
 
 
+def setsumei(cat, k):
+    u"""画像カタログの説明を、かならず1本の文字列で返す。
+
+    ■ ここは一度まちがえた
+
+    カタログの中身は「ルーデウス 茶髪 洞窟」という**文字列**なのに、
+    配列のつもりで u" ".join() していた。文字列を join すると
+    「ル ー デ ウ ス   茶 髪」と1文字ずつ離れてしまい、
+    「ルーデウス」で探しても**一度も一致しなかった**。
+    黙って当たらないだけなので、動いているように見えていた。
+    """
+    v = (cat or {}).get(k)
+    if not v:
+        return u""
+    return v if isinstance(v, basestring if str is bytes else str) \
+        else u" ".join(v)
+
+
 def card_no_e(rows, hajime, owari, title, cat):
     u"""章カードに使う絵を、その章の中から選ぶ。
 
@@ -2266,7 +2284,7 @@ def card_no_e(rows, hajime, owari, title, cat):
         img = rows[i][1]
         if not img or img.startswith(u"@@"):
             continue
-        w = u" ".join(cat.get(img, []) if cat else [])
+        w = setsumei(cat, img)
         if not w:
             if best is None:
                 best = img
@@ -3154,7 +3172,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             for k in images:
                 if u"/" not in k or k.split(u"/")[0] not in cur["rank"]:
                     continue
-                w = u" ".join((catalog or {}).get(k, []))
+                w = setsumei(catalog, k)
                 if not w or any(x in w for x in DAME):
                     continue        # 説明の無い絵と、出してはいけない絵は借りない
                 sou.append(k)
@@ -3178,7 +3196,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                         continue
                     if nokeru and k in saikin:
                         continue
-                    w = u" ".join((catalog or {}).get(k, []))
+                    w = setsumei(catalog, k)
                     if any(x in w for x in dewa):
                         return k
             return None        # その人の絵が無い → 繰り返してでもその人にする
@@ -3483,9 +3501,62 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         oboeru(pick)
         t = tx.rstrip()
         new_sentence = (not t) or t[-1] in u"。！？"
+    # --- 最後に、章の話数から外れた絵を引き戻す ---
+    #
+    # 章ごとに話数を決めても、まだ 14か所が別の話数の絵になっていた。
+    # 「ですが、」のような文で、前の行の絵をそのまま引き継いだり、
+    # 章の中に当たる絵が無くて外へ探しに行ったりしたもの。
+    #
+    # ここでもう一度、その章の話数の中から選び直す。
+    # セリフに人の名前があれば、その人が写っている絵を先に探す。
+    # 見つからなければ、そのままにする（無理に変えない）。
+    hikimodoshi = 0
+    if shou_kiri:
+        ima2 = list(base_fols)
+        for idx in range(len(out)):
+            if idx in shou_kiri:
+                ima2 = shou_kiri[idx][1]
+            img = out[idx]
+            if not ima2 or not img or u"/" not in img:
+                continue
+            if img.split(u"/")[0] in ima2:
+                continue                      # もう合っている
+            tx2 = slots[idx][2]
+            hoshii2 = [c for c in uniq(CHARACTERS) if c in tx2]
+            dewa2 = []
+            for c in hoshii2:
+                dewa2.extend([c] + ONAJI_HITO.get(c, []) + MITAME.get(c, []))
+            erabi = None
+            for k in images:
+                if u"/" not in k or k.split(u"/")[0] not in ima2:
+                    continue
+                w3 = setsumei(catalog, k)
+                if not w3 or any(x in w3 for x in DAME):
+                    continue
+                # ここは全部決まったあとなので「最近つかった」は見ない。
+                # 見てしまうと、引き戻せるのに引き戻せないものが残る。
+                if tsukai.get(k, 0) >= jougen:
+                    continue
+                if k == out[idx - 1] if idx else False:
+                    continue              # 直前と同じ絵にはしない
+                if dewa2:
+                    if any(x in w3 for x in dewa2):
+                        erabi = k
+                        break
+                elif erabi is None:
+                    erabi = k
+            if erabi:
+                tsukai[out[idx]] = max(0, tsukai.get(out[idx], 1) - 1)
+                out[idx] = erabi
+                tsukai[erabi] = tsukai.get(erabi, 0) + 1
+                hikimodoshi += 1
+
     say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
         u"%d枚が同じ文から引き継ぎ / 全%d枚"
         % (hit, namae, carried, len(slots)))
+    if hikimodoshi:
+        say(u"章の話数から外れていた絵を %d枚 その章の中に引き戻しました"
+            % hikimodoshi)
     if naoshita[0]:
         say(u"人ちがいだった絵を %d枚 選び直しました" % naoshita[0])
     kasane = sorted(((v, k) for k, v in tsukai.items() if v > jougen), reverse=True)
@@ -3550,7 +3621,7 @@ def write_plan(path, slots, images, fingerprint=u""):
 # make_slideshow.py の決め方を直しても、設定が同じなら
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
-WARIATE_BAN = 4
+WARIATE_BAN = 5
 
 
 def inputs_fingerprint(paths):
