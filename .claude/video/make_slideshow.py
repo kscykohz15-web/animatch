@@ -524,6 +524,8 @@ MITAME_KITEI = {
     u"字幕の最短": 0.0, u"同じ絵の上限": 3.0, u"書き出しの速さ": u"faster",
     u"引用の大きさ": 38.0, u"引用の色": u"FFFFFF",
     u"章の大きさ": 24.0, u"章の色": u"FFFFFF",
+    # 絵をゆっくり横に動かす（はい/いいえ）と、そのための拡大率
+    u"画像を動かす": u"はい", u"画像の拡大": 1.10,
 }
 
 
@@ -3773,6 +3775,41 @@ def read_plan(path):
 
 
 # ---------------------------------------------------------------- 描画
+def unicode_bool(v):
+    u"""「はい/いいえ」を真偽に直す。"""
+    return unicode(v).strip() not in (u"いいえ", u"なし", u"0", u"off", u"OFF", u"False") \
+        if str is bytes else \
+        str(v).strip() not in (u"いいえ", u"なし", u"0", u"off", u"OFF", u"False")
+
+
+def pan_kesan(w, kakudai, nagai_byou):
+    u"""横に動かす量と速さを決める。
+
+    ■ 考え方（本人の指定）
+
+      ・絵をあらかじめ少し大きく（既定 1.10倍）しておく
+      ・はじめは左端を見せ、少しずつ右へずらしていく
+      ・**動く速さは全部の絵で同じ**
+      ・いちばん長く映る絵でも、右端を越えない速さにする
+
+    大きくしたぶんの余り（はみ出せる幅）を、
+    いちばん長い尺で割れば、その速さになる。
+
+      余り   = 画面の幅 ×(拡大率 − 1)
+      速さ   = 余り ÷ いちばん長い尺   [1秒あたり何ピクセル]
+
+    1920 を 1.10倍 → 余り 192px。いちばん長い絵が 4.0秒なら
+    1秒あたり 48px。2秒の絵なら 96px（画面の5%）だけ動く。
+    短い絵ほど動く量が少ないだけで、速さは同じなので、
+    見ていて調子が変わらない。
+    """
+    amari = int(round(w * (kakudai - 1.0)))
+    amari -= amari % 2
+    if amari <= 0 or nagai_byou <= 0:
+        return 0, 0.0
+    return amari, amari / float(nagai_byou)
+
+
 def normalize(src, dst, w, h, fit):
     if fit == "cover":
         vf = ("scale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d" % (w, h, w, h))
@@ -4228,15 +4265,23 @@ def main():
             uniq.append(img)
     say(u"画像を %dx%d にそろえています (%d枚)…" % (w, h, len(uniq)))
     cache = {}
+    # 絵を横に動かすときは、あらかじめ大きめにそろえておく。
+    # 断片を作るときに、その大きいほうから画面ぶんを切り出して動かす。
+    ugokasu = unicode_bool(mi.get(u"画像を動かす", u"はい"))
+    kakudai = max(1.0, min(1.5, float(mi.get(u"画像の拡大", 1.10))))
+    nw, nh = w, h
+    if ugokasu:
+        nw = int(round(w * kakudai)); nw -= nw % 2
+        nh = int(round(h * kakudai)); nh -= nh % 2
     for img in uniq:
         src = img if os.path.isabs(img) else imgpath.get(img, os.path.join(a.images, img))
         if not os.path.exists(src):
             die(u"画像が見つかりません: " + src + u"  (割り当て表の名前を確認してください)")
         key = u"%s|%d|%d|%dx%d|%s" % (os.path.abspath(src), os.path.getsize(src),
-                                      int(os.path.getmtime(src)), w, h, a.fit)
+                                      int(os.path.getmtime(src)), nw, nh, a.fit)
         dst = os.path.join(norm, hashlib.md5(key.encode("utf-8")).hexdigest()[:16] + ".png")
         if not os.path.exists(dst):
-            normalize(src, dst, w, h, a.fit)
+            normalize(src, dst, nw, nh, a.fit)
         cache[img] = dst
 
     # --- 章タイトルのカードを、章の頭にはさむ ---
@@ -4428,6 +4473,38 @@ def main():
             u"%s %d か所(%s)" % (k, tally[k], en["kubun"].get(k, {}).get("fx", u"-"))
             for k in sorted(tally, key=lambda x: -tally[x])))
 
+    # --- 絵を横に動かす速さを決める ---
+    #
+    # いちばん長く映る絵でも右端を越えない速さにし、それを全部の絵で使う。
+    # 章カードは動かさない（左右で絵と文字を分けているので、動くと崩れる）。
+    amari, hayasa = 0, 0.0
+    if ugokasu:
+        nagai = max((frames[i] / float(fps))
+                    for i in range(len(rows))
+                    if not rows[i][1].startswith(u"@@")) if rows else 0.0
+        amari, hayasa = pan_kesan(w, kakudai, nagai)
+        if amari:
+            say(u"絵を横に動かします: %.2f倍に広げ、余り %dpx を"
+                u"いちばん長い %.2f秒 で使い切る速さ（毎秒 %.1fpx）"
+                % (kakudai, amari, nagai, hayasa))
+            say(u"  2秒の絵なら %.0fpx（画面の %.1f%%）だけ動きます"
+                % (min(amari, hayasa * 2), 100.0 * min(amari, hayasa * 2) / w))
+        else:
+            ugokasu = False
+
+    def pan_chain(label_in, label_out, ugoku):
+        u"""大きい絵から画面ぶんを切り出す。ugoku=True なら少しずつ右へ。
+
+        crop の x に t を入れると1コマずつ計算し直してくれる。
+        min(...) を付けているので、尺が長くても右端を越えない。
+        """
+        y = u"(ih-%d)/2" % h
+        if ugoku:
+            x = u"'min(%d,%.4f*t)'" % (amari, hayasa)
+        else:
+            x = u"(iw-%d)/2" % w
+        return u"[%s]crop=%d:%d:x=%s:y=%s[%s];" % (label_in, w, h, x, y, label_out)
+
     shigoto = []          # あとでまとめて作る断片
     for i, (_du, img, _t) in enumerate(rows):
         spec = en["kubun"].get(kinds.get(i)) if i in kinds else None
@@ -4439,7 +4516,18 @@ def main():
         mae = cache[rows[i - 1][1]] if (need_mae and i > 0) else None
         if need_mae and mae is None:
             fil = None
-        key = (cache[img], frames[i], mae, fil)
+        # 章カードは元から画面ぴったりの大きさなので、切り出しも動きもしない
+        kore_ugoku = ugokasu and not img.startswith(u"@@")
+        mae_ugoku = ugokasu and mae is not None \
+            and not rows[i - 1][1].startswith(u"@@")
+        pan = None
+        if ugokasu:
+            pan = pan_chain(u"0:v", u"c0", kore_ugoku)
+            if mae is not None:
+                pan += pan_chain(u"1:v", u"c1", False)
+            if fil:
+                fil = pan + fil.replace(u"[0:v]", u"[c0]").replace(u"[1:v]", u"[c1]")
+        key = (cache[img], frames[i], mae, fil, kore_ugoku)
         seg = segcache.get(key)
         if seg is None:
             seg = os.path.join(segdir, "s%05d.mp4" % len(segcache))
@@ -4449,6 +4537,9 @@ def main():
                 if mae:
                     cmd += ["-loop", "1", "-framerate", str(fps), "-i", mae]
                 cmd += ["-filter_complex", fil, "-map", "[v]"]
+            elif ugokasu:
+                cmd += ["-vf", pan_chain(u"0:v", u"v", kore_ugoku)
+                        .replace(u"[0:v]", u"").rstrip(u";").replace(u"[v]", u"")]
             cmd += ["-frames:v", str(frames[i]),
                     "-c:v", "libx264", "-preset", a.seg_preset,
                     "-crf", str(max(12, a.crf - 6)),
