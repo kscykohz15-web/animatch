@@ -67,6 +67,12 @@ BGM\tてすと曲.wav
 BGMの音量\t0.25
 BGMのフェード\t2
 BGM控えめ\tいいえ
+章タイトル\tはい
+章タイトルの秒数\t1.5
+章タイトルの音\tドーン.mp3
+章タイトルのエフェクト\t暗転
+章タイトルの色\t141024
+章タイトルの絵の幅\t0.5
 """
 
 
@@ -90,7 +96,7 @@ def junbi():
           newline="\n").write(body)
     shutil.copy(os.path.join(HERE, u"見た目.txt"),
                 os.path.join(SAGYOU, u"見た目.txt"))
-    for nm in (u"カメラ.mp3", u"はさみ.mp3", u"カードをめくる.mp3"):
+    for nm in (u"カメラ.mp3", u"はさみ.mp3", u"カードをめくる.mp3", u"ドーン.mp3"):
         src = os.path.join(HERE, u"効果音", nm)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(SAGYOU, u"効果音", nm))
@@ -176,7 +182,9 @@ def main():
                            (u"字幕を焼き込みます", u"字幕が焼かれていません"),
                            (u"効果音:", u"効果音が入っていません"),
                            (u"BGM:", u"BGMが入っていません"),
-                           (u"同じ絵は", u"同じ絵の上限が効いていません")):
+                           (u"同じ絵は", u"同じ絵の上限が効いていません"),
+                           (u"章タイトルのカードを", u"章タイトルのカードが入っていません"),
+                           (u"声に無音を", u"カードぶんの無音が入っていません")):
         if shirushi not in out:
             komatta.append(nani)
     ookisa = os.path.getsize(kansei)
@@ -186,7 +194,8 @@ def main():
     for line in out.split(u"\n"):
         if any(k in line for k in (u"字幕を焼き込みます", u"左上の引用",
                                    u"右上のチャプター", u"効果音:", u"BGM:",
-                                   u"同じ絵は", u"合計", u"タイミング")):
+                                   u"同じ絵は", u"章タイトル", u"無音を",
+                                   u"合計", u"タイミング")):
             print(u"   " + line.strip())
     print(u"   完成.mp4 %.0fKB" % (ookisa / 1024.0))
 

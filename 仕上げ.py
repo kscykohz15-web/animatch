@@ -168,6 +168,30 @@ else:
         print(u"× 共通の一覧に無い: " + u" ".join(nai))
     else:
         print(u"○ 共通 %d件が pushKyotsu で全パックに入ります" % len(KYOTSU))
+
+# 演出.txt が名前を出している音は、全部パックに入っていること。
+# ドーン.mp3 を足したとき、掲示板に入れ忘れて「音が鳴らない」になりかけた。
+# ZIP も Prepare も script[data-se] をまとめて配るので、ここが1か所で足りる。
+oto = set()
+for line in io.open(os.path.join(V, u"演出.txt"), encoding="utf-8-sig") \
+        .read().replace("\r\n", "\n").split("\n"):
+    if line.lstrip().startswith(u"#") or not line.strip():
+        continue
+    c = [x.strip() for x in line.split(u"\t") if x.strip()]
+    if len(c) >= 3 and c[0] == u"区切り":
+        oto.add(c[2])
+    elif len(c) >= 2 and c[0] == u"章タイトルの音":
+        oto.add(c[1])
+nuke = sorted(x for x in oto
+              if u'data-se="%s"' % x not in src
+              or not os.path.exists(os.path.join(V, u"効果音", x)))
+if nuke:
+    warui.append(u"効果音が配られていません: " + u" ".join(nuke))
+    print(u"× 演出.txt が使う音が掲示板に入っていません: " + u" ".join(nuke))
+else:
+    print(u"○ 演出.txt が使う音 %d件とも、掲示板から全パックに入ります（%s）"
+          % (len(oto), u" ".join(sorted(oto))))
+
 for d in DOUGA:
     for tag, nm in ((u"over", u"画面表示"), (u"plan", u"画像プラン")):
         f = os.path.join(V, u"%s_%s.txt" % (nm, {
@@ -283,6 +307,15 @@ if u"$env:PYTHONIOENCODING = 'utf-8'" not in src:
     print(u"× menu.ps1 が PYTHONIOENCODING を立てていません")
 else:
     print(u"○ 画面の文字コードを UTF-8 にそろえています")
+
+# ── ⑬ 章タイトルのカード ────────────────────────────
+midashi(u"⑬", u"章タイトルのカードが右半分に収まるか")
+r = subprocess.run([sys.executable, os.path.join(V, u"カード検査.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"章タイトルのカードが右半分からはみ出します")
 
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
