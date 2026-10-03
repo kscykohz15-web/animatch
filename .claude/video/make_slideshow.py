@@ -3092,7 +3092,17 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 説明が無い絵は、そのまま候補に残す（それがこの仕組みの役目）。
                 """
                 fs = set(f for f, d in emap.items() if all(w in d for w in words))
+                # 誰の絵が欲しいかは、#指定 だけでなく**セリフ**からも取る。
+                #
+                # 「ここにロキシーがいました。」で シルフィエット の絵が出ていた。
+                # 当て方は #ロキシー が外れると #青髪 帽子 に落ちるが、
+                # そこには人の名前が入っていないので、せっかくの
+                # 「別の人の絵は外す」が効かなかった。
+                # オルステッドの2か所も同じ理由。
                 hoshii = [w for w in words if w in uniq(CHARACTERS)]
+                for c in uniq(CHARACTERS):
+                    if c in (cur.get("tx") or u"") and c not in hoshii:
+                        hoshii.append(c)
                 betsu = [c for c in uniq(CHARACTERS) if c not in hoshii] if hoshii else []
                 out2 = []
                 for k in pool:
@@ -3351,6 +3361,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 say(u"注意: どれにも当たらなかった場面の指定 %s が %d個の話数フォルダに"
                     u"当たります。1つの話数に絞ることをおすすめします。" % (f, len(fols)))
     naoshita = [0]
+    kaoganai = [0]
 
     def naoshi(pick, tx):
         """人ちがいの絵を選び直す。
@@ -3384,6 +3395,26 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 if _match(key):
                     naoshita[0] += 1
                     return resolve(key)
+        # その人の絵が、この章の話数に1枚も無いとき。
+        #
+        # ここで諦めると「ここにロキシーがいました。」に
+        # シルフィエットの顔が出たままになる（実際に3か所残った）。
+        # **別人の顔より、誰も写っていない絵のほうがましなので、**
+        # 同じ話数の中から「ほかの人が写っていない絵」に替える。
+        # それも無ければ、そのときは諦める。
+        for k in images:
+            if u"/" not in k or k.split(u"/")[0] not in cur["rank"]:
+                continue
+            w2 = setsumei(cat, k)
+            if not w2 or any(x in w2 for x in DAME):
+                continue
+            if any(c in w2 for c in uniq(CHARACTERS)):
+                continue              # 誰かが写っている絵は、ここでは使わない
+            if tsukai.get(k, 0) >= jougen:
+                continue
+            naoshita[0] += 1
+            kaoganai[0] += 1
+            return k
         return pick
 
     out, d = [], 0
@@ -3559,6 +3590,9 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             % hikimodoshi)
     if naoshita[0]:
         say(u"人ちがいだった絵を %d枚 選び直しました" % naoshita[0])
+    if kaoganai[0]:
+        say(u"  うち %d枚は、その人の絵がこの話数に無いので"
+            u"「誰も写っていない絵」にしました" % kaoganai[0])
     kasane = sorted(((v, k) for k, v in tsukai.items() if v > jougen), reverse=True)
     say(u"同じ絵は %d回まで。いちばん使った絵 %d回 / 使った絵の種類 %d"
         % (jougen, max(tsukai.values()) if tsukai else 0, len(tsukai)))
@@ -3621,7 +3655,7 @@ def write_plan(path, slots, images, fingerprint=u""):
 # make_slideshow.py の決め方を直しても、設定が同じなら
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
-WARIATE_BAN = 5
+WARIATE_BAN = 7
 
 
 def inputs_fingerprint(paths):
