@@ -3225,7 +3225,16 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if not (f.startswith(u"@") or f.startswith(u"#")):
             return f
         key = f[1:].strip() if f.startswith(u"@") else f
-        pk = (u"|".join(cur["fols"]), key, hiroi)
+        # 候補の並びは覚えておいて使い回すが、**誰のセリフかも鍵に入れること。**
+        #
+        # 入れていなかったので、「話数まるごとから選ぶときに別の人の絵を外す」が
+        # 一度も効かなかった。その章で最初に #青髪 帽子 を引いたのが
+        # ロキシーの出てこない行だったため、シルフィエットの絵が入った並びが
+        # そのまま残り、あとのロキシーの行も全部それを使っていた。
+        # （点数も中身も前の回とまったく同じになり、気づけた）
+        dare = u",".join(sorted(c for c in uniq(CHARACTERS)
+                                if c in (cur.get("tx") or u"")))
+        pk = (u"|".join(cur["fols"]), key, hiroi, dare)
         if pk not in pools:
             pools[pk] = [_match(key, hiroi), 0]
         lst, i = pools[pk]
@@ -3655,7 +3664,7 @@ def write_plan(path, slots, images, fingerprint=u""):
 # make_slideshow.py の決め方を直しても、設定が同じなら
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
-WARIATE_BAN = 7
+WARIATE_BAN = 8
 
 
 def inputs_fingerprint(paths):
