@@ -3113,7 +3113,16 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     DAME = (u"使用不可", u"クレジット", u"実写", u"テロップ", u"提供")
 
     def karu():
-        u"""同じ話数の中から、まだ上限に達していない絵を借りる。"""
+        u"""同じ話数の中から、まだ上限に達していない絵を借りる。
+
+        ■ 借りるときも「誰が写っているか」を見ること
+
+        はじめ、話数さえ合っていればどれでもよいことにしたら、
+        「ヒトガミの目的は、」にルーデウスの絵が当たるようになった。
+        同じ絵の使いすぎは直ったが、人ちがいが16件に増えた（うち10件がヒトガミ）。
+        セリフに出てくる人が写っている絵を先に探し、
+        いなければ、その人が写っていない絵を借りる。
+        """
         fk = u"|".join(cur["fols"])
         if not fk:
             return None
@@ -3127,6 +3136,32 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                     continue        # 説明の無い絵と、出してはいけない絵は借りない
                 sou.append(k)
             hoka_pool[fk] = _order(sou)
+
+        tx = cur.get("tx") or u""
+        hoshii = [c for c in uniq(CHARACTERS) if c in tx]
+        if hoshii:
+            # セリフに人の名前が出ているときは、その人の絵しか借りない。
+            #
+            # 「ヒトガミの目的は、」にルーデウスの絵が当たるくらいなら、
+            # ヒトガミの絵を4回目に使うほうがよい。
+            # 本人がいちばん先に言ったのが「画像と字幕の内容がずれている」なので、
+            # 絵の変化より、誰の話かが合っていることを上に置く。
+            dewa = []
+            for c in hoshii:
+                dewa.extend([c] + ONAJI_HITO.get(c, []) + MITAME.get(c, []))
+            for nokeru in (True, False):      # まず最近つかっていないものから
+                for k in hoka_pool[fk]:
+                    if tsukai.get(k, 0) >= jougen:
+                        continue
+                    if nokeru and k in saikin:
+                        continue
+                    w = u" ".join((catalog or {}).get(k, []))
+                    if any(x in w for x in dewa):
+                        return k
+            return None        # その人の絵が無い → 繰り返してでもその人にする
+
+        # 人の名前が出ていないセリフ（「ですが、」など）は、
+        # 話数さえ合っていればよいので、変化をつけるために借りる。
         for k in hoka_pool[fk]:
             if tsukai.get(k, 0) < jougen and k not in saikin:
                 return k
@@ -3369,6 +3404,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             ima_base = fs
             shou_tsukatta.append((title, fs))
         base_fols = ima_base
+        cur["tx"] = tx          # 絵を借りるとき、誰のセリフかを見るため
         pick = None
         r = erabu(tx)
         if r is not None:
@@ -3491,7 +3527,7 @@ def write_plan(path, slots, images, fingerprint=u""):
 # make_slideshow.py の決め方を直しても、設定が同じなら
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
-WARIATE_BAN = 2
+WARIATE_BAN = 3
 
 
 def inputs_fingerprint(paths):

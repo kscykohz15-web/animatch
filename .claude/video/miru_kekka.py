@@ -466,6 +466,11 @@ def main():
     for r in rows:
         img = r[u"img"]
         tx = r[u"text"]
+        # 章タイトルのカード(@@card00 など)は、こちらが作った絵なので採点しない。
+        # カタログに載っているはずがなく、11か所ぜんぶ「説明がありません」と
+        # 出て、直しようのない指摘で埋まっていた。
+        if img.startswith(u"@@"):
+            continue
         desc = cat_lookup(tags, img) if not is_zuhyou(img) else u"（図表スライド）"
         riyuu = []
         omosa = 0
