@@ -32,7 +32,7 @@ def shou_atsumeru():
         if not (f.startswith(u"画面表示_") and f.endswith(u".txt")):
             continue
         _, chaps = M.load_overlay(os.path.join(HERE, f))
-        for (_toki, title) in chaps:
+        for (_toki, title, _eps) in chaps:
             namae.append((f, title))
     return namae
 

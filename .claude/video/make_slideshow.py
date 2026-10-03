@@ -475,7 +475,11 @@ def load_overlay(path):
         if len(c) >= 2 and c[0] in (u"引用", u"credit"):
             credit = c[1]
         elif len(c) >= 3 and c[0] in (u"章", u"chapter"):
-            chaps.append((c[1], kaigyou_naosu(c[2])))
+            # 4列目は「この章はアニメの何話の内容か」。カンマ区切りで複数可。
+            # 絵をその話数から選ぶのと、章カードの絵を選ぶのに使います。
+            eps = [x.strip() for x in c[3].replace(u"、", u",").split(u",")
+                   if x.strip()] if len(c) >= 4 else []
+            chaps.append((c[1], kaigyou_naosu(c[2]), eps))
     return credit, chaps
 
 
@@ -609,7 +613,7 @@ def chapter_spans(cues, chaps, total):
     """キーワードが最初に出てくるキューを、その章の開始にする。"""
     marks = []
     used = set()
-    for (key, title) in chaps:
+    for (key, title, _eps) in chaps:
         for i, (st, _en, tx) in enumerate(cues):
             if i in used or key not in tx:
                 continue
@@ -1710,7 +1714,8 @@ def load_enshutsu(path):
     out = {"kubun": {}, "sevol": 0.4, "aida": {}, "sezure": 0.0,
            "zentai": 0.0,
            "card": True, "card_byou": 1.5, "card_se": u"ドーン.mp3",
-           "card_fx": u"暗転", "card_iro": u"141024", "card_hidari": 0.5,
+           "card_fx": u"暗転", "card_iro": u"000000", "card_hidari": 0.5,
+           "card_nuki": True,
            "bgm": u"", "bgmvol": 0.10, "bgmfade": 3.0, "bgmduck": True}
     if not os.path.exists(path):
         return out
@@ -1754,6 +1759,8 @@ def load_enshutsu(path):
                 out["card_hidari"] = max(0.2, min(0.8, float(c[1])))
             except ValueError:
                 pass
+        elif c[0] == u"章タイトルの背景抜き" and len(c) >= 2:
+            out["card_nuki"] = c[1] not in (u"いいえ", u"なし", u"0", u"off", u"OFF")
         elif c[0] == u"演出の間隔" and len(c) >= 2:
             try:
                 out["zentai"] = max(0.0, float(c[1]))
@@ -1793,7 +1800,7 @@ def kimeru_basho(rows, starts, chaps, en):
     n = len(rows)
     kind = {}
     if chaps:
-        for (key, _title) in chaps:
+        for (key, _title, _eps) in chaps:
             for i in range(n):
                 if key in rows[i][2]:
                     if i > 0:
@@ -2171,17 +2178,160 @@ def bgm_hikaeme(bgm, koe, total, work):
     return out
 
 
-def make_card(moto, out, w, h, iro, hidari):
-    u"""章タイトルのカードを作る。左半分に絵、右半分は無地。
+_NUKI_SESSION = [None]      # rembg は読み込みが重いので1回だけ作る
 
-    文字は焼き込まない。字幕(libass)で右半分に書くので、
-    フォントも大きさも 見た目.txt のものがそのまま使える。
-    （ffmpeg の drawtext だと、Windowsのフォントの場所を
-      こちらで決め打ちすることになり、環境で転ぶ）
+
+def nuki_dekiru():
+    u"""背景を消す道具(rembg)が使えるか。1回だけ調べる。"""
+    if _NUKI_SESSION[0] is None:
+        try:
+            from rembg import new_session
+            # isnet-anime は、アニメの絵のために作られたもの。
+            # 既定の u2net は実写向けで、アニメだと髪や服がごっそり欠ける。
+            _NUKI_SESSION[0] = new_session("isnet-anime")
+        except Exception as e:
+            _NUKI_SESSION[0] = False
+            say(u"  背景を消す道具(rembg)が入っていません: %s" % e)
+            say(u"  章カードは、絵をそのまま切り取って使います。")
+            say(u"  キャラだけにしたいときは  pip install rembg onnxruntime  を"
+                u"実行してください(初回だけ176MBの読み込みがあります)。")
+    return _NUKI_SESSION[0] or None
+
+
+def kyara_nuku(moto, out, yoyuu=0.04, shikii=48):
+    u"""絵から背景を消して、キャラだけの PNG にする。
+
+    消したあと、中身のある所だけに切りつめる(余白を落とす)。
+    切りつめないと、元の絵のまん中に小さくキャラが乗っただけになり、
+    半分に置いても小さくしか見えません。
+
+    ■ 透明かどうかは、必ず「透明の層(アルファ)」だけで見ること
+
+    最初 Image.getbbox() で囲みを取っていたら、1枚も抜けていないのに
+    「画面いっぱい残っている」と出ました。getbbox() は色の層も見るので、
+    透明でも色が入っていれば囲みに入ってしまいます。
+    透明の層を取り出し、しきい値で白黒にしてから囲みを取ります。
+
+    うまく抜けなかったとき(ほとんど透明・ほとんど不透明)は None を返し、
+    呼んだ側が元の絵をそのまま使います。背景が複雑な絵や、
+    キャラが写っていない風景の絵がこれに当たります。
+    """
+    sess = nuki_dekiru()
+    if not sess:
+        return None
+    try:
+        from rembg import remove
+        from PIL import Image
+        im = Image.open(moto).convert("RGBA")
+        cut = remove(im, session=sess)
+        alpha = cut.split()[3]
+        mask = alpha.point(lambda v: 255 if v >= shikii else 0)
+        bbox = mask.getbbox()
+        if not bbox:
+            return None                       # 何も残らなかった
+        w0, h0 = cut.size
+        nokori = sum(mask.histogram()[128:]) / float(w0 * h0)
+        if nokori < 0.02:
+            return None                       # 抜きすぎ(キャラが消えた)
+        if nokori > 0.92:
+            return None                       # 何も抜けていない
+        yx = int((bbox[2] - bbox[0]) * yoyuu)
+        yy = int((bbox[3] - bbox[1]) * yoyuu)
+        cut = cut.crop((max(0, bbox[0] - yx), max(0, bbox[1] - yy),
+                        min(w0, bbox[2] + yx), min(h0, bbox[3] + yy)))
+        cut.save(out)
+        return out
+    except Exception as e:
+        say(u"  背景を消せませんでした(%s): %s" % (os.path.basename(moto), e))
+        return None
+
+
+def card_no_e(rows, hajime, owari, title, cat):
+    u"""章カードに使う絵を、その章の中から選ぶ。
+
+    本人の指定は「適したものをあなたが見つけ、背景を切り取ってキャラだけに」。
+    章の先頭の絵をそのまま使うと、風景や文字だけの絵が来ることがあり、
+    背景を消したら何も残りません。
+
+    その章で使っている絵の中から、
+      ・章の名前に出てくる人が写っている絵       …いちばん強い
+      ・誰かが写っている絵                      …次
+      ・「アップ」と書かれている絵               …さらに足す
+      ・「使用不可」「クレジット」「実写」は外す
+    で選びます。カタログに説明が無ければ、今までどおり先頭の絵。
+    """
+    namae = [c for c in uniq(CHARACTERS) if c in title]
+    best, bscore = None, -1
+    for i in range(hajime, owari):
+        img = rows[i][1]
+        if not img or img.startswith(u"@@"):
+            continue
+        w = u" ".join(cat.get(img, []) if cat else [])
+        if not w:
+            if best is None:
+                best = img
+            continue
+        if any(x in w for x in (u"使用不可", u"クレジット", u"実写", u"テロップ")):
+            continue
+        sc = 0
+        if namae and any(c in w for c in namae):
+            sc += 6
+        elif any(c in w for c in uniq(CHARACTERS)):
+            sc += 3
+        if u"アップ" in w:
+            sc += 2
+        if u"二人" in w or u"三人" in w:
+            sc -= 1                      # 1人のほうが切り抜きが映える
+        if i == hajime:
+            sc += 1                      # 迷ったら章の頭
+        if sc > bscore:
+            best, bscore = img, sc
+    return best or rows[hajime][1]
+
+
+def make_card(moto, out, w, h, iro, hidari, nuki=True):
+    u"""章タイトルのカードを作る。
+
+    本人の指定:
+      「適した画像を見つけ、背景だけを切り取ってキャラだけの画像を作り、
+        そのキャラだけの画像を半分に、背景は全て黒、
+        もう半分には太字で章のタイトル」
+
+    なので
+      ・左半分 … キャラだけ(背景を消したもの)を、はみ出さない大きさで真ん中に
+      ・全体   … 黒(章タイトルの色。既定 000000)
+      ・右半分 … 文字。ここでは焼かず、字幕(libass)で太字で書く
+                 （ffmpeg の drawtext だと Windows のフォントの場所を
+                   決め打ちすることになり、見た目.txt の指定が効かない）
+
+    背景が消せなかったときは、今までどおり絵をそのまま切り取って左に置く。
+    キャラが写っていない風景の絵では、そのほうが見られるため。
     """
     lw = int(round(w * hidari))
     lw -= lw % 2
     rw = w - lw
+
+    kyara = None
+    if nuki:
+        kyara = kyara_nuku(moto, os.path.splitext(out)[0] + u"_キャラ.png")
+
+    if kyara:
+        # 左半分の中に収める。縦も横もはみ出さない大きさで、真ん中に置く。
+        yohaku = 0.90
+        s = (u"color=c=0x%s:s=%dx%d[bg];"
+             u"[0:v]scale=%d:%d:force_original_aspect_ratio=decrease[k];"
+             u"[bg][k]overlay=x=(%d-overlay_w)/2:y=(%d-overlay_h)/2,"
+             u"format=yuv420p[v]"
+             % (iro, w, h, int(lw * yohaku), int(h * yohaku), lw, h))
+        run([need("ffmpeg"), "-y", "-loglevel", "error",
+             "-loop", "1", "-i", kyara,
+             "-filter_complex", s, "-map", "[v]", "-frames:v", "1", out])
+        try:
+            os.remove(kyara)
+        except OSError:
+            pass
+        return out, True
+
     s = (u"[0:v]scale=%d:%d:force_original_aspect_ratio=increase,"
          u"crop=%d:%d,setsar=1[L];"
          u"color=c=0x%s:s=%dx%d[R];"
@@ -2189,7 +2339,7 @@ def make_card(moto, out, w, h, iro, hidari):
          % (lw, h, lw, h, iro, rw, h))
     run([need("ffmpeg"), "-y", "-loglevel", "error", "-loop", "1", "-i", moto,
          "-filter_complex", s, "-map", "[v]", "-frames:v", "1", out])
-    return out
+    return out, False
 
 
 def fx_filter(fx, dur):
@@ -2810,7 +2960,7 @@ def check_plan_words(rules, default, catalog):
 
 
 def assign_images(slots, images, rules, default, catalog=None, epmap=None,
-                  focus=None, mitame=None):
+                  focus=None, mitame=None, chaps=None):
     """画像プランに従って、スロットごとに絵を決める。
 
     「@第11話」のように書くと、そのフォルダの画像を順に使う。
@@ -2874,6 +3024,9 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         say(u"対象話数に書かれた話数が見つかりません: " + w)
 
     base_fols = resolve_focus(focus)
+    # base_fols は章ごとに差し替わるので、「もともとの既定」を別に取っておく。
+    # 偏りの警告は、こちらと比べないと意味が変わってしまう。
+    moto_base = list(base_fols)
     if base_fols:
         say(u"対象話数(既定): " + u" / ".join(base_fols))
     used_focus = set()
@@ -3148,7 +3301,39 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                     best, blen = r, len(k)
         return best
 
-    for (_st, _du, tx) in slots:
+    # 章ごとの「アニメ何話か」を、スロット番号に落とす。
+    #
+    # 画面表示_○○.txt の 章の行の4列目。ここが書いてあれば、その章の間は
+    # 既定の話数をそれに差し替えます。画像プランに @@話数 が書いてある行は
+    # そちらが勝つので、手で決めたものは今までどおり優先されます。
+    shou_kiri = {}
+    if chaps:
+        tsukatta = set()
+        for (key, title, eps) in chaps:
+            if not eps:
+                continue
+            for i, (_s2, _d2, t2) in enumerate(slots):
+                if i not in tsukatta and key in t2:
+                    fs = resolve_focus(eps)
+                    if fs:
+                        shou_kiri[i] = (title, fs)
+                    else:
+                        say(u"  章「%s」の話数が見つかりません: %s"
+                            % (title.replace(u"\\N", u" "), u", ".join(eps)))
+                    tsukatta.add(i)
+                    break
+        if shou_kiri:
+            say(u"章ごとの話数: %d章ぶんを使います（画面表示の4列目）"
+                % len(shou_kiri))
+
+    ima_base = list(base_fols)
+    shou_tsukatta = []
+    for idx, (_st, _du, tx) in enumerate(slots):
+        if idx in shou_kiri:
+            title, fs = shou_kiri[idx]
+            ima_base = fs
+            shou_tsukatta.append((title, fs))
+        base_fols = ima_base
         pick = None
         r = erabu(tx)
         if r is not None:
@@ -3232,7 +3417,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     # 1つの話数の解説動画なら、その話数に偏っているのが正しい。
     # 偏りを責めるのは、対象話数の先頭に書いた話数ではないときだけ。
     if order and order[0][1] > len(out) * 0.5:
-        atama = base_fols[0] if base_fols else None
+        atama = moto_base[0] if moto_base else None
         if order[0][0] != atama:
             say(u"⚠ %s に %.0f%% が偏っています。画像プランの指定を見直してください。"
                 % (order[0][0], 100.0 * order[0][1] / len(out)))
@@ -3388,7 +3573,63 @@ def normalize(src, dst, w, h, fit):
     run(cmd)
 
 
-def write_ichiran(rows, starts, ends, fol=u"確認用"):
+def e_no(img):
+    u"""絵のファイル名から「アニメ何話の絵か」を取り出す。
+
+    絵は 話数フォルダ/ファイル名 で置かれているので、
+    フォルダ名がそのまま話数です。別に書き足す必要はありません
+    （二重に持つと必ず食いちがうので、持たせません）。
+    """
+    if not img or img.startswith(u"@@"):
+        return u""
+    return img.split(u"/")[0] if u"/" in img else u""
+
+
+def shou_no_wasuu(rows, chaps):
+    u"""各行が「台本のうえで何話の内容か」を出す。
+
+    画面表示_○○.txt の章の行の4列目。章が変わるまで、同じ話数が続きます。
+    絵の話数とこれを並べると、食いちがいがその場で見えます。
+    """
+    out = [u""] * len(rows)
+    if not chaps:
+        return out
+    kiri, tsukatta = {}, set()
+    for (key, _title, eps) in chaps:
+        if not eps:
+            continue
+        for i, (_du, _img, tx) in enumerate(rows):
+            if i not in tsukatta and key in tx:
+                kiri[i] = eps
+                tsukatta.add(i)
+                break
+    ima = []
+    for i in range(len(rows)):
+        if i in kiri:
+            ima = kiri[i]
+        out[i] = u" / ".join(ima)
+    return out
+
+
+def hyou_gyou(i, start, du, img, tx, daihon):
+    u"""一覧.txt の1行。絵の話数と、台本の話数を並べる。"""
+    e = e_no(img)
+    # 台本が「この話」と言っているのに、絵が別の話から来ているところに印。
+    # ここが採点でいちばん効きます。
+    shirushi = u""
+    if e and daihon and e not in [x.strip() for x in daihon.split(u"/")]:
+        shirushi = u"ちがう"
+    # セリフは必ずいちばん右。印を右端に置くと、セリフの一部として
+    # 読まれてしまい、採点がおかしくなります（一度そうなりかけました）。
+    return u"%03d\t%s\t%.2f\t%s\t%s\t%s\t%s\t%s" % (
+        i + 1, mmss(start), du, img, e, daihon, shirushi,
+        tx.replace(u"\t", u" "))
+
+
+ATAMA_GYOU = u"番号\t開始\t尺\t画像\t絵の話数\t台本の話数\tちがい\tセリフ"
+
+
+def write_ichiran(rows, starts, ends, fol=u"確認用", chaps=None):
     u"""一覧.txt だけ書く（動画は切らない）。
 
     採点(miru_kekka.py)が見るのはこの表だけで、短い動画は1本も見ていない。
@@ -3396,11 +3637,11 @@ def write_ichiran(rows, starts, ends, fol=u"確認用"):
     """
     if not os.path.isdir(fol):
         os.makedirs(fol)
-    hyo = [u"番号\t開始\t尺\t画像\tセリフ"]
+    daihon = shou_no_wasuu(rows, chaps)
+    hyo = [ATAMA_GYOU]
     for i, (_du, img, tx) in enumerate(rows):
-        hyo.append(u"%03d\t%s\t%.2f\t%s\t%s"
-                   % (i + 1, mmss(starts[i]), ends[i] - starts[i], img,
-                      tx.replace(u"\t", u" ")))
+        hyo.append(hyou_gyou(i, starts[i], ends[i] - starts[i],
+                             img, tx, daihon[i]))
     atama = [u"# 時刻表の作り方: " + JIKOKU[0]]
     for x in TARINAI:
         atama.append(u"# 足りない設定: " + x)
@@ -3410,7 +3651,7 @@ def write_ichiran(rows, starts, ends, fol=u"確認用"):
     say(u"確認用/一覧.txt を書きました (%d行)。採点はこれだけで足ります。" % len(rows))
 
 
-def write_cuts(final, rows, starts, ends, fol=u"確認用"):
+def write_cuts(final, rows, starts, ends, fol=u"確認用", chaps=None):
     """完成した動画を、1枚ずつの短い動画に切り分ける。
 
     直したい場所を「7番」のように番号で指せるようにするためのもの。
@@ -3424,8 +3665,9 @@ def write_cuts(final, rows, starts, ends, fol=u"確認用"):
     os.makedirs(fol)
     say(u"")
     say(u"1枚ずつの確認用動画を作っています (%d本)…" % len(rows))
-    write_ichiran(rows, starts, ends)      # 表は 確認用 に、動画は 動画/分割版 に
-    hyo = [u"番号	開始	尺	画像	セリフ"]
+    write_ichiran(rows, starts, ends, chaps=chaps)   # 表は 確認用、動画は 動画/分割版
+    daihon = shou_no_wasuu(rows, chaps)
+    hyo = [ATAMA_GYOU]
     for i, (_du, img, tx) in enumerate(rows):
         s0, du = starts[i], ends[i] - starts[i]
         na = re.sub(u"[\\/:*?\"<>|\r\n\t]+", u"", tx)[:24] or u"なし"
@@ -3439,8 +3681,7 @@ def write_cuts(final, rows, starts, ends, fol=u"確認用"):
                         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
                         "-c:a", "aac", "-avoid_negative_ts", "make_zero", out],
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        hyo.append(u"%03d\t%s\t%.2f\t%s\t%s"
-                   % (i + 1, mmss(s0), du, img, tx.replace(u"\t", u" ")))
+        hyo.append(hyou_gyou(i, s0, du, img, tx, daihon[i]))
         if (i + 1) % 40 == 0:
             say(u"  %d / %d" % (i + 1, len(rows)))
     # 先頭に、時刻表をどう組んだかを書いておく。
@@ -3736,8 +3977,11 @@ def main():
             if rules or default:
                 cat = load_catalog(a.catalog, images)
                 emap = load_epmap(a.epmap, images)
+                _c0, chaps_for_assign = load_overlay(a.overlay) \
+                    if os.path.exists(a.overlay) else (u"", [])
                 picked = assign_images(slots, images, rules, default, cat,
-                                       emap, focus, mitame=mi)
+                                       emap, focus, mitame=mi,
+                                       chaps=chaps_for_assign)
         write_plan(PLAN, slots, picked, fp_now)
         say(u"音声 %s / 画像 %d枚 / 区切り %d枚ぶん" % (mmss(total), len(images), len(slots)))
         say(u"割り当て表を書き出しました: " + os.path.join(HERE, PLAN))
@@ -3783,31 +4027,40 @@ def main():
     card_moto = []      # (入れる位置, もとの絵) を元の並びで
     if en.get("card") and chaps0 and not a.no_fx:
         tsukatta = set()
-        for (key, title) in chaps0:
+        for (key, title, _eps) in chaps0:
             for i in range(len(rows)):
                 if i in tsukatta or key not in rows[i][2]:
                     continue
                 if i == 0:
                     tsukatta.add(i)
                     break      # いちばん最初はカードを入れない
-                card_moto.append((i, rows[i][1], title))
+                card_moto.append((i, title))
                 tsukatta.add(i)
                 break
     if card_moto:
         card_moto.sort()
+        # 章ごとに、カードに向いた絵をその章の中から選び直す
+        cat_for_card = load_catalog(a.catalog, images) \
+            if os.path.exists(a.catalog) else {}
+        kugiri = [x[0] for x in card_moto] + [len(rows)]
+        card_moto = [(ii, card_no_e(rows, ii, kugiri[n + 1], ti, cat_for_card), ti)
+                     for n, (ii, ti) in enumerate(card_moto)]
         cdir = os.path.join(HERE, SONOTA_DIR, "card")
         if not os.path.isdir(cdir):
             os.makedirs(cdir)
         byou = en["card_byou"]
         atarashii, zure = [], 0
-        ci = 0
+        ci, nuketa = 0, 0
         for i, row in enumerate(rows):
             while ci < len(card_moto) and card_moto[ci][0] == i:
                 _, moto, title = card_moto[ci]
                 key = u"@@card%02d" % ci
                 png = os.path.join(cdir, "card%02d.png" % ci)
-                make_card(cache[moto], png, w, h,
-                          en["card_iro"], en["card_hidari"])
+                _, ok = make_card(cache[moto], png, w, h,
+                                  en["card_iro"], en["card_hidari"],
+                                  nuki=en.get("card_nuki", True))
+                if ok:
+                    nuketa += 1
                 cache[key] = png
                 cards[len(atarashii)] = title
                 atarashii.append((byou, key, u""))
@@ -3816,6 +4069,8 @@ def main():
         rows = atarashii
         say(u"章タイトルのカードを %d枚 はさみました (1枚 %.1f秒)"
             % (len(cards), byou))
+        say(u"  うち %d枚は背景を消してキャラだけにしました（残り %d枚は"
+            u"抜けなかったので絵のまま）" % (nuketa, len(cards) - nuketa))
 
     # --- 切り替わりをフレームにそろえる(絵と字幕を1フレームも狂わせない) ---
     fps = a.fps
@@ -3876,7 +4131,7 @@ def main():
             if chaps and hookae:
                 say(u"  台本に見つからなかったチャプターのキーワード %d本:" % hookae)
                 atta = set(t for (_s, _e, t) in spans)
-                for (key, title) in chaps:
+                for (key, title, _eps) in chaps:
                     if title not in atta:
                         say(u"    × %-16s → %s" % (key, title.replace(u"\\N", u" / ")))
             TARINAI.extend(kakete_iru(a, mi_aru, ov_aru, credit, chaps, spans))
@@ -4144,9 +4399,9 @@ def main():
     # 1枚ずつの動画は --cuts のときだけ（255本で何分もかかる）。
     try:
         if a.cuts:
-            write_cuts(final, rows, starts, ends)
+            write_cuts(final, rows, starts, ends, chaps=chaps)
         else:
-            write_ichiran(rows, starts, ends)
+            write_ichiran(rows, starts, ends, chaps=chaps)
     except Exception as e:
         say(u"確認用の書き出しはできませんでした: %s" % e)
     say(u"絵を差し替えたいときは 画像割り当て.tsv を直して、もう一度 batを実行してください。")

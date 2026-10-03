@@ -149,6 +149,27 @@ r = subprocess.run([sys.executable, os.path.join(V, u"プラン全部作る.py")
 print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"画像プランに問題があります")
+else:
+    # もう一度まわして、同じものができること。
+    # 「手で選んだ絵」の枠が、作り直すたびに 4行→8行→12行 と
+    # 太っていったことがある。1回だけでは気づけない。
+    import hashlib as _h
+    def _yubi():
+        d = {}
+        for f in sorted(os.listdir(V)):
+            if f.startswith(u"画像プラン_") and f.endswith(u".txt"):
+                d[f] = _h.md5(io.open(os.path.join(V, f), "rb").read()).hexdigest()
+        return d
+    mae = _yubi()
+    subprocess.run([sys.executable, os.path.join(V, u"プラン全部作る.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+    chigau = [f for f, v in _yubi().items() if mae.get(f) != v]
+    if chigau:
+        warui.append(u"作り直すたびに画像プランが変わります: " + u" ".join(chigau))
+        print(u"× 2回作ると中身が変わります: " + u" ".join(chigau))
+    else:
+        print(u"○ もう一度作っても同じものができます（枠が太りません）")
 
 # ── ⑤ 配り忘れ ──────────────────────────────────────
 midashi(u"⑤", u"共通の設定が、どの動画のパックにも入るか")

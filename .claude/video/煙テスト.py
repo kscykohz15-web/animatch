@@ -40,23 +40,28 @@ DAIHON = u"""むかし、ある所に絵がありました。
 """
 
 GAMEN = u"""引用\t©てすと
-章\tむかし\tはじめ
-章\tここで話が変わります\tおわり
+章\tむかし\tはじめ\tてすと甲
+章\tここで話が変わります\tおわり\tてすと乙
 """
 
-PLAN = u"""@@話数\tてすと
-むかし\t#あか, #あお
-その絵は四枚\t#あお, #みどり
-それでも動画\t#みどり, #きいろ
-ここで話が変わります\t#きいろ, #あか
-最後に\t#あか, #あお
-*\t#あお
+PLAN = u"""むかし\t#あか, #あお, #もも
+その絵は四枚\t#あお, #もも, #あか
+それでも動画\t#もも, #あか, #あお
+ここで話が変わります\t#きいろ, #みどり, #みず
+最後に\t#みどり, #みず, #きいろ
+*\t#あお, #みどり
 """
 
-CATALOG = u"""あか.jpg\tあか
-あお.jpg\tあお
-みどり.jpg\tみどり
-きいろ.jpg\tきいろ
+CATALOG = u"""てすと甲/あか\tあか
+てすと甲/あお\tあお
+てすと甲/もも\tもも
+てすと乙/みどり\tみどり
+てすと乙/きいろ\tきいろ
+てすと乙/みず\tみず
+"""
+
+EPMAP = u"""てすと甲\tはじめ あか あお もも
+てすと乙\tおわり みどり きいろ みず
 """
 
 ENSHUTSU = u"""区切り\t。\tカメラ.mp3\t暗転\t0.12
@@ -79,19 +84,22 @@ BGM控えめ\tいいえ
 def junbi():
     if os.path.isdir(SAGYOU):
         shutil.rmtree(SAGYOU)
-    e = os.path.join(SAGYOU, u"絵", u"てすと")
-    os.makedirs(e)
+    e = os.path.join(SAGYOU, u"絵")
+    os.makedirs(os.path.join(e, u"てすと甲"))
+    os.makedirs(os.path.join(e, u"てすと乙"))
     os.makedirs(os.path.join(SAGYOU, u"効果音"))
     os.makedirs(os.path.join(SAGYOU, u"BGM"))
-    for nm, col in ((u"あか", "red"), (u"あお", "blue"),
-                    (u"みどり", "green"), (u"きいろ", "yellow")):
+    for nm, col, fol in ((u"あか", "red", u"てすと甲"), (u"あお", "blue", u"てすと甲"),
+                         (u"もも", "pink", u"てすと甲"),
+                         (u"みどり", "green", u"てすと乙"), (u"きいろ", "yellow", u"てすと乙"),
+                         (u"みず", "cyan", u"てすと乙")):
         ff(["-f", "lavfi", "-i", "color=c=%s:s=1280x720" % col,
-            "-frames:v", "1", os.path.join(e, nm + ".jpg")])
+            "-frames:v", "1", os.path.join(e, fol, nm + ".jpg")])
 
     w = io.open  # 短く
     for nm, body in ((u"台本_字幕用.txt", DAIHON), (u"画面表示.txt", GAMEN),
                      (u"画像プラン.txt", PLAN), (u"画像カタログ.txt", CATALOG),
-                     (u"演出.txt", ENSHUTSU)):
+                     (u"話数マップ.txt", EPMAP), (u"演出.txt", ENSHUTSU)):
         w(os.path.join(SAGYOU, nm), "w", encoding="utf-8",
           newline="\n").write(body)
     shutil.copy(os.path.join(HERE, u"見た目.txt"),
@@ -184,7 +192,8 @@ def main():
                            (u"BGM:", u"BGMが入っていません"),
                            (u"同じ絵は", u"同じ絵の上限が効いていません"),
                            (u"章タイトルのカードを", u"章タイトルのカードが入っていません"),
-                           (u"声に無音を", u"カードぶんの無音が入っていません")):
+                           (u"声に無音を", u"カードぶんの無音が入っていません"),
+                           (u"章ごとの話数", u"章ごとの話数(画面表示の4列目)が効いていません")):
         if shirushi not in out:
             komatta.append(nani)
     ookisa = os.path.getsize(kansei)
@@ -194,7 +203,7 @@ def main():
     for line in out.split(u"\n"):
         if any(k in line for k in (u"字幕を焼き込みます", u"左上の引用",
                                    u"右上のチャプター", u"効果音:", u"BGM:",
-                                   u"同じ絵は", u"章タイトル", u"無音を",
+                                   u"同じ絵は", u"章タイトル", u"無音を", u"章ごとの話数",
                                    u"合計", u"タイミング")):
             print(u"   " + line.strip())
     print(u"   完成.mp4 %.0fKB" % (ookisa / 1024.0))

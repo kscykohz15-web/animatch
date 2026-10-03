@@ -35,7 +35,7 @@ def shirabe(overlay, script, shizuka=False):
     cues = cues_of(script)
     atari, hazure, junban = [], [], []
     tsukatta = set()
-    for (key, title) in chaps:
+    for (key, title, _eps) in chaps:
         ban = None
         for i, c in enumerate(cues):
             if i in tsukatta or key not in c:

@@ -79,17 +79,72 @@ def key_of(cue):
     return cue.strip().rstrip(u"、。！？")
 
 
+def tebiki(out):
+    u"""すでにある画像プランから「手で選んだ絵」の行だけを取り出す。
+
+    作り直すたびに消えると、本人が選んだ絵が黙って元に戻ります。
+    「手で選んだ絵は、機械の判定より上」なので、必ず持ち越します。
+
+    ■ 枠の終わりは「# ══ 章の名前 ══」ではなく、最初の章の見出しで決める
+
+    はじめ「手で選んだ絵」という字を見つけた所から集めていたら、
+    説明文の中の同じ字に当たってしまい、そのうえ本文の先頭
+    （最初の章より前にある行）まで一緒に拾って、作り直すたびに
+    4行 → 8行 → 12行 と増えていきました。
+    枠の下の区切り線から、最初の章の見出しまで、と決め打ちます。
+    同じ行は1回だけにします（増えてしまったものはここで直ります）。
+    """
+    if not os.path.exists(out):
+        return []
+    lines = io.open(out, encoding="utf-8-sig").read() \
+        .replace("\r\n", "\n").split("\n")
+    # ① 「手で選んだ絵（」のある見出し行を探す
+    atama = None
+    for i, line in enumerate(lines):
+        if u"手で選んだ絵（" in line:
+            atama = i
+            break
+    if atama is None:
+        return []
+    # ② その下の区切り線（# ═════…）の次から
+    hajime = None
+    for i in range(atama + 1, len(lines)):
+        if lines[i].startswith(u"# \u2550\u2550\u2550"):
+            hajime = i + 1
+            break
+    if hajime is None:
+        return []
+    # ③ 最初の章の見出し（# ══ 名前 ══）まで
+    nokosu, mita = [], set()
+    for line in lines[hajime:]:
+        if line.startswith(u"# \u2550\u2550 "):
+            break
+        t = line.rstrip()
+        if not t.strip() or t.lstrip().startswith(u"#"):
+            continue
+        if t not in mita:
+            mita.add(t)
+            nokosu.append(t)
+    return nokosu
+
+
 def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
     ate = load_atekata(os.path.join(HERE, u"当て方.txt"))
     cues = cues_of(script)
     _credit, chaps = M.load_overlay(overlay) if os.path.exists(overlay) else (u"", [])
-    shou_wasuu = shou_wasuu or {}
+    # 章ごとの話数は、画面表示_○○.txt の章の行の4列目から取ります。
+    # そこが「この章はアニメの何話の内容か」の置き場所です。
+    shou_wasuu = dict(shou_wasuu or {})
+    for (_key, title, eps) in chaps:
+        if eps and title not in shou_wasuu:
+            shou_wasuu[title] = eps
+    te = tebiki(out)
     kitei = kitei or [u"#穏やか", u"#室内", u"#立ち姿"]
 
     # 章の切り替わる字幕の番号を出す
     kiri = {}
     tsukatta = set()
-    for (key, title) in chaps:
+    for (key, title, _eps) in chaps:
         for i, c in enumerate(cues):
             if i not in tsukatta and key in c:
                 kiri[i] = title
@@ -98,6 +153,11 @@ def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
 
     gyou, atta = [], 0
     ima_wasuu = None
+    # 最初の章より前にも字幕があります。見出しを付けずに書くと、
+    # それが「手で選んだ絵」の枠の中に見えてしまい、作り直すたびに
+    # 枠が太っていきました（4行→8行→12行）。必ず見出しの下に置きます。
+    if cues and 0 not in kiri:
+        gyou.append(u"# \u2550\u2550 章がはじまる前 \u2550\u2550")
     for i, c in enumerate(cues):
         if i in kiri:
             title = kiri[i]
@@ -123,6 +183,8 @@ def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
 
     nm = os.path.basename(out)
     body = ATAMA % (midashi, nm, os.path.basename(script))
+    if te:
+        body += u"\n".join(te) + u"\n"
     body += u"\n".join(gyou) + u"\n\n"
     body += u"# 何にも当たらなかったとき\n*\t" + u", ".join(kitei) + u"\n"
     io.open(out, "w", encoding="utf-8", newline="\n").write(body)
