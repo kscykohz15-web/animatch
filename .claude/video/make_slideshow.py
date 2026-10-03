@@ -3834,8 +3834,13 @@ def main():
     # merged.wav が抜けていたので、音声を録り直しても古い尺のまま使われ、
     # 字幕と音声がずれていた。見た目.txt も、同じ絵の上限や字幕の最短が
     # 割り当てに効くので入れる。
+    # 画面表示_○○.txt も必ず入れること。
+    # 章の行の4列目(その章がアニメの何話か)が、どの絵を選ぶかを決めるので、
+    # ここを直したら割り当て表は作り直さないといけない。
+    # 入れ忘れていたせいで、話数を書いても古い表が使われ、
+    # 本人が その他/画像割り当て.tsv を手で消さないと効かなかった。
     srcs = [IMGPLAN, a.catalog, a.epmap, a.script, a.srt,
-            a.audio, a.mitame, u"人物ルール.txt"]
+            a.audio, a.mitame, a.overlay, u"人物ルール.txt"]
     fp_now = inputs_fingerprint(srcs)
     newer = None
     if have and not stale:
