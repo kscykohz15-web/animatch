@@ -265,6 +265,7 @@ def load_ichiran(path):
         no, hajime, shaku = parts[0], parts[1], parts[2]
         gazou = hiku(u"画像", 3)
         serifu = hiku(u"セリフ", len(parts) - 1)
+        daihon = hiku(u"台本の話数", -1)
         try:
             shaku_f = float(shaku)
         except ValueError:
@@ -275,6 +276,7 @@ def load_ichiran(path):
             u"sec": shaku_f,
             u"img": gazou.strip(),
             u"text": serifu.strip(),
+            u"daihon": [x.strip() for x in daihon.split(u"/") if x.strip()],
         })
     return rows
 
@@ -484,10 +486,17 @@ def main():
             omosa += 10
 
         # ② 話数ちがい
+        #
+        # その行の章が「アニメの何話か」で見る。一覧.txt の「台本の話数」の列。
+        # 前は画像プランのいちばん最初の @@話数 だけを「使ってよい話数」として
+        # 全行に当てていた。章ごとに話数を変えるようにしたとたん、
+        # 2話目以降の章が全部ちがい扱いになり、170か所・39点になった。
+        # （実際に台本と食いちがっていたのは 278行のうち14行だけ）
+        yurusu = r.get(u"daihon") or kyoka
         fol = folder_of(img)
-        if kyoka and fol and not is_zuhyou(img) and not erabi:
-            if fol not in kyoka:
-                riyuu.append(u"話数ちがい（%s は今回の対象外）" % fol)
+        if yurusu and fol and not is_zuhyou(img) and not erabi:
+            if fol not in yurusu:
+                riyuu.append(u"話数ちがい（この章は %s の話）" % u" / ".join(yurusu))
                 omosa += 6
 
         # ③ 人ちがい

@@ -3108,6 +3108,33 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             del saikin[0]
         tsukai[k] = tsukai.get(k, 0) + 1
 
+    # 章の話数の中にある絵を、まるごと並べたもの（話数の組ごとに1回だけ作る）
+    hoka_pool = {}
+    DAME = (u"使用不可", u"クレジット", u"実写", u"テロップ", u"提供")
+
+    def karu():
+        u"""同じ話数の中から、まだ上限に達していない絵を借りる。"""
+        fk = u"|".join(cur["fols"])
+        if not fk:
+            return None
+        if fk not in hoka_pool:
+            sou = []
+            for k in images:
+                if u"/" not in k or k.split(u"/")[0] not in cur["rank"]:
+                    continue
+                w = u" ".join((catalog or {}).get(k, []))
+                if not w or any(x in w for x in DAME):
+                    continue        # 説明の無い絵と、出してはいけない絵は借りない
+                sou.append(k)
+            hoka_pool[fk] = _order(sou)
+        for k in hoka_pool[fk]:
+            if tsukai.get(k, 0) < jougen and k not in saikin:
+                return k
+        for k in hoka_pool[fk]:
+            if tsukai.get(k, 0) < jougen:
+                return k
+        return None
+
     def resolve(f, hiroi=False):
         if not (f.startswith(u"@") or f.startswith(u"#")):
             return f
@@ -3133,8 +3160,16 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             if tsukai.get(k, 0) < jougen:
                 pools[pk][1] = i + step + 1
                 return k
-        # ③ 候補がぜんぶ上限に達している。いちばん使っていないものにする。
-        #    ここに来るのは候補が少なすぎるとき。あとで数を知らせる。
+        # ③ 候補がぜんぶ上限。章の話数の中から、まだ余裕のある絵を借りる。
+        #
+        #    ここが無いと、候補が1枚しかない章で同じ絵が何度も出ます。
+        #    実際「助言② ウェンポートの路地裏」の章で、38行を18種でまかない、
+        #    1枚が16回出ました（上限は3）。
+        #    話数は合っているのだから、同じ話数の別の絵にするほうが良い。
+        k = karu()
+        if k:
+            return k
+        # ④ それでも無いときだけ、いちばん使っていないものを繰り返す。
         afure[0] += 1
         k = min(lst, key=lambda x: (tsukai.get(x, 0), lst.index(x)))
         pools[pk][1] = i + 1
