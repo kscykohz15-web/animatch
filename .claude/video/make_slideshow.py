@@ -3485,6 +3485,15 @@ def write_plan(path, slots, images, fingerprint=u""):
                     % (i + 1, st, du, mmss(st), img, tx.replace(u"\t", u" ")))
 
 
+# 絵の決め方そのものの版。**決め方を変えたら必ず1つ上げること。**
+#
+# 指紋は設定ファイルの中身しか見ていなかったので、こちらが
+# make_slideshow.py の決め方を直しても、設定が同じなら
+# 前の割り当て表がそのまま使われ、直したことが効かなかった。
+# （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
+WARIATE_BAN = 2
+
+
 def inputs_fingerprint(paths):
     u"""割り当ての元になったファイルの指紋を作る。
 
@@ -3495,7 +3504,7 @@ def inputs_fingerprint(paths):
     大きなファイル(音声など)は、頭と尻と大きさだけで足りる。
     """
     OOKII = 4 * 1024 * 1024
-    parts = []
+    parts = [u"ban%d" % WARIATE_BAN]
     for p in paths:
         if not p:
             continue

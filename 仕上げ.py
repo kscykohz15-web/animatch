@@ -16,6 +16,7 @@ u"""掲示板を出す前に、決めごとを全部きかいで確かめる。
 「老デウス以外のパックに設定が1つも入っていなかった」のは、
 ここを機械で見ていなかったからです。
 """
+import hashlib
 import io, os, re, shutil, subprocess, sys
 
 def sagasu():
@@ -337,6 +338,43 @@ r = subprocess.run([sys.executable, os.path.join(V, u"カード検査.py")],
 print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"章タイトルのカードが右半分からはみ出します")
+
+# ── ⑭ 絵の決め方を直したら、版を上げたか ────────────
+midashi(u"⑭", u"絵の決め方を直したら WARIATE_BAN を上げたか")
+# 指紋は設定ファイルしか見ない。決め方(assign_images)を直しても
+# 設定が同じなら前の割り当て表が使われ、直したことが空振りする。
+# 実際に一度、まるまる空振りした回がある。
+ms = io.open(os.path.join(V, "make_slideshow.py"), encoding="utf-8").read()
+m_ban = re.search(r"^WARIATE_BAN\s*=\s*(\d+)", ms, re.M)
+i_a = ms.find(u"def assign_images(")
+if not m_ban or i_a < 0:
+    warui.append(u"WARIATE_BAN か assign_images が見つかりません")
+    print(u"× WARIATE_BAN か assign_images が見つかりません")
+else:
+    j_a = ms.find(u"\ndef ", ms.index(u"\n", i_a))
+    honbun = ms[i_a:j_a if j_a > 0 else len(ms)]
+    ima = u"%s %s" % (m_ban.group(1),
+                      hashlib.md5(honbun.encode("utf-8")).hexdigest()[:12])
+    oboe2 = os.path.join(HERE, u".割り当ての版.txt")
+    mae = io.open(oboe2, encoding="utf-8").read().strip() \
+        if os.path.exists(oboe2) else u""
+    if mae and mae != ima:
+        ban_mae, h_mae = (mae.split() + [u""])[:2]
+        ban_ima, h_ima = ima.split()
+        if h_mae != h_ima and ban_mae == ban_ima:
+            warui.append(u"絵の決め方を直したのに WARIATE_BAN が %s のままです"
+                         % ban_ima)
+            print(u"× 決め方(assign_images)が変わったのに版が %s のままです。"
+                  u"1つ上げてください" % ban_ima)
+            print(u"   上げないと、本人の画面では前の割り当て表が使われます")
+        else:
+            print(u"○ 決め方が変わり、版も %s → %s に上がっています"
+                  % (ban_mae, ban_ima))
+            io.open(oboe2, "w", encoding="utf-8", newline="\n").write(ima)
+    else:
+        if not mae:
+            io.open(oboe2, "w", encoding="utf-8", newline="\n").write(ima)
+        print(u"○ 絵の決め方は変わっていません（版 %s）" % m_ban.group(1))
 
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
