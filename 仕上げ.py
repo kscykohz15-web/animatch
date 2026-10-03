@@ -376,6 +376,15 @@ else:
             io.open(oboe2, "w", encoding="utf-8", newline="\n").write(ima)
         print(u"○ 絵の決め方は変わっていません（版 %s）" % m_ban.group(1))
 
+# ── ⑮ 人物ルールの条件が、本当にあるタグか ──────────
+midashi(u"⑮", u"人物ルールの条件が、出てくるタグかどうか")
+r = subprocess.run([sys.executable, os.path.join(V, u"人物ルール検査.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"人物ルールに、絶対に当たらない条件があります")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

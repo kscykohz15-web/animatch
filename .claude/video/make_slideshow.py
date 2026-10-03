@@ -3062,8 +3062,31 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 return [k for k in pool if cat.get(k) and all(w in cat[k] for w in words)]
 
             def by_epmap(pool):
+                u"""話数マップ(話数まるごと)から探す。
+
+                ■ 「話数まるごと」でも、別の人が写っている絵は外すこと
+
+                前はその話数の絵をぜんぶ返していた。
+                Ⅱ第14話の説明には「ロキシー」と書いてあるので、
+                #ロキシー がその話数の絵ぜんぶに当たり、
+                シルフィエットの絵が「ここにロキシーがいました」に出た（3か所）。
+                1枚ごとの説明があるなら、そこに別の人の名前しか無い絵は外す。
+                説明が無い絵は、そのまま候補に残す（それがこの仕組みの役目）。
+                """
                 fs = set(f for f, d in emap.items() if all(w in d for w in words))
-                return [k for k in pool if (k.split(u"/")[0] if u"/" in k else u"") in fs]
+                hoshii = [w for w in words if w in uniq(CHARACTERS)]
+                betsu = [c for c in uniq(CHARACTERS) if c not in hoshii] if hoshii else []
+                out2 = []
+                for k in pool:
+                    if (k.split(u"/")[0] if u"/" in k else u"") not in fs:
+                        continue
+                    if betsu:
+                        w2 = cat.get(k)
+                        if w2 and not any(h in w2 for h in hoshii) \
+                                and any(c in w2 for c in betsu):
+                            continue        # 別の人だと分かっている絵は使わない
+                    out2.append(k)
+                return out2
 
             if cur["rank"]:
                 inside = [k for k in images if _in_focus(k)]
@@ -3527,7 +3550,7 @@ def write_plan(path, slots, images, fingerprint=u""):
 # make_slideshow.py の決め方を直しても、設定が同じなら
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
-WARIATE_BAN = 3
+WARIATE_BAN = 4
 
 
 def inputs_fingerprint(paths):
