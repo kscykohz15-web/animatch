@@ -339,42 +339,34 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"章タイトルのカードが右半分からはみ出します")
 
-# ── ⑭ 絵の決め方を直したら、版を上げたか ────────────
-midashi(u"⑭", u"絵の決め方を直したら WARIATE_BAN を上げたか")
-# 指紋は設定ファイルしか見ない。決め方(assign_images)を直しても
-# 設定が同じなら前の割り当て表が使われ、直したことが空振りする。
-# 実際に一度、まるまる空振りした回がある。
+# ── ⑭ 決め方を直したら、割り当て表が作り直されるか ────────────
+midashi(u"⑭", u"決め方を直したら、割り当て表が作り直されるか")
+# 指紋が設定ファイルしか見ていなかったせいで、こちらが決め方を直しても
+# 前の割り当て表がそのまま使われ、直したことが空振りした。2回やっている。
+#   1回目 絵の借り方を直した回   2回目 字幕と音声のずれを直した v129
+# 手で上げる版は忘れるので、いまは決め方の関数のソースそのものを
+# 指紋に混ぜている。ここが外れていないかを見る。
 ms = io.open(os.path.join(V, "make_slideshow.py"), encoding="utf-8").read()
-m_ban = re.search(r"^WARIATE_BAN\s*=\s*(\d+)", ms, re.M)
-i_a = ms.find(u"def assign_images(")
-if not m_ban or i_a < 0:
-    warui.append(u"WARIATE_BAN か assign_images が見つかりません")
-    print(u"× WARIATE_BAN か assign_images が見つかりません")
+HISSU = [u"kugiri_awase", u"timeline_from_parts_srt", u"place_in_chunk",
+         u"assign_images"]
+m_k = re.search(r"def kime_kata_shirushi\(\):(.*?)\ndef ", ms, re.S)
+tsukatte = u"kime_kata_shirushi()" in ms.split(u"def inputs_fingerprint")[-1][:1500]
+if not m_k:
+    warui.append(u"kime_kata_shirushi が make_slideshow.py にありません")
+    print(u"× kime_kata_shirushi がありません（決め方を直しても空振りします）")
+elif not tsukatte:
+    warui.append(u"inputs_fingerprint が kime_kata_shirushi を使っていません")
+    print(u"× 指紋に決め方の印が入っていません（直しても空振りします）")
 else:
-    j_a = ms.find(u"\ndef ", ms.index(u"\n", i_a))
-    honbun = ms[i_a:j_a if j_a > 0 else len(ms)]
-    ima = u"%s %s" % (m_ban.group(1),
-                      hashlib.md5(honbun.encode("utf-8")).hexdigest()[:12])
-    oboe2 = os.path.join(HERE, u".割り当ての版.txt")
-    mae = io.open(oboe2, encoding="utf-8").read().strip() \
-        if os.path.exists(oboe2) else u""
-    if mae and mae != ima:
-        ban_mae, h_mae = (mae.split() + [u""])[:2]
-        ban_ima, h_ima = ima.split()
-        if h_mae != h_ima and ban_mae == ban_ima:
-            warui.append(u"絵の決め方を直したのに WARIATE_BAN が %s のままです"
-                         % ban_ima)
-            print(u"× 決め方(assign_images)が変わったのに版が %s のままです。"
-                  u"1つ上げてください" % ban_ima)
-            print(u"   上げないと、本人の画面では前の割り当て表が使われます")
-        else:
-            print(u"○ 決め方が変わり、版も %s → %s に上がっています"
-                  % (ban_mae, ban_ima))
-            io.open(oboe2, "w", encoding="utf-8", newline="\n").write(ima)
+    nai = [k for k in HISSU if k not in m_k.group(1)]
+    if nai:
+        warui.append(u"決め方の印に入っていない関数: " + u" ".join(nai))
+        print(u"× 次の関数が印に入っていません。直しても空振りします:")
+        for k in nai:
+            print(u"   " + k)
     else:
-        if not mae:
-            io.open(oboe2, "w", encoding="utf-8", newline="\n").write(ima)
-        print(u"○ 絵の決め方は変わっていません（版 %s）" % m_ban.group(1))
+        print(u"○ 決め方(%s)を直せば、割り当て表は必ず作り直されます"
+              % u"・".join(HISSU))
 
 # ── ⑮ 人物ルールの条件が、本当にあるタグか ──────────
 midashi(u"⑮", u"人物ルールの条件が、出てくるタグかどうか")

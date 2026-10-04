@@ -3705,13 +3705,15 @@ def write_plan(path, slots, images, fingerprint=u""):
         if fingerprint:
             f.write(u"# inputs: %s\r\n" % fingerprint)
         f.write(u"# 画像の割り当て表です。5列目(画像)を書き換えると、その絵に差し替わります。\r\n")
+        f.write(u"# 5列目には短い番号(例 3-11-056)を書いても通ります。期-話-通し番号です。\r\n")
         f.write(u"# 3列目(尺)を書き換えると長さが変わります。開始とmm:ssは表示用なので直さなくて大丈夫です。\r\n")
         f.write(u"# 行を消すとその分だけ前の絵が伸びます。保存したら「スライドショー動画にする.bat」をもう一度実行してください。\r\n")
-        f.write(u"No\t開始\t尺\tmm:ss\t画像\tセリフ\r\n")
+        f.write(u"No\t開始\t尺\tmm:ss\t画像\tセリフ\t絵の番号\r\n")
         for i, (st, du, tx) in enumerate(slots):
             img = images[i] if len(images) == len(slots) else images[i % len(images)]
-            f.write(u"%d\t%.2f\t%.2f\t%s\t%s\t%s\r\n"
-                    % (i + 1, st, du, mmss(st), img, tx.replace(u"\t", u" ")))
+            f.write(u"%d\t%.2f\t%.2f\t%s\t%s\t%s\t%s\r\n"
+                    % (i + 1, st, du, mmss(st), img,
+                       tx.replace(u"\t", u" "), img_code(img)))
 
 
 # 絵の決め方そのものの版。**決め方を変えたら必ず1つ上げること。**
@@ -3721,6 +3723,40 @@ def write_plan(path, slots, images, fingerprint=u""):
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
 WARIATE_BAN = 8
+
+
+def kime_kata_shirushi():
+    u"""絵の決め方・時刻の決め方のソースそのものの印。
+
+    ■ なぜ要るか（v129 がまるごと空振りした）
+
+    指紋は「設定ファイルの中身」＋「手で上げる WARIATE_BAN」だけを見ていた。
+    字幕と音声のずれを直して v129 を出したのに、本人の画面では何も変わらず
+    「画像の部分の間がすべてずれている」ままだった。
+    採点の1行目がそれを言っていた。
+
+        時刻表: ⑥ 前回の割り当て表をそのまま使用
+
+    設定は何も変えていないので指紋が一致し、**前の（ずれたままの）割り当て表が
+    そのまま使われ、直した時刻の計算が一度も走らなかった。**
+    WARIATE_BAN を上げ忘れたせいだが、「忘れないようにする」では同じことが起きる。
+    （同じ穴に2回落ちている。1回目は絵の借り方を直したとき）
+
+    ■ 直し方：手で上げるのをやめて、中身そのものを見る
+
+    決め方を書いてある関数のソースを、そのまま MD5 にする。
+    こちらが1文字でも直せば印が変わり、割り当て表は必ず作り直される。
+    上げ忘れようがない。
+    """
+    import inspect
+    h = hashlib.md5()
+    for f in (kugiri_awase, timeline_from_parts_srt, place_in_chunk,
+              assign_images):
+        try:
+            h.update(inspect.getsource(f).encode("utf-8"))
+        except Exception:
+            return u"なし"
+    return h.hexdigest()[:10]
 
 
 def inputs_fingerprint(paths):
@@ -3733,7 +3769,7 @@ def inputs_fingerprint(paths):
     大きなファイル(音声など)は、頭と尻と大きさだけで足りる。
     """
     OOKII = 4 * 1024 * 1024
-    parts = [u"ban%d" % WARIATE_BAN]
+    parts = [u"ban%d" % WARIATE_BAN, u"kime:%s" % kime_kata_shirushi()]
     for p in paths:
         if not p:
             continue
@@ -3882,14 +3918,23 @@ SASHIKAE = os.path.join(SONOTA_DIR, u"差し替え.txt")
 SASHIKAE_ATAMA = u"""\ufeff# ─────────────────────────────────────────────
 # 差し替え ─ 番号で絵を入れ替える
 #
-#   書式:  番号 <タブ> 絵の目印
+#   書式:  字幕の番号 <タブ> 絵の番号
 #
 #   例:
-#     042\t無職転生Ⅲ 第13話/007
-#     209\t無職転生Ⅱ 第22話/031_
+#     042\t3-13-007        ← 無職転生Ⅲ 第13話 の 007 の絵にする
+#     209\t2-22-031        ← 無職転生Ⅱ 第22話 の 031 の絵にする
 #
-# 番号は 確認用/コマ一覧_01.png と 確認用/一覧.txt のものです。
-# 絵の目印はファイル名の一部で構いません（前のほうが一致すればOK）。
+#   絵の番号は 期-話-通し番号 です。
+#     1-09-005  … 無職転生   第9話  の 005
+#     2-14-013  … 無職転生Ⅱ 第14話 の 013
+#     3-11-056  … 無職転生Ⅲ 第11話 の 056
+#   「3-11-56」「Ⅲ11-056」のように書いても通ります。
+#
+# 字幕の番号は 確認用/コマ一覧_01.png と 確認用/一覧.txt のものです。
+# 絵の番号は、画像フォルダに入っている 一覧_01.png と 一覧.txt で見られます。
+#   （無ければ「はじめる.bat」→ C で作れます）
+#
+# 昔の書き方（042\t無職転生Ⅲ 第13話/007 のようなファイル名の一部）も通ります。
 #
 # **ここに書いた絵は、話数の外でも、使いすぎでも、そのまま使われます。**
 # 機械の判定より、本人が選んだものが上です。
@@ -3919,11 +3964,19 @@ def load_sashikae(path, images):
         except ValueError:
             continue
         shirushi = c[1].strip()
-        atari = [k for k in images if shirushi in k]
-        if not atari:
-            machigai.append(u"%d番の「%s」に当たる絵がありません" % (no, shirushi))
+        # 短い番号(3-11-056)を先に試し、だめならファイル名の一部として探す
+        kimari = code_to_img(shirushi, images)
+        if not kimari:
+            atari = [k for k in images if shirushi in k]
+            kimari = sorted(atari)[0] if atari else None
+        if not kimari:
+            tasuke = u""
+            if code_norm(shirushi):
+                tasuke = u"（その番号の絵が画像フォルダにありません）"
+            machigai.append(u"%d番の「%s」に当たる絵がありません%s"
+                            % (no, shirushi, tasuke))
             continue
-        out[no] = sorted(atari)[0]
+        out[no] = kimari
     for m in machigai:
         say(u"  差し替え: " + m)
     return out
@@ -3956,6 +4009,81 @@ def e_no(img):
     if not img or img.startswith(u"@@"):
         return u""
     return img.split(u"/")[0] if u"/" in img else u""
+
+
+# ------------------------------------------------ 絵の短い番号（期-話-通し番号）
+#
+# 本人の指定（2026-10-04）:
+#   「それぞれのフォルダ内に、画像とその番号がわかる一覧表を作成し、
+#     それぞれどの画像を割り当てるのか正確にかつ簡単に指示できるようにしたい」
+#
+# 「無職転生Ⅲ 第11話/056_pTrupzRmdVSYPWm_x2.png」は打つのがつらい。
+# フォルダ名と、ファイル名の頭についている番号だけで一意に決まるので、
+#   期 - 話 - 通し番号      →  3-11-056
+# と書けるようにする。どこでもこの書き方が通るようにそろえる。
+KI_KIGOU = ((u"Ⅲ", 3), (u"Ⅱ", 2), (u"III", 3), (u"II", 2))
+
+
+def fol_code(fol):
+    u"""話数フォルダ名 → (期, 話)。分からなければ None。"""
+    if not fol:
+        return None
+    ki = 1
+    for kigou, n in KI_KIGOU:
+        if kigou in fol:
+            ki = n
+            break
+    m = re.search(r"第\s*(\d+)\s*話", fol)
+    if not m:
+        return None
+    return (ki, int(m.group(1)))
+
+
+def img_code(img):
+    u"""絵の名前 → 短い番号。例 無職転生Ⅲ 第11話/056_xxx.png → 3-11-056"""
+    if not img or img.startswith(u"@@") or u"/" not in img:
+        return u""
+    fol, name = img.split(u"/", 1)
+    ke = fol_code(fol)
+    m = re.match(r"(\d+)", os.path.basename(name))
+    if not ke or not m:
+        return u""
+    return u"%d-%02d-%03d" % (ke[0], ke[1], int(m.group(1)))
+
+
+def code_norm(t):
+    u"""打ちまちがいを吸収して (期, 話, 通し番号) にする。
+
+    通るもの:  3-11-56 / 3_11_056 / Ⅲ-11-056 / Ⅲ11-056 / 3 11 56
+    """
+    if not t:
+        return None
+    u = t.strip()
+    for kigou, n in KI_KIGOU:
+        if u.startswith(kigou):
+            u = u"%d%s" % (n, u[len(kigou):])
+            break
+    kazu = re.findall(r"\d+", u)
+    if len(kazu) == 3:
+        ki, wa, no = (int(x) for x in kazu)
+    elif len(kazu) == 2 and u[:1].isdigit() and len(kazu[0]) >= 3:
+        # 「311-056」のように期と話がくっついている書き方
+        ki, wa, no = int(kazu[0][0]), int(kazu[0][1:]), int(kazu[1])
+    else:
+        return None
+    if ki not in (1, 2, 3) or wa > 99:
+        return None
+    return (ki, wa, no)
+
+
+def code_to_img(t, images):
+    u"""短い番号 → 実際の絵の名前。見つからなければ None。"""
+    ke = code_norm(t)
+    if not ke:
+        return None
+    hoshii = u"%d-%02d-%03d" % ke
+    atari = [k for k in images if img_code(k) == hoshii]
+    return sorted(atari)[0] if atari else None
 
 
 def shou_no_wasuu(rows, chaps):
@@ -4064,9 +4192,14 @@ def koma_ichiran(rows, starts, ends, cache, fol=u"確認用", retsu=4, gyou=5):
             nw = int(d.textlength(no, font=f_no)) + 22
             d.rectangle([x, y, x + nw, y + 48], fill=(12, 10, 20))
             d.text((x + 11, y + 6), no, font=f_no, fill=(238, 201, 115))
-            d.text((x + nw + 10, y + 14),
+            d.text((x + nw + 10, y + 6),
                    u"%s  %.1f秒" % (mmss(starts[i]), ends[i] - starts[i]),
                    font=f_tx, fill=(150, 142, 180))
+            # いま当たっている絵の番号。入れ替えたいときは
+            # 「この番号を、別の番号に」と書けばいいだけにする。
+            ima = img_code(rows[i][1])
+            if ima:
+                d.text((x + nw + 10, y + 26), ima, font=f_tx, fill=(238, 201, 115))
             tx = rows[i][2].strip() or (u"（章タイトル）"
                                         if rows[i][1].startswith(u"@@") else u"")
             lines = wrap_ja(tx, 24, 3) if tx else []
@@ -4451,6 +4584,25 @@ def main():
                      u" ＝ 音声を録り直していれば、ずれます")
 
     rows = read_plan(PLAN)
+
+    # --- 画像の列に短い番号(3-11-056)が書かれていたら、絵の名前に直す ---
+    # 本人が表を直すときは、長いファイル名を打つより番号のほうが速い。
+    naoshita, fumei = 0, []
+    for i, (du, img, tx) in enumerate(rows):
+        if img.startswith(u"@@") or img in imgpath or os.path.isabs(img):
+            continue
+        if u"/" in img and not code_norm(img):
+            continue
+        atta = code_to_img(img, images)
+        if atta:
+            rows[i] = (du, atta, tx)
+            naoshita += 1
+        elif code_norm(img):
+            fumei.append(u"%d番の %s" % (i + 1, img))
+    if naoshita:
+        say(u"割り当て表の短い番号 %d個を、絵に読みかえました" % naoshita)
+    for t in fumei:
+        say(u"  × " + t + u" に当たる絵が画像フォルダにありません")
 
     # --- 番号で指定された差し替えを当てる（本人の指定がいちばん上） ---
     kae = load_sashikae(os.path.join(HERE, SASHIKAE), images)
