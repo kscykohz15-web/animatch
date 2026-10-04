@@ -1144,6 +1144,52 @@ def align_boundaries(expected, cands):
     return out, n
 
 
+def card_basho(rows, chaps):
+    u"""章タイトルのカードを、どの行の前に入れるかを求める。
+
+    差し替えの番号合わせと、実際にカードを入れるところの
+    **2か所で同じ答えを使う**ために、関数にしてある。
+    （別々に数えていたせいで番号が1つずれていた）
+    """
+    out, tsukatta = [], set()
+    for (key, title, _eps) in (chaps or []):
+        for i in range(len(rows)):
+            if i in tsukatta or key not in rows[i][2]:
+                continue
+            tsukatta.add(i)
+            if i == 0:
+                break          # いちばん最初はカードを入れない
+            out.append((i, title))
+            break
+    out.sort()
+    return out
+
+
+def toshi_bangou(rows, kaado):
+    u"""本人が見ている通し番号 → 割り当て表の行。
+
+    ■ なぜ要るか（本人の27件の指定が、18番から1つずつずれていた）
+
+    本人が番号を読むのは 確認用/一覧.txt と 確認用/コマ一覧_01.png。
+    そこには**章タイトルのカードも1コマとして入っている**（278コマ）。
+    ところが差し替えは、カードを入れる前の割り当て表（267行）に
+    当てていた。カードが1枚はさまるたびに、そこから先が1つずつずれる。
+
+    本人が18番を空けていたので気づけた（18番＝「ヒトガミの目的」のカード）。
+
+    返り値: {通し番号: 行(0から)}, {通し番号: 章の名前}（カードのぶん）
+    """
+    basho = dict(kaado or [])
+    ban, card_ban, d = {}, {}, 0
+    for i in range(len(rows)):
+        if i in basho:
+            d += 1
+            card_ban[d] = basho[i]
+        d += 1
+        ban[d] = i
+    return ban, card_ban
+
+
 def koma_awase(slots, ikari, sils, tol=0.8, saitan=0.10):
     u"""文字数で割った切れ目を、本物の「間」に寄せ直す。
 
@@ -3112,6 +3158,42 @@ def check_plan_words(rules, default, catalog):
         say(u"")
 
 
+def plan_code_naosu(rules, default, images):
+    u"""画像プランに書かれた絵の番号(3-14-095)を、絵の名前に読みかえる。
+
+    本人の27件の直しから分かったこと：
+    **「どうもこんにちは」「かさです」のような決まり文句は、
+    中身で選ぶものではなく、毎回この絵と決まっている。**
+    タグで近いものを探させるのではなく、絵そのものを指せるようにする。
+
+    番号で書いた絵は「人が見て選んだ絵」として扱われるので、
+    使用不可の判定も、使いすぎの上限も越えて、そのまま使われる。
+    """
+    naoshita, fumei = 0, []
+
+    def hitotsu(f):
+        if f.startswith(u"#") or f.startswith(u"@") or not code_norm(f):
+            return f
+        atta = code_to_img(f, images)
+        if atta:
+            return atta
+        fumei.append(f)
+        return f
+
+    for r in rules:
+        mae = list(r[1])
+        r[1] = [hitotsu(f) for f in r[1]]
+        naoshita += sum(1 for a, b in zip(mae, r[1]) if a != b)
+    mae = list(default)
+    default = [hitotsu(f) for f in default]
+    naoshita += sum(1 for a, b in zip(mae, default) if a != b)
+    if naoshita:
+        say(u"画像プランの絵の番号 %d個を、絵の名前に読みかえました" % naoshita)
+    for f in sorted(set(fumei)):
+        say(u"  × 画像プランの %s に当たる絵が画像フォルダにありません" % f)
+    return rules, default
+
+
 def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                   focus=None, mitame=None, chaps=None):
     """画像プランに従って、スロットごとに絵を決める。
@@ -4668,6 +4750,7 @@ def main():
         picked = images
         if os.path.exists(a.imageplan):
             rules, default, focus = load_imageplan(a.imageplan)
+            rules, default = plan_code_naosu(rules, default, images)
             if rules or default:
                 cat = load_catalog(a.catalog, images)
                 emap = load_epmap(a.epmap, images)
@@ -4709,14 +4792,32 @@ def main():
         say(u"  × " + t + u" に当たる絵が画像フォルダにありません")
 
     # --- 番号で指定された差し替えを当てる（本人の指定がいちばん上） ---
+    # 本人が読む番号は 確認用/一覧.txt と コマ一覧（章カードも1コマ）なので、
+    # ここで同じ番号にそろえてから当てる。
+    en = load_enshutsu(a.enshutsu)
+    _credit0, chaps0 = load_overlay(a.overlay) if os.path.exists(a.overlay) \
+        else (u"", [])
+    kaado = card_basho(rows, chaps0) \
+        if (en.get("card") and chaps0 and not a.no_fx) else []
+    ban, card_ban = toshi_bangou(rows, kaado)
     kae = load_sashikae(os.path.join(HERE, SASHIKAE), images)
     if kae:
         kaeta = 0
         for no, img2 in sorted(kae.items()):
-            if 1 <= no <= len(rows):
-                du, _mae2, tx2 = rows[no - 1]
-                rows[no - 1] = (du, img2, tx2)
-                kaeta += 1
+            if no in card_ban:
+                say(u"  差し替え: %d番は章タイトルのカード「%s」です。"
+                    u"ここは入れ替えられません" % (no, card_ban[no]))
+                continue
+            if no not in ban:
+                say(u"  差し替え: %d番はありません（いちばん大きい番号は %d）"
+                    % (no, max(ban) if ban else 0))
+                continue
+            i = ban[no]
+            du, _mae2, tx2 = rows[i]
+            rows[i] = (du, img2, tx2)
+            say(u"  差し替え: %3d番「%s」→ %s"
+                % (no, (tx2.strip() or u"（セリフなし）")[:22], img_code(img2) or img2))
+            kaeta += 1
         say(u"差し替え.txt のとおり %d枚を入れ替えました（番号で指定されたもの）" % kaeta)
     elif not os.path.exists(os.path.join(HERE, SASHIKAE)):
         io.open(os.path.join(HERE, SASHIKAE), "w", encoding="utf-8",
@@ -4755,25 +4856,10 @@ def main():
     # --- 章タイトルのカードを、章の頭にはさむ ---
     # 1.5秒ぶん尺が増えるので、あとで音声にも同じだけ無音を入れる。
     # 入れないと、ここから先がまるごとずれる。
-    en = load_enshutsu(a.enshutsu)
-    _credit0, chaps0 = load_overlay(a.overlay) if os.path.exists(a.overlay) \
-        else (u"", [])
     cards = {}          # 新しい並びでの位置 -> 章の名前
-    card_moto = []      # (入れる位置, もとの絵) を元の並びで
-    if en.get("card") and chaps0 and not a.no_fx:
-        tsukatta = set()
-        for (key, title, _eps) in chaps0:
-            for i in range(len(rows)):
-                if i in tsukatta or key not in rows[i][2]:
-                    continue
-                if i == 0:
-                    tsukatta.add(i)
-                    break      # いちばん最初はカードを入れない
-                card_moto.append((i, title))
-                tsukatta.add(i)
-                break
+    # 場所は差し替えの前に求めてある（番号を合わせるため）。同じものを使う。
+    card_moto = list(kaado)
     if card_moto:
-        card_moto.sort()
         # 章ごとに、カードに向いた絵をその章の中から選び直す
         cat_for_card = load_catalog(a.catalog, images) \
             if os.path.exists(a.catalog) else {}
