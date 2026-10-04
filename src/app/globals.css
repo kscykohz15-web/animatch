@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/*
+ * iPhone での使い勝手を優先した土台。
+ *   * セーフエリア（ホームバー / ノッチ）を避ける余白
+ *   * 入力欄の文字サイズを 16px 以上にして Safari の自動ズームを防ぐ
+ *   * タップ時のハイライトを消し、ネイティブアプリに近い手触りにする
+ */
+
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #15181d;
+  --muted: #646b78;
+  --border: #e3e6eb;
+  --accent: #1f7a4d;
+  --accent-soft: #e7f4ec;
+  --danger: #b4443a;
+  --warn: #9a6400;
+  --warn-soft: #fdf3e0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --surface: #1d2025;
+    --text: #f1f3f6;
+    --muted: #9aa2b0;
+    --border: #2d323a;
+    --accent: #4cc98a;
+    --accent-soft: #1b2f26;
+    --danger: #f08a80;
+    --warn: #e0ac54;
+    --warn-soft: #2d2518;
+  }
+}
+
+html {
+  background: var(--bg);
+  /* iOS のスクロール終端でのバウンスによる白い隙間を防ぐ */
+  overscroll-behavior-y: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI",
+    system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safari が入力時に画面を拡大しないよう、フォームの文字は 16px 以上にする */
+input,
+textarea,
+select,
+button {
+  font-size: 16px;
+  font-family: inherit;
+}
+
+/* ホーム画面から起動したときの下端バー（ホームインジケータ）を避ける */
+.safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+}
+
+.safe-top {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+}
+
+/* チェック時の取り消し線アニメーション */
+@media (prefers-reduced-motion: no-preference) {
+  .item-row {
+    transition: opacity 160ms ease, background-color 160ms ease;
+  }
+}
