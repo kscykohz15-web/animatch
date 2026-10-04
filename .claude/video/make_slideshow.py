@@ -1222,6 +1222,55 @@ def check_script_vs_srt(script, srt_path, names):
     say(u"")
 
 
+def kugiri_awase(durs, total, sils, mado=1.5):
+    u"""1行ずつの音声の境目を、merged.wav の本物の無音に合わせ直す。
+
+    ■ なぜ要るか（本人の画面で、冒頭だけ字幕と声がずれた）
+
+    merged.wav は 1行ずつの音声をつなぐときに、行の前後の無音を削るので、
+    合計が縮む（実測 540.81秒 → 534.44秒）。
+    この縮みは**行の長さに比例しない。**
+    後ろに長い間がある行はたくさん縮み、間の無い行はほとんど縮まない。
+
+    前は一律 0.9882倍にしていたので、
+      ・削られた量が平均より多い行のあとは、字幕が**遅れる**
+      ・平均より少ない行のあとは、字幕が**早まる**
+    しかも合計は必ず合うので、**最後だけは合い、途中でずれる。**
+    本人の「冒頭からヒトガミの目的の章までずれる」はこれ。
+
+    ■ どう直すか
+
+    行の境目は、merged.wav の中では必ず無音の中にある（そこを削ったので）。
+    一律倍率で出した目安の近くにある無音の**まん中**へ寄せる。
+    寄せ先が無ければ目安のまま。順番が入れ替わらないようにだけ見る。
+
+    戻り値: 境目の時刻の並び（0 と total を含む len(durs)+1 個）
+    """
+    n = len(durs)
+    if n < 2:
+        return [0.0, total]
+    naka = sorted((a + b) / 2.0 for (a, b) in (sils or []) if b > a)
+
+    # 合わせるたびに「残りの本物の時間 ÷ 残りの読み上げ時間」を計算し直す。
+    #
+    # 一度ずれたまま次を見積もると、ずれが積み上がって窓から外れ、
+    # そこから先が全部合わなくなる（実際そうなった）。
+    # 合わせ直した位置から測り直せば、ずれは次に持ち越さない。
+    out, t = [0.0], 0.0
+    for k in range(1, n):
+        nokori_honto = total - t
+        nokori_yomi = float(sum(durs[k - 1:])) or 1.0
+        mezasu = t + durs[k - 1] * (nokori_honto / nokori_yomi)
+        chikai = [(abs(c - mezasu), c) for c in naka
+                  if abs(c - mezasu) <= mado and c > t + 0.05]
+        saki = min(chikai)[1] if chikai else mezasu
+        saki = min(max(saki, t + 0.05), total - 0.05)
+        out.append(saki)
+        t = saki
+    out.append(total)
+    return out
+
+
 def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict=False):
     """★ 1行ずつの音声の長さ + subtitle.srt の本文 から、正確な時刻表を作る。
 
@@ -1280,12 +1329,17 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict
     head = (u"1行ずつの音声 %d個 (%s) の実測 %.2f秒 → merged.wav %.2f秒 (%.4f倍) / 文 %d"
             % (len(names), os.path.basename(folder) or u".", ssum, total, scale, len(sents)))
 
+    # 行の境目は、一律倍率ではなく merged.wav の本物の無音に合わせる。
+    # 一律だと、削られた無音の量が行ごとにちがうぶんだけ途中でずれる。
+    kugiri = kugiri_awase(durs, total, sils)
+    zure = max(abs(kugiri[k] - sum(durs[:k]) * scale) for k in range(len(kugiri))) \
+        if len(kugiri) > 1 else 0.0
+    if zure > 0.15:
+        head += u" / 境目を無音に合わせ直しました(最大 %.2f秒ぶん)" % zure
+
     out = [None] * len(sents)
-    t = 0.0
     for gi, took in enumerate(groups):
-        a0 = t
-        t += durs[gi] * scale
-        b0 = t
+        a0, b0 = kugiri[gi], kugiri[gi + 1]
         for (idx, (s2, e2)) in zip(took, place_in_chunk(took, sents, a0, b0, sils)):
             out[idx] = (max(0.0, s2 - LEAD), e2, sents[idx])
     for j in range(len(out)):
