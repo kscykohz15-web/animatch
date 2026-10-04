@@ -3776,6 +3776,8 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             img = out[idx]
             if not ima2 or not img or u"/" not in img:
                 continue
+            if img in tebiki:
+                continue      # 手で選んだ絵。話数の外でもそのまま使う
             if img.split(u"/")[0] in ima2:
                 continue                      # もう合っている
             tx2 = slots[idx][2]
