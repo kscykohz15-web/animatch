@@ -1144,6 +1144,85 @@ def align_boundaries(expected, cands):
     return out, n
 
 
+def koma_awase(slots, ikari, sils, tol=0.8, saitan=0.10):
+    u"""文字数で割った切れ目を、本物の「間」に寄せ直す。
+
+    ■ なぜ要るか（v130 でもまだ字幕がずれていた）
+
+    時刻表が「① 音声＋subtitle.srt」でも、ずれは残っていた。
+    理由は、**合っているのは 1行ずつの音声の境目(54か所)だけ**だから。
+
+        1行ずつの音声     54個   ← 実測。ここは正確
+          ↓ refine_cues（文字数で割る）
+        字幕             180本   ← ここから推測
+          ↓ split_by_kuten（文字数で割る）
+        絵と字幕の区切り  267枚   ← ここも推測
+
+    VOICEPEAK は一定の速さで読む、という前提で文字数の比で割っていたが、
+    実際には「、」「。」で息を継ぐし、語によって速さも変わる。
+    1つの段落の中で 0.5〜1.5秒ずれるので、**段落の頭だけ合っていて、
+    途中の字幕が声より早く出たり遅れたりする。**
+
+    ■ 直し方
+
+    実測の境目（錨）は動かさない。その間に入った切れ目だけを、
+    merged.wav に本当にある「間」へ寄せる。
+    順番は保ち、寄せ先が無い切れ目は文字数の比のまま置く。
+    """
+    if len(slots) < 2 or not sils:
+        return slots, 0, 0.0
+    # 切れ目の時刻をならべる
+    kugiri = [slots[0][0]]
+    for (st, du, _tx) in slots:
+        kugiri.append(st + du)
+    n = len(kugiri)
+    # 錨＝実測から来た切れ目。ここは動かさない
+    ik = sorted(ikari or [])
+
+    def is_ikari(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    tomeru = [True] + [is_ikari(kugiri[i]) for i in range(1, n - 1)] + [True]
+    # 寄せ先の候補。「間」の終わりの少し手前＝次の声が出る直前
+    ma = [max(a + 0.02, b - LEAD) for (a, b) in sils if (b - a) >= saitan]
+    ma.sort()
+    ugokashi, ichiban = 0, 0.0
+    i = 0
+    while i < n - 1:
+        if not tomeru[i]:
+            i += 1
+            continue
+        j = i + 1
+        while j < n and not tomeru[j]:
+            j += 1
+        if j >= n or j - i < 2:
+            i = j
+            continue
+        # i と j は動かさない。その間の (j-i-1) 個を寄せる
+        a0, b0 = kugiri[i], kugiri[j]
+        naka = [k for k in ma if a0 + 0.25 < k < b0 - 0.25]
+        exp = kugiri[i + 1:j]
+        if len(naka) >= len(exp):
+            atta, _ = align_boundaries(exp, naka)
+            if atta:
+                for t, (mae, ato) in enumerate(zip(exp, atta)):
+                    # 遠すぎる寄せは、かえって悪くなるのでしない
+                    if abs(ato - mae) <= tol:
+                        kugiri[i + 1 + t] = ato
+                        if abs(ato - mae) > 0.05:
+                            ugokashi += 1
+                            ichiban = max(ichiban, abs(ato - mae))
+        i = j
+    # 順番が入れ替わらないようにだけ見る
+    for t in range(1, n):
+        if kugiri[t] <= kugiri[t - 1] + 0.12:
+            kugiri[t] = kugiri[t - 1] + 0.12
+    out = []
+    for t, (_st, _du, tx) in enumerate(slots):
+        out.append((kugiri[t], max(0.12, kugiri[t + 1] - kugiri[t]), tx))
+    return out, ugokashi, ichiban
+
+
 def place_in_chunk(sents_idx, sents, a0, b0, sils):
     """かたまりの中で、文の切れ目を実際の「間」に置く。"""
     k = len(sents_idx)
@@ -3750,8 +3829,8 @@ def kime_kata_shirushi():
     """
     import inspect
     h = hashlib.md5()
-    for f in (kugiri_awase, timeline_from_parts_srt, place_in_chunk,
-              assign_images):
+    for f in (kugiri_awase, koma_awase, timeline_from_parts_srt,
+              place_in_chunk, assign_images):
         try:
             h.update(inspect.getsource(f).encode("utf-8"))
         except Exception:
@@ -4527,6 +4606,11 @@ def main():
                 say(u"字幕の終わり %s と音声の長さ %s が違ったので、%.3f倍に直しました。"
                     % (mmss(srt_end), mmss(total), k))
                 say(u"  (これをしないと、後半ほど発話と字幕がズレます)")
+        # ここまでの切れ目は「実測から来たもの」。これを錨にして、
+        # このあと文字数で割って増える切れ目だけを、あとで間に寄せ直す。
+        ikari = []
+        if cues:
+            ikari = sorted(set([c[0] for c in cues] + [cues[-1][1]]))
         if cues:
             raw = len(cues)
             cues = refine_cues(cues, a.sec * 1.7, 30)
@@ -4543,6 +4627,9 @@ def main():
                 # 合わせた結果、最後が音声より短い/長いときは末尾を伸ばす
                 if cues and cues[-1][1] < total:
                     cues[-1] = (cues[-1][0], total, cues[-1][2])
+                if cues:
+                    ikari = sorted(set(ikari + [c[0] for c in cues]
+                                       + [cues[-1][1]]))
             else:
                 say(u"音声に「間」が見つかりませんでした(無音の判定を緩めるには --noise-db -40)。")
         slots = build_slots(cues, total, a.sec)
@@ -4561,6 +4648,23 @@ def main():
                 if tsunagi:
                     say(u"   %d文字以下、または %.1f秒未満の切れ端は、後ろにくっつけています。"
                         % (tsunagi, a.kuten_min))
+        # --- 文字数で割った切れ目を、本物の「間」に寄せ直す ---
+        # ここをやらないと、段落の頭だけ合っていて途中がずれる。
+        # 実測の切れ目(錨)は動かさないので、合っていた所が崩れることはない。
+        if slots and not a.no_snap:
+            sils_k = detect_silences(a.audio, a.noise_db, 0.08)
+            if sils_k:
+                slots, ugoita, ichiban = koma_awase(slots, ikari, sils_k,
+                                                    tol=min(a.snap_tol, 0.9))
+                if ugoita:
+                    say(u"文字数で割った切れ目 %d か所を、本物の「間」に合わせ直しました"
+                        u"（いちばん大きいもの %.2f秒）" % (ugoita, ichiban))
+                else:
+                    say(u"文字数で割った切れ目は、すでに「間」と合っていました。")
+            else:
+                say(u"音声に「間」が見つからず、切れ目は文字数のままです"
+                    u"（--noise-db -40 で緩められます）。")
+
         picked = images
         if os.path.exists(a.imageplan):
             rules, default, focus = load_imageplan(a.imageplan)

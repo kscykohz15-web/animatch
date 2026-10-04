@@ -6,12 +6,17 @@ u"""画像一覧 ─ 話数フォルダごとに「絵と番号の一覧表」�
     一覧表を作成し、それぞれどの画像を割り当てるのか
     正確にかつ簡単に指示できるようにしたい」
 
-できるもの（話数フォルダの中に置きます。元の絵には一切ふれません）:
+できるもの（元の絵には一切ふれません）:
 
     無職転生Ⅲ 第11話/
         一覧_01.png     絵を並べた表。1マスに大きく「3-11-056」と番号
         一覧_02.png     20枚ずつ、何ページでも
         一覧.txt        番号 → ファイル名（説明があれば説明も）
+
+    一覧/               ← 全話数ぶんを1つのフォルダに集めたもの
+        3-11_01.png     ここを開いて矢印キーを押すだけで、
+        3-11_02.png     1期の1話から3期の14話まで順に見ていけます
+        ...
 
 絵の番号は 期-話-通し番号 です。
 
@@ -33,9 +38,11 @@ import re
 import sys
 import io
 import argparse
+import shutil
 
 EXTS = (".png", ".jpg", ".jpeg", ".webp", ".bmp")
 KI_KIGOU = ((u"Ⅲ", 3), (u"Ⅱ", 2), (u"III", 3), (u"II", 2))
+MATOME = u"一覧"            # 全話数ぶんを集めるフォルダの名前
 RETSU, GYOU = 5, 4          # 1ページ 5列×4行 = 20枚
 TW, TH = 360, 203           # 1マスの絵の大きさ
 FONTS = [u"C:\\Windows\\Fonts\\meiryo.ttc", u"C:\\Windows\\Fonts\\YuGothM.ttc",
@@ -93,8 +100,19 @@ def fnt(px):
     return ImageFont.load_default()
 
 
-def sheet_wo_tsukuru(fol_path, fol, names, cat, f_no, f_sm, f_hd):
-    u"""1つの話数フォルダぶんの一覧シートを作る。作ったページ数を返す。"""
+def matome_na(fol, pg):
+    u"""まとめフォルダでの名前。並べ替えたときに話数の順になるようにする。"""
+    ke = fol_code(fol)
+    atama = u"%d-%02d" % ke if ke else (u"9-99_" + fol)
+    return u"%s_%02d.png" % (atama, pg)
+
+
+def sheet_wo_tsukuru(fol_path, fol, names, cat, f_no, f_sm, f_hd, matome=None):
+    u"""1つの話数フォルダぶんの一覧シートを作る。作ったページ数を返す。
+
+    matome を渡すと、同じ絵をそのフォルダにも置く。
+    本人の指定：「画像の切り替えのみですべての一覧が見られるように」。
+    """
     from PIL import Image, ImageDraw
     pad, gap, shita, atama = 20, 12, 30, 58
     per = RETSU * GYOU
@@ -135,15 +153,20 @@ def sheet_wo_tsukuru(fol_path, fol, names, cat, f_no, f_sm, f_hd):
                 d.text((x + 2, y + TH + 6), setsu, font=f_sm, fill=(170, 164, 200))
         out = os.path.join(fol_path, u"一覧_%02d.png" % (pg + 1))
         sheet.save(out)
+        if matome:
+            sheet.save(os.path.join(matome, matome_na(fol, pg + 1)))
         dekita += 1
     # 余分なページが前に残っていたら消す（絵が減ったとき）
     for n in os.listdir(fol_path):
         m = re.match(r"^一覧_(\d+)\.png$", n)
         if m and int(m.group(1)) > dekita:
-            try:
-                os.remove(os.path.join(fol_path, n))
-            except Exception:
-                pass
+            for q in [os.path.join(fol_path, n)] + \
+                     ([os.path.join(matome, matome_na(fol, int(m.group(1))))]
+                      if matome else []):
+                try:
+                    os.remove(q)
+                except Exception:
+                    pass
     return dekita
 
 
@@ -159,6 +182,40 @@ def txt_wo_kaku(fol_path, fol, names, cat):
                    % (img_code(fol, n) or u"?", n, cat.get(fol + u"/" + n, u"")))
     io.open(os.path.join(fol_path, u"一覧.txt"), "w",
             encoding="utf-8", newline="\r\n").write(u"\r\n".join(out) + u"\r\n")
+
+
+def matome_mo_aru(fol_path, fol, matome):
+    u"""まとめフォルダにも同じページが揃っているか。
+
+    一覧だけ先に作ってあった回のぶんも、ここで拾って置き直す。
+    """
+    mai = len([n for n in os.listdir(fol_path)
+               if re.match(r"^一覧_\d+\.png$", n)])
+    if not mai:
+        return False
+    for pg in range(1, mai + 1):
+        if not os.path.exists(os.path.join(matome, matome_na(fol, pg))):
+            return False
+    return True
+
+
+def utsusu(fol_path, fol, matome):
+    u"""もう出来ている一覧シートを、まとめフォルダに写すだけ。
+
+    作り直すと何分もかかるので、中身が同じなら写すだけで済ませる。
+    """
+    n = 0
+    for nm in sorted(os.listdir(fol_path)):
+        m = re.match(r"^一覧_(\d+)\.png$", nm)
+        if not m:
+            continue
+        try:
+            shutil.copy2(os.path.join(fol_path, nm),
+                         os.path.join(matome, matome_na(fol, int(m.group(1)))))
+            n += 1
+        except Exception:
+            pass
+    return n
 
 
 def atarashii_ka(fol_path, names):
@@ -200,13 +257,18 @@ def main():
         print(u"説明つき: 画像カタログ.txt から %d枚ぶん" % len(cat))
 
     fols = sorted([n for n in os.listdir(a.images)
-                   if os.path.isdir(os.path.join(a.images, n))], key=natkey)
+                   if os.path.isdir(os.path.join(a.images, n)) and n != MATOME],
+                  key=natkey)
     if not fols:
         print(u"話数フォルダが見つかりません: " + a.images)
         return 1
 
+    matome_dir = os.path.join(a.images, MATOME)
+    if not os.path.isdir(matome_dir):
+        os.makedirs(matome_dir)
+
     f_no, f_sm, f_hd = fnt(30), fnt(16), fnt(24)
-    zenbu, tobashi, mai_kei = [], 0, 0
+    zenbu, tobashi, mai_kei, utsushi = [], 0, 0, 0
     for idx, fol in enumerate(fols, 1):
         fp = os.path.join(a.images, fol)
         names = sorted([n for n in os.listdir(fp)
@@ -215,6 +277,9 @@ def main():
         if not names:
             continue
         if not a.again and atarashii_ka(fp, names):
+            # 一覧はもう出来ている。まとめフォルダに無いぶんだけ写す
+            if not matome_mo_aru(fp, fol, matome_dir):
+                utsushi += utsusu(fp, fol, matome_dir)
             tobashi += 1
             for n in names:
                 zenbu.append((img_code(fol, n), fol, n))
@@ -222,7 +287,8 @@ def main():
         print(u"[%d/%d] %s  %d枚" % (idx, len(fols), fol, len(names)))
         sys.stdout.flush()
         txt_wo_kaku(fp, fol, names, cat)
-        mai_kei += sheet_wo_tsukuru(fp, fol, names, cat, f_no, f_sm, f_hd)
+        mai_kei += sheet_wo_tsukuru(fp, fol, names, cat, f_no, f_sm, f_hd,
+                                    matome=matome_dir)
         for n in names:
             zenbu.append((img_code(fol, n), fol, n))
 
@@ -246,8 +312,13 @@ def main():
               % tobashi)
     if mai_kei:
         print(u"  一覧シート %dページを作りました" % mai_kei)
+    if utsushi:
+        print(u"  （もう出来ていた %dページは、作り直さずにまとめフォルダへ写しました）"
+              % utsushi)
     print(u"  話数フォルダの中の  一覧_01.png  を開くと、絵と番号が並んでいます。")
-    print(u"  全部まとめたものは  " + mp)
+    print(u"  ぜんぶまとめたものは  " + matome_dir)
+    print(u"    1枚目を開いて矢印キーを押すだけで、1期の1話から3期の14話まで見られます。")
+    print(u"  番号とファイル名の対応は  " + mp)
     return 0
 
 

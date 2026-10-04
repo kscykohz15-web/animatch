@@ -347,8 +347,8 @@ midashi(u"⑭", u"決め方を直したら、割り当て表が作り直され�
 # 手で上げる版は忘れるので、いまは決め方の関数のソースそのものを
 # 指紋に混ぜている。ここが外れていないかを見る。
 ms = io.open(os.path.join(V, "make_slideshow.py"), encoding="utf-8").read()
-HISSU = [u"kugiri_awase", u"timeline_from_parts_srt", u"place_in_chunk",
-         u"assign_images"]
+HISSU = [u"kugiri_awase", u"koma_awase", u"timeline_from_parts_srt",
+         u"place_in_chunk", u"assign_images"]
 m_k = re.search(r"def kime_kata_shirushi\(\):(.*?)\ndef ", ms, re.S)
 tsukatte = u"kime_kata_shirushi()" in ms.split(u"def inputs_fingerprint")[-1][:1500]
 if not m_k:
