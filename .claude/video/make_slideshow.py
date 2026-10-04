@@ -525,7 +525,7 @@ MITAME_KITEI = {
     u"引用の大きさ": 38.0, u"引用の色": u"FFFFFF",
     u"章の大きさ": 24.0, u"章の色": u"FFFFFF",
     # 絵をゆっくり横に動かす（はい/いいえ）と、そのための拡大率
-    u"画像を動かす": u"はい", u"画像の拡大": 1.10,
+    u"画像を動かす": u"はい", u"画像の拡大": 1.10, u"動きの速さ": 0.75,
 }
 
 
@@ -3782,7 +3782,7 @@ def unicode_bool(v):
         str(v).strip() not in (u"いいえ", u"なし", u"0", u"off", u"OFF", u"False")
 
 
-def pan_kesan(w, kakudai, nagai_byou):
+def pan_kesan(w, kakudai, nagai_byou, hayasa_bai=0.75):
     u"""横に動かす量と速さを決める。
 
     ■ 考え方（本人の指定）
@@ -3793,21 +3793,28 @@ def pan_kesan(w, kakudai, nagai_byou):
       ・いちばん長く映る絵でも、右端を越えない速さにする
 
     大きくしたぶんの余り（はみ出せる幅）を、
-    いちばん長い尺で割れば、その速さになる。
+    いちばん長い尺で割れば「ちょうど使い切る速さ」になる。
 
-      余り   = 画面の幅 ×(拡大率 − 1)
-      速さ   = 余り ÷ いちばん長い尺   [1秒あたり何ピクセル]
+      余り     = 画面の幅 ×(拡大率 − 1)
+      使い切る = 余り ÷ いちばん長い尺      [1秒あたり何ピクセル]
+      速さ     = 使い切る × 動きの速さ
 
-    1920 を 1.10倍 → 余り 192px。いちばん長い絵が 4.0秒なら
-    1秒あたり 48px。2秒の絵なら 96px（画面の5%）だけ動く。
-    短い絵ほど動く量が少ないだけで、速さは同じなので、
-    見ていて調子が変わらない。
+    ■ 動きの速さ（既定 0.75）
+
+    ちょうど使い切る速さは、本人が見て**少し速かった**ので 0.75倍にした。
+    下げるぶんには、いちばん長い絵でも右端に届かなくなるだけなので、
+    端が切れる心配は増えない（1.0 を超えると切れるので、そこで止める）。
+
+    1920 を 1.10倍 → 余り 192px。いちばん長い絵が 4.07秒なら
+    ちょうど使い切る速さは毎秒 47.2px、その 0.75倍で毎秒 35.4px。
+    2秒の絵なら 71px（画面の3.7%）だけ動く。
     """
     amari = int(round(w * (kakudai - 1.0)))
     amari -= amari % 2
     if amari <= 0 or nagai_byou <= 0:
         return 0, 0.0
-    return amari, amari / float(nagai_byou)
+    bai = max(0.05, min(1.0, hayasa_bai))
+    return amari, amari / float(nagai_byou) * bai
 
 
 def normalize(src, dst, w, h, fit):
@@ -4482,13 +4489,17 @@ def main():
         nagai = max((frames[i] / float(fps))
                     for i in range(len(rows))
                     if not rows[i][1].startswith(u"@@")) if rows else 0.0
-        amari, hayasa = pan_kesan(w, kakudai, nagai)
+        bai = max(0.05, min(1.0, float(mi.get(u"動きの速さ", 0.75))))
+        amari, hayasa = pan_kesan(w, kakudai, nagai, bai)
         if amari:
-            say(u"絵を横に動かします: %.2f倍に広げ、余り %dpx を"
-                u"いちばん長い %.2f秒 で使い切る速さ（毎秒 %.1fpx）"
-                % (kakudai, amari, nagai, hayasa))
-            say(u"  2秒の絵なら %.0fpx（画面の %.1f%%）だけ動きます"
-                % (min(amari, hayasa * 2), 100.0 * min(amari, hayasa * 2) / w))
+            say(u"絵を横に動かします: %.2f倍に広げ、余り %dpx。"
+                u"いちばん長い %.2f秒 で使い切る速さの %.2f倍（毎秒 %.1fpx）"
+                % (kakudai, amari, nagai, bai, hayasa))
+            say(u"  2秒の絵なら %.0fpx（画面の %.1f%%）/ "
+                u"いちばん長い絵でも %.0fpx（余り %dpx の %.0f%%）だけ動きます"
+                % (min(amari, hayasa * 2), 100.0 * min(amari, hayasa * 2) / w,
+                   min(amari, hayasa * nagai), amari,
+                   100.0 * min(amari, hayasa * nagai) / amari))
         else:
             ugokasu = False
 
