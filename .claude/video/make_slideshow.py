@@ -3782,39 +3782,97 @@ def unicode_bool(v):
         str(v).strip() not in (u"いいえ", u"なし", u"0", u"off", u"OFF", u"False")
 
 
-def pan_kesan(w, kakudai, nagai_byou, hayasa_bai=0.75):
-    u"""横に動かす量と速さを決める。
+PAN_MUKI = (u"左へ", u"右へ", u"上へ", u"下へ")
 
-    ■ 考え方（本人の指定）
 
-      ・絵をあらかじめ少し大きく（既定 1.10倍）しておく
-      ・はじめは左端を見せ、少しずつ右へずらしていく
-      ・**動く速さは全部の絵で同じ**
-      ・いちばん長く映る絵でも、右端を越えない速さにする
+def pan_kesan(w, h, kakudai, nagai_byou, hayasa_bai=0.75):
+    u"""横にも縦にも動かせる量と、その速さを決める。
 
-    大きくしたぶんの余り（はみ出せる幅）を、
-    いちばん長い尺で割れば「ちょうど使い切る速さ」になる。
+    ■ 4方向を同じ速さ・同じ距離にする
 
-      余り     = 画面の幅 ×(拡大率 − 1)
-      使い切る = 余り ÷ いちばん長い尺      [1秒あたり何ピクセル]
-      速さ     = 使い切る × 動きの速さ
+    1.10倍にすると、余りは 横 192px・縦 108px と**ちがう**。
+    方向ごとに距離を変えると、縦のときだけ速く見えてしまうので、
+    **小さいほう（縦の 108px）を全部の方向の距離にそろえる。**
+    こうすれば、どの方向でも同じ速さ・同じ距離になり、
+    どの方向でも端が切れない。
 
-    ■ 動きの速さ（既定 0.75）
+      動く距離 = min(横の余り, 縦の余り)
+      速さ     = 動く距離 ÷ いちばん長い尺 × 動きの速さ
 
-    ちょうど使い切る速さは、本人が見て**少し速かった**ので 0.75倍にした。
-    下げるぶんには、いちばん長い絵でも右端に届かなくなるだけなので、
-    端が切れる心配は増えない（1.0 を超えると切れるので、そこで止める）。
-
-    1920 を 1.10倍 → 余り 192px。いちばん長い絵が 4.07秒なら
-    ちょうど使い切る速さは毎秒 47.2px、その 0.75倍で毎秒 35.4px。
-    2秒の絵なら 71px（画面の3.7%）だけ動く。
+    戻り値 (動く距離, 速さ, 横の余り, 縦の余り)
     """
-    amari = int(round(w * (kakudai - 1.0)))
-    amari -= amari % 2
-    if amari <= 0 or nagai_byou <= 0:
-        return 0, 0.0
+    yoko = int(round(w * (kakudai - 1.0))); yoko -= yoko % 2
+    tate = int(round(h * (kakudai - 1.0))); tate -= tate % 2
+    kyori = min(yoko, tate)
+    if kyori <= 0 or nagai_byou <= 0:
+        return 0, 0.0, yoko, tate
     bai = max(0.05, min(1.0, hayasa_bai))
-    return amari, amari / float(nagai_byou) * bai
+    return kyori, kyori / float(nagai_byou) * bai, yoko, tate
+
+
+def pan_muki(i, mae_muki):
+    u"""その絵をどの方向に動かすか。
+
+    同じ方向が続くと「まだ動いている」ように見えてくどいので、
+    直前とちがう方向から選ぶ。
+    番号から決めるので、作り直しても同じ結果になる（毎回変わらない）。
+    """
+    import hashlib
+    nokori = [m for m in PAN_MUKI if m != mae_muki] or list(PAN_MUKI)
+    tane = hashlib.md5((u"pan%d" % i).encode("utf-8")).hexdigest()
+    return nokori[int(tane[:8], 16) % len(nokori)]
+
+
+SASHIKAE = os.path.join(SONOTA_DIR, u"差し替え.txt")
+
+SASHIKAE_ATAMA = u"""\ufeff# ─────────────────────────────────────────────
+# 差し替え ─ 番号で絵を入れ替える
+#
+#   書式:  番号 <タブ> 絵の目印
+#
+#   例:
+#     042\t無職転生Ⅲ 第13話/007
+#     209\t無職転生Ⅱ 第22話/031_
+#
+# 番号は 確認用/コマ一覧_01.png と 確認用/一覧.txt のものです。
+# 絵の目印はファイル名の一部で構いません（前のほうが一致すればOK）。
+#
+# **ここに書いた絵は、話数の外でも、使いすぎでも、そのまま使われます。**
+# 機械の判定より、本人が選んだものが上です。
+#
+# 直したら「はじめる.bat」→ 2 → 1 を実行するだけ。
+# 台本も音声も作り直しません。
+# ─────────────────────────────────────────────
+
+"""
+
+
+def load_sashikae(path, images):
+    u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}"""
+    if not os.path.exists(path):
+        return {}
+    out, machigai = {}, []
+    for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
+            .replace("\r\n", "\n").split("\n"):
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            continue
+        c = re.split(r"[\t\uFF09\u3000 ]{1,}", t, 1)
+        if len(c) < 2:
+            continue
+        try:
+            no = int(c[0].strip())
+        except ValueError:
+            continue
+        shirushi = c[1].strip()
+        atari = [k for k in images if shirushi in k]
+        if not atari:
+            machigai.append(u"%d番の「%s」に当たる絵がありません" % (no, shirushi))
+            continue
+        out[no] = sorted(atari)[0]
+    for m in machigai:
+        say(u"  差し替え: " + m)
+    return out
 
 
 def normalize(src, dst, w, h, fit):
@@ -3888,6 +3946,85 @@ def hyou_gyou(i, start, du, img, tx, daihon):
 
 
 ATAMA_GYOU = u"番号\t開始\t尺\t画像\t絵の話数\t台本の話数\tちがい\tセリフ"
+
+
+def koma_ichiran(rows, starts, ends, cache, fol=u"確認用", retsu=4, gyou=5):
+    u"""番号つきの「どの字幕にどの絵か」の表を、画像にして出す。
+
+    本人の指定：
+      「字幕の入った画像が表として見られ、それぞれの番号が振られており、
+        番号を指定するだけで画像を入れ替える仕組みが望ましい」
+
+    1マス = 絵 + 大きな番号 + その字幕。
+    気に入らないマスの番号を 差し替え.txt に書けば、そこだけ入れ替わる。
+    """
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        say(u"コマ一覧は Pillow が要ります（pip install pillow）。とばしました。")
+        return 0
+    FONTS = [u"C:\\Windows\\Fonts\\meiryo.ttc", u"C:\\Windows\\Fonts\\YuGothM.ttc",
+             u"C:\\Windows\\Fonts\\msgothic.ttc",
+             u"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"]
+
+    def fnt(px):
+        for f in FONTS:
+            if os.path.exists(f):
+                try:
+                    return ImageFont.truetype(f, px)
+                except Exception:
+                    pass
+        return ImageFont.load_default()
+
+    tw, th = 420, 236
+    pad, gap, shita, atama = 22, 14, 86, 64
+    per = retsu * gyou
+    mai = (len(rows) + per - 1) // per
+    W = pad * 2 + retsu * tw + (retsu - 1) * gap
+    H = atama + pad + gyou * (th + shita) + (gyou - 1) * gap + pad
+    f_no, f_tx, f_hd = fnt(34), fnt(19), fnt(28)
+    if not os.path.isdir(fol):
+        os.makedirs(fol)
+    dekita = 0
+    for pg in range(mai):
+        sheet = Image.new("RGB", (W, H), (14, 13, 22))
+        d = ImageDraw.Draw(sheet)
+        d.text((pad, 20), u"コマ一覧  %d / %d ページ   ［番号を 差し替え.txt に書くと"
+               u"、その絵だけ入れ替わります］" % (pg + 1, mai), font=f_hd,
+               fill=(238, 201, 115))
+        for k in range(per):
+            i = pg * per + k
+            if i >= len(rows):
+                break
+            c, r = k % retsu, k // retsu
+            x = pad + c * (tw + gap)
+            y = atama + pad + r * (th + shita + gap)
+            d.rectangle([x, y, x + tw, y + th], fill=(32, 30, 48))
+            try:
+                im = Image.open(cache[rows[i][1]]).convert("RGB")
+                im.thumbnail((tw, th), Image.LANCZOS)
+                sheet.paste(im, (x + (tw - im.width) // 2, y + (th - im.height) // 2))
+            except Exception:
+                d.text((x + 12, y + th // 2), u"(絵なし)", font=f_tx, fill=(150, 142, 180))
+            no = u"%03d" % (i + 1)
+            nw = int(d.textlength(no, font=f_no)) + 22
+            d.rectangle([x, y, x + nw, y + 48], fill=(12, 10, 20))
+            d.text((x + 11, y + 6), no, font=f_no, fill=(238, 201, 115))
+            d.text((x + nw + 10, y + 14),
+                   u"%s  %.1f秒" % (mmss(starts[i]), ends[i] - starts[i]),
+                   font=f_tx, fill=(150, 142, 180))
+            tx = rows[i][2].strip() or (u"（章タイトル）"
+                                        if rows[i][1].startswith(u"@@") else u"")
+            lines = wrap_ja(tx, 24, 3) if tx else []
+            for n2, ln in enumerate(lines[:3]):
+                d.text((x + 4, y + th + 8 + n2 * 24), ln, font=f_tx,
+                       fill=(228, 222, 245))
+        out = os.path.join(fol, u"コマ一覧_%02d.png" % (pg + 1))
+        sheet.save(out)
+        dekita += 1
+    say(u"確認用/コマ一覧_01.png … %dページ を作りました（%dコマ）" % (dekita, len(rows)))
+    say(u"  気に入らないコマの番号を その他/差し替え.txt に書けば、そこだけ入れ替わります。")
+    return dekita
 
 
 def write_ichiran(rows, starts, ends, fol=u"確認用", chaps=None):
@@ -4261,6 +4398,20 @@ def main():
 
     rows = read_plan(PLAN)
 
+    # --- 番号で指定された差し替えを当てる（本人の指定がいちばん上） ---
+    kae = load_sashikae(os.path.join(HERE, SASHIKAE), images)
+    if kae:
+        kaeta = 0
+        for no, img2 in sorted(kae.items()):
+            if 1 <= no <= len(rows):
+                du, _mae2, tx2 = rows[no - 1]
+                rows[no - 1] = (du, img2, tx2)
+                kaeta += 1
+        say(u"差し替え.txt のとおり %d枚を入れ替えました（番号で指定されたもの）" % kaeta)
+    elif not os.path.exists(os.path.join(HERE, SASHIKAE)):
+        io.open(os.path.join(HERE, SASHIKAE), "w", encoding="utf-8",
+                newline="\r\n").write(SASHIKAE_ATAMA)
+
     # --- 画像を出力サイズにそろえる(同じ絵は1回だけ) ---
     work = os.path.join(HERE, SONOTA_DIR, "_work")
     norm = os.path.join(work, "norm")
@@ -4484,36 +4635,55 @@ def main():
     #
     # いちばん長く映る絵でも右端を越えない速さにし、それを全部の絵で使う。
     # 章カードは動かさない（左右で絵と文字を分けているので、動くと崩れる）。
-    amari, hayasa = 0, 0.0
+    kyori, hayasa, yoko, tate = 0, 0.0, 0, 0
+    muki = {}
     if ugokasu:
         nagai = max((frames[i] / float(fps))
                     for i in range(len(rows))
                     if not rows[i][1].startswith(u"@@")) if rows else 0.0
         bai = max(0.05, min(1.0, float(mi.get(u"動きの速さ", 0.75))))
-        amari, hayasa = pan_kesan(w, kakudai, nagai, bai)
-        if amari:
-            say(u"絵を横に動かします: %.2f倍に広げ、余り %dpx。"
-                u"いちばん長い %.2f秒 で使い切る速さの %.2f倍（毎秒 %.1fpx）"
-                % (kakudai, amari, nagai, bai, hayasa))
-            say(u"  2秒の絵なら %.0fpx（画面の %.1f%%）/ "
-                u"いちばん長い絵でも %.0fpx（余り %dpx の %.0f%%）だけ動きます"
-                % (min(amari, hayasa * 2), 100.0 * min(amari, hayasa * 2) / w,
-                   min(amari, hayasa * nagai), amari,
-                   100.0 * min(amari, hayasa * nagai) / amari))
+        kyori, hayasa, yoko, tate = pan_kesan(w, h, kakudai, nagai, bai)
+        if kyori:
+            mae = None
+            for i in range(len(rows)):
+                if rows[i][1].startswith(u"@@"):
+                    continue          # 章カードは動かさない
+                mae = pan_muki(i, mae)
+                muki[i] = mae
+            kazu = {}
+            for m in muki.values():
+                kazu[m] = kazu.get(m, 0) + 1
+            say(u"絵を動かします: %.2f倍に広げ、余り 横%dpx 縦%dpx。"
+                u"小さいほうの %dpx を全方向の距離にそろえます" % (kakudai, yoko, tate, kyori))
+            say(u"  いちばん長い %.2f秒 で使い切る速さの %.2f倍（毎秒 %.1fpx）/ "
+                u"2秒の絵なら %.0fpx（画面の %.1f%%）"
+                % (nagai, bai, hayasa, min(kyori, hayasa * 2),
+                   100.0 * min(kyori, hayasa * 2) / w))
+            say(u"  方向はバラバラ（直前とはちがう向き）: "
+                + u" / ".join(u"%s %d枚" % (m, kazu.get(m, 0)) for m in PAN_MUKI))
         else:
             ugokasu = False
 
-    def pan_chain(label_in, label_out, ugoku):
-        u"""大きい絵から画面ぶんを切り出す。ugoku=True なら少しずつ右へ。
+    def pan_chain(label_in, label_out, m):
+        u"""大きい絵から画面ぶんを切り出す。m が向き（None なら動かさない）。
 
-        crop の x に t を入れると1コマずつ計算し直してくれる。
-        min(...) を付けているので、尺が長くても右端を越えない。
+        crop の x / y に t を入れると1コマずつ計算し直してくれる。
+        min / max で止めてあるので、どの向きでも端を越えない。
+        動く帯は余りの**まん中**に置くので、絵の中心から大きく外れない。
         """
-        y = u"(ih-%d)/2" % h
-        if ugoku:
-            x = u"'min(%d,%.4f*t)'" % (amari, hayasa)
+        x0 = (yoko - kyori) / 2.0          # 横に動く帯の左端
+        y0 = (tate - kyori) / 2.0          # 縦に動く帯の上端
+        susumu = u"min(%d,%.4f*t)" % (kyori, hayasa)
+        if m == u"左へ":        # 絵が左へ流れる＝切り出しが右へ進む
+            x, y = u"'%.1f+%s'" % (x0, susumu), u"%.1f" % (tate / 2.0)
+        elif m == u"右へ":
+            x, y = u"'%.1f-%s'" % (x0 + kyori, susumu), u"%.1f" % (tate / 2.0)
+        elif m == u"上へ":
+            x, y = u"%.1f" % (yoko / 2.0), u"'%.1f+%s'" % (y0, susumu)
+        elif m == u"下へ":
+            x, y = u"%.1f" % (yoko / 2.0), u"'%.1f-%s'" % (y0 + kyori, susumu)
         else:
-            x = u"(iw-%d)/2" % w
+            x, y = u"(iw-%d)/2" % w, u"(ih-%d)/2" % h
         return u"[%s]crop=%d:%d:x=%s:y=%s[%s];" % (label_in, w, h, x, y, label_out)
 
     shigoto = []          # あとでまとめて作る断片
@@ -4528,17 +4698,14 @@ def main():
         if need_mae and mae is None:
             fil = None
         # 章カードは元から画面ぴったりの大きさなので、切り出しも動きもしない
-        kore_ugoku = ugokasu and not img.startswith(u"@@")
-        mae_ugoku = ugokasu and mae is not None \
-            and not rows[i - 1][1].startswith(u"@@")
-        pan = None
+        kore = muki.get(i) if ugokasu else None
         if ugokasu:
-            pan = pan_chain(u"0:v", u"c0", kore_ugoku)
+            pan = pan_chain(u"0:v", u"c0", kore)
             if mae is not None:
-                pan += pan_chain(u"1:v", u"c1", False)
+                pan += pan_chain(u"1:v", u"c1", None)
             if fil:
                 fil = pan + fil.replace(u"[0:v]", u"[c0]").replace(u"[1:v]", u"[c1]")
-        key = (cache[img], frames[i], mae, fil, kore_ugoku)
+        key = (cache[img], frames[i], mae, fil, kore)
         seg = segcache.get(key)
         if seg is None:
             seg = os.path.join(segdir, "s%05d.mp4" % len(segcache))
@@ -4549,7 +4716,7 @@ def main():
                     cmd += ["-loop", "1", "-framerate", str(fps), "-i", mae]
                 cmd += ["-filter_complex", fil, "-map", "[v]"]
             elif ugokasu:
-                cmd += ["-vf", pan_chain(u"0:v", u"v", kore_ugoku)
+                cmd += ["-vf", pan_chain(u"0:v", u"v", kore)
                         .replace(u"[0:v]", u"").rstrip(u";").replace(u"[v]", u"")]
             cmd += ["-frames:v", str(frames[i]),
                     "-c:v", "libx264", "-preset", a.seg_preset,
@@ -4726,6 +4893,7 @@ def main():
             write_cuts(final, rows, starts, ends, chaps=chaps)
         else:
             write_ichiran(rows, starts, ends, chaps=chaps)
+        koma_ichiran(rows, starts, ends, cache)
     except Exception as e:
         say(u"確認用の書き出しはできませんでした: %s" % e)
     say(u"絵を差し替えたいときは 画像割り当て.tsv を直して、もう一度 batを実行してください。")
