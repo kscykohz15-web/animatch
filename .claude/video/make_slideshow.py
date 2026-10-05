@@ -4119,14 +4119,19 @@ def load_sashikae(path, images):
         t = line.strip()
         if not t or t.startswith(u"#"):
             continue
-        c = re.split(r"[\t\uFF09\u3000 ]{1,}", t, 1)
+        # 表計算から貼ると、タブの列に「タブ」という字がそのまま入ることがある。
+        # 実際に9番と18番がそれで当たらなかったので、落としてから読む。
+        c = [x for x in re.split(r"[\t\uFF09\u3000 ]{1,}", t)
+             if x and x.strip() not in (u"タブ", u"TAB", u"tab", u"\\t")]
         if len(c) < 2:
+            if len(c) == 1 and c[0].strip().isdigit():
+                continue          # 番号だけの行（本人が空けた所）は黙ってとばす
             continue
         try:
             no = int(c[0].strip())
         except ValueError:
             continue
-        shirushi = c[1].strip()
+        shirushi = u" ".join(c[1:]).strip()
         # 短い番号(3-11-056)を先に試し、だめならファイル名の一部として探す
         kimari = code_to_img(shirushi, images)
         if not kimari:

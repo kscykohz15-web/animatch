@@ -281,10 +281,50 @@ def load_ichiran(path):
     return rows
 
 
-def load_plan_tebiki(path):
-    u"""画像プランにファイル名で直接書かれた絵を集める。
+CODE_RE = re.compile(r"^([123])\s*[-_. ]\s*(\d{1,2})\s*[-_. ]\s*(\d{1,3})$")
 
-    それは人が見て選んだ絵なので、話数ちがい・使用不可で責めない。
+
+def code_of(img):
+    u"""絵の名前 → 短い番号（3-11-056）。make_slideshow.py と同じ決め方。"""
+    if not img or u"/" not in img:
+        return u""
+    fol, name = img.split(u"/", 1)
+    ki = 3 if u"Ⅲ" in fol else (2 if u"Ⅱ" in fol else 1)
+    m1 = re.search(r"第\s*(\d+)\s*話", fol)
+    m2 = re.match(r"(\d+)", os.path.basename(name))
+    if not m1 or not m2:
+        return u""
+    return u"%d-%02d-%03d" % (ki, int(m1.group(1)), int(m2.group(1)))
+
+
+def code_hyou(rows):
+    u"""この動画に出てくる絵の「番号 → 絵の名前」の表。"""
+    out = {}
+    for r in rows:
+        c = code_of(r.get(u"img") or u"")
+        if c:
+            out.setdefault(c, r[u"img"])
+    return out
+
+
+def code_naosu(f, hyou):
+    u"""短い番号で書かれていたら、絵の名前に読みかえる。"""
+    m = CODE_RE.match((f or u"").strip())
+    if not m:
+        return f
+    return hyou.get(u"%d-%02d-%03d"
+                    % (int(m.group(1)), int(m.group(2)), int(m.group(3))), f)
+
+
+def load_plan_tebiki(path, hyou=None):
+    u"""画像プランにファイル名か絵の番号で直接書かれた絵を集める。
+
+    それは人が見て選んだ絵なので、話数ちがい・人ちがいで責めない。
+
+    ■ 絵の番号(3-05-035)も読む（2026-10-05）
+    挨拶の絵を番号で固定したら、採点がそれを「話数ちがい」と3回責めた。
+    プランに書いてあるのに、名前が違うので手びきと分からなかった。
+    **手で選んだ絵の例外は、採点もその1つ。**
     """
     out = set()
     if not path or not os.path.exists(path):
@@ -298,7 +338,26 @@ def load_plan_tebiki(path):
         for f in line.split(u"\t", 1)[1].split(u","):
             f = f.strip()
             if f and not f.startswith(u"#") and not f.startswith(u"@"):
-                out.add(f)
+                out.add(code_naosu(f, hyou or {}))
+    return out
+
+
+def load_sashikae_ban(path):
+    u"""その他/差し替え.txt で本人が番号指定した所を集める（番号の集合）。
+
+    ここも「手で選んだ絵」。機械の判定より本人が上なので、責めない。
+    番号は 確認用/一覧.txt と同じ通し番号。
+    """
+    out = set()
+    if not path or not os.path.exists(path):
+        return out
+    for line in yomu(path).split(u"\n"):
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            continue
+        m = re.match(r"^(\d+)[\s\t]", t)
+        if m:
+            out.add(int(m.group(1)))
     return out
 
 
@@ -414,7 +473,8 @@ def main():
     rows = load_ichiran(ich)
     tags = load_catalog(a.catalog)
     kyoka = load_plan_episodes(plan)
-    tebiki = load_plan_tebiki(plan)
+    tebiki = load_plan_tebiki(plan, code_hyou(rows))
+    sashi = load_sashikae_ban(os.path.join(u"その他", u"差し替え.txt"))
 
     note(u"=== 動画の採点 ===")
     note(u"一覧      : %s  (%d か所)" % (ich, len(rows)))
@@ -427,8 +487,10 @@ def main():
             note(u"  ⚠⚠ 字幕と音声がずれています。絵の問題ではありません。")
             note(u"     台本を直したのに音声が古いままです。1 で音声を作り直してください。")
             note(u"")
-    if tebiki:
-        note(u"手で選んだ絵: %d枚 （採点の対象から外します）" % len(tebiki))
+    if tebiki or sashi:
+        note(u"手で選んだ絵: 画像プラン %d枚 / 差し替え %d か所 "
+             u"（人ちがい・話数ちがいでは責めません）" % (len(tebiki), len(sashi)))
+        note(u"  ただし【使用不可】の絵だけは、選ばれていても必ずお知らせします。")
     if kyoka:
         note(u"使ってよい話数: %s" % u", ".join(kyoka))
     note(u"")
@@ -483,11 +545,19 @@ def main():
 
         # 画像プランにファイル名で直接書いた絵は、人が選んだもの。
         # 話数や使用不可で責めない（本人の指定が上）。
-        erabi = img in tebiki
+        erabi = (img in tebiki) or (r[u"no"] in sashi)
 
         # ⑤ 使用不可
-        if u"使用不可" in desc.split() and not erabi:
-            riyuu.append(u"【使用不可】の絵が出てしまっています")
+        #
+        # ここだけは、本人が選んだ絵でも必ず言う。
+        # 文字あり・実写・きわどい画面は、本人が見落としていると困るもの
+        # （権利の話なので、好みの問題ではない）。
+        if u"使用不可" in desc.split():
+            if erabi:
+                riyuu.append(u"本人が選んだ絵ですが【使用不可】です"
+                             u"（文字あり・実写など）。別の絵をおすすめします")
+            else:
+                riyuu.append(u"【使用不可】の絵が出てしまっています")
             omosa += 10
 
         # ② 話数ちがい
