@@ -1190,7 +1190,129 @@ def toshi_bangou(rows, kaado):
     return ban, card_ban
 
 
-def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.04):
+def jikan_awase(a0, b0, moji, cands, omomi=0.6):
+    u"""かたまりの切れ目を「間」に割り当てる。**尺の見合いで選ぶ。**
+
+    moji  … かたまりごとの文字数
+    cands … (時刻, 間の長さ) の並び（時刻順）
+
+    ■ なぜ「位置」ではなく「尺」で見るのか
+
+    前は「文字数で割った位置に、いちばん近い間」を選んでいた。
+    ところが読む速さは かたまりごとに ±25% ばらつくので、見積もりの位置
+    そのものが 0.5秒ずれる。そこから近いものを選ぶと、**一度ずれると
+    その先も引きずる。**
+
+    尺で見れば、ずれは持ち越さない。
+    「このかたまりは12文字だから、だいたい 1.9秒 のはず」を
+    1つずつ確かめながら進む。
+
+    費用 = Σ |実際の尺 − 文字数ぶんの尺| ÷ 文字数ぶんの尺   （割合で見る）
+           − 重み × Σ 間の長さ（0.4秒で頭打ち）
+
+    割合で見るのは、短いかたまりの 0.2秒 と
+    長いかたまりの 0.2秒 を同じ重さにしないため。
+    """
+    k = len(moji)
+    m = len(cands)
+    if k < 2 or m < k - 1:
+        return None
+    hayasa = (b0 - a0) / float(max(1, sum(moji)))      # 1文字あたりの秒
+    mezasu = [max(0.12, moji[j] * hayasa) for j in range(k)]
+    INF = float("inf")
+
+    def hiyou(d, j, L):
+        return abs(d - mezasu[j]) / mezasu[j] - omomi * min(L, 0.4)
+
+    # dp[j][i] … j+1番目までの切れ目を決め、最後が cands[i] のときの最小費用
+    dp = [[INF] * m for _ in range(k - 1)]
+    back = [[-1] * m for _ in range(k - 1)]
+    for i in range(m):
+        t, L = cands[i]
+        if t <= a0:
+            continue
+        dp[0][i] = hiyou(t - a0, 0, L)
+    for j in range(1, k - 1):
+        for i in range(m):
+            t, L = cands[i]
+            best, bi = INF, -1
+            for q in range(i):
+                if dp[j - 1][q] >= INF:
+                    continue
+                d = t - cands[q][0]
+                if d <= 0.05:
+                    continue
+                v = dp[j - 1][q] + hiyou(d, j, L)
+                if v < best:
+                    best, bi = v, q
+            dp[j][i] = best
+            back[j][i] = bi
+    best, bi = INF, -1
+    for i in range(m):
+        if dp[k - 2][i] >= INF:
+            continue
+        d = b0 - cands[i][0]
+        if d <= 0.05:
+            continue
+        v = dp[k - 2][i] + abs(d - mezasu[k - 1]) / mezasu[k - 1]
+        if v < best:
+            best, bi = v, i
+    if bi < 0:
+        return None
+    out, j = [0.0] * (k - 1), k - 2
+    i = bi
+    while j >= 0 and i >= 0:
+        out[j] = cands[i][0]
+        i = back[j][i]
+        j -= 1
+    return out
+
+
+def nagasa_awase(exp, cands, omomi=15.0):
+    u"""切れ目を「間」に割り当てる。距離だけでなく**間の長さ**も見る。
+
+    cands は (時刻, 間の長さ) の並び。順番は保つ。
+
+    ■ なぜ長さを見るのか
+
+    本物の声は、子音や息つぎで**言葉の途中でも 0.02〜0.09秒 切れる。**
+    距離だけで選ぶと、近いというだけでその途切れに吸い寄せられ、
+    かえって悪くなる（実測で 0.3秒超が 27%）。
+    「、」のあとの息継ぎは、それより長い。**長い間ほど切れ目らしい。**
+
+    費用 = 距離 − 重み × 間の長さ（長さは 0.5秒で頭打ち）
+    """
+    n, m = len(exp), len(cands)
+    if n == 0 or m < n:
+        return None
+    INF = float("inf")
+
+    def hiyou(j, i):
+        t, L = cands[i]
+        return abs(t - exp[j]) - omomi * min(L, 0.5)
+
+    prev = [hiyou(0, i) for i in range(m)]
+    back = [[0] * m for _ in range(n)]
+    for j in range(1, n):
+        cur = [INF] * m
+        best_v, best_i = INF, 0
+        for i in range(m):
+            if i >= 1 and prev[i - 1] < best_v:
+                best_v, best_i = prev[i - 1], i - 1
+            if i >= j and best_v < INF:
+                cur[i] = best_v + hiyou(j, i)
+                back[j][i] = best_i
+        prev = cur
+    last = min(range(m), key=lambda i: prev[i])
+    out = [0.0] * n
+    i = last
+    for j in range(n - 1, -1, -1):
+        out[j] = cands[i][0]
+        i = back[j][i]
+    return out
+
+
+def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
     u"""文字数で割った切れ目を、本物の「間」に寄せ直す。
 
     ■ なぜ要るか（v130 でもまだ字幕がずれていた）
@@ -1244,8 +1366,9 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.04):
         return any(abs(t - x) <= 0.06 for x in ik)
 
     tomeru = [True] + [is_ikari(kugiri[i]) for i in range(1, n - 1)] + [True]
-    # 寄せ先の候補。「間」の終わりの少し手前＝次の声が出る直前
-    ma = [max(a + 0.02, b - LEAD) for (a, b) in sils if (b - a) >= saitan]
+    # 寄せ先の候補。「間」の終わりの少し手前＝次の声が出る直前。
+    # 長さも覚えておく（短い間は、言葉の途中の途切れかもしれない）。
+    ma = [(max(a + 0.02, b - LEAD), b - a) for (a, b) in sils if (b - a) >= saitan]
     ma.sort()
     ugokashi, ichiban = 0, 0.0
     i = 0
@@ -1261,18 +1384,42 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.04):
             continue
         # i と j は動かさない。その間の (j-i-1) 個を寄せる
         a0, b0 = kugiri[i], kugiri[j]
-        naka = [k for k in ma if a0 + 0.25 < k < b0 - 0.25]
+        naka = [(t, L) for (t, L) in ma if a0 + 0.25 < t < b0 - 0.25]
         exp = kugiri[i + 1:j]
+        # 言葉の途中の途切れ(0.03〜0.12秒)まで候補に入れると、そちらへ
+        # 吸い寄せられてかえって悪くなる。**長い間ほど切れ目らしい**ので、
+        # 要る数の何倍かだけ、長いものから残してから位置で並べ直す。
         if len(naka) >= len(exp):
-            atta, _ = align_boundaries(exp, naka)
+            atta = nagasa_awase(exp, naka)
             if atta:
-                for t, (mae, ato) in enumerate(zip(exp, atta)):
-                    # 遠すぎる寄せは、かえって悪くなるのでしない
+                # ① 遠すぎない寄せだけ採る。遠い寄せはかえって悪くなる
+                kimari = {}
+                for t2, (mae, ato) in enumerate(zip(exp, atta)):
                     if abs(ato - mae) <= tol:
-                        kugiri[i + 1 + t] = ato
+                        kimari[t2] = ato
                         if abs(ato - mae) > 0.05:
                             ugokashi += 1
                             ichiban = max(ichiban, abs(ato - mae))
+                # ② 寄せられなかった切れ目は、**寄せた所から割り直す。**
+                #
+                # もとの見積もりは、かたまり全体を文字数で割ったもの。
+                # 途中が実際の「間」に寄ったのに、残りを古い見積もりのまま
+                # 置くと、そこだけ取り残されて 1秒以上ずれる（実測）。
+                # 錨のときと同じで、**合わせるたびに測り直す**。
+                teiten = [(-1, a0)] + sorted(kimari.items()) + [(len(exp), b0)]
+                for p2 in range(len(teiten) - 1):
+                    (ia, ta), (ib, tb) = teiten[p2], teiten[p2 + 1]
+                    if ib - ia < 2:
+                        continue
+                    moji = [max(1, len(slots[i + 1 + q][2]))
+                            for q in range(ia + 1, ib + 1)]
+                    kei = float(sum(moji))
+                    t3 = ta
+                    for q in range(ia + 1, ib):
+                        t3 += (tb - ta) * moji[q - ia - 1] / kei
+                        kimari[q] = t3
+                for q, t3 in kimari.items():
+                    kugiri[i + 1 + q] = t3
         i = j
     # 順番が入れ替わらないようにだけ見る
     for t in range(1, n):
@@ -1362,7 +1509,7 @@ def check_script_vs_srt(script, srt_path, names):
     say(u"")
 
 
-def kugiri_awase(durs, total, sils, mado=1.5):
+def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
     u"""1行ずつの音声の境目を、merged.wav の本物の無音に合わせ直す。
 
     ■ なぜ要るか（本人の画面で、冒頭だけ字幕と声がずれた）
@@ -1389,7 +1536,23 @@ def kugiri_awase(durs, total, sils, mado=1.5):
     n = len(durs)
     if n < 2:
         return [0.0, total]
-    naka = sorted((a + b) / 2.0 for (a, b) in (sils or []) if b > a)
+    # **長さで絞るのが肝心。**
+    # 本物の声は、子音や息つぎで言葉の途中でも 0.03〜0.12秒 切れる。
+    # 長さを見ずに拾うと、段落の境目がその途切れに吸い寄せられ、
+    # その段落まるごと 1.5〜2.2秒 ずれる（実測）。
+    # 段落の境目は、必ず 0.2秒 以上の本物の間の中にある。
+    # ■ 「間のまん中」ではなく「間の終わりの少し手前」に置く（2026-10-05）
+    #
+    # まん中に置いていたので、**段落の境目がいつも 0.36秒 早かった。**
+    # つなぎ目の間は 0.5秒ほどあるので、まん中＝声が出る 0.25秒前。
+    # そこに LEAD(0.12秒) がさらに乗って 0.36秒。実測でぴたりと出た
+    # （最大0.38 / 平均0.36 / ほぼ全部が 0.3秒超）。
+    # 声が出る直前に置けば、その 0.36秒 はまるごと消える。
+    #
+    # 長さで絞るのも肝心。本物の声は子音や息つぎで言葉の途中でも
+    # 0.02〜0.09秒 切れるので、長さを見ないと境目がそちらへ吸い寄せられる。
+    naka = sorted(max(a + 0.02, b - LEAD) for (a, b) in (sils or [])
+                  if b - a >= saitan)
 
     # 合わせるたびに「残りの本物の時間 ÷ 残りの読み上げ時間」を計算し直す。
     #

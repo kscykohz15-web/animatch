@@ -18,24 +18,46 @@ for line in io.open(u"その他/画像割り当て.tsv", encoding="utf-8-sig").r
         continue
     rows.append((float(c[1]), float(c[2]), c[5].strip()))
 
+# ■ 突き合わせは「順番」で行う（2026-10-05）
+#
+# 前は本文で引いていたので、**同じ文字列が2回出ると別の場所に当たり**、
+# 7秒といった偽のずれが出ていた（328個中 9個が重複）。
+# それに合わせて決め方を直しかけた。測り方の誤りを直すのが先。
+# いまは「前に当てた所から少し先」だけを見る。
 tsukatta, zure, mitsukaranai = set(), [], 0
+ichi = 0
 for (st, du, tx) in rows:
     k = tx.strip()
-    cand = [i for i in hyou.get(k, []) if i not in tsukatta]
+    cand = [i for i in hyou.get(k, [])
+            if i not in tsukatta and ichi - 2 <= i <= ichi + 6]
+    if not cand:
+        cand = [i for i in hyou.get(k, []) if i not in tsukatta and i >= ichi]
     if not cand:
         mitsukaranai += 1
         continue
-    i = cand[0]
+    i = min(cand)
     tsukatta.add(i)
+    ichi = i + 1
     honto = seikai[i][0]
     zure.append((abs(st - honto), st, honto, k, i))
+
+# 段落の境目（錨）と、その中の切れ目を分けて見る
+atama = set(sei.get(u"atama", []))
+anc = [z for z in zure if z[4] in atama]
+naka = [z for z in zure if z[4] not in atama]
 
 zure.sort(reverse=True)
 n = len(zure)
 if u"--json" in sys.argv:
     import json
     ookii = [z for z in zure if z[0] > 0.30]
+    def matome(v):
+        if not v:
+            return [0.0, 0.0, 0.0]
+        return [round(max(x[0] for x in v), 2), round(sum(x[0] for x in v) / len(v), 2),
+                round(100.0 * sum(1 for x in v if x[0] > 0.30) / len(v), 0)]
     print(json.dumps({u"kazu": len(rows), u"ookii": round(zure[0][0], 3) if zure else 0.0,
+                      u"anc": matome(anc), u"naka": matome(naka),
                       u"heikin": round(sum(z[0] for z in zure) / max(1, n), 3),
                       u"wariai": round(100.0 * len(ookii) / max(1, n), 1),
                       u"waru": [[round(z[0], 2), round(z[1], 2), round(z[2], 2), z[3]]

@@ -47,15 +47,42 @@ def bun():
 
 
 def tone(sec, hz=440.0, vol=0.35):
-    u"""声のかわりの音。長さは秒で指定。"""
+    u"""声のかわりの音。長さは秒で指定。
+
+    ■ 言葉の途中にも、細かい途切れを入れる（ここが肝心）
+
+    本物の声は、子音・破裂音で **言葉の途中でも 0.02〜0.07秒 切れる。**
+    入れていない材料で測ると、直ったように見えてしまう。
+
+    ■ 長さの根拠（当てずっぽうにしない）
+
+    本番のログで、0.10秒以上の間に 140か所が寄っていた。
+    ＝ **本物の「、」の息継ぎは、ほとんどが 0.10秒以上。**
+    一方、子音の途切れがそれより長くなることはない。
+    前の材料は 途中の途切れを 0.12秒まで・「、」を 0.06秒からにしていて、
+    **両者が重なりすぎていた**（どんな決め方でも区別できない形）。
+    """
     k = int(round(sec * SR))
-    return [int(32767 * vol * math.sin(2 * math.pi * hz * i / SR)
-                * (0.6 + 0.4 * math.sin(2 * math.pi * 3.1 * i / SR)))
-            for i in range(k)]
+    out = []
+    i = 0
+    tsugi = random.uniform(0.18, 0.45)      # 次に途切れるまで
+    while i < k:
+        if len(out) / float(SR) >= tsugi and k - i > int(0.25 * SR):
+            kire = int(round(random.uniform(0.02, 0.07) * SR))
+            out += [0] * kire
+            i += kire
+            tsugi = len(out) / float(SR) + random.uniform(0.18, 0.45)
+            continue
+        out.append(int(32767 * vol * math.sin(2 * math.pi * hz * i / SR)
+                       * (0.6 + 0.4 * math.sin(2 * math.pi * 3.1 * i / SR))))
+        i += 1
+    return out[:k]
 
 
 def mu(sec):
-    return [0] * int(round(sec * SR))
+    u"""無音。本物はまったくの無ではなく、わずかな暗騒音がある。"""
+    k = int(round(sec * SR))
+    return [int(random.gauss(0, 12)) for _ in range(k)]
 
 
 def kaku(path, data):
@@ -96,24 +123,30 @@ def main():
             if i < len(bs) - 1:
                 # 「、」のあとは短い息継ぎ、「。」のあとは長めの間。
                 # 短いほうは無音の判定(0.22秒)に引っかからない＝合わせ先が無い。
-                oto += mu(random.choice([0.06, 0.10, 0.15, 0.20, 0.25])
+                # 「、」の息継ぎは 0.10〜0.35秒、「。」のあとは 0.30〜0.85秒。
+                # 子音の途切れ(0.02〜0.07)と、わずかに重なる所は残してある。
+                oto += mu(random.choice([0.10, 0.14, 0.18, 0.25, 0.35])
                           if t.endswith(u"、") else
                           random.choice([0.30, 0.40, 0.55, 0.70, 0.85]))
         oto += mu(oshiri)
         kaku(os.path.join(u"output", u"%03d.wav" % (p + 1)), oto)
         moto_kei += len(oto) / float(SR)
 
-        # merged.wav は前後の無音を削ってつなぐ（本物がそうなっている）
+        # merged.wav は前後の無音を**少しだけ**削ってつなぐ。
+        #
+        # 本物の実測: 540.81秒 → 534.44秒。53のつなぎ目で 6.37秒 ＝
+        # **1か所あたり 0.12秒しか削っていない。**
+        # 前は 0.48秒 削る材料にしていて、段落の境目そのものを潰していた。
+        # そのせいで「境目が見つからない」別の壊れ方を再現してしまった。
+        kezuru = 0.12
         hajime = len(merged) / float(SR)
-        kezuru_a = int(round(atama * SR))
-        kezuru_b = int(round(oshiri * SR))
+        kezuru_a = int(round(kezuru / 2.0 * SR))
+        kezuru_b = int(round(kezuru / 2.0 * SR))
         nakami = oto[kezuru_a:len(oto) - kezuru_b]
         for (st, du) in naka:
-            s2 = hajime + (st - atama)
+            s2 = hajime + (st - kezuru / 2.0)
             seikai.append((s2, s2 + du))
         merged += nakami
-        if p < PARTS - 1:
-            merged += mu(0.12)      # つなぎ目に残る短い間
     kaku(u"merged.wav", merged)
 
     # subtitle.srt（本文を合わせるためだけに使われる。時刻は雑でよい）
@@ -136,6 +169,7 @@ def main():
 
     io.open(u"正解.json", "w", encoding="utf-8").write(
         json.dumps({u"bun": bunretsu, u"seikai": seikai,
+                    u"atama": [sum(len(x) for x in dan[:i]) for i in range(len(dan))],
                     u"moto": moto_kei, u"merged": len(merged) / float(SR)},
                    ensure_ascii=False))
     print(u"文 %d個 / 1行ずつの音声 %d個" % (len(bunretsu), PARTS))
