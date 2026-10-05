@@ -377,6 +377,18 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"人物ルールに、絶対に当たらない条件があります")
 
+# ── ⑯ 字幕と声がずれていないか（作った材料で実測）────────────
+midashi(u"⑯", u"字幕と声がずれていないか（実測）")
+# 「まだずれています」を何度も往復した。こちらで測れないものは、こちらで直せない。
+# 本物と同じ形の材料を作って、出来た割り当てと正解を突き合わせて測る。
+# 1〜2分かかるが、ここを省くと同じ往復が必ずまた起きる。
+r = subprocess.run([sys.executable, os.path.join(V, u"ずれ検査.py"), u"--回", u"2"],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"字幕と声がずれています（ずれ検査.py）")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

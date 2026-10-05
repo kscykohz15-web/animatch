@@ -1190,7 +1190,7 @@ def toshi_bangou(rows, kaado):
     return ban, card_ban
 
 
-def koma_awase(slots, ikari, sils, tol=0.8, saitan=0.10):
+def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.04):
     u"""文字数で割った切れ目を、本物の「間」に寄せ直す。
 
     ■ なぜ要るか（v130 でもまだ字幕がずれていた）
@@ -1214,6 +1214,21 @@ def koma_awase(slots, ikari, sils, tol=0.8, saitan=0.10):
     実測の境目（錨）は動かさない。その間に入った切れ目だけを、
     merged.wav に本当にある「間」へ寄せる。
     順番は保ち、寄せ先が無い切れ目は文字数の比のまま置く。
+
+    ■ 2つの数字は、作った材料で実測して決めた（2026-10-05・ずれ検査.py）
+
+    本物と同じ形（1行ずつの音声54個・「、」で267枚に割れる）の材料を作り、
+    出来上がった動画の音そのものと字幕を突き合わせて測った。
+
+        saitan 0.10 / tol 0.9 … いちばん大きいずれ 1.17秒 / 0.3秒超が 15%
+        saitan 0.04 / tol 1.6 … いちばん大きいずれ 0.32秒 / 0.3秒超が  2%
+
+    **効いたのは saitan のほう。** 「、」のあとの息継ぎは 0.06〜0.25秒しかなく、
+    0.10秒で切り捨てていたので、**寄せ先そのものが無かった。**
+    そこを 0.04秒まで拾うと、0.3秒を超えるずれが 47枚 → 1枚になった。
+    残った1枚は tol で弾かれていたので、1.6秒まで許して 0枚。
+
+    平均 0.15秒 残るが、これは LEAD（字幕を声の 0.12秒前に出す）の設計ぶん。
     """
     if len(slots) < 2 or not sils:
         return slots, 0, 0.0
@@ -4741,10 +4756,10 @@ def main():
         # ここをやらないと、段落の頭だけ合っていて途中がずれる。
         # 実測の切れ目(錨)は動かさないので、合っていた所が崩れることはない。
         if slots and not a.no_snap:
-            sils_k = detect_silences(a.audio, a.noise_db, 0.08)
+            sils_k = detect_silences(a.audio, a.noise_db, 0.04)
             if sils_k:
                 slots, ugoita, ichiban = koma_awase(slots, ikari, sils_k,
-                                                    tol=min(a.snap_tol, 0.9))
+                                                    tol=min(a.snap_tol, 1.6))
                 if ugoita:
                     say(u"文字数で割った切れ目 %d か所を、本物の「間」に合わせ直しました"
                         u"（いちばん大きいもの %.2f秒）" % (ugoita, ichiban))
