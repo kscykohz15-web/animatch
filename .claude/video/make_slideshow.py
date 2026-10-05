@@ -4287,11 +4287,36 @@ SASHIKAE_ATAMA = u"""\ufeff# ─────────────────
 """
 
 
+KOUHO_FILE = os.path.join(SONOTA_DIR, u"候補.txt")
+OMAKASE = os.path.join(SONOTA_DIR, u"おまかせ.txt")
+
+
+def load_kouho(path):
+    u"""直す.py が出した候補の表。{(番号, 1〜6): 絵}
+
+    本人が打つのは数字ひとつ。その数字をここで絵に戻す。
+    """
+    out = {}
+    if not os.path.exists(path):
+        return out
+    for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
+            .replace("\r\n", "\n").split("\n"):
+        t = line.strip()
+        if not t or t.startswith(u"#") or u"\t" not in t:
+            continue
+        a, b = t.split(u"\t", 1)
+        m = re.match(r"^(\d+)-(\d+)$", a.strip())
+        if m:
+            out[(int(m.group(1)), int(m.group(2)))] = b.strip()
+    return out
+
+
 def load_sashikae(path, images):
     u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}"""
     if not os.path.exists(path):
         return {}
     out, machigai = {}, []
+    kouho = load_kouho(os.path.join(HERE, KOUHO_FILE))
     for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
             .replace("\r\n", "\n").split("\n"):
         t = line.strip()
@@ -4310,7 +4335,17 @@ def load_sashikae(path, images):
         except ValueError:
             continue
         shirushi = u" ".join(c[1:]).strip()
-        # 短い番号(3-11-056)を先に試し、だめならファイル名の一部として探す
+        # ① 「3」のような1桁は、直す.py が出した紙の候補の番号
+        if re.match(r"^[1-9]$", shirushi):
+            kimari = kouho.get((no, int(shirushi)))
+            if kimari:
+                out[no] = kimari
+                continue
+            machigai.append(u"%d番の候補 %s がありません"
+                            u"（先に「はじめる.bat」→ N で紙を作ってください）"
+                            % (no, shirushi))
+            continue
+        # ② 短い番号(3-11-056)を試し、だめならファイル名の一部として探す
         kimari = code_to_img(shirushi, images)
         if not kimari:
             atari = [k for k in images if shirushi in k]
@@ -4985,6 +5020,19 @@ def main():
     kaado = card_basho(rows, chaps0) \
         if (en.get("card") and chaps0 and not a.no_fx) else []
     ban, card_ban = toshi_bangou(rows, kaado)
+    # ① 機械のおまかせ（直す.py が当てたもの）を先に当てる
+    oma = load_sashikae(os.path.join(HERE, OMAKASE), images)
+    if oma:
+        n2 = 0
+        for no, img2 in sorted(oma.items()):
+            if no in ban:
+                du, _m3, tx3 = rows[ban[no]]
+                rows[ban[no]] = (du, img2, tx3)
+                n2 += 1
+        say(u"おまかせ.txt のとおり %d枚を当てました（機械が選んだもの）" % n2)
+        say(u"  気に入らない所は 確認用/直す_01.png を見て、差し替え.txt に数字を。")
+
+    # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
     kae = load_sashikae(os.path.join(HERE, SASHIKAE), images)
     if kae:
         kaeta = 0

@@ -389,6 +389,17 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"字幕と声がずれています（ずれ検査.py）")
 
+# ── ⑰ 絵を数字ひとつで直す仕組みが働くか ────────────
+midashi(u"⑰", u"絵を数字ひとつで直す仕組みが働くか")
+# 本人の工数をいちばん食うのが絵の直し。
+# 候補の出し方・紙の数字・本人の指定の優先、どれが欠けても手間が戻る。
+r = subprocess.run([sys.executable, os.path.join(V, u"直す検査.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"絵を直す仕組みが働いていません（直す検査.py）")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
