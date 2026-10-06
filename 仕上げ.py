@@ -428,6 +428,17 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"絵を直す仕組みが働いていません（直す検査.py）")
 
+# ── ⑲ 絵と字幕が同じコマで切り替わるか ────────────
+midashi(u"⑲", u"絵と字幕が同じコマで切り替わるか")
+# 本人の指摘「字幕と音声はあっているが、字幕と画像の切り替わりがずれている」。
+# 推測で直さず、**出来た動画のコマを数えて**確かめる。章カードの有無の両方。
+r = subprocess.run([sys.executable, os.path.join(V, u"絵と字幕の検査.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"絵と字幕が同じコマで切り替わっていません")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
