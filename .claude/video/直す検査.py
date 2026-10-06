@@ -8,6 +8,9 @@ u"""直す検査 ─ 「数字ひとつで絵を入れ替える」仕組みが�
   ③ 使用不可（文字あり・実写）が候補に出ていないか
   ④ 紙に書いた数字が、ちゃんとその絵に戻るか                    （閉ループ）
   ⑤ 本人の指定が、機械のおまかせより上になるか
+  ⑦ おまかせが、同じ絵ばかり当てていないか                      （実測で見つけた）
+  ⑧ となりの区切りに同じ絵を当てていないか
+  ⑨ 重い不安（人ちがい・話数ちがい）を、ぜんぶ当て直しているか
 
 材料はここで作る。絵は色だけの画像で足りる（見るのは説明の言葉なので）。
 """
@@ -36,6 +39,7 @@ SERIFU = [u"まずヒトガミの目的。", u"これはヒトガミ自身の死
           u"将来ヒトガミを殺しにきてしまうとのことなのです。",
           u"オルステッドと手を組み、", u"ロキシーが妊娠していたからです。",
           u"エリスは剣を抜いた。"]
+KUGIRI = 120          # 区切りの数（同じ絵の片寄りは、数が多くないと出ない）
 
 
 def junbi():
@@ -67,7 +71,8 @@ def junbi():
     io.open(os.path.join(SAGYOU, u"画像カタログ.txt"), "w",
             encoding="utf-8", newline="\r\n").write(u"\r\n".join(cat) + u"\r\n")
     out = [u"番号\t開始\t尺\t画像\tセリフ\t台本の話数"]
-    for i, s in enumerate(SERIFU, 1):
+    for i in range(1, KUGIRI + 1):
+        s = SERIFU[i % len(SERIFU)]
         wa = WA[i % 2]                      # わざと話数を外したものを混ぜる
         out.append(u"%d\t%.2f\t2.00\t%s/%03d_t%02d_x2.png\t%s\t%s"
                    % (i, i * 2.0, wa, (i * 7) % 60 + 1, (i * 7) % 60 + 1, s,
@@ -92,7 +97,7 @@ def main():
     junbi()
     env = dict(os.environ, PYTHONIOENCODING="utf-8")
     r = subprocess.run([sys.executable, u"直す.py", u"--画像", u"画像",
-                        u"--数", u"8", u"--おまかせ"],
+                        u"--数", u"10", u"--おまかせ"],
                        cwd=SAGYOU, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, env=env)
     if r.returncode != 0:
@@ -142,13 +147,33 @@ def main():
                 imgs.append(u"%s/%s" % (fol, n))
         kouho = ms.load_kouho(os.path.join(u"その他", u"候補.txt"))
         oma = ms.load_sashikae(os.path.join(u"その他", u"おまかせ.txt"), imgs)
-        # 本人が 002 に 4 と書いたことにする
+        # 本人が「紙に出ている最初の番号」に 4 と書いたことにする。
+        # 番号を決め打ちにすると、紙に載らなくなったときに検査が壊れる。
         sp = os.path.join(u"その他", u"差し替え.txt")
         s2 = io.open(sp, encoding="utf-8-sig").read()
         import re as _re
-        s2 = _re.sub(r"(?m)^002\t.*$", u"002\t4", s2)
+        kami_no = [int(x) for x in _re.findall(r"(?m)^(\d+)\t", s2)]
+        tameshi = kami_no[0] if kami_no else 0
+        s2 = _re.sub(r"(?m)^%03d\t.*$" % tameshi, u"%03d\t4" % tameshi, s2)
         io.open(sp, "w", encoding="utf-8", newline="\r\n").write(s2)
         kae = ms.load_sashikae(sp, imgs)
+        # 本人が書かなかった所（紙に出ているが空のまま）
+        akete = kami_no[1] if len(kami_no) > 1 else 0
+
+        # ⑦⑧⑨ おまかせの中身そのものを調べる
+        import collections
+        kaz = collections.Counter(oma.values())
+        saita = kaz.most_common(1)[0][1] if kaz else 0
+        ban = sorted(oma)
+        tonari = sum(1 for x, y in zip(ban, ban[1:])
+                     if y == x + 1 and oma[x] == oma[y])
+        nokori = 0
+        for rr in rows:
+            no = int(rr[u"no"])
+            if no in oma:
+                continue
+            if N.fuan(rr, tags, tsukai)[0] >= 25:
+                nokori += 1
     finally:
         os.chdir(moto)
 
@@ -164,13 +189,22 @@ def main():
             wa and wa_ok == wa, u"%d / %d件" % (wa_ok, wa))
     shirabe(u"③ 使用不可が候補に出ない", dame == 0, u"%d回" % dame)
     shirabe(u"④ 紙の数字が、その絵に戻る",
-            kae.get(2) == kouho.get((2, 4)) and kouho.get((2, 4)) is not None,
-            u"002→4 が %s" % (kouho.get((2, 4)) or u"引けません"))
+            tameshi and kae.get(tameshi) == kouho.get((tameshi, 4))
+            and kouho.get((tameshi, 4)) is not None,
+            u"%03d→4 が %s" % (tameshi, kouho.get((tameshi, 4)) or u"引けません"))
     shirabe(u"⑤ 本人の指定が、おまかせより上",
-            kae.get(2) is not None and kae.get(2) != oma.get(2),
-            u"本人 %s / おまかせ %s" % (kae.get(2), oma.get(2)))
+            tameshi and kae.get(tameshi) is not None
+            and kae.get(tameshi) != oma.get(tameshi),
+            u"本人 %s / おまかせ %s" % (kae.get(tameshi), oma.get(tameshi)))
     shirabe(u"⑥ 本人が書かない所は、おまかせのまま",
-            8 not in kae and 8 in oma, u"008 は %s" % (oma.get(8) or u"無し"))
+            akete and akete not in kae and akete in oma,
+            u"%03d は %s" % (akete, oma.get(akete) or u"無し"))
+    shirabe(u"⑦ おまかせが同じ絵ばかりにならない",
+            saita <= max(6, len(oma) // 8),
+            u"当てた%d か所 / 絵の種類 %d / いちばん多い絵 %d回"
+            % (len(oma), len(kaz), saita))
+    shirabe(u"⑧ となりに同じ絵を当てない", tonari == 0, u"%d か所" % tonari)
+    shirabe(u"⑨ 重い不安を当て残さない", nokori == 0, u"残り %d枚" % nokori)
 
     print(u"")
     if warui:

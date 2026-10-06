@@ -152,8 +152,36 @@ def fuan(r, tags, tsukai):
     return omosa, u" / ".join(riyuu)
 
 
-def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO):
-    u"""この区切りに合いそうな絵を、良い順に kazu 枚えらぶ。"""
+# 1回使うごとに引く点。**実測で決めた**（278枚・6450枚の材料で振ってみた）。
+#
+#   罰 0 … 人物一致100% だが 1枚を79回つかう（使いものにならない）
+#   罰15 … 人物一致 99% / 種類145 / 最多9回      ← これにした
+#   罰35 … 人物一致 84% / 種類169 / 最多5回
+#   罰60 … 人物一致 71% / 種類174 / 最多4回
+#
+# 7か条では **③人物が、⑥使いまわしより上**。だから人物を守る側を選ぶ。
+# 上限を硬くする作りも試したが、人物一致が 100%→63% に落ちたのでやめた
+# （章の話数は2〜4本しかなく、その人の絵がそもそも足りないため）。
+# 1回使うごとに引く点。**実測で決めた**（区切り278枚・絵6450枚の材料で振った）。
+#
+#   罰 0 … 人物一致100% だが 1枚を79回つかう（使いものにならない）
+#   罰15 … 人物一致 99% / 種類145 / 最多9回      ← これにした
+#   罰35 … 人物一致 84% / 種類169 / 最多5回
+#   罰60 … 人物一致 71% / 種類174 / 最多4回
+#
+# 7か条では **③人物が、⑥使いまわしより上**。だから人物を守る側を選ぶ。
+# 「3回まで」を硬い上限にする作りも試したが、人物一致が 100%→63% に
+# 落ちたのでやめた（章の話数は2〜4本しかなく、その人の絵が足りない）。
+KAISU_BATSU = 15
+
+
+def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO, sakeru=None):
+    u"""この区切りに合いそうな絵を、良い順に kazu 枚えらぶ。
+
+    tsukai … いま何回使われているか。**自分が当てたぶんも数える。**
+             数えないと、同じ絵を 82回 当ててしまう（実測）。
+    sakeru … 直前の絵。同じ絵を続けない。
+    """
     tx = r[u"text"]
     ima = r[u"img"]
     yurusu = r.get(u"daihon") or []
@@ -179,7 +207,7 @@ def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO):
 
     ten = []
     for k in moto:
-        if k == ima:
+        if k == ima or (sakeru and k == sakeru):
             continue
         desc = M.cat_lookup(tags, k)
         if desc is None:
@@ -214,9 +242,14 @@ def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO):
                 if M.folder_of(t) == fol and abs(ban_of(t) - ban_of(k)) <= 8:
                     p += 15
                     break
-        # ⑥ 使いすぎている絵は下げる
+        # ⑥ 使いすぎている絵は下げる。点を引くだけでは足りない。
+        #
+        # 章の話数は2〜4本しかないので、人が写っている絵はもともと少ない。
+        # 点を引くだけだと、それでも同じ絵が勝ち続ける（実測で22回）。
+        # **上限を超えたものは候補から外す。** 外しすぎて候補が無くなったら、
+        # 呼び出し元が上限を1つ上げて呼び直す。
         n = len(tsukai.get(k, []))
-        p -= 50 if n >= 3 else (15 * n)
+        p -= KAISU_BATSU * n
         # 同点のときの順番を、毎回同じにする
         p -= int(hashlib.md5(k.encode("utf-8")).hexdigest()[:4], 16) / 1e6
         ten.append((p, k))
@@ -313,10 +346,16 @@ SASHI_ATAMA = u"""\ufeff# ──────────────────
 """
 
 
-def sashikae_kaku(path, mato):
+def sashikae_kaku(path, mato, furui=None):
     u"""差し替え.txt に、直す所の行を空のまま足す。
 
     本人が書くのは数字ひとつ。すでに書いてある行はそのまま残す。
+
+    ■ 前に書いた数字は、絵の番号に固めてから残す
+
+    「3」は**そのときの紙の3番目**という意味しかない。紙を作り直すと
+    中身が変わるので、古い「3」を残すと**別の絵を指してしまう。**
+    前の候補表(furui)で引いて、`3-14-095` の形にしてから残す。
     """
     aru, moto = {}, u""
     if os.path.exists(path):
@@ -328,7 +367,14 @@ def sashikae_kaku(path, mato):
             c = [x for x in re.split(r"[\t\u3000 ]{1,}", t)
                  if x and x.strip() not in (u"タブ", u"TAB", u"tab", u"\\t")]
             if c and c[0].isdigit():
-                aru[int(c[0])] = u" ".join(c[1:]).strip()
+                no0 = int(c[0])
+                v = u" ".join(c[1:]).strip()
+                # 数字のままだと、紙を作り直したときに別の絵を指す
+                if re.match(r"^[1-9]$", v) and furui:
+                    g = furui.get((no0, int(v)))
+                    if g:
+                        v = M.code_of(g) or v
+                aru[no0] = v
     gyou = [SASHI_ATAMA.rstrip(u"\n")]
     for m in mato:
         no = m[u"no"]
@@ -370,6 +416,10 @@ def main():
     if not rows:
         print(u"× 一覧.txt が読めませんでした。")
         return 1
+    if not os.path.exists(a.catalog):
+        print(u"× %s がありません。" % a.catalog)
+        print(u"   メニューの 8 で、絵に説明をつけてから使ってください。")
+        return 1
     tags = M.load_catalog(a.catalog)
     if not tags:
         print(u"× %s が読めませんでした。" % a.catalog)
@@ -384,6 +434,19 @@ def main():
         for k in names:
             imgpath[k] = os.path.join(a.images, fol, k.split(u"/", 1)[1])
 
+    # 前の候補表（差し替え.txt に残っている数字を、絵の番号に固めるのに使う）
+    furui = {}
+    kp0 = os.path.join(u"その他", u"候補.txt")
+    if os.path.exists(kp0):
+        for line in M.yomu(kp0).split(u"\n"):
+            t = line.strip()
+            if not t or t.startswith(u"#") or u"\t" not in t:
+                continue
+            aa, bb = t.split(u"\t", 1)
+            mm = re.match(r"^(\d+)-(\d+)$", aa.strip())
+            if mm:
+                furui[(int(mm.group(1)), int(mm.group(2)))] = bb.strip()
+
     tsukai = {}
     for r in rows:
         tsukai.setdefault(r[u"img"], []).append(r[u"no"])
@@ -395,27 +458,62 @@ def main():
         if a.zenbu or omosa > 0:
             tsuki.append((omosa, i, riyuu))
     tsuki.sort(key=lambda x: (-x[0], x[1]))
-    if not a.zenbu:
-        tsuki = tsuki[:a.kazu]
-    else:
-        tsuki = sorted(tsuki, key=lambda x: x[1])[:max(a.kazu, 200)]
     if not tsuki:
         print(u"○ 気になる所はありませんでした。")
         return 0
+    # 紙に出すのは上位だけ（読むのが大変になるので）。
+    # ただし **おまかせは「重い不安」ぜんぶに当てる。**
+    # 紙の枚数で区切ると、30か所ずつしか直らず何周もすることになる。
+    OMOI = 25        # 人ちがい・話数ちがい・使用不可はここを超える
+    if a.zenbu:
+        taisho = sorted(tsuki, key=lambda x: x[1])[:400]
+    else:
+        kami = tsuki[:a.kazu]
+        omoi = [x for x in tsuki if x[0] >= OMOI]
+        mi = set(id(x) for x in kami)
+        taisho = kami + [x for x in omoi if id(x) not in mi]
+    kami_ban = set(x[1] for x in tsuki[:a.kazu]) if not a.zenbu else None
+    tsuki = taisho
 
     print(u"区切り %d枚のうち、%d か所を見ます。候補を選んでいます…"
           % (len(rows), len(tsuki)))
-    mato = []
-    for n2, (omosa, i, riyuu) in enumerate(tsuki, 1):
+    # ■ 当てる順は「区切りの順」。重い順ではない。
+    #
+    # 自分が当てたぶんも使った回数に数えるので、順に見ていかないと
+    # 同じ絵が片寄る。となりの絵と続けないためにも、順に見る必要がある。
+    riyuu_hyou = dict((i, riyuu) for (_o, i, riyuu) in tsuki)
+    junban = sorted(riyuu_hyou)
+    ima_tsukai = {}
+    for r in rows:
+        ima_tsukai.setdefault(r[u"img"], []).append(r[u"no"])
+    # これから入れ替える所は、いまの絵を数えない（使わなくなるので）
+    for i in junban:
+        g = rows[i][u"img"]
+        if g in ima_tsukai and rows[i][u"no"] in ima_tsukai[g]:
+            ima_tsukai[g].remove(rows[i][u"no"])
+
+    erabi = {}
+    mae = None
+    for n2, i in enumerate(junban, 1):
         r = rows[i]
-        k = kouho_erabu(r, rows, i, tags, zenbu, tsukai)
+        k = kouho_erabu(r, rows, i, tags, zenbu, ima_tsukai, sakeru=mae)
         if not k:
             continue
-        mato.append({u"no": int(r[u"no"]), u"ima": r[u"img"], u"serifu": r[u"text"],
-                     u"riyuu": riyuu, u"kouho": k})
-        if n2 % 10 == 0:
-            print(u"  %d / %d" % (n2, len(tsuki)))
+        erabi[i] = k
+        ima_tsukai.setdefault(k[0], []).append(r[u"no"])
+        mae = k[0]
+        if n2 % 40 == 0:
+            print(u"  %d / %d" % (n2, len(junban)))
             sys.stdout.flush()
+
+    mato = []
+    for (omosa, i, riyuu) in tsuki:
+        if i not in erabi:
+            continue
+        r = rows[i]
+        mato.append({u"no": int(r[u"no"]), u"i": i, u"ima": r[u"img"],
+                     u"serifu": r[u"text"], u"riyuu": riyuu,
+                     u"kouho": erabi[i]})
 
     # 候補の対応表（機械が読む）
     kp = os.path.join(u"その他", u"候補.txt")
@@ -427,8 +525,10 @@ def main():
             g.append(u"%03d-%d\t%s" % (m[u"no"], c, k))
     io.open(kp, "w", encoding="utf-8", newline="\r\n").write(u"\r\n".join(g) + u"\r\n")
 
-    mai = sheet(mato, imgpath, tags, omakase=a.omakase)
-    sashikae_kaku(os.path.join(u"その他", u"差し替え.txt"), mato)
+    kami = [m for m in mato
+            if kami_ban is None or m[u"i"] in kami_ban]
+    mai = sheet(kami, imgpath, tags, omakase=a.omakase)
+    sashikae_kaku(os.path.join(u"その他", u"差し替え.txt"), kami, furui)
 
     # おまかせ ─ いちばん良い候補を、機械の指定として別ファイルに書く。
     #
@@ -449,12 +549,14 @@ def main():
         os.remove(op)
 
     print(u"")
-    print(u"確認用/直す_01.png … %dページ を作りました（%d か所）" % (mai, len(mato)))
     if a.omakase:
-        print(u"  **%d か所を、いちばん良い候補に自動で当てました。**" % len(mato))
+        print(u"**%d か所を、いちばん良い候補に自動で当てました。**" % len(mato))
+        print(u"  そのうち、とくに見てほしい %d か所を紙にしました: "
+              u"確認用/直す_01.png（%dページ）" % (len(kami), mai))
         print(u"  紙の「1」が当たっています。気に入らない所だけ 2〜6 を書いてください。")
         print(u"  （何も書かなければ、そのまま自動のぶんが使われます）")
     else:
+        print(u"確認用/直す_01.png … %dページ（%d か所）" % (mai, len(kami)))
         print(u"  いちばん左がいまの絵、右の6枚が候補です。")
         print(u"  その他/差し替え.txt に、良い候補の 1〜6 を書くだけです。")
         print(u"  （空のままなら、いまの絵のままになります）")

@@ -307,8 +307,36 @@ else:
         print(r.stdout.decode("utf-8", "replace").rstrip())
         if r.returncode != 0:
             warui.append(u"menu.ps1 の構造に問題があります")
+    # ついでに、本物の PowerShell があれば構文そのものを見る。
+    # 構造の検査だけでは「書き方が壊れている」を見つけられない。
+    pwsh = shutil.which("pwsh") or u"/tmp/claude-0/pwsh/pwsh"
+    if os.path.exists(pwsh) and os.path.exists(out_ps1):
+        cmd = ('$t=$null;$e=$null;'
+               '[void][System.Management.Automation.Language.Parser]::ParseFile('
+               '"%s",[ref]$t,[ref]$e);'
+               'if($e.Count){foreach($x in $e){Write-Output('
+               '"  "+$x.Extent.StartLineNumber+"行目: "+$x.Message)};exit 1}'
+               'Write-Output ("○ PowerShell の構文エラーなし（トークン "+$t.Count+"個）")'
+               ) % out_ps1.replace("\\", "/")
+        r2 = subprocess.run([pwsh, "-NoProfile", "-Command", cmd],
+                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        print(r2.stdout.decode("utf-8", "replace").rstrip())
+        if r2.returncode != 0:
+            warui.append(u"menu.ps1 に PowerShell の構文エラーがあります")
+    else:
+        print(u"… pwsh が無いので、構文そのものの検査はとばします")
     if os.path.exists(out_ps1):
         os.remove(out_ps1)
+
+# ── ⑱ 道具が4か所ぜんぶに入っているか ────────────
+midashi(u"⑱", u"道具が4か所ぜんぶに入っているか")
+# 置き場所・同期・ZIP・Prepare の4つ。片方だけだと黙って消える（3回やった）。
+r = subprocess.run([sys.executable, os.path.join(V, u"パック検査.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"道具がパックの4か所ぜんぶに入っていません")
 
 # ── ⑫ 台本に BOM が付いていないか ───────────────────
 midashi(u"⑫", u"台本の先頭に見えない文字(BOM)が付いていないか")
