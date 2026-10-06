@@ -36,13 +36,41 @@ def kotoba(n):
     return t[:n]
 
 
+# かたまりに付ける「背番号」。
+#
+# ■ なぜ要るか（2026-10-06・ここを直さないと何も測れない）
+#
+# 前は、出来た割り当て表と正解を **本文で突き合わせていた。**
+# ところが作った本文には同じ文字列が出てくるので、
+# 「本文が合わない 4枚」が出たとたんに**そこから先が1つずつ食いちがい**、
+# 2.66秒・2.37秒といった**偽のずれ**が並んだ。
+# それを本物のずれだと思って決め方を直しかけている（2回目）。
+#
+# かたまり1つ1つに重ならない背番号を付けておけば、
+# 突き合わせは一対一で決まり、**出た数字は全部本物**になる。
+# 背番号は **ふつうのカタカナ** で作る。
+# 小さい字や単位記号を使うと、字幕の折り返しや字数の数え方が変わり、
+# **検査したい仕組みそのものが別の動きになってしまう**（361枚に増えた）。
+BANGOU = KANA
+_renban = [0]
+
+
+def seban():
+    u"""0,1,2… を、ふつうのカタカナ3文字に直す（重ならない背番号）。"""
+    n = _renban[0]
+    _renban[0] += 1
+    b = len(BANGOU)
+    return u"".join(BANGOU[(n // b ** k) % b] for k in (2, 1, 0))
+
+
 def bun():
     u"""「、」で2〜3つに割れる文を1つ作る。かたまりの並びで返す。"""
     k = random.choice([2, 2, 3, 3, 4])
     out = []
     for i in range(k):
         n = random.choice([5, 7, 9, 11, 14, 17, 20])
-        out.append(kotoba(n) + (u"。" if i == k - 1 else u"、"))
+        # 背番号を頭に付ける。これでかたまりの本文が重ならない。
+        out.append(seban() + kotoba(n) + (u"。" if i == k - 1 else u"、"))
     return out
 
 
@@ -167,9 +195,23 @@ def main():
     io.open(u"台本_読み上げ用.txt", "w", encoding="utf-8").write(
         u"\n".join(u"".join(bs) for bs in dan) + u"\n")
 
+    # 「文の頭」も覚えておく。
+    # ずれたとき、**どの仕組みのせいか**を名指しできるようにするため。
+    #   段落の頭   → kugiri_awase（1行ずつの音声の境目）
+    #   文の頭     → place_in_chunk（かたまりの中の文の切れ目）
+    #   それ以外   → koma_awase / split_by_kuten（「、」の切れ目）
+    bun_atama, n2 = [], 0
+    for bs in dan:
+        atarashii = True
+        for t in bs:
+            if atarashii:
+                bun_atama.append(n2)
+            atarashii = t.strip().endswith((u"。", u"！", u"？"))
+            n2 += 1
     io.open(u"正解.json", "w", encoding="utf-8").write(
         json.dumps({u"bun": bunretsu, u"seikai": seikai,
                     u"atama": [sum(len(x) for x in dan[:i]) for i in range(len(dan))],
+                    u"bun_atama": bun_atama,
                     u"moto": moto_kei, u"merged": len(merged) / float(SR)},
                    ensure_ascii=False))
     print(u"文 %d個 / 1行ずつの音声 %d個" % (len(bunretsu), PARTS))

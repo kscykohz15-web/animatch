@@ -1268,7 +1268,31 @@ def jikan_awase(a0, b0, moji, cands, omomi=0.6):
     return out
 
 
-def nagasa_awase(exp, cands, omomi=15.0):
+# ■ 数字はぜんぶ実測で決めた（2026-10-06・乱数6〜8通り × 区切り330枚）
+#
+#   直す前                        最大 8.66秒 / 平均 0.37 / 0.3秒超 7%
+#   place_in_chunk を直して       最大 1.88秒 / 平均 0.16 / 0.3秒超 2%
+#   「、」の切れ目に罰を入れて     最大 1.68秒 / 平均 0.16 / 0.3秒超 2%
+#   文の tol を 2.4 にして        最大 1.57秒 / 平均 0.16 / 0.3秒超 2%
+#
+# ここまでの数字は、**測り方を直してから**出したもの。
+# それまでの測り方は、同じ本文のかたまりを取りちがえて
+# 7秒といった偽のずれを出していた（かたまりに背番号を付けて直した）。
+NAGASA_OMOMI = [15.0]      # 間の長さをどれだけ重く見るか
+TEN_NAGASA = [0.22]        # 「、」の息継ぎの長さの目安
+TEN_BATSU = [20.0]         # それより長い間に付く罰（実測で決めた）
+# 錨を「段落の境目だけ」にするか。**実測で False にした**（2026-10-06）。
+#
+#   錨=全部（文の切れ目も固定）… 最大 1.68 / 0.3秒超 2%
+#   錨=段落だけ（文も動かす）  … 最大 1.61 / 0.3秒超 8%
+#
+# place_in_chunk を直したあとは、その答えは十分よい。
+# 固定したほうが、そのあとの「、」の割り直しが安定する。
+# （直す前は、ここが外れると誰も直せず、段落まるごとずれていた）
+IKARI_DANRAKU = [False]
+
+
+def nagasa_awase(exp, cands, omomi=None, kuten=None):
     u"""切れ目を「間」に割り当てる。距離だけでなく**間の長さ**も見る。
 
     cands は (時刻, 間の長さ) の並び。順番は保つ。
@@ -1287,9 +1311,30 @@ def nagasa_awase(exp, cands, omomi=15.0):
         return None
     INF = float("inf")
 
+    om = NAGASA_OMOMI[0] if omomi is None else omomi
+
+    # ■ 「。」の切れ目と「、」の切れ目を、同じ目で見てはいけない（2026-10-06）
+    #
+    # 「。」のあとの間は長く、「、」の息継ぎは短い（実測 0.1〜0.35秒）。
+    # なのに「長い間ほど切れ目らしい」を**どの切れ目にも同じようにかけていた**ので、
+    # 「、」の切れ目が、となりの「。」の長い間に吸い寄せられた。
+    # そこが錨として固定されると、その段落がまるごとずれる。
+    #
+    # kuten[j] が True なら「。」の切れ目。長い間を好む。
+    # False なら「、」の切れ目。長すぎる間はむしろ避ける。
+    ten_ue = TEN_NAGASA[0]       # 「、」の息継ぎの上限の目安
+    ten_batsu = TEN_BATSU[0]     # それより長い間に付く罰
+
     def hiyou(j, i):
         t, L = cands[i]
-        return abs(t - exp[j]) - omomi * min(L, 0.5)
+        d = abs(t - exp[j])
+        if kuten and j < len(kuten) and not kuten[j]:
+            # 「、」の切れ目。長すぎる間は、となりの「。」の間かもしれない
+            return d - om * min(L, ten_ue) + ten_batsu * max(0.0, L - ten_ue)
+        # 「。」の切れ目。長い間ほど切れ目らしい。
+        # （「短すぎる間に罰を付ける」も試したが、実測で何も変わらなかった。
+        #   下限 0.4 にすると かえって悪化したので、入れていない）
+        return d - om * min(L, 0.5)
 
     prev = [hiyou(0, i) for i in range(m)]
     back = [[0] * m for _ in range(n)]
@@ -1309,6 +1354,221 @@ def nagasa_awase(exp, cands, omomi=15.0):
     for j in range(n - 1, -1, -1):
         out[j] = cands[i][0]
         i = back[j][i]
+    return out
+
+
+NOISE_DB = [-35]           # 無音と見なす音量（本体の --noise-db に合わせる）
+
+# 1行ずつの音声で実測する仕組みを使うか。検査から False にして、
+# **使えなかったときの道（文字数で割る）も必ず測る。**
+#
+# 本物の読み上げが「、」で必ず息を継ぐとはかぎらない。
+# 数が合わなければ文字数で割る道に落ちるので、そちらも検査しないと、
+# 本人の画面でだけずれる、がまた起きる。
+JISSOKU_TSUKAU = [True]
+
+
+def kugiri_moji(tx):
+    u"""その文が「、」「。」でいくつの切れはしに割れるか（数えるだけ）。"""
+    return kugiri(tx, 0)
+
+
+def wav_no_koe(path, saitan=0.095):
+    u"""1行ぶんの音声の中で、声が出ている区間を順に返す。
+
+    ■ なぜ merged.wav ではなく、1行ずつの音声を見るのか（2026-10-06）
+
+    merged.wav はつなぐときに前後の無音を削っているので、
+    どこがどれだけ削られたかが分からない。
+    1行ずつの音声は**削る前のそのまま**なので、
+    その中の「間」は、台本の「、」「。」とそのまま対応する。
+
+    ここで測った**本当の長さ**を使えば、
+    「読む速さはどこでも同じ」という当てずっぽうを捨てられる。
+    """
+    try:
+        sils = detect_silences(path, NOISE_DB[0], 0.05)
+    except Exception:
+        return []
+    zen = audio_duration(path) or 0.0
+    if zen <= 0:
+        return []
+    nagai = [(x, y) for (x, y) in sils if (y - x) >= saitan]
+    out, t = [], 0.0
+    for (x, y) in nagai:
+        if x > t + 0.02:
+            out.append((t, x))
+        t = max(t, y)
+    if zen > t + 0.02:
+        out.append((t, zen))
+    return out
+
+
+def jissoku_wariai(path, kazu, saitan=0.095):
+    u"""1行ぶんの音声から、切れはし kazu 個それぞれの「本当の長さの割合」を返す。
+
+    声の区間の数が kazu と合ったときだけ答える。合わなければ None。
+    （合わないのは、「、」で息を継がなかった所があるとき。
+      そのときは今までどおり文字数で割る）
+
+    ■ 「数が合えば位置を見ずに確定」の二の舞にしないために
+
+    ここで返すのは**割合だけ**で、位置は決めない。
+    位置は、このあと merged.wav の本物の間へ寄せるときに決まる。
+    数が合ったことを、位置の証拠には使わない。
+    """
+    if not JISSOKU_TSUKAU[0]:
+        return None
+    koe = wav_no_koe(path, saitan)
+    if len(koe) != kazu or kazu <= 0:
+        return None
+    # 切れはし q の長さ = 声の長さ + そのうしろの間（次の声までの空き）
+    nagasa = []
+    for i, (a2, b2) in enumerate(koe):
+        tsugi = koe[i + 1][0] if i + 1 < len(koe) else b2
+        nagasa.append(max(0.01, tsugi - a2))
+    kei = float(sum(nagasa))
+    return [x / kei for x in nagasa]
+
+
+def koe_no_jiku(a0, b0, sils):
+    u"""a0〜b0 を「声が出ている時間」の物差しに直す道具を作る。
+
+    ■ なぜ要るか（2026-10-06・残っていたずれの正体）
+
+    切れ目の見当は「文字数の比」で置いていた。
+    これは **読む速さも、間の長さも、どこでも同じ** という前提だが、
+    実際には「、」の息継ぎは 0.1〜0.35秒、「。」のあとは 0.3〜0.85秒ある。
+    長い段落では、この間の積み重ねだけで 1.5〜2秒 ずれる。
+    そこへ「近くの長い間に寄せる」をかけるので、
+    **1つ隣の間に吸い寄せられて、その段落がまるごとずれた。**
+
+    間を除いた「声の長さ」で測れば、間の長短に振り回されない。
+
+    戻り値 (koe, modosu)
+        koe(t)    … a0 から t までに、声が出ていた秒数
+        modosu(x) … 声が x 秒ぶん出たところの、本当の時刻
+    """
+    naka = [(max(a0, x), min(b0, y)) for (x, y) in (sils or [])
+            if y > a0 and x < b0 and y > x]
+    naka.sort()
+    # 累積: 区間の始まりごとに「そこまでの声の長さ」
+    tsugi, kei, hyou = a0, 0.0, []
+    for (x, y) in naka:
+        if x > tsugi:
+            hyou.append((tsugi, x, kei))
+            kei += x - tsugi
+        tsugi = max(tsugi, y)
+    if tsugi < b0:
+        hyou.append((tsugi, b0, kei))
+        kei += b0 - tsugi
+    if kei <= 0:
+        # 声がまったく無い（ありえないが、0で割らない）
+        return (lambda t: t - a0), (lambda x: a0 + x), max(1e-6, b0 - a0)
+
+    def koe(t):
+        if t <= a0:
+            return 0.0
+        for (x, y, c) in hyou:
+            if t < x:
+                return c
+            if t <= y:
+                return c + (t - x)
+        return kei
+
+    def modosu(v):
+        v = min(max(v, 0.0), kei)
+        for (x, y, c) in hyou:
+            if v <= c + (y - x):
+                return x + (v - c)
+        return b0
+
+    return koe, modosu, kei
+
+
+def mitsumori(a0, b0, moji, sils):
+    u"""切れはしの文字数から、切れ目の見当をつける。
+
+    **「声が出ている時間」で割る。** 間の長さに振り回されないため。
+    声が見つからないときだけ、前までどおり時間そのもので割る。
+    """
+    kei_moji = float(sum(max(1, m) for m in moji)) or 1.0
+    _koe, modosu, kei = koe_no_jiku(a0, b0, sils)
+    out, cum = [], 0.0
+    for m in moji[:-1]:
+        cum += max(1, m)
+        out.append(modosu(kei * (cum / kei_moji)))
+    return out
+
+
+def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
+    u"""文字数で割った切れ目(exp)を、本物の「間」(naka)へ寄せる。
+
+    naka … (時刻, 間の長さ) の並び。時刻の順。
+    moji … a0〜b0 の間にある切れはしの文字数（len(exp)+1 個）
+    tol  … これ以上遠い寄せは採らない
+
+    ■ ここを1つにまとめた理由（2026-10-06）
+
+    同じ仕事を2か所でやっていて、**片方だけが間違っていた。**
+
+      koma_awase    … 遠すぎる寄せを tol で捨て、残りを割り直す（正しい）
+      place_in_chunk… 「ちょうど要る数だけ無音があれば、位置を見ずに確定」
+                       という別の決め方（**これが本人のずれの原因**）
+
+    実測した例（作った材料・段落24）
+        本当の文の切れ目        418.45 / 427.90
+        文字数で割った目安      418.07 / 426.88  ← もともと十分近い
+        「ちょうど2個」で確定   415.14 / 418.33  ← **9.6秒 早い**
+
+    「数が合うこと」は、位置が合っている証拠にならない。
+    0.32秒以上の間がたまたま2つあっただけで、1つは「、」の息継ぎだった。
+    そして、ここで決まった切れ目は**錨として固定される**ので、
+    あとの koma_awase では直せない。だから段落まるごとずれ、
+    次の段落の頭で戻る ─ 本人の「その区間だけずれる」はこれ。
+    """
+    if not exp:
+        return []
+    kimari = {}
+    if len(naka) >= len(exp):
+        atta = nagasa_awase(exp, naka, kuten=kuten)
+        if atta:
+            # ① 遠すぎない寄せだけ採る。
+            #
+            # **正直に書いておく: この線は、いまの検査では一度も働いていない。**
+            # 作った材料で数えたところ、弾いた回数は 0。
+            # tol を外しても数字は変わらなかった（壊して確かめた）。
+            # それでも残してあるのは、これが「調整した値」ではなく
+            # **歯止め**だから。1つの切れ目が何秒も飛ぶのは、
+            # どんな理由があっても作りの誤りで、そのまま通してはいけない。
+            # （「ちょうど k-1個なら確定」も、壊れるまでは安全に見えていた）
+            for t, (mae, ato) in enumerate(zip(exp, atta)):
+                if abs(ato - mae) <= tol:
+                    kimari[t] = ato
+    # ② 寄せられなかった切れ目は、**寄せた所から割り直す。**
+    #
+    # もとの見積もりは、まるごとを文字数で割ったもの。
+    # 途中が実際の「間」に寄ったのに、残りを古い見積もりのまま置くと、
+    # そこだけ取り残されて 1秒以上ずれる（実測）。
+    teiten = [(-1, a0)] + sorted(kimari.items()) + [(len(exp), b0)]
+    for p2 in range(len(teiten) - 1):
+        (ia, ta), (ib, tb) = teiten[p2], teiten[p2 + 1]
+        if ib - ia < 2:
+            continue
+        # 切れはし ia+1 番目から ib 番目まで（moji の添字は切れはしの番号）
+        w = [max(1, moji[q]) for q in range(ia + 1, ib + 1)]
+        kei = float(sum(w))
+        t3 = ta
+        for q in range(ia + 1, ib):
+            t3 += (tb - ta) * w[q - ia - 1] / kei
+            kimari[q] = t3
+    # 念のため順番を守る
+    out, mae2 = [], a0
+    for t in range(len(exp)):
+        v = max(kimari.get(t, exp[t]), mae2 + 0.12)
+        v = min(v, b0 - 0.12 * (len(exp) - t))
+        out.append(v)
+        mae2 = v
     return out
 
 
@@ -1385,41 +1645,26 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
         # i と j は動かさない。その間の (j-i-1) 個を寄せる
         a0, b0 = kugiri[i], kugiri[j]
         naka = [(t, L) for (t, L) in ma if a0 + 0.25 < t < b0 - 0.25]
-        exp = kugiri[i + 1:j]
+        # 見当は「声が出ている時間」で割り直す。
+        # ここに来る kugiri[i+1:j] は文字数で割ったままの値なので、
+        # 長い段落では間の積み重ねぶん（1.5〜2秒）ずれている。
+        moji0 = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
+        exp = mitsumori(a0, b0, moji0, sils)
         # 言葉の途中の途切れ(0.03〜0.12秒)まで候補に入れると、そちらへ
         # 吸い寄せられてかえって悪くなる。**長い間ほど切れ目らしい**ので、
         # 要る数の何倍かだけ、長いものから残してから位置で並べ直す。
-        if len(naka) >= len(exp):
-            atta = nagasa_awase(exp, naka)
-            if atta:
-                # ① 遠すぎない寄せだけ採る。遠い寄せはかえって悪くなる
-                kimari = {}
-                for t2, (mae, ato) in enumerate(zip(exp, atta)):
-                    if abs(ato - mae) <= tol:
-                        kimari[t2] = ato
-                        if abs(ato - mae) > 0.05:
-                            ugokashi += 1
-                            ichiban = max(ichiban, abs(ato - mae))
-                # ② 寄せられなかった切れ目は、**寄せた所から割り直す。**
-                #
-                # もとの見積もりは、かたまり全体を文字数で割ったもの。
-                # 途中が実際の「間」に寄ったのに、残りを古い見積もりのまま
-                # 置くと、そこだけ取り残されて 1秒以上ずれる（実測）。
-                # 錨のときと同じで、**合わせるたびに測り直す**。
-                teiten = [(-1, a0)] + sorted(kimari.items()) + [(len(exp), b0)]
-                for p2 in range(len(teiten) - 1):
-                    (ia, ta), (ib, tb) = teiten[p2], teiten[p2 + 1]
-                    if ib - ia < 2:
-                        continue
-                    moji = [max(1, len(slots[i + 1 + q][2]))
-                            for q in range(ia + 1, ib + 1)]
-                    kei = float(sum(moji))
-                    t3 = ta
-                    for q in range(ia + 1, ib):
-                        t3 += (tb - ta) * moji[q - ia - 1] / kei
-                        kimari[q] = t3
-                for q, t3 in kimari.items():
-                    kugiri[i + 1 + q] = t3
+        # 切れはしの文字数。**添字は i から**。
+        # 前は slots[i+1+q] を見ていて、1つうしろの字幕の文字数で
+        # 割っていた（切れ目 kugiri[i+1+q] の手前の切れはしは slots[i+q]）。
+        moji = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
+        # その切れ目の手前の字幕が「。」で終わっていれば、文の切れ目
+        kuten = [owari_bun(slots[i + q][2]) for q in range(0, j - i - 1)]
+        kimari = ma_ni_yoseru(exp, naka, a0, b0, moji, tol=tol, kuten=kuten)
+        for q, t3 in enumerate(kimari):
+            if abs(t3 - exp[q]) > 0.05:
+                ugokashi += 1
+                ichiban = max(ichiban, abs(t3 - exp[q]))
+            kugiri[i + 1 + q] = t3
         i = j
     # 順番が入れ替わらないようにだけ見る
     for t in range(1, n):
@@ -1431,40 +1676,51 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
     return out, ugokashi, ichiban
 
 
-def place_in_chunk(sents_idx, sents, a0, b0, sils):
-    """かたまりの中で、文の切れ目を実際の「間」に置く。"""
+def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=0.12,
+                   wariai=None):
+    u"""かたまりの中で、文の切れ目を実際の「間」に置く。
+
+    ■ 「ちょうど k-1 個あったら確定」をやめた（2026-10-06・本人のずれの原因）
+
+    前は、この中の無音を長さで絞っていって **ちょうど k-1 個** になったら、
+    位置をまったく見ずにそれを文の切れ目と決めていた（「推測ゼロ」と称して）。
+
+    作った材料で実測した例（段落24・9かたまり）
+        本当の文の切れ目        418.45 / 427.90
+        文字数で割った目安      418.07 / 426.88  ← もともと十分近い
+        「ちょうど2個」で確定   415.14 / 418.33  ← **9.6秒 早い**
+
+    0.32秒以上の間がたまたま2つあっただけで、1つは「、」の息継ぎだった。
+    **数が合うことは、位置が合っている証拠にならない。**
+    しかもここで決まった切れ目は錨として固定されるので、あとで直せない。
+    その段落だけ字幕・絵・声がずれ、次の段落の頭で戻る。
+    本人が何度も言っていた「その区間だけずれる」はこれ。
+
+    いまは koma_awase と**同じ道具**（ma_ni_yoseru）で寄せる。
+    遠すぎる寄せは採らず、寄せられなかった所は寄せた所から割り直す。
+    """
     k = len(sents_idx)
     if k == 1:
         return [(a0, b0)]
     ws = [max(1, len(sents[j])) for j in sents_idx]
-    tw = float(sum(ws))
-    cum, exp = 0.0, []
-    for j in range(k - 1):
-        cum += ws[j]
-        exp.append(a0 + (b0 - a0) * (cum / tw))
-    # かたまりの末尾にある無音(=次のかたまりとの境目)は候補に入れない
-    inside = [(x, y) for (x, y) in sils
-              if x > a0 + 0.05 and y < b0 - 0.05]
-    got = None
-    # このかたまりの中で「ちょうど k-1 個」になる無音の長さを探す。
-    # 見つかれば、文の切れ目はそこで確定する(推測ゼロ)。
-    best_exact = None
-    for L in (0.60, 0.50, 0.45, 0.40, 0.36, 0.32, 0.28, 0.25, 0.22, 0.20, 0.18, 0.15, 0.12):
-        cand = [c for c in inside if (c[1] - c[0]) >= L]
-        if len(cand) == k - 1:
-            best_exact = [max(c[0] + 0.02, c[1] - LEAD) for c in cand]
-            break
-    if best_exact:
-        got = best_exact
+    if wariai and len(wariai) == k:
+        # **1行ずつの音声で実際に測った長さ**の割合が渡ってきた。
+        # 文字数で割る当てずっぽうより、こちらがずっと確か。
+        exp, cum = [], 0.0
+        for q in range(k - 1):
+            cum += wariai[q]
+            exp.append(a0 + (b0 - a0) * cum)
     else:
-        # 長い無音ほど文の切れ目らしいので、そちらを優先して割り当てる
-        longs = sorted(inside, key=lambda c: -(c[1] - c[0]))[:max(k * 3, 8)]
-        longs = sorted(longs, key=lambda c: c[0])
-        cands = [max(c[0] + 0.02, c[1] - LEAD) for c in longs]
-        if len(cands) >= k - 1:
-            got, _ = align_boundaries(exp, cands)
-    if not got:
-        got = exp
+        # 見当は「声が出ている時間」で割る（間の長さに振り回されないため）
+        exp = mitsumori(a0, b0, ws, sils)
+    # かたまりの末尾にある無音(=次のかたまりとの境目)は候補に入れない。
+    # 「間の終わりの少し手前」＝次の声が出る直前に置く。
+    naka = [(max(x + 0.02, y - LEAD), y - x) for (x, y) in (sils or [])
+            if (y - x) >= saitan and x > a0 + 0.05 and y < b0 - 0.05]
+    naka.sort()
+    # 文の切れ目なので、ぜんぶ「。」の切れ目
+    got = ma_ni_yoseru(exp, naka, a0, b0, ws, tol=tol,
+                       kuten=[True] * len(exp))
     bounds = [a0] + list(got) + [b0]
     for t in range(1, len(bounds)):
         if bounds[t] <= bounds[t - 1]:
@@ -1574,6 +1830,11 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
     return out
 
 
+# 1行ずつの音声から分かった「段落の境目」。**ここだけが実測。**
+# その中の文の切れ目は見当なので、錨にしてはいけない（2026-10-06）。
+JIKKOKU_KUGIRI = []
+
+
 def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict=False):
     """★ 1行ずつの音声の長さ + subtitle.srt の本文 から、正確な時刻表を作る。
 
@@ -1641,13 +1902,46 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict
         head += u" / 境目を無音に合わせ直しました(最大 %.2f秒ぶん)" % zure
 
     out = [None] * len(sents)
+    jissoku = 0
     for gi, took in enumerate(groups):
         a0, b0 = kugiri[gi], kugiri[gi + 1]
-        for (idx, (s2, e2)) in zip(took, place_in_chunk(took, sents, a0, b0, sils)):
+        # ■ その段落の 1行ぶんの音声から、文の長さを**実際に測る**
+        #
+        # 文字数で割る当てずっぽうは、読む速さのばらつき（±25%）ぶん外れる。
+        # 長い段落では 1.5〜2秒になり、そこへ「近くの間に寄せる」をかけるので
+        # 1つ隣の間に吸い寄せられ、その段落がまるごとずれていた。
+        #
+        # 1行ずつの音声は削られていないので、その中の「間」は
+        # 台本の「、」「。」とそのまま対応する。数が合ったときだけ使い、
+        # 合わなければ今までどおり文字数で割る。
+        wariai = None
+        try:
+            koma = []
+            for j in took:
+                koma.append(len(kugiri_moji(sents[j])))
+            hoshii = sum(koma)
+            w2 = jissoku_wariai(os.path.join(folder, names[gi]), hoshii)
+            if w2:
+                wariai, t2 = [], 0
+                for n2 in koma:
+                    wariai.append(sum(w2[t2:t2 + n2]))
+                    t2 += n2
+                jissoku += 1
+        except Exception:
+            wariai = None
+        for (idx, (s2, e2)) in zip(took, place_in_chunk(took, sents, a0, b0, sils,
+                                                        wariai=wariai)):
             out[idx] = (max(0.0, s2 - LEAD), e2, sents[idx])
     for j in range(len(out)):
         if out[j] is None:
             return None, u"割り当てに穴があります"
+    # ■ 本当に実測から来た切れ目は、**段落の境目(kugiri)だけ**。
+    #   その中の文の切れ目は place_in_chunk の見当であって、実測ではない。
+    #   ここを呼び出し元に渡して、錨にするのは kugiri だけにする。
+    JIKKOKU_KUGIRI[:] = [max(0.0, t - LEAD) for t in kugiri]
+    if jissoku:
+        head += (u" / %d/%d の段落は、1行ずつの音声で文の長さを実測しました"
+                 % (jissoku, len(groups)))
     return out, head + (u" → 推測なしで対応しました。" if not loose else loose)
 
 
@@ -4910,11 +5204,27 @@ def main():
                 say(u"字幕の終わり %s と音声の長さ %s が違ったので、%.3f倍に直しました。"
                     % (mmss(srt_end), mmss(total), k))
                 say(u"  (これをしないと、後半ほど発話と字幕がズレます)")
-        # ここまでの切れ目は「実測から来たもの」。これを錨にして、
-        # このあと文字数で割って増える切れ目だけを、あとで間に寄せ直す。
+        # ■ 錨にしてよいのは「本当に実測から来た切れ目」だけ（2026-10-06）
+        #
+        # 前は cues の切れ目を**全部**錨にしていた。
+        # けれど cues には、1行ずつの音声から分かった段落の境目（実測）と、
+        # その中で place_in_chunk が見当で置いた文の切れ目が混ざっている。
+        # 見当のほうまで動かさないことにしていたので、
+        # **そこで1.6秒ずれると、もう誰も直せなかった。**
+        # しかもその段落の中の「、」は、ずれた切れ目を端にして割られるので、
+        # 段落まるごとずれ、次の段落の頭で戻る ─ 本人の「その区間だけずれる」。
+        #
+        # いまは段落の境目だけを錨にし、文の切れ目も「、」と一緒に
+        # koma_awase でまとめて本物の間へ寄せ直す。
         ikari = []
         if cues:
-            ikari = sorted(set([c[0] for c in cues] + [cues[-1][1]]))
+            if JIKKOKU_KUGIRI and IKARI_DANRAKU[0]:
+                ikari = sorted(set(JIKKOKU_KUGIRI))
+                say(u"錨は、1行ずつの音声から分かった段落の境目 %d か所だけにします"
+                    u"（その中の文の切れ目は見当なので、あとで間に寄せ直します）"
+                    % len(ikari))
+            else:
+                ikari = sorted(set([c[0] for c in cues] + [cues[-1][1]]))
         if cues:
             raw = len(cues)
             cues = refine_cues(cues, a.sec * 1.7, 30)

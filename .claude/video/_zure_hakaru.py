@@ -24,27 +24,45 @@ for line in io.open(u"その他/画像割り当て.tsv", encoding="utf-8-sig").r
 # 7秒といった偽のずれが出ていた（328個中 9個が重複）。
 # それに合わせて決め方を直しかけた。測り方の誤りを直すのが先。
 # いまは「前に当てた所から少し先」だけを見る。
-tsukatta, zure, mitsukaranai = set(), [], 0
-ichi = 0
+# ■ 突き合わせは「背番号」で一対一にする（2026-10-06）
+#
+# 前は本文で引いていた。同じ文字列が出ると別の場所に当たり、
+# 「本文が合わない」が1枚出たとたん**そこから先が1つずつ食いちがって**、
+# 2.66秒・2.37秒といった**偽のずれ**が並んだ。
+# それを本物のずれだと思って決め方を直しかけた（2回目）。
+#
+# いまは材料のほうが、かたまり1つ1つに重ならない背番号を付けている。
+# 一対一で決まるので、**出た数字は全部本物**。
+# 一対一にならなかったら、ずれではなく **検査の失敗** として落とす。
+if len(hyou) != len(bun):
+    print(u"× 材料のかたまりに重なりがあります（%d個中 ちがう本文は %d個）。"
+          u"背番号が効いていません。" % (len(bun), len(hyou)))
+    sys.exit(1)
+
+zure, mitsukaranai = [], 0
 for (st, du, tx) in rows:
     k = tx.strip()
-    cand = [i for i in hyou.get(k, [])
-            if i not in tsukatta and ichi - 2 <= i <= ichi + 6]
-    if not cand:
-        cand = [i for i in hyou.get(k, []) if i not in tsukatta and i >= ichi]
-    if not cand:
+    hits = hyou.get(k, [])
+    if len(hits) != 1:
         mitsukaranai += 1
         continue
-    i = min(cand)
-    tsukatta.add(i)
-    ichi = i + 1
+    i = hits[0]
     honto = seikai[i][0]
     zure.append((abs(st - honto), st, honto, k, i))
 
-# 段落の境目（錨）と、その中の切れ目を分けて見る
+# ■ ずれを「どの仕組みのせいか」で分ける（2026-10-06）
+#
+#   段落の頭 → kugiri_awase（1行ずつの音声の境目。ここは実測なので合う）
+#   文の頭   → place_in_chunk（かたまりの中の文の切れ目）
+#   それ以外 → koma_awase（「、」の切れ目）
+#
+# どこが悪いか分からないまま数字だけ見て、関係ない所を触るのを防ぐ。
 atama = set(sei.get(u"atama", []))
+bun_atama = set(sei.get(u"bun_atama", [])) - atama
 anc = [z for z in zure if z[4] in atama]
 naka = [z for z in zure if z[4] not in atama]
+bun_s = [z for z in zure if z[4] in bun_atama]
+ten_s = [z for z in zure if z[4] not in atama and z[4] not in bun_atama]
 
 zure.sort(reverse=True)
 n = len(zure)
@@ -58,6 +76,7 @@ if u"--json" in sys.argv:
                 round(100.0 * sum(1 for x in v if x[0] > 0.30) / len(v), 0)]
     print(json.dumps({u"kazu": len(rows), u"ookii": round(zure[0][0], 3) if zure else 0.0,
                       u"anc": matome(anc), u"naka": matome(naka),
+                      u"bun": matome(bun_s), u"ten": matome(ten_s),
                       u"heikin": round(sum(z[0] for z in zure) / max(1, n), 3),
                       u"wariai": round(100.0 * len(ookii) / max(1, n), 1),
                       u"waru": [[round(z[0], 2), round(z[1], 2), round(z[2], 2), z[3]]
@@ -72,6 +91,18 @@ print(u"いちばん大きいずれ : %.2f秒" % zure[0][0])
 print(u"平均のずれ         : %.2f秒" % heikin)
 print(u"0.30秒を超えたもの : %d枚 (%.0f%%)" % (len(ookii), 100.0 * len(ookii) / n))
 print(u"0.50秒を超えたもの : %d枚" % sum(1 for z in zure if z[0] > 0.50))
+print(u"")
+print(u"")
+print(u"── どの仕組みのせいか ──")
+def shu(na, v):
+    if not v:
+        print(u"  %-28s なし" % na); return
+    print(u"  %-28s %3d枚 / 最大 %.2f / 平均 %.2f / 0.3超 %d枚"
+          % (na, len(v), max(x[0] for x in v), sum(x[0] for x in v) / len(v),
+             sum(1 for x in v if x[0] > 0.30)))
+shu(u"段落の頭 (kugiri_awase)", anc)
+shu(u"文の頭   (place_in_chunk)", bun_s)
+shu(u"「、」   (koma_awase)", ten_s)
 print(u"")
 print(u"── ずれの大きい順 ──")
 for (d, st, honto, k, i) in zure[:8]:

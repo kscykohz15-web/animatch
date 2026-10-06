@@ -38,17 +38,39 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SAGYOU = os.path.join(HERE, u"_ずれ検査")
-# ■ 合格の線は「平均」と「割合」で見る。最大では見ない。
+# ■ 合格の線（2026-10-06 に引き直した）
 #
-# 作った材料は本物そのものではない（本人のPCの外部ツールが作る
-# merged.wav は、こちらに無い）。1枚だけ大きく外れることはあり、
-# そこを追いかけると、材料のクセに合わせこんでしまう。
-# **平均と割合は材料のクセに強い。** そこで線を引く。
+# **前はここで「最大」を見ていなかった。** 「材料のクセだから」という理屈で
+# 平均と割合だけにしていた。その結果、
 #
-# 本当の数字は、本人の動画そのもので測る（ずれ実測.py）。
-GOUKAKU_HEIKIN = 0.45
-GOUKAKU_WARIAI = 12.0
-GOUKAKU_ANC = 0.30
+#     ○ 乱数 2  いちばん大きいずれ 7.25秒 ... 平均 0.35秒 / 0.30秒超 8%
+#
+# と、**7.25秒ずれていても ○ を出していた。**
+# 本人は「まだずれています」と4回言っていて、そのたびに
+# この検査は通っていた。検査が通るように線を動かしていたのが実際。
+#
+# いまは最大も見る。1か所でも大きくずれていれば、本人の画面では必ず分かる。
+#
+# （7.25秒の中身は、測り方の誤り＋本物の誤りが混ざっていた。
+#   かたまりに重ならない背番号を付けて、測り方を一対一にしてから
+#   place_in_chunk の「ちょうど k-1個あったら位置を見ずに確定」を直した。）
+GOUKAKU_OOKII = 0.70     # いちばん大きいずれ
+GOUKAKU_HEIKIN = 0.25    # 平均
+GOUKAKU_WARIAI = 5.0     # 0.30秒を超えたものの割合(%)
+GOUKAKU_ANC = 0.30       # 段落の境目(錨)の平均
+
+# ■ 「実測が使えなかったとき」の道も必ず測る（2026-10-06）
+#
+# 文の長さは、1行ずつの音声の中の「間」を数えて実測している。
+# けれど本物の読み上げが「、」で必ず息を継ぐとはかぎらない。
+# 数が合わなければ、今までどおり文字数で割る道に落ちる。
+# **そちらを測っていなければ、本人の画面でだけずれる、がまた起きる。**
+#
+# この道は当てずっぽうが残るので、線はゆるめ。それでも
+# 直す前（最大 8.66秒）に戻ったら必ず落ちる。
+YOBI_OOKII = 1.80
+YOBI_HEIKIN = 0.30
+YOBI_WARIAI = 8.0
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -74,6 +96,18 @@ def junbi():
         Image.new("RGB", (640, 360), (20 + i * 15, 60, 120)) \
             .save(os.path.join(ex, u"%03d_t.png" % i))
     return SAGYOU
+
+
+def jissoku_kirikae(tsukau):
+    u"""実測の仕組みを使う/使わないを切りかえる。"""
+    q = os.path.join(SAGYOU, u"make_slideshow.py")
+    s = io.open(q, encoding="utf-8").read()
+    for a, b in ((u"JISSOKU_TSUKAU = [True]", u"JISSOKU_TSUKAU = [%r]" % bool(tsukau)),
+                 (u"JISSOKU_TSUKAU = [False]", u"JISSOKU_TSUKAU = [%r]" % bool(tsukau))):
+        if a in s:
+            s = s.replace(a, b, 1)
+            break
+    io.open(q, "w", encoding="utf-8", newline="\n").write(s)
 
 
 def hitotsu(tane):
@@ -112,14 +146,36 @@ def main():
     if junbi() is None:
         return 1
     warui = []
-    for tane in range(1, a.kai + 1):
+    for (tsukau, nm, oo, he, wa) in ((True, u"実測あり", GOUKAKU_OOKII,
+                                      GOUKAKU_HEIKIN, GOUKAKU_WARIAI),
+                                     (False, u"実測なし(予備の道)", YOBI_OOKII,
+                                      YOBI_HEIKIN, YOBI_WARIAI)):
+        print(u"── %s ──" % nm)
+        jissoku_kirikae(tsukau)
+        if shirabe(a.kai, nm, oo, he, wa):
+            warui.append(nm)
+    print(u"")
+    try:
+        shutil.rmtree(SAGYOU)
+    except Exception:
+        pass
+    if warui:
+        print(u"× 字幕と声がずれています（%s）。" % u" / ".join(warui))
+        return 1
+    print(u"○ 実測ありも、実測なしの予備の道も、字幕と声はずれていません。")
+    return 0
+
+
+def shirabe(kai, nm, oo, he, wa):
+    warui = []
+    for tane in range(1, kai + 1):
         k = hitotsu(tane)
         if k is None:
             print(u"× 乱数 %d で検査そのものが動きませんでした" % tane)
             return 1
         anc = k.get(u"anc", [0, 0, 0])
-        shirushi = u"○" if (k[u"heikin"] <= GOUKAKU_HEIKIN
-                            and k[u"wariai"] <= GOUKAKU_WARIAI
+        shirushi = u"○" if (k[u"ookii"] <= oo and k[u"heikin"] <= he
+                            and k[u"wariai"] <= wa
                             and anc[1] <= GOUKAKU_ANC) else u"×"
         print(u"%s 乱数 %d  区切り %3d枚 / いちばん大きいずれ %.2f秒 / "
               u"平均 %.2f秒 / 0.30秒超 %.0f%%"
@@ -128,21 +184,23 @@ def main():
             print(u"     段落の境目(錨) 最大%.2f 平均%.2f 0.3超%.0f%%  / "
                   u"その中の切れ目 最大%.2f 平均%.2f 0.3超%.0f%%"
                   % tuple(k[u"anc"] + k[u"naka"]))
+        if u"bun" in k:
+            # どの仕組みのせいかまで出す。数字だけ見て関係ない所を触らないため。
+            print(u"     文の頭(place_in_chunk) 最大%.2f / "
+                  u"「、」(koma_awase) 最大%.2f"
+                  % (k[u"bun"][0], k[u"ten"][0]))
         if shirushi == u"×":
             warui.append(tane)
             for z in k[u"waru"][:3]:
                 print(u"     %5.2f秒  字幕 %7.2f / 声 %7.2f  %s"
                       % (z[0], z[1], z[2], z[3][:20]))
-    print(u"")
     if warui:
-        print(u"× 字幕と声がずれています（乱数 %s）。"
-              % u", ".join(str(x) for x in warui))
-        print(u"   合格の線: 平均 %.2f秒まで / 0.30秒超 %.0f%%まで / "
-              u"段落の境目の平均 %.2f秒まで"
-              % (GOUKAKU_HEIKIN, GOUKAKU_WARIAI, GOUKAKU_ANC))
-        return 1
-    print(u"○ %d通りすべてで、字幕と声はずれていません。" % a.kai)
-    return 0
+        print(u"   %s の合格の線: いちばん大きいずれ %.2f秒まで / 平均 %.2f秒まで / "
+              u"0.30秒超 %.0f%%まで / 段落の境目の平均 %.2f秒まで"
+              % (nm, oo, he, wa, GOUKAKU_ANC))
+        return True
+    print(u"   %s … %d通りすべて合格" % (nm, kai))
+    return False
 
 
 if __name__ == "__main__":
