@@ -37,6 +37,78 @@ def tags_of(path):
     return go
 
 
+def jinbutsu_of(path):
+    u"""人物ルール.txt で決めている人物名を集める。
+
+    ■ なぜ タグ一覧.txt を読むだけにしないのか（2026-10-06）
+
+    人物名は 人物ルール.txt で決めているのに、
+    タグ一覧.txt にも同じ名前を書き写していた。**2か所ある。**
+    片方を直してもう片方を忘れると、
+    「タグ一覧に無い言葉: ルーデウス」で 7本ぜんぶ落ちる。実際に落ちた。
+
+    名前が書いてある所から直に読めば、書き写しは要らなくなる。
+    """
+    out = set()
+    for line in io.open(path, encoding="utf-8-sig").read() \
+            .replace("\r\n", "\n").split("\n"):
+        if u"\t" not in line or line.lstrip().startswith(u"#"):
+            continue
+        na = line.split(u"\t")[0].strip()
+        if na:
+            out.add(na)
+    return out
+
+
+def catalog_of(path):
+    u"""画像カタログ.txt を「説明の言葉の集まり」の並びとして読む。"""
+    out = []
+    try:
+        honbun = io.open(path, encoding="utf-8-sig").read()
+    except Exception:
+        return out
+    for line in honbun.replace("\r\n", "\n").split("\n"):
+        if u"\t" in line and not line.lstrip().startswith(u"#"):
+            out.append(set(line.split(u"\t", 1)[1].split()))
+    return out
+
+
+# この枚数より少ないカタログは「見本」とみなして、当たらないタグを
+# 落とす材料にしない。
+#
+# ■ なぜ線を引くのか（2026-10-06）
+#
+# こちらに置いてあるカタログは 120枚の見本で、本物は本人のPCの 10222枚。
+# 見本で数えると 176種のうち 94種が「1枚も当たらない」になるが、
+# これは見本が小さいだけで、#光る目 も #草原 も本物には当たる。
+# ここで落とすと、意味のない赤を毎回出すことになる。
+#
+# **本人のPCでは本物のカタログがあるので、そこで本当の答えが出る。**
+HONMONO_SAITEI = 1000
+
+
+def shinu_tags(rows, catalog):
+    u"""#タグ のうち、カタログの絵に1枚も当たらないものを返す。
+
+    ■ 綴りが合っていても、当たらなければ同じこと（2026-10-06）
+
+    これまでの検査は「タグ一覧.txt にある言葉か」しか見ていなかった。
+    言葉として正しくても、その言葉が付いた絵が1枚も無ければ、
+    その #指定 は黙って外れる。**綴り間違いと結果は同じ。**
+    """
+    out = {}
+    for keys, files in rows:
+        for f in files:
+            if not f.startswith(u"#"):
+                continue
+            hitsuyou = set(f[1:].split())
+            if not hitsuyou:
+                continue
+            if not any(hitsuyou <= d for d in catalog):
+                out[f[1:]] = out.get(f[1:], 0) + 1
+    return out
+
+
 def wasuu_of(path):
     u"""話数マップ.txt のフォルダ名。"""
     out = set()
@@ -74,7 +146,10 @@ def yomu(plan):
 
 
 def shirabe(plan, script, shizuka=False):
-    tags = tags_of(os.path.join(HERE, u"タグ一覧.txt"))
+    # 使ってよい言葉は、**決めている所から直に集める**。書き写さない。
+    tags = tags_of(os.path.join(HERE, u"タグ一覧.txt")) \
+        | jinbutsu_of(os.path.join(HERE, u"人物ルール.txt")) \
+        | set(M.MITAME.keys())
     wasuu = wasuu_of(os.path.join(HERE, u"話数マップ.txt"))
     rows, focus = yomu(plan)
     cues = cues_of(script)
@@ -92,6 +167,21 @@ def shirabe(plan, script, shizuka=False):
     if warui_tag:
         komatta.append(u"タグ一覧に無い言葉 %d個: %s"
                        % (len(warui_tag), u" ".join(sorted(warui_tag))))
+
+    # ①-2 綴りは合っているのに、その絵が1枚も無いタグ
+    catalog = catalog_of(os.path.join(HERE, u"画像カタログ.txt"))
+    if len(catalog) >= HONMONO_SAITEI:
+        shinu = shinu_tags(rows, catalog)
+        if shinu:
+            naraba = sorted(shinu.items(), key=lambda x: -x[1])[:8]
+            komatta.append(u"絵が1枚も無いタグ %d種: %s"
+                           % (len(shinu),
+                              u" ".join(u"%s(%d回)" % (k, v) for k, v in naraba)))
+    elif catalog:
+        komatta_nashi = u"（カタログ%d枚は見本なので、絵が無いタグの検査はとばしました）" \
+            % len(catalog)
+        if not shizuka:
+            print(komatta_nashi)
 
     # ② 話数フォルダ
     warui_wa = [f for f in focus if f not in wasuu]
