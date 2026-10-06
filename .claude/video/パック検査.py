@@ -99,6 +99,28 @@ def main():
     nai2 = [f for f in pairs.values() if not os.path.exists(os.path.join(here, f))]
     shirabe(u"ファイルが実際にある", not nai2, u" / ".join(nai2) or u"ぜんぶあります")
 
+    # 設定ファイルの改行。Windows 側で読むものなので CRLF でそろえる。
+    #
+    # 一度やらかしている（2026-10-06）: 人物ルール.txt に「代わり」の行を
+    # 書き足したとき、CRLF の文字列をさらに CRLF で足して `\r\r\n` になった。
+    # 読む側が .replace("\r\n","\n") だけなので、行のうしろに `\r` が残る。
+    # strip() でたまたま消えていたが、タブで割る所に来れば黙って壊れる。
+    # 見るのは video フォルダの .txt ぜんぶ（設定も台本の下書きも Windows で開く）。
+    # sync_py.py の表だけを見ると .py しか入っておらず、
+    # **1つも調べない検査**になる（いちど実際にそうなった）。
+    yogore, mita = [], 0
+    for f in sorted(os.listdir(here)):
+        if not f.endswith(u".txt"):
+            continue
+        b = io.open(os.path.join(here, f), "rb").read()
+        if not b:
+            continue
+        mita += 1
+        if re.search(b"\r\r", b) or re.search(b"\r(?!\n)", b):
+            yogore.append(f)
+    shirabe(u"設定の改行が CRLF でそろっている", (not yogore) and mita >= 10,
+            u" / ".join(yogore) or (u"%d個ぜんぶそろっています" % mita))
+
     print(u"")
     if warui:
         print(u"× パックへの入れ忘れがあります。")

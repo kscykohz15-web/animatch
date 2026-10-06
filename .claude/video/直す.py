@@ -103,10 +103,13 @@ def wrap(t, n):
 
 
 # ------------------------------------------------------------------ 採点
-def fuan(r, tags, tsukai):
+def fuan(r, tags, tsukai, rows=None, i=None, han=None):
     u"""この区切りが「不安」かどうか。大きいほど先に見せる。
 
     採点(miru_kekka)と同じ目で見る。ここで拾えないものは紙に出ない。
+
+    rows と i を渡すと、**前後の文も見てから**「人ちがい」と言う。
+    渡さないと1行だけで見る（前までの動き）。
     """
     img, tx = r[u"img"], r[u"text"]
     if not img or img.startswith(u"@@") or M.is_zuhyou(img):
@@ -119,9 +122,16 @@ def fuan(r, tags, tsukai):
     if u"使用不可" in w:
         return 100, u"【使用不可】文字あり・実写など"
     hito = M.chars_in(tx)
+    # 前後の文から「出してよい人」を広げる。
+    # 33番「ヒトガミを完全に封じ込めてしまう。」にオルステッドの絵を当てるのは、
+    # 本人が良いと言った当て方。ここを1行だけで見ると「人ちがい」と出てしまう。
+    yoi = list(hito)
+    if rows is not None and i is not None:
+        omomi = bunmyaku(rows, i, han=han)
+        yoi += [c for c in omomi if omomi[c] >= 0.5 and c not in yoi]
     if hito:
         iru = []
-        for c in hito:
+        for c in yoi:
             if c in w or any(x in w for x in M.IIKAE.get(c, [])):
                 iru.append(c)
         if not iru:
@@ -160,19 +170,33 @@ def fuan(r, tags, tsukai):
 #   罰60 … 人物一致 71% / 種類174 / 最多4回
 #
 # 7か条では **③人物が、⑥使いまわしより上**。だから人物を守る側を選ぶ。
-# 上限を硬くする作りも試したが、人物一致が 100%→63% に落ちたのでやめた
-# （章の話数は2〜4本しかなく、その人の絵がそもそも足りないため）。
-# 1回使うごとに引く点。**実測で決めた**（区切り278枚・絵6450枚の材料で振った）。
-#
-#   罰 0 … 人物一致100% だが 1枚を79回つかう（使いものにならない）
-#   罰15 … 人物一致 99% / 種類145 / 最多9回      ← これにした
-#   罰35 … 人物一致 84% / 種類169 / 最多5回
-#   罰60 … 人物一致 71% / 種類174 / 最多4回
-#
-# 7か条では **③人物が、⑥使いまわしより上**。だから人物を守る側を選ぶ。
 # 「3回まで」を硬い上限にする作りも試したが、人物一致が 100%→63% に
 # 落ちたのでやめた（章の話数は2〜4本しかなく、その人の絵が足りない）。
 KAISU_BATSU = 15
+
+
+# ------------------------------------------------- 文脈（誰の話かを前後から読む）
+#
+# 中身は miru_kekka.py にある。**採点と、絵の選びかたで、同じ見方をするため。**
+# 片方だけ直すと、採点が「人ちがい」と言い、直すが「合っている」と言い出す。
+KAWARI = M.KAWARI
+load_kawari = M.load_kawari
+hitobito = M.hitobito
+bun_han = M.bun_han
+sashi_moto = M.sashi_moto
+bunmyaku = M.bunmyaku
+KAWARI_BIKI = M.KAWARI_BIKI
+
+
+_HAN = {}
+
+
+def han_cache(rows):
+    u"""文の範囲は台本ごとに1回しか計算しない（区切りの数だけ呼ばれるので）。"""
+    k = id(rows)
+    if k not in _HAN or len(_HAN[k]) != len(rows):
+        _HAN[k] = bun_han(rows)
+    return _HAN[k]
 
 
 def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO, sakeru=None):
@@ -185,8 +209,26 @@ def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO, sakeru=None):
     tx = r[u"text"]
     ima = r[u"img"]
     yurusu = r.get(u"daihon") or []
-    hito = M.chars_in(tx)
+    # **前後の文からも「誰の話か」を読む。** 1行だけでは決まらない。
+    omomi = bunmyaku(rows, i, han=han_cache(rows))
+    hito = sorted(omomi, key=lambda c: -omomi[c])
+    # 文脈でしっかり出ている人（この人たちが揃って写っていれば、なお良い）。
+    #
+    # **「0.7 以上の人ぜんぶ」ではいけない。**
+    #   30「ララといいます。」の文脈は ルーデウス0.80 ロキシー0.80 ヒトガミ0.70。
+    #   0.7 以上を全部とると3人になり、3人そろった絵は無いので、
+    #   「二人が写った絵」の加点が働かず、ルーデウス1人の絵を選んでしまった。
+    # だから **いちばん上に並んでいる人たちだけ** を主役とする。
+    ue = max(omomi.values()) if omomi else 0.0
+    shuyaku = [c for c in hito if omomi[c] >= max(0.7, ue - 0.05)]
+    yarare = M.wo_ukeru(tx)
     te = M.tegakari_in(tx)
+    # 前後の文の手がかりも少しだけ見る（「子供」「結婚」など）
+    for d in (-1, 1):
+        if 0 <= i + d < len(rows):
+            for x in M.tegakari_in(rows[i + d][u"text"] or u""):
+                if x not in te:
+                    te.append(x)
 
     # となりの絵（場面のつながりを見るため）
     tonari = []
@@ -216,17 +258,42 @@ def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO, sakeru=None):
         if u"使用不可" in w:
             continue
         p = 0.0
-        # ③ 人がいちばん重い
+        # ③ 人がいちばん重い。**文脈での重みぶん**だけ効かせる
         if hito:
             iru = [c for c in hito
                    if c in w or any(x in w for x in M.IIKAE.get(c, []))]
             hoka = [c for c in M.CHARACTERS if c in w and c not in hito]
             if iru:
-                p += 100
+                p += 100 * max(omomi[c] for c in iru)
+                # 文脈の主役が2人いて、両方写っているなら、それがいちばん良い
+                # （29・30番「ルーデウスとロキシーの二人が写った画像」）
+            if len(shuyaku) >= 2:
+                soro = [c for c in shuyaku
+                        if c in w or any(x in w for x in M.IIKAE.get(c, []))]
+                if len(soro) == len(shuyaku):
+                    p += 45
+                    if u"二人" in w:
+                        p += 15
+                elif len(soro) == 1 and u"二人" in w:
+                    # **絵の説明には、名前が1人しか付かないことが多い。**
+                    # カタログの元になっている言葉は「いちばん目立つ人」の
+                    # 髪の色や服なので、二人写っていても片方しか名前が付かない。
+                    # 「ロキシー 二人」は、ルーデウスとロキシーの絵かもしれない。
+                    # そろっている絵が見つからないときの、次に良い手。
+                    p += 30
+                elif u"一人" in w:
+                    # 1人しか写っていない絵は、二人の場面には合わない
+                    p -= 10
             elif hoka:
                 p -= 80
             else:
                 p -= 30
+        # 「〜を」で受けている人は、やられている側。
+        # その顔の絵があれば、それがいちばん合う（本人の 33番の直し）。
+        if yarare and M.yarare_kao(w) and any(
+                c in w or any(x in w for x in M.IIKAE.get(c, []))
+                for c in yarare):
+            p += 25
         # 情景の手がかり
         atari = [x for x in te if M.tegakari_ok(x, w)]
         p += min(36, 12 * len(atari))
@@ -421,6 +488,10 @@ def main():
         print(u"   メニューの 8 で、絵に説明をつけてから使ってください。")
         return 1
     tags = M.load_catalog(a.catalog)
+    KAWARI.update(load_kawari())
+    if KAWARI:
+        print(u"絵の無い人の代わり: " + u" / ".join(
+            u"%s→%s" % (k, u"・".join(v)) for k, v in sorted(KAWARI.items())))
     if not tags:
         print(u"× %s が読めませんでした。" % a.catalog)
         return 1
@@ -454,7 +525,7 @@ def main():
     # 不安な順に並べる
     tsuki = []
     for i, r in enumerate(rows):
-        omosa, riyuu = fuan(r, tags, tsukai)
+        omosa, riyuu = fuan(r, tags, tsukai, rows, i, han_cache(rows))
         if a.zenbu or omosa > 0:
             tsuki.append((omosa, i, riyuu))
     tsuki.sort(key=lambda x: (-x[0], x[1]))

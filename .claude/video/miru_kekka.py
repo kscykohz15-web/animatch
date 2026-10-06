@@ -133,6 +133,8 @@ def load_person_rules(path):
             continue
         name, cond = s.split(u"\t", 1)
         name = name.strip()
+        if name == u"代わり":
+            continue          # 「絵の無い人の代わり」の行。人物ルールではない
         # 頭に - を付けると「その名前を取り消す」規則になる。
         # カタログに書き込まれてしまった誤りを、見直さずに消すため。
         kesu = name.startswith(u"-")
@@ -409,6 +411,248 @@ def tegakari_in(text):
     return out
 
 
+# ---------------------------------------- 文脈（誰の話かを前後から読む）
+#
+# ここは **採点（miru_kekka）と、絵の選びかた（直す.py）の両方が使う。**
+# 片方だけ直すと、採点が「人ちがい」と言い、直すが「合っている」と言い出す。
+
+# 絵の無い人を、誰で代えるか（人物ルール.txt の「代わり」の行）。
+# ララのように、まだアニメに出ていない人は、絵が1枚も無い。
+KAWARI = {}
+
+
+def load_kawari(path=u"人物ルール.txt"):
+    u"""「代わり <タブ> 絵の無い人 <タブ> 代わりに写す人たち」を読む。"""
+    out = {}
+    if not os.path.exists(path):
+        return out
+    for line in yomu(path).split(u"\n"):
+        c = [x.strip() for x in line.strip().split(u"\t")]
+        if len(c) >= 3 and c[0] == u"代わり" and c[1]:
+            out[c[1]] = [x for x in c[2].split() if x]
+    return out
+
+
+# 文脈の重み。**本人の直し 29〜37番の理由から決めた**（2026-10-06）。
+#
+#   その行に名前がある                      1.00
+#   指示語（この子供）の指す先              0.95
+#   同じ文の中                              0.85
+#   指示語だけの断片（それが、）が指す前の文 0.90
+#   前後1行                                 0.70
+#   前後2行                                 0.50
+#
+OMO_JIBUN, OMO_SASHI, OMO_BUN, OMO_MAEBUN = 1.00, 0.95, 0.85, 0.90
+OMO_TONARI, OMO_FUTATSU = 0.70, 0.50
+
+# 絵の無い人（ララ）の代わりに写す人は、本人より少し下げる。
+#
+#   30「ララといいます。」        → ララしかいない → 親（ルーデウス・ロキシー）
+#   31「そしてララが一人でヒトガミを倒すわけではありません。」
+#                                → ヒトガミは絵がある → **ヒトガミ**
+#
+# つまり「代わりの人」は、絵のある人がいれば負ける。だから 1.0 より下げる。
+KAWARI_BIKI = 0.8
+
+# 「〜を」で受けている人を下げる割合。
+#
+#   本人の 33番「ヒトガミを完全に封じ込めてしまう。」
+#     →「ヒトガミの画像(やられる顔)**もしくは**、オルステッドの画像」
+#   本人の 34番「それが、」→「オルステッドの画像」
+#
+# 「〜を」で受けている人は、やられている側。やられ顔の絵が要る。
+# それが無いなら、**やる側**（オルステッド）を出すほうが合う。
+# ただし下げるのは「同じ文の中に、絵のある“やる側”がいるとき」だけ。
+#   31番は「ララが（絵が無い）ヒトガミを倒す」なので、下げない。
+#   （下げると、出せる人が1人もいなくなる）
+WO_BIKI = 0.6
+
+# 指示語だけでできた短い断片（「それが、」「これは、」）
+SASHI_DAKE = re.compile(u"^(それ|これ|あれ|そう|こう)[がはをに、]")
+
+
+# 「やられている顔」に当たるタグ。
+#
+# 本人の 33番の直し（2026-10-06）
+#   「ヒトガミを完全に封じ込めてしまう。」
+#     →「ヒトガミの画像(**やられる顔**)もしくは、オルステッドの画像」
+#
+# 「〜を」で受けている人は、やられている側。その顔の絵があればそれがいちばん合う。
+# ここは**いま付いているタグだけ**で見る（絵に説明を付け直さなくて済むように）。
+# 「苦痛」は入れていない。いま絵に付くタグに無い言葉なので、書いても
+# 一度も当たらない（人物ルール検査.py が、この並びも調べている）。
+YARARE = [u"恐怖", u"悲しい", u"泣く", u"緊迫"]
+
+
+def yarare_kao(w):
+    u"""絵の説明(集合)が「やられている顔」かどうか。"""
+    return any(x in w for x in YARARE)
+
+
+def wo_ukeru(tx):
+    u"""その行で「〜を」で受けられている人たち（やられている側）。"""
+    return [c for c in hitobito(tx or u"") if kaku_wo(tx or u"", c)]
+
+
+def hitobito(tx):
+    u"""その文に出てくる人の名前。**絵の無い人（ララ）も拾う。**
+
+    miru_kekka.CHARACTERS には、絵が1枚も無い人は入っていない
+    （入れると採点が「人ちがい」と言い出す）。
+    けれど文脈を読むときには、名前が出たこと自体が手がかりになる。
+    """
+    out = list(chars_in(tx or u""))
+    for na in (KAWARI or {}):
+        if na and na in (tx or u"") and na not in out:
+            out.append(na)
+    return out
+
+
+def kaku_wo(tx, na):
+    u"""その人が「〜を」で受けられているか（やられている側か）。"""
+    return (na + u"を") in (tx or u"")
+
+
+def bun_han(rows):
+    u"""行ごとに「その行が入っている文」の範囲 (始まり, 終わり) を返す。
+
+    「。」「！」「？」で終わる行が、文の終わり。
+    """
+    owari = [n for n, r in enumerate(rows)
+             if (r[u"text"] or u"").rstrip().endswith((u"。", u"！", u"？"))]
+    han, s0 = [None] * len(rows), 0
+    for e in owari:
+        for n in range(s0, e + 1):
+            han[n] = (s0, e)
+        s0 = e + 1
+    for n in range(s0, len(rows)):
+        han[n] = (s0, len(rows) - 1)
+    return han
+
+
+def sashi_moto(rows, i):
+    u"""「この子供」「その能力」の指す先の行を探す。
+
+    ■ なぜ要るか（本人の理由・29番）
+        「**この子供**という言葉から、前後の文章から
+          ルーデウスとロキシーの子供であるとわかるため、
+          二人が写った画像が望ましい」
+
+    「この子供」だけを見ても誰も写っていない。
+    **前の文の「ルーデウスとロキシーのその子供が、」が答え。**
+
+    やり方: 指示語のうしろの言葉を、長いほうから短いほうへ切って、
+            前の行に同じ言葉があるか探す。
+            「この子供には名前があって、」→ 子供 → 前の行が見つかる。
+    """
+    tx = rows[i][u"text"] or u""
+    for m in re.finditer(u"[こそあ]の", tx):
+        ato = tx[m.end():]
+        for n in range(6, 1, -1):
+            go = ato[:n]
+            if len(go) < n or re.search(u"[、。！？\s]", go):
+                continue
+            mitsuketa = None
+            for j in range(i - 1, max(-1, i - 30), -1):
+                if go in (rows[j][u"text"] or u""):
+                    if mitsuketa is None:
+                        mitsuketa = j
+                    if hitobito(rows[j][u"text"]):
+                        return j            # 人が写っている行が、いちばん良い
+            if mitsuketa is not None:
+                return mitsuketa
+    return None
+
+
+def bunmyaku(rows, i, mae=2, ato=2, han=None):
+    u"""その区切りの「誰の話か」を、台本の前後から読む。{人物: 重み}
+
+    ■ なぜ要るか（本人の指摘・2026-10-06）
+
+      29「この子供という言葉から、**前後の文章から**ルーデウスとロキシーの
+          子供であるとわかるため、二人が写った画像が望ましい」
+      34「それが、」→ オルステッドの画像
+
+    「この子供」「それが、」だけを見ても、誰の話か分からない。
+    **1行しか見ていなかったのが、外れていた理由。**
+
+    読む順（重みは上の OMO_* ）
+      ① その行の名前
+      ② 指示語（この子供）の指す先の行
+      ③ 同じ文の中（前は「。」まで、後ろは「。」まで）
+      ④ 指示語だけの断片なら、**直前の文ぜんぶ**（それが＝前の出来事）
+      ⑤ 前後1行・前後2行
+      ⑥ 「〜を」で受けている人を下げる（やられ顔が要るので）
+      ⑦ 絵の無い人を、代わりの人に置きかえる（少し下げて）
+    """
+    if han is None:
+        han = bun_han(rows)
+    out = {}
+
+    def tasu(j, omo):
+        tx = rows[j][u"text"] or u""
+        if not tx:
+            return
+        s0, e0 = han[j] if han[j] else (j, j)
+        # ⑥ 同じ文の中に「絵のある“やる側”」がいるときだけ、「〜を」を下げる
+        yaru = False
+        for n in range(s0, e0 + 1):
+            t2 = rows[n][u"text"] or u""
+            for c in hitobito(t2):
+                if c not in (KAWARI or {}) and not kaku_wo(t2, c):
+                    yaru = True
+        for c in hitobito(tx):
+            o = omo * (WO_BIKI if (yaru and kaku_wo(tx, c)) else 1.0)
+            if out.get(c, 0) < o:
+                out[c] = o
+
+    tasu(i, OMO_JIBUN)
+
+    # ② 指示語の指す先
+    moto = sashi_moto(rows, i)
+    if moto is not None:
+        tasu(moto, OMO_SASHI)
+
+    # ③ 同じ文の中
+    s0, e0 = han[i] if han[i] else (i, i)
+    for j in range(s0, e0 + 1):
+        if j != i:
+            tasu(j, OMO_BUN)
+
+    # ④ 「それが、」のような指示語だけの断片は、**直前の文**を指す。
+    #    うしろ（同じ文の残り）は、その断片についての説明なので、半分にする。
+    sashi_dake = bool(SASHI_DAKE.match((rows[i][u"text"] or u"").strip()))         and len((rows[i][u"text"] or u"").strip()) <= 8
+    if sashi_dake and s0 - 1 >= 0:
+        p0, p1 = han[s0 - 1] if han[s0 - 1] else (s0 - 1, s0 - 1)
+        for j in range(p0, p1 + 1):
+            tasu(j, OMO_MAEBUN)
+        # うしろを半分にしてやり直す（③で入れたぶんを薄める）
+        saki = {}
+        for j in range(i + 1, e0 + 1):
+            tt = rows[j][u"text"] or u""
+            for c in hitobito(tt):
+                saki[c] = max(saki.get(c, 0), OMO_BUN * 0.5)
+        for c, o in saki.items():
+            # ③ で OMO_BUN のまま入っていて、ほかに根拠が無いものだけ下げる
+            if abs(out.get(c, 0) - OMO_BUN) < 1e-9:
+                out[c] = o
+
+    # ⑤ 前後の行
+    for d in range(1, max(mae, ato) + 1):
+        if d <= mae and i - d >= 0:
+            tasu(i - d, OMO_TONARI if d == 1 else OMO_FUTATSU)
+        if d <= ato and i + d < len(rows):
+            tasu(i + d, OMO_TONARI if d == 1 else OMO_FUTATSU)
+
+    # ⑦ 絵の無い人は、代わりの人たちに置きかえる（ララ → ルーデウス・ロキシー）
+    for na, kawari in (KAWARI or {}).items():
+        if na in out:
+            omo = out.pop(na) * KAWARI_BIKI
+            for k in kawari:
+                out[k] = max(out.get(k, 0), omo)
+    return out
+
+
 # 時間帯の言葉。絵に時間帯が1つも書かれていないときは、
 # 「合っていない」ではなく「分からない」なので、責めない。
 JIKAN = [u"夜", u"朝", u"昼", u"夕方"]
@@ -525,7 +769,9 @@ def main():
     warui = []      # (重さ, 番号, 種類, 説明)
     mikoshi = []    # 絵で表せる言葉が無いセリフ
     nashi = 0       # カタログに無い
-    for r in rows:
+    KAWARI.update(load_kawari(u"人物ルール.txt"))
+    han = bun_han(rows)          # 文の範囲は1回だけ計算する
+    for ri, r in enumerate(rows):
         img = r[u"img"]
         tx = r[u"text"]
         # 章タイトルのカード(@@card00 など)は、こちらが作った絵なので採点しない。
@@ -575,11 +821,20 @@ def main():
                 omosa += 6
 
         # ③ 人ちがい
+        #
+        # **その1行だけでは決められない。**（本人の直し 33番・2026-10-06）
+        #   「ヒトガミを完全に封じ込めてしまう。」
+        #     → 本人は「ヒトガミのやられる顔 **もしくは** オルステッド」。
+        #   行だけ見ると、オルステッドの絵は「人ちがい」になってしまう。
+        # だから、直す.py と同じ文脈の見方で「出してよい人」を広げる。
+        # 行に名前がある人は重み 1.0 なので、ここが緩むのは文脈があるときだけ。
         hito = chars_in(tx)
+        omomi = bunmyaku(rows, ri, han=han)
+        yoi = [c for c in omomi if omomi[c] >= 0.5]
         if hito and desc and not is_zuhyou(img) and not erabi:
             w = set(desc.split())
             atta = []
-            for c in hito:
+            for c in (hito + [x for x in yoi if x not in hito]):
                 kouho = [c] + IIKAE.get(c, [])
                 if any(x in w for x in kouho):
                     atta.append(c)

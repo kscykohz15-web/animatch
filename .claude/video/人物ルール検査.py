@@ -41,11 +41,31 @@ def main():
         if not t or t.startswith(u"#") or u"\t" not in t:
             continue
         namae, joken = t.split(u"\t", 1)
+        if namae.strip() == u"代わり":
+            # 「代わり <タブ> 絵の無い人 <タブ> 代わりに写す人たち」の行。
+            # タグの条件ではなく、人の名前が並んでいるだけなので調べない。
+            continue
         kazu += 1
         for w in joken.replace(u"　", u" ").split():
             for x in w.lstrip(u"!").split(u"|"):
                 if x and x not in g:
                     warui.append((n, namae.strip(), x))
+    # miru_kekka.py の「やられ顔」の言葉も、出てくるタグか調べる。
+    # コードの中に書いた言葉は、どの検査も見ていなかった
+    # （「苦痛」と書いて、一度も当たらないまま気づけなかった）。
+    try:
+        import importlib.util
+        sp = importlib.util.spec_from_file_location(
+            "mk_r", os.path.join(HERE, u"miru_kekka.py"))
+        mk = importlib.util.module_from_spec(sp)
+        sp.loader.exec_module(mk)
+        for x in getattr(mk, "YARARE", []):
+            kazu += 1
+            if x not in g:
+                warui.append((0, u"やられ顔(miru_kekka.py の YARARE)", x))
+    except Exception as e:
+        print(u"× miru_kekka.py を読めませんでした: %s" % e)
+        return 1
     if warui:
         for (n, namae, x) in warui:
             print(u"× %d行目 %s の条件「%s」は、タグ一覧.txt にありません"

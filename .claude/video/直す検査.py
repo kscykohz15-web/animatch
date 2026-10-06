@@ -168,11 +168,14 @@ def main():
         tonari = sum(1 for x, y in zip(ban, ban[1:])
                      if y == x + 1 and oma[x] == oma[y])
         nokori = 0
-        for rr in rows:
+        # 不安の見方は、**直す.py が使うのと同じにする**
+        # （前後の文も見る。片方だけ1行で見ると、ここが食いちがう）
+        han = N.bun_han(rows)
+        for i2, rr in enumerate(rows):
             no = int(rr[u"no"])
             if no in oma:
                 continue
-            if N.fuan(rr, tags, tsukai)[0] >= 25:
+            if N.fuan(rr, tags, tsukai, rows, i2, han)[0] >= 25:
                 nokori += 1
     finally:
         os.chdir(moto)

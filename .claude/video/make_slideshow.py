@@ -2755,6 +2755,8 @@ def load_person_rules(path):
             continue
         name, cond = s.split(u"\t", 1)
         name = name.strip()
+        if name == u"代わり":
+            continue          # 「絵の無い人の代わり」の行。人物ルールではない
         # 頭に - を付けると「その名前を取り消す」規則になる。
         # カタログに書き込まれてしまった誤りを、見直さずに消すため。
         kesu = name.startswith(u"-")
