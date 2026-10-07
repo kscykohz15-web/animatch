@@ -283,7 +283,7 @@
     <div class="stat"><div class="v">0</div><div class="k">投稿済み</div></div>
   </div>
 
-  <section>
+  <section data-board="mushoku">
     <h2>放送進捗</h2>
     <p class="lede">話数を選ぶと、その時点で「今いちばん刺さる話題」を計算し直します。</p>
     <div class="strip" id="strip"></div>
@@ -291,14 +291,14 @@
     <p class="epedit" id="epnote"></p>
   </section>
 
-  <section>
+  <section data-board="mushoku">
     <h2>今、刺さる話題</h2>
     <p class="lede">推奨度 = 話題の引きの強さ × 鮮度(該当話からの経過) + 台本があれば即応加点。</p>
     <div class="recs" id="recs"></div>
     <div class="locked" id="locked"></div>
   </section>
 
-  <section id="iraisec">
+  <section data-board="mushoku" id="iraisec">
     <h2>台本の依頼</h2>
     <p class="lede">ここで出した依頼は、次にこのボードを開いたときに私(Claude)が読みます。
       直してほしい所は、具体的に書くほど正確に直せます。</p>
@@ -306,7 +306,7 @@
     <p class="ihint" id="inote">読み込んでいます…</p>
   </section>
 
-  <section>
+  <section data-board="mushoku">
     <h2>別の切り口を探す</h2>
     <p class="lede">現在の放送状況と手持ちの台本をふまえて、まだ作っていない角度をClaudeに出させます。</p>
     <div class="ask">
@@ -315,10 +315,10 @@
     </div>
   </section>
 
-  <section id="nijussen">
-    <h2>20選シリーズ ─ 絵をそろえる手順</h2>
+  <section data-board="osusume" id="nijussen">
+    <h2>絵をそろえる手順（作品フォルダ）</h2>
     <p class="lede">無職転生の回は、章ごとに<b>アニメの話数</b>で絵を絞っていました。
-      20選は1本の中で20作品を渡るので、<b>章ごとに「作品フォルダ」で絞ります</b>。
+      おすすめ紹介の回は1本で20作品を渡るので、<b>章ごとに「作品フォルダ」で絞ります</b>。
       仕組みは同じで、絞る相手が話数から作品に変わるだけです。</p>
 
     <div class="packnote" style="margin-top:4px;">
@@ -475,7 +475,7 @@ python tate.py --no 40 --to-no 52 --hook hook.png</pre>
     </div>
   </section>
 
-  <section>
+  <section data-board="mushoku">
     <h2>原作検証で判明した訂正</h2>
     <dl class="facts">
       <div class="fact"><dt>エリスの死</dt><dd>不死魔王アトーフェとの戦いで、ルーデウスを<b>かばって</b>死亡。誤解して敵視していた時期はあるが、和解した直後の出来事。<span class="was">当初「ルーデウスが誤って手にかけた」としていた → 誤り</span></dd></div>
@@ -492,7 +492,7 @@ python tate.py --no 40 --to-no 52 --hook hook.png</pre>
     <div class="rules">
       <dl class="rule"><dt>2本立て</dt><dd>字幕用(漢字表記)と読み上げ用(カタカナ・ワ変換)。本文内容は完全一致、表記変換のみ</dd></dl>
       <dl class="rule"><dt>読み上げ変換</dt><dd>助詞「は」→「ワ」(では・ならでは除く) / 話数の「話」→「ワ」 / 中黒「・」→読点 / 誤読名詞のみカタカナ化</dd></dl>
-      <dl class="rule"><dt>ネタバレ</dt><dd>原則アニメ放送済み範囲のみ。老デウス回のみ例外で原作全開、冒頭に強い警告</dd></dl>
+      <dl class="rule"><dt>ネタバレ</dt><dd>原則アニメ放送済み範囲のみ。無職転生の老デウス回だけ例外で原作全開（冒頭に強い警告）。おすすめ紹介の回は、どういう種類の話かまでで止める</dd></dl>
       <dl class="rule"><dt>サムネ</dt><dd>濃紫〜黒グラデ / 白極太コピー(黒フチ) / 金サブコピー / 赤「ネタバレ注意」バッジ</dd></dl>
       <dl class="rule"><dt>音声・字幕</dt><dd><code>voicepeak_all_in_one.py</code> → <code>make_srt.py</code>。ナレーター小春六花</dd></dl>
     </div>
@@ -12754,7 +12754,12 @@ if __name__ == "__main__":
       axis:"2024〜2025の20本。強かったのは「原作つきの続編」と「オリジナル」の二択に割れ、そのうえで配信中心の作品がふつうに名作として並ぶようになった",
       spoiler:"aired",
       outline:["結論先出し: 名作かどうかは放送が終わってからでないと決まらない","①フリーレン ②ダンジョン飯 ③忘却バッテリー ④狼と香辛料","⑤ユーフォニアム3 ⑥推しの子2期 ⑦負けヒロイン ⑧僕ヤバ2期","引き留め: 2024年秋から、オリジナルが同じ土俵に上がる","⑨ダンダダン ⑩リゼロ3期 ⑪チ。 ⑫アオのハコ","⑬メダリスト ⑭薬屋2期 ⑮全修。 ⑯SAKAMOTO DAYS","⑰ジークアクス ⑱タコピーの原罪 ⑲ガチアクタ ⑳光が死んだ夏","まとめ: 続編の年・オリジナルの年・配信が名作に並んだ年","余白20選への導線"],
-      files:"ここ最近の名作20選_字幕用_最終版.txt / 読み上げ用_最終版.txt"}
+      files:"ここ最近の名作20選_字幕用_最終版.txt / 読み上げ用_最終版.txt"},
+    narou:{name:"なろう系アニメ総まとめ", chars:0, min:"0",
+      axis:"なろう系は似ているのではなく、同じ入口を使っているだけ。10年ぶんを並べると、閉じ込める・生まれ直す・やり直す・仕事をする・最初から強い、の5つの型に割れる",
+      spoiler:"aired",
+      outline:["結論先出し: 似ているのは入口だけ。中身は5つに割れる","型① 異世界へ移される … ①ログホライズン ②オーバーロード ③このすば ④幼女戦記","異世界かるてっと（この4本が選ばれたこと自体が時代の顔）","型② 生まれ直す … ⑤転スラ ⑥蜘蛛ですが ⑦転生したら剣でした ⑧無職転生","引き留め: このあと戦わない型が出てくる。いちばん伸びたのはそこ","型③ やり直す … ⑨リゼロ ⑩盾の勇者 ⑪デスマーチ ⑫陰の実力者","型④ 知識と仕事 … ⑬本好きの下剋上 ⑭薬屋のひとりごと ⑮聖女の魔力 ⑯八男","型⑤ 最初から最強 … ⑰賢者の孫 ⑱ありふれた職業 ⑲魔王学院 ⑳くまクマ熊ベアー","まとめ: 入口は10年変わっていない。伸びたのは型④、行き切ったのは型⑤"],
+      files:"なろう系アニメ総まとめ_字幕用_最終版.txt / 読み上げ用_最終版.txt"}
   };
 
   var STAGES = [
@@ -12778,6 +12783,7 @@ if __name__ == "__main__":
   /* ---------- 放送ストリップ ---------- */
   function renderStrip(){
     var s = $("strip");
+    if(!s) return;              // おすすめ掲示板には放送進捗の節が無い
     s.textContent = "";
     EPS.forEach(function(ep){
       var b = el("button", "ep" + (ep.n<=AIRED?" aired":" future") + (ep.n===sel?" sel":""));
@@ -12791,7 +12797,9 @@ if __name__ == "__main__":
   }
 
   function renderEpInfo(){
-    var ep = EPS[sel-1], box = $("epinfo");
+    var box = $("epinfo");
+    if(!box) return;
+    var ep = EPS[sel-1];
     box.textContent = "";
     box.appendChild(el("div","t","第" + ep.n + "話 " + ep.t + "  (" + ep.d + ")"));
     if(ep.note) box.appendChild(el("div","s",ep.note));
@@ -12828,6 +12836,7 @@ if __name__ == "__main__":
     open.sort(function(a,b){ return b._s.total - a._s.total; });
 
     var box = $("recs");
+    if(!box) return;
     box.textContent = "";
     open.slice(0,6).forEach(function(t, i){
       var s = t._s;
@@ -13473,7 +13482,9 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v142";
+  var PACK_VERSION = "v143";
+  // build.py が掲示板ごとに書きかえます（mushoku / osusume）
+  var BOARD = "@@BOARD@@";
   function packVersion(){
     var d = new Date();
     function z(n){ return (n<10?"0":"") + n; }
@@ -14828,12 +14839,14 @@ if __name__ == "__main__":
       + '<span style="font-size:15px">分</span>';
     var d = new Date();
     function z(n){ return (n < 10 ? "0" : "") + n; }
-    $("asof").textContent = "パック " + PACK_VERSION + " ・ 放送済み 第"
-      + AIRED + "話まで ・ 開いた日 "
+    $("asof").textContent = "パック " + PACK_VERSION
+      + (BOARD === "mushoku" ? " ・ 放送済み 第" + AIRED + "話まで" : "")
+      + " ・ 開いた日 "
       + d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
   }
 
-  renderStrip(); renderEpInfo(); renderRecs(); renderInv(); renderStats();
+  if($("strip")){ renderStrip(); renderEpInfo(); renderRecs(); }
+  renderInv(); renderStats();
 
   /* ---------- db: 工程チェック / 放送進捗 / 依頼 ---------- */
 
@@ -15097,6 +15110,7 @@ if __name__ == "__main__":
 
   function renderIrai(rows){
     var box = $("ilist");
+    if(!box) return;           // 依頼の節が無い掲示板
     box.textContent = "";
     if(!rows.length){
       $("inote").textContent = dbns
@@ -15137,66 +15151,74 @@ if __name__ == "__main__":
   }
 
   /* ---------- sample: 別の切り口を聞く ---------- */
-  if(window.claude && window.claude.use){
-    window.claude.use("sample").then(function(sample){
-      var btn = $("askbtn");
-      smp = sample;
-      if(!sample){
-        btn.parentNode.parentNode.hidden = true;
-        var ds = document.querySelectorAll("[data-draft]");
-        for(var k=0;k<ds.length;k++){ ds[k].hidden = true; }
-        return;
-      }
-      btn.disabled = false;
-      btn.textContent = "この状況で刺さる切り口を3つ出す";
-      btn.addEventListener("click", function(){
-        var out = $("askout");
-        out.hidden = false;
-        out.textContent = "考えています…";
-        btn.disabled = true;
+  // ここは無職転生の掲示板だけに入ります（build.py が印で切り出します）。
+  // 走らせないだけでは足りません。sample を名乗っていない掲示板に
+  // 名乗っていない capability を呼ぶ字が残っていると、警告が出ます。
+  /*@@ONLY:mushoku@@*/
+  {
+    if(window.claude && window.claude.use){
+      window.claude.use("sample").then(function(sample){
+        var btn = $("askbtn");
+        if(!btn) return;          // 別の切り口の節が無い掲示板
+        smp = sample;
+        if(!sample){
+          btn.parentNode.parentNode.hidden = true;
+          var ds = document.querySelectorAll("[data-draft]");
+          for(var k=0;k<ds.length;k++){ ds[k].hidden = true; }
+          return;
+        }
+        btn.disabled = false;
+        btn.textContent = "この状況で刺さる切り口を3つ出す";
+        btn.addEventListener("click", function(){
+          var out = $("askout");
+          out.hidden = false;
+          out.textContent = "考えています…";
+          btn.disabled = true;
 
-        var have = Object.keys(SCRIPTS).map(function(k){ return SCRIPTS[k].name; }).join(" / ");
-        var cand = TOPICS.filter(function(t){ return !t.script; }).map(function(t){ return t.title; }).join(" / ");
-        var ep = EPS[sel-1];
+          var have = Object.keys(SCRIPTS).map(function(k){ return SCRIPTS[k].name; }).join(" / ");
+          var cand = TOPICS.filter(function(t){ return !t.script; }).map(function(t){ return t.title; }).join(" / ");
+          var ep = EPS[sel-1];
 
-        var prompt =
-          "あなたは日本のアニメ解説YouTubeチャンネル『かさ【ゆるオタ】』の企画担当です。\n" +
-          "作品は『無職転生』。視聴者は原作未読のアニメ視聴者が中心です。\n\n" +
-          "【現在の状況】\n" +
-          "・アニメ3期は第" + AIRED + "話まで放送済み(本日 " + TODAY + ")\n" +
-          "・想定する視聴者は第" + sel + "話「" + ep.t + "」まで見た状態" + (ep.fut ? "(この話は未放送の予測)" : "") + "\n" +
-          "・その話の内容: " + (ep.note || "特記なし") + "\n\n" +
-          "【すでに台本がある企画(重複させない)】\n" + have + "\n\n" +
-          "【すでに候補として挙がっている企画(これ以外を出す)】\n" + cand + "\n\n" +
-          "【チャンネルの方針】\n" +
-          "・情報を整理して見せる形式が軸。単なるキャラ紹介や感想は不可\n" +
-          "・「今わかっている内容の整理・時系列」×「真実や伏線などの引きが強い話題」の組み合わせ\n" +
-          "・尺は10分前後\n" +
-          "・原作ネタバレを含む場合はその旨を明記すること\n\n" +
-          "【出力形式】\n" +
-          "上記と重複しない新しい企画を、刺さる順に3つ。各企画について以下の3行だけを書いてください。\n" +
-          "タイトル: (20字前後)\n" +
-          "軸: (この動画で何を見せるか、1文)\n" +
-          "今刺さる理由: (第" + sel + "話まで見た視聴者に、なぜ今これが刺さるか、1〜2文)\n\n" +
-          "前置きや総括は不要です。3企画ぶんだけ出力してください。";
+          var prompt =
+            "あなたは日本のアニメ解説YouTubeチャンネル『かさ【ゆるオタ】』の企画担当です。\n" +
+            "作品は『無職転生』。視聴者は原作未読のアニメ視聴者が中心です。\n\n" +
+            "【現在の状況】\n" +
+            "・アニメ3期は第" + AIRED + "話まで放送済み(本日 " + TODAY + ")\n" +
+            "・想定する視聴者は第" + sel + "話「" + ep.t + "」まで見た状態" + (ep.fut ? "(この話は未放送の予測)" : "") + "\n" +
+            "・その話の内容: " + (ep.note || "特記なし") + "\n\n" +
+            "【すでに台本がある企画(重複させない)】\n" + have + "\n\n" +
+            "【すでに候補として挙がっている企画(これ以外を出す)】\n" + cand + "\n\n" +
+            "【チャンネルの方針】\n" +
+            "・情報を整理して見せる形式が軸。単なるキャラ紹介や感想は不可\n" +
+            "・「今わかっている内容の整理・時系列」×「真実や伏線などの引きが強い話題」の組み合わせ\n" +
+            "・尺は10分前後\n" +
+            "・原作ネタバレを含む場合はその旨を明記すること\n\n" +
+            "【出力形式】\n" +
+            "上記と重複しない新しい企画を、刺さる順に3つ。各企画について以下の3行だけを書いてください。\n" +
+            "タイトル: (20字前後)\n" +
+            "軸: (この動画で何を見せるか、1文)\n" +
+            "今刺さる理由: (第" + sel + "話まで見た視聴者に、なぜ今これが刺さるか、1〜2文)\n\n" +
+            "前置きや総括は不要です。3企画ぶんだけ出力してください。";
 
-        sample(prompt, {
-          modelTier: "default",
-          onText: function(e){ out.textContent = e.text; }
-        }).then(function(r){
-          out.textContent = r.text;
-          btn.disabled = false;
-        }).catch(function(err){
-          out.textContent = (err && err.code === "rate_limited")
-            ? "混み合っています。少し待ってからもう一度お試しください。"
-            : "生成できませんでした。もう一度お試しください。";
-          btn.disabled = false;
+          sample(prompt, {
+            modelTier: "default",
+            onText: function(e){ out.textContent = e.text; }
+          }).then(function(r){
+            out.textContent = r.text;
+            btn.disabled = false;
+          }).catch(function(err){
+            out.textContent = (err && err.code === "rate_limited")
+              ? "混み合っています。少し待ってからもう一度お試しください。"
+              : "生成できませんでした。もう一度お試しください。";
+            btn.disabled = false;
+          });
         });
-      });
-    }).catch(function(){ $("askbtn").parentNode.parentNode.hidden = true; });
-  } else {
-    $("askbtn").parentNode.parentNode.hidden = true;
+      }).catch(function(){ var b2 = $("askbtn"); if(b2) b2.parentNode.parentNode.hidden = true; });
+    } else {
+      var b3 = $("askbtn"); if(b3) b3.parentNode.parentNode.hidden = true;
+    }
   }
+  /*@@END@@*/
 })();
 
   // ── iPhone用: フック画像をこの場で作る ──────────────

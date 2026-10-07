@@ -19,6 +19,7 @@ ICHIRAN = os.path.join(HERE, u"動画一覧.txt")
 class Douga(object):
     def __init__(self, c):
         self.shirushi, self.namae, sub, tts, self.midashi = c[:5]
+        self.ban = c[5] if len(c) >= 6 else u"mushoku"
         self.sub = os.path.join(SC, sub)
         self.tts = os.path.join(SC, tts)
         self.sub_rel, self.tts_rel = sub, tts
@@ -29,7 +30,8 @@ class Douga(object):
         return "<Douga %s %s>" % (self.shirushi, self.namae)
 
 
-def yomu(path=None):
+def yomu(path=None, ban=None):
+    u"""ban に "osusume" などを渡すと、その掲示板の動画だけを返す。"""
     out = []
     for line in io.open(path or ICHIRAN, encoding="utf-8-sig") \
             .read().replace("\r\n", "\n").split("\n"):
@@ -37,11 +39,15 @@ def yomu(path=None):
         if not t.strip() or t.lstrip().startswith(u"#") or u"\t" not in t:
             continue
         c = [x.strip() for x in t.split(u"\t")]
-        if len(c) < 5:
-            raise ValueError(u"動画一覧.txt の列が足りません: " + t)
+        if len(c) < 6:
+            raise ValueError(u"動画一覧.txt の列が足りません(6列): " + t)
         out.append(Douga(c))
     if not out:
         raise ValueError(u"動画一覧.txt に1本も書かれていません")
+    if ban:
+        out = [v for v in out if v.ban == ban]
+        if not out:
+            raise ValueError(u"掲示板 %s の動画が1本もありません" % ban)
     return out
 
 
@@ -52,7 +58,7 @@ if __name__ == "__main__":
     except Exception:
         pass
     for v in yomu():
-        print(u"%-7s %-8s %s" % (v.shirushi, v.namae, v.midashi))
+        print(u"%-7s %-9s %-8s %s" % (v.shirushi, v.ban, v.namae, v.midashi))
         for p in (v.sub, v.tts, v.overlay):
             if not os.path.exists(p):
                 print(u"   × ありません: " + os.path.basename(p))

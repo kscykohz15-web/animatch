@@ -219,6 +219,27 @@ else:
     print(u"○ 演出.txt が使う音 %d件とも、掲示板から全パックに入ります（%s）"
           % (len(oto), u" ".join(sorted(oto))))
 
+# 動画一覧.txt の1本ごとに、掲示板の SCRIPTS に件があるか。
+# build.py も最後に見るが、そこまで20項目ぜんぶ走ってからになるので、ここでも見る。
+nai_sc = [v.shirushi for v in _DOUGA
+          if not re.search(r"^    %s:\{name:" % re.escape(v.shirushi), src, re.M)]
+if nai_sc:
+    warui.append(u"board.src.html の SCRIPTS に無い動画: " + u" ".join(nai_sc))
+    print(u"× SCRIPTS に無い動画: " + u" ".join(nai_sc))
+else:
+    print(u"○ 動画 %d本とも SCRIPTS に件があります" % len(_DOUGA))
+
+# 節の data-board が、build.py の知っている掲示板だけを指しているか
+ban_src = set(re.findall(r'<section data-board="([^"]+)"', src))
+ban_ichiran = set(v.ban for v in _DOUGA)
+shiranai = ban_src - ban_ichiran
+if shiranai:
+    warui.append(u"data-board に動画が1本も無い掲示板: " + u" ".join(sorted(shiranai)))
+    print(u"× data-board に動画が1本も無い掲示板: " + u" ".join(sorted(shiranai)))
+else:
+    print(u"○ 掲示板 %s … 節の印と動画一覧.txt が合っています"
+          % u" / ".join(sorted(ban_ichiran)))
+
 for d in DOUGA:
     for tag, nm in ((u"over", u"画面表示"), (u"plan", u"画像プラン")):
         f = os.path.join(V, u"%s_%s.txt" % (nm, NAMAE[d]))
