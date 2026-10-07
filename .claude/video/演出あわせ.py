@@ -50,12 +50,10 @@ SANKOU = {
 HONNIN = dict(NERAI)
 HONNIN.update(SANKOU)
 
-KUMI = [
-    (u"老デウス", u"画面表示_老デウス.txt", u"../final/老デウス_壮絶な人生年表_字幕用_最終版.txt"),
-    (u"第1回", u"画面表示_第1回.txt", u"../final/第1回_人生年表_字幕用_最終版.txt"),
-    (u"第6回", u"画面表示_第6回.txt", u"../final/第6回_ヒトガミの正体_字幕用_最終版.txt"),
-    (u"第7回", u"画面表示_第7回.txt", u"../final/第7回_オルステッドの正体_字幕用_最終版.txt"),
-]
+# どの台本で測るかも 動画一覧.txt にだけ書いてあります。
+# 前はここに4本だけ書き写していました。
+import 動画一覧 as _D
+KUMI = [(v.namae, v.overlay, v.sub) for v in _D.yomu()]
 
 
 def kumitate(script):
@@ -83,8 +81,8 @@ def hakaru(en_path):
               u"mijikai": 0, u"nagai": 0, u"byou": 0.0}
     aida = []
     for (nm, ov, sc) in KUMI:
-        rows, starts, total = kumitate(os.path.join(HERE, sc))
-        _credit, chaps = M.load_overlay(os.path.join(HERE, ov))
+        rows, starts, total = kumitate(sc)
+        _credit, chaps = M.load_overlay(ov)
         kinds = M.kimeru_basho(rows, starts, chaps, en)
         n = len(rows) - 1                      # 切り替わりの数
         goukei[u"cut"] += n
@@ -130,7 +128,8 @@ def hakaru(en_path):
 def main():
     p = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, u"演出.txt")
     kekka, cut = hakaru(p)
-    print(u"\n%s で、台本4本(切り替わり %d か所)を計算した結果\n" % (os.path.basename(p), cut))
+    print(u"\n%s で、台本%d本(切り替わり %d か所)を計算した結果\n"
+          % (os.path.basename(p), len(KUMI), cut))
     print(u"  %-26s %8s %8s %7s" % (u"", u"いまの設定", u"本人の実測", u"ちがい"))
     warui = 0
     for k in (u"演出が入る間隔", u"効果音のずれ", u"パッと切る(2コマ以内)",

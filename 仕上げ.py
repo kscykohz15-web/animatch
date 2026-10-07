@@ -68,30 +68,20 @@ except Exception:
 YOMI_SOKUDO = 6.46          # 実測の読み上げ速度（字/秒）
 SAITAN_BYO = 8 * 60         # ミッドロール広告に必要な尺
 
-# (名前, 字幕用, 読み上げ用)
-DAIHON = [
-    (u"老デウス", u"final/老デウス_壮絶な人生年表_字幕用_最終版.txt",
-                  u"final/老デウス_壮絶な人生年表_読み上げ用_最終版.txt"),
-    (u"第0弾", u"第0弾_ターニングポイント全解説_字幕用_v4段落整理版.txt",
-               u"第0弾_ターニングポイント全解説_読み上げ用_v4段落整理版.txt"),
-    (u"第1回", u"final/第1回_人生年表_字幕用_最終版.txt",
-               u"final/第1回_人生年表_読み上げ用_最終版.txt"),
-    (u"第3回", u"final/第3回_伏線7選_字幕用_最終版.txt",
-               u"final/第3回_伏線7選_読み上げ用_最終版.txt"),
-    (u"第4回", u"final/第4回_謎7選_字幕用_最終版.txt",
-               u"final/第4回_謎7選_読み上げ用_最終版.txt"),
-    (u"第5回", u"final/第5回_3人が一度いなくなる理由_字幕用_最終版.txt",
-               u"final/第5回_3人が一度いなくなる理由_読み上げ用_最終版.txt"),
-    (u"第6回", u"final/第6回_ヒトガミの正体_字幕用_最終版.txt",
-               u"final/第6回_ヒトガミの正体_読み上げ用_最終版.txt"),
-    (u"第7回", u"final/第7回_オルステッドの正体_字幕用_最終版.txt",
-               u"final/第7回_オルステッドの正体_読み上げ用_最終版.txt"),
-]
+# ■ どの動画があるかは、ここには書きません（2026-10-07）
+#
+# 前はこのファイルに2つ（DAIHON と DOUGA）、全部しらべる.py に1つ、
+# プラン全部作る.py に1つ、同じ一覧が4か所ありました。
+# 1本足すとどこかを必ず忘れるので、video/動画一覧.txt に1か所だけ置いています。
+import 動画一覧 as _D
+_DOUGA = _D.yomu()
+DAIHON = [(v.namae, v.sub_rel, v.tts_rel) for v in _DOUGA]
+DOUGA = [v.shirushi for v in _DOUGA]
+NAMAE = dict((v.shirushi, v.namae) for v in _DOUGA)
 
 # パックに必ず入っていないといけないもの
 KYOTSU = [u"画像カタログ.txt", u"話数マップ.txt", u"タグ一覧.txt", u"企画と台本の型.txt",
           u"台本の知恵.txt", u"読み辞書.txt", u"人物ルール.txt", u"演出.txt", u"見た目.txt"]
-DOUGA = [u"rou", u"tp", u"s1", u"s3", u"s4", u"s5", u"s6", u"s7"]
 
 warui = []
 
@@ -110,7 +100,7 @@ def mmss(t):
 
 
 # ── ① 台本の組 ───────────────────────────────────────
-midashi(u"①", u"台本の組（字幕用 と 読み上げ用）")
+midashi(u"①", u"台本の組（動画一覧.txt の %d本）" % len(DAIHON))
 for (nm, sub, tts) in DAIHON:
     ps, pt = os.path.join(B, sub), os.path.join(B, tts)
     if not os.path.exists(ps):
@@ -231,9 +221,7 @@ else:
 
 for d in DOUGA:
     for tag, nm in ((u"over", u"画面表示"), (u"plan", u"画像プラン")):
-        f = os.path.join(V, u"%s_%s.txt" % (nm, {
-            u"rou": u"老デウス", u"tp": u"第0弾", u"s1": u"第1回", u"s3": u"第3回",
-            u"s4": u"第4回", u"s5": u"第5回", u"s6": u"第6回", u"s7": u"第7回"}[d]))
+        f = os.path.join(V, u"%s_%s.txt" % (nm, NAMAE[d]))
         if not os.path.exists(f):
             warui.append(u"%s がありません" % os.path.basename(f))
             print(u"× %s がありません" % os.path.basename(f))
@@ -357,10 +345,21 @@ if r.returncode != 0:
 midashi(u"⑫", u"台本の先頭に見えない文字(BOM)が付いていないか")
 # 付いていると、VOICEPEAK に渡す本人のスクリプトが
 # cp932 で書けずに落ちる（実際に落ちた）。
+# ■ 見る所が足りていなかった（2026-10-07）
+#
+# ここは「JSの式に \ufeff と書いていないか」だけを見ていた。
+# **台本そのものの先頭に BOM が付いていること**は見ていないので、
+# 掲示板に残っていた v141 では doc-*-tts 8本ぜんぶに付いていた。
+# 本物の台本ファイルを直に見る。build.py も流し込むときに落とす。
 warui_bom = []
 for m in re.finditer(r'\{name:"(台本_[^"]+\.txt)",\s*text:\s*([^,}]+)\}', src):
     if u"ufeff" in m.group(2):
         warui_bom.append(m.group(1))
+for (nm, sub, tts) in DAIHON:
+    for michi in (sub, tts):
+        f = os.path.join(B, michi)
+        if os.path.exists(f) and io.open(f, "rb").read(3) == b"\xef\xbb\xbf":
+            warui_bom.append(os.path.basename(f))
 if warui_bom:
     for f in sorted(set(warui_bom)):
         warui.append(u"%s に BOM が付いています" % f)
