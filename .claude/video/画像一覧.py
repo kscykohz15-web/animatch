@@ -40,6 +40,9 @@ import io
 import argparse
 import shutil
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import 置き場所                                   # 絵の道は置き場所.txt にだけ書く
+
 EXTS = (".png", ".jpg", ".jpeg", ".webp", ".bmp")
 KI_KIGOU = ((u"Ⅲ", 3), (u"Ⅱ", 2), (u"III", 3), (u"II", 2))
 MATOME = u"一覧"            # 全話数ぶんを集めるフォルダの名前
@@ -237,7 +240,7 @@ def atarashii_ka(fol_path, names):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--images", default=u"C:\\Youtube動画\\無職転生\\画像\\高画質")
+    ap.add_argument("--images", default=置き場所.gazou())
     ap.add_argument("--catalog", default=u"画像カタログ.txt")
     ap.add_argument("--again", action="store_true")
     a = ap.parse_args()

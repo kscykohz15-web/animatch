@@ -114,8 +114,8 @@ def junbi():
     ff(["-f", "lavfi", "-i",
         "sine=frequency=280:duration=12,volume='if(lt(mod(t,2),1.4),0.5,0)':eval=frame",
         "-ar", "44100", "-ac", "1", os.path.join(SAGYOU, "merged.wav")])
-    shutil.copy(os.path.join(HERE, "make_slideshow.py"),
-                os.path.join(SAGYOU, "make_slideshow.py"))
+    for f in ("make_slideshow.py", u"置き場所.py"):
+        shutil.copy(os.path.join(HERE, f), os.path.join(SAGYOU, f))
     return e
 
 

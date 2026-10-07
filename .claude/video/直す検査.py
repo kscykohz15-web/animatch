@@ -50,7 +50,8 @@ def junbi():
         shutil.rmtree(SAGYOU)
     os.makedirs(os.path.join(SAGYOU, u"確認用"))
     os.makedirs(os.path.join(SAGYOU, u"その他"))
-    for f in (u"直す.py", u"miru_kekka.py", u"make_slideshow.py", u"人物ルール.txt"):
+    for f in (u"直す.py", u"miru_kekka.py", u"make_slideshow.py", u"置き場所.py",
+              u"人物ルール.txt"):
         shutil.copy(os.path.join(HERE, f), os.path.join(SAGYOU, f))
     root = os.path.join(SAGYOU, u"画像")
     cat = [u"# 目印\t説明"]

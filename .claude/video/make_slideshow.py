@@ -35,7 +35,14 @@ import time
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-IMGDIR_DEFAULT = u"C:\\Youtube動画\\無職転生\\画像\\高画質"
+sys.path.insert(0, HERE)
+try:
+    import 置き場所                               # 絵の道は置き場所.txt にだけ書く
+    IMGDIR_DEFAULT = 置き場所.gazou()
+except ImportError:
+    # 検査が作る作業フォルダには、道具を1つだけ持ち込むことがある。
+    # そこでは必ず --images が渡るので、この値は使われない。
+    IMGDIR_DEFAULT = u""
 EXTS = (".png", ".jpg", ".jpeg", ".webp", ".bmp")
 # ── フォルダの分け方（2026-10-02 本人の指定）──────────────
 #   音声/    … merged.wav / subtitle.srt / 音声のもと.txt
