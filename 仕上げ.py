@@ -189,6 +189,14 @@ if yobi < 2:
     print(u"× ZIPを作る2か所のうち %d か所しか共通を入れていません" % yobi)
 else:
     print(u"○ ZIPを作る %d か所とも共通を入れています" % yobi)
+    # 置き場所.txt は掲示板ごとに中身が違うので共通(pushKyotsu)に入れられない。
+    # 入れ忘れると、絵のフォルダを見にいく先が無いまま動画を作ることになる。
+    nb = len(re.findall(r'name:"置き場所\.txt"', src))
+    if nb < 2:
+        warui.append(u"置き場所.txt を入れているZIPが %d か所しかありません（2か所必要）" % nb)
+        print(u"× 置き場所.txt がZIPの %d か所にしか入っていません" % nb)
+    else:
+        print(u"○ 置き場所.txt も ZIPの %d か所とも入ります" % nb)
     nai = [k for k in KYOTSU if u'"%s"' % k not in src]
     if nai:
         warui.append(u"共通に入っていない: " + u" ".join(nai))

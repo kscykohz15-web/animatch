@@ -82,7 +82,7 @@ def junbi():
     if os.path.isdir(SAGYOU):
         shutil.rmtree(SAGYOU)
     os.makedirs(SAGYOU)
-    for f in (u"make_slideshow.py", u"見た目.txt", u"演出.txt",
+    for f in (u"make_slideshow.py", u"置き場所.py", u"見た目.txt", u"演出.txt",
               u"_zure_tsukuru.py", u"_zure_hakaru.py"):
         shutil.copy(os.path.join(HERE, f), os.path.join(SAGYOU, f))
     ex = os.path.join(SAGYOU, u"ex", u"てすと")

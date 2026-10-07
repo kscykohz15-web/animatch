@@ -28,6 +28,7 @@ SRC = os.path.join(HERE, "board.src.html")
 
 # (置き場所の id, video/ の中のファイル名)
 PAIRS = [
+    ("py-basho",     u"置き場所.py"),
     ("py-slideshow", u"make_slideshow.py"),
     ("py-contact",   u"make_contact.py"),
     ("py-shiboru",   u"shiboru.py"),

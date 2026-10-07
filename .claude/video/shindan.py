@@ -10,6 +10,8 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import 置き場所                                   # 道は置き場所.txt にだけ書く
 OUT = []
 
 
@@ -45,7 +47,7 @@ def pick_folder():
             return d, tried
         d = os.path.dirname(d)
         tried.append(d)
-    root = u"C:\\Youtube動画\\無職転生"
+    root = 置き場所.oomoto()
     best, bt = None, -1
     if os.path.isdir(root):
         for n in os.listdir(root):

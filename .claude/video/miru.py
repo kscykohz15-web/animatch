@@ -38,7 +38,9 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 EXTS = (".jpg", ".jpeg", ".png", ".webp", ".bmp")
 
-IMGDIR_DEFAULT = u"C:\\Youtube動画\\無職転生\\画像\\高画質"
+sys.path.insert(0, HERE)
+import 置き場所                                   # 絵の道は置き場所.txt にだけ書く
+IMGDIR_DEFAULT = 置き場所.gazou()
 CATALOG = u"画像カタログ.txt"
 EPMAP = u"話数マップ.txt"
 KEYFILE = u"APIキー.txt"

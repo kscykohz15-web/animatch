@@ -18,8 +18,10 @@ import shutil
 import subprocess
 import sys
 
-SRC_DEFAULT = u"C:\\Youtube動画\\無職転生\\録画"
-OUT_DEFAULT = u"C:\\Youtube動画\\無職転生\\画像\\素材"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import 置き場所                                   # 道は置き場所.txt にだけ書く
+SRC_DEFAULT = 置き場所.rokuga()
+OUT_DEFAULT = os.path.join(置き場所.oomoto(), u"画像", u"素材")
 VIDEO_EXTS = (".ts", ".m2ts", ".mp4", ".mkv", ".avi", ".wmv", ".mov", ".mpg")
 
 

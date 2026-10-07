@@ -13,8 +13,11 @@ import os
 import re
 import sys
 
-IMGDIR_DEFAULT = u"C:\\Youtube動画\\無職転生\\画像\\高画質"
-OUTDIR_DEFAULT = u"C:\\Youtube動画\\無職転生\\画像"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import 置き場所                                   # 絵の道は置き場所.txt にだけ書く
+IMGDIR_DEFAULT = 置き場所.gazou()
+OUTDIR_DEFAULT = os.path.dirname(IMGDIR_DEFAULT.rstrip(u"\\/")) \
+    if os.path.basename(IMGDIR_DEFAULT.rstrip(u"\\/")) == u"高画質" else IMGDIR_DEFAULT
 EXTS = (".png", ".jpg", ".jpeg", ".webp", ".bmp")
 
 FONTS = [

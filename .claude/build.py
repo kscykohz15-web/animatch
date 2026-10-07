@@ -179,6 +179,31 @@ def main():
                    u'<div class="eyebrow">%s</div>' % eyebrow, s, count=1)
         s = s.replace(u'var BOARD = "@@BOARD@@";', u'var BOARD = "%s";' % ban)
 
+        # 絵と録画の道。置き場所_<掲示板>.txt が、ただ一つの置き場所。
+        # menu.ps1 の中にも同じ道が要るので、ここから差し込む。
+        basho_file = os.path.join(V, u"置き場所_%s.txt" % ban)
+        basho = yomu(basho_file)
+        michi = {}
+        for line in basho.split(u"\n"):
+            t = line.strip()
+            if t and not t.startswith(u"#") and u"\t" in t:
+                k, v = t.split(u"\t", 1)
+                michi[k.strip()] = v.strip()
+        for k in (u"おおもと", u"画像", u"録画"):
+            if not michi.get(k):
+                shinu(u"%s に「%s」の行がありません" % (os.path.basename(basho_file), k))
+        # 画像フォルダの1つ上（shiboru.py と一覧シートを置く所）
+        imgroot = michi[u"画像"]
+        if os.path.basename(imgroot.replace(u"\\", u"/").rstrip(u"/")) == u"高画質":
+            imgroot = imgroot.replace(u"\\", u"/").rstrip(u"/").rsplit(u"/", 1)[0] \
+                .replace(u"/", u"\\")
+        s = s.replace(u"@@BASHO@@", basho)
+        # menu.ps1 はJSの文字列の中にあるので、円記号を2つにして入れる
+        for shirushi, michi_ in ((u"@@OOMOTO@@", michi[u"おおもと"]),
+                                 (u"@@IMGDIR@@", michi[u"画像"]),
+                                 (u"@@IMGROOT@@", imgroot)):
+            s = s.replace(shirushi, michi_.replace(u"\\", u"\\\\"))
+
         # 台本（BOMは落とす）
         daihon = []
         for v in douga:

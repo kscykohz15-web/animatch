@@ -23,6 +23,8 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import 置き場所                                   # 絵の道は置き場所.txt にだけ書く
 PLAN = u"画像割り当て.tsv"
 OVERLAY = u"画面表示.txt"
 AUDIO = u"merged.wav"
@@ -134,7 +136,7 @@ def main():
     ap.add_argument("--max-sec", type=float, default=60.0,
                     help=u"これを超えたら知らせる(既定60秒)")
     ap.add_argument("--name", default=u"", help=u"作るフォルダの名前")
-    ap.add_argument("--images", default=u"C:\\Youtube動画\\無職転生\\画像\\高画質")
+    ap.add_argument("--images", default=置き場所.gazou())
     ap.add_argument("--render", action="store_true", default=True)
     ap.add_argument("--no-render", dest="render", action="store_false")
     a = ap.parse_args()
@@ -243,7 +245,7 @@ def main():
     # 図表と道具をそろえる
     if os.path.isdir(FIGDIR):
         shutil.copytree(FIGDIR, os.path.join(out, FIGDIR))
-    for f in ("make_slideshow.py",):
+    for f in ("make_slideshow.py", u"置き場所.py", u"置き場所.txt"):
         if os.path.exists(f):
             shutil.copy2(f, out)
 

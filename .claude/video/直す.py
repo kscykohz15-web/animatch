@@ -44,6 +44,12 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import miru_kekka as M            # noqa: E402
+try:
+    import 置き場所                # noqa: E402  絵の道は置き場所.txt にだけ書く
+    GAZOU_KITEI = 置き場所.gazou()
+except ImportError:
+    # 検査の作業フォルダでは必ず --画像 が渡るので、この値は使われない
+    GAZOU_KITEI = u""
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -462,8 +468,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(u"確認用", u"一覧.txt"))
     ap.add_argument(u"--カタログ", dest="catalog", default=u"画像カタログ.txt")
-    ap.add_argument(u"--画像", dest="images",
-                    default=u"C:\\Youtube動画\\無職転生\\画像\\高画質")
+    ap.add_argument(u"--画像", dest="images", default=GAZOU_KITEI)
     ap.add_argument(u"--数", dest="kazu", type=int, default=30)
     ap.add_argument(u"--全部", dest="zenbu", action="store_true")
     ap.add_argument(u"--おまかせ", dest="omakase", action="store_true",

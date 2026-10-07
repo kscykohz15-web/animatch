@@ -49,7 +49,7 @@ def junbi(shou):
         shutil.rmtree(SAGYOU)
     os.makedirs(os.path.join(SAGYOU, u"その他"))
     os.makedirs(os.path.join(SAGYOU, u"ex", u"色"))
-    for f in (u"make_slideshow.py", u"見た目.txt", u"演出.txt"):
+    for f in (u"make_slideshow.py", u"置き場所.py", u"見た目.txt", u"演出.txt"):
         shutil.copy(os.path.join(HERE, f), os.path.join(SAGYOU, f))
     N, SR = 30, 44100
     for i in range(1, N + 1):
