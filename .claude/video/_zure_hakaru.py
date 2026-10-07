@@ -39,10 +39,26 @@ if len(hyou) != len(bun):
           u"背番号が効いていません。" % (len(bun), len(hyou)))
     sys.exit(1)
 
+# ■ くっつけた字幕も突き合わせられるようにする（2026-10-07）
+#
+# 「声が止まっていない「、」では切らない」ようにしたので、
+# 1枚の字幕が **正解の切れはし2つ以上** を含むようになった。
+# 本文をまるごと突き合わせる作りでは一致せず、
+# 「本文が合わない」が 16枚 → 67枚 に増えた。
+# **測れていないぶんが悪い所かもしれない**ので、このままでは数字を信じられない。
+#
+# 背番号は切れはしの先頭3文字なので、**字幕の先頭3文字**で引けば、
+# くっついていてもその字幕が始まる切れはしが分かる。
+atama3 = {}
+for i, (tx2, _) in enumerate(zip(bun, seikai)):
+    atama3.setdefault(tx2.strip()[:3], []).append(i)
+
 zure, mitsukaranai = [], 0
 for (st, du, tx) in rows:
     k = tx.strip()
     hits = hyou.get(k, [])
+    if len(hits) != 1:
+        hits = atama3.get(k[:3], [])
     if len(hits) != 1:
         mitsukaranai += 1
         continue

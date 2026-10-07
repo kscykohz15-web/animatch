@@ -794,14 +794,127 @@ def list_images(d, extra=None):
 
 
 # ---------------------------------------------------------------- 割り当て
-def split_text_by_time(text, st, en, pieces):
-    """text を pieces(文などの断片)に分け、文字数の比で時間を割り振る。"""
-    total_chars = float(sum(len(x) for x in pieces)) or 1.0
-    out, t = [], st
+def jissoku_hikidashi():
+    u"""「、」の切れはしごとに測った長さを、本文で引ける形にして返す。
+
+    ■ 「前から順に使い切る」ではいけない（2026-10-07）
+
+    はじめは pop() で使い切る形にしていた。ところが refine_cues は
+    **同じ本文に対して2回** split_text_by_time を呼ぶ:
+
+        ① 文に割るとき（この段落は文が1つなので、何も割らない）
+        ② その文を「、」で割るとき ← ここが本番
+
+    ①で中身をぜんぶ使い切ってしまい、**②には何も残っていなかった。**
+    そのため「、」の切れ目は結局ぜんぶ文字数で割られ、
+    測った長さを入れても数字が1つも動かなかった（4回くり返した）。
+
+    いまは使い切らない。同じ本文が何度も出てくるときは、
+    **値がそろっているときだけ**使う。ばらついていれば使わない
+    （どれが今の1つか決められないので、当てずっぽうより危ない）。
+    """
+    hk = dict()
+    for (ko, by, k3) in JISSOKU_KOMA:
+        hk.setdefault(ko, []).append((by, k3))
+    return hk
+
+
+def jissoku_hitotsu(hk, ko):
+    u"""その切れはしの「測った長さ」。決められないときは None。"""
+    # ■ 同じ本文が2回以上出てきたら、使わない（2026-10-07）
+    #
+    # 「近ければ平均してよい」にしたら、いちばん大きいずれが
+    # 0.96秒 → 1.81秒 と**悪くなった。**
+    # どの1つを指しているか決められないものを使うと、
+    # 当てずっぽうより大きく外す。1回しか出てこない本文だけ使う。
+    v = hk.get(ko)
+    if not v or len(v) != 1:
+        return None
+    return v[0][0]
+
+
+def jissoku_iki(hk, ko):
+    u"""その切れはしのあとで、本当に声が止まったか。分からなければ None。"""
+    v = hk.get(ko)
+    if not v or len(v) != 1:
+        return None
+    return v[0][1]
+
+
+def kire_me_erabu(hk, piece, max_chars):
+    u"""「、」の切れはしのうち、**声が止まった所でだけ**切るようにまとめ直す。
+
+    ■ 声が止まっていない所で切ると、合わせようが無い（2026-10-07）
+
+    残っていたずれを数えたら、0.3秒を超えた 45件は 206件中の22%。
+    材料で「息継ぎしない「、」」にした割合 27% とほぼ同じだった。
+
+    **つまり残りは全部「声が止まっていない所で字幕を切った」ぶん。**
+    そこには合わせ先の「間」が無いので、文字数で割るしかなく、
+    読む速さのばらつき(±25%)がそのままずれになる。
+    いくら測り方を良くしても、ここは原理的に詰められない。
+
+    切らなければ、ずれない。声が止まった所でだけ切る。
+    ただし字幕が長くなりすぎるときは、読めなくなるので切る。
+    """
+    if not hk:
+        return piece
+    out, cur = [], u""
+    for i, x in enumerate(piece):
+        cur += x
+        iki = jissoku_iki(hk, x)
+        owari = (i == len(piece) - 1)
+        # 声が止まった／分からない／長すぎる／最後 なら、ここで切る
+        if owari or iki is None or iki or disp_len(cur) >= max_chars:
+            out.append(cur)
+            cur = u""
+    if cur:
+        if out:
+            out[-1] += cur
+        else:
+            out.append(cur)
+    return out
+
+
+def jissoku_nagasa(hk, text):
+    u"""その本文ぜんぶの「測った長さ」。1つでも欠けていれば None。"""
+    if not hk:
+        return None
+    kei = 0.0
+    for ko in kugiri(text, 0):
+        b2 = jissoku_hitotsu(hk, ko)
+        if b2 is None:
+            return None
+        kei += b2
+    return kei if kei > 0 else None
+
+
+def split_text_by_time(text, st, en, pieces, hk=None):
+    """text を pieces(文などの断片)に分け、時間を割り振る。
+
+    ■ ここが「測った長さ」を捨てていた大元（2026-10-07）
+
+    1行ずつの音声で測った長さを、はじめは split_by_kuten にだけ入れていた。
+    ところが**字幕はその前に refine_cues でもう割られていて**、
+    そこがこの関数（文字数の比）を使っていた。
+    後ろでいくら直しても、**切れ目はすでに決まっていた。**
+    だから「測った長さを入れたのに数字が1つも動かない」が3回続いた。
+
+    いま、測った長さがあればそれで割る。無い所だけ文字数で割る。
+    """
     span = en - st
+    naga = None
+    if hk and len(pieces) > 1:
+        n2 = [jissoku_nagasa(hk, x) for x in pieces]
+        if all(x is not None for x in n2) and sum(n2) > 0:
+            kei2 = float(sum(n2))
+            naga = [span * (x / kei2) for x in n2]
+    if naga is None:
+        total_chars = float(sum(len(x) for x in pieces)) or 1.0
+        naga = [span * (len(x) / total_chars) for x in pieces]
+    out, t = [], st
     for i, piece in enumerate(pieces):
-        d = span * (len(piece) / total_chars)
-        e = en if i == len(pieces) - 1 else t + d
+        e = en if i == len(pieces) - 1 else t + naga[i]
         out.append((t, e, piece))
         t = e
     return out
@@ -1387,7 +1500,13 @@ def wav_no_koe(path, saitan=0.095):
     「読む速さはどこでも同じ」という当てずっぽうを捨てられる。
     """
     try:
-        sils = detect_silences(path, NOISE_DB[0], 0.05)
+        # ■ 拾う下限を saitan に合わせる（2026-10-07）
+        #
+        # ここは 0.05秒で固定だった。そのため saitan を 0.02 に下げても
+        # **検出そのものが 0.05秒止まりで、数字が1つも動かなかった。**
+        # 息を継がない「、」の切れ目は 0.02〜0.07秒なので、
+        # 0.05秒止まりでは半分しか見えない。
+        sils = detect_silences(path, NOISE_DB[0], max(0.01, min(0.05, saitan)))
     except Exception:
         return []
     zen = audio_duration(path) or 0.0
@@ -1404,31 +1523,165 @@ def wav_no_koe(path, saitan=0.095):
     return out
 
 
-def jissoku_wariai(path, kazu, saitan=0.095):
-    u"""1行ぶんの音声から、切れはし kazu 個それぞれの「本当の長さの割合」を返す。
+MATOME_JOUGEN = 8          # 1つの区間にまとめる切れはしの上限（暴走よけ）
 
-    声の区間の数が kazu と合ったときだけ答える。合わなければ None。
-    （合わないのは、「、」で息を継がなかった所があるとき。
-      そのときは今までどおり文字数で割る）
+# 切れはし(「、」ごと)1つ1つの、測った長さ（秒）。(本文, 秒) の並び。
+#
+# ■ なぜ要るか（2026-10-07）
+#
+# 1行ずつの音声で測った長さを、はじめは**文の切れ目にしか**使っていなかった。
+# その結果 place_in_chunk（文の頭）は 最大0.25秒まで良くなったのに、
+# **「、」の切れ目は 最大0.96秒のまま**だった。
+# split_by_kuten が、文の中を**文字数の比**で割っていたから。
+#
+# ■ 文まるごとの本文では引けない（一度しくじった）
+#
+# はじめは (文の本文, 割合) で持たせたが、split_by_kuten に届く時点で
+# 本文はすでに細かく割られていて、**一度も一致しなかった**。
+# 数字が1つも変わらず、それで気づいた。
+# いまは**切れはしの本文**で引く。割り方が変わっても引ける。
+#
+# 同じ本文が何度も出てきたときは、**前から順に**使う。
+JISSOKU_KOMA = []
+KOMA_TSUKATTA = [0, 0]     # 「、」の割り方: [測った値を使った枚数, 文字数で割った枚数]
+KOMA_JISSOKU = []          # 1枚ごとに「測った長さで割ったか」。koma_awase が見る
 
-    ■ 「数が合えば位置を見ずに確定」の二の舞にしないために
+# 測った見当を、本物の「間」へ寄せるときに許す動き（秒）。
+#
+# 当てずっぽうの見当は大きく外れるので 1.6秒まで許していた。
+# **測った見当は外れないので、そんなに動かしてはいけない。**
+# 大きく許すと、となりの「間」へ吸い寄せられて、かえって悪くなる。
+JISSOKU_TOL = [0.35]
 
-    ここで返すのは**割合だけ**で、位置は決めない。
-    位置は、このあと merged.wav の本物の間へ寄せるときに決まる。
-    数が合ったことを、位置の証拠には使わない。
+
+def koe_to_awaseru(moji, dur):
+    u"""切れはしの文字数と、測った声の区間を、順番を保って対応づける。
+
+    ■ 「数がぴったり合ったときだけ使う」をやめた理由（2026-10-07）
+
+    前はこうしていた ──
+    「、」で割った数と、声の区間の数が**ぴったり同じときだけ**実測を使う。
+
+    本人の第6回のログ:
+
+        15/54 の段落は、1行ずつの音声で文の長さを実測しました
+
+    **54段落のうち15段落しか使えていない。** 残り39段落は
+    文字数で割る当てずっぽうに落ち、本人の画面で 2.08秒ずれていた。
+
+    理由は単純で、**読み上げは「、」で必ず息を継ぐわけではない。**
+    1か所でも継がなければ数が合わず、その段落まるごと実測を捨てていた。
+    1段落に「、」が4つあれば、4回とも継ぐ確率は 0.73**4 ≒ 0.28。
+    **ぴったり一致を求めるかぎり、7割の段落は救えない。**
+
+    いまは数が合わなくてよい。切れはしと声の区間を、
+    **順番を崩さずに**対応づける（どちらが多くてもよい）。
+
+      ・声の区間が少ない  → 息を継がなかった所。1区間に数個の切れはしが入る
+      ・声の区間が多い    → 言葉の途中で切れた所。数区間で1つの切れはしになる
+
+    対応のしかたは、**文字数から予想した長さにいちばん近いもの**を選ぶ。
+    選んだあとの長さは**測った値**を使う。
+    文字数は「どう区切るか」を決めるためだけに使い、
+    長さそのものは当てずっぽうにしない。
+
+    ■ ここでも「位置」は決めない
+
+    返すのは長さだけ。位置はこのあと merged.wav の本物の間へ寄せるときに決まる。
+    「対応がついたこと」を位置の証拠には使わない。
+    （「ちょうど k-1個あったから確定」で 9.6秒ずらした失敗をくり返さない）
+    """
+    k, m = len(moji), len(dur)
+    if k <= 0 or m <= 0:
+        return None
+    zen_d = float(sum(dur))
+    zen_c = float(sum(moji))
+    if zen_d <= 0 or zen_c <= 0:
+        return None
+    cm, cd = [0] * (k + 1), [0.0] * (m + 1)
+    for i, x in enumerate(moji):
+        cm[i + 1] = cm[i] + x
+    for j, x in enumerate(dur):
+        cd[j + 1] = cd[j] + x
+    INF = float("inf")
+    best = [[INF] * (m + 1) for _ in range(k + 1)]
+    kara = [[None] * (m + 1) for _ in range(k + 1)]
+    best[0][0] = 0.0
+    for i in range(k + 1):
+        for j in range(m + 1):
+            if best[i][j] == INF:
+                continue
+            for a in range(1, min(MATOME_JOUGEN, k - i) + 1):
+                for b in range(1, min(MATOME_JOUGEN, m - j) + 1):
+                    if a > 1 and b > 1:
+                        continue          # 多対多は許さない（対応が曖昧になる）
+                    ch = cm[i + a] - cm[i]
+                    dd = cd[j + b] - cd[j]
+                    nedan = best[i][j] + abs(dd - zen_d * ch / zen_c)
+                    if nedan < best[i + a][j + b]:
+                        best[i + a][j + b] = nedan
+                        kara[i + a][j + b] = (i, j, a)
+    if best[k][m] == INF:
+        return None
+    out = [0.0] * k
+    iki = [False] * k           # その切れはしのあとで、本当に声が止まったか
+    i, j = k, m
+    while i > 0 or j > 0:
+        pi, pj, a = kara[i][j]
+        dd = cd[j] - cd[pj]
+        ch = cm[i] - cm[pi]
+        for q in range(a):
+            out[pi + q] = dd * (moji[pi + q] / float(ch)) if ch else dd / a
+        iki[pi + a - 1] = True   # かたまりの最後だけが、本物の切れ目
+        i, j = pi, pj
+    return out, iki
+
+
+def jissoku_wariai(path, moji, saitan=0.095, koma=None):
+    u"""1行ぶんの音声から、切れはしそれぞれの「本当の長さの割合」を返す。
+
+    moji は切れはしごとの文字数の並び。koma は「文ごとの切れはしの数」。
+    数が合わなくても答える。
+
+    ■ 段落まるごとで対応づけると、1つ食いちがうと最後まで響く（2026-10-07）
+
+    作った材料の段落2で、**正解 24.79 / 26.33 は
+    測った区間の切れ目 24.85 / 26.39 とぴったり一致していた。**
+    つまり測定は正解を持っていたのに、出来た動画は 23.82 / 25.66 で、
+    0.97秒 早かった。段落全体をいっぺんに対応づけたので、
+    **どこか1つの食いちがいが、そこから先をまるごとずらしていた。**
+
+    文の切れ目（「。」）は place_in_chunk が別に正確に出している（最大0.25秒）。
+    そこで**文ごとに区切って**対応づける。
+    食いちがってもその文の中だけで済み、次の文には響かない。
     """
     if not JISSOKU_TSUKAU[0]:
         return None
     koe = wav_no_koe(path, saitan)
-    if len(koe) != kazu or kazu <= 0:
+    if not koe or not moji:
         return None
     # 切れはし q の長さ = 声の長さ + そのうしろの間（次の声までの空き）
     nagasa = []
     for i, (a2, b2) in enumerate(koe):
         tsugi = koe[i + 1][0] if i + 1 < len(koe) else b2
         nagasa.append(max(0.01, tsugi - a2))
-    kei = float(sum(nagasa))
-    return [x / kei for x in nagasa]
+
+    # ■ 文ごとに区切って対応づけるのは、実測で悪くなった（2026-10-07）
+    #
+    #   段落まるごと … 最大 0.96秒 / 平均 0.22 / 0.3秒超 14%
+    #   文ごと       … 最大 1.81秒 / 平均 0.24 / 0.3秒超 16%
+    #
+    # 文の区切りを声の区間に合わせる所で取りちがえると、
+    # その文の中が丸ごとずれるため。段落まるごとのほうが安定していた。
+    # （思いつきが良さそうでも、測って悪ければ入れない）
+    kekka = koe_to_awaseru(list(moji), nagasa)
+    if not kekka:
+        return None
+    naga, iki = kekka
+    kei = float(sum(naga))
+    if kei <= 0:
+        return None
+    return [x / kei for x in naga], iki
 
 
 def koe_no_jiku(a0, b0, sils):
@@ -1645,11 +1898,25 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
         # i と j は動かさない。その間の (j-i-1) 個を寄せる
         a0, b0 = kugiri[i], kugiri[j]
         naka = [(t, L) for (t, L) in ma if a0 + 0.25 < t < b0 - 0.25]
-        # 見当は「声が出ている時間」で割り直す。
-        # ここに来る kugiri[i+1:j] は文字数で割ったままの値なので、
-        # 長い段落では間の積み重ねぶん（1.5〜2秒）ずれている。
-        moji0 = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
-        exp = mitsumori(a0, b0, moji0, sils)
+        # ■ 見当の作り直しが、測った長さを捨てていた（2026-10-07・ここが本丸）
+        #
+        # ここは無条件に**文字数から見当を作り直して**いた。
+        # そのため split_by_kuten が 1行ずつの音声で測った長さを入れても、
+        # **この行で丸ごと捨てられ、数字が1つも変わらなかった。**
+        # （measured を入れても 0.96秒のまま動かず、それで気づいた）
+        #
+        # 測って割った所は、slots の時刻そのものが答えなので、それを使う。
+        # 寄せ幅も小さくする。測った見当を 1.6秒も動かす理由は無い。
+        jis_koko = all(KOMA_JISSOKU[i + q] for q in range(0, j - i)) \
+            if len(KOMA_JISSOKU) >= j else False
+        if jis_koko:
+            exp = list(kugiri[i + 1:j])
+            tol_koko = min(tol, JISSOKU_TOL[0])
+        else:
+            # 測れていない所だけ、今までどおり文字数で割り直す
+            moji0 = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
+            exp = mitsumori(a0, b0, moji0, sils)
+            tol_koko = tol
         # 言葉の途中の途切れ(0.03〜0.12秒)まで候補に入れると、そちらへ
         # 吸い寄せられてかえって悪くなる。**長い間ほど切れ目らしい**ので、
         # 要る数の何倍かだけ、長いものから残してから位置で並べ直す。
@@ -1659,7 +1926,7 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
         moji = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
         # その切れ目の手前の字幕が「。」で終わっていれば、文の切れ目
         kuten = [owari_bun(slots[i + q][2]) for q in range(0, j - i - 1)]
-        kimari = ma_ni_yoseru(exp, naka, a0, b0, moji, tol=tol, kuten=kuten)
+        kimari = ma_ni_yoseru(exp, naka, a0, b0, moji, tol=tol_koko, kuten=kuten)
         for q, t3 in enumerate(kimari):
             if abs(t3 - exp[q]) > 0.05:
                 ugokashi += 1
@@ -1916,15 +2183,31 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict
         # 合わなければ今までどおり文字数で割る。
         wariai = None
         try:
-            koma = []
+            koma, moji = [], []
             for j in took:
-                koma.append(len(kugiri_moji(sents[j])))
-            hoshii = sum(koma)
-            w2 = jissoku_wariai(os.path.join(folder, names[gi]), hoshii)
+                ps = kugiri_moji(sents[j])
+                koma.append(len(ps))
+                moji.extend(max(1, disp_len(x)) for x in ps)
+            w2 = jissoku_wariai(os.path.join(folder, names[gi]), moji)
+            iki2 = None
             if w2:
+                w2, iki2 = w2
                 wariai, t2 = [], 0
-                for n2 in koma:
-                    wariai.append(sum(w2[t2:t2 + n2]))
+                for (j, n2) in zip(took, koma):
+                    bun = w2[t2:t2 + n2]
+                    wariai.append(sum(bun))
+                    # 文の中の「、」の割り方も、測った長さで決める。
+                    #
+                    # ■ 切れはしが1つの文も必ず記録する（2026-10-07）
+                    #
+                    # 前は n2 > 1（「、」で2つ以上に割れる文）だけ記録していた。
+                    # 引くほうは「その字幕の切れはしが**全部**そろっているか」で
+                    # 判定するので、**1つでも記録が無い文が混ざると、
+                    # その字幕まるごと文字数で割る**ほうへ落ちていた。
+                    # そのせいで、測った長さを入れても数字が1つも動かなかった。
+                    ik = iki2[t2:t2 + n2] if iki2 else [True] * n2
+                    for (ko, wa3, k3) in zip(kugiri_moji(sents[j]), bun, ik):
+                        JISSOKU_KOMA.append((ko, wa3, k3))
                     t2 += n2
                 jissoku += 1
         except Exception:
@@ -2110,6 +2393,7 @@ def refine_cues(cues, max_sec, max_chars):
     VOICEPEAKは一定の速さで読むので、文字数の比で時間を割り振れば
     実際の発話とほぼ合う。"""
     out = []
+    hk = jissoku_hikidashi()
     for (st, en, tx) in cues:
         tx = u" ".join(tx.split())
         if not tx:
@@ -2118,25 +2402,28 @@ def refine_cues(cues, max_sec, max_chars):
             out.append((st, en, tx))
             continue
         parts = [x for x in SENT_END.split(tx) if x.strip()]
-        for (s2, e2, sent) in split_text_by_time(tx, st, en, parts):
+        for (s2, e2, sent) in split_text_by_time(tx, st, en, parts, hk):
             sent = sent.strip()
             if (e2 - s2) <= max_sec and len(sent) <= max_chars:
                 out.append((s2, e2, sent))
                 continue
             # まだ長い文は読点で分ける
             chunks, cur = [], u""
-            for ch in sent:
-                cur += ch
-                if ch in u"、" and len(cur) >= max_chars * 0.45:
+            for ko in kire_me_erabu(hk, kugiri(sent, 0), max_chars):
+                cur += ko
+                if len(cur) >= max_chars * 0.45:
                     chunks.append(cur)
                     cur = u""
             if cur:
-                chunks.append(cur)
+                if chunks:
+                    chunks[-1] += cur
+                else:
+                    chunks.append(cur)
             if len(chunks) < 2:
                 k = max(2, int(len(sent) / float(max_chars)) + 1)
                 chunks = (split_lines(sent, len(sent) / float(k) * 1.3, k)
                           or [sent[i:i + max_chars] for i in range(0, len(sent), max_chars)])
-            out.extend(split_text_by_time(sent, s2, e2, chunks))
+            out.extend(split_text_by_time(sent, s2, e2, chunks, hk))
     return out
 
 
@@ -2201,35 +2488,78 @@ def split_by_kuten(slots, saitan=1.1, moji=0, mijika=0):
     尺は文字数の比で分ける。丸めの誤差は最後で吸収する
     （合計がずれると音と絵がずれる）。
     """
+    # 測った長さを、切れはしの本文で引けるようにする（使い切らない）
+    jm = jissoku_hikidashi()
+    KOMA_TSUKATTA[0] = KOMA_TSUKATTA[1] = 0
+    del KOMA_JISSOKU[:]
+
     out = []
     for (s0, du, tx) in slots:
-        piece = kugiri(tx, moji)
-        if len(piece) < 2:
-            out.append([s0, du, tx])
-            continue
-        # 文字数で尺を割る
-        n = [max(1, disp_len(x)) for x in piece]
-        tot = float(sum(n))
+        piece = kire_me_erabu(jm, kugiri(tx, moji), 30)
+        # ■ 切れはしが1つのコマも「測った」に数える（2026-10-07）
+        #
+        # 前は len(piece) < 2 のコマを、問答無用で「測っていない」にしていた。
+        # **338枚中216枚がそれ**で、その区間は丸ごと
+        # 「文字数で見当を作り直す」ほうへ落ちていた。
+        # （測った見当を使えた区間は 114中11しかなかった）
+        # 切れはしが1つでも、その長さが測れていれば測れている。
         hit = list(piece)
-        hik = [du * (x / tot) for x in n]
-        # 短いものを後ろにくっつける（mijika=0 なら何もしない＝前までの動き）
+        # ① 1行ずつの音声で測った長さがあれば、それで割る（当てずっぽうをしない）
+        byou = [jissoku_hitotsu(jm, x) for x in piece]
+        if all(b is not None for b in byou) and sum(byou) > 0:
+            kei3 = float(sum(byou))
+            hik = [du * (b / kei3) for b in byou]
+            KOMA_TSUKATTA[0] += len(piece)
+            jis = True
+        elif len(piece) < 2:
+            hik = [du]
+            KOMA_TSUKATTA[1] += 1
+            jis = False
+        else:
+            # ② 測れていない所だけ、今までどおり文字数で割る
+            n = [max(1, disp_len(x)) for x in piece]
+            tot = float(sum(n))
+            hik = [du * (x / tot) for x in n]
+            KOMA_TSUKATTA[1] += len(piece)
+            jis = False
+        # 短いものをくっつける
+        #
+        # ■ 「と、」だけで1枚になっていた（2026-10-07・本人の指摘）
+        #
+        #   見た目.txt の「字幕の最短」が 0 だったので mijika=0 になり、
+        #   **この仕組みが一度も動いていなかった。**
+        #   その結果「と、」の2文字に絵が1枚・2秒割り当てられ、
+        #   本人に「意味が分からない」と言われた。
+        #
+        # ■ 最後の1つがくっつかない作りだった
+        #
+        #   `i < len(hit) - 1` なので、**いちばん後ろは一度も見ない。**
+        #   後ろが短いときは、くっつける先が後ろに無いので**前に**くっつける。
         i = 0
-        while mijika and i < len(hit) - 1:
+        while mijika and i < len(hit):
             mijikai = (disp_len(hit[i]) <= mijika) or (hik[i] < saitan)
-            if mijikai and not owari_bun(hit[i]):
-                hit[i + 1] = hit[i] + hit[i + 1]
-                hik[i + 1] += hik[i]
-                del hit[i]
-                del hik[i]
-                # i は進めない。くっついた先も短いかもしれないので、もう一度見る。
-            else:
+            if not mijikai or owari_bun(hit[i]) and i < len(hit) - 1:
                 i += 1
+                continue
+            if i < len(hit) - 1 and not owari_bun(hit[i]):
+                hit[i + 1] = hit[i] + hit[i + 1]      # 後ろにくっつける
+                hik[i + 1] += hik[i]
+                del hit[i], hik[i]
+                # i は進めない。くっついた先も短いかもしれないので、もう一度見る。
+            elif i > 0:
+                hit[i - 1] = hit[i - 1] + hit[i]      # 後ろが無いので前に
+                hik[i - 1] += hik[i]
+                del hit[i], hik[i]
+                i -= 1
+            else:
+                break                                  # 1つしか無い。そのまま
         # 丸めの誤差を最後で吸収する
         sa = du - sum(hik)
         hik[-1] += sa
         t = s0
         for x, d in zip(hit, hik):
             out.append([t, d, x])
+            KOMA_JISSOKU.append(jis)
             t += d
     return out
 
@@ -5267,6 +5597,10 @@ def main():
             if len(slots) != mae:
                 say(u"句読点で割りました: %d枚 → %d枚 (1枚あたり %.1f秒)"
                     % (mae, len(slots), total / max(1, len(slots))))
+                if KOMA_TSUKATTA[0] or KOMA_TSUKATTA[1]:
+                    say(u"   そのうち %d枚は、1行ずつの音声で測った長さで割りました"
+                        u"（残り %d枚は文字数）"
+                        % (KOMA_TSUKATTA[0], KOMA_TSUKATTA[1]))
                 if a.kuten_moji:
                     say(u"   「。」は必ず切り、「、」は %d文字を超えないように切っています。"
                         % a.kuten_moji)

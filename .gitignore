@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 検査を .claude/video の中で走らせると、作業フォルダと画像がここに出来る。
+# 一度 382ファイル（PNG 込み）をコミットしかけた。成果物は git に入れない。
+.claude/video/__pycache__/
+.claude/video/_文脈検査/
+.claude/video/_直す検査/
+.claude/video/_ずれ検査/
+.claude/video/_絵と字幕/
+.claude/video/_見本/
