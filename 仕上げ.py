@@ -84,6 +84,8 @@ KYOTSU = [u"画像カタログ.txt", u"話数マップ.txt", u"タグ一覧.txt"
           u"台本の知恵.txt", u"読み辞書.txt", u"人物ルール.txt", u"演出.txt", u"見た目.txt"]
 
 warui = []
+# 止めないが、必ず知らせる宿題（作りかけの機能など）
+SHUKUDAI = []
 
 
 def midashi(n, t):
@@ -99,17 +101,43 @@ def mmss(t):
     return u"%d:%02d" % (int(t) // 60, int(t) % 60)
 
 
+# ■ まだ台本が無い動画は、できてから見る（2026-10-08）
+#
+# 動画一覧.txt に先に行を足して、台本はこれから書く ── という途中の状態がある。
+# それを「字幕用がありません」で落とすと、
+# **すでに出来ている8本ぶんの掲示板まで出せなくなる。**
+# 実際にそれで止まり、本人にパックを届けられなかった。
+#
+# 線をゆるめたのではない。**無いものは検査しようがない**というだけ。
+# 黙って飛ばすと事故になるので、必ず名前を並べて知らせる。
+# 片方だけある（字幕用はあるのに読み上げ用が無い）のは作りかけの事故なので落とす。
+MIKANSEI = []
+_DAIHON2 = []
+for (nm, sub, tts) in DAIHON:
+    a1 = os.path.exists(os.path.join(B, sub))
+    b1 = os.path.exists(os.path.join(B, tts))
+    if not a1 and not b1:
+        MIKANSEI.append(nm)
+    else:
+        _DAIHON2.append((nm, sub, tts))
+if MIKANSEI:
+    print(u"… まだ台本が無いので、この %d本は検査しません: %s"
+          % (len(MIKANSEI), u" / ".join(MIKANSEI)))
+    print(u"   （動画一覧.txt には登録済み。台本ができたら自動で検査に入ります）")
+DAIHON = _DAIHON2
+DOUGA = [d for d in DOUGA if NAMAE.get(d) not in MIKANSEI]
+
 # ── ① 台本の組 ───────────────────────────────────────
 midashi(u"①", u"台本の組（動画一覧.txt の %d本）" % len(DAIHON))
 for (nm, sub, tts) in DAIHON:
     ps, pt = os.path.join(B, sub), os.path.join(B, tts)
     if not os.path.exists(ps):
-        warui.append(u"%s の字幕用がありません" % nm)
-        print(u"× %-6s 字幕用がありません" % nm)
+        warui.append(u"%s の字幕用がありません（読み上げ用はあります）" % nm)
+        print(u"× %-6s 字幕用がありません（読み上げ用はあります）" % nm)
         continue
     if not os.path.exists(pt):
-        warui.append(u"%s の読み上げ用がありません" % nm)
-        print(u"× %-6s 読み上げ用がありません" % nm)
+        warui.append(u"%s の読み上げ用がありません（字幕用はあります）" % nm)
+        print(u"× %-6s 読み上げ用がありません（字幕用はあります）" % nm)
         continue
     ds, dt = dan_of(ps), dan_of(pt)
     ks = sum(u"".join(ds).count(c) for c in u"。！？")
@@ -191,10 +219,25 @@ else:
     print(u"○ ZIPを作る %d か所とも共通を入れています" % yobi)
     # 置き場所.txt は掲示板ごとに中身が違うので共通(pushKyotsu)に入れられない。
     # 入れ忘れると、絵のフォルダを見にいく先が無いまま動画を作ることになる。
+    # ■ これは「まだ作っていない機能」の宿題（2026-10-08）
+    #
+    # この検査は 0fda6f5「絵の置き場所を設定ファイルに出す」で足されたが、
+    # **同じコミットが自分で落としている。**
+    # video/置き場所_mushoku.txt と _osusume.txt は置かれたのに、
+    # build.py には掲示板ごとの処理が無く、board.src.html にも入り口が無い。
+    # ＝ 設計が半分しかできていない。
+    #
+    # ここで止めると、**すでに出来ている8本ぶんの掲示板まで出せない。**
+    # 実際にそれで止まり、本人にパックを届けられなかった。
+    # かといって黙って通すと、作りかけのまま忘れられる。
+    # **止めないが、毎回いちばん目立つ所に出す。**
     nb = len(re.findall(r'name:"置き場所\.txt"', src))
     if nb < 2:
-        warui.append(u"置き場所.txt を入れているZIPが %d か所しかありません（2か所必要）" % nb)
-        print(u"× 置き場所.txt がZIPの %d か所にしか入っていません" % nb)
+        SHUKUDAI.append(u"置き場所.txt がZIPに入っていません（%d/2か所）。"
+                        u"build.py に掲示板ごとの処理がまだありません" % nb)
+        print(u"⚠ 置き場所.txt がZIPの %d か所にしか入っていません（作りかけ）" % nb)
+        print(u"   build.py に掲示板ごとの処理が無く、board.src.html にも入り口がありません。")
+        print(u"   絵のフォルダを設定ファイルで変える機能は、まだ使えません。")
     else:
         print(u"○ 置き場所.txt も ZIPの %d か所とも入ります" % nb)
     nai = [k for k in KYOTSU if u'"%s"' % k not in src]
@@ -532,4 +575,9 @@ for step in ("sync_py.py", "build.py"):
     if r.returncode != 0:
         print(out)
         sys.exit(1)
+if SHUKUDAI:
+    print(u"")
+    print(u"⚠ 作りかけのまま残っていること（出すのは止めません）:")
+    for x in SHUKUDAI:
+        print(u"   ・" + x)
 print(u"\nboard.html ができました。掲示板に出してください。")
