@@ -272,13 +272,15 @@ else:
 
 # 動画一覧.txt の1本ごとに、掲示板の SCRIPTS に件があるか。
 # build.py も最後に見るが、そこまで20項目ぜんぶ走ってからになるので、ここでも見る。
+# まだ台本が無い動画は、掲示板にも載せようがない。できてから見る。
 nai_sc = [v.shirushi for v in _DOUGA
-          if not re.search(r"^    %s:\{name:" % re.escape(v.shirushi), src, re.M)]
+          if v.namae not in MIKANSEI
+          and not re.search(r"^    %s:\{name:" % re.escape(v.shirushi), src, re.M)]
 if nai_sc:
     warui.append(u"board.src.html の SCRIPTS に無い動画: " + u" ".join(nai_sc))
     print(u"× SCRIPTS に無い動画: " + u" ".join(nai_sc))
 else:
-    print(u"○ 動画 %d本とも SCRIPTS に件があります" % len(_DOUGA))
+    print(u"○ 動画 %d本とも SCRIPTS に件があります" % (len(_DOUGA) - len(MIKANSEI)))
 
 # 節の data-board が、build.py の知っている掲示板だけを指しているか
 ban_src = set(re.findall(r'<section data-board="([^"]+)"', src))
