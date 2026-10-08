@@ -2,6 +2,11 @@
 u"""字幕ずれ検査 ─ 出来た割り当て表と「正解」を突き合わせて測る"""
 import io, json, sys
 
+# 「超えた」と数える線。本人の ずれ実測.py と同じ 0.45秒。
+# 字幕は設計上 LEAD=0.12秒ぶん先に出すので、完璧に合っていても0.24秒前後は出る。
+# 0.30秒はそのすぐ上で、ほぼ合っているものまで赤にしていた。
+SHIKII = 0.45
+
 sei = json.load(io.open(u"正解.json", encoding="utf-8"))
 bun, seikai = sei[u"bun"], sei[u"seikai"]
 hyou = {}
@@ -84,12 +89,12 @@ zure.sort(reverse=True)
 n = len(zure)
 if u"--json" in sys.argv:
     import json
-    ookii = [z for z in zure if z[0] > 0.30]
+    ookii = [z for z in zure if z[0] > SHIKII]
     def matome(v):
         if not v:
             return [0.0, 0.0, 0.0]
         return [round(max(x[0] for x in v), 2), round(sum(x[0] for x in v) / len(v), 2),
-                round(100.0 * sum(1 for x in v if x[0] > 0.30) / len(v), 0)]
+                round(100.0 * sum(1 for x in v if x[0] > SHIKII) / len(v), 0)]
     print(json.dumps({u"kazu": len(rows), u"ookii": round(zure[0][0], 3) if zure else 0.0,
                       u"anc": matome(anc), u"naka": matome(naka),
                       u"bun": matome(bun_s), u"ten": matome(ten_s),
@@ -101,11 +106,11 @@ if u"--json" in sys.argv:
 if not n:
     print(u"× 突き合わせられませんでした"); sys.exit(1)
 heikin = sum(z[0] for z in zure) / n
-ookii = [z for z in zure if z[0] > 0.30]
+ookii = [z for z in zure if z[0] > SHIKII]
 print(u"区切り %d枚 / 突き合わせ %d枚 / 本文が合わない %d枚" % (len(rows), n, mitsukaranai))
 print(u"いちばん大きいずれ : %.2f秒" % zure[0][0])
 print(u"平均のずれ         : %.2f秒" % heikin)
-print(u"0.30秒を超えたもの : %d枚 (%.0f%%)" % (len(ookii), 100.0 * len(ookii) / n))
+print(u"%.2f秒を超えたもの : %d枚 (%.0f%%)" % (SHIKII, len(ookii), 100.0 * len(ookii) / n))
 print(u"0.50秒を超えたもの : %d枚" % sum(1 for z in zure if z[0] > 0.50))
 print(u"")
 print(u"")
@@ -115,7 +120,7 @@ def shu(na, v):
         print(u"  %-28s なし" % na); return
     print(u"  %-28s %3d枚 / 最大 %.2f / 平均 %.2f / 0.3超 %d枚"
           % (na, len(v), max(x[0] for x in v), sum(x[0] for x in v) / len(v),
-             sum(1 for x in v if x[0] > 0.30)))
+             sum(1 for x in v if x[0] > SHIKII)))
 shu(u"段落の頭 (kugiri_awase)", anc)
 shu(u"文の頭   (place_in_chunk)", bun_s)
 shu(u"「、」   (koma_awase)", ten_s)

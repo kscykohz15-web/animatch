@@ -419,7 +419,9 @@ midashi(u"⑭", u"決め方を直したら、割り当て表が作り直され�
 # 指紋に混ぜている。ここが外れていないかを見る。
 ms = io.open(os.path.join(V, "make_slideshow.py"), encoding="utf-8").read()
 HISSU = [u"kugiri_awase", u"koma_awase", u"timeline_from_parts_srt",
-         u"place_in_chunk", u"assign_images"]
+         u"place_in_chunk", u"assign_images",
+         u"refine_cues", u"split_by_kuten", u"split_text_by_time",
+         u"koe_to_awaseru", u"jissoku_wariai"]
 m_k = re.search(r"def kime_kata_shirushi\(\):(.*?)\ndef ", ms, re.S)
 tsukatte = u"kime_kata_shirushi()" in ms.split(u"def inputs_fingerprint")[-1][:1500]
 if not m_k:
@@ -429,15 +431,24 @@ elif not tsukatte:
     warui.append(u"inputs_fingerprint が kime_kata_shirushi を使っていません")
     print(u"× 指紋に決め方の印が入っていません（直しても空振りします）")
 else:
+    # ■ ファイル全体を見ているか（2026-10-08・3回目の空振りのあと）
+    #
+    # 手で並べた関数だけを見ていたせいで、字幕を割る所が抜けていた。
+    # 本人の v144 が「⑥ 前回の割り当て表をそのまま使用」になり、
+    # 直した処理が1行も動かなかった。並べ忘れは3回起きている。
+    zentai = u"getsource(sys.modules[__name__])" in m_k.group(1)
     nai = [k for k in HISSU if k not in m_k.group(1)]
-    if nai:
+    if not zentai:
+        warui.append(u"決め方の印が make_slideshow.py 全体を見ていません")
+        print(u"× 印が関数の選び方に頼っています。並べ忘れると空振りします。")
+    elif nai:
         warui.append(u"決め方の印に入っていない関数: " + u" ".join(nai))
         print(u"× 次の関数が印に入っていません。直しても空振りします:")
         for k in nai:
             print(u"   " + k)
     else:
-        print(u"○ 決め方(%s)を直せば、割り当て表は必ず作り直されます"
-              % u"・".join(HISSU))
+        print(u"○ make_slideshow.py を1文字でも直せば、割り当て表は必ず作り直されます"
+              u"（関数を並べ忘れようがありません）")
 
 # ── ⑮ 人物ルールの条件が、本当にあるタグか ──────────
 midashi(u"⑮", u"人物ルールの条件が、出てくるタグかどうか")

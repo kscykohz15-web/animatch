@@ -4735,10 +4735,53 @@ def kime_kata_shirushi():
     こちらが1文字でも直せば印が変わり、割り当て表は必ず作り直される。
     上げ忘れようがない。
     """
+    # ■ 字幕を割る所が入っていなかった（2026-10-08・3回目の空振り）
+    #
+    # 本人の第6回を v144 で作り直してもらったら、こう出た。
+    #
+    #     既存の割り当て表を使います
+    #     ⑥ 前回の割り当て表をそのまま使用
+    #
+    # ＝ **直した処理が1行も動かず、前回の表をそのまま使っていた。**
+    # 数字(2.08秒・47枚・18%)が前回と完全に同じだったのはそのため。
+    #
+    # ここに並べる関数だけが指紋に入る。
+    # 字幕をどこで割るか（refine_cues / split_by_kuten / split_text_by_time）
+    # と、1行ずつの音声から長さを測る所は**入っていなかった**。
+    # 時刻を決めているのは、この並びと同じくらいそちらなのに。
+    #
+    # 「忘れないようにする」では同じ穴に落ちる（これで3回目）。
+    # **時刻に関わる関数は、ここに全部並べる。**
+    # ■ 選ぶのをやめた（2026-10-08・3回目の空振りのあと）
+    #
+    # ここは「決め方の関数」を手で並べて、そのソースだけを見ていた。
+    # 本人の第6回を v144 で作り直してもらったら、こう出た。
+    #
+    #     既存の割り当て表を使います
+    #     ⑥ 前回の割り当て表をそのまま使用
+    #
+    # ＝ **直した処理が1行も動かず、前回の表をそのまま使われていた。**
+    # 数字(2.08秒・47枚・18%)が前回と1桁も違わなかったのはそのため。
+    # 字幕をどこで割るか（refine_cues / split_by_kuten / split_text_by_time）は
+    # **並びに入っていなかった**。時刻を決めているのはそこなのに。
+    #
+    # 並べ忘れは3回起きた。選ぶかぎり4回目が起きる。
+    # **このファイル全体を見る。** 関係ない所を直したときも作り直しになるが、
+    # 作り直しは数分、ずれた動画は本人との往復1回ぶん。くらべるまでもない。
     import inspect
     h = hashlib.md5()
+    try:
+        h.update(inspect.getsource(sys.modules[__name__]).encode("utf-8"))
+        return h.hexdigest()[:10]
+    except Exception:
+        pass
+    # ファイル全体が読めないときだけ、主な関数のソースで代用する
     for f in (kugiri_awase, koma_awase, timeline_from_parts_srt,
-              place_in_chunk, assign_images):
+              place_in_chunk, assign_images,
+              refine_cues, split_by_kuten, split_text_by_time,
+              koe_to_awaseru, jissoku_wariai, wav_no_koe,
+              jissoku_hikidashi, jissoku_hitotsu, jissoku_nagasa,
+              kire_me_erabu, ma_ni_yoseru, mitsumori):
         try:
             h.update(inspect.getsource(f).encode("utf-8"))
         except Exception:
