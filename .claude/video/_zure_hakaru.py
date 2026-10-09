@@ -107,7 +107,15 @@ if not n:
     print(u"× 突き合わせられませんでした"); sys.exit(1)
 heikin = sum(z[0] for z in zure) / n
 ookii = [z for z in zure if z[0] > SHIKII]
+# ■ 句読点の無い所で切った字幕を数える（2026-10-09）
+# 本人の第6回では13枚あって、0.45秒超の上位7件を全部作っていた。
+# 声は「ルーデウスは」で止まらない。止まらない所に合わせ先の「間」は無い。
+_hon = [r for r in rows if r[2].strip()]
+KUTEN_NASHI = sum(1 for i, r in enumerate(_hon)
+                  if i < len(_hon) - 1 and r[2].strip()[-1] not in u"。！？、")
 print(u"区切り %d枚 / 突き合わせ %d枚 / 本文が合わない %d枚" % (len(rows), n, mitsukaranai))
+print(u"句読点の無い所で切った字幕 : %d枚%s"
+      % (KUTEN_NASHI, u"" if not KUTEN_NASHI else u"  ← ここは必ずずれます"))
 print(u"いちばん大きいずれ : %.2f秒" % zure[0][0])
 print(u"平均のずれ         : %.2f秒" % heikin)
 print(u"%.2f秒を超えたもの : %d枚 (%.0f%%)" % (SHIKII, len(ookii), 100.0 * len(ookii) / n))

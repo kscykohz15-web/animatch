@@ -1552,6 +1552,7 @@ MATOME_JOUGEN = 8          # 1つの区間にまとめる切れはしの上限�
 JISSOKU_KOMA = []
 KOMA_TSUKATTA = [0, 0]     # 「、」の割り方: [測った値を使った枚数, 文字数で割った枚数]
 KOMA_JISSOKU = []          # 1枚ごとに「測った長さで割ったか」。koma_awase が見る
+KUTEN_NASHI = [0]          # 句読点の無い所で切った字幕の数（0 でなければ必ずずれる）
 
 # 測った見当を、本物の「間」へ寄せるときに許す動き（秒）。
 #
@@ -2426,11 +2427,35 @@ def refine_cues(cues, max_sec, max_chars):
                     chunks[-1] += cur
                 else:
                     chunks.append(cur)
+            # ■ 句読点の無い所では、**切らない**（2026-10-09・本人の動画で特定）
+            #
+            # 長い文に「、」が無いとき、ここは長さだけで真っ二つにしていた。
+            # 「ルーデウスは」「この一件をただの」「つまりこの世界の」 ──
+            # **声が止まらない所で字幕を切っていた。**
+            #
+            # 本人の第6回を数えたら、こうなっていた。
+            #
+            #   字幕の始まりが…          枚数    0.45秒超
+            #   前が「。」＝文の切れ目     92枚     0枚 ( 0%)
+            #   章カードの直後            12枚     0枚 ( 0%)
+            #   前が「、」＝文の途中      149枚    13枚 ( 9%)
+            #   前が句読点なし＝語の途中   13枚     7枚 (54%)
+            #
+            # **13枚しかない「語の途中で切った」が、上位7件をぜんぶ作っていた。**
+            # 2.11秒 1.75秒 1.63秒 1.34秒 1.01秒 0.93秒 0.80秒 ── 全部これ。
+            #
+            # 止まらない所には合わせ先の「間」が無い。だから合うはずがない。
+            # 7回「推測を上手くする」をやったが、**推測してはいけない所だった。**
+            #
+            # 切らなければ字幕は長くなるが、2行に折り返せば読める。
+            # 「ルーデウスは」だけで1枚より、そのほうが字幕としても良い。
             if len(chunks) < 2:
-                k = max(2, int(len(sent) / float(max_chars)) + 1)
-                chunks = (split_lines(sent, len(sent) / float(k) * 1.3, k)
-                          or [sent[i:i + max_chars] for i in range(0, len(sent), max_chars)])
+                chunks = [sent]
             out.extend(split_text_by_time(sent, s2, e2, chunks, hk))
+    # 句読点の無い所で切れてしまった字幕を数える（0 のはず）
+    KUTEN_NASHI[0] = sum(
+        1 for i, (a9, b9, t9) in enumerate(out)
+        if i < len(out) - 1 and t9.strip() and t9.strip()[-1] not in u"。！？、")
     return out
 
 
@@ -5634,6 +5659,13 @@ def main():
             cues = refine_cues(cues, a.sec * 1.7, 30)
             if len(cues) > raw:
                 say(u"字幕 %d本を、文の切れ目で %d本にほぐしました。" % (raw, len(cues)))
+            if KUTEN_NASHI[0]:
+                # 本人の第6回では、ここが13枚あって上位7件のずれを全部作っていた。
+                say(u"⚠ 句読点の無い所で切った字幕が %d枚あります。"
+                    u"そこは声が止まらないので必ずずれます。" % KUTEN_NASHI[0])
+            else:
+                say(u"○ 字幕はすべて「。」か「、」の所で切れています"
+                    u"（声が止まらない所では切っていません）")
         if cues and not from_audio and not a.no_snap:
             sils = detect_silences(a.audio, a.noise_db, a.silence_len)
             if sils:
