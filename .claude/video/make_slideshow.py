@@ -2452,10 +2452,6 @@ def refine_cues(cues, max_sec, max_chars):
             if len(chunks) < 2:
                 chunks = [sent]
             out.extend(split_text_by_time(sent, s2, e2, chunks, hk))
-    # 句読点の無い所で切れてしまった字幕を数える（0 のはず）
-    KUTEN_NASHI[0] = sum(
-        1 for i, (a9, b9, t9) in enumerate(out)
-        if i < len(out) - 1 and t9.strip() and t9.strip()[-1] not in u"。！？、")
     return out
 
 
@@ -2631,21 +2627,41 @@ def build_slots(cues, total, target):
         if n == 1:
             out.append([s0, du, tx])
             continue
+        # ■ ここでも句読点の無い所で切っていた（2026-10-09・2か所目）
+        #
+        # refine_cues で「切らない」ようにしたのに、**そのあとのここで切り直して**
+        # いた。本人の v146 のログは
+        #
+        #     ○ 字幕はすべて「。」か「、」の所で切れています
+        #
+        # と出したのに、採点.txt には
+        #
+        #     [020] ルーデウスとロキシーの間に生まれる子供を
+        #
+        # が残り、その直後が 2.11秒ずれたままだった。
+        # **検査を入れた場所が間違っていた**（refine_cues の出口しか見ていない）。
+        # 前に「後ろの工程が上書きしていた」で失敗したのと同じ形。
+        #
+        # ここも句読点のある所でだけ切る。無ければ切らない。
         pieces = None
         if tx:
-            # 余裕の持たせ方をいくつか試し、いちばん読みやすい切り方を選ぶ
-            budget = disp_len(tx) / float(n)
-            best_cost = None
-            for slack in (1.15, 1.35, 1.6, 1.9, 2.4):
-                got = split_lines(tx, budget * slack, n, want_cost=True)
-                if not got:
-                    continue
-                cand, cost = got
-                if best_cost is None or cost < best_cost:
-                    best_cost, pieces = cost, cand
+            ko = kugiri(tx, 0)
+            if len(ko) >= 2:
+                # 「、」「。」の所でだけ、n個に近くなるようまとめ直す
+                pieces, cur = [], u""
+                hoshii = max(1, int(round(disp_len(tx) / float(n))))
+                for x in ko:
+                    cur += x
+                    if disp_len(cur) >= hoshii and len(pieces) < n - 1:
+                        pieces.append(cur)
+                        cur = u""
+                if cur:
+                    if pieces:
+                        pieces[-1] += cur
+                    else:
+                        pieces.append(cur)
         if not pieces:
-            step = max(1, int(round(len(tx) / float(n)))) if tx else 1
-            pieces = [tx[i:i + step] for i in range(0, len(tx), step)]
+            pieces = [tx]            # 切る所が無い。切らない
         pieces = [x for x in pieces if x.strip()]
         if not pieces:
             # セリフが無いスロットは、そのまま等分する
@@ -5659,13 +5675,7 @@ def main():
             cues = refine_cues(cues, a.sec * 1.7, 30)
             if len(cues) > raw:
                 say(u"字幕 %d本を、文の切れ目で %d本にほぐしました。" % (raw, len(cues)))
-            if KUTEN_NASHI[0]:
-                # 本人の第6回では、ここが13枚あって上位7件のずれを全部作っていた。
-                say(u"⚠ 句読点の無い所で切った字幕が %d枚あります。"
-                    u"そこは声が止まらないので必ずずれます。" % KUTEN_NASHI[0])
-            else:
-                say(u"○ 字幕はすべて「。」か「、」の所で切れています"
-                    u"（声が止まらない所では切っていません）")
+
         if cues and not from_audio and not a.no_snap:
             sils = detect_silences(a.audio, a.noise_db, a.silence_len)
             if sils:
@@ -5732,7 +5742,27 @@ def main():
                                        emap, focus, mitame=mi,
                                        chaps=chaps_for_assign)
         write_plan(PLAN, slots, picked, fp_now)
+        # ■ 数えるのは**いちばん最後**（2026-10-09・検査が嘘をついたので移した）
+        #
+        # refine_cues の出口で数えていたら、そのあとで切り直す工程があって、
+        #     ○ 字幕はすべて「。」か「、」の所で切れています
+        # と出しながら「ルーデウスとロキシーの間に生まれる子供を」が残っていた。
+        # **途中で数えても、後ろで変わればそれまで。**
+        # 出来上がった割り当て表そのものを数える。
+        _hon = [x for x in slots if (x[2] or u"").strip()]
+        KUTEN_NASHI[0] = sum(
+            1 for i, x in enumerate(_hon)
+            if i < len(_hon) - 1 and x[2].strip()[-1] not in u"。！？、")
         say(u"音声 %s / 画像 %d枚 / 区切り %d枚ぶん" % (mmss(total), len(images), len(slots)))
+        if KUTEN_NASHI[0]:
+            say(u"⚠ 句読点の無い所で切った字幕が %d枚あります。"
+                u"そこは声が止まらないので必ずずれます。" % KUTEN_NASHI[0])
+            for i, x in enumerate(_hon):
+                if i < len(_hon) - 1 and x[2].strip()[-1] not in u"。！？、":
+                    say(u"     %s" % x[2].strip()[:34])
+        else:
+            say(u"○ 字幕はすべて「。」か「、」の所で切れています"
+                u"（声が止まらない所では切っていません）")
         say(u"割り当て表を書き出しました: " + os.path.join(HERE, PLAN))
         if a.plan:
             say(u"中身を確認し、必要なら画像の列を直してから「動画を作る.bat」を実行してください。")
