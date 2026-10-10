@@ -1412,7 +1412,56 @@ TEN_BATSU = [20.0]         # それより長い間に付く罰（実測で決め
 IKARI_DANRAKU = [False]
 
 
-def nagasa_awase(exp, cands, omomi=None, kuten=None):
+# 寄せ先を1つも採らないときの費用（秒あつかい）。
+#
+# ■ なぜ「採らない」を許すのか（2026-10-10）
+#
+# 前は「候補が足りなければ丸ごとあきらめる」(m < n で None)、
+# 足りていれば「全部の切れ目に必ず1つずつ割り当てる」だった。
+# **ろくな寄せ先が無い切れ目にも、無理に割り当てていた。**
+# 1つずつ断れるようにすると、無理な割り当てが消え、
+# 候補が足りないだけで全部あきらめることも無くなる。
+MIYOSE_BATSU = [0.30]
+
+# 遠くへ寄せてよいのは、**はっきりした「間」のときだけ**。
+#
+# ■ 不合格の1件を、その場で見て決めた（2026-10-10）
+#
+# 実測ありの乱数3で 1.54秒。その区間だけ印を付けて出した。
+#
+#   a0=488.33 b0=499.93 測った=False tol=1.60
+#   exp   = [491.99, 497.94]       ← 文字数の見当。本当は 491.23
+#   候補  = [(492.77, 0.14)]       ← **0.14秒しかない途切れ、1つだけ**
+#   決まり = [492.77, 498.14]
+#
+# 見当は 0.76秒ずれていた。そこへ 0.78秒 先の **0.14秒の途切れ**に
+# 寄せたので、**0.76秒 → 1.54秒 と悪くなった。**
+# 0.14秒は息継ぎではなく、子音の切れめかもしれない長さ。
+# それを根拠に 0.78秒も動かしてはいけない。
+#
+# 窓を一律に絞ると直るが、それは測って悪かった（枚数が3倍）。
+# 遠くの「間」でも、**長ければ**寄せたほうが良いからだ。
+#
+# 長さで分けるのも、一律にかけると悪かった。
+#
+#   長さで窓を分ける（はっきり=0.20秒）… 0.45秒超 8% / 7% / 4%
+#   かけない                            …            2% / 2% / 2%
+#
+# **本物の「、」の息継ぎは 0.10〜0.20秒 にもあるので、
+#   長さだけで切ると、効いていた寄せまで落ちる。**
+#
+# 上の1件を分けているのは長さではなく、**候補の少なさ**だった。
+# 11.6秒の区間に切れ目が2つあって、候補が 1つしか無い。
+# 候補が足りていないときの対応づけは**決まりようがない**ので、
+# 遠くへ跳ぶ根拠にならない。候補が足りているなら、
+# 順番を保った対応づけがちゃんと効くので、遠い寄せも信じてよい。
+#
+# なので「候補が切れ目より少ないときだけ、短い間への遠い寄せを断る」。
+CHIKAKU = [0.35]          # ここまでは、どんな間へでも寄せてよい
+HAKKIRI = [0.20]          # これ以上の間を「はっきりした間」とみなす
+
+
+def nagasa_awase(exp, cands, omomi=None, kuten=None, tol=None):
     u"""切れ目を「間」に割り当てる。距離だけでなく**間の長さ**も見る。
 
     cands は (時刻, 間の長さ) の並び。順番は保つ。
@@ -1427,11 +1476,30 @@ def nagasa_awase(exp, cands, omomi=None, kuten=None):
     費用 = 距離 − 重み × 間の長さ（長さは 0.5秒で頭打ち）
     """
     n, m = len(exp), len(cands)
-    if n == 0 or m < n:
+    if n == 0:
         return None
     INF = float("inf")
 
     om = NAGASA_OMOMI[0] if omomi is None else omomi
+    # ■ 硬い窓。これより遠い寄せは、DPの中で**考えない**（2026-10-10）
+    #
+    # ここが「まちがった間に寄る」の正体だった。費用は
+    #
+    #     距離 − 15.0 × 間の長さ （＋長すぎる間への罰）
+    #
+    # で、長さの項が距離の項より一桁大きい。数えるとこうなる。
+    #
+    #   「、」の切れ目 … 0.05秒の間から 0.22秒の間へ乗りかえる値打ち 2.55
+    #   「。」の切れ目 … 0.05秒の間から 0.50秒の間へ        値打ち 6.75
+    #
+    # **費用は秒だてなので、DPは切れ目を 2.55秒・6.75秒 動かしてでも
+    #   長い間に乗せる。** 本物の間なので「声の中で切り替わる」検査には
+    #   引っかからないが、字幕は何秒もずれる。
+    #
+    # tol は**後から弾く**だけだった。弾いた切れ目は文字数に戻せても、
+    # **その隣は、歪んだDPが置いた所に残る。**
+    # 窓をDPの中に入れれば、歪んだ並びそのものが選ばれなくなる。
+    mado = float(tol) if tol else INF
 
     # ■ 「。」の切れ目と「、」の切れ目を、同じ目で見てはいけない（2026-10-06）
     #
@@ -1445,9 +1513,18 @@ def nagasa_awase(exp, cands, omomi=None, kuten=None):
     ten_ue = TEN_NAGASA[0]       # 「、」の息継ぎの上限の目安
     ten_batsu = TEN_BATSU[0]     # それより長い間に付く罰
 
+    # 候補が切れ目より少ない＝対応づけが決まりようがない区間
+    tarinai = (m < n)
+
     def hiyou(j, i):
         t, L = cands[i]
         d = abs(t - exp[j])
+        # 候補が足りない区間でだけ、短い間への遠い寄せを断る
+        mado_koko = mado
+        if tarinai and L < HAKKIRI[0]:
+            mado_koko = min(mado, CHIKAKU[0])
+        if d > mado_koko:
+            return INF
         if kuten and j < len(kuten) and not kuten[j]:
             # 「、」の切れ目。長すぎる間は、となりの「。」の間かもしれない
             return d - om * min(L, ten_ue) + ten_batsu * max(0.0, L - ten_ue)
@@ -1456,24 +1533,43 @@ def nagasa_awase(exp, cands, omomi=None, kuten=None):
         #   下限 0.4 にすると かえって悪化したので、入れていない）
         return d - om * min(L, 0.5)
 
-    prev = [hiyou(0, i) for i in range(m)]
-    back = [[0] * m for _ in range(n)]
-    for j in range(1, n):
-        cur = [INF] * m
-        best_v, best_i = INF, 0
-        for i in range(m):
-            if i >= 1 and prev[i - 1] < best_v:
-                best_v, best_i = prev[i - 1], i - 1
-            if i >= j and best_v < INF:
-                cur[i] = best_v + hiyou(j, i)
-                back[j][i] = best_i
-        prev = cur
-    last = min(range(m), key=lambda i: prev[i])
-    out = [0.0] * n
-    i = last
-    for j in range(n - 1, -1, -1):
-        out[j] = cands[i][0]
-        i = back[j][i]
+    # best[j][i] … 切れ目を j 個決めて、候補を i 個まで使ったときの最小費用。
+    # 進み方は2つだけ。
+    #   ① 切れ目 j は候補 k(>= i) に寄せる  … 費用 hiyou(j, k)
+    #   ② 切れ目 j は寄せない               … 費用 MIYOSE_BATSU（候補は使わない）
+    # 順番は i が戻らないことで保たれる。
+    batsu = MIYOSE_BATSU[0]
+    best = [[INF] * (m + 1) for _ in range(n + 1)]
+    kara = [[None] * (m + 1) for _ in range(n + 1)]
+    best[0][0] = 0.0
+    for j in range(n):
+        for i in range(m + 1):
+            v = best[j][i]
+            if v == INF:
+                continue
+            # ② 寄せない
+            if v + batsu < best[j + 1][i]:
+                best[j + 1][i] = v + batsu
+                kara[j + 1][i] = (i, None)
+            # ① どれかに寄せる
+            for k in range(i, m):
+                h = hiyou(j, k)
+                if h == INF:
+                    continue
+                if v + h < best[j + 1][k + 1]:
+                    best[j + 1][k + 1] = v + h
+                    kara[j + 1][k + 1] = (i, k)
+    i = min(range(m + 1), key=lambda x: best[n][x])
+    if best[n][i] == INF:
+        return None
+    # **寄せなかった切れ目は None を返す。** 呼ぶほうが、
+    # 寄せた所から割り直す（文字数のまま取り残さない）。
+    out = [None] * n
+    for j in range(n, 0, -1):
+        pi, k = kara[j][i]
+        if k is not None:
+            out[j - 1] = cands[k][0]
+        i = pi
     return out
 
 
@@ -1560,6 +1656,7 @@ KUTEN_NASHI = [0]          # 句読点の無い所で切った字幕の数（0 �
 # **測った見当は外れないので、そんなに動かしてはいけない。**
 # 大きく許すと、となりの「間」へ吸い寄せられて、かえって悪くなる。
 JISSOKU_TOL = [0.35]
+
 
 
 # 段落のうち「1行ずつの音声で測れた」割合。1.0 なら全部（ふだんはこれ）。
@@ -1824,8 +1921,9 @@ def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
     if not exp:
         return []
     kimari = {}
-    if len(naka) >= len(exp):
-        atta = nagasa_awase(exp, naka, kuten=kuten)
+    if naka:
+        # 窓(tol)はDPの中で効かせる。ここで後から弾くのではもう遅い。
+        atta = nagasa_awase(exp, naka, kuten=kuten, tol=tol)
         if atta:
             # ① 遠すぎない寄せだけ採る。
             #
@@ -1837,7 +1935,7 @@ def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
             # どんな理由があっても作りの誤りで、そのまま通してはいけない。
             # （「ちょうど k-1個なら確定」も、壊れるまでは安全に見えていた）
             for t, (mae, ato) in enumerate(zip(exp, atta)):
-                if abs(ato - mae) <= tol:
+                if ato is not None and abs(ato - mae) <= tol:
                     kimari[t] = ato
     # ② 寄せられなかった切れ目は、**寄せた所から割り直す。**
     #
@@ -1849,8 +1947,27 @@ def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
         (ia, ta), (ib, tb) = teiten[p2], teiten[p2 + 1]
         if ib - ia < 2:
             continue
-        # 切れはし ia+1 番目から ib 番目まで（moji の添字は切れはしの番号）
-        w = [max(1, moji[q]) for q in range(ia + 1, ib + 1)]
+        # ■ 割り直しに使う重みは、**文字数より exp の間隔**（2026-10-10）
+        #
+        # exp は、測れた所では「1行ずつの音声で測った長さ」から来ている。
+        # ここを文字数で割り直すと、**測った中身をその場で捨てていた。**
+        #
+        # 寄せを1つずつ断れるようにしたとたん、これが表に出た。
+        # 前は「候補が足りなければ丸ごとあきらめる」ので exp がそのまま
+        # 残っていたが、断れるようにしたら、断った切れ目が
+        # 文字数での割り直しに落ちるようになった。
+        # 実測ありの乱数3で 0.74秒 → 1.54秒（不合格）になったのがこれ。
+        #
+        # exp の間隔で割れば、寄せたぶんのずらしは吸収しつつ、
+        # 測った中身は残る。間隔が取れないときだけ文字数に戻る。
+        hidari = exp[ia] if ia >= 0 else a0
+        migi = exp[ib] if ib < len(exp) else b0
+        ten = [hidari] + [exp[q] for q in range(ia + 1, ib)] + [migi]
+        haba = [ten[k + 1] - ten[k] for k in range(len(ten) - 1)]
+        if len(haba) == ib - ia and min(haba) >= 0 and sum(haba) > 0.01:
+            w = [max(0.001, x) for x in haba]
+        else:
+            w = [max(1, moji[q]) for q in range(ia + 1, ib + 1)]
         kei = float(sum(w))
         t3 = ta
         for q in range(ia + 1, ib):
@@ -1957,6 +2074,23 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
             # 測れていない所だけ、今までどおり文字数で割り直す
             moji0 = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
             exp = mitsumori(a0, b0, moji0, sils)
+            # ■ 窓を絞るのは、測って悪かった（2026-10-10・2回測った）
+            #
+            # 「長い間に乗せる値打ちが『、』で2.55秒・『。』で6.75秒ぶん
+            #   あるので、窓が 1.6秒では窓いっぱいまで飛ぶ」── 筋は通る。
+            # 絞って測った。**断れるDPにしたあとで、もう一度測り直した。**
+            #
+            #   窓 0.30 … 0.45秒超 11% / 10% /  8%   平均 0.24
+            #   窓 0.45 …            10% /  8% /  6%        0.22
+            #   窓 0.70 …             3% /  6% /  2%        0.19
+            #   窓 1.00 …             1% /  4% /  1%        0.18
+            #   窓 1.6  …             1% /  3% /  1%        0.18  ← これ
+            #
+            # **絞るほど悪くなった。** 遠くても本物の「間」に寄せたほうが、
+            # 文字数の見当のまま置くよりましだった。
+            # 窓 0.70 だけは最大値を 0.97秒に抑えるが、0.45秒を超える枚数が
+            # 3倍になる（288枚中 4枚 → 12枚）。本人が気づくのは枚数のほうなので、
+            # 枚数を採る。**つまみを増やさず、tol をそのまま窓にする。**
             tol_koko = tol
         # 言葉の途中の途切れ(0.03〜0.12秒)まで候補に入れると、そちらへ
         # 吸い寄せられてかえって悪くなる。**長い間ほど切れ目らしい**ので、
@@ -1998,6 +2132,20 @@ def jimaku_ue(w, h, mi, hitotsu=0, gyou=0):
     return max(12, per * max(1, gyou or int(mi[u"字幕の行数"])))
 
 
+# ■ 「つなげない切れ目を、間まで動かして割り直す」は測って悪かった
+#   （2026-10-10・ma_ni_warinaosu として作り、外した）
+#
+# 最大値を作っていたのは「2行に入らないので消せなかった切れ目」で、
+# それは材料で確かに特定できた（上位8件のうち7件）。
+# そこで2枚ぶんの本文を合わせ、本物の「間」にいちばん近い「、」で
+# 割り直す形にした。筋は通っていたが、実測はこうだった。
+#
+#   入れない … 0.45秒超 1% / 3% / 1%   最大 0.80 / 1.20 / 1.59
+#   入れる   … 0.45秒超 4% / 3% / 4%   最大 1.37 / 1.19 / 1.95
+#
+# **どの乱数でも悪くなった。** 切れ目を動かすと、その前後の字幕の
+# 長さが変わり、そこから先の割り振りがずれていく。
+# 「消す」は時刻を1つも動かさないので安全だが、「動かす」は違う。
 def koe_no_naka_tsunagu(slots, sils, ikari, ue):
     u"""**声の途中で切り替わる切れ目を、つないで消す。**
 
@@ -2068,6 +2216,7 @@ def koe_no_naka_tsunagu(slots, sils, ikari, ue):
         elif not ((mae[2] or u"").strip() and (sl[2] or u"").strip()):
             pass
         elif disp_len(mae[2]) + disp_len(sl[2]) > ue:
+            # つなげない。動かすのは測って悪かったので、そのまま残す
             nokori[u"2行に入らない"] += 1
         else:
             mae[1] += sl[1]
