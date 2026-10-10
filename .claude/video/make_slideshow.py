@@ -4335,6 +4335,126 @@ def plan_code_naosu(rules, default, images):
     return rules, default
 
 
+_KEKKA = [u"まだ"]
+
+
+def kekka_karu():
+    u"""前後の文を読む道具（miru_kekka）を借りる。無ければ None。
+
+    ■ なぜ借りるのか ─ 置き場所を2か所にしない（2026-10-10）
+
+    「前後の文から誰の話か読む」は `miru_kekka.bunmyaku` にあり、
+    **本人が理由を書いてくれた9件（29〜37番）で 9/9 通っている。**
+    同じものを make_slideshow にも書くと、片方を必ず直し忘れる
+    （メモリ「同じ名前を2か所に書くと片方を必ず忘れる」）。
+    だから**借りる。** 置き場所は miru_kekka のまま1か所。
+
+    検査の作業場所には miru_kekka を持ち込まないことがあるので、
+    無ければ今までどおり「その行の本文だけ」で動く（止めない）。
+    """
+    if _KEKKA[0] == u"まだ":
+        _KEKKA[0] = None
+        try:
+            import miru_kekka as _mk
+            try:
+                _mk.KAWARI.update(_mk.load_kawari(u"人物ルール.txt"))
+            except Exception:
+                pass
+            _KEKKA[0] = _mk
+        except Exception:
+            _KEKKA[0] = None
+    return _KEKKA[0]
+
+
+def bunmyaku_hito(slots, idx, oboe=None, omomi_mo=False):
+    u"""その区切りが「誰の話か」を、**前後の文から**読んで重い順に返す。
+
+    ■ ここが本人の直しの正体だった（2026-10-10）
+
+    本人の第6回のログ:
+
+        画像プランを使いました: 225枚が直接一致 / **0枚がセリフの人名から**
+
+    本番の割り当ては、字幕1枚の本文しか見ていなかった。
+    だから人の名前が入っていない字幕 ──
+
+        「この子供には名前があって、」  「ララといいます。」  「それが、」
+
+    では誰の話か分からず、前の行の絵を引き継ぐか既定の絵になっていた。
+    本人はこの3枚とも手で直している（22・23・26番）。
+
+    前後を読む道具は既にあって 9/9 通っていたのに、
+    **本番では呼んでいなかった。** ここで呼ぶ。
+    """
+    mk = kekka_karu()
+    tx = slots[idx][2] if idx < len(slots) else u""
+
+    def dame():
+        j = [c for c in uniq(CHARACTERS) if c in (tx or u"")]
+        return (j, dict((c, 1.0) for c in j)) if omomi_mo else j
+
+    if mk is None:
+        return dame()
+    if oboe is not None and u"rows" in oboe:
+        rows, han = oboe[u"rows"], oboe[u"han"]
+    else:
+        rows = [{u"text": (x[2] or u""), u"no": i + 1}
+                for i, x in enumerate(slots)]
+        try:
+            han = mk.bun_han(rows)
+        except Exception:
+            han = None
+        if oboe is not None:
+            oboe[u"rows"], oboe[u"han"] = rows, han
+    try:
+        omomi = mk.bunmyaku(rows, idx, han=han)
+    except Exception:
+        return dame()
+    # その行に名前が出ている人は、重みが同じなら先にする
+    jibun = set(c for c in uniq(CHARACTERS) if c in (tx or u""))
+    jun = [c for c in sorted(omomi, key=lambda c: (-omomi[c], c not in jibun, c))
+           if c in uniq(CHARACTERS)]
+    return (jun, omomi) if omomi_mo else jun
+
+
+# 「同点」とみなす重みの差。これ以内で並んでいる人は、同じくらい主役。
+DOUTEN = [0.06]
+
+
+def hito_fuda(slots, idx, oboe=None):
+    u"""試す #指定 を、良い順に返す。**同点なら「二人そろった絵」を先に。**
+
+    ■ 本人の書いた理由がそのまま条件になっている（2026-10-10）
+
+      29「この子供という言葉から、前後の文章からルーデウスとロキシーの
+          子供であるとわかるため、**二人が写った画像が望ましい**」
+      30「ララはまだアニメで生まれていないので、
+          ルーデウスとロキシーの**二人が写った画像が望ましい**」
+
+    前後を読んだ重みを見ると、そこがちゃんと同点になっていた。
+
+        29番  ルーデウス 0.95 / ロキシー 0.95 / ヒトガミ 0.50
+        30番  ルーデウス 0.80 / ロキシー 0.80 / ヒトガミ 0.70
+        34番  オルステッド 0.90 / ヒトガミ 0.70     ← ここは単独
+
+    **同点は「どちらか」ではなく「二人」の合図。**
+    だから先に「#ルーデウス ロキシー」を試す。
+    カタログの説明は空白区切りで、#指定 は全部そろって初めて当たるので、
+    二人写っている絵だけに当たる。無ければ1人ずつに落ちる。
+    """
+    r = bunmyaku_hito(slots, idx, oboe, omomi_mo=True)
+    jun, omomi = r if isinstance(r, tuple) else (r, {})
+    if not jun:
+        return []
+    ue = omomi.get(jun[0], 1.0)
+    douten = [c for c in jun if omomi.get(c, 0.0) >= ue - DOUTEN[0]]
+    fuda = []
+    if len(douten) >= 2:
+        fuda.append(u" ".join(douten[:2]))
+    fuda.extend(jun)
+    return fuda
+
+
 def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                   focus=None, mitame=None, chaps=None):
     """画像プランに従って、スロットごとに絵を決める。
@@ -4372,6 +4492,13 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             say(u"    " + k)
     known = set(images)
     pools = {}
+    bun_oboe = {}        # 前後を読むための覚え書き（毎回作り直さない）
+
+    def hito_jun(idx, tx):
+        u"""この区切りが誰の話か。前後の文を読んで重い順に。"""
+        if idx is None:
+            return [c for c in uniq(CHARACTERS) if c in (tx or u"")]
+        return bunmyaku_hito(slots, idx, bun_oboe)
 
     cat = catalog or {}
     emap = epmap or {}
@@ -4413,11 +4540,49 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     def _in_focus(k):
         return k.split(u"/")[0] in cur["rank"] if u"/" in k else False
 
+    def tooi(fol):
+        u"""対象話数から、その話数までの**遠さ**。
+
+        ■ 外に出るのが悪いのではなく、**一期まで飛ぶのが悪い**
+          （2026-10-10・本人の26件から）
+
+        本人も 22番「この子供には名前があって、」で Ⅲ第8話を選んでいる。
+        対象話数(Ⅲ11/Ⅲ12/Ⅲ14)の外だが、**同じ三期の近い話数**だった。
+        いっぽう機械は 無職転生 第9話を 34枚・第12話を 29枚 使っていた。
+        三期の話をしている所に**一期の絵**が出ていたということ。
+
+        だから「外に出さない」ではなく「近い所から順に」にする。
+        期がちがうのは重く、同じ期の中の話数のちがいは軽く見る。
+        """
+        ke = fol_code(fol)
+        if not ke:
+            return 10 ** 5
+        chikai = 10 ** 5
+        for f2 in cur["fols"]:
+            k2 = fol_code(f2)
+            if not k2:
+                continue
+            # 期が1つちがうと 100話ぶん遠い、くらいに重く見る
+            d = abs(ke[0] - k2[0]) * 100 + abs(ke[1] - k2[1])
+            chikai = min(chikai, d)
+        return chikai
+
     def _order(lst):
-        """対象話数に書いた順に並べる(書いていない話数は後ろ)。"""
+        """対象話数に書いた順に並べる。
+
+        書いていない話数は後ろ。**そのうしろの並びは「遠さ」順。**
+        前はここが natkey（名前順）だけだったので、外へ広げたときに
+        一期の絵が先に来ていた。
+        """
         r = cur["rank"]
-        return sorted(lst, key=lambda k: (r.get(k.split(u"/")[0], 10 ** 6)
-                                          if u"/" in k else 10 ** 6, natkey(k)))
+
+        def kagi(k):
+            fol = k.split(u"/")[0] if u"/" in k else u""
+            i = r.get(fol)
+            if i is not None:
+                return (0, i, 0, natkey(k))
+            return (1, 0, tooi(fol), natkey(k))
+        return sorted(lst, key=kagi)
 
     def _match(key, hiroi=False):
         """@ はファイル名/フォルダ名で、# は説明で探す。
@@ -4458,8 +4623,11 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 # 「別の人の絵は外す」が効かなかった。
                 # オルステッドの2か所も同じ理由。
                 hoshii = [w for w in words if w in uniq(CHARACTERS)]
-                for c in uniq(CHARACTERS):
-                    if c in (cur.get("tx") or u"") and c not in hoshii:
+                # #指定 に人が書いていなければ、**前後の文から**読む。
+                # 前は cur["tx"]（その行の本文）だけを見ていたので、
+                # 「それが、」のような行では誰も分からなかった。
+                for c in hito_jun(cur.get("idx"), cur.get("tx")):
+                    if c not in hoshii:
                         hoshii.append(c)
                 betsu = [c for c in uniq(CHARACTERS) if c not in hoshii] if hoshii else []
                 out2 = []
@@ -4844,6 +5012,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             shou_tsukatta.append((title, fs))
         base_fols = ima_base
         cur["tx"] = tx          # 絵を借りるとき、誰のセリフかを見るため
+        cur["idx"] = idx        # 前後の文を読むため
         pick = None
         r = erabu(tx)
         if r is not None:
@@ -4859,18 +5028,24 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 r[2] += 1
                 hit += 1
                 prev_rule = r
-        # 句読点で割った切れ端に人の名前が出てきたら、その人の絵にする。
-        # 文の前半と後半で写っている人が違うとき、ここが効く。
+        # 誰の話かを**前後の文から**読んで、その人の絵にする。
+        #
+        # ■ 前は「その行に名前が出ていたら」だけだった（2026-10-10）
+        #
+        # 本人のログは `0枚がセリフの人名から`。つまりこの道は
+        # 一度も通っていなかった。名前が入っていない字幕
+        # 「この子供には名前があって、」「ララといいます。」「それが、」
+        # では誰も見つからず、前の絵の引き継ぎか既定の絵に落ちていた。
+        # 本人はその3枚とも手で直している（22・23・26番）。
         if pick is None:
-            for c in uniq(CHARACTERS):
-                if c in tx:
-                    f = u"#" + c
-                    cur["fols"] = base_fols
-                    cur["rank"] = dict((f2, i2) for i2, f2 in enumerate(base_fols))
-                    if _match(f):
-                        pick = resolve(f)
-                        namae += 1
-                        break
+            for c in hito_fuda(slots, idx, bun_oboe):
+                f = u"#" + c
+                cur["fols"] = base_fols
+                cur["rank"] = dict((f2, i2) for i2, f2 in enumerate(base_fols))
+                if _match(f):
+                    pick = resolve(f)
+                    namae += 1
+                    break
         if pick is None and not new_sentence and prev_rule:
             want = prev_rule[3] if len(prev_rule) > 3 else []
             fols = resolve_focus(want) if want else base_fols
@@ -4922,7 +5097,8 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             if img.split(u"/")[0] in ima2:
                 continue                      # もう合っている
             tx2 = slots[idx][2]
-            hoshii2 = [c for c in uniq(CHARACTERS) if c in tx2]
+            cur["idx"], cur["tx"] = idx, tx2
+            hoshii2 = hito_jun(idx, tx2)
             dewa2 = []
             for c in hoshii2:
                 dewa2.extend([c] + ONAJI_HITO.get(c, []) + MITAME.get(c, []))

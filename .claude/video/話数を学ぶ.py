@@ -21,9 +21,25 @@ u"""話数を学ぶ ─ 本人が直した絵から、章ごとの「アニメ�
   ・本人が一度も選ばなかった話数は、後ろに下げる（消しはしない）
   ・直しの無い章は、いまの設定をそのまま残す
 
+■ 手本も一緒に残す（2026-10-10・本人の指定）
+
+  「私が指定したものは完璧と考え、それ以外のあなたが自動で割り当てた
+    ものを私が指定したものくらいの精度にあげたい」
+  「…必要な情報を蓄積できるようにしてください」
+
+本人の直しは `その他/差し替え.txt` に溜まるが、**その動画の中でしか効かない。**
+次の動画では0から。そこでこの道具は、直しを `手本.tsv` に写して残す。
+
+残すのは番号だけではない。**その絵に何が写っていたか**（カタログの説明）と、
+**機械は誰だと思っていたか**（前後の文を読んだ重み）も一緒に残す。
+外した理由がそこに出るので、次に直す所がすぐ分かる。
+
+そして「当て方.txt に足せる行」を提案する。当て方.txt は全動画で共通なので、
+ここが厚くなるほど、これから書く台本にも自動で効く。
+
 使い方:
     python 話数を学ぶ.py            … 何が変わるかを見るだけ
-    python 話数を学ぶ.py --書く     … 画面表示.txt を書きかえる
+    python 話数を学ぶ.py --書く     … 画面表示.txt と 手本.tsv を書きかえる
 """
 from __future__ import print_function
 import argparse
@@ -32,10 +48,128 @@ import os
 import re
 import sys
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
     pass
+
+TEHON = u"手本.tsv"
+# 当て方に足す行を出すのに要る、手本の数。
+# 1件だけだと「その動画だけの事情」かどうか分からない。
+URAZUKE = 2
+
+
+def mochikomu(nm):
+    u"""同じフォルダの道具を読み込む。"""
+    import importlib.util
+    p = os.path.join(HERE, nm + u".py")
+    if not os.path.exists(p):
+        p = nm + u".py"
+    spec = importlib.util.spec_from_file_location(nm, p)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def tehon_michi():
+    u"""手本.tsv の置き場所。**動画ごとにばらけさせない。**
+
+    動画の作業フォルダごとに道具が置かれるので、HERE を使うと
+    手本が動画ごとに分かれてしまい、**蓄積にならない。**
+    置き場所.txt の「おおもと」に1つだけ置く
+    （道は置き場所.txt にだけ書く、という決まりに合わせる）。
+    """
+    try:
+        import 置き場所
+        return os.path.join(置き場所.oomoto(), TEHON)
+    except Exception:
+        return os.path.join(HERE, TEHON)
+
+
+def load_sashikae_kumi(path):
+    u"""差し替え.txt → {番号: 書かれた指定}（絵の番号でもファイル名でも）"""
+    out = {}
+    if not os.path.exists(path):
+        return out
+    for line in yomu(path).split(u"\n"):
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            continue
+        c = [x for x in re.split(r"[\t　 ]{1,}", t)
+             if x and x.strip() not in (u"タブ", u"TAB", u"tab", u"\\t")]
+        if len(c) < 2:
+            continue
+        try:
+            no = int(c[0])
+        except ValueError:
+            continue
+        out[no] = u" ".join(c[1:]).strip()
+    return out
+
+
+def tehon_yomu(path):
+    u"""手本.tsv を読む。戻り値 (見出しの行たち, {(動画,番号): 行})"""
+    atama, naka = [], {}
+    if not os.path.exists(path):
+        return atama, naka
+    for line in yomu(path).split(u"\n"):
+        if line.startswith(u"#"):
+            atama.append(line)
+            continue
+        if not line.strip():
+            continue
+        c = line.split(u"\t")
+        if len(c) < 4:
+            continue
+        naka[(c[0].strip(), c[1].strip())] = c
+    return atama, naka
+
+
+# 指示語は、**この4つの形だけ**。
+#
+# ■ ゆるく取ると、鍵がゴミになる（2026-10-10）
+#
+# はじめは `[こそあど][のれ]?[ぁ-んァ-ヶ一-龠]{1,6}` で拾っていた。
+# ところが「あ」「そ」は文の頭によく出るひらがななので、
+#
+#     「ではありません。」      → 「ありません」
+#     「そしてララが一人で…」  → 「そしてララが一」
+#     「これは少しネタバレ…」  → 「これは少しネタバ」
+#
+# が鍵として出てきた。**当て方.txt にこれを入れたら害になる**
+# （「あって」→ #ルーデウス ロキシー になってしまう）。
+# 指示語は形を決め打ちし、続きは**漢字だけ**に限る。
+SASHI = (u"この", u"その", u"あの", u"どの")
+
+# 中身を持たない言葉。鍵にしてはいけない。
+TOMERU = set(u"""
+こと もの ため とき よう わけ はず 場合 自分 本当 今回 動画 内容 部分
+以上 以下 一部 最後 最初 今後 実際 結果 理由 意味 感じ 時点 以外 全部
+注意 説明 紹介 解説 話数 番目 一つ 二つ 三つ 四つ
+""".split())
+
+
+def kotoba(tx):
+    u"""字幕から、当て方の鍵になりそうな言葉を取る。
+
+    形態素解析は使わない（お金も外の道具も使わない方針）。
+    拾うのは2つだけ ── 決め打ちの指示語＋漢字、と、漢字のかたまり。
+    """
+    out = []
+    for s2 in SASHI:
+        for m in re.finditer(s2 + u"([一-龠]{1,4})", tx):
+            if m.group(1) not in TOMERU:
+                out.append(m.group(0))
+    for m in re.finditer(u"[一-龠]{2,6}", tx):
+        w = m.group(0)
+        if w not in TOMERU:
+            out.append(w)
+    # 長いものを先に（当て方は「いちばん長く当たったもの」を採る）
+    return sorted(set(out), key=lambda x: (-len(x), x))
+
 
 KI_KIGOU = ((u"Ⅲ", 3), (u"Ⅱ", 2), (u"III", 3), (u"II", 2))
 
@@ -146,13 +280,142 @@ def load_overlay(path):
     return gyou, shou
 
 
+def tehon_atsumeru(a):
+    u"""本人が手で選んだ絵を、動画をまたいで残す（手本.tsv）。"""
+    douga = a.douga or os.path.basename(os.path.abspath(os.getcwd()))
+    if not os.path.exists(a.ichiran):
+        print(u"× %s がありません。先に動画を1回作ってください。" % a.ichiran)
+        return 1
+    sashi = load_sashikae_kumi(a.sashi)
+    if not sashi:
+        print(u"差し替え.txt に本人の直しがありません。集めるものがありません。")
+        return 0
+
+    M = mochikomu(u"miru_kekka")
+    try:
+        M.KAWARI.update(M.load_kawari(os.path.join(HERE, u"人物ルール.txt")))
+    except Exception:
+        pass
+    rows = M.load_ichiran(a.ichiran)
+    tags = M.load_catalog(a.cat) if os.path.exists(a.cat) else {}
+    if not tags:
+        print(u"（%s が無いので、絵の中身は空のままにします）" % a.cat)
+    han = M.bun_han(rows)
+    ban = dict((int(r[u"no"]), n) for n in range(len(rows))
+               for r in [rows[n]] if str(r[u"no"]).strip().isdigit())
+
+    atama, naka = tehon_yomu(a.tehon)
+    atarashii, machigai = 0, []
+    print(u"── 本人が選んだ絵の中身 ──")
+    print(u"")
+    kazoe = {}
+    for no in sorted(sashi):
+        i = ban.get(no)
+        if i is None:
+            continue
+        tx = rows[i][u"text"] or u""
+        img = rows[i][u"img"] or u""
+        fol = img.split(u"/")[0] if u"/" in img else u""
+        setsu = (M.cat_lookup(tags, img) or u"") if tags else u""
+        omomi = M.bunmyaku(rows, i, han=han)
+        kikai = u"・".join(sorted(omomi, key=lambda c: -omomi[c])[:3])
+        print(u"%3d番「%s」" % (no, tx[:34]))
+        print(u"     選んだ絵: %-12s %s" % (sashi[no], fol or u"(不明)"))
+        if setsu:
+            print(u"     絵の中身: %s" % setsu)
+        if kikai:
+            print(u"     機械は  : %s" % kikai)
+        key = (douga, unicode_str(no))
+        c = [douga, unicode_str(no), tx, sashi[no], fol, setsu, kikai]
+        if key not in naka:
+            atarashii += 1
+        naka[key] = c
+        print(u"")
+
+    # ■ 数えるのは**溜まった手本ぜんぶ**。今回ぶんだけではない（2026-10-10）
+    #
+    # はじめは今回の直しだけを数えていた。手本.tsv は 14件に増えているのに
+    # 「まだ1件ずつしか無い」と出て、**蓄積の意味がまるごと無くなっていた。**
+    # 動画をまたいで同じ言葉が出たときに初めて法則になるのだから、
+    # ここは必ず溜まったぜんぶを見る。
+    for c in naka.values():
+        tx2 = c[2] if len(c) > 2 else u""
+        fol2 = c[4] if len(c) > 4 else u""
+        setsu2 = c[5] if len(c) > 5 else u""
+        for k in kotoba(tx2):
+            e = kazoe.setdefault(k, {u"話数": {}, u"中身": {}, u"件": 0})
+            e[u"件"] += 1
+            e[u"話数"][fol2] = e[u"話数"].get(fol2, 0) + 1
+            for w in setsu2.split():
+                e[u"中身"][w] = e[u"中身"].get(w, 0) + 1
+
+    print(u"── 当て方.txt に足せる行（手本 %d件以上で裏が取れたもの）──" % URAZUKE)
+    print(u"   そのまま当て方.txt に貼れる形で出します。")
+    print(u"")
+    deta = 0
+    for k in sorted(kazoe, key=lambda x: (-kazoe[x][u"件"], -len(x))):
+        e = kazoe[k]
+        if e[u"件"] < URAZUKE:
+            continue
+        if deta >= 40:
+            print(u"  …（ほか %d語。手本が増えるほどここが増えます）"
+                  % (sum(1 for x in kazoe if kazoe[x][u"件"] >= URAZUKE) - deta))
+            break
+        # その言葉のとき、本人の絵に何回も写っていたもの
+        nakami = [w for w in sorted(e[u"中身"], key=lambda w: -e[u"中身"][w])
+                  if e[u"中身"][w] >= URAZUKE]
+        wa = sorted(e[u"話数"], key=lambda f: -e[u"話数"][f])
+        if nakami:
+            print(u"  %s\t#%s" % (k, u" ".join(nakami[:3])))
+            print(u"     （手本 %d件 / 写っていたもの %s / 話数 %s）"
+                  % (e[u"件"],
+                     u" ".join(u"%s×%d" % (w, e[u"中身"][w]) for w in nakami[:5]),
+                     u" ".join(u"%s×%d" % (f or u"?", e[u"話数"][f]) for f in wa)))
+        else:
+            print(u"  %-14s 手本 %d件あるが、写っているものが毎回ちがう"
+                  % (k, e[u"件"]))
+            print(u"     （話数 %s）"
+                  % u" ".join(u"%s×%d" % (f or u"?", e[u"話数"][f]) for f in wa))
+        deta += 1
+    if not deta:
+        print(u"  （まだ 1件ずつしか無いので、足せる行はありません）")
+    print(u"")
+    print(u"今回の直し %d件（うち新しいもの %d件） / 溜まった手本 ぜんぶで %d件"
+          % (len(sashi), atarashii, len(naka)))
+    if not a.kaku:
+        print(u"書き足すには --書く を付けてください: %s" % a.tehon)
+        return 0
+    if not atama:
+        atama = [u"# 手本 ─ 本人が手で選んだ絵。動画をまたいで残します。",
+                 u"# 動画\t番号\t字幕\t絵の番号\t話数フォルダ\tカタログの説明\t機械の見立て"]
+    gyou = list(atama)
+    for key in sorted(naka, key=lambda x: (x[0], int(x[1]) if x[1].isdigit() else 0)):
+        gyou.append(u"\t".join(naka[key]))
+    io.open(a.tehon, "w", encoding="utf-8", newline="\n") \
+        .write(u"\n".join(gyou) + u"\n")
+    print(u"書き足しました: %s （ぜんぶで %d件）" % (a.tehon, len(naka)))
+    return 0
+
+
+def unicode_str(x):
+    try:
+        return unicode(x)          # noqa: F821  (Python2 のとき)
+    except NameError:
+        return str(x)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(u"確認用", u"一覧.txt"))
     ap.add_argument(u"--差し替え", dest="sashi", default=os.path.join(u"その他", u"差し替え.txt"))
     ap.add_argument(u"--画面表示", dest="overlay", default=u"画面表示.txt")
+    ap.add_argument(u"--カタログ", dest="cat", default=u"画像カタログ.txt")
+    ap.add_argument(u"--手本", dest="tehon", default=u"")
+    ap.add_argument(u"--動画", dest="douga", default=u"")
     ap.add_argument(u"--書く", dest="kaku", action="store_true")
     a = ap.parse_args()
+    if not a.tehon:
+        a.tehon = tehon_michi()
 
     for p in (a.ichiran, a.overlay):
         if not os.path.exists(p):
@@ -176,6 +439,10 @@ def main():
         print(u"差し替え.txt に、絵の番号で書かれた直しがありません。")
         print(u"（本人の直しが無いと、学ぶものがありません）")
         return 0
+    # 話数を学ぶ前に、**手本をぜんぶ残す**（動画をまたいで効かせるため）
+    print(u"")
+    tehon_atsumeru(a)
+    print(u"")
 
     gyou, shou = load_overlay(a.overlay)
     if not shou:

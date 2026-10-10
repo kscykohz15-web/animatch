@@ -228,6 +228,50 @@ def main():
                  u"二人 %s番目 / 一人 %s番目"
                  % (jun.get(u"二人", u"-"), jun.get(u"一人", u"-"))))
 
+        # ⑫ **本番の割り当て（assign_images）でも同じ9件が当たるか**
+        #
+        # ■ なぜこれを足したか（2026-10-10・本人のログから）
+        #
+        # ここまでの検査は 直す.py の選びかたを見ていた。それは 9/9 通る。
+        # ところが本人のログはこうだった。
+        #
+        #     区切り 236枚のうち、30 か所を見ます
+        #
+        # **236枚のうち30枚にしか効いていない。** 残り206枚は
+        # make_slideshow の assign_images が決めていて、そちらは
+        # **字幕1枚の本文しか見ていない**（0枚がセリフの人名から）。
+        # 前後を読む力があるのに、本番では使っていなかった。
+        #
+        # なので本番の道でも同じ9件を見る。両方通って初めて合格。
+        S = mochikomu("ms_b", u"make_slideshow.py")
+        imgs = sorted(tags.keys())
+        # 当て方.txt の人物の行と同じ形の規則だけを与える。
+        # 「この子供には名前があって、」には人の名前が無いので、
+        # **前後を読めなければ当たらない。**
+        rules = [[[h], [u"#" + h], 0, list(WA)] for h in HITO]
+        slots = [(n * 2.0, 2.0, tx) for n, (_no, tx) in enumerate(JIMAKU)]
+        honban = S.assign_images(slots, imgs, rules, [], catalog=tags,
+                                 epmap={}, focus=list(WA))
+        h_atari, h_ng = 0, []
+        for n, (no, tx) in enumerate(JIMAKU):
+            if no not in SEIKAI:
+                continue
+            img = honban[n] if n < len(honban) else u""
+            eta = dare(img)
+            ok = any(c in SEIKAI[no] for c in eta)
+            if ok and no in FUTARI:
+                ok = all(c in eta for c in SEIKAI[no])
+            if ok:
+                h_atari += 1
+            else:
+                h_ng.append((no, tx, u"・".join(eta) or u"(人なし)", SEIKAI[no]))
+        print(u"")
+        print(u"⑫ 本番の割り当て(assign_images) … 当たり %d / %d"
+              % (h_atari, len(SEIKAI)))
+        for (no, tx, eta, nozomi) in h_ng:
+            print(u"   × %2d番「%s」 望み %s / 選んだ絵 %s"
+                  % (no, tx, u"・".join(nozomi), eta))
+
         print(u"")
         print(u"当たり %d / %d" % (atari, len(SEIKAI)))
         if not futa_ok:
@@ -239,7 +283,11 @@ def main():
         if atari < len(SEIKAI):
             print(u"× 本人の直し（29〜37番）を、機械だけでは再現できていません。")
             return 1
-        print(u"○ 本人の直し 29〜37番を、機械だけで全部あてました。")
+        if h_atari < len(SEIKAI):
+            print(u"× 直す.py は当てられても、**本番の割り当てが当てられていません。**")
+            print(u"   本人の動画は 236枚のうち 206枚がこちらの道で決まります。")
+            return 1
+        print(u"○ 本人の直し 29〜37番を、直す.py も本番の割り当ても全部あてました。")
         return 0
     finally:
         os.chdir(moto)
