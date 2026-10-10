@@ -1562,6 +1562,34 @@ KUTEN_NASHI = [0]          # 句読点の無い所で切った字幕の数（0 �
 JISSOKU_TOL = [0.35]
 
 
+# 段落のうち「1行ずつの音声で測れた」割合。1.0 なら全部（ふだんはこれ）。
+#
+# ■ なぜ要るか（2026-10-10・検査が本物より易しかった、その2）
+#
+# 検査の材料は、かたまり1つ1つに重ならない背番号を付けている。
+# そのおかげで突き合わせが一対一で決まる（それは要る）が、
+# **副作用として「この「、」で声が止まったか」が毎回必ず分かる。**
+# 本物はそうではない。本人の第6回のログは
+#
+#     15/54 の段落は、1行ずつの音声で文の長さを実測しました
+#
+# **7割の段落は、止まったかどうかが分からない。**
+# 分からない所での切り方を直しても、検査では何も変わらないか、
+# むしろ良い数字が出る（検査では分かるのが当たり前なので、
+# 分かる前提の仕組みが有利になってしまう）。
+#
+# ここで「測れた段落の割合」を落とせるようにして、
+# 本物と同じ 15/54 の条件でも測れるようにする。
+# 乱数は使わない。何番目の段落を測れたことにするかは順番で決める
+# （同じ材料なら必ず同じ結果になるように）。
+JISSOKU_WARI = [1.0]
+JISSOKU_BAN = [0]
+
+# 字幕をつないでよい上限の文字数（2行に折り返して収まる数）。
+# 見た目.txt から出す。1920x1080・字幕の大きさ11・2行 なら 34。
+JIMAKU_UE = [34]
+
+
 def koe_to_awaseru(moji, dur):
     u"""切れはしの文字数と、測った声の区間を、順番を保って対応づける。
 
@@ -1664,6 +1692,11 @@ def jissoku_wariai(path, moji, saitan=0.095, koma=None):
     食いちがってもその文の中だけで済み、次の文には響かない。
     """
     if not JISSOKU_TSUKAU[0]:
+        return None
+    # 測れた段落の割合を落とす（検査で本物と同じ条件を作るため）
+    JISSOKU_BAN[0] += 1
+    n, w = JISSOKU_BAN[0], JISSOKU_WARI[0]
+    if w < 1.0 and int(n * w) <= int((n - 1) * w):
         return None
     koe = wav_no_koe(path, saitan)
     if not koe or not moji:
@@ -1949,6 +1982,100 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
     for t, (_st, _du, tx) in enumerate(slots):
         out.append((kugiri[t], max(0.12, kugiri[t + 1] - kugiri[t]), tx))
     return out, ugokashi, ichiban
+
+
+# 「声が止まった」と認める間の長さ（秒）。これより短い途切れは、
+# 言葉の途中のかすれであって、息継ぎではない。
+MA_SAITAN = [0.05]
+
+
+def jimaku_ue(w, h, mi, hitotsu=0, gyou=0):
+    u"""字幕が2行に折り返して収まる文字数。write_ass と同じ数え方。"""
+    size = max(24, int(round(min(w, h) / max(6.0, mi[u"字幕の大きさ"]))))
+    side = int(w * 0.04)
+    per = hitotsu or int(mi[u"字幕の1行"]) \
+        or max(8, int((w - side * 2 - size * 0.25) / float(size)))
+    return max(12, per * max(1, gyou or int(mi[u"字幕の行数"])))
+
+
+def koe_no_naka_tsunagu(slots, sils, ikari, ue):
+    u"""**声の途中で切り替わる切れ目を、つないで消す。**
+
+    ■ 本人が見ているものを、そのまま消す（2026-10-10）
+
+    本人の言い方はいつも同じだった。
+
+        「ということで」を終わった後に、「今回の動画の内容は」と
+         言い始めるぐらいで、字幕・画像共に次のものに切り替わっています
+
+    つまり **切り替わりが「間」ではなく「声の中」に落ちている。**
+    どこで切るかを上手く当てようとして7回外した。
+    当てるのをやめて、**外れたものを消す。**
+
+    ■ なぜこれで届くのか
+
+    「1行ずつの音声で測れた」のは本人の第6回で 15/54 しかない。
+    だから「ここで息を継いだか」は7割の所で分からない。
+    ところが **merged.wav の「間」は、いつでも 100% 分かる。**
+    7割の所で分からない材料で当てにいくより、
+    いつでも分かる材料で**消す**ほうが確かだった。
+
+    ■ 切るのをやめて、つなぐだけ（切れ目は増やさない）
+
+    検査で分かったことがある。細かく切るのは**それ自体が自己修正**で、
+    切れ目1つ1つが本物の「間」へ寄せ直される（koma_awase）ので、
+    ずれがそこで何度も 0 に戻る。
+    先にまとめてしまうと寄せ先が減り、いちばん大きいずれが
+    0.97秒 → 1.74秒 と**悪くなった**（本物と同じ 15/54 の条件で実測）。
+
+    だから切るのは今までどおり。**寄せ終わったあとで**、
+    「間」に乗らなかった切れ目だけを消す。
+    消すと字幕はつながって長くなるので、2行に収まる範囲まで。
+
+    残すもの:
+      ・錨（1行ずつの音声から分かった段落の境目）
+      ・「。」で終わっている字幕のうしろ（文の切れ目。実測で 0% ずれない）
+      ・2行に収まらなくなる所（読めないほうが困る）
+    """
+    if len(slots) < 2 or not sils:
+        return slots, 0
+    ik = sorted(ikari or [])
+    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_SAITAN[0]]
+
+    def ikari_ka(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    def ma_no_naka(t):
+        # 字幕は声より LEAD だけ先に出す。声が出るのは t + LEAD。
+        koe = t + LEAD
+        for (a, b) in ma:
+            if a - 0.03 <= koe <= b + 0.03:
+                return True
+        return False
+
+    out, keshita = [list(slots[0])], 0
+    # 消せずに残ったものの内訳。**残った理由が言えないと、直せない。**
+    nokori = {u"錨": 0, u"間の中": 0, u"「。」のあと": 0, u"2行に入らない": 0}
+    for sl in slots[1:]:
+        mae = out[-1]
+        t = sl[0]
+        if ikari_ka(t):
+            nokori[u"錨"] += 1
+        elif ma_no_naka(t):
+            nokori[u"間の中"] += 1
+        elif owari_bun(mae[2]):
+            nokori[u"「。」のあと"] += 1
+        elif not ((mae[2] or u"").strip() and (sl[2] or u"").strip()):
+            pass
+        elif disp_len(mae[2]) + disp_len(sl[2]) > ue:
+            nokori[u"2行に入らない"] += 1
+        else:
+            mae[1] += sl[1]
+            mae[2] = (mae[2] + sl[2]).strip()
+            keshita += 1
+            continue
+        out.append(list(sl))
+    return [tuple(x) for x in out], keshita, nokori
 
 
 def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=0.12,
@@ -5491,6 +5618,8 @@ def main():
     if a.vertical and a.size == "1920x1080":
         a.size = "1080x1920"
     w, h = [int(x) for x in a.size.lower().split("x")]
+    # つないでよい上限は、2行に折り返して読める文字数そのもの
+    JIMAKU_UE[0] = jimaku_ue(w, h, mi, a.sub_chars or 0, a.sub_lines or 0)
     tate = h > w
     if not a.safe_bottom:
         # 縦動画は下にアプリのボタンが重なるので、字幕を高めに置く
@@ -5725,6 +5854,26 @@ def main():
                         u"（いちばん大きいもの %.2f秒）" % (ugoita, ichiban))
                 else:
                     say(u"文字数で割った切れ目は、すでに「間」と合っていました。")
+                # 寄せても「間」に乗らなかった切れ目を消す（声の途中で
+                # 切り替わるのを、推測で当てずに**消して**無くす）
+                mae_kazu = len(slots)
+                slots, keshita, nokori = koe_no_naka_tsunagu(
+                    slots, sils_k, ikari, JIMAKU_UE[0])
+                if keshita:
+                    say(u"声の途中に落ちていた切れ目 %d か所を消しました"
+                        u"（%d枚 → %d枚。字幕はつながって2行になります）"
+                        % (keshita, mae_kazu, len(slots)))
+                else:
+                    say(u"切れ目はすべて「間」に乗っていました。")
+                # 残ったものは、理由を必ず出す（言えないと次が直せない）
+                nok = nokori.get(u"2行に入らない", 0)
+                say(u"  残した切れ目: 錨 %d / 間の中 %d / 「。」のあと %d / "
+                    u"2行に入らない %d（上限 %d文字）"
+                    % (nokori.get(u"錨", 0), nokori.get(u"間の中", 0),
+                       nokori.get(u"「。」のあと", 0), nok, JIMAKU_UE[0]))
+                if nok:
+                    say(u"  ※「2行に入らない」で残した %d か所は、"
+                        u"声の途中で切り替わっている可能性があります。" % nok)
             else:
                 say(u"音声に「間」が見つからず、切れ目は文字数のままです"
                     u"（--noise-db -40 で緩められます）。")

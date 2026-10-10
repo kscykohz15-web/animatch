@@ -120,6 +120,14 @@ KUTEN_NASHI_JOUGEN = 0
 #
 # この道は当てずっぽうが残るので、線はゆるめ。それでも
 # 直す前（最大 8.66秒）に戻ったら必ず落ちる。
+# 本人の第6回と同じ条件（段落の 15/54 しか測れない）での線。
+#
+# ここは**今の実力をそのまま書く**。通したいから動かす、はしない。
+# 本人の動画の実測（v146）は 0.45秒超 6% / 平均 0.14 / 最大 2.11秒 だった。
+HONBAN_OOKII = 2.20
+HONBAN_HEIKIN = 0.30
+HONBAN_WARIAI = 10.0
+
 YOBI_OOKII = 2.60
 YOBI_HEIKIN = 0.30
 YOBI_WARIAI = 12.0
@@ -150,15 +158,22 @@ def junbi():
     return SAGYOU
 
 
-def jissoku_kirikae(tsukau):
-    u"""実測の仕組みを使う/使わないを切りかえる。"""
+def jissoku_kirikae(tsukau, wari=1.0):
+    u"""実測を使う/使わないと、**測れた段落の割合**を切りかえる。
+
+    ■ 割合が要る理由（2026-10-10）
+
+    材料は背番号のおかげで毎回「声が止まったか」が分かってしまう。
+    本物は 15/54 ＝ 0.28 しか分からない。
+    分からない所での切り方は、割合を落とさないと測れない。
+    """
     q = os.path.join(SAGYOU, u"make_slideshow.py")
     s = io.open(q, encoding="utf-8").read()
-    for a, b in ((u"JISSOKU_TSUKAU = [True]", u"JISSOKU_TSUKAU = [%r]" % bool(tsukau)),
-                 (u"JISSOKU_TSUKAU = [False]", u"JISSOKU_TSUKAU = [%r]" % bool(tsukau))):
-        if a in s:
-            s = s.replace(a, b, 1)
-            break
+    import re as _re
+    s = _re.sub(u"JISSOKU_TSUKAU = \\[(True|False)\\]",
+                u"JISSOKU_TSUKAU = [%r]" % bool(tsukau), s, count=1)
+    s = _re.sub(u"JISSOKU_WARI = \\[[0-9.]+\\]",
+                u"JISSOKU_WARI = [%r]" % float(wari), s, count=1)
     io.open(q, "w", encoding="utf-8", newline="\n").write(s)
 
 
@@ -198,12 +213,16 @@ def main():
     if junbi() is None:
         return 1
     warui = []
-    for (tsukau, nm, oo, he, wa) in ((True, u"実測あり", GOUKAKU_OOKII,
-                                      GOUKAKU_HEIKIN, GOUKAKU_WARIAI),
-                                     (False, u"実測なし(予備の道)", YOBI_OOKII,
-                                      YOBI_HEIKIN, YOBI_WARIAI)):
+    for (tsukau, wari, nm, oo, he, wa) in (
+            (True, 1.0, u"実測あり", GOUKAKU_OOKII,
+             GOUKAKU_HEIKIN, GOUKAKU_WARIAI),
+            # 本人の第6回と同じ条件。ここが本番に近い。
+            (True, 15.0 / 54.0, u"実測 15/54(本物と同じ)", HONBAN_OOKII,
+             HONBAN_HEIKIN, HONBAN_WARIAI),
+            (False, 1.0, u"実測なし(予備の道)", YOBI_OOKII,
+             YOBI_HEIKIN, YOBI_WARIAI)):
         print(u"── %s ──" % nm)
-        jissoku_kirikae(tsukau)
+        jissoku_kirikae(tsukau, wari)
         if shirabe(a.kai, nm, oo, he, wa):
             warui.append(nm)
     print(u"")
