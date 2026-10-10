@@ -5926,6 +5926,30 @@ def main():
                     help=u"字幕の見え方を1枚のPNGで確認する(秒を指定可)")
     ap.add_argument("--render", action="store_true")
     a = ap.parse_args()
+    # ■ どのコードが走ったかを、必ず1行目に出す（2026-10-10）
+    #
+    # 本人の第6回を v150 で作り直してもらったら、絵の割り当てが
+    # **1枚も変わっていなかった。** 指紋の行がその理由を言っていた。
+    #
+    #     画面表示.txt:8e4f774e10  →  画面表示.txt:c80d6d6033
+    #
+    # 変わったのは設定だけで、**kime（コードの指紋）は同じ**。
+    # つまり作業フォルダの make_slideshow.py が古いままだった。
+    # menu.ps1 の MakeVideo が Prepare を呼んでいなかったため
+    # （メニューの 2 では、道具が入れ替わらない）。
+    #
+    # 掲示板に出した版と、実際に走った版が違う ──
+    # これを**画面で確かめられなかった**ので、1往復まるごと無駄にした。
+    # 以後、走ったコードの指紋を自分で名乗る。
+    say(u"make_slideshow の版: kime:%s" % kime_kata_shirushi())
+    try:
+        _pv = u"パック版.txt"
+        if os.path.exists(_pv):
+            _t = io.open(_pv, encoding="utf-8-sig", errors="replace").read().strip()
+            if _t:
+                say(u"  パック: %s" % _t.split(u"\n")[0][:60])
+    except Exception:
+        pass
 
     os.chdir(HERE)
     # フォルダを用意して、入出力の場所をここで決めてしまう。

@@ -515,6 +515,18 @@ def main():
     if not a.kaku:
         print(u"%d章ぶん変わります。書きかえるには --書く を付けてください。" % kaeta)
         return 0
+    # ■ 学んだ印を必ず入れる（2026-10-10）
+    #
+    # 本人のログの L の1行目がこれだった。
+    #
+    #     新しい 画面表示.txt に差し替えました (前のものは _前の設定 へ)
+    #
+    # **Prepare が、前に学んだ話数を毎回パックのものに戻していた。**
+    # 学んでも次の回には消えていたということ。
+    # 印が入っていれば Prepare はそのまま残す（menu.ps1 側で見ている）。
+    SHIRUSHI = u"# 学んだ話数が入っています（話数を学ぶ.py）。Prepare は上書きしません。"
+    if not any(x.strip() == SHIRUSHI for x in gyou):
+        gyou = [SHIRUSHI] + gyou
     io.open(a.overlay, "w", encoding="utf-8-sig", newline="\r\n") \
         .write(u"\n".join(gyou).replace(u"\n", u"\r\n"))
     print(u"%d章ぶん書きかえました: %s" % (kaeta, a.overlay))
