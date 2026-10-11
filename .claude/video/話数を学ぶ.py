@@ -176,6 +176,84 @@ def kotoba(tx):
     return sorted(set(out), key=lambda x: (-len(x), x))
 
 
+# 背景と場面に使う言葉。タグ一覧.txt にあるものだけを拾う。
+HAIKEI = u"室内 室外 夜 昼 夕方 雨 雪 森 街 城 教室 酒場 水辺 草原 路地裏 雲 空 山 海".split()
+BAMEN_KOTOBA = u"戦闘 笑顔 悲しい 怒り 恐怖 驚き 穏やか 緊迫 回想 アップ 立ち姿 走る 食事 魔法 剣 本 手紙".split()
+
+
+def kotoba_hiroi(tx, hako):
+    return [w for w in hako if w in (tx or u"")]
+
+
+def jimaku_daicho(M, N, rows, shou_no, out_path):
+    u"""字幕の台帳。**前後の文を読んで**「誰のことか」を出す。"""
+    han = M.bun_han(rows)
+    gy = [u"# 字幕の台帳 ─ その字幕が、誰の・どんな背景の・どんな場面の話か",
+          u"# 「誰」は前後の文から読んでいます（重い順。かっこの数は確からしさ）",
+          u"# 番号\t章\t誰\t背景\t場面\t対象話数\t字幕"]
+    for i, r in enumerate(rows):
+        tx = r[u"text"] or u""
+        if not tx.strip():
+            continue
+        omomi = M.bunmyaku(rows, i, han=han)
+        dare = [u"%s(%.2f)" % (c, omomi[c])
+                for c in sorted(omomi, key=lambda c: -omomi[c])[:4]]
+        gy.append(u"\t".join([
+            unicode_str(r[u"no"]),
+            shou_no(r[u"no"]) or u"",
+            u" ".join(dare),
+            u" ".join(kotoba_hiroi(tx, HAIKEI)),
+            u" ".join(kotoba_hiroi(tx, BAMEN_KOTOBA)),
+            (r.get(u"daihon") and u" / ".join(r[u"daihon"])) or u"",
+            tx]))
+    io.open(out_path, "w", encoding="utf-8-sig", newline="\r\n") \
+        .write(u"\r\n".join(gy) + u"\r\n")
+    return len(gy) - 3
+
+
+def e_daicho(M, S, imgs, tags, bamen, out_path):
+    u"""絵の台帳。期・話・コマは確か。人・背景・場面は確かさを添える。"""
+    gy = [u"# 絵の台帳 ─ その絵に誰が写っていて、どんな背景の、どんな場面か",
+          u"# 期・話・コマはフォルダ名と連番から出しています（確か）",
+          u"# 人・背景・場面はカタログからなので、外れることがあります",
+          u"# 絵の番号\t期\t話\tコマ\t写っている人\t背景\t場面\t確かさ\tファイル"]
+    kazu = {u"本人": 0, u"カタログ": 0, u"説明なし": 0}
+    for k in imgs:
+        ke = S.fol_code(k.split(u"/")[0]) if u"/" in k else None
+        n = S.koma_bangou(k)
+        setsu = (M.cat_lookup(tags, k) or u"") if tags else u""
+        hito = [c for c in M.CHARACTERS if c in setsu] if setsu else []
+        # 本人が 章の場面.txt でこのコマを指していれば、それが決定
+        honnin = []
+        for (na, hans) in list(bamen.get(u"章", {}).items()):
+            for (f, lo, hi) in hans:
+                if ke and f == k.split(u"/")[0] and n is not None and lo <= n <= hi:
+                    honnin.append(na)
+        for (kt, (f, lo, hi)) in bamen.get(u"言葉", []):
+            if f == k.split(u"/")[0] and n is not None and lo <= n <= hi:
+                honnin.append(u"＊" + kt)
+        if honnin:
+            tashika = u"本人:" + u",".join(honnin[:2])
+            kazu[u"本人"] += 1
+        elif setsu:
+            tashika = u"カタログ"
+            kazu[u"カタログ"] += 1
+        else:
+            tashika = u"説明なし"
+            kazu[u"説明なし"] += 1
+        gy.append(u"\t".join([
+            (u"%d-%02d-%03d" % (ke[0], ke[1], n)) if (ke and n is not None) else u"",
+            unicode_str(ke[0]) if ke else u"", unicode_str(ke[1]) if ke else u"",
+            (u"%03d" % n) if n is not None else u"",
+            u" ".join(hito),
+            u" ".join(kotoba_hiroi(setsu, HAIKEI)),
+            u" ".join(kotoba_hiroi(setsu, BAMEN_KOTOBA)),
+            tashika, k]))
+    io.open(out_path, "w", encoding="utf-8-sig", newline="\r\n") \
+        .write(u"\r\n".join(gy) + u"\r\n")
+    return len(gy) - 4, kazu
+
+
 KI_KIGOU = ((u"Ⅲ", 3), (u"Ⅱ", 2), (u"III", 3), (u"II", 2))
 
 
@@ -409,6 +487,60 @@ def unicode_str(x):
         return str(x)
 
 
+def daicho_kaku(a, rows, shou_no):
+    u"""字幕と絵、両方の台帳を書き出す（本人の指定・2026-10-11）。"""
+    try:
+        M = mochikomu(u"miru_kekka")
+        S = mochikomu(u"make_slideshow")
+    except Exception as e:
+        print(u"   台帳は作れませんでした（%s）" % e)
+        return
+    # ■ 行の形が2つある（2026-10-11）
+    #
+    # この道具の load_ichiran は **組** (番号, 画像, セリフ) を返すが、
+    # miru_kekka の load_ichiran は **辞書** を返す。
+    # bunmyaku は辞書のほうを使うので、ここで読み直す。
+    #
+    # 「絵の無い人の代わり」（ララ→ルーデウス・ロキシー）も読むこと。
+    # 読まないと、ララの話の所で誰も出てこない。
+    for p2 in (os.path.join(HERE, u"人物ルール.txt"), u"人物ルール.txt"):
+        try:
+            M.KAWARI.update(M.load_kawari(p2))
+            break
+        except Exception:
+            continue
+    try:
+        rows2 = M.load_ichiran(a.ichiran)
+    except Exception as e:
+        print(u"   台帳は作れませんでした（一覧が読めません: %s）" % e)
+        return
+
+    def shou2(no):
+        try:
+            return shou_no(int(unicode_str(no).strip()))
+        except Exception:
+            return u""
+    try:
+        p = os.path.join(u"確認用", u"字幕の台帳.txt")
+        n = jimaku_daicho(M, S, rows2, shou2, p)
+        print(u"   字幕の台帳: %s （%d枚）" % (p, n))
+    except Exception as e:
+        print(u"   字幕の台帳は作れませんでした（%s）" % e)
+    try:
+        imgs = sorted(set(r[u"img"] for r in rows2 if r.get(u"img")))
+        for cand in (os.path.join(u"確認用", u"画像一覧.txt"), u"画像一覧.txt"):
+            if os.path.exists(cand):
+                imgs = [x.strip() for x in yomu(cand).split(u"\n")
+                        if x.strip() and not x.strip().startswith(u"#")]
+                break
+        tags = M.load_catalog(a.cat) if os.path.exists(a.cat) else {}
+        n2, kazu = e_daicho(M, S, imgs, tags, S.load_bamen(), u"絵の台帳.txt")
+        print(u"   絵の台帳: 絵の台帳.txt （%d枚 / 本人 %d・カタログ %d・説明なし %d）"
+              % (n2, kazu[u"本人"], kazu[u"カタログ"], kazu[u"説明なし"]))
+    except Exception as e:
+        print(u"   絵の台帳は作れませんでした（%s）" % e)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(u"確認用", u"一覧.txt"))
@@ -592,6 +724,7 @@ def main():
         return 0
     if not a.kaku:
         print(u"%d章ぶん変わります。書きかえるには --書く を付けてください。" % kaeta)
+        daicho_kaku(a, rows, shou_no)
         return 0
     # ■ 学んだ印を必ず入れる（2026-10-10）
     #
@@ -608,6 +741,7 @@ def main():
     io.open(a.overlay, "w", encoding="utf-8-sig", newline="\r\n") \
         .write(u"\n".join(gyou).replace(u"\n", u"\r\n"))
     print(u"%d章ぶん書きかえました: %s" % (kaeta, a.overlay))
+    daicho_kaku(a, rows, shou_no)
     print(u"「はじめる.bat」→ 2 → 1 で作り直すと、学んだ話数で選び直します。")
     return 0
 

@@ -1655,7 +1655,32 @@ KUTEN_NASHI = [0]          # 句読点の無い所で切った字幕の数（0 �
 # 当てずっぽうの見当は大きく外れるので 1.6秒まで許していた。
 # **測った見当は外れないので、そんなに動かしてはいけない。**
 # 大きく許すと、となりの「間」へ吸い寄せられて、かえって悪くなる。
-JISSOKU_TOL = [0.35]
+# ■ 0.35 → 1.20 にした（2026-10-11・本人「同じところでずれています」）
+#
+# 本人の実例を計算したら、ここが塞いでいた。
+#
+#   前「ルーデウスを敵として潰すのではなく、」 2:17 から 3.33秒
+#   次「まず手懐けにいったというわけです。」   声は 2:19.32 から
+#   → 切れ目が **1.01秒 遅い**
+#
+# その区間は「測れた」扱いなので窓が 0.35秒。正しい「間」は 1.01秒 先、
+# **窓の外**なので寄せられなかった。測った長さが外れている所では、
+# 窓が狭いほど直しようがなくなる。
+#
+# 材料で測ったら、0.70 / 1.20 / 1.60 のどれも **0.35 と1桁も変わらなかった**。
+#
+#   0.35  最大 1.09 / 1.27 / 1.00秒   0.45秒超 5% / 4% / 2%
+#   0.70  （同じ）
+#   1.20  （同じ）
+#   1.60  （同じ）
+#
+# 材料では測れた所の測定が正しいので、0.35秒より遠くへ寄せる必要が
+# 一度も起きない＝**無害**。本人の 1.01秒 だけが通るようになる。
+#
+# （これまで試した直しは全部ここで害が出た。害の出ない形はこれだけだった。
+#   「1枚ずつ近くの無音へ戻す」最大 2.62秒まで悪化 /
+#   「最後に全部を声の始まりへ合わせ直す」0.45秒超 5/6/3%）
+JISSOKU_TOL = [1.20]
 
 
 
@@ -2179,6 +2204,119 @@ def jimaku_ue(w, h, mi, hitotsu=0, gyou=0):
 # **どの乱数でも悪くなった。** 切れ目を動かすと、その前後の字幕の
 # 長さが変わり、そこから先の割り振りがずれていく。
 # 「消す」は時刻を1つも動かさないので安全だが、「動かす」は違う。
+# 最後の合わせ直しで、1つの切れ目を動かしてよい幅（秒）。
+UGOKASU_UE = [2.00]
+
+
+def koe_ni_awaseru(slots, sils, ikari):
+    u"""**最後に、全部の切れ目を本物の声の始まりへ合わせ直す。**
+
+    ■ なぜ作り直したか（2026-10-11・本人「同じところでずれています」）
+
+    それまでは「おかしい切れ目を1枚ずつ見つけて、近くの無音へ戻す」
+    をやっていた。本人の実例で計算すると、歯止めの線すれすれ
+    （比 0.79 / 線 0.70）でしか通らない。前の字幕の開始が 0.4秒
+    ちがえば弾かれる。**確実ではない。**
+
+    **1枚ずつ近くを見るやり方そのものが弱い。**
+    近くに別の「間」があれば、そちらに吸い寄せられる。
+
+    測るほうは、もうその答えを持っていた（ずれ実測.py・2026-10-09）。
+
+        「いちばん近い声の始まり」で探すのをやめた。
+         字幕も声の始まりも、どちらも時間順に並んでいる。
+         **順番を守って対応づければ、取りちがえようがない。**
+
+    **測り方と同じものを、直すほうにも入れる。**
+    字幕の切れ目と声の始まりを、順番を保って全体で対応づけ、
+    対応がついた切れ目をその声の始まりへ移す。
+
+    動かさないもの:
+      ・錨（1行ずつの音声から分かった段落の境目）
+      ・対応がつかなかった切れ目（余った「間」は息継ぎなので飛ばす）
+      ・動かすと前後が短くなりすぎる所
+      ・UGOKASU_UE より遠い所（それは対応づけのまちがい）
+    """
+    if len(slots) < 2 or not sils:
+        return slots, 0
+    ik = sorted(ikari or [])
+
+    def ikari_ka(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    # 声の始まり＝無音の終わり。字幕はその LEAD 秒前に出す。
+    hajimari = sorted(max(0.0, b - LEAD) for (a, b) in sils
+                      if (b - a) >= MA_SAITAN[0])
+    if not hajimari:
+        return slots, 0
+    # 動かす対象は slots[1:] の始まり（最初の1枚の頭は動かさない）
+    kugiri = [slots[i][0] for i in range(1, len(slots))]
+    n, m = len(kugiri), len(hajimari)
+    INF = float("inf")
+    # dp[i][j] = 切れ目 i までを、声の始まり j までで説明した最小の合計
+    dp = [[INF] * (m + 1) for _ in range(n + 1)]
+    kara = [[None] * (m + 1) for _ in range(n + 1)]
+    for j in range(m + 1):
+        dp[0][j] = 0.0
+    for i in range(1, n + 1):
+        moto = kugiri[i - 1]
+        for j in range(1, m + 1):
+            v = dp[i - 1][j - 1] + abs(hajimari[j - 1] - moto)
+            k = (i - 1, j - 1)
+            if dp[i][j - 1] < v:                 # この「間」は誰にも当てない
+                v, k = dp[i][j - 1], (i, j - 1)
+            dp[i][j] = v
+            kara[i][j] = k
+    atta = [None] * n
+    i, j = n, m
+    while i > 0:
+        pi, pj = kara[i][j]
+        if pi == i - 1:
+            atta[i - 1] = hajimari[j - 1]
+        i, j = pi, pj
+
+    # ■ 動かすのは「声の中に落ちている切れ目」だけ（2026-10-11・測って決めた）
+    #
+    # はじめは対応がついた切れ目を**全部**動かした。悪くなった。
+    #
+    #   何もしない      最大 1.09 / 1.27 / 1.00秒   0.45秒超 5% / 4% / 2%
+    #   全部動かす      最大 1.36 / 1.29 / 1.41秒          5% / 6% / 3%
+    #
+    # 「、」の7割は声が止まらない所なので、**そこに正しく置かれている
+    # 切れ目まで、近くの「間」へ引きずられる。**
+    # 直したいのは「声の中で切り替わっている」ものだけ。そこに絞る。
+    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_SAITAN[0]]
+
+    def ma_no_naka(t):
+        koe = t + LEAD
+        return any(a - 0.03 <= koe <= b + 0.03 for (a, b) in ma)
+
+    atarashii = list(kugiri)
+    for q in range(n):
+        if atta[q] is None or ikari_ka(kugiri[q]):
+            continue
+        if ma_no_naka(kugiri[q]):
+            continue            # もう「間」に乗っている。動かさない
+        if abs(atta[q] - kugiri[q]) > UGOKASU_UE[0]:
+            continue
+        atarashii[q] = atta[q]
+    owari = slots[-1][0] + slots[-1][1]
+    saki = slots[0][0]
+    for q in range(n):
+        lo = saki + MIJIKA_SAITAN[0]
+        hi = (atarashii[q + 1] if q + 1 < n else owari) - MIJIKA_SAITAN[0]
+        if hi < lo:
+            atarashii[q] = max(lo, kugiri[q])
+        else:
+            atarashii[q] = min(max(atarashii[q], lo), hi)
+        saki = atarashii[q]
+    ugoita = sum(1 for q in range(n) if abs(atarashii[q] - kugiri[q]) > 0.02)
+    out, toki = [], [slots[0][0]] + atarashii + [owari]
+    for q in range(len(slots)):
+        out.append((toki[q], max(0.12, toki[q + 1] - toki[q]), slots[q][2]))
+    return out, ugoita
+
+
 def koe_no_naka_tsunagu(slots, sils, ikari, ue):
     u"""**声の途中で切り替わる切れ目を、つないで消す。**
 
@@ -2291,20 +2429,14 @@ def koe_no_naka_tsunagu(slots, sils, ikari, ue):
             # **本文はそのままで、時刻だけその無音の終わりへ戻す。**
             # 前に試した「本文も割り直す」は測って悪かったが、
             # これは時刻だけなので、前後の字幕の長さ以外は何も動かない。
-            atarashii = koe_no_hajimari(t)
-            if atarashii is not None:
-                maede = out[-1][0] if len(out) >= 1 else 0.0
-                # 前の字幕が短すぎなくなる範囲で、かつ
-                # 前後の長さが文字数から出した長さに近いときだけ動かす
-                if atarashii - maede >= MIJIKA_SAITAN[0] \
-                        and tA_owari(sl) - atarashii >= MIJIKA_SAITAN[0] \
-                        and hontorashii(mae[2], atarashii - maede) \
-                        and hontorashii(sl[2], tA_owari(sl) - atarashii):
-                    mae[1] = atarashii - mae[0]
-                    sl = [atarashii, tA_owari(sl) - atarashii, sl[2]]
-                    modoshita[0] += 1
-                    out.append(list(sl))
-                    continue
+            # ■ ここで1枚ずつ戻すのはやめた（2026-10-11）
+            #
+            # 「直前に無音が終わった所へ戻す」を入れたが、本人の実例では
+            # 歯止めの線すれすれ（比 0.79 / 線 0.70）でしか通らず、
+            # 前の字幕の ало が 0.4秒ちがえば弾かれる。**確実ではない。**
+            # 1枚ずつ近くを見るやり方そのものが弱いので、
+            # **最後に全部の切れ目をまとめて声の始まりへ合わせ直す**
+            # （koe_ni_awaseru）。測り方と同じ、順番を守った対応づけ。
             nokori[u"2行に入らない"] += 1
         else:
             mae[1] += sl[1]
@@ -6424,6 +6556,16 @@ def main():
                 if nok:
                     say(u"  ※「2行に入らない」で残した %d か所は、"
                         u"声の途中で切り替わっている可能性があります。" % nok)
+                # ■ 「最後に全部の切れ目を声の始まりへ合わせ直す」は
+                #   測って悪かったので入れていない（2026-10-11・koe_ni_awaseru）
+                #
+                #   何もしない    最大 1.09/1.27/1.00秒  0.45秒超 5%/4%/2%
+                #   全部動かす    最大 1.36/1.29/1.41秒          5%/6%/3%
+                #   声の中だけ    （同じ数字）
+                #
+                #   「、」の7割は声が止まらない所なので、そこに**正しく**
+                #   置かれている切れ目まで近くの「間」へ引きずられる。
+                #   関数は残してあるが、呼んでいない。
             else:
                 say(u"音声に「間」が見つからず、切れ目は文字数のままです"
                     u"（--noise-db -40 で緩められます）。")
