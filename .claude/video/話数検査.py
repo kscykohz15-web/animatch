@@ -113,6 +113,52 @@ JIMAKU = [
 ]
 
 
+def bamen_shiken():
+    u"""学んだ「場面のコマ番号」の中から選ぶか。
+
+    ■ 本人の26件から出た、いちばん確かな手がかり（2026-10-11）
+
+    カタログの説明は外れている（3-14-152 を「エリス」など）。
+    いっぽうコマ番号は切り出した順なので、話数の中の時間の位置
+    ＝**どの場面か**をそのまま表す。本人の選択はきれいに固まっていた。
+
+        はじめに        Ⅲ11 コマ105〜142
+        ヒトガミの目的  Ⅲ14 コマ78〜157
+
+    Ⅲ第11話は166枚あるのに、選ばれたのは 105〜142 だけだった。
+    だからこの範囲を渡して、**その中から選ぶか**を見る。
+    """
+    import tempfile
+    wa = u"無職転生Ⅲ 第11話"
+    images, cat = [], {}
+    for n in list(range(1, 31)) + list(range(105, 143)):
+        key = u"%s/%03d_x2.png" % (wa, n)
+        images.append(key)
+        cat[key] = u"ヒトガミ 室内 穏やか"
+    rules = [[[u"ヒトガミ"], [u"#ヒトガミ"], 0, [wa]]]
+    slots = [(i * 2.0, 2.0, u"ヒトガミには、") for i in range(8)]
+    moto = os.getcwd()
+    ba = tempfile.mkdtemp()
+    os.chdir(ba)
+    try:
+        io.open(M.BAMEN, "w", encoding="utf-8-sig", newline="\r\n").write(
+            u"# 章\t話数フォルダ\tコマの範囲\r\n%s\t%s\t105-142\r\n"
+            % (u"はじめに", wa))
+        picked = M.assign_images(
+            slots, images, rules, [], catalog=cat, epmap={}, focus=[wa],
+            chaps=[(u"ヒトガミには", u"はじめに", [wa])])
+    finally:
+        os.chdir(moto)
+    naka = [k for k in picked if 105 <= (M.koma_bangou(k) or 0) <= 142]
+    print(u"")
+    print(u"── 学んだ場面のコマから選ぶか ──")
+    for k in picked:
+        n = M.koma_bangou(k)
+        print(u"   %s コマ %3d" % (u"○" if 105 <= (n or 0) <= 142 else u"×", n or -1))
+    print(u"   範囲の中 %d / %d枚" % (len(naka), len(picked)))
+    return len(naka) == len(picked)
+
+
 def main():
     images, cat, rules = zairyou()
     slots = [(i * 2.0, 2.0, tx) for i, (tx, _h) in enumerate(JIMAKU)]
@@ -158,6 +204,11 @@ def main():
                   % (tx[:28], u"・".join(hoshii), ita))
     else:
         print(u"○ 人ちがいはありません")
+    if not bamen_shiken():
+        warui += 1
+        print(u"× 学んだ場面のコマを使えていません")
+    else:
+        print(u"○ 学んだ場面のコマの中から選びました")
     return 1 if warui else 0
 
 

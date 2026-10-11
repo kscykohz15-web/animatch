@@ -509,8 +509,53 @@ def main():
             gyou[s[u"i"]] = u"\t".join(c[:4])
         print(u"")
 
+    # ■ 「どの場面か」も学ぶ（2026-10-11・本人の26件から）
+    #
+    # カタログの説明は当てにならない。本人が選んだ絵の説明を見ると
+    #
+    #   3-14-152 →「エリス 赤髪 鎧 剣」   （セリフはルーデウスとロキシーの子供）
+    #   3-14-080 →「ロキシー 紫髪」       （ロキシーは青髪）
+    #   3-14-157 →「文字あり 使用不可」   （本人がそれを選んでいる）
+    #
+    # なので「選んだ絵のタグを学ぶ」は天井が低い。
+    #
+    # **コマ番号だけは当てになる。** 切り出した順の番号なので、
+    # 話数の中の「時間の位置」＝**どの場面か**をそのまま表す。
+    # 本人の26件を章ごとに並べると、きれいに固まっていた。
+    #
+    #   はじめに        Ⅲ11 コマ105〜142 / Ⅲ12 コマ44〜70 / Ⅲ05 コマ35
+    #   ヒトガミの目的  Ⅲ14 コマ78〜157 / Ⅲ08 コマ16
+    #
+    # Ⅲ第11話は166枚あるのに、本人が選んだのは 105〜142 だけ。
+    # ここを渡せば、カタログが間違っていても**場面は合う。**
+    bamen = {}
+    for no, fol in sorted(sashi.items()):
+        na = shou_no(no)
+        ke = code_norm(u" ".join(load_sashikae_kumi(a.sashi).get(no, u"").split()))
+        if not (na and fol and ke):
+            continue
+        bamen.setdefault((na, fol), []).append(ke[2])
+    if bamen:
+        gy = [u"# 章の場面 ─ 本人が選んだ絵の「コマ番号の範囲」です。",
+              u"# 話数を学ぶ.py が書きます。手で直しても構いません。",
+              u"# 範囲の中の絵を先に使います（無ければその話数の他の絵）。",
+              u"# 章	話数フォルダ	コマの範囲"]
+        print(u"── 章ごとの「どの場面か」 ──")
+        for (na, fol) in sorted(bamen):
+            ns = sorted(bamen[(na, fol)])
+            gy.append(u"%s	%s	%d-%d" % (na.replace(u"\\N", u" "), fol, ns[0], ns[-1]))
+            print(u"   %-16s %-18s コマ %3d〜%3d （%d件）"
+                  % (na.replace(u"\\N", u" ")[:16], fol, ns[0], ns[-1], len(ns)))
+        if a.kaku:
+            io.open(u"章の場面.txt", "w", encoding="utf-8-sig", newline="\r\n") \
+                .write(u"\r\n".join(gy) + u"\r\n")
+            print(u"   書きました: 章の場面.txt")
+        else:
+            print(u"   （--書く を付けると 章の場面.txt に書きます）")
+        print(u"")
+
     if not kaeta:
-        print(u"学んだ結果、変えるところはありませんでした。")
+        print(u"学んだ結果、章の話数で変えるところはありませんでした。")
         return 0
     if not a.kaku:
         print(u"%d章ぶん変わります。書きかえるには --書く を付けてください。" % kaeta)

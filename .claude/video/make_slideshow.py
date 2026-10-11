@@ -4455,6 +4455,68 @@ def hito_fuda(slots, idx, oboe=None):
     return fuda
 
 
+BAMEN = u"章の場面.txt"
+
+
+def shou_namae(t):
+    u"""章の名前をくらべる形にそろえる（\\N は空白にする）。"""
+    return u" ".join((t or u"").replace(u"\\N", u" ").split())
+
+
+def load_bamen(path=BAMEN):
+    u"""章の場面.txt を読む → {章名: [(話数フォルダ, 下限, 上限)]}
+
+    ■ なぜコマ番号なのか（2026-10-11・本人の26件から）
+
+    カタログの説明は当てにならない。本人が選んだ絵を引いてみると
+
+        3-14-152 →「エリス 赤髪 鎧 剣」  （セリフはルーデウスとロキシーの子供）
+        3-14-080 →「ロキシー 紫髪」      （ロキシーは青髪）
+        3-14-157 →「文字あり 使用不可」  （本人がそれを選んでいる）
+
+    **「選んだ絵のタグを学ぶ」は天井が低い。**
+
+    いっぽうコマ番号は切り出した順の番号なので、
+    話数の中の「時間の位置」＝**どの場面か**をそのまま表す。
+    本人の26件を章ごとに並べると、きれいに固まっていた。
+
+        はじめに        Ⅲ11 コマ105〜142 / Ⅲ12 コマ44〜70
+        ヒトガミの目的  Ⅲ14 コマ78〜157
+
+    Ⅲ第11話は166枚あるのに、選ばれたのは 105〜142 だけ。
+    ここを使えば、**カタログが間違っていても場面は合う。**
+
+    範囲は「先に使う」だけで、しばりではない。
+    手本が少ないうちは範囲が狭いので、外も使えるようにしておく。
+    """
+    out = {}
+    if not os.path.exists(path):
+        return out
+    nama = io.open(path, encoding="utf-8-sig", errors="replace").read() \
+        .replace(u"\r\n", u"\n")
+    for line in nama.split(u"\n"):
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            continue
+        c = t.split(u"\t")
+        if len(c) < 3:
+            continue
+        m = re.match(r"\s*(\d+)\s*-\s*(\d+)\s*$", c[2])
+        if not m:
+            continue
+        out.setdefault(shou_namae(c[0]), []).append(
+            (c[1].strip(), int(m.group(1)), int(m.group(2))))
+    return out
+
+
+def koma_bangou(k):
+    u"""絵の名前から、話数の中のコマ番号を取る。無ければ None。"""
+    if not k or u"/" not in k:
+        return None
+    m = re.match(r"(\d+)", os.path.basename(k.split(u"/", 1)[1]))
+    return int(m.group(1)) if m else None
+
+
 def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                   focus=None, mitame=None, chaps=None):
     """画像プランに従って、スロットごとに絵を決める。
@@ -4535,7 +4597,25 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     used_focus = set()
 
     # いま効いている話数。規則ごとに differ するので、その都度入れ替える。
-    cur = {"fols": base_fols, "rank": dict((f, i) for i, f in enumerate(base_fols))}
+    cur = {"fols": base_fols, "rank": dict((f, i) for i, f in enumerate(base_fols)),
+           "shou": u""}
+    bamen = load_bamen()
+    if bamen:
+        say(u"章の場面を読みました: %d章ぶん（本人が選んだコマ番号の範囲）"
+            % len(bamen))
+
+    def bamen_naka(k):
+        u"""その絵が、いまの章で本人が選んだコマ番号の範囲に入っているか。"""
+        if not bamen:
+            return False
+        han = bamen.get(cur.get("shou") or u"")
+        if not han:
+            return False
+        fol = k.split(u"/")[0] if u"/" in k else u""
+        n = koma_bangou(k)
+        if n is None:
+            return False
+        return any(f == fol and lo <= n <= hi for (f, lo, hi) in han)
 
     def _in_focus(k):
         return k.split(u"/")[0] in cur["rank"] if u"/" in k else False
@@ -4579,9 +4659,11 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         def kagi(k):
             fol = k.split(u"/")[0] if u"/" in k else u""
             i = r.get(fol)
+            # 同じ話数の中では、**本人が選んだ場面のコマを先に**
+            ba = 0 if bamen_naka(k) else 1
             if i is not None:
-                return (0, i, 0, natkey(k))
-            return (1, 0, tooi(fol), natkey(k))
+                return (0, i, ba, 0, natkey(k))
+            return (1, 0, ba, tooi(fol), natkey(k))
         return sorted(lst, key=kagi)
 
     def _match(key, hiroi=False):
@@ -5009,6 +5091,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if idx in shou_kiri:
             title, fs = shou_kiri[idx]
             ima_base = fs
+            cur["shou"] = shou_namae(title)
             shou_tsukatta.append((title, fs))
         base_fols = ima_base
         cur["tx"] = tx          # 絵を借りるとき、誰のセリフかを見るため
@@ -6014,7 +6097,7 @@ def main():
     # 入れ忘れていたせいで、話数を書いても古い表が使われ、
     # 本人が その他/画像割り当て.tsv を手で消さないと効かなかった。
     srcs = [IMGPLAN, a.catalog, a.epmap, a.script, a.srt,
-            a.audio, a.mitame, a.overlay, u"人物ルール.txt"]
+            a.audio, a.mitame, a.overlay, u"人物ルール.txt", BAMEN]
     fp_now = inputs_fingerprint(srcs)
     newer = None
     if have and not stale:

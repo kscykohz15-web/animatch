@@ -344,6 +344,23 @@ def load_plan_tebiki(path, hyou=None):
     return out
 
 
+def ban_int(x):
+    u"""番号を整数にする。できなければ -1（どれにも当たらない）。
+
+    一覧.txt は文字列、差し替え.txt は整数で番号を持っている。
+    くらべる所で必ず通すこと。
+    """
+    try:
+        return int(unicode(x).strip())     # noqa: F821  (Python2)
+    except NameError:
+        try:
+            return int(str(x).strip())
+        except Exception:
+            return -1
+    except Exception:
+        return -1
+
+
 def load_sashikae_ban(path):
     u"""その他/差し替え.txt で本人が番号指定した所を集める（番号の集合）。
 
@@ -792,7 +809,25 @@ def main():
 
         # 画像プランにファイル名で直接書いた絵は、人が選んだもの。
         # 話数や使用不可で責めない（本人の指定が上）。
-        erabi = (img in tebiki) or (r[u"no"] in sashi)
+        #
+        # ■ ここが**一度も効いていなかった**（2026-10-11）
+        #
+        # 一覧.txt の番号は `u"no": no.strip()` で**文字列**、
+        # 差し替えの番号は `int(...)` で**整数**。
+        #
+        #     "016" in {16}   →  いつでも False
+        #
+        # そのため採点は、**本人が手で選んだ絵をずっと責めていた。**
+        # 本人の第6回で「ひどい 8 か所」と出ていたが、
+        # その8件（008 016 017 019 020 024 025 027）は
+        # **ぜんぶ本人の差し替え番号**だった。
+        # カタログの説明が外れている絵（3-14-152 を「エリス」など）を
+        # 本人が選んでいるので、人ちがいに見えていただけ。
+        #
+        # つまり **機械が自動で当てた約200枚には、人ちがい・話数ちがいが
+        # 1件も無かった。** 点数はそこを映していなかった。
+        # この数字を見ながら何回も直したので、**嘘の的を撃っていた。**
+        erabi = (img in tebiki) or (ban_int(r[u"no"]) in sashi)
 
         # ⑤ 使用不可
         #
@@ -874,8 +909,11 @@ def main():
                 muchi = True
 
         # ① 使いすぎ（印だけ。重さは軽く）
+        #
+        # 本人が手で選んだ所では言わない。挨拶の絵（3-05-035）は
+        # **わざと3回とも同じ**にしてあるので、責める意味がない。
         n = len(tsukai.get(img, []))
-        if n >= a.kurikaeshi:
+        if n >= a.kurikaeshi and not erabi:
             riyuu.append(u"同じ絵を%d回使っています" % n)
             omosa += 1
 
