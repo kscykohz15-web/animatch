@@ -150,13 +150,38 @@ def bamen_shiken():
     finally:
         os.chdir(moto)
     naka = [k for k in picked if 105 <= (M.koma_bangou(k) or 0) <= 142]
+    # ＊言葉 の行が、章の行より強いか（本人の指定・2026-10-11）
+    #   「ロキシーを殺す」のような字幕には、その出来事の場面を当てたい
+    d2 = tempfile.mkdtemp()
+    os.chdir(d2)
+    try:
+        io.open(M.BAMEN, "w", encoding="utf-8-sig", newline="\r\n").write(
+            u"# 章\t話数フォルダ\tコマの範囲\r\n"
+            u"はじめに\t%s\t105-142\r\n"
+            u"＊ロキシーを殺す\t%s\t010-020\r\n" % (wa, wa))
+        slots2 = [(0.0, 2.0, u"ヒトガミには、"),
+                  (2.0, 2.0, u"老デウスの世界線ではロキシーを殺すことに成功したのか。"),
+                  (4.0, 2.0, u"ヒトガミには、")]
+        p2 = M.assign_images(slots2, images, rules, [], catalog=cat, epmap={},
+                             focus=[wa],
+                             chaps=[(u"ヒトガミには", u"はじめに", [wa])])
+    finally:
+        os.chdir(moto)
+    ban2 = [M.koma_bangou(k) or 0 for k in p2]
+    kotoba_ok = (10 <= ban2[1] <= 20) and (105 <= ban2[0] <= 142)
+    print(u"")
+    print(u"── ＊言葉 の行が章より強いか ──")
+    for (tx, n) in zip([u"ヒトガミには、", u"ロキシーを殺す…", u"ヒトガミには、"], ban2):
+        print(u"   %-18s コマ %3d" % (tx[:18], n))
+    print(u"   %s 言葉の行（010-020）が効き、他は章の行（105-142）のまま"
+          % (u"○" if kotoba_ok else u"×"))
     print(u"")
     print(u"── 学んだ場面のコマから選ぶか ──")
     for k in picked:
         n = M.koma_bangou(k)
         print(u"   %s コマ %3d" % (u"○" if 105 <= (n or 0) <= 142 else u"×", n or -1))
     print(u"   範囲の中 %d / %d枚" % (len(naka), len(picked)))
-    return len(naka) == len(picked)
+    return len(naka) == len(picked) and kotoba_ok
 
 
 def main():

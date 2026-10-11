@@ -74,6 +74,11 @@ def mochikomu(nm):
     return m
 
 
+def shou_namae(t):
+    u"""章の名前をくらべる形にそろえる（\\N は空白にする）。"""
+    return u" ".join((t or u"").replace(u"\\N", u" ").split())
+
+
 def tehon_michi():
     u"""手本.tsv の置き場所。**動画ごとにばらけさせない。**
 
@@ -546,6 +551,34 @@ def main():
             gy.append(u"%s	%s	%d-%d" % (na.replace(u"\\N", u" "), fol, ns[0], ns[-1]))
             print(u"   %-16s %-18s コマ %3d〜%3d （%d件）"
                   % (na.replace(u"\\N", u" ")[:16], fol, ns[0], ns[-1], len(ns)))
+        # ■ 手で足した行を消さない（2026-10-11）
+        #
+        # Prepare が 画面表示.txt を上書きして、学んだ話数を毎回消していた
+        # のと同じ事故（30節）。ここも同じ形で塞ぐ。
+        #
+        # 残すもの:
+        #   ・「＊言葉」の行（本人が手で書いた、その言葉のときの場面）
+        #   ・差し替えが無い章の行（機械には学ぶ材料が無いので、消してはいけない）
+        manabu_shou = set(shou_namae(na) for (na, _f) in bamen)
+        nokosu = []
+        if os.path.exists(u"章の場面.txt"):
+            for line in yomu(u"章の場面.txt").split(u"\n"):
+                t2 = line.strip()
+                if not t2 or t2.startswith(u"#"):
+                    continue
+                c2 = t2.split(u"\t")
+                if len(c2) < 3:
+                    continue
+                na2 = c2[0].strip()
+                if na2.startswith(u"＊") or na2.startswith(u"*"):
+                    nokosu.append(t2)
+                elif shou_namae(na2) not in manabu_shou:
+                    nokosu.append(t2)
+        if nokosu:
+            gy.append(u"")
+            gy.append(u"# ここから下は、前からあった行です（消していません）")
+            gy.extend(nokosu)
+            print(u"   手で書かれていた %d行は、そのまま残します" % len(nokosu))
         if a.kaku:
             io.open(u"章の場面.txt", "w", encoding="utf-8-sig", newline="\r\n") \
                 .write(u"\r\n".join(gy) + u"\r\n")

@@ -2122,6 +2122,39 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
 # 言葉の途中のかすれであって、息継ぎではない。
 MA_SAITAN = [0.05]
 
+# 字幕1枚の最短の長さ（秒）。これより短くなる動かし方はしない。
+MIJIKA_SAITAN = [0.45]
+
+# 読み上げの速さ（字/秒・実測）。動かした先が本当らしいかを見るのに使う。
+YOMI_HAYASA = [6.46]
+# 文字数から出した長さの、何倍までを本当らしいと見るか。
+#
+# ■ 歯止めが無いと悪くなる（2026-10-11・測った）
+#
+# 「つなげないなら時刻を声の始まりへ戻す」を入れたとき、
+# 戻し先を「直前に無音が終わった所」にしただけでは
+#
+#   いちばん大きいずれ 1.09/1.27/1.00秒  →  1.95/2.56/2.62秒（不合格）
+#
+# と**悪くなった。** 長く喋り続けている所では「直前の無音」が
+# 何秒も前にあるので、そこまで飛んでしまう。
+#
+# 戻した先が本当にその字幕の声の始まりなら、
+# 前後の字幕の長さは**文字数から出した長さに近くなる**はずなので、
+# そこを見て、離れすぎていたら戻さない。
+# 測った結果（本物と同じ 15/54 の条件・前 → 後）
+#
+#   戻さない        最大 1.09 / 1.27 / 1.00秒   0.45秒超 5% / 4% / 2%
+#   歯止め 0.60〜1.70  最大 1.69 / 1.71 / 1.24秒          4% / 6% / 3%
+#   歯止め 0.70〜1.50  最大 1.36 / 1.27 / 1.24秒          3% / 5% / 2%
+#   歯止め 0.80〜1.35  最大 1.36 / 1.27 / 0.91秒          3% / 5% / 2%
+#
+# 0.80 のほうが材料では良いが、**本人の1件が弾かれる**（比 0.79）。
+# 材料には「つなぐと1文字だけ超える」形が入っていないので、
+# ここは材料より本人の実例を採る。材料では引き分け。
+HONTO_SHITA = [0.70]
+HONTO_UE = [1.50]
+
 
 def jimaku_ue(w, h, mi, hitotsu=0, gyou=0):
     u"""字幕が2行に折り返して収まる文字数。write_ass と同じ数え方。"""
@@ -2201,7 +2234,30 @@ def koe_no_naka_tsunagu(slots, sils, ikari, ue):
                 return True
         return False
 
+    def koe_no_hajimari(t):
+        u"""t の直前で無音が終わった時刻（＝声が出はじめた所）。無ければ None。
+
+        字幕は声より LEAD だけ先に出すので、返すのは「その時刻 − LEAD」。
+        """
+        koe = t + LEAD
+        owari = [b for (a2, b) in ma if b <= koe]
+        if not owari:
+            return None
+        return max(owari) - LEAD
+
+    def tA_owari(x):
+        return x[0] + x[1]
+
+    def hontorashii(tx, byou):
+        u"""その本文を byou 秒で読むのは本当らしいか（読む速さから見て）。"""
+        moji = disp_len((tx or u"").strip())
+        if moji <= 0:
+            return False
+        hoshii = moji / float(YOMI_HAYASA[0])
+        return HONTO_SHITA[0] * hoshii <= byou <= HONTO_UE[0] * hoshii
+
     out, keshita = [list(slots[0])], 0
+    modoshita = [0]
     # 消せずに残ったものの内訳。**残った理由が言えないと、直せない。**
     nokori = {u"錨": 0, u"間の中": 0, u"「。」のあと": 0, u"2行に入らない": 0}
     for sl in slots[1:]:
@@ -2216,7 +2272,39 @@ def koe_no_naka_tsunagu(slots, sils, ikari, ue):
         elif not ((mae[2] or u"").strip() and (sl[2] or u"").strip()):
             pass
         elif disp_len(mae[2]) + disp_len(sl[2]) > ue:
-            # つなげない。動かすのは測って悪かったので、そのまま残す
+            # ■ つなげないなら、**時刻だけを声の始まりへ戻す**（2026-10-11）
+            #
+            # 本人の動画でいちばん大きいずれ（1.01秒）がここだった。
+            #
+            #   前の字幕「ルーデウスを敵として潰すのではなく、」 18文字
+            #   次の字幕「まず手懐けにいったというわけです。」   17文字
+            #   つなぐと 35文字 ── **上限34文字を1文字だけ超える**
+            #
+            # だから消せず、声の途中で切り替わったまま残っていた。
+            # 本人の言葉「『潰すのではなく』のあと、この字幕と画像のまま
+            # 次の音声が始まる」。
+            #
+            # なぜ寄せられなかったか: その区間は「測れた」扱いなので窓が
+            # 0.35秒。正しい「間」は 1.01秒 先なので**窓の外**だった。
+            #
+            # 「間」そのものは分かっている（1.01秒前に無音が終わっている）。
+            # **本文はそのままで、時刻だけその無音の終わりへ戻す。**
+            # 前に試した「本文も割り直す」は測って悪かったが、
+            # これは時刻だけなので、前後の字幕の長さ以外は何も動かない。
+            atarashii = koe_no_hajimari(t)
+            if atarashii is not None:
+                maede = out[-1][0] if len(out) >= 1 else 0.0
+                # 前の字幕が短すぎなくなる範囲で、かつ
+                # 前後の長さが文字数から出した長さに近いときだけ動かす
+                if atarashii - maede >= MIJIKA_SAITAN[0] \
+                        and tA_owari(sl) - atarashii >= MIJIKA_SAITAN[0] \
+                        and hontorashii(mae[2], atarashii - maede) \
+                        and hontorashii(sl[2], tA_owari(sl) - atarashii):
+                    mae[1] = atarashii - mae[0]
+                    sl = [atarashii, tA_owari(sl) - atarashii, sl[2]]
+                    modoshita[0] += 1
+                    out.append(list(sl))
+                    continue
             nokori[u"2行に入らない"] += 1
         else:
             mae[1] += sl[1]
@@ -2224,6 +2312,7 @@ def koe_no_naka_tsunagu(slots, sils, ikari, ue):
             keshita += 1
             continue
         out.append(list(sl))
+    nokori[u"声の始まりへ戻した"] = modoshita[0]
     return [tuple(x) for x in out], keshita, nokori
 
 
@@ -4489,7 +4578,7 @@ def load_bamen(path=BAMEN):
     範囲は「先に使う」だけで、しばりではない。
     手本が少ないうちは範囲が狭いので、外も使えるようにしておく。
     """
-    out = {}
+    out = {u"章": {}, u"言葉": []}
     if not os.path.exists(path):
         return out
     nama = io.open(path, encoding="utf-8-sig", errors="replace").read() \
@@ -4504,8 +4593,24 @@ def load_bamen(path=BAMEN):
         m = re.match(r"\s*(\d+)\s*-\s*(\d+)\s*$", c[2])
         if not m:
             continue
-        out.setdefault(shou_namae(c[0]), []).append(
-            (c[1].strip(), int(m.group(1)), int(m.group(2))))
+        han = (c[1].strip(), int(m.group(1)), int(m.group(2)))
+        na = c[0].strip()
+        # ■ 「＊言葉」で書くと、章より強い（2026-10-11・本人の指定）
+        #
+        # 本人の言葉:
+        #   「『ロキシーを殺す』などの字幕の場合は、
+        #     ロキシーが実際に死んだ時の画像などが適していると考えます」
+        #
+        # つまり欲しいのは「誰が写っているか」ではなく
+        # **その字幕が指している出来事の場面**。
+        # 章ぜんぶではなく、その言葉が出てくる字幕だけに効かせたいので、
+        # 言葉で書ける行を別に持つ。章の行より先に見る。
+        if na.startswith(u"＊") or na.startswith(u"*"):
+            kotoba = na[1:].strip()
+            if kotoba:
+                out[u"言葉"].append((kotoba, han))
+        else:
+            out[u"章"].setdefault(shou_namae(na), []).append(han)
     return out
 
 
@@ -4600,15 +4705,24 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     cur = {"fols": base_fols, "rank": dict((f, i) for i, f in enumerate(base_fols)),
            "shou": u""}
     bamen = load_bamen()
-    if bamen:
-        say(u"章の場面を読みました: %d章ぶん（本人が選んだコマ番号の範囲）"
-            % len(bamen))
+    if bamen[u"章"] or bamen[u"言葉"]:
+        say(u"章の場面を読みました: 章 %d件 / 言葉 %d件"
+            u"（本人が選んだコマ番号の範囲）"
+            % (len(bamen[u"章"]), len(bamen[u"言葉"])))
+
+    def bamen_han():
+        u"""いまの字幕に効く範囲。**言葉の指定が章より強い。**"""
+        tx = cur.get("tx") or u""
+        kotoba = [h for (k2, h) in bamen[u"言葉"] if k2 and k2 in tx]
+        if kotoba:
+            return kotoba
+        return bamen[u"章"].get(cur.get("shou") or u"") or []
 
     def bamen_naka(k):
-        u"""その絵が、いまの章で本人が選んだコマ番号の範囲に入っているか。"""
-        if not bamen:
+        u"""その絵が、本人が選んだコマ番号の範囲に入っているか。"""
+        if not (bamen[u"章"] or bamen[u"言葉"]):
             return False
-        han = bamen.get(cur.get("shou") or u"")
+        han = bamen_han()
         if not han:
             return False
         fol = k.split(u"/")[0] if u"/" in k else u""
@@ -6303,6 +6417,10 @@ def main():
                     u"2行に入らない %d（上限 %d文字）"
                     % (nokori.get(u"錨", 0), nokori.get(u"間の中", 0),
                        nokori.get(u"「。」のあと", 0), nok, JIMAKU_UE[0]))
+                if nokori.get(u"声の始まりへ戻した"):
+                    say(u"  つなげない切れ目 %d か所は、時刻を声の始まりへ"
+                        u"戻しました（本文はそのまま）"
+                        % nokori[u"声の始まりへ戻した"])
                 if nok:
                     say(u"  ※「2行に入らない」で残した %d か所は、"
                         u"声の途中で切り替わっている可能性があります。" % nok)
