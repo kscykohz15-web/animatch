@@ -2147,6 +2147,25 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
 # 言葉の途中のかすれであって、息継ぎではない。
 MA_SAITAN = [0.05]
 
+# ■ 「この切れ目は間の中だからOK」と認める最短（2026-10-12・本人の4件）
+#
+# 本人が見つけた4つのうち2つは、くっつければ消せる長さだった。
+#
+#   「それが自称・魔界皇帝、」(11) ＋「キシリカ・キシリス。」(10) = 21文字
+#   「そしてルーデウスはそれを破り、」(15) ＋「ベガリットで…」(15) = 30文字
+#
+# 上限34文字に収まるのに消えていない。つまり **消す前の段で
+# 「この切れ目は間の中だから直さなくてよい」と判定されていた。**
+#
+# その判定に使っていたのが MA_SAITAN = 0.05秒。
+# **50ミリ秒は「間」ではない。** 「ッ」の詰まる音や破裂音の閉鎖が
+# その長さで、語の途中にいくらでもある（39節）。
+# 本当の句読点の「間」は 0.2秒ほどある。
+#
+# 候補にする最短（0.085）とは役目がちがうので、別の数にする。
+# 値は きつい材料（偽の寄せ先あり）で測って決めた。
+MA_MITOMERU = [0.18]
+
 # 字幕1枚の最短の長さ（秒）。これより短くなる動かし方はしない。
 MIJIKA_SAITAN = [0.45]
 
@@ -2285,7 +2304,7 @@ def koe_ni_awaseru(slots, sils, ikari):
     # 「、」の7割は声が止まらない所なので、**そこに正しく置かれている
     # 切れ目まで、近くの「間」へ引きずられる。**
     # 直したいのは「声の中で切り替わっている」ものだけ。そこに絞る。
-    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_SAITAN[0]]
+    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_MITOMERU[0]]
 
     def ma_no_naka(t):
         koe = t + LEAD
@@ -2359,7 +2378,7 @@ def koe_no_naka_tsunagu(slots, sils, ikari, ue):
     if len(slots) < 2 or not sils:
         return slots, 0
     ik = sorted(ikari or [])
-    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_SAITAN[0]]
+    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_MITOMERU[0]]
 
     def ikari_ka(t):
         return any(abs(t - x) <= 0.06 for x in ik)
@@ -4920,6 +4939,44 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             chikai = min(chikai, d)
         return chikai
 
+    def hito_awase(k):
+        u"""その絵に写っている人が、この字幕の人と合っているか。
+
+        ■ 本人の指摘（2026-10-12）
+
+        > やはりさすがに字幕の登場人物と画像の登場人物ぐらいは
+        > 合わせられるようにしてください。こんなとこまで私で指定するのは
+        > 時間の無駄です。
+
+        もっともで、ここが抜けていた。前は「誰の話か」を読む仕組み
+        （bunmyaku_hito）を**絵が1枚も見つからなかったときの逃げ道**
+        にしか置いていなかった。本人のログは `0枚がセリフの人名から`
+        ＝ **その道は一度も通っていない。** だから
+        「ヒトガミの話なのにロキシーの絵」が普通に出ていた。
+
+        いまは並び順の中に入れる。`#アップ` や `#少年少女` のように
+        人を指定していない札でも、**別人だけが写った絵は後ろへ回る。**
+
+        返す値（小さいほど先）
+          0 … 字幕の人が写っている
+          1 … 絵に人が書かれていない（カタログが空。分からないので責めない）
+          2 … 別人だけが写っている
+
+        2 を「使わない」ではなく「後ろ」にしているのは、カタログの説明が
+        外れていることがあるから（3-14-152 が「エリス」など）。
+        候補がそれしか無ければ、やはりそれを使う。
+        """
+        hoshii = cur.get("hito") or set()
+        if not hoshii:
+            return 1
+        setsu = cat.get(k) or u""
+        if not setsu:
+            return 1
+        utsutte = [c for c in CHARACTERS if c in setsu]
+        if not utsutte:
+            return 1
+        return 0 if any(c in hoshii for c in utsutte) else 2
+
     def _order(lst):
         """対象話数に書いた順に並べる。
 
@@ -4932,11 +4989,13 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         def kagi(k):
             fol = k.split(u"/")[0] if u"/" in k else u""
             i = r.get(fol)
+            # **字幕の人と絵の人が合っているか**（2026-10-12・本人の指摘）
+            hi = hito_awase(k)
             # 同じ話数の中では、**本人が選んだ場面のコマを先に**
             ba = 0 if bamen_naka(k) else 1
             if i is not None:
-                return (0, i, ba, 0, natkey(k))
-            return (1, 0, ba, tooi(fol), natkey(k))
+                return (0, i, hi, ba, 0, natkey(k))
+            return (1, 0, hi, ba, tooi(fol), natkey(k))
         return sorted(lst, key=kagi)
 
     def _match(key, hiroi=False):
@@ -5369,6 +5428,18 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         base_fols = ima_base
         cur["tx"] = tx          # 絵を借りるとき、誰のセリフかを見るため
         cur["idx"] = idx        # 前後の文を読むため
+        # **この字幕が誰の話か**を1回だけ求めて覚える（並び順で毎回使う）。
+        # 別名（老デウス＝ルーデウス、シルフィ＝フィッツ）と、
+        # カタログに名前が無い人の見た目も入れておく。
+        mina = set()
+        try:
+            for c in hito_jun(idx, tx):
+                mina.add(c)
+                mina.update(ONAJI_HITO.get(c, []))
+                mina.update(MITAME.get(c, []))
+        except Exception:
+            pass
+        cur["hito"] = mina
         pick = None
         r = erabu(tx)
         if r is not None:
@@ -5849,11 +5920,63 @@ def load_kouho(path):
     return out
 
 
-def load_sashikae(path, images):
-    u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}"""
+def moji_de_sagasu(hoshii, rows, ban, moto_no):
+    u"""字幕の文から、いまそれがどの番号にいるかを探す。
+
+    切り方が変わると、同じ文が
+      ・そのまま残っている（一致）
+      ・前後とくっついて長くなった（含まれる）
+      ・さらに割られて短くなった（含む）
+    のどれかになる。順に見て、だめなら None。
+    同じ文が2か所にあるときは、**もとの番号に近いほう**を採る。
+    """
+    h = u" ".join((hoshii or u"").split())
+    if not h:
+        return None
+
+    def naka(no):
+        i = ban.get(no)
+        if i is None or i >= len(rows):
+            return u""
+        return u" ".join((rows[i][2] or u"").split())
+
+    nos = sorted(ban)
+    for shiken in (lambda t: t == h,
+                   lambda t: t and h in t,
+                   lambda t: t and t in h):
+        atari = [no for no in nos if shiken(naka(no))]
+        if atari:
+            return min(atari, key=lambda no: (abs(no - moto_no), no))
+    return None
+
+
+def load_sashikae(path, images, moji=None):
+    u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}
+
+    ■ 3列目に「字幕の文」を書ける（2026-10-12・本人の指摘）
+
+    > 元々私が指定した時とは字幕一つ一つの長さが変わっているため、
+    > 私の指定した内容と字幕がリンクしていない部分があります
+
+    そのとおりで、**番号は動く。** 字幕の切り方を変えると
+    （台本を直しても、こちらがコードを直しても）全部の番号がずれ、
+    26件の指定が1つずつ隣の字幕に当たっていた。
+
+        v154  15番=章カード  16番「まずヒトガミの目的。」→3-14-157
+        v155  14番=章カード  15番「まずヒトガミの目的。」→3-14-156  ← ずれた
+
+    番号は「動く目印」なので、留めるなら**字幕の文**。
+    3列目に文を書いておけば、切り方が変わってもそこへ付いていく。
+
+        16	3-14-157	まずヒトガミの目的。
+
+    3列目が無い行は、これまでどおり番号で当てる（当たった文は必ず出す）。
+    """
     if not os.path.exists(path):
         return {}
     out, machigai = {}, []
+    if moji is None:
+        moji = {}
     kouho = load_kouho(os.path.join(HERE, KOUHO_FILE))
     for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
             .replace("\r\n", "\n").split("\n"):
@@ -5873,6 +5996,14 @@ def load_sashikae(path, images):
         except ValueError:
             continue
         shirushi = u" ".join(c[1:]).strip()
+        # 2列目だけで絵が決まるなら、3列目以降は**字幕の文**として読む。
+        # （ファイル名に空白が入ることがあるので、決まらなければ元の読み方）
+        if len(c) >= 3:
+            tango = c[1].strip()
+            if re.match(r"^[1-9]$", tango) or code_to_img(tango, images) \
+                    or any(tango in k for k in images):
+                shirushi = tango
+                moji[no] = u" ".join(c[2:]).strip()
         # ① 「3」のような1桁は、直す.py が出した紙の候補の番号
         if re.match(r"^[1-9]$", shirushi):
             kimari = kouho.get((no, int(shirushi)))
@@ -6599,6 +6730,36 @@ def main():
                                    kei - JIMAKU_UE[0], a2, b2, kei))
                         say(u"    字幕用と読み上げ用の**両方**を同じだけ縮めて、"
                             u"1（音声）から作り直してください。")
+                # ■ 短すぎる字幕を名指しで出す（2026-10-12・本人の「と、」）
+                #
+                # 本人「「と、」だけの字幕があります。ここはそもそも台本が
+                #       悪いと思うので一部修正し、こんな中途半端な切り方は
+                #       無くしてください。」
+                #
+                # 見た目.txt の「字幕の最短」は 6文字で、短い切れ端は
+                # 後ろ（無ければ前）にくっつけている。**それでも残るのは、
+                # その切れ端が1段落まるごとを占めているとき。**
+                # くっつける相手が段落の中に無く、段落をまたぐと時刻が動く
+                # （段落の境目は錨）。だから**機械では直せない。**
+                # 直すのは台本側なので、場所を名指しで渡す。
+                try:
+                    mijika_ue = max(6, int(mi.get(u"字幕の最短") or 6))
+                except Exception:
+                    mijika_ue = 6
+                chibi = [(q, x) for q, x in enumerate(slots)
+                         if 0 < disp_len((x[2] or u"").strip()) <= mijika_ue]
+                if chibi:
+                    say(u"  ※ %d文字以下の字幕が %d か所あります。"
+                        u"**台本を直さないと消えません**"
+                        u"（その切れ端だけで1段落になっているため、"
+                        u"くっつける相手が段落の中にありません）:"
+                        % (mijika_ue, len(chibi)))
+                    for (q, x) in chibi[:8]:
+                        say(u"    %d:%02d  「%s」"
+                            % (int(x[0]) // 60, int(x[0]) % 60,
+                               (x[2] or u"").strip()))
+                    say(u"    前後の文につないで1段落にまとめ、"
+                        u"1（音声）から作り直してください。")
                 # ■ 「最後に全部の切れ目を声の始まりへ合わせ直す」は
                 #   測って悪かったので入れていない（2026-10-11・koe_ni_awaseru）
                 #
@@ -6699,7 +6860,28 @@ def main():
         say(u"  気に入らない所は 確認用/直す_01.png を見て、差し替え.txt に数字を。")
 
     # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
-    kae = load_sashikae(os.path.join(HERE, SASHIKAE), images)
+    sashi_moji = {}
+    kae = load_sashikae(os.path.join(HERE, SASHIKAE), images, moji=sashi_moji)
+    # ■ 字幕の文が書いてあれば、**番号ではなく文で留める**（2026-10-12）
+    #
+    # 本人「元々私が指定した時とは字幕の長さが変わっているため、
+    #       私の指定した内容と字幕がリンクしていない部分があります」
+    # 番号は動く目印なので、文があるならそちらを信じる。
+    if sashi_moji:
+        utsushita = []
+        naoshi = {}
+        for no, img2 in sorted(kae.items()):
+            saki = moji_de_sagasu(sashi_moji.get(no), rows, ban, no)
+            if saki is None or saki == no:
+                naoshi[no] = img2
+                continue
+            naoshi[saki] = img2
+            utsushita.append((no, saki, sashi_moji.get(no)))
+        if utsushita:
+            say(u"字幕の切り方が変わっていたので、指定を文で留め直しました:")
+            for (mae2, ato2, tx3) in utsushita:
+                say(u"  %3d番 → %3d番  「%s」" % (mae2, ato2, (tx3 or u"")[:26]))
+        kae = naoshi
     if kae:
         kaeta = 0
         for no, img2 in sorted(kae.items()):
@@ -6714,8 +6896,25 @@ def main():
             i = ban[no]
             du, _mae2, tx2 = rows[i]
             rows[i] = (du, img2, tx2)
-            say(u"  差し替え: %3d番「%s」→ %s"
-                % (no, (tx2.strip() or u"（セリフなし）")[:22], img_code(img2) or img2))
+            # 当たった先の人が合っているかを、その場で見せる。
+            # 合っていなければ「番号がずれたまま」の合図になる。
+            shirase = u""
+            try:
+                setsu2 = (catalog or {}).get(img2) or u""
+                utsu = [c for c in CHARACTERS if c in setsu2]
+                hoshii3 = set()
+                for c in (bunmyaku_hito(slots, i, {}) or []):
+                    hoshii3.add(c)
+                    hoshii3.update(ONAJI_HITO.get(c, []))
+                if utsu and hoshii3 and not any(c in hoshii3 for c in utsu):
+                    shirase = u"   ← 人がちがいます（絵は %s / セリフは %s）" \
+                        % (u"・".join(utsu[:2]),
+                           u"・".join(list(hoshii3)[:2]))
+            except Exception:
+                pass
+            say(u"  差し替え: %3d番「%s」→ %s%s"
+                % (no, (tx2.strip() or u"（セリフなし）")[:22],
+                   img_code(img2) or img2, shirase))
             kaeta += 1
         say(u"差し替え.txt のとおり %d枚を入れ替えました（番号で指定されたもの）" % kaeta)
     elif not os.path.exists(os.path.join(HERE, SASHIKAE)):
