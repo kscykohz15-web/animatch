@@ -128,6 +128,34 @@ HONBAN_OOKII = 2.20
 HONBAN_HEIKIN = 0.30
 HONBAN_WARIAI = 10.0
 
+# ■ 4段目「きつい材料」の線（2026-10-12）
+#
+# ここだけ材料の作り方がちがう。2つ足している。
+#   ① つなぎ目で削る量を段落ごとにばらつかせる（前はぴったり 0.12秒の固定で、
+#      実測から出した見当が**誤差ゼロで正解に一致**していた）
+#   ② 語の途中に 0.09〜0.15秒 の閉鎖（「ッ」や破裂音）を作る。
+#      機械が寄せ先の候補にするのは 0.085秒以上なので、
+#      **語の途中なのに正しそうに見える寄せ先**になる。
+#      前の材料の語中の途切れは 0.02〜0.07秒で**全部しきい値の下**だった。
+#
+# この2つが無かったために、JISSOKU_TOL を 0.35 → 1.20 に広げても
+# **1段も数字が動かず、それを「無害の証拠」と読み違えた。**
+# 本物では 0.45秒超が 3% → 12% に悪化していた。
+#
+# ■ この段の線は「落ちないため」ではなく「悪化を見るため」にある
+#
+# 材料がきついので数字は大きい。**本物と合わせ込めていない**（「ッ」の密度を
+# 3乱数で振ったら順序が逆転するほどばらついた）。だから
+# **この段の絶対値でつまみを決めてはいけない。** 使い方は1つだけ:
+#   **同じ条件で前と比べて、悪くなっていないか。**
+# 線は、いまの実力に余裕を少し足した所に置く。通すために動かさない。
+KITSUI_OOKII = 3.60
+KITSUI_HEIKIN = 0.50
+KITSUI_WARIAI = 24.0
+
+# 4段目のあいだだけ立てる旗。_zure_tsukuru.py に env で渡す。
+KITSUI = [False]
+
 YOBI_OOKII = 2.60
 YOBI_HEIKIN = 0.30
 YOBI_WARIAI = 12.0
@@ -179,6 +207,8 @@ def jissoku_kirikae(tsukau, wari=1.0):
 
 def hitotsu(tane):
     env = dict(os.environ, PYTHONIOENCODING="utf-8")
+    env[u"ZURE_KEZURU_BARA"] = u"1" if KITSUI[0] else u"0"
+    env[u"ZURE_TSUMARU"] = u"1" if KITSUI[0] else u"0"
     r = subprocess.run([sys.executable, u"_zure_tsukuru.py", str(tane)],
                        cwd=SAGYOU, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, env=env)
@@ -213,16 +243,28 @@ def main():
     if junbi() is None:
         return 1
     warui = []
-    for (tsukau, wari, nm, oo, he, wa) in (
-            (True, 1.0, u"実測あり", GOUKAKU_OOKII,
-             GOUKAKU_HEIKIN, GOUKAKU_WARIAI),
-            # 本人の第6回と同じ条件。ここが本番に近い。
-            (True, 15.0 / 54.0, u"実測 15/54(本物と同じ)", HONBAN_OOKII,
-             HONBAN_HEIKIN, HONBAN_WARIAI),
+    # ■ 「本物と同じ」の札を付けかえた（2026-10-12）
+    #
+    # 15/54 は **v146 のときの本物**。いまの本人のログは
+    #   「54/54 の段落は、1行ずつの音声で文の長さを実測しました」
+    # ＝ **54/54**。本物に近いのは wari=1.0 の段で、
+    # 15/54 の段は「測れない所が多いときの予備」。
+    # 札が古いせいで、いちばん本物から遠い段を「本物と同じ」として
+    # 信じていた（v154 の判断ミスはそこから始まっている）。
+    for (tsukau, wari, nm, oo, he, wa, kitsui) in (
+            (True, 1.0, u"実測 54/54(本物と同じ)", GOUKAKU_OOKII,
+             GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False),
+            (True, 15.0 / 54.0, u"実測 15/54(測れない所が多いとき)", HONBAN_OOKII,
+             HONBAN_HEIKIN, HONBAN_WARIAI, False),
             (False, 1.0, u"実測なし(予備の道)", YOBI_OOKII,
-             YOBI_HEIKIN, YOBI_WARIAI)):
+             YOBI_HEIKIN, YOBI_WARIAI, False),
+            # ■ 4段目（2026-10-12）。**偽の寄せ先がある材料。**
+            #   ここが無かったせいで JISSOKU_TOL の広げすぎが見えなかった。
+            (True, 1.0, u"きつい材料(偽の寄せ先あり)", KITSUI_OOKII,
+             KITSUI_HEIKIN, KITSUI_WARIAI, True)):
         print(u"── %s ──" % nm)
         jissoku_kirikae(tsukau, wari)
+        KITSUI[0] = kitsui
         if shirabe(a.kai, nm, oo, he, wa):
             warui.append(nm)
     print(u"")
@@ -233,7 +275,7 @@ def main():
     if warui:
         print(u"× 字幕と声がずれています（%s）。" % u" / ".join(warui))
         return 1
-    print(u"○ 実測ありも、実測なしの予備の道も、字幕と声はずれていません。")
+    print(u"○ 4段ぜんぶで、字幕と声はずれていません。")
     return 0
 
 

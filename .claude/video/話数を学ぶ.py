@@ -185,12 +185,29 @@ def kotoba_hiroi(tx, hako):
     return [w for w in hako if w in (tx or u"")]
 
 
-def jimaku_daicho(M, N, rows, shou_no, out_path):
-    u"""字幕の台帳。**前後の文を読んで**「誰のことか」を出す。"""
+def jimaku_daicho(M, N, rows, shou_no, out_path, bamen=None):
+    u"""字幕の台帳。**前後の文を読んで**「誰のことか」を出す。
+
+    ■ 列の名前が中身と違っていた（2026-10-12）
+
+    見出しは「対象話数」なのに、入れていたのは `daihon`（＝台本の文）だった。
+    本人が欲しいのは「その字幕がアニメ何話にあたるか」なので、
+    **学んだ章の話数（章の場面.txt）を本物の列として足し**、
+    台本は「台本」と名乗らせる。
+    """
     han = M.bun_han(rows)
+    bamen = bamen or {}
+    shou_han = bamen.get(u"章") or {}
+
+    def hanashi(shou):
+        u"""その章で本人が選んでいた話数とコマの範囲。"""
+        han2 = shou_han.get(N.shou_namae(shou) if shou else u"") or []
+        return u" / ".join(u"%s %d-%d" % (f, lo, hi) for (f, lo, hi) in han2)
+
     gy = [u"# 字幕の台帳 ─ その字幕が、誰の・どんな背景の・どんな場面の話か",
           u"# 「誰」は前後の文から読んでいます（重い順。かっこの数は確からしさ）",
-          u"# 番号\t章\t誰\t背景\t場面\t対象話数\t字幕"]
+          u"# 「その章の話数」は 章の場面.txt から（本人が選んだ絵で学んだもの）",
+          u"# 番号\t章\t誰\t背景\t場面\tその章の話数\t台本\t字幕"]
     for i, r in enumerate(rows):
         tx = r[u"text"] or u""
         if not tx.strip():
@@ -198,17 +215,19 @@ def jimaku_daicho(M, N, rows, shou_no, out_path):
         omomi = M.bunmyaku(rows, i, han=han)
         dare = [u"%s(%.2f)" % (c, omomi[c])
                 for c in sorted(omomi, key=lambda c: -omomi[c])[:4]]
+        shou = shou_no(r[u"no"]) or u""
         gy.append(u"\t".join([
             unicode_str(r[u"no"]),
-            shou_no(r[u"no"]) or u"",
+            shou,
             u" ".join(dare),
             u" ".join(kotoba_hiroi(tx, HAIKEI)),
             u" ".join(kotoba_hiroi(tx, BAMEN_KOTOBA)),
+            hanashi(shou),
             (r.get(u"daihon") and u" / ".join(r[u"daihon"])) or u"",
             tx]))
     io.open(out_path, "w", encoding="utf-8-sig", newline="\r\n") \
         .write(u"\r\n".join(gy) + u"\r\n")
-    return len(gy) - 3
+    return len(gy) - 4
 
 
 def e_daicho(M, S, imgs, tags, bamen, out_path):
@@ -516,13 +535,17 @@ def daicho_kaku(a, rows, shou_no):
         return
 
     def shou2(no):
+        # 章がまだ分からない所で呼ばれてもよい（shou_no が None）。
+        # 章は「場面」の列にしか使っていないので、空でも台帳は作れる。
+        if shou_no is None:
+            return u""
         try:
             return shou_no(int(unicode_str(no).strip()))
         except Exception:
             return u""
     try:
         p = os.path.join(u"確認用", u"字幕の台帳.txt")
-        n = jimaku_daicho(M, S, rows2, shou2, p)
+        n = jimaku_daicho(M, S, rows2, shou2, p, bamen=S.load_bamen())
         print(u"   字幕の台帳: %s （%d枚）" % (p, n))
     except Exception as e:
         print(u"   字幕の台帳は作れませんでした（%s）" % e)
@@ -562,6 +585,17 @@ def main():
     if not rows:
         print(u"× 一覧.txt が読めませんでした。")
         return 1
+
+    # ■ 台帳は**いちばん先に**書く（2026-10-12・本人「Lを押しても台帳ができない」）
+    #
+    # 前は main の終わりの方で呼んでいた。そこまでに**帰る道が3つ**あった。
+    #   ・差し替え.txt に直しが無い
+    #   ・画面表示.txt に章の行が無い
+    #   ・学んだ結果、章の話数で変えるところが無い  ← 本人はこれ
+    # 台帳は「誰・背景・場面・何期何話」を並べただけの棚で、
+    # **学習の結果に1つも依存していない。** なのに学習の都合で消えていた。
+    # 一覧が読めたら必ず1回書く。章が分からなければ「場面」の列が空になるだけ。
+    daicho_kaku(a, rows, None)
 
     # 期-話 → フォルダ名 の対応は、実際に出ている絵から作る
     codes = {}
@@ -721,10 +755,17 @@ def main():
 
     if not kaeta:
         print(u"学んだ結果、章の話数で変えるところはありませんでした。")
+        # ■ ここで帰ってはいけない（2026-10-12・本人「Lを押しても台帳ができない」）
+        #
+        # 台帳は「章の話数が変わったか」とは関係がない。**ただの棚**で、
+        # 毎回おなじものを書き直すだけのもの。
+        # なのに「変えるところがありません」で帰っていたので、
+        # **いちばん普通の場合（もう学び終わっている）に1枚もできなかった。**
+        # 本人の画面がまさにそれ（はじめに・ヒトガミの目的の2章とも
+        # 「変えるところはありません」）。
         return 0
     if not a.kaku:
         print(u"%d章ぶん変わります。書きかえるには --書く を付けてください。" % kaeta)
-        daicho_kaku(a, rows, shou_no)
         return 0
     # ■ 学んだ印を必ず入れる（2026-10-10）
     #
@@ -741,7 +782,6 @@ def main():
     io.open(a.overlay, "w", encoding="utf-8-sig", newline="\r\n") \
         .write(u"\n".join(gyou).replace(u"\n", u"\r\n"))
     print(u"%d章ぶん書きかえました: %s" % (kaeta, a.overlay))
-    daicho_kaku(a, rows, shou_no)
     print(u"「はじめる.bat」→ 2 → 1 で作り直すと、学んだ話数で選び直します。")
     return 0
 
