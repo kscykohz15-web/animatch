@@ -58,7 +58,11 @@ def main():
     mi, _ = M.load_mitame(os.path.join(HERE, u"見た目.txt"))
     size = max(24, int(round(min(W, H) / max(6.0, mi[u"字幕の大きさ"]))))
     gyou = max(1, int(mi[u"字幕の行数"]))
-    side = int(W * 0.04)
+    # 余白は make_slideshow の JIMAKU_YOHAKU から取る。
+    # ここに 0.04 と書き写していたせいで、本番が 0.03（横幅を広く使う・
+    # 2026-10-14 の本人の指定）になったあとも、**検査だけ狭いまま**だった。
+    # 狭い幅で折り返すので、本番では割れない所が割れて見えていた。
+    side = int(W * M.JIMAKU_YOHAKU[0])
     n = warui = 0
     rei = []
     for p in SC:
