@@ -81,7 +81,8 @@ NAMAE = dict((v.shirushi, v.namae) for v in _DOUGA)
 
 # パックに必ず入っていないといけないもの
 KYOTSU = [u"画像カタログ.txt", u"話数マップ.txt", u"タグ一覧.txt", u"企画と台本の型.txt",
-          u"台本の知恵.txt", u"読み辞書.txt", u"人物ルール.txt", u"演出.txt", u"見た目.txt"]
+          u"台本の知恵.txt", u"紹介の型.txt", u"読み辞書.txt", u"人物ルール.txt",
+          u"演出.txt", u"見た目.txt"]
 
 warui = []
 
