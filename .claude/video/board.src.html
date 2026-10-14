@@ -8272,10 +8272,61 @@ def fit_to_box(text, usable, size, max_lines):
     n = max_lines
     best = split_lines(text, disp_len(text) / float(n) * 1.25, n)
     if not best:
-        step = max(1, int(round(len(text) / float(n))))
-        best = [text[i:i + step] for i in range(0, len(text), step)]
+        best = muri_ni_kiru(text, n)
     longest = max(disp_len(l) for l in best)
     return best, max(20, int(usable / longest))
+
+
+def kiriyoi(text, i):
+    u"""text[i-1] と text[i] の間で切ってよいか（言葉の途中でないか）。
+
+    折り返し検査.py が「悪い継ぎ目」と呼ぶものと、同じ見方にしてあります。
+    """
+    if i <= 0 or i >= len(text):
+        return False
+    mae, ato = text[i - 1], text[i]
+    if mae in STRONG or mae in MEDIUM:
+        return True
+    a, b = kind_of(mae), kind_of(ato)
+    if a == "kanji" and b == "kanji":
+        return False
+    if a == "kata" and b == "kata":
+        return False
+    return True
+
+
+def muri_ni_kiru(text, n):
+    u"""どうしても入らないときの、最後の切り方（2026-10-14）
+
+    前は長さだけで**等分**していました。そのため
+
+        貴族の娘エリス・ボレアス・グ / レイラットの家庭教師として、
+
+    のように、カタカナの名前の真ん中で切れることがありました
+    （台本11本・字幕3467枚のうち2枚）。
+    等分の位置から**近い順に、切ってよい所**をさがして切ります。
+    上の例なら「ボレアス・」の後ろ（1文字ずらすだけ）で切れます。
+
+    折り返しは「熟語を割らない」が、幅を使い切ることより上です。
+    """
+    out, nokori = [], text
+    for k in range(n, 1, -1):
+        hoshii = int(round(len(nokori) / float(k)))
+        haba = max(1, len(nokori) // 4)          # ずらしすぎて片寄らせない
+        ichi = None
+        for d in range(0, haba + 1):
+            for i in (hoshii - d, hoshii + d):
+                if kiriyoi(nokori, i):
+                    ichi = i
+                    break
+            if ichi is not None:
+                break
+        if ichi is None:
+            ichi = max(1, min(hoshii, len(nokori) - 1))
+        out.append(nokori[:ichi])
+        nokori = nokori[ichi:]
+    out.append(nokori)
+    return out
 
 
 def kaigyou_naosu(t):
@@ -14011,8 +14062,25 @@ def load_sashikae(path, images, moji=None):
         # （ファイル名に空白が入ることがあるので、決まらなければ元の読み方）
         if len(c) >= 3:
             tango = c[1].strip()
-            if re.match(r"^[1-9]$", tango) or code_to_img(tango, images) \
-                    or any(tango in k for k in images):
+            # ■ 行末までで絵が決まるなら、そちらが本物（2026-10-14）
+            #
+            #   おまかせ.txt は 直す.py が
+            #   「番号 <タブ> フォルダ/ファイル名」で書く。
+            #   フォルダ名には**空白が入る**（「無職転生Ⅲ 第12話」）。
+            #   空白でも切って3列目を字幕の文として読むと、
+            #   2列目が「無職転生Ⅲ」になってしまう。
+            #   それは**どの絵の道にも入っている**ので、
+            #   当たりの1枚目（第11話の1枚目）が
+            #   **104か所ぜんぶに**当たっていた（おまかせが丸ごと死ぬ）。
+            #
+            #   3列目に字幕の文を書くときの2列目は「3」や「3-14-157」で、
+            #   行末まで continue で読んでも絵にはならない。
+            #   だから「行末までで決まるか」を先に見れば、両方が立つ。
+            zen = code_to_img(shirushi, images) \
+                or [x for x in images if shirushi in x]
+            if not zen and (re.match(r"^[1-9]$", tango)
+                            or code_to_img(tango, images)
+                            or any(tango in k for k in images)):
                 shirushi = tango
                 moji[no] = u" ".join(c[2:]).strip()
         # ① 「3」のような1桁は、直す.py が出した紙の候補の番号
