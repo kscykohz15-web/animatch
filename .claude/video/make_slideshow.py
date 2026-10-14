@@ -432,10 +432,31 @@ def wrap_ja(text, per_line, max_lines):
     return fit_lines(text, per_line, max_lines)
 
 
+# 字幕の左右の余白（画面の幅に対する割合）。
+#
+# ■ 4% → 3% にした（2026-10-14・本人の指定）
+#
+# > 字幕の改行は二行までにしてください。見にくいです。
+# > その代わり、横幅をもう少し広く使って大丈夫です。
+#
+# 1920 で 98px のとき、余白 4% だと 1行17文字（2行で34文字）。
+# 3% にすると 1行18文字（2行で36文字）になり、左右の余白は 78px 残る。
+# **フォントの大きさは変えない。** 変えると全部の動画の見た目が動くため。
+JIMAKU_YOHAKU = [0.03]
+
+
 def fit_to_box(text, usable, size, max_lines):
     """必ず usable(px) に収まる (行, 文字サイズ) を返す。
 
-    まず行を増やして入れられないか試し、それでも無理なときだけ縮める。
+    ■ 3行目を許すのをやめた（2026-10-14・本人の指定）
+
+    > 字幕の改行は二行までにしてください。見にくいです。
+
+    前は「行を増やして入れられないか試し、それでも無理なときだけ縮める」
+    だったので、2行に入らない字幕が**黙って3行で出ていた**。
+    いまは max_lines を超えたら、行を増やさず**縮めて**収める。
+    くっつける上限（jimaku_ue）は2行で入る文字数に合わせてあるので、
+    ふだんここで縮むことは無い。
     """
     text = u" ".join(text.split())
     if not text:
@@ -445,12 +466,8 @@ def fit_to_box(text, usable, size, max_lines):
         got = split_lines(text, usable / float(size), n)
         if got:
             return got, size
-    # 2) 1行だけ余分に許す
-    got = split_lines(text, usable / float(size), max_lines + 1)
-    if got:
-        return got, size
-    # 3) それでも無理なら、入る大きさまで縮める(はみ出させない)
-    n = max_lines + 1
+    # 2) 行は増やさない。入る大きさまで縮める（はみ出させない）
+    n = max_lines
     best = split_lines(text, disp_len(text) / float(n) * 1.25, n)
     if not best:
         step = max(1, int(round(len(text) / float(n))))
@@ -651,7 +668,7 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     # 高さ基準にすると、縦動画(1080x1920)で字幕が倍の大きさになってしまう。
     mi = mi or dict(MITAME_KITEI)
     base = min(w, h)
-    side = int(w * 0.04)
+    side = int(w * JIMAKU_YOHAKU[0])
     usable = w - side * 2 - size * 0.25      # フチの太さぶん余裕を見る
     if not per_line:
         per_line = max(8, int(usable / float(size)))
@@ -2283,7 +2300,7 @@ HONTO_UE = [1.50]
 def jimaku_ue(w, h, mi, hitotsu=0, gyou=0):
     u"""字幕が2行に折り返して収まる文字数。write_ass と同じ数え方。"""
     size = max(24, int(round(min(w, h) / max(6.0, mi[u"字幕の大きさ"]))))
-    side = int(w * 0.04)
+    side = int(w * JIMAKU_YOHAKU[0])
     per = hitotsu or int(mi[u"字幕の1行"]) \
         or max(8, int((w - side * 2 - size * 0.25) / float(size)))
     return max(12, per * max(1, gyou or int(mi[u"字幕の行数"])))
@@ -3199,7 +3216,16 @@ def split_by_kuten(slots, saitan=1.1, moji=0, mijika=0):
                 hik[i + 1] += hik[i]
                 del hit[i], hik[i]
                 # i は進めない。くっついた先も短いかもしれないので、もう一度見る。
-            elif i > 0:
+            elif i > 0 and not owari_bun(hit[i - 1]):
+                # ■ 「。」をまたいでくっつけない（2026-10-14・本人の指定）
+                #
+                # > ただし、中途半端にくっつけないように、
+                # > 「。」や「、」で字幕の区切りを作ってください。
+                #
+                # 前は、前の切れはしが「。」で終わっていてもくっつけていた。
+                # 文が終わっている所に次の文の頭をつなぐと、
+                # **1枚の字幕に2つの文が混ざる。** それが中途半端。
+                # 文の中でだけくっつける。
                 hit[i - 1] = hit[i - 1] + hit[i]      # 後ろが無いので前に
                 hik[i - 1] += hik[i]
                 del hit[i], hik[i]
@@ -5551,10 +5577,37 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 used_focus.add(u" / ".join(fols) if fols else u"(見つからず)")
             ok = usable(r[1])
             if ok:
-                pick = resolve(ok[r[2] % len(ok)])
-                r[2] += 1
-                hit += 1
-                prev_rule = r
+                # ■ 章の外へ出る前に、章の中で人を合わせる（2026-10-14）
+                #
+                # 本人の採点で「ひどい」の多くが**同じ1枚**だった。
+                #
+                #   無職転生Ⅲ 第10話/001_…  … 16回
+                #   「二人 金髪 少年少女 鎧 剣 アップ」
+                #   → 話数ちがい・人ちがい（セリフはヒトガミやロキシー）
+                #
+                # 前の直し（最後の逃げ道を karu() に通す）は効かなかった。
+                # 本人のログは **213枚が直接一致** ＝ 札は当たっていて、
+                # 最後の逃げ道まで来ていなかったからである。
+                #
+                # 本当の道はこちら。`usable` は章の中で1枚も見つからないと
+                # **全部の話数へ広げる**。すると `#アップ` のような
+                # ざっくりした札が、章の外の絵に当たってしまう。
+                #
+                # **章の中で人が合う絵のほうが、章の外で札が合う絵より良い。**
+                # 本人の言う「せめて登場人物くらいは合わせて」はこれ。
+                if usable_hiroi(r[1]):
+                    cur["fols"] = fols
+                    cur["rank"] = dict((f, i) for i, f in enumerate(fols))
+                    kari = karu()
+                    if kari:
+                        pick = kari
+                        hit += 1
+                        prev_rule = r
+                if pick is None:
+                    pick = resolve(ok[r[2] % len(ok)])
+                    r[2] += 1
+                    hit += 1
+                    prev_rule = r
         # 誰の話かを**前後の文から**読んで、その人の絵にする。
         #
         # ■ 前は「その行に名前が出ていたら」だけだった（2026-10-10）

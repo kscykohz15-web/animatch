@@ -194,7 +194,18 @@ def main():
         if pi == i - 1:
             moto, st, tx = mato[i - 1]
             c = hajimari[j - 1]
-            zure.append((abs(c - moto), st, moto, c, tx))
+            # ■ 符号を残す（2026-10-14・本人の指摘）
+            #
+            # > 「この時」の音声のときには先に字幕と画像が次のものへ
+            # >  進んでおり、…「ずれ」の測定結果とも異なるので
+            # >  測定方法を変える必要があります
+            #
+            # そのとおりだった。ここは **abs** で向きを捨てていたので、
+            #   ・字幕が声より**早い**（字幕が先に進む）… 本人が見ているもの
+            #   ・字幕が声より**遅い**（字幕が居座る）
+            # の2つが同じ数字になっていた。本人に見えるのは前者だけ。
+            # 向きを残して、分けて数える。
+            zure.append((abs(c - moto), st, moto, c, tx, moto - c))
         i, j = pi, pj
 
     n = len(zure)
@@ -224,9 +235,20 @@ def main():
     print(u"%.2f秒を超えたもの : %d枚 (%.0f%%)"
           % (GOUKAKU, len(waru), 100.0 * len(waru) / n))
 
+    # ── 向きで分ける（本人に見えるのは「字幕が先に進む」ほうだけ）
+    hayai = [z for z in zure if len(z) > 5 and z[5] > 0 and z[0] > GOUKAKU]
+    osoi = [z for z in zure if len(z) > 5 and z[5] <= 0 and z[0] > GOUKAKU]
+    print(u"")
+    print(u"   そのうち 字幕が声より**早い**（字幕が先に進む）: %d枚" % len(hayai))
+    print(u"            字幕が声より**遅い**（字幕が居座る）  : %d枚" % len(osoi))
+    if hayai:
+        print(u"   ← 見ていて気になるのはこちらです:")
+        for z in hayai[:8]:
+            print(u"      %s  %.2f秒早い   %s" % (mmss(z[1]), z[0], z[4][:30]))
+
     # ── 声の途中で切り替わっていないか（本人が見ているのはこれ）
     naka = []
-    for (d, st, moto, c, tx) in zure:
+    for (d, st, moto, c, tx, _muki) in zure:
         fukasa = shaberi_chuu(moto)
         if fukasa > 0.15:
             naka.append((fukasa, st, tx))
@@ -287,10 +309,13 @@ def main():
             u"%.2f秒を超えたもの\t%d枚 / %d枚" % (GOUKAKU, len(waru), n),
             u"声の途中で切り替わり\t%d枚 / %d枚" % (len(naka), n),
             u"比例配分の最低\t%.2f" % (hi[0][0] if hi else 1.0),
+            u"字幕が声より早い（先に進む）\t%d枚" % len(hayai),
+            u"字幕が声より遅い（居座る）\t%d枚" % len(osoi),
             u"文字数から見て短すぎる字幕\t%d枚 / %d枚" % (len(hi_roku), n),
-            u"", u"動画の時刻\tずれ\t字幕"]
-    for (d, st, moto, c, tx) in zure[:40]:
-        gyou.append(u"%s\t%.2f秒\t%s" % (mmss(st), d, tx))
+            u"", u"動画の時刻\tずれ\t向き\t字幕"]
+    for z in zure[:40]:
+        muki = u"早い" if (len(z) > 5 and z[5] > 0) else u"遅い"
+        gyou.append(u"%s\t%.2f秒\t%s\t%s" % (mmss(z[1]), z[0], muki, z[4]))
     try:
         if not os.path.isdir(u"確認用"):
             os.makedirs(u"確認用")
@@ -348,7 +373,7 @@ def main():
     print(u"")
     if waru:
         print(u"⚠ %.2f秒を超えてずれている所が %d枚 あります。" % (GOUKAKU, len(waru)))
-        for (d, st, moto, c, tx) in waru[:8]:
+        for (d, st, moto, c, tx, _m2) in waru[:8]:
             print(u"  %s  %.2f秒ずれ   %s" % (mmss(st), d, tx[:24]))
         print(u"  この時刻と文をチャットに貼ってください。")
     else:
