@@ -55,6 +55,13 @@ def sagasu(*na):
     return None
 
 
+def disp_len(t):
+    u"""見た目の文字数。全角は1、半角は0.5として数える（字幕の折り返しと同じ）。"""
+    import unicodedata
+    return sum(2 if unicodedata.east_asian_width(c) in u"FWA" else 1
+               for c in (t or u"")) / 2.0
+
+
 def mmss(t):
     return u"%d:%02d" % (int(t // 60), int(t % 60))
 
@@ -234,6 +241,44 @@ def main():
     else:
         print(u"○ 切り替わりはすべて、声の切れ目（無音）で起きています")
 
+    # ── もう1つの測り方: 比例配分の何割をもらったか（2026-10-13）
+    #
+    # 本人の言葉:
+    #   「字幕に対して次の字幕のセリフを五つか六つくらいは言葉を発してから
+    #     切り替わる部分があります。ただ、その後ろのセリフは音ずれが発生しない」
+    #
+    # 前の測り方（ずれの秒数）では 0.96秒 しか見えなかったが、
+    # 「その字幕がもらった尺 ÷ 文字数ぶんの比例配分」で測ると 0.32 と出る。
+    #
+    #   前 057  3.33秒 / 18文字 =  5.4字/秒   ← 余裕がありすぎる
+    #      058  0.83秒 / 17文字 = 20.5字/秒   ← **17文字は0.83秒では読めない**
+    #      合計 4.16秒 / 35文字 = 8.4字/秒    ← 合計は正しい。割り方だけ
+    #
+    # 1.00 が比例どおり。0.60 を下回るものは、作りの誤り。
+    hi = []
+    kei_du = sum(max(0.001, r[2]) for r in rows)
+    kei_mj = sum(disp_len(r[4]) for r in rows)
+    if kei_du > 0.01 and kei_mj > 0.01:
+        hayasa2 = kei_mj / kei_du
+        for r in rows:
+            mj = disp_len(r[4])
+            if mj > 0.01 and r[2] > 0.001:
+                hi.append((r[2] / (mj / hayasa2), r[1], r[4]))
+    hi.sort()
+    hi_roku = [x for x in hi if x[0] < 0.60]
+    print(u"")
+    if hi:
+        print(u"字幕の尺が、文字数に見合っているか（1.00 が比例どおり）")
+        print(u"   いちばん低い %.2f / 下から5%% %.2f"
+              % (hi[0][0], hi[max(0, len(hi) // 20)][0]))
+        if hi_roku:
+            print(u"⚠ 文字数から見て短すぎる字幕 : %d枚" % len(hi_roku))
+            print(u"   （前の字幕が居座り、次の声が始まってから切り替わります）")
+            for (x, t2, tx) in hi_roku[:10]:
+                print(u"   %s  比 %.2f   %s" % (mmss(t2), x, tx[:30]))
+        else:
+            print(u"○ 文字数から見て短すぎる字幕はありません")
+
     gyou = [u"# 字幕と声のずれ（BGMの無い merged.wav を基準に測ったもの）",
             u"# 章カードぶんの無音は引いてあります。",
             u"",
@@ -241,6 +286,8 @@ def main():
             u"平均のずれ\t%.2f秒" % heikin,
             u"%.2f秒を超えたもの\t%d枚 / %d枚" % (GOUKAKU, len(waru), n),
             u"声の途中で切り替わり\t%d枚 / %d枚" % (len(naka), n),
+            u"比例配分の最低\t%.2f" % (hi[0][0] if hi else 1.0),
+            u"文字数から見て短すぎる字幕\t%d枚 / %d枚" % (len(hi_roku), n),
             u"", u"動画の時刻\tずれ\t字幕"]
     for (d, st, moto, c, tx) in zure[:40]:
         gyou.append(u"%s\t%.2f秒\t%s" % (mmss(st), d, tx))

@@ -85,6 +85,45 @@ naka = [z for z in zure if z[4] not in atama]
 bun_s = [z for z in zure if z[4] in bun_atama]
 ten_s = [z for z in zure if z[4] not in atama and z[4] not in bun_atama]
 
+# ■ もう1つの測り方 ─ 「比例配分の何割をもらったか」（2026-10-13）
+#
+# 本人の言葉:
+#   「字幕に対して次の字幕のセリフを五つか六つくらいは言葉を発してから
+#     切り替わる部分があります。ただ、その後ろのセリフは音ずれが発生しない」
+#
+# 本人の動画を数えたら、原因が数字で出た。
+#
+#   前 057  3.33秒 / 18文字 =  5.4字/秒   ← 余裕がありすぎる
+#      058  0.83秒 / 17文字 = 20.5字/秒   ← **物理的に不可能**
+#      合計 4.16秒 / 35文字 = 8.4字/秒    ← 合計は正しい。割り方だけ
+#
+# **17文字を0.83秒で読むことはできない。** これは「ずれ」として
+# 測るより、「その字幕がもらった尺 ÷ 文字数ぶんの比例配分」で測るほうが
+# まっすぐ出る。比が 1.0 なら比例どおり、0.3 なら7割食われている。
+#
+# ずれの秒数では 0.96秒 しか見えないが、この比では 0.32 と出る。
+# **前の測り方では見えなかった不具合が、こちらでは一目で出る。**
+import unicodedata as _ud
+
+
+def _haba(t):
+    return sum(2 if _ud.east_asian_width(c) in u"FWA" else 1 for c in (t or u"")) / 2.0
+
+
+_hi = []
+_kei_du = sum(max(0.001, r[1]) for r in rows)
+_kei_mj = sum(_haba(r[2]) for r in rows)
+if _kei_du > 0.01 and _kei_mj > 0.01:
+    _hayasa = _kei_mj / _kei_du            # この動画の実際の字/秒
+    for (_st, _du, _tx) in rows:
+        _mj = _haba(_tx)
+        if _mj > 0.01 and _du > 0.001:
+            _hi.append((_du / (_mj / _hayasa), _tx))
+_hi.sort()
+_hi_mn = round(_hi[0][0], 2) if _hi else 1.0
+_hi_sita = round(_hi[max(0, len(_hi) // 20)][0], 2) if _hi else 1.0
+_hi_roku = sum(1 for (x, _t) in _hi if x < 0.6)
+
 zure.sort(reverse=True)
 n = len(zure)
 if u"--json" in sys.argv:
@@ -96,6 +135,8 @@ if u"--json" in sys.argv:
         return [round(max(x[0] for x in v), 2), round(sum(x[0] for x in v) / len(v), 2),
                 round(100.0 * sum(1 for x in v if x[0] > SHIKII) / len(v), 0)]
     print(json.dumps({u"kazu": len(rows), u"ookii": round(zure[0][0], 3) if zure else 0.0,
+                      u"hiritsu_mn": _hi_mn, u"hiritsu_sita": _hi_sita,
+                      u"hiritsu_roku": _hi_roku,
                       u"anc": matome(anc), u"naka": matome(naka),
                       u"bun": matome(bun_s), u"ten": matome(ten_s),
                       u"heikin": round(sum(z[0] for z in zure) / max(1, n), 3),
@@ -121,6 +162,14 @@ print(u"平均のずれ         : %.2f秒" % heikin)
 print(u"%.2f秒を超えたもの : %d枚 (%.0f%%)" % (SHIKII, len(ookii), 100.0 * len(ookii) / n))
 print(u"0.50秒を超えたもの : %d枚" % sum(1 for z in zure if z[0] > 0.50))
 print(u"")
+print(u"")
+print(u"── 比例配分の何割をもらったか（1.00 が比例どおり）──")
+print(u"いちばん低い       : %.2f" % _hi_mn)
+print(u"下から5%%          : %.2f" % _hi_sita)
+print(u"0.60 を下回るもの  : %d枚" % _hi_roku)
+for (x, t) in _hi[:5]:
+    if x < 0.80:
+        print(u"  %.2f  %s" % (x, (t or u"")[:34]))
 print(u"")
 print(u"── どの仕組みのせいか ──")
 def shu(na, v):

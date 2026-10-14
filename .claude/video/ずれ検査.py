@@ -153,6 +153,20 @@ KITSUI_OOKII = 3.60
 KITSUI_HEIKIN = 0.50
 KITSUI_WARIAI = 24.0
 
+# ■ 比例配分の床の線（2026-10-13・本人の4つめの訴え）
+#
+# 「その字幕がもらった尺 ÷ 文字数ぶんの比例配分」。1.00 が比例どおり。
+# ずれの秒数では見えない不具合が、ここでは一目で出る。
+#
+#   本人の 058番  ずれ 0.96秒 ／ **比 0.32**（17文字に0.83秒）
+#   直す前の材料  最低 0.28 ／ 0.6未満 13枚
+#   直したあと    最低 0.75 ／ 0.6未満  0枚
+#
+# **これは調整値ではなく歯止め。** 文字数から見てありえない短さを
+# 渡すのは、どんな理由があっても作りの誤り。
+# 線は「いまの実力に少し余裕」ではなく **0.6未満を1枚も出さない**。
+HIRITSU_YUKA = 0.60       # これを下回る字幕が1枚でもあれば落とす
+
 # 4段目のあいだだけ立てる旗。_zure_tsukuru.py に env で渡す。
 KITSUI = [False]
 
@@ -287,9 +301,11 @@ def shirabe(kai, nm, oo, he, wa):
             print(u"× 乱数 %d で検査そのものが動きませんでした" % tane)
             return 1
         anc = k.get(u"anc", [0, 0, 0])
+        roku = k.get(u"hiritsu_roku", 0)
         shirushi = u"○" if (k[u"ookii"] <= oo and k[u"heikin"] <= he
                             and k[u"wariai"] <= wa
-                            and anc[1] <= GOUKAKU_ANC) else u"×"
+                            and anc[1] <= GOUKAKU_ANC
+                            and roku == 0) else u"×"
         print(u"%s 乱数 %d  区切り %3d枚 / いちばん大きいずれ %.2f秒 / "
               u"平均 %.2f秒 / 0.45秒超 %.0f%%"
               % (shirushi, tane, k[u"kazu"], k[u"ookii"], k[u"heikin"], k[u"wariai"]))
@@ -302,6 +318,11 @@ def shirabe(kai, nm, oo, he, wa):
             print(u"     文の頭(place_in_chunk) 最大%.2f / "
                   u"「、」(koma_awase) 最大%.2f"
                   % (k[u"bun"][0], k[u"ten"][0]))
+        if u"hiritsu_mn" in k:
+            print(u"     比例配分 いちばん低い %.2f / 下から5%% %.2f / "
+                  u"%.2f未満 %d枚"
+                  % (k[u"hiritsu_mn"], k[u"hiritsu_sita"],
+                     HIRITSU_YUKA, roku))
         if shirushi == u"×":
             warui.append(tane)
             for z in k[u"waru"][:3]:
@@ -309,8 +330,9 @@ def shirabe(kai, nm, oo, he, wa):
                       % (z[0], z[1], z[2], z[3][:20]))
     if warui:
         print(u"   %s の合格の線: いちばん大きいずれ %.2f秒まで / 平均 %.2f秒まで / "
-              u"0.45秒超 %.0f%%まで / 段落の境目の平均 %.2f秒まで"
-              % (nm, oo, he, wa, GOUKAKU_ANC))
+              u"0.45秒超 %.0f%%まで / 段落の境目の平均 %.2f秒まで / "
+              u"比例配分 %.2f未満は0枚"
+              % (nm, oo, he, wa, GOUKAKU_ANC, HIRITSU_YUKA))
         return True
     print(u"   %s … %d通りすべて合格" % (nm, kai))
     return False
