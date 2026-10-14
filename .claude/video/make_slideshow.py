@@ -432,10 +432,31 @@ def wrap_ja(text, per_line, max_lines):
     return fit_lines(text, per_line, max_lines)
 
 
+# 字幕の左右の余白（画面の幅に対する割合）。
+#
+# ■ 4% → 3% にした（2026-10-14・本人の指定）
+#
+# > 字幕の改行は二行までにしてください。見にくいです。
+# > その代わり、横幅をもう少し広く使って大丈夫です。
+#
+# 1920 で 98px のとき、余白 4% だと 1行17文字（2行で34文字）。
+# 3% にすると 1行18文字（2行で36文字）になり、左右の余白は 78px 残る。
+# **フォントの大きさは変えない。** 変えると全部の動画の見た目が動くため。
+JIMAKU_YOHAKU = [0.03]
+
+
 def fit_to_box(text, usable, size, max_lines):
     """必ず usable(px) に収まる (行, 文字サイズ) を返す。
 
-    まず行を増やして入れられないか試し、それでも無理なときだけ縮める。
+    ■ 3行目を許すのをやめた（2026-10-14・本人の指定）
+
+    > 字幕の改行は二行までにしてください。見にくいです。
+
+    前は「行を増やして入れられないか試し、それでも無理なときだけ縮める」
+    だったので、2行に入らない字幕が**黙って3行で出ていた**。
+    いまは max_lines を超えたら、行を増やさず**縮めて**収める。
+    くっつける上限（jimaku_ue）は2行で入る文字数に合わせてあるので、
+    ふだんここで縮むことは無い。
     """
     text = u" ".join(text.split())
     if not text:
@@ -445,12 +466,8 @@ def fit_to_box(text, usable, size, max_lines):
         got = split_lines(text, usable / float(size), n)
         if got:
             return got, size
-    # 2) 1行だけ余分に許す
-    got = split_lines(text, usable / float(size), max_lines + 1)
-    if got:
-        return got, size
-    # 3) それでも無理なら、入る大きさまで縮める(はみ出させない)
-    n = max_lines + 1
+    # 2) 行は増やさない。入る大きさまで縮める（はみ出させない）
+    n = max_lines
     best = split_lines(text, disp_len(text) / float(n) * 1.25, n)
     if not best:
         step = max(1, int(round(len(text) / float(n))))
@@ -488,6 +505,26 @@ def load_overlay(path):
                    if x.strip()] if len(c) >= 4 else []
             chaps.append((c[1], kaigyou_naosu(c[2]), eps))
     return credit, chaps
+
+
+def load_shou_credit(path):
+    u"""章の行の5列目＝その章のあいだだけ左上に出す引用元。
+
+    おすすめアニメ紹介の回は、1本で20作品を渡ります。
+    1社だけ書くことができないので、章ごとに出し分けます。
+    返すのは章と同じ並び・同じ数の一覧。空の章は「」。
+
+    load_overlay は空の列を捨てるので、ここでは**捨てずに**数えます。
+    """
+    out = []
+    for line in io.open(path, encoding="utf-8-sig", errors="replace") \
+            .read().replace("\r\n", "\n").split("\n"):
+        if not line.strip() or line.lstrip().startswith(u"#"):
+            continue
+        c = line.split(u"\t")
+        if c and c[0].strip() in (u"章", u"chapter"):
+            out.append(c[4].strip() if len(c) >= 5 else u"")
+    return out
 
 
 TARINAI = []        # 足りない設定。最後にまとめて出し、一覧.txt にも残す。
@@ -651,7 +688,7 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     # 高さ基準にすると、縦動画(1080x1920)で字幕が倍の大きさになってしまう。
     mi = mi or dict(MITAME_KITEI)
     base = min(w, h)
-    side = int(w * 0.04)
+    side = int(w * JIMAKU_YOHAKU[0])
     usable = w - side * 2 - size * 0.25      # フチの太さぶん余裕を見る
     if not per_line:
         per_line = max(8, int(usable / float(size)))
@@ -698,8 +735,16 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
 
     body = []
     if credit and total > 0:
-        body.append(u"Dialogue: 1,%s,%s,Credit,,0,0,0,,%s"
-                    % (ass_time(0.0), ass_time(total), _esc(credit)))
+        # credit は 1本の文字列（ずっと同じ）か、
+        # (始まり, 終わり, 文字) の一覧（章ごとに出し分ける）。
+        if isinstance(credit, (list, tuple)):
+            for (cst, cen, ctx) in credit:
+                if ctx:
+                    body.append(u"Dialogue: 1,%s,%s,Credit,,0,0,0,,%s"
+                                % (ass_time(cst), ass_time(cen), _esc(ctx)))
+        else:
+            body.append(u"Dialogue: 1,%s,%s,Credit,,0,0,0,,%s"
+                        % (ass_time(0.0), ass_time(total), _esc(credit)))
     chw = max(6, int((w * 0.46) / float(chsize)))
     for (st, en, title) in (chapters or []):
         lines = []
@@ -748,13 +793,34 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     return len([b for b in body if b.startswith(u"Dialogue: 0")])
 
 
+# ■ 絵として使ってはいけないフォルダ（2026-10-13・本人の採点から）
+#
+# 本人の採点で「ひどい」21件のうち9件が、**たった1枚の同じ絵**だった。
+#
+#   一覧/9-99_無職転生Ⅱ 特番_01.png  … 9回
+#   → カタログに説明がありません / 話数ちがい
+#
+# これは絵ではなく、**番号をふった一覧シート**（画像一覧_01.png の類）。
+# 画像フォルダの中に「一覧」フォルダが 327枚 あり、それが候補に
+# 入っていた。どの #指定 にも当たらないので、**既定の絵として
+# 何度も選ばれていた。** 絵ではないものを動画に出してはいけない。
+TSUKAWANAI_FOL = (u"一覧", u"確認用", u"素材", u"_選んだ画像", u"候補")
+
+
 def _walk_images(root):
-    """話数フォルダなど、下の階層もたどって画像を集める。"""
+    """話数フォルダなど、下の階層もたどって画像を集める。
+
+    一覧シートなど「絵ではないもの」のフォルダは、はじめから入れない。
+    """
     out = []
     for cur, dirs, files in os.walk(root):
+        dirs[:] = [d for d in dirs if d not in TSUKAWANAI_FOL]
         dirs.sort(key=natkey)
         rel = os.path.relpath(cur, root)
         rel = u"" if rel == "." else rel.replace(os.sep, u"/")
+        atama = rel.split(u"/")[0] if rel else u""
+        if atama in TSUKAWANAI_FOL:
+            continue
         for n in sorted([x for x in files if x.lower().endswith(EXTS)], key=natkey):
             out.append(((rel + u"/" + n) if rel else n, os.path.join(cur, n)))
     return out
@@ -801,14 +867,127 @@ def list_images(d, extra=None):
 
 
 # ---------------------------------------------------------------- 割り当て
-def split_text_by_time(text, st, en, pieces):
-    """text を pieces(文などの断片)に分け、文字数の比で時間を割り振る。"""
-    total_chars = float(sum(len(x) for x in pieces)) or 1.0
-    out, t = [], st
+def jissoku_hikidashi():
+    u"""「、」の切れはしごとに測った長さを、本文で引ける形にして返す。
+
+    ■ 「前から順に使い切る」ではいけない（2026-10-07）
+
+    はじめは pop() で使い切る形にしていた。ところが refine_cues は
+    **同じ本文に対して2回** split_text_by_time を呼ぶ:
+
+        ① 文に割るとき（この段落は文が1つなので、何も割らない）
+        ② その文を「、」で割るとき ← ここが本番
+
+    ①で中身をぜんぶ使い切ってしまい、**②には何も残っていなかった。**
+    そのため「、」の切れ目は結局ぜんぶ文字数で割られ、
+    測った長さを入れても数字が1つも動かなかった（4回くり返した）。
+
+    いまは使い切らない。同じ本文が何度も出てくるときは、
+    **値がそろっているときだけ**使う。ばらついていれば使わない
+    （どれが今の1つか決められないので、当てずっぽうより危ない）。
+    """
+    hk = dict()
+    for (ko, by, k3) in JISSOKU_KOMA:
+        hk.setdefault(ko, []).append((by, k3))
+    return hk
+
+
+def jissoku_hitotsu(hk, ko):
+    u"""その切れはしの「測った長さ」。決められないときは None。"""
+    # ■ 同じ本文が2回以上出てきたら、使わない（2026-10-07）
+    #
+    # 「近ければ平均してよい」にしたら、いちばん大きいずれが
+    # 0.96秒 → 1.81秒 と**悪くなった。**
+    # どの1つを指しているか決められないものを使うと、
+    # 当てずっぽうより大きく外す。1回しか出てこない本文だけ使う。
+    v = hk.get(ko)
+    if not v or len(v) != 1:
+        return None
+    return v[0][0]
+
+
+def jissoku_iki(hk, ko):
+    u"""その切れはしのあとで、本当に声が止まったか。分からなければ None。"""
+    v = hk.get(ko)
+    if not v or len(v) != 1:
+        return None
+    return v[0][1]
+
+
+def kire_me_erabu(hk, piece, max_chars):
+    u"""「、」の切れはしのうち、**声が止まった所でだけ**切るようにまとめ直す。
+
+    ■ 声が止まっていない所で切ると、合わせようが無い（2026-10-07）
+
+    残っていたずれを数えたら、0.3秒を超えた 45件は 206件中の22%。
+    材料で「息継ぎしない「、」」にした割合 27% とほぼ同じだった。
+
+    **つまり残りは全部「声が止まっていない所で字幕を切った」ぶん。**
+    そこには合わせ先の「間」が無いので、文字数で割るしかなく、
+    読む速さのばらつき(±25%)がそのままずれになる。
+    いくら測り方を良くしても、ここは原理的に詰められない。
+
+    切らなければ、ずれない。声が止まった所でだけ切る。
+    ただし字幕が長くなりすぎるときは、読めなくなるので切る。
+    """
+    if not hk:
+        return piece
+    out, cur = [], u""
+    for i, x in enumerate(piece):
+        cur += x
+        iki = jissoku_iki(hk, x)
+        owari = (i == len(piece) - 1)
+        # 声が止まった／分からない／長すぎる／最後 なら、ここで切る
+        if owari or iki is None or iki or disp_len(cur) >= max_chars:
+            out.append(cur)
+            cur = u""
+    if cur:
+        if out:
+            out[-1] += cur
+        else:
+            out.append(cur)
+    return out
+
+
+def jissoku_nagasa(hk, text):
+    u"""その本文ぜんぶの「測った長さ」。1つでも欠けていれば None。"""
+    if not hk:
+        return None
+    kei = 0.0
+    for ko in kugiri(text, 0):
+        b2 = jissoku_hitotsu(hk, ko)
+        if b2 is None:
+            return None
+        kei += b2
+    return kei if kei > 0 else None
+
+
+def split_text_by_time(text, st, en, pieces, hk=None):
+    """text を pieces(文などの断片)に分け、時間を割り振る。
+
+    ■ ここが「測った長さ」を捨てていた大元（2026-10-07）
+
+    1行ずつの音声で測った長さを、はじめは split_by_kuten にだけ入れていた。
+    ところが**字幕はその前に refine_cues でもう割られていて**、
+    そこがこの関数（文字数の比）を使っていた。
+    後ろでいくら直しても、**切れ目はすでに決まっていた。**
+    だから「測った長さを入れたのに数字が1つも動かない」が3回続いた。
+
+    いま、測った長さがあればそれで割る。無い所だけ文字数で割る。
+    """
     span = en - st
+    naga = None
+    if hk and len(pieces) > 1:
+        n2 = [jissoku_nagasa(hk, x) for x in pieces]
+        if all(x is not None for x in n2) and sum(n2) > 0:
+            kei2 = float(sum(n2))
+            naga = [span * (x / kei2) for x in n2]
+    if naga is None:
+        total_chars = float(sum(len(x) for x in pieces)) or 1.0
+        naga = [span * (len(x) / total_chars) for x in pieces]
+    out, t = [], st
     for i, piece in enumerate(pieces):
-        d = span * (len(piece) / total_chars)
-        e = en if i == len(pieces) - 1 else t + d
+        e = en if i == len(pieces) - 1 else t + naga[i]
         out.append((t, e, piece))
         t = e
     return out
@@ -1299,7 +1478,56 @@ TEN_BATSU = [20.0]         # それより長い間に付く罰（実測で決め
 IKARI_DANRAKU = [False]
 
 
-def nagasa_awase(exp, cands, omomi=None, kuten=None):
+# 寄せ先を1つも採らないときの費用（秒あつかい）。
+#
+# ■ なぜ「採らない」を許すのか（2026-10-10）
+#
+# 前は「候補が足りなければ丸ごとあきらめる」(m < n で None)、
+# 足りていれば「全部の切れ目に必ず1つずつ割り当てる」だった。
+# **ろくな寄せ先が無い切れ目にも、無理に割り当てていた。**
+# 1つずつ断れるようにすると、無理な割り当てが消え、
+# 候補が足りないだけで全部あきらめることも無くなる。
+MIYOSE_BATSU = [0.30]
+
+# 遠くへ寄せてよいのは、**はっきりした「間」のときだけ**。
+#
+# ■ 不合格の1件を、その場で見て決めた（2026-10-10）
+#
+# 実測ありの乱数3で 1.54秒。その区間だけ印を付けて出した。
+#
+#   a0=488.33 b0=499.93 測った=False tol=1.60
+#   exp   = [491.99, 497.94]       ← 文字数の見当。本当は 491.23
+#   候補  = [(492.77, 0.14)]       ← **0.14秒しかない途切れ、1つだけ**
+#   決まり = [492.77, 498.14]
+#
+# 見当は 0.76秒ずれていた。そこへ 0.78秒 先の **0.14秒の途切れ**に
+# 寄せたので、**0.76秒 → 1.54秒 と悪くなった。**
+# 0.14秒は息継ぎではなく、子音の切れめかもしれない長さ。
+# それを根拠に 0.78秒も動かしてはいけない。
+#
+# 窓を一律に絞ると直るが、それは測って悪かった（枚数が3倍）。
+# 遠くの「間」でも、**長ければ**寄せたほうが良いからだ。
+#
+# 長さで分けるのも、一律にかけると悪かった。
+#
+#   長さで窓を分ける（はっきり=0.20秒）… 0.45秒超 8% / 7% / 4%
+#   かけない                            …            2% / 2% / 2%
+#
+# **本物の「、」の息継ぎは 0.10〜0.20秒 にもあるので、
+#   長さだけで切ると、効いていた寄せまで落ちる。**
+#
+# 上の1件を分けているのは長さではなく、**候補の少なさ**だった。
+# 11.6秒の区間に切れ目が2つあって、候補が 1つしか無い。
+# 候補が足りていないときの対応づけは**決まりようがない**ので、
+# 遠くへ跳ぶ根拠にならない。候補が足りているなら、
+# 順番を保った対応づけがちゃんと効くので、遠い寄せも信じてよい。
+#
+# なので「候補が切れ目より少ないときだけ、短い間への遠い寄せを断る」。
+CHIKAKU = [0.35]          # ここまでは、どんな間へでも寄せてよい
+HAKKIRI = [0.20]          # これ以上の間を「はっきりした間」とみなす
+
+
+def nagasa_awase(exp, cands, omomi=None, kuten=None, tol=None):
     u"""切れ目を「間」に割り当てる。距離だけでなく**間の長さ**も見る。
 
     cands は (時刻, 間の長さ) の並び。順番は保つ。
@@ -1314,11 +1542,30 @@ def nagasa_awase(exp, cands, omomi=None, kuten=None):
     費用 = 距離 − 重み × 間の長さ（長さは 0.5秒で頭打ち）
     """
     n, m = len(exp), len(cands)
-    if n == 0 or m < n:
+    if n == 0:
         return None
     INF = float("inf")
 
     om = NAGASA_OMOMI[0] if omomi is None else omomi
+    # ■ 硬い窓。これより遠い寄せは、DPの中で**考えない**（2026-10-10）
+    #
+    # ここが「まちがった間に寄る」の正体だった。費用は
+    #
+    #     距離 − 15.0 × 間の長さ （＋長すぎる間への罰）
+    #
+    # で、長さの項が距離の項より一桁大きい。数えるとこうなる。
+    #
+    #   「、」の切れ目 … 0.05秒の間から 0.22秒の間へ乗りかえる値打ち 2.55
+    #   「。」の切れ目 … 0.05秒の間から 0.50秒の間へ        値打ち 6.75
+    #
+    # **費用は秒だてなので、DPは切れ目を 2.55秒・6.75秒 動かしてでも
+    #   長い間に乗せる。** 本物の間なので「声の中で切り替わる」検査には
+    #   引っかからないが、字幕は何秒もずれる。
+    #
+    # tol は**後から弾く**だけだった。弾いた切れ目は文字数に戻せても、
+    # **その隣は、歪んだDPが置いた所に残る。**
+    # 窓をDPの中に入れれば、歪んだ並びそのものが選ばれなくなる。
+    mado = float(tol) if tol else INF
 
     # ■ 「。」の切れ目と「、」の切れ目を、同じ目で見てはいけない（2026-10-06）
     #
@@ -1332,9 +1579,18 @@ def nagasa_awase(exp, cands, omomi=None, kuten=None):
     ten_ue = TEN_NAGASA[0]       # 「、」の息継ぎの上限の目安
     ten_batsu = TEN_BATSU[0]     # それより長い間に付く罰
 
+    # 候補が切れ目より少ない＝対応づけが決まりようがない区間
+    tarinai = (m < n)
+
     def hiyou(j, i):
         t, L = cands[i]
         d = abs(t - exp[j])
+        # 候補が足りない区間でだけ、短い間への遠い寄せを断る
+        mado_koko = mado
+        if tarinai and L < HAKKIRI[0]:
+            mado_koko = min(mado, CHIKAKU[0])
+        if d > mado_koko:
+            return INF
         if kuten and j < len(kuten) and not kuten[j]:
             # 「、」の切れ目。長すぎる間は、となりの「。」の間かもしれない
             return d - om * min(L, ten_ue) + ten_batsu * max(0.0, L - ten_ue)
@@ -1343,24 +1599,43 @@ def nagasa_awase(exp, cands, omomi=None, kuten=None):
         #   下限 0.4 にすると かえって悪化したので、入れていない）
         return d - om * min(L, 0.5)
 
-    prev = [hiyou(0, i) for i in range(m)]
-    back = [[0] * m for _ in range(n)]
-    for j in range(1, n):
-        cur = [INF] * m
-        best_v, best_i = INF, 0
-        for i in range(m):
-            if i >= 1 and prev[i - 1] < best_v:
-                best_v, best_i = prev[i - 1], i - 1
-            if i >= j and best_v < INF:
-                cur[i] = best_v + hiyou(j, i)
-                back[j][i] = best_i
-        prev = cur
-    last = min(range(m), key=lambda i: prev[i])
-    out = [0.0] * n
-    i = last
-    for j in range(n - 1, -1, -1):
-        out[j] = cands[i][0]
-        i = back[j][i]
+    # best[j][i] … 切れ目を j 個決めて、候補を i 個まで使ったときの最小費用。
+    # 進み方は2つだけ。
+    #   ① 切れ目 j は候補 k(>= i) に寄せる  … 費用 hiyou(j, k)
+    #   ② 切れ目 j は寄せない               … 費用 MIYOSE_BATSU（候補は使わない）
+    # 順番は i が戻らないことで保たれる。
+    batsu = MIYOSE_BATSU[0]
+    best = [[INF] * (m + 1) for _ in range(n + 1)]
+    kara = [[None] * (m + 1) for _ in range(n + 1)]
+    best[0][0] = 0.0
+    for j in range(n):
+        for i in range(m + 1):
+            v = best[j][i]
+            if v == INF:
+                continue
+            # ② 寄せない
+            if v + batsu < best[j + 1][i]:
+                best[j + 1][i] = v + batsu
+                kara[j + 1][i] = (i, None)
+            # ① どれかに寄せる
+            for k in range(i, m):
+                h = hiyou(j, k)
+                if h == INF:
+                    continue
+                if v + h < best[j + 1][k + 1]:
+                    best[j + 1][k + 1] = v + h
+                    kara[j + 1][k + 1] = (i, k)
+    i = min(range(m + 1), key=lambda x: best[n][x])
+    if best[n][i] == INF:
+        return None
+    # **寄せなかった切れ目は None を返す。** 呼ぶほうが、
+    # 寄せた所から割り直す（文字数のまま取り残さない）。
+    out = [None] * n
+    for j in range(n, 0, -1):
+        pi, k = kara[j][i]
+        if k is not None:
+            out[j - 1] = cands[k][0]
+        i = pi
     return out
 
 
@@ -1394,7 +1669,13 @@ def wav_no_koe(path, saitan=0.095):
     「読む速さはどこでも同じ」という当てずっぽうを捨てられる。
     """
     try:
-        sils = detect_silences(path, NOISE_DB[0], 0.05)
+        # ■ 拾う下限を saitan に合わせる（2026-10-07）
+        #
+        # ここは 0.05秒で固定だった。そのため saitan を 0.02 に下げても
+        # **検出そのものが 0.05秒止まりで、数字が1つも動かなかった。**
+        # 息を継がない「、」の切れ目は 0.02〜0.07秒なので、
+        # 0.05秒止まりでは半分しか見えない。
+        sils = detect_silences(path, NOISE_DB[0], max(0.01, min(0.05, saitan)))
     except Exception:
         return []
     zen = audio_duration(path) or 0.0
@@ -1411,31 +1692,225 @@ def wav_no_koe(path, saitan=0.095):
     return out
 
 
-def jissoku_wariai(path, kazu, saitan=0.095):
-    u"""1行ぶんの音声から、切れはし kazu 個それぞれの「本当の長さの割合」を返す。
+MATOME_JOUGEN = 8          # 1つの区間にまとめる切れはしの上限（暴走よけ）
 
-    声の区間の数が kazu と合ったときだけ答える。合わなければ None。
-    （合わないのは、「、」で息を継がなかった所があるとき。
-      そのときは今までどおり文字数で割る）
+# 切れはし(「、」ごと)1つ1つの、測った長さ（秒）。(本文, 秒) の並び。
+#
+# ■ なぜ要るか（2026-10-07）
+#
+# 1行ずつの音声で測った長さを、はじめは**文の切れ目にしか**使っていなかった。
+# その結果 place_in_chunk（文の頭）は 最大0.25秒まで良くなったのに、
+# **「、」の切れ目は 最大0.96秒のまま**だった。
+# split_by_kuten が、文の中を**文字数の比**で割っていたから。
+#
+# ■ 文まるごとの本文では引けない（一度しくじった）
+#
+# はじめは (文の本文, 割合) で持たせたが、split_by_kuten に届く時点で
+# 本文はすでに細かく割られていて、**一度も一致しなかった**。
+# 数字が1つも変わらず、それで気づいた。
+# いまは**切れはしの本文**で引く。割り方が変わっても引ける。
+#
+# 同じ本文が何度も出てきたときは、**前から順に**使う。
+JISSOKU_KOMA = []
+KOMA_TSUKATTA = [0, 0]     # 「、」の割り方: [測った値を使った枚数, 文字数で割った枚数]
+KOMA_JISSOKU = []          # 1枚ごとに「測った長さで割ったか」。koma_awase が見る
+KUTEN_NASHI = [0]          # 句読点の無い所で切った字幕の数（0 でなければ必ずずれる）
 
-    ■ 「数が合えば位置を見ずに確定」の二の舞にしないために
+# 測った見当を、本物の「間」へ寄せるときに許す動き（秒）。
+#
+# 当てずっぽうの見当は大きく外れるので 1.6秒まで許していた。
+# **測った見当は外れないので、そんなに動かしてはいけない。**
+# 大きく許すと、となりの「間」へ吸い寄せられて、かえって悪くなる。
+# ■ 0.35 → 1.20 にした（2026-10-11・本人「同じところでずれています」）
+#
+# 本人の実例を計算したら、ここが塞いでいた。
+#
+#   前「ルーデウスを敵として潰すのではなく、」 2:17 から 3.33秒
+#   次「まず手懐けにいったというわけです。」   声は 2:19.32 から
+#   → 切れ目が **1.01秒 遅い**
+#
+# その区間は「測れた」扱いなので窓が 0.35秒。正しい「間」は 1.01秒 先、
+# **窓の外**なので寄せられなかった。測った長さが外れている所では、
+# 窓が狭いほど直しようがなくなる。
+#
+# 材料で測ったら、0.70 / 1.20 / 1.60 のどれも **0.35 と1桁も変わらなかった**。
+#
+#   0.35  最大 1.09 / 1.27 / 1.00秒   0.45秒超 5% / 4% / 2%
+#   0.70  （同じ）
+#   1.20  （同じ）
+#   1.60  （同じ）
+#
+# 材料では測れた所の測定が正しいので、0.35秒より遠くへ寄せる必要が
+# 一度も起きない＝**無害**。本人の 1.01秒 だけが通るようになる。
+#
+# （これまで試した直しは全部ここで害が出た。害の出ない形はこれだけだった。
+#   「1枚ずつ近くの無音へ戻す」最大 2.62秒まで悪化 /
+#   「最後に全部を声の始まりへ合わせ直す」0.45秒超 5/6/3%）
+JISSOKU_TOL = [0.35]
 
-    ここで返すのは**割合だけ**で、位置は決めない。
-    位置は、このあと merged.wav の本物の間へ寄せるときに決まる。
-    数が合ったことを、位置の証拠には使わない。
+
+
+# 段落のうち「1行ずつの音声で測れた」割合。1.0 なら全部（ふだんはこれ）。
+#
+# ■ なぜ要るか（2026-10-10・検査が本物より易しかった、その2）
+#
+# 検査の材料は、かたまり1つ1つに重ならない背番号を付けている。
+# そのおかげで突き合わせが一対一で決まる（それは要る）が、
+# **副作用として「この「、」で声が止まったか」が毎回必ず分かる。**
+# 本物はそうではない。本人の第6回のログは
+#
+#     15/54 の段落は、1行ずつの音声で文の長さを実測しました
+#
+# **7割の段落は、止まったかどうかが分からない。**
+# 分からない所での切り方を直しても、検査では何も変わらないか、
+# むしろ良い数字が出る（検査では分かるのが当たり前なので、
+# 分かる前提の仕組みが有利になってしまう）。
+#
+# ここで「測れた段落の割合」を落とせるようにして、
+# 本物と同じ 15/54 の条件でも測れるようにする。
+# 乱数は使わない。何番目の段落を測れたことにするかは順番で決める
+# （同じ材料なら必ず同じ結果になるように）。
+JISSOKU_WARI = [1.0]
+JISSOKU_BAN = [0]
+
+# 字幕をつないでよい上限の文字数（2行に折り返して収まる数）。
+# 見た目.txt から出す。1920x1080・字幕の大きさ11・2行 なら 34。
+JIMAKU_UE = [34]
+
+
+def koe_to_awaseru(moji, dur):
+    u"""切れはしの文字数と、測った声の区間を、順番を保って対応づける。
+
+    ■ 「数がぴったり合ったときだけ使う」をやめた理由（2026-10-07）
+
+    前はこうしていた ──
+    「、」で割った数と、声の区間の数が**ぴったり同じときだけ**実測を使う。
+
+    本人の第6回のログ:
+
+        15/54 の段落は、1行ずつの音声で文の長さを実測しました
+
+    **54段落のうち15段落しか使えていない。** 残り39段落は
+    文字数で割る当てずっぽうに落ち、本人の画面で 2.08秒ずれていた。
+
+    理由は単純で、**読み上げは「、」で必ず息を継ぐわけではない。**
+    1か所でも継がなければ数が合わず、その段落まるごと実測を捨てていた。
+    1段落に「、」が4つあれば、4回とも継ぐ確率は 0.73**4 ≒ 0.28。
+    **ぴったり一致を求めるかぎり、7割の段落は救えない。**
+
+    いまは数が合わなくてよい。切れはしと声の区間を、
+    **順番を崩さずに**対応づける（どちらが多くてもよい）。
+
+      ・声の区間が少ない  → 息を継がなかった所。1区間に数個の切れはしが入る
+      ・声の区間が多い    → 言葉の途中で切れた所。数区間で1つの切れはしになる
+
+    対応のしかたは、**文字数から予想した長さにいちばん近いもの**を選ぶ。
+    選んだあとの長さは**測った値**を使う。
+    文字数は「どう区切るか」を決めるためだけに使い、
+    長さそのものは当てずっぽうにしない。
+
+    ■ ここでも「位置」は決めない
+
+    返すのは長さだけ。位置はこのあと merged.wav の本物の間へ寄せるときに決まる。
+    「対応がついたこと」を位置の証拠には使わない。
+    （「ちょうど k-1個あったから確定」で 9.6秒ずらした失敗をくり返さない）
+    """
+    k, m = len(moji), len(dur)
+    if k <= 0 or m <= 0:
+        return None
+    zen_d = float(sum(dur))
+    zen_c = float(sum(moji))
+    if zen_d <= 0 or zen_c <= 0:
+        return None
+    cm, cd = [0] * (k + 1), [0.0] * (m + 1)
+    for i, x in enumerate(moji):
+        cm[i + 1] = cm[i] + x
+    for j, x in enumerate(dur):
+        cd[j + 1] = cd[j] + x
+    INF = float("inf")
+    best = [[INF] * (m + 1) for _ in range(k + 1)]
+    kara = [[None] * (m + 1) for _ in range(k + 1)]
+    best[0][0] = 0.0
+    for i in range(k + 1):
+        for j in range(m + 1):
+            if best[i][j] == INF:
+                continue
+            for a in range(1, min(MATOME_JOUGEN, k - i) + 1):
+                for b in range(1, min(MATOME_JOUGEN, m - j) + 1):
+                    if a > 1 and b > 1:
+                        continue          # 多対多は許さない（対応が曖昧になる）
+                    ch = cm[i + a] - cm[i]
+                    dd = cd[j + b] - cd[j]
+                    nedan = best[i][j] + abs(dd - zen_d * ch / zen_c)
+                    if nedan < best[i + a][j + b]:
+                        best[i + a][j + b] = nedan
+                        kara[i + a][j + b] = (i, j, a)
+    if best[k][m] == INF:
+        return None
+    out = [0.0] * k
+    iki = [False] * k           # その切れはしのあとで、本当に声が止まったか
+    i, j = k, m
+    while i > 0 or j > 0:
+        pi, pj, a = kara[i][j]
+        dd = cd[j] - cd[pj]
+        ch = cm[i] - cm[pi]
+        for q in range(a):
+            out[pi + q] = dd * (moji[pi + q] / float(ch)) if ch else dd / a
+        iki[pi + a - 1] = True   # かたまりの最後だけが、本物の切れ目
+        i, j = pi, pj
+    return out, iki
+
+
+def jissoku_wariai(path, moji, saitan=0.095, koma=None):
+    u"""1行ぶんの音声から、切れはしそれぞれの「本当の長さの割合」を返す。
+
+    moji は切れはしごとの文字数の並び。koma は「文ごとの切れはしの数」。
+    数が合わなくても答える。
+
+    ■ 段落まるごとで対応づけると、1つ食いちがうと最後まで響く（2026-10-07）
+
+    作った材料の段落2で、**正解 24.79 / 26.33 は
+    測った区間の切れ目 24.85 / 26.39 とぴったり一致していた。**
+    つまり測定は正解を持っていたのに、出来た動画は 23.82 / 25.66 で、
+    0.97秒 早かった。段落全体をいっぺんに対応づけたので、
+    **どこか1つの食いちがいが、そこから先をまるごとずらしていた。**
+
+    文の切れ目（「。」）は place_in_chunk が別に正確に出している（最大0.25秒）。
+    そこで**文ごとに区切って**対応づける。
+    食いちがってもその文の中だけで済み、次の文には響かない。
     """
     if not JISSOKU_TSUKAU[0]:
         return None
+    # 測れた段落の割合を落とす（検査で本物と同じ条件を作るため）
+    JISSOKU_BAN[0] += 1
+    n, w = JISSOKU_BAN[0], JISSOKU_WARI[0]
+    if w < 1.0 and int(n * w) <= int((n - 1) * w):
+        return None
     koe = wav_no_koe(path, saitan)
-    if len(koe) != kazu or kazu <= 0:
+    if not koe or not moji:
         return None
     # 切れはし q の長さ = 声の長さ + そのうしろの間（次の声までの空き）
     nagasa = []
     for i, (a2, b2) in enumerate(koe):
         tsugi = koe[i + 1][0] if i + 1 < len(koe) else b2
         nagasa.append(max(0.01, tsugi - a2))
-    kei = float(sum(nagasa))
-    return [x / kei for x in nagasa]
+
+    # ■ 文ごとに区切って対応づけるのは、実測で悪くなった（2026-10-07）
+    #
+    #   段落まるごと … 最大 0.96秒 / 平均 0.22 / 0.3秒超 14%
+    #   文ごと       … 最大 1.81秒 / 平均 0.24 / 0.3秒超 16%
+    #
+    # 文の区切りを声の区間に合わせる所で取りちがえると、
+    # その文の中が丸ごとずれるため。段落まるごとのほうが安定していた。
+    # （思いつきが良さそうでも、測って悪ければ入れない）
+    kekka = koe_to_awaseru(list(moji), nagasa)
+    if not kekka:
+        return None
+    naga, iki = kekka
+    kei = float(sum(naga))
+    if kei <= 0:
+        return None
+    return [x / kei for x in naga], iki
 
 
 def koe_no_jiku(a0, b0, sils):
@@ -1508,6 +1983,47 @@ def mitsumori(a0, b0, moji, sils):
     return out
 
 
+# ■ 切れはしがもらう尺の床 ─ **比例配分の何割までなら削ってよいか**
+#
+# （2026-10-13・本人「次の字幕のセリフを五つか六つくらいは言葉を発してから
+#   切り替わる。ただ、その後ろのセリフは音ずれが発生しない」）
+#
+# 本人の動画を数えたら、原因がはっきり出た。
+#
+#   前 057  3.33秒 / 18文字 =  5.4字/秒   ← 余裕がありすぎる
+#      058  0.83秒 / 17文字 = 20.5字/秒   ← **物理的に不可能**
+#      2枚あわせて 4.16秒 / 35文字 = 8.4字/秒  ← 合計は正しい
+#      059 は章カード（動かせない錨）→ **だから後ろはずれない**
+#
+# **17文字を0.83秒で読むことはできない。** 合計は合っていて、
+# 割り方だけが壊れている。切れ目が1.2秒遅いぶん、前の字幕が居座り、
+# 次の字幕の声が五つ六つ鳴ってから切り替わる。錨で必ず戻るので
+# そこから先はずれない ── 本人の言葉そのまま。
+#
+# 前の歯止めは `mae2 + 0.12` の**固定0.12秒**で、文字数を見ていなかった。
+# だから17文字に0.83秒を渡せた。
+#
+# 床は「文字数÷6.46」ではなく **そのかたまりの中での比例配分の何割か**
+# にする。話す速さに左右されず、合計が必ず収まる（割×全体 ≤ 全体）。
+#
+# 値はきつい材料（偽の寄せ先あり・3乱数）で振って決めた。
+# 「比例配分の最低」は、材料 0.28 ／ 本人の実測 0.32（058番）で**ほぼ一致**。
+# 材料がはじめて本人の不具合を数字で再現した。
+#
+#   床 0.12(前) 候補0.085 … 最大3.24 平均0.34 15.6% ／ 最低0.28 0.6未満13枚
+#   床 0.80     候補0.18  … 最大2.80 平均0.31 14.2% ／ 最低0.67 0.6未満 0枚
+#   床 0.90     候補0.18  … 最大2.70 平均0.29 14.0% ／ 最低0.75 0.6未満 0枚  ← これ
+#   床 0.95     候補0.18  … 最大1.88 平均0.29 15.3% ／ 最低0.79
+#
+# 0.95 は最大がいちばん良いが、0.45秒超が1.3ポイント悪くなる。
+# 寄せる自由が5%しか残らず、「寄せない」に近づくため。
+SAITEI_WARI = [0.90]
+
+# 寄せ先の候補にする無音の最短。言葉の途中の閉鎖（「ッ」や破裂音は
+# 0.09〜0.15秒）を候補に入れると、そちらへ吸い寄せられる。
+KOUHO_SAITAN = [0.18]
+
+
 def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
     u"""文字数で割った切れ目(exp)を、本物の「間」(naka)へ寄せる。
 
@@ -1537,8 +2053,9 @@ def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
     if not exp:
         return []
     kimari = {}
-    if len(naka) >= len(exp):
-        atta = nagasa_awase(exp, naka, kuten=kuten)
+    if naka:
+        # 窓(tol)はDPの中で効かせる。ここで後から弾くのではもう遅い。
+        atta = nagasa_awase(exp, naka, kuten=kuten, tol=tol)
         if atta:
             # ① 遠すぎない寄せだけ採る。
             #
@@ -1550,7 +2067,7 @@ def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
             # どんな理由があっても作りの誤りで、そのまま通してはいけない。
             # （「ちょうど k-1個なら確定」も、壊れるまでは安全に見えていた）
             for t, (mae, ato) in enumerate(zip(exp, atta)):
-                if abs(ato - mae) <= tol:
+                if ato is not None and abs(ato - mae) <= tol:
                     kimari[t] = ato
     # ② 寄せられなかった切れ目は、**寄せた所から割り直す。**
     #
@@ -1562,24 +2079,59 @@ def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
         (ia, ta), (ib, tb) = teiten[p2], teiten[p2 + 1]
         if ib - ia < 2:
             continue
-        # 切れはし ia+1 番目から ib 番目まで（moji の添字は切れはしの番号）
-        w = [max(1, moji[q]) for q in range(ia + 1, ib + 1)]
+        # ■ 割り直しに使う重みは、**文字数より exp の間隔**（2026-10-10）
+        #
+        # exp は、測れた所では「1行ずつの音声で測った長さ」から来ている。
+        # ここを文字数で割り直すと、**測った中身をその場で捨てていた。**
+        #
+        # 寄せを1つずつ断れるようにしたとたん、これが表に出た。
+        # 前は「候補が足りなければ丸ごとあきらめる」ので exp がそのまま
+        # 残っていたが、断れるようにしたら、断った切れ目が
+        # 文字数での割り直しに落ちるようになった。
+        # 実測ありの乱数3で 0.74秒 → 1.54秒（不合格）になったのがこれ。
+        #
+        # exp の間隔で割れば、寄せたぶんのずらしは吸収しつつ、
+        # 測った中身は残る。間隔が取れないときだけ文字数に戻る。
+        hidari = exp[ia] if ia >= 0 else a0
+        migi = exp[ib] if ib < len(exp) else b0
+        ten = [hidari] + [exp[q] for q in range(ia + 1, ib)] + [migi]
+        haba = [ten[k + 1] - ten[k] for k in range(len(ten) - 1)]
+        if len(haba) == ib - ia and min(haba) >= 0 and sum(haba) > 0.01:
+            w = [max(0.001, x) for x in haba]
+        else:
+            w = [max(1, moji[q]) for q in range(ia + 1, ib + 1)]
         kei = float(sum(w))
         t3 = ta
         for q in range(ia + 1, ib):
             t3 += (tb - ta) * w[q - ia - 1] / kei
             kimari[q] = t3
-    # 念のため順番を守る
+    # ■ 順番を守り、**どの切れはしにも比例配分の床を残す**
+    #
+    # 前は固定 0.12秒 だったので、17文字に0.83秒を渡していた。
+    # いまは「その切れはしが文字数から見てもらうべき尺」の
+    # SAITEI_WARI 割を必ず残す。割×全体 ≤ 全体 なので必ず収まる。
+    zen = max(0.001, b0 - a0)
+    kei_m = float(sum(max(1, m) for m in (moji or []))) or 1.0
+
+    def yuka(q):
+        u"""切れはし q が最低もらう尺。"""
+        if not moji or q >= len(moji):
+            return 0.12
+        return max(0.12, zen * max(1, moji[q]) / kei_m * SAITEI_WARI[0])
+
     out, mae2 = [], a0
     for t in range(len(exp)):
-        v = max(kimari.get(t, exp[t]), mae2 + 0.12)
-        v = min(v, b0 - 0.12 * (len(exp) - t))
+        v = kimari.get(t, exp[t])
+        v = max(v, mae2 + yuka(t))                 # 左の切れはしに床を残す
+        nokori = sum(yuka(q) for q in range(t + 1, max(t + 2, len(moji or []))))
+        v = min(v, b0 - nokori)                    # 右ぜんぶに床を残す
+        v = max(v, mae2 + 0.12)                    # 順番は必ず守る
         out.append(v)
         mae2 = v
     return out
 
 
-def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
+def koma_awase(slots, ikari, sils, tol=1.6, saitan=None):
     u"""文字数で割った切れ目を、本物の「間」に寄せ直す。
 
     ■ なぜ要るか（v130 でもまだ字幕がずれていた）
@@ -1635,6 +2187,8 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
     tomeru = [True] + [is_ikari(kugiri[i]) for i in range(1, n - 1)] + [True]
     # 寄せ先の候補。「間」の終わりの少し手前＝次の声が出る直前。
     # 長さも覚えておく（短い間は、言葉の途中の途切れかもしれない）。
+    if saitan is None:
+        saitan = KOUHO_SAITAN[0]
     ma = [(max(a + 0.02, b - LEAD), b - a) for (a, b) in sils if (b - a) >= saitan]
     ma.sort()
     ugokashi, ichiban = 0, 0.0
@@ -1652,11 +2206,42 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
         # i と j は動かさない。その間の (j-i-1) 個を寄せる
         a0, b0 = kugiri[i], kugiri[j]
         naka = [(t, L) for (t, L) in ma if a0 + 0.25 < t < b0 - 0.25]
-        # 見当は「声が出ている時間」で割り直す。
-        # ここに来る kugiri[i+1:j] は文字数で割ったままの値なので、
-        # 長い段落では間の積み重ねぶん（1.5〜2秒）ずれている。
-        moji0 = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
-        exp = mitsumori(a0, b0, moji0, sils)
+        # ■ 見当の作り直しが、測った長さを捨てていた（2026-10-07・ここが本丸）
+        #
+        # ここは無条件に**文字数から見当を作り直して**いた。
+        # そのため split_by_kuten が 1行ずつの音声で測った長さを入れても、
+        # **この行で丸ごと捨てられ、数字が1つも変わらなかった。**
+        # （measured を入れても 0.96秒のまま動かず、それで気づいた）
+        #
+        # 測って割った所は、slots の時刻そのものが答えなので、それを使う。
+        # 寄せ幅も小さくする。測った見当を 1.6秒も動かす理由は無い。
+        jis_koko = all(KOMA_JISSOKU[i + q] for q in range(0, j - i)) \
+            if len(KOMA_JISSOKU) >= j else False
+        if jis_koko:
+            exp = list(kugiri[i + 1:j])
+            tol_koko = min(tol, JISSOKU_TOL[0])
+        else:
+            # 測れていない所だけ、今までどおり文字数で割り直す
+            moji0 = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
+            exp = mitsumori(a0, b0, moji0, sils)
+            # ■ 窓を絞るのは、測って悪かった（2026-10-10・2回測った）
+            #
+            # 「長い間に乗せる値打ちが『、』で2.55秒・『。』で6.75秒ぶん
+            #   あるので、窓が 1.6秒では窓いっぱいまで飛ぶ」── 筋は通る。
+            # 絞って測った。**断れるDPにしたあとで、もう一度測り直した。**
+            #
+            #   窓 0.30 … 0.45秒超 11% / 10% /  8%   平均 0.24
+            #   窓 0.45 …            10% /  8% /  6%        0.22
+            #   窓 0.70 …             3% /  6% /  2%        0.19
+            #   窓 1.00 …             1% /  4% /  1%        0.18
+            #   窓 1.6  …             1% /  3% /  1%        0.18  ← これ
+            #
+            # **絞るほど悪くなった。** 遠くても本物の「間」に寄せたほうが、
+            # 文字数の見当のまま置くよりましだった。
+            # 窓 0.70 だけは最大値を 0.97秒に抑えるが、0.45秒を超える枚数が
+            # 3倍になる（288枚中 4枚 → 12枚）。本人が気づくのは枚数のほうなので、
+            # 枚数を採る。**つまみを増やさず、tol をそのまま窓にする。**
+            tol_koko = tol
         # 言葉の途中の途切れ(0.03〜0.12秒)まで候補に入れると、そちらへ
         # 吸い寄せられてかえって悪くなる。**長い間ほど切れ目らしい**ので、
         # 要る数の何倍かだけ、長いものから残してから位置で並べ直す。
@@ -1666,7 +2251,7 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
         moji = [max(1, len(slots[i + q][2])) for q in range(0, j - i)]
         # その切れ目の手前の字幕が「。」で終わっていれば、文の切れ目
         kuten = [owari_bun(slots[i + q][2]) for q in range(0, j - i - 1)]
-        kimari = ma_ni_yoseru(exp, naka, a0, b0, moji, tol=tol, kuten=kuten)
+        kimari = ma_ni_yoseru(exp, naka, a0, b0, moji, tol=tol_koko, kuten=kuten)
         for q, t3 in enumerate(kimari):
             if abs(t3 - exp[q]) > 0.05:
                 ugokashi += 1
@@ -1683,7 +2268,358 @@ def koma_awase(slots, ikari, sils, tol=1.6, saitan=0.085):
     return out, ugokashi, ichiban
 
 
-def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=0.12,
+# 「声が止まった」と認める間の長さ（秒）。これより短い途切れは、
+# 言葉の途中のかすれであって、息継ぎではない。
+MA_SAITAN = [0.05]
+
+# ■ 「この切れ目は間の中だからOK」と認める最短（2026-10-12・本人の4件）
+#
+# 本人が見つけた4つのうち2つは、くっつければ消せる長さだった。
+#
+#   「それが自称・魔界皇帝、」(11) ＋「キシリカ・キシリス。」(10) = 21文字
+#   「そしてルーデウスはそれを破り、」(15) ＋「ベガリットで…」(15) = 30文字
+#
+# 上限34文字に収まるのに消えていない。つまり **消す前の段で
+# 「この切れ目は間の中だから直さなくてよい」と判定されていた。**
+#
+# その判定に使っていたのが MA_SAITAN = 0.05秒。
+# **50ミリ秒は「間」ではない。** 「ッ」の詰まる音や破裂音の閉鎖が
+# その長さで、語の途中にいくらでもある（39節）。
+# 本当の句読点の「間」は 0.2秒ほどある。
+#
+# 候補にする最短（0.085）とは役目がちがうので、別の数にする。
+# 値は きつい材料（偽の寄せ先あり）で測って決めた。
+MA_MITOMERU = [0.18]
+
+# 字幕1枚の最短の長さ（秒）。これより短くなる動かし方はしない。
+MIJIKA_SAITAN = [0.45]
+
+# 読み上げの速さ（字/秒・実測）。動かした先が本当らしいかを見るのに使う。
+YOMI_HAYASA = [6.46]
+# 文字数から出した長さの、何倍までを本当らしいと見るか。
+#
+# ■ 歯止めが無いと悪くなる（2026-10-11・測った）
+#
+# 「つなげないなら時刻を声の始まりへ戻す」を入れたとき、
+# 戻し先を「直前に無音が終わった所」にしただけでは
+#
+#   いちばん大きいずれ 1.09/1.27/1.00秒  →  1.95/2.56/2.62秒（不合格）
+#
+# と**悪くなった。** 長く喋り続けている所では「直前の無音」が
+# 何秒も前にあるので、そこまで飛んでしまう。
+#
+# 戻した先が本当にその字幕の声の始まりなら、
+# 前後の字幕の長さは**文字数から出した長さに近くなる**はずなので、
+# そこを見て、離れすぎていたら戻さない。
+# 測った結果（本物と同じ 15/54 の条件・前 → 後）
+#
+#   戻さない        最大 1.09 / 1.27 / 1.00秒   0.45秒超 5% / 4% / 2%
+#   歯止め 0.60〜1.70  最大 1.69 / 1.71 / 1.24秒          4% / 6% / 3%
+#   歯止め 0.70〜1.50  最大 1.36 / 1.27 / 1.24秒          3% / 5% / 2%
+#   歯止め 0.80〜1.35  最大 1.36 / 1.27 / 0.91秒          3% / 5% / 2%
+#
+# 0.80 のほうが材料では良いが、**本人の1件が弾かれる**（比 0.79）。
+# 材料には「つなぐと1文字だけ超える」形が入っていないので、
+# ここは材料より本人の実例を採る。材料では引き分け。
+HONTO_SHITA = [0.70]
+HONTO_UE = [1.50]
+
+
+def jimaku_ue(w, h, mi, hitotsu=0, gyou=0):
+    u"""字幕が2行に折り返して収まる文字数。write_ass と同じ数え方。"""
+    size = max(24, int(round(min(w, h) / max(6.0, mi[u"字幕の大きさ"]))))
+    side = int(w * JIMAKU_YOHAKU[0])
+    per = hitotsu or int(mi[u"字幕の1行"]) \
+        or max(8, int((w - side * 2 - size * 0.25) / float(size)))
+    return max(12, per * max(1, gyou or int(mi[u"字幕の行数"])))
+
+
+# ■ 「つなげない切れ目を、間まで動かして割り直す」は測って悪かった
+#   （2026-10-10・ma_ni_warinaosu として作り、外した）
+#
+# 最大値を作っていたのは「2行に入らないので消せなかった切れ目」で、
+# それは材料で確かに特定できた（上位8件のうち7件）。
+# そこで2枚ぶんの本文を合わせ、本物の「間」にいちばん近い「、」で
+# 割り直す形にした。筋は通っていたが、実測はこうだった。
+#
+#   入れない … 0.45秒超 1% / 3% / 1%   最大 0.80 / 1.20 / 1.59
+#   入れる   … 0.45秒超 4% / 3% / 4%   最大 1.37 / 1.19 / 1.95
+#
+# **どの乱数でも悪くなった。** 切れ目を動かすと、その前後の字幕の
+# 長さが変わり、そこから先の割り振りがずれていく。
+# 「消す」は時刻を1つも動かさないので安全だが、「動かす」は違う。
+# 最後の合わせ直しで、1つの切れ目を動かしてよい幅（秒）。
+UGOKASU_UE = [2.00]
+
+
+def koe_ni_awaseru(slots, sils, ikari):
+    u"""**最後に、全部の切れ目を本物の声の始まりへ合わせ直す。**
+
+    ■ なぜ作り直したか（2026-10-11・本人「同じところでずれています」）
+
+    それまでは「おかしい切れ目を1枚ずつ見つけて、近くの無音へ戻す」
+    をやっていた。本人の実例で計算すると、歯止めの線すれすれ
+    （比 0.79 / 線 0.70）でしか通らない。前の字幕の開始が 0.4秒
+    ちがえば弾かれる。**確実ではない。**
+
+    **1枚ずつ近くを見るやり方そのものが弱い。**
+    近くに別の「間」があれば、そちらに吸い寄せられる。
+
+    測るほうは、もうその答えを持っていた（ずれ実測.py・2026-10-09）。
+
+        「いちばん近い声の始まり」で探すのをやめた。
+         字幕も声の始まりも、どちらも時間順に並んでいる。
+         **順番を守って対応づければ、取りちがえようがない。**
+
+    **測り方と同じものを、直すほうにも入れる。**
+    字幕の切れ目と声の始まりを、順番を保って全体で対応づけ、
+    対応がついた切れ目をその声の始まりへ移す。
+
+    動かさないもの:
+      ・錨（1行ずつの音声から分かった段落の境目）
+      ・対応がつかなかった切れ目（余った「間」は息継ぎなので飛ばす）
+      ・動かすと前後が短くなりすぎる所
+      ・UGOKASU_UE より遠い所（それは対応づけのまちがい）
+    """
+    if len(slots) < 2 or not sils:
+        return slots, 0
+    ik = sorted(ikari or [])
+
+    def ikari_ka(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    # 声の始まり＝無音の終わり。字幕はその LEAD 秒前に出す。
+    hajimari = sorted(max(0.0, b - LEAD) for (a, b) in sils
+                      if (b - a) >= MA_SAITAN[0])
+    if not hajimari:
+        return slots, 0
+    # 動かす対象は slots[1:] の始まり（最初の1枚の頭は動かさない）
+    kugiri = [slots[i][0] for i in range(1, len(slots))]
+    n, m = len(kugiri), len(hajimari)
+    INF = float("inf")
+    # dp[i][j] = 切れ目 i までを、声の始まり j までで説明した最小の合計
+    dp = [[INF] * (m + 1) for _ in range(n + 1)]
+    kara = [[None] * (m + 1) for _ in range(n + 1)]
+    for j in range(m + 1):
+        dp[0][j] = 0.0
+    for i in range(1, n + 1):
+        moto = kugiri[i - 1]
+        for j in range(1, m + 1):
+            v = dp[i - 1][j - 1] + abs(hajimari[j - 1] - moto)
+            k = (i - 1, j - 1)
+            if dp[i][j - 1] < v:                 # この「間」は誰にも当てない
+                v, k = dp[i][j - 1], (i, j - 1)
+            dp[i][j] = v
+            kara[i][j] = k
+    atta = [None] * n
+    i, j = n, m
+    while i > 0:
+        pi, pj = kara[i][j]
+        if pi == i - 1:
+            atta[i - 1] = hajimari[j - 1]
+        i, j = pi, pj
+
+    # ■ 動かすのは「声の中に落ちている切れ目」だけ（2026-10-11・測って決めた）
+    #
+    # はじめは対応がついた切れ目を**全部**動かした。悪くなった。
+    #
+    #   何もしない      最大 1.09 / 1.27 / 1.00秒   0.45秒超 5% / 4% / 2%
+    #   全部動かす      最大 1.36 / 1.29 / 1.41秒          5% / 6% / 3%
+    #
+    # 「、」の7割は声が止まらない所なので、**そこに正しく置かれている
+    # 切れ目まで、近くの「間」へ引きずられる。**
+    # 直したいのは「声の中で切り替わっている」ものだけ。そこに絞る。
+    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_MITOMERU[0]]
+
+    def ma_no_naka(t):
+        koe = t + LEAD
+        return any(a - 0.03 <= koe <= b + 0.03 for (a, b) in ma)
+
+    atarashii = list(kugiri)
+    for q in range(n):
+        if atta[q] is None or ikari_ka(kugiri[q]):
+            continue
+        if ma_no_naka(kugiri[q]):
+            continue            # もう「間」に乗っている。動かさない
+        if abs(atta[q] - kugiri[q]) > UGOKASU_UE[0]:
+            continue
+        atarashii[q] = atta[q]
+    owari = slots[-1][0] + slots[-1][1]
+    saki = slots[0][0]
+    for q in range(n):
+        lo = saki + MIJIKA_SAITAN[0]
+        hi = (atarashii[q + 1] if q + 1 < n else owari) - MIJIKA_SAITAN[0]
+        if hi < lo:
+            atarashii[q] = max(lo, kugiri[q])
+        else:
+            atarashii[q] = min(max(atarashii[q], lo), hi)
+        saki = atarashii[q]
+    ugoita = sum(1 for q in range(n) if abs(atarashii[q] - kugiri[q]) > 0.02)
+    out, toki = [], [slots[0][0]] + atarashii + [owari]
+    for q in range(len(slots)):
+        out.append((toki[q], max(0.12, toki[q + 1] - toki[q]), slots[q][2]))
+    return out, ugoita
+
+
+def koe_no_naka_tsunagu(slots, sils, ikari, ue):
+    u"""**声の途中で切り替わる切れ目を、つないで消す。**
+
+    ■ 本人が見ているものを、そのまま消す（2026-10-10）
+
+    本人の言い方はいつも同じだった。
+
+        「ということで」を終わった後に、「今回の動画の内容は」と
+         言い始めるぐらいで、字幕・画像共に次のものに切り替わっています
+
+    つまり **切り替わりが「間」ではなく「声の中」に落ちている。**
+    どこで切るかを上手く当てようとして7回外した。
+    当てるのをやめて、**外れたものを消す。**
+
+    ■ なぜこれで届くのか
+
+    「1行ずつの音声で測れた」のは本人の第6回で 15/54 しかない。
+    だから「ここで息を継いだか」は7割の所で分からない。
+    ところが **merged.wav の「間」は、いつでも 100% 分かる。**
+    7割の所で分からない材料で当てにいくより、
+    いつでも分かる材料で**消す**ほうが確かだった。
+
+    ■ 切るのをやめて、つなぐだけ（切れ目は増やさない）
+
+    検査で分かったことがある。細かく切るのは**それ自体が自己修正**で、
+    切れ目1つ1つが本物の「間」へ寄せ直される（koma_awase）ので、
+    ずれがそこで何度も 0 に戻る。
+    先にまとめてしまうと寄せ先が減り、いちばん大きいずれが
+    0.97秒 → 1.74秒 と**悪くなった**（本物と同じ 15/54 の条件で実測）。
+
+    だから切るのは今までどおり。**寄せ終わったあとで**、
+    「間」に乗らなかった切れ目だけを消す。
+    消すと字幕はつながって長くなるので、2行に収まる範囲まで。
+
+    残すもの:
+      ・錨（1行ずつの音声から分かった段落の境目）
+      ・「。」で終わっている字幕のうしろ（文の切れ目。実測で 0% ずれない）
+      ・2行に収まらなくなる所（読めないほうが困る）
+    """
+    if len(slots) < 2 or not sils:
+        return slots, 0
+    ik = sorted(ikari or [])
+    ma = [(a, b) for (a, b) in sils if (b - a) >= MA_MITOMERU[0]]
+
+    def ikari_ka(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    def ma_no_naka(t):
+        # 字幕は声より LEAD だけ先に出す。声が出るのは t + LEAD。
+        koe = t + LEAD
+        for (a, b) in ma:
+            if a - 0.03 <= koe <= b + 0.03:
+                return True
+        return False
+
+    def koe_no_hajimari(t):
+        u"""t の直前で無音が終わった時刻（＝声が出はじめた所）。無ければ None。
+
+        **いまは呼んでいません。** v153 の「1枚ずつ戻す」で使っていたもので、
+        測って不採用にしました（下の ■ の (a)）。同じ直しを書き直さないよう、
+        歯止め（hontorashii）といっしょに残しています。
+
+        字幕は声より LEAD だけ先に出すので、返すのは「その時刻 − LEAD」。
+        """
+        koe = t + LEAD
+        owari = [b for (a2, b) in ma if b <= koe]
+        if not owari:
+            return None
+        return max(owari) - LEAD
+
+    def tA_owari(x):
+        return x[0] + x[1]
+
+    def hontorashii(tx, byou):
+        u"""その本文を byou 秒で読むのは本当らしいか（読む速さから見て）。
+
+        **いまは呼んでいません**（koe_no_hajimari と同じく v153 の残り）。
+        """
+        moji = disp_len((tx or u"").strip())
+        if moji <= 0:
+            return False
+        hoshii = moji / float(YOMI_HAYASA[0])
+        return HONTO_SHITA[0] * hoshii <= byou <= HONTO_UE[0] * hoshii
+
+    out, keshita = [list(slots[0])], 0
+    # 消せずに残ったものの内訳。**残った理由が言えないと、直せない。**
+    nokori = {u"錨": 0, u"間の中": 0, u"「。」のあと": 0, u"2行に入らない": 0}
+    # ■ 「2行に入らない」で残した所を、**中身ごと**覚えておく（2026-10-12）
+    #
+    # ここは機械では直せない所。理由はこうなっている。
+    #   ・声の途中で切り替わる切れ目を安全に直す方法は「くっつけて消す」
+    #     だけ（時刻を1つも動かさないので）
+    #   ・くっつけるには2行の上限（いまは 34文字）に収まらないといけない
+    #   ・収まらなければ消せない ＝ 声の途中で切り替わったまま残る
+    #
+    # 上限を上げれば消せるが、fit_to_box は2行に入らないとき
+    # **わざと3行目を許す**作りなので、見た目が崩れる（測って取り下げた）。
+    # つまり **台本の文字を1つ減らすのが、いちばん確かで安い直し。**
+    # それを本人に頼めるよう、どこを何文字減らせばよいかを出す。
+    nokori[u"中身"] = []
+    for sl in slots[1:]:
+        mae = out[-1]
+        t = sl[0]
+        if ikari_ka(t):
+            nokori[u"錨"] += 1
+        elif ma_no_naka(t):
+            nokori[u"間の中"] += 1
+        elif owari_bun(mae[2]):
+            nokori[u"「。」のあと"] += 1
+        elif not ((mae[2] or u"").strip() and (sl[2] or u"").strip()):
+            pass
+        elif disp_len(mae[2]) + disp_len(sl[2]) > ue:
+            nokori[u"中身"].append((t, mae[2], sl[2],
+                                    disp_len(mae[2]) + disp_len(sl[2])))
+            # ■ つなげないなら、**時刻だけを声の始まりへ戻す**（2026-10-11）
+            #
+            # 本人の動画でいちばん大きいずれ（1.01秒）がここだった。
+            #
+            #   前の字幕「ルーデウスを敵として潰すのではなく、」 18文字
+            #   次の字幕「まず手懐けにいったというわけです。」   17文字
+            #   つなぐと 35文字 ── **上限34文字を1文字だけ超える**
+            #
+            # だから消せず、声の途中で切り替わったまま残っていた。
+            # 本人の言葉「『潰すのではなく』のあと、この字幕と画像のまま
+            # 次の音声が始まる」。
+            #
+            # なぜ寄せられなかったか: その区間は「測れた」扱いなので窓が
+            # 0.35秒。正しい「間」は 1.01秒 先なので**窓の外**だった。
+            #
+            # 「間」そのものは分かっている（1.01秒前に無音が終わっている）。
+            # **本文はそのままで、時刻だけその無音の終わりへ戻す。**
+            # ■ ここでは何もしない（2026-10-11・v154）
+            #
+            # 消せないので、数えるだけ。**時刻を動かす直しは2つ試して
+            # 2つともやめた。** もう一度書かないように、両方残しておく。
+            #
+            #   (a) 1枚ずつ、直前に無音が終わった所へ戻す（v153）
+            #       → 本人の実例が歯止めの線すれすれ（比 0.79 / 線 0.70）
+            #         でしか通らない。前の字幕の頭が 0.4秒ちがえば弾かれる。
+            #         歯止めを外すと最大 2.62秒 まで悪化。**確実ではない。**
+            #   (b) 最後に全部の切れ目を声の始まりへ合わせ直す
+            #       （koe_ni_awaseru）→ 0.45秒超が 5%/6%/3% と悪化。
+            #         **関数は下に残してあるが、呼んでいない。**
+            #
+            # 本人の実例（1.01秒）を通したのは、ここではなく
+            # **`JISSOKU_TOL` を 0.35 → 1.20 に広げたこと**。
+            # 塞いでいたのは「測れた所の寄せ窓が狭いこと」だった。
+            # くわしくは メモリ36節。
+            nokori[u"2行に入らない"] += 1
+        else:
+            mae[1] += sl[1]
+            mae[2] = (mae[2] + sl[2]).strip()
+            keshita += 1
+            continue
+        out.append(list(sl))
+    return [tuple(x) for x in out], keshita, nokori
+
+
+def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=None,
                    wariai=None):
     u"""かたまりの中で、文の切れ目を実際の「間」に置く。
 
@@ -1723,7 +2659,8 @@ def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=0.12,
     # かたまりの末尾にある無音(=次のかたまりとの境目)は候補に入れない。
     # 「間の終わりの少し手前」＝次の声が出る直前に置く。
     naka = [(max(x + 0.02, y - LEAD), y - x) for (x, y) in (sils or [])
-            if (y - x) >= saitan and x > a0 + 0.05 and y < b0 - 0.05]
+            if (y - x) >= (saitan if saitan is not None else KOUHO_SAITAN[0])
+            and x > a0 + 0.05 and y < b0 - 0.05]
     naka.sort()
     # 文の切れ目なので、ぜんぶ「。」の切れ目
     got = ma_ni_yoseru(exp, naka, a0, b0, ws, tol=tol,
@@ -1815,7 +2752,8 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
     # 長さで絞るのも肝心。本物の声は子音や息つぎで言葉の途中でも
     # 0.02〜0.09秒 切れるので、長さを見ないと境目がそちらへ吸い寄せられる。
     naka = sorted(max(a + 0.02, b - LEAD) for (a, b) in (sils or [])
-                  if b - a >= saitan)
+                  if b - a >= (saitan if saitan is not None
+                               else KOUHO_SAITAN[0]))
 
     # 合わせるたびに「残りの本物の時間 ÷ 残りの読み上げ時間」を計算し直す。
     #
@@ -1923,15 +2861,31 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict
         # 合わなければ今までどおり文字数で割る。
         wariai = None
         try:
-            koma = []
+            koma, moji = [], []
             for j in took:
-                koma.append(len(kugiri_moji(sents[j])))
-            hoshii = sum(koma)
-            w2 = jissoku_wariai(os.path.join(folder, names[gi]), hoshii)
+                ps = kugiri_moji(sents[j])
+                koma.append(len(ps))
+                moji.extend(max(1, disp_len(x)) for x in ps)
+            w2 = jissoku_wariai(os.path.join(folder, names[gi]), moji)
+            iki2 = None
             if w2:
+                w2, iki2 = w2
                 wariai, t2 = [], 0
-                for n2 in koma:
-                    wariai.append(sum(w2[t2:t2 + n2]))
+                for (j, n2) in zip(took, koma):
+                    bun = w2[t2:t2 + n2]
+                    wariai.append(sum(bun))
+                    # 文の中の「、」の割り方も、測った長さで決める。
+                    #
+                    # ■ 切れはしが1つの文も必ず記録する（2026-10-07）
+                    #
+                    # 前は n2 > 1（「、」で2つ以上に割れる文）だけ記録していた。
+                    # 引くほうは「その字幕の切れはしが**全部**そろっているか」で
+                    # 判定するので、**1つでも記録が無い文が混ざると、
+                    # その字幕まるごと文字数で割る**ほうへ落ちていた。
+                    # そのせいで、測った長さを入れても数字が1つも動かなかった。
+                    ik = iki2[t2:t2 + n2] if iki2 else [True] * n2
+                    for (ko, wa3, k3) in zip(kugiri_moji(sents[j]), bun, ik):
+                        JISSOKU_KOMA.append((ko, wa3, k3))
                     t2 += n2
                 jissoku += 1
         except Exception:
@@ -2117,6 +3071,7 @@ def refine_cues(cues, max_sec, max_chars):
     VOICEPEAKは一定の速さで読むので、文字数の比で時間を割り振れば
     実際の発話とほぼ合う。"""
     out = []
+    hk = jissoku_hikidashi()
     for (st, en, tx) in cues:
         tx = u" ".join(tx.split())
         if not tx:
@@ -2125,25 +3080,48 @@ def refine_cues(cues, max_sec, max_chars):
             out.append((st, en, tx))
             continue
         parts = [x for x in SENT_END.split(tx) if x.strip()]
-        for (s2, e2, sent) in split_text_by_time(tx, st, en, parts):
+        for (s2, e2, sent) in split_text_by_time(tx, st, en, parts, hk):
             sent = sent.strip()
             if (e2 - s2) <= max_sec and len(sent) <= max_chars:
                 out.append((s2, e2, sent))
                 continue
             # まだ長い文は読点で分ける
             chunks, cur = [], u""
-            for ch in sent:
-                cur += ch
-                if ch in u"、" and len(cur) >= max_chars * 0.45:
+            for ko in kire_me_erabu(hk, kugiri(sent, 0), max_chars):
+                cur += ko
+                if len(cur) >= max_chars * 0.45:
                     chunks.append(cur)
                     cur = u""
             if cur:
-                chunks.append(cur)
+                if chunks:
+                    chunks[-1] += cur
+                else:
+                    chunks.append(cur)
+            # ■ 句読点の無い所では、**切らない**（2026-10-09・本人の動画で特定）
+            #
+            # 長い文に「、」が無いとき、ここは長さだけで真っ二つにしていた。
+            # 「ルーデウスは」「この一件をただの」「つまりこの世界の」 ──
+            # **声が止まらない所で字幕を切っていた。**
+            #
+            # 本人の第6回を数えたら、こうなっていた。
+            #
+            #   字幕の始まりが…          枚数    0.45秒超
+            #   前が「。」＝文の切れ目     92枚     0枚 ( 0%)
+            #   章カードの直後            12枚     0枚 ( 0%)
+            #   前が「、」＝文の途中      149枚    13枚 ( 9%)
+            #   前が句読点なし＝語の途中   13枚     7枚 (54%)
+            #
+            # **13枚しかない「語の途中で切った」が、上位7件をぜんぶ作っていた。**
+            # 2.11秒 1.75秒 1.63秒 1.34秒 1.01秒 0.93秒 0.80秒 ── 全部これ。
+            #
+            # 止まらない所には合わせ先の「間」が無い。だから合うはずがない。
+            # 7回「推測を上手くする」をやったが、**推測してはいけない所だった。**
+            #
+            # 切らなければ字幕は長くなるが、2行に折り返せば読める。
+            # 「ルーデウスは」だけで1枚より、そのほうが字幕としても良い。
             if len(chunks) < 2:
-                k = max(2, int(len(sent) / float(max_chars)) + 1)
-                chunks = (split_lines(sent, len(sent) / float(k) * 1.3, k)
-                          or [sent[i:i + max_chars] for i in range(0, len(sent), max_chars)])
-            out.extend(split_text_by_time(sent, s2, e2, chunks))
+                chunks = [sent]
+            out.extend(split_text_by_time(sent, s2, e2, chunks, hk))
     return out
 
 
@@ -2208,35 +3186,87 @@ def split_by_kuten(slots, saitan=1.1, moji=0, mijika=0):
     尺は文字数の比で分ける。丸めの誤差は最後で吸収する
     （合計がずれると音と絵がずれる）。
     """
+    # 測った長さを、切れはしの本文で引けるようにする（使い切らない）
+    jm = jissoku_hikidashi()
+    KOMA_TSUKATTA[0] = KOMA_TSUKATTA[1] = 0
+    del KOMA_JISSOKU[:]
+
     out = []
     for (s0, du, tx) in slots:
-        piece = kugiri(tx, moji)
-        if len(piece) < 2:
-            out.append([s0, du, tx])
-            continue
-        # 文字数で尺を割る
-        n = [max(1, disp_len(x)) for x in piece]
-        tot = float(sum(n))
+        piece = kire_me_erabu(jm, kugiri(tx, moji), 30)
+        # ■ 切れはしが1つのコマも「測った」に数える（2026-10-07）
+        #
+        # 前は len(piece) < 2 のコマを、問答無用で「測っていない」にしていた。
+        # **338枚中216枚がそれ**で、その区間は丸ごと
+        # 「文字数で見当を作り直す」ほうへ落ちていた。
+        # （測った見当を使えた区間は 114中11しかなかった）
+        # 切れはしが1つでも、その長さが測れていれば測れている。
         hit = list(piece)
-        hik = [du * (x / tot) for x in n]
-        # 短いものを後ろにくっつける（mijika=0 なら何もしない＝前までの動き）
+        # ① 1行ずつの音声で測った長さがあれば、それで割る（当てずっぽうをしない）
+        byou = [jissoku_hitotsu(jm, x) for x in piece]
+        if all(b is not None for b in byou) and sum(byou) > 0:
+            kei3 = float(sum(byou))
+            hik = [du * (b / kei3) for b in byou]
+            KOMA_TSUKATTA[0] += len(piece)
+            jis = True
+        elif len(piece) < 2:
+            hik = [du]
+            KOMA_TSUKATTA[1] += 1
+            jis = False
+        else:
+            # ② 測れていない所だけ、今までどおり文字数で割る
+            n = [max(1, disp_len(x)) for x in piece]
+            tot = float(sum(n))
+            hik = [du * (x / tot) for x in n]
+            KOMA_TSUKATTA[1] += len(piece)
+            jis = False
+        # 短いものをくっつける
+        #
+        # ■ 「と、」だけで1枚になっていた（2026-10-07・本人の指摘）
+        #
+        #   見た目.txt の「字幕の最短」が 0 だったので mijika=0 になり、
+        #   **この仕組みが一度も動いていなかった。**
+        #   その結果「と、」の2文字に絵が1枚・2秒割り当てられ、
+        #   本人に「意味が分からない」と言われた。
+        #
+        # ■ 最後の1つがくっつかない作りだった
+        #
+        #   `i < len(hit) - 1` なので、**いちばん後ろは一度も見ない。**
+        #   後ろが短いときは、くっつける先が後ろに無いので**前に**くっつける。
         i = 0
-        while mijika and i < len(hit) - 1:
+        while mijika and i < len(hit):
             mijikai = (disp_len(hit[i]) <= mijika) or (hik[i] < saitan)
-            if mijikai and not owari_bun(hit[i]):
-                hit[i + 1] = hit[i] + hit[i + 1]
-                hik[i + 1] += hik[i]
-                del hit[i]
-                del hik[i]
-                # i は進めない。くっついた先も短いかもしれないので、もう一度見る。
-            else:
+            if not mijikai or owari_bun(hit[i]) and i < len(hit) - 1:
                 i += 1
+                continue
+            if i < len(hit) - 1 and not owari_bun(hit[i]):
+                hit[i + 1] = hit[i] + hit[i + 1]      # 後ろにくっつける
+                hik[i + 1] += hik[i]
+                del hit[i], hik[i]
+                # i は進めない。くっついた先も短いかもしれないので、もう一度見る。
+            elif i > 0 and not owari_bun(hit[i - 1]):
+                # ■ 「。」をまたいでくっつけない（2026-10-14・本人の指定）
+                #
+                # > ただし、中途半端にくっつけないように、
+                # > 「。」や「、」で字幕の区切りを作ってください。
+                #
+                # 前は、前の切れはしが「。」で終わっていてもくっつけていた。
+                # 文が終わっている所に次の文の頭をつなぐと、
+                # **1枚の字幕に2つの文が混ざる。** それが中途半端。
+                # 文の中でだけくっつける。
+                hit[i - 1] = hit[i - 1] + hit[i]      # 後ろが無いので前に
+                hik[i - 1] += hik[i]
+                del hit[i], hik[i]
+                i -= 1
+            else:
+                break                                  # 1つしか無い。そのまま
         # 丸めの誤差を最後で吸収する
         sa = du - sum(hik)
         hik[-1] += sa
         t = s0
         for x, d in zip(hit, hik):
             out.append([t, d, x])
+            KOMA_JISSOKU.append(jis)
             t += d
     return out
 
@@ -2276,21 +3306,41 @@ def build_slots(cues, total, target):
         if n == 1:
             out.append([s0, du, tx])
             continue
+        # ■ ここでも句読点の無い所で切っていた（2026-10-09・2か所目）
+        #
+        # refine_cues で「切らない」ようにしたのに、**そのあとのここで切り直して**
+        # いた。本人の v146 のログは
+        #
+        #     ○ 字幕はすべて「。」か「、」の所で切れています
+        #
+        # と出したのに、採点.txt には
+        #
+        #     [020] ルーデウスとロキシーの間に生まれる子供を
+        #
+        # が残り、その直後が 2.11秒ずれたままだった。
+        # **検査を入れた場所が間違っていた**（refine_cues の出口しか見ていない）。
+        # 前に「後ろの工程が上書きしていた」で失敗したのと同じ形。
+        #
+        # ここも句読点のある所でだけ切る。無ければ切らない。
         pieces = None
         if tx:
-            # 余裕の持たせ方をいくつか試し、いちばん読みやすい切り方を選ぶ
-            budget = disp_len(tx) / float(n)
-            best_cost = None
-            for slack in (1.15, 1.35, 1.6, 1.9, 2.4):
-                got = split_lines(tx, budget * slack, n, want_cost=True)
-                if not got:
-                    continue
-                cand, cost = got
-                if best_cost is None or cost < best_cost:
-                    best_cost, pieces = cost, cand
+            ko = kugiri(tx, 0)
+            if len(ko) >= 2:
+                # 「、」「。」の所でだけ、n個に近くなるようまとめ直す
+                pieces, cur = [], u""
+                hoshii = max(1, int(round(disp_len(tx) / float(n))))
+                for x in ko:
+                    cur += x
+                    if disp_len(cur) >= hoshii and len(pieces) < n - 1:
+                        pieces.append(cur)
+                        cur = u""
+                if cur:
+                    if pieces:
+                        pieces[-1] += cur
+                    else:
+                        pieces.append(cur)
         if not pieces:
-            step = max(1, int(round(len(tx) / float(n)))) if tx else 1
-            pieces = [tx[i:i + step] for i in range(0, len(tx), step)]
+            pieces = [tx]            # 切る所が無い。切らない
         pieces = [x for x in pieces if x.strip()]
         if not pieces:
             # セリフが無いスロットは、そのまま等分する
@@ -3688,6 +4738,204 @@ def plan_code_naosu(rules, default, images):
     return rules, default
 
 
+_KEKKA = [u"まだ"]
+
+
+def kekka_karu():
+    u"""前後の文を読む道具（miru_kekka）を借りる。無ければ None。
+
+    ■ なぜ借りるのか ─ 置き場所を2か所にしない（2026-10-10）
+
+    「前後の文から誰の話か読む」は `miru_kekka.bunmyaku` にあり、
+    **本人が理由を書いてくれた9件（29〜37番）で 9/9 通っている。**
+    同じものを make_slideshow にも書くと、片方を必ず直し忘れる
+    （メモリ「同じ名前を2か所に書くと片方を必ず忘れる」）。
+    だから**借りる。** 置き場所は miru_kekka のまま1か所。
+
+    検査の作業場所には miru_kekka を持ち込まないことがあるので、
+    無ければ今までどおり「その行の本文だけ」で動く（止めない）。
+    """
+    if _KEKKA[0] == u"まだ":
+        _KEKKA[0] = None
+        try:
+            import miru_kekka as _mk
+            try:
+                _mk.KAWARI.update(_mk.load_kawari(u"人物ルール.txt"))
+            except Exception:
+                pass
+            _KEKKA[0] = _mk
+        except Exception:
+            _KEKKA[0] = None
+    return _KEKKA[0]
+
+
+def bunmyaku_hito(slots, idx, oboe=None, omomi_mo=False):
+    u"""その区切りが「誰の話か」を、**前後の文から**読んで重い順に返す。
+
+    ■ ここが本人の直しの正体だった（2026-10-10）
+
+    本人の第6回のログ:
+
+        画像プランを使いました: 225枚が直接一致 / **0枚がセリフの人名から**
+
+    本番の割り当ては、字幕1枚の本文しか見ていなかった。
+    だから人の名前が入っていない字幕 ──
+
+        「この子供には名前があって、」  「ララといいます。」  「それが、」
+
+    では誰の話か分からず、前の行の絵を引き継ぐか既定の絵になっていた。
+    本人はこの3枚とも手で直している（22・23・26番）。
+
+    前後を読む道具は既にあって 9/9 通っていたのに、
+    **本番では呼んでいなかった。** ここで呼ぶ。
+    """
+    mk = kekka_karu()
+    tx = slots[idx][2] if idx < len(slots) else u""
+
+    def dame():
+        j = [c for c in uniq(CHARACTERS) if c in (tx or u"")]
+        return (j, dict((c, 1.0) for c in j)) if omomi_mo else j
+
+    if mk is None:
+        return dame()
+    if oboe is not None and u"rows" in oboe:
+        rows, han = oboe[u"rows"], oboe[u"han"]
+    else:
+        rows = [{u"text": (x[2] or u""), u"no": i + 1}
+                for i, x in enumerate(slots)]
+        try:
+            han = mk.bun_han(rows)
+        except Exception:
+            han = None
+        if oboe is not None:
+            oboe[u"rows"], oboe[u"han"] = rows, han
+    try:
+        omomi = mk.bunmyaku(rows, idx, han=han)
+    except Exception:
+        return dame()
+    # その行に名前が出ている人は、重みが同じなら先にする
+    jibun = set(c for c in uniq(CHARACTERS) if c in (tx or u""))
+    jun = [c for c in sorted(omomi, key=lambda c: (-omomi[c], c not in jibun, c))
+           if c in uniq(CHARACTERS)]
+    return (jun, omomi) if omomi_mo else jun
+
+
+# 「同点」とみなす重みの差。これ以内で並んでいる人は、同じくらい主役。
+DOUTEN = [0.06]
+
+
+def hito_fuda(slots, idx, oboe=None):
+    u"""試す #指定 を、良い順に返す。**同点なら「二人そろった絵」を先に。**
+
+    ■ 本人の書いた理由がそのまま条件になっている（2026-10-10）
+
+      29「この子供という言葉から、前後の文章からルーデウスとロキシーの
+          子供であるとわかるため、**二人が写った画像が望ましい**」
+      30「ララはまだアニメで生まれていないので、
+          ルーデウスとロキシーの**二人が写った画像が望ましい**」
+
+    前後を読んだ重みを見ると、そこがちゃんと同点になっていた。
+
+        29番  ルーデウス 0.95 / ロキシー 0.95 / ヒトガミ 0.50
+        30番  ルーデウス 0.80 / ロキシー 0.80 / ヒトガミ 0.70
+        34番  オルステッド 0.90 / ヒトガミ 0.70     ← ここは単独
+
+    **同点は「どちらか」ではなく「二人」の合図。**
+    だから先に「#ルーデウス ロキシー」を試す。
+    カタログの説明は空白区切りで、#指定 は全部そろって初めて当たるので、
+    二人写っている絵だけに当たる。無ければ1人ずつに落ちる。
+    """
+    r = bunmyaku_hito(slots, idx, oboe, omomi_mo=True)
+    jun, omomi = r if isinstance(r, tuple) else (r, {})
+    if not jun:
+        return []
+    ue = omomi.get(jun[0], 1.0)
+    douten = [c for c in jun if omomi.get(c, 0.0) >= ue - DOUTEN[0]]
+    fuda = []
+    if len(douten) >= 2:
+        fuda.append(u" ".join(douten[:2]))
+    fuda.extend(jun)
+    return fuda
+
+
+BAMEN = u"章の場面.txt"
+
+
+def shou_namae(t):
+    u"""章の名前をくらべる形にそろえる（\\N は空白にする）。"""
+    return u" ".join((t or u"").replace(u"\\N", u" ").split())
+
+
+def load_bamen(path=BAMEN):
+    u"""章の場面.txt を読む → {章名: [(話数フォルダ, 下限, 上限)]}
+
+    ■ なぜコマ番号なのか（2026-10-11・本人の26件から）
+
+    カタログの説明は当てにならない。本人が選んだ絵を引いてみると
+
+        3-14-152 →「エリス 赤髪 鎧 剣」  （セリフはルーデウスとロキシーの子供）
+        3-14-080 →「ロキシー 紫髪」      （ロキシーは青髪）
+        3-14-157 →「文字あり 使用不可」  （本人がそれを選んでいる）
+
+    **「選んだ絵のタグを学ぶ」は天井が低い。**
+
+    いっぽうコマ番号は切り出した順の番号なので、
+    話数の中の「時間の位置」＝**どの場面か**をそのまま表す。
+    本人の26件を章ごとに並べると、きれいに固まっていた。
+
+        はじめに        Ⅲ11 コマ105〜142 / Ⅲ12 コマ44〜70
+        ヒトガミの目的  Ⅲ14 コマ78〜157
+
+    Ⅲ第11話は166枚あるのに、選ばれたのは 105〜142 だけ。
+    ここを使えば、**カタログが間違っていても場面は合う。**
+
+    範囲は「先に使う」だけで、しばりではない。
+    手本が少ないうちは範囲が狭いので、外も使えるようにしておく。
+    """
+    out = {u"章": {}, u"言葉": []}
+    if not os.path.exists(path):
+        return out
+    nama = io.open(path, encoding="utf-8-sig", errors="replace").read() \
+        .replace(u"\r\n", u"\n")
+    for line in nama.split(u"\n"):
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            continue
+        c = t.split(u"\t")
+        if len(c) < 3:
+            continue
+        m = re.match(r"\s*(\d+)\s*-\s*(\d+)\s*$", c[2])
+        if not m:
+            continue
+        han = (c[1].strip(), int(m.group(1)), int(m.group(2)))
+        na = c[0].strip()
+        # ■ 「＊言葉」で書くと、章より強い（2026-10-11・本人の指定）
+        #
+        # 本人の言葉:
+        #   「『ロキシーを殺す』などの字幕の場合は、
+        #     ロキシーが実際に死んだ時の画像などが適していると考えます」
+        #
+        # つまり欲しいのは「誰が写っているか」ではなく
+        # **その字幕が指している出来事の場面**。
+        # 章ぜんぶではなく、その言葉が出てくる字幕だけに効かせたいので、
+        # 言葉で書ける行を別に持つ。章の行より先に見る。
+        if na.startswith(u"＊") or na.startswith(u"*"):
+            kotoba = na[1:].strip()
+            if kotoba:
+                out[u"言葉"].append((kotoba, han))
+        else:
+            out[u"章"].setdefault(shou_namae(na), []).append(han)
+    return out
+
+
+def koma_bangou(k):
+    u"""絵の名前から、話数の中のコマ番号を取る。無ければ None。"""
+    if not k or u"/" not in k:
+        return None
+    m = re.match(r"(\d+)", os.path.basename(k.split(u"/", 1)[1]))
+    return int(m.group(1)) if m else None
+
+
 def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                   focus=None, mitame=None, chaps=None):
     """画像プランに従って、スロットごとに絵を決める。
@@ -3725,6 +4973,13 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             say(u"    " + k)
     known = set(images)
     pools = {}
+    bun_oboe = {}        # 前後を読むための覚え書き（毎回作り直さない）
+
+    def hito_jun(idx, tx):
+        u"""この区切りが誰の話か。前後の文を読んで重い順に。"""
+        if idx is None:
+            return [c for c in uniq(CHARACTERS) if c in (tx or u"")]
+        return bunmyaku_hito(slots, idx, bun_oboe)
 
     cat = catalog or {}
     emap = epmap or {}
@@ -3761,16 +5016,123 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     used_focus = set()
 
     # いま効いている話数。規則ごとに differ するので、その都度入れ替える。
-    cur = {"fols": base_fols, "rank": dict((f, i) for i, f in enumerate(base_fols))}
+    cur = {"fols": base_fols, "rank": dict((f, i) for i, f in enumerate(base_fols)),
+           "shou": u""}
+    bamen = load_bamen()
+    if bamen[u"章"] or bamen[u"言葉"]:
+        say(u"章の場面を読みました: 章 %d件 / 言葉 %d件"
+            u"（本人が選んだコマ番号の範囲）"
+            % (len(bamen[u"章"]), len(bamen[u"言葉"])))
+
+    def bamen_han():
+        u"""いまの字幕に効く範囲。**言葉の指定が章より強い。**"""
+        tx = cur.get("tx") or u""
+        kotoba = [h for (k2, h) in bamen[u"言葉"] if k2 and k2 in tx]
+        if kotoba:
+            return kotoba
+        return bamen[u"章"].get(cur.get("shou") or u"") or []
+
+    def bamen_naka(k):
+        u"""その絵が、本人が選んだコマ番号の範囲に入っているか。"""
+        if not (bamen[u"章"] or bamen[u"言葉"]):
+            return False
+        han = bamen_han()
+        if not han:
+            return False
+        fol = k.split(u"/")[0] if u"/" in k else u""
+        n = koma_bangou(k)
+        if n is None:
+            return False
+        return any(f == fol and lo <= n <= hi for (f, lo, hi) in han)
 
     def _in_focus(k):
         return k.split(u"/")[0] in cur["rank"] if u"/" in k else False
 
+    def tooi(fol):
+        u"""対象話数から、その話数までの**遠さ**。
+
+        ■ 外に出るのが悪いのではなく、**一期まで飛ぶのが悪い**
+          （2026-10-10・本人の26件から）
+
+        本人も 22番「この子供には名前があって、」で Ⅲ第8話を選んでいる。
+        対象話数(Ⅲ11/Ⅲ12/Ⅲ14)の外だが、**同じ三期の近い話数**だった。
+        いっぽう機械は 無職転生 第9話を 34枚・第12話を 29枚 使っていた。
+        三期の話をしている所に**一期の絵**が出ていたということ。
+
+        だから「外に出さない」ではなく「近い所から順に」にする。
+        期がちがうのは重く、同じ期の中の話数のちがいは軽く見る。
+        """
+        ke = fol_code(fol)
+        if not ke:
+            return 10 ** 5
+        chikai = 10 ** 5
+        for f2 in cur["fols"]:
+            k2 = fol_code(f2)
+            if not k2:
+                continue
+            # 期が1つちがうと 100話ぶん遠い、くらいに重く見る
+            d = abs(ke[0] - k2[0]) * 100 + abs(ke[1] - k2[1])
+            chikai = min(chikai, d)
+        return chikai
+
+    def hito_awase(k):
+        u"""その絵に写っている人が、この字幕の人と合っているか。
+
+        ■ 本人の指摘（2026-10-12）
+
+        > やはりさすがに字幕の登場人物と画像の登場人物ぐらいは
+        > 合わせられるようにしてください。こんなとこまで私で指定するのは
+        > 時間の無駄です。
+
+        もっともで、ここが抜けていた。前は「誰の話か」を読む仕組み
+        （bunmyaku_hito）を**絵が1枚も見つからなかったときの逃げ道**
+        にしか置いていなかった。本人のログは `0枚がセリフの人名から`
+        ＝ **その道は一度も通っていない。** だから
+        「ヒトガミの話なのにロキシーの絵」が普通に出ていた。
+
+        いまは並び順の中に入れる。`#アップ` や `#少年少女` のように
+        人を指定していない札でも、**別人だけが写った絵は後ろへ回る。**
+
+        返す値（小さいほど先）
+          0 … 字幕の人が写っている
+          1 … 絵に人が書かれていない（カタログが空。分からないので責めない）
+          2 … 別人だけが写っている
+
+        2 を「使わない」ではなく「後ろ」にしているのは、カタログの説明が
+        外れていることがあるから（3-14-152 が「エリス」など）。
+        候補がそれしか無ければ、やはりそれを使う。
+        """
+        hoshii = cur.get("hito") or set()
+        if not hoshii:
+            return 1
+        setsu = cat.get(k) or u""
+        if not setsu:
+            return 1
+        utsutte = [c for c in CHARACTERS if c in setsu]
+        if not utsutte:
+            return 1
+        return 0 if any(c in hoshii for c in utsutte) else 2
+
     def _order(lst):
-        """対象話数に書いた順に並べる(書いていない話数は後ろ)。"""
+        """対象話数に書いた順に並べる。
+
+        書いていない話数は後ろ。**そのうしろの並びは「遠さ」順。**
+        前はここが natkey（名前順）だけだったので、外へ広げたときに
+        一期の絵が先に来ていた。
+        """
         r = cur["rank"]
-        return sorted(lst, key=lambda k: (r.get(k.split(u"/")[0], 10 ** 6)
-                                          if u"/" in k else 10 ** 6, natkey(k)))
+
+        def kagi(k):
+            fol = k.split(u"/")[0] if u"/" in k else u""
+            i = r.get(fol)
+            # **字幕の人と絵の人が合っているか**（2026-10-12・本人の指摘）
+            hi = hito_awase(k)
+            # 同じ話数の中では、**本人が選んだ場面のコマを先に**
+            ba = 0 if bamen_naka(k) else 1
+            if i is not None:
+                return (0, i, hi, ba, 0, natkey(k))
+            return (1, 0, hi, ba, tooi(fol), natkey(k))
+        return sorted(lst, key=kagi)
 
     def _match(key, hiroi=False):
         """@ はファイル名/フォルダ名で、# は説明で探す。
@@ -3811,8 +5173,11 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 # 「別の人の絵は外す」が効かなかった。
                 # オルステッドの2か所も同じ理由。
                 hoshii = [w for w in words if w in uniq(CHARACTERS)]
-                for c in uniq(CHARACTERS):
-                    if c in (cur.get("tx") or u"") and c not in hoshii:
+                # #指定 に人が書いていなければ、**前後の文から**読む。
+                # 前は cur["tx"]（その行の本文）だけを見ていたので、
+                # 「それが、」のような行では誰も分からなかった。
+                for c in hito_jun(cur.get("idx"), cur.get("tx")):
+                    if c not in hoshii:
                         hoshii.append(c)
                 betsu = [c for c in uniq(CHARACTERS) if c not in hoshii] if hoshii else []
                 out2 = []
@@ -3922,8 +5287,26 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                         return k
             return None        # その人の絵が無い → 繰り返してでもその人にする
 
-        # 人の名前が出ていないセリフ（「ですが、」など）は、
-        # 話数さえ合っていればよいので、変化をつけるために借りる。
+        # ■ 字幕に名前が無くても、**前後から読んだ人**で探す
+        #   （2026-10-13・本人「画像と字幕での登場人物も乖離のある部分が多い」）
+        #
+        # 前はここで「話数さえ合っていればよい」としていたので、
+        # 「その日記を読んでしまいました。」「親切に見えたあの助言が、」
+        # のような名前の無い字幕に、誰の絵でも入っていた。
+        # cur["hito"] は前後の文を読んだ結果なので、それを使う。
+        mawari = cur.get("hito") or set()
+        if mawari:
+            for nokeru in (True, False):
+                for k in hoka_pool[fk]:
+                    if tsukai.get(k, 0) >= jougen:
+                        continue
+                    if nokeru and k in saikin:
+                        continue
+                    w = setsumei(catalog, k)
+                    if any(x in w for x in mawari):
+                        return k
+
+        # それでも見つからなければ、話数さえ合っていればよいとして借りる。
         for k in hoka_pool[fk]:
             if tsukai.get(k, 0) < jougen and k not in saikin:
                 return k
@@ -4194,9 +5577,23 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if idx in shou_kiri:
             title, fs = shou_kiri[idx]
             ima_base = fs
+            cur["shou"] = shou_namae(title)
             shou_tsukatta.append((title, fs))
         base_fols = ima_base
         cur["tx"] = tx          # 絵を借りるとき、誰のセリフかを見るため
+        cur["idx"] = idx        # 前後の文を読むため
+        # **この字幕が誰の話か**を1回だけ求めて覚える（並び順で毎回使う）。
+        # 別名（老デウス＝ルーデウス、シルフィ＝フィッツ）と、
+        # カタログに名前が無い人の見た目も入れておく。
+        mina = set()
+        try:
+            for c in hito_jun(idx, tx):
+                mina.add(c)
+                mina.update(ONAJI_HITO.get(c, []))
+                mina.update(MITAME.get(c, []))
+        except Exception:
+            pass
+        cur["hito"] = mina
         pick = None
         r = erabu(tx)
         if r is not None:
@@ -4208,22 +5605,55 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 used_focus.add(u" / ".join(fols) if fols else u"(見つからず)")
             ok = usable(r[1])
             if ok:
-                pick = resolve(ok[r[2] % len(ok)])
-                r[2] += 1
-                hit += 1
-                prev_rule = r
-        # 句読点で割った切れ端に人の名前が出てきたら、その人の絵にする。
-        # 文の前半と後半で写っている人が違うとき、ここが効く。
+                # ■ 章の外へ出る前に、章の中で人を合わせる（2026-10-14）
+                #
+                # 本人の採点で「ひどい」の多くが**同じ1枚**だった。
+                #
+                #   無職転生Ⅲ 第10話/001_…  … 16回
+                #   「二人 金髪 少年少女 鎧 剣 アップ」
+                #   → 話数ちがい・人ちがい（セリフはヒトガミやロキシー）
+                #
+                # 前の直し（最後の逃げ道を karu() に通す）は効かなかった。
+                # 本人のログは **213枚が直接一致** ＝ 札は当たっていて、
+                # 最後の逃げ道まで来ていなかったからである。
+                #
+                # 本当の道はこちら。`usable` は章の中で1枚も見つからないと
+                # **全部の話数へ広げる**。すると `#アップ` のような
+                # ざっくりした札が、章の外の絵に当たってしまう。
+                #
+                # **章の中で人が合う絵のほうが、章の外で札が合う絵より良い。**
+                # 本人の言う「せめて登場人物くらいは合わせて」はこれ。
+                if usable_hiroi(r[1]):
+                    cur["fols"] = fols
+                    cur["rank"] = dict((f, i) for i, f in enumerate(fols))
+                    kari = karu()
+                    if kari:
+                        pick = kari
+                        hit += 1
+                        prev_rule = r
+                if pick is None:
+                    pick = resolve(ok[r[2] % len(ok)])
+                    r[2] += 1
+                    hit += 1
+                    prev_rule = r
+        # 誰の話かを**前後の文から**読んで、その人の絵にする。
+        #
+        # ■ 前は「その行に名前が出ていたら」だけだった（2026-10-10）
+        #
+        # 本人のログは `0枚がセリフの人名から`。つまりこの道は
+        # 一度も通っていなかった。名前が入っていない字幕
+        # 「この子供には名前があって、」「ララといいます。」「それが、」
+        # では誰も見つからず、前の絵の引き継ぎか既定の絵に落ちていた。
+        # 本人はその3枚とも手で直している（22・23・26番）。
         if pick is None:
-            for c in uniq(CHARACTERS):
-                if c in tx:
-                    f = u"#" + c
-                    cur["fols"] = base_fols
-                    cur["rank"] = dict((f2, i2) for i2, f2 in enumerate(base_fols))
-                    if _match(f):
-                        pick = resolve(f)
-                        namae += 1
-                        break
+            for c in hito_fuda(slots, idx, bun_oboe):
+                f = u"#" + c
+                cur["fols"] = base_fols
+                cur["rank"] = dict((f2, i2) for i2, f2 in enumerate(base_fols))
+                if _match(f):
+                    pick = resolve(f)
+                    namae += 1
+                    break
         if pick is None and not new_sentence and prev_rule:
             want = prev_rule[3] if len(prev_rule) > 3 else []
             fols = resolve_focus(want) if want else base_fols
@@ -4242,8 +5672,22 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if pick is None:
             cur["fols"] = base_fols
             cur["rank"] = dict((f, i) for i, f in enumerate(base_fols))
-            pick = resolve(pool_default[d % len(pool_default)])
-            d += 1
+            # ■ 固定の「既定の絵」より先に、章の話数から借りる
+            #   （2026-10-13・本人の採点から）
+            #
+            # 本人の採点で「ひどい」21件のうち12件が、**同じ1枚**だった。
+            #
+            #   無職転生Ⅲ 第10話/001_…  … 12回
+            #   → 話数ちがい・人ちがい（セリフはヒトガミ／絵は金髪の二人）
+            #
+            # 画像プランの `*`（既定）が1枚しか無いので、どの指定にも
+            # 当たらなかった20種類の行が**全部その1枚**に落ちていた。
+            # karu() は章の話数の中から、人を見て、上限未満の絵を借りる。
+            # 既定の絵は、それでも見つからないときだけ。
+            pick = karu()
+            if pick is None:
+                pick = resolve(pool_default[d % len(pool_default)])
+                d += 1
             prev_rule = None
         # セリフに人の名前が出ているのに、選ばれた絵に「別の人」が写っている
         # ときだけ、その人の絵に選び直す。誰も写っていない絵はそのまま。
@@ -4275,7 +5719,8 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             if img.split(u"/")[0] in ima2:
                 continue                      # もう合っている
             tx2 = slots[idx][2]
-            hoshii2 = [c for c in uniq(CHARACTERS) if c in tx2]
+            cur["idx"], cur["tx"] = idx, tx2
+            hoshii2 = hito_jun(idx, tx2)
             dewa2 = []
             for c in hoshii2:
                 dewa2.extend([c] + ONAJI_HITO.get(c, []) + MITAME.get(c, []))
@@ -4405,10 +5850,53 @@ def kime_kata_shirushi():
     こちらが1文字でも直せば印が変わり、割り当て表は必ず作り直される。
     上げ忘れようがない。
     """
+    # ■ 字幕を割る所が入っていなかった（2026-10-08・3回目の空振り）
+    #
+    # 本人の第6回を v144 で作り直してもらったら、こう出た。
+    #
+    #     既存の割り当て表を使います
+    #     ⑥ 前回の割り当て表をそのまま使用
+    #
+    # ＝ **直した処理が1行も動かず、前回の表をそのまま使っていた。**
+    # 数字(2.08秒・47枚・18%)が前回と完全に同じだったのはそのため。
+    #
+    # ここに並べる関数だけが指紋に入る。
+    # 字幕をどこで割るか（refine_cues / split_by_kuten / split_text_by_time）
+    # と、1行ずつの音声から長さを測る所は**入っていなかった**。
+    # 時刻を決めているのは、この並びと同じくらいそちらなのに。
+    #
+    # 「忘れないようにする」では同じ穴に落ちる（これで3回目）。
+    # **時刻に関わる関数は、ここに全部並べる。**
+    # ■ 選ぶのをやめた（2026-10-08・3回目の空振りのあと）
+    #
+    # ここは「決め方の関数」を手で並べて、そのソースだけを見ていた。
+    # 本人の第6回を v144 で作り直してもらったら、こう出た。
+    #
+    #     既存の割り当て表を使います
+    #     ⑥ 前回の割り当て表をそのまま使用
+    #
+    # ＝ **直した処理が1行も動かず、前回の表をそのまま使われていた。**
+    # 数字(2.08秒・47枚・18%)が前回と1桁も違わなかったのはそのため。
+    # 字幕をどこで割るか（refine_cues / split_by_kuten / split_text_by_time）は
+    # **並びに入っていなかった**。時刻を決めているのはそこなのに。
+    #
+    # 並べ忘れは3回起きた。選ぶかぎり4回目が起きる。
+    # **このファイル全体を見る。** 関係ない所を直したときも作り直しになるが、
+    # 作り直しは数分、ずれた動画は本人との往復1回ぶん。くらべるまでもない。
     import inspect
     h = hashlib.md5()
+    try:
+        h.update(inspect.getsource(sys.modules[__name__]).encode("utf-8"))
+        return h.hexdigest()[:10]
+    except Exception:
+        pass
+    # ファイル全体が読めないときだけ、主な関数のソースで代用する
     for f in (kugiri_awase, koma_awase, timeline_from_parts_srt,
-              place_in_chunk, assign_images):
+              place_in_chunk, assign_images,
+              refine_cues, split_by_kuten, split_text_by_time,
+              koe_to_awaseru, jissoku_wariai, wav_no_koe,
+              jissoku_hikidashi, jissoku_hitotsu, jissoku_nagasa,
+              kire_me_erabu, ma_ni_yoseru, mitsumori):
         try:
             h.update(inspect.getsource(f).encode("utf-8"))
         except Exception:
@@ -4627,11 +6115,77 @@ def load_kouho(path):
     return out
 
 
-def load_sashikae(path, images):
-    u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}"""
+def moji_de_sagasu(hoshii, rows, ban, moto_no):
+    u"""字幕の文から、いまそれがどの番号にいるかを探す。
+
+    切り方が変わると、同じ文が
+      ・そのまま残っている（一致）
+      ・前後とくっついて長くなった（含まれる）
+      ・さらに割られて短くなった（含む）
+    のどれかになる。順に見て、だめなら None。
+    同じ文が2か所にあるときは、**もとの番号に近いほう**を採る。
+    """
+    h = u" ".join((hoshii or u"").split())
+    if not h:
+        return None
+
+    def naka(no):
+        i = ban.get(no)
+        if i is None or i >= len(rows):
+            return u""
+        return u" ".join((rows[i][2] or u"").split())
+
+    # ■ 短い言葉で当てにいかない（2026-10-13・本人のログで誤爆した）
+    #
+    # 本人の 差し替え.txt の3列目に「老デウス」と入っていて、
+    # それを字幕の文として「含まれる」で探したため、
+    #   2番 → 1番「老デウスの歩んできた人生が、」
+    # に移してしまった。**本人が書いたのは字幕ではなく絵の説明だった。**
+    #
+    # 字幕の文は普通もっと長い。ぴったり一致は長さを問わないが、
+    # 「含まれる／含む」で当てにいくのは **8文字以上**のときだけにする。
+    # 短い3列目は字幕ではないと見て、番号のまま当てる。
+    nos = sorted(ban)
+    atari = [no for no in nos if naka(no) == h]
+    if atari:
+        return min(atari, key=lambda no: (abs(no - moto_no), no))
+    if disp_len(h) < 8:
+        return None          # 短すぎる。字幕の文ではないと見る
+    for shiken in (lambda t: t and h in t,
+                   lambda t: t and t in h):
+        atari = [no for no in nos if shiken(naka(no))]
+        if atari:
+            return min(atari, key=lambda no: (abs(no - moto_no), no))
+    return None
+
+
+def load_sashikae(path, images, moji=None):
+    u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}
+
+    ■ 3列目に「字幕の文」を書ける（2026-10-12・本人の指摘）
+
+    > 元々私が指定した時とは字幕一つ一つの長さが変わっているため、
+    > 私の指定した内容と字幕がリンクしていない部分があります
+
+    そのとおりで、**番号は動く。** 字幕の切り方を変えると
+    （台本を直しても、こちらがコードを直しても）全部の番号がずれ、
+    26件の指定が1つずつ隣の字幕に当たっていた。
+
+        v154  15番=章カード  16番「まずヒトガミの目的。」→3-14-157
+        v155  14番=章カード  15番「まずヒトガミの目的。」→3-14-156  ← ずれた
+
+    番号は「動く目印」なので、留めるなら**字幕の文**。
+    3列目に文を書いておけば、切り方が変わってもそこへ付いていく。
+
+        16	3-14-157	まずヒトガミの目的。
+
+    3列目が無い行は、これまでどおり番号で当てる（当たった文は必ず出す）。
+    """
     if not os.path.exists(path):
         return {}
     out, machigai = {}, []
+    if moji is None:
+        moji = {}
     kouho = load_kouho(os.path.join(HERE, KOUHO_FILE))
     for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
             .replace("\r\n", "\n").split("\n"):
@@ -4651,6 +6205,14 @@ def load_sashikae(path, images):
         except ValueError:
             continue
         shirushi = u" ".join(c[1:]).strip()
+        # 2列目だけで絵が決まるなら、3列目以降は**字幕の文**として読む。
+        # （ファイル名に空白が入ることがあるので、決まらなければ元の読み方）
+        if len(c) >= 3:
+            tango = c[1].strip()
+            if re.match(r"^[1-9]$", tango) or code_to_img(tango, images) \
+                    or any(tango in k for k in images):
+                shirushi = tango
+                moji[no] = u" ".join(c[2:]).strip()
         # ① 「3」のような1桁は、直す.py が出した紙の候補の番号
         if re.match(r"^[1-9]$", shirushi):
             kimari = kouho.get((no, int(shirushi)))
@@ -5060,6 +6622,30 @@ def main():
                     help=u"字幕の見え方を1枚のPNGで確認する(秒を指定可)")
     ap.add_argument("--render", action="store_true")
     a = ap.parse_args()
+    # ■ どのコードが走ったかを、必ず1行目に出す（2026-10-10）
+    #
+    # 本人の第6回を v150 で作り直してもらったら、絵の割り当てが
+    # **1枚も変わっていなかった。** 指紋の行がその理由を言っていた。
+    #
+    #     画面表示.txt:8e4f774e10  →  画面表示.txt:c80d6d6033
+    #
+    # 変わったのは設定だけで、**kime（コードの指紋）は同じ**。
+    # つまり作業フォルダの make_slideshow.py が古いままだった。
+    # menu.ps1 の MakeVideo が Prepare を呼んでいなかったため
+    # （メニューの 2 では、道具が入れ替わらない）。
+    #
+    # 掲示板に出した版と、実際に走った版が違う ──
+    # これを**画面で確かめられなかった**ので、1往復まるごと無駄にした。
+    # 以後、走ったコードの指紋を自分で名乗る。
+    say(u"make_slideshow の版: kime:%s" % kime_kata_shirushi())
+    try:
+        _pv = u"パック版.txt"
+        if os.path.exists(_pv):
+            _t = io.open(_pv, encoding="utf-8-sig", errors="replace").read().strip()
+            if _t:
+                say(u"  パック: %s" % _t.split(u"\n")[0][:60])
+    except Exception:
+        pass
 
     os.chdir(HERE)
     # フォルダを用意して、入出力の場所をここで決めてしまう。
@@ -5077,6 +6663,8 @@ def main():
     if a.vertical and a.size == "1920x1080":
         a.size = "1080x1920"
     w, h = [int(x) for x in a.size.lower().split("x")]
+    # つないでよい上限は、2行に折り返して読める文字数そのもの
+    JIMAKU_UE[0] = jimaku_ue(w, h, mi, a.sub_chars or 0, a.sub_lines or 0)
     tate = h > w
     if not a.safe_bottom:
         # 縦動画は下にアプリのボタンが重なるので、字幕を高めに置く
@@ -5122,7 +6710,7 @@ def main():
     # 入れ忘れていたせいで、話数を書いても古い表が使われ、
     # 本人が その他/画像割り当て.tsv を手で消さないと効かなかった。
     srcs = [IMGPLAN, a.catalog, a.epmap, a.script, a.srt,
-            a.audio, a.mitame, a.overlay, u"人物ルール.txt"]
+            a.audio, a.mitame, a.overlay, u"人物ルール.txt", BAMEN]
     fp_now = inputs_fingerprint(srcs)
     newer = None
     if have and not stale:
@@ -5138,6 +6726,17 @@ def main():
             newer = plan_is_outdated(PLAN, srcs)
             if newer:
                 say(u"%s のほうが新しいので、絵の割り当てを作り直します。" % newer)
+        else:
+            # ■ 作り直さないときは、その理由を必ず見せる（2026-10-08）
+            #
+            # 「直したのに動かない」が3回続き、そのたびに
+            # **画面に手がかりが無いまま推測で原因を探した。**
+            # 指紋が一致したから使い回したのなら、その指紋を出す。
+            # 出していれば、どれが同じなのか一目で分かった。
+            say(u"割り当て表の指紋が一致したので、前のものを使います。")
+            say(u"    前回: %s" % fp_old[:120])
+            say(u"    今回: %s" % fp_now[:120])
+            say(u"  （作り直したいときは その他\\画像割り当て.tsv を消すか --plan）")
     if stale:
         bak = os.path.join(SONOTA_DIR, u"画像割り当て_旧.tsv")
         try:
@@ -5250,6 +6849,7 @@ def main():
             cues = refine_cues(cues, a.sec * 1.7, 30)
             if len(cues) > raw:
                 say(u"字幕 %d本を、文の切れ目で %d本にほぐしました。" % (raw, len(cues)))
+
         if cues and not from_audio and not a.no_snap:
             sils = detect_silences(a.audio, a.noise_db, a.silence_len)
             if sils:
@@ -5274,6 +6874,10 @@ def main():
             if len(slots) != mae:
                 say(u"句読点で割りました: %d枚 → %d枚 (1枚あたり %.1f秒)"
                     % (mae, len(slots), total / max(1, len(slots))))
+                if KOMA_TSUKATTA[0] or KOMA_TSUKATTA[1]:
+                    say(u"   そのうち %d枚は、1行ずつの音声で測った長さで割りました"
+                        u"（残り %d枚は文字数）"
+                        % (KOMA_TSUKATTA[0], KOMA_TSUKATTA[1]))
                 if a.kuten_moji:
                     say(u"   「。」は必ず切り、「、」は %d文字を超えないように切っています。"
                         % a.kuten_moji)
@@ -5295,6 +6899,86 @@ def main():
                         u"（いちばん大きいもの %.2f秒）" % (ugoita, ichiban))
                 else:
                     say(u"文字数で割った切れ目は、すでに「間」と合っていました。")
+                # 寄せても「間」に乗らなかった切れ目を消す（声の途中で
+                # 切り替わるのを、推測で当てずに**消して**無くす）
+                mae_kazu = len(slots)
+                slots, keshita, nokori = koe_no_naka_tsunagu(
+                    slots, sils_k, ikari, JIMAKU_UE[0])
+                if keshita:
+                    say(u"声の途中に落ちていた切れ目 %d か所を消しました"
+                        u"（%d枚 → %d枚。字幕はつながって2行になります）"
+                        % (keshita, mae_kazu, len(slots)))
+                else:
+                    say(u"切れ目はすべて「間」に乗っていました。")
+                # 残ったものは、理由を必ず出す（言えないと次が直せない）
+                nok = nokori.get(u"2行に入らない", 0)
+                say(u"  残した切れ目: 錨 %d / 間の中 %d / 「。」のあと %d / "
+                    u"2行に入らない %d（上限 %d文字）"
+                    % (nokori.get(u"錨", 0), nokori.get(u"間の中", 0),
+                       nokori.get(u"「。」のあと", 0), nok, JIMAKU_UE[0]))
+                if nok:
+                    say(u"  ※「2行に入らない」で残した %d か所は、"
+                        u"声の途中で切り替わっている可能性があります。" % nok)
+                    # ■ どこを何文字減らせばよいかを出す（2026-10-12）
+                    #
+                    # ここは機械では直せない。くっつけて消す以外に安全な手が
+                    # 無く、くっつけるには2行の上限に収まらないといけない。
+                    # **台本から数文字減らすのが、いちばん確かで安い直し。**
+                    # 本人のパソコンは触れないので、場所と文字数を渡す。
+                    naka = sorted(nokori.get(u"中身") or [],
+                                  key=lambda x: -(x[3] - JIMAKU_UE[0]))
+                    chikai = [x for x in naka if x[3] - JIMAKU_UE[0] <= 4]
+                    if chikai:
+                        say(u"  このうち %d か所は、台本を %d〜%d文字 減らすだけで"
+                            u"消えます（上限 %d文字）:"
+                            % (len(chikai), chikai[-1][3] - JIMAKU_UE[0],
+                               chikai[0][3] - JIMAKU_UE[0], JIMAKU_UE[0]))
+                        for (t2, a2, b2, kei) in chikai[:8]:
+                            say(u"    %d:%02d  あと%d文字  「%s」＋「%s」= %d文字"
+                                % (int(t2) // 60, int(t2) % 60,
+                                   kei - JIMAKU_UE[0], a2, b2, kei))
+                        say(u"    字幕用と読み上げ用の**両方**を同じだけ縮めて、"
+                            u"1（音声）から作り直してください。")
+                # ■ 短すぎる字幕を名指しで出す（2026-10-12・本人の「と、」）
+                #
+                # 本人「「と、」だけの字幕があります。ここはそもそも台本が
+                #       悪いと思うので一部修正し、こんな中途半端な切り方は
+                #       無くしてください。」
+                #
+                # 見た目.txt の「字幕の最短」は 6文字で、短い切れ端は
+                # 後ろ（無ければ前）にくっつけている。**それでも残るのは、
+                # その切れ端が1段落まるごとを占めているとき。**
+                # くっつける相手が段落の中に無く、段落をまたぐと時刻が動く
+                # （段落の境目は錨）。だから**機械では直せない。**
+                # 直すのは台本側なので、場所を名指しで渡す。
+                try:
+                    mijika_ue = max(6, int(mi.get(u"字幕の最短") or 6))
+                except Exception:
+                    mijika_ue = 6
+                chibi = [(q, x) for q, x in enumerate(slots)
+                         if 0 < disp_len((x[2] or u"").strip()) <= mijika_ue]
+                if chibi:
+                    say(u"  ※ %d文字以下の字幕が %d か所あります。"
+                        u"**台本を直さないと消えません**"
+                        u"（その切れ端だけで1段落になっているため、"
+                        u"くっつける相手が段落の中にありません）:"
+                        % (mijika_ue, len(chibi)))
+                    for (q, x) in chibi[:8]:
+                        say(u"    %d:%02d  「%s」"
+                            % (int(x[0]) // 60, int(x[0]) % 60,
+                               (x[2] or u"").strip()))
+                    say(u"    前後の文につないで1段落にまとめ、"
+                        u"1（音声）から作り直してください。")
+                # ■ 「最後に全部の切れ目を声の始まりへ合わせ直す」は
+                #   測って悪かったので入れていない（2026-10-11・koe_ni_awaseru）
+                #
+                #   何もしない    最大 1.09/1.27/1.00秒  0.45秒超 5%/4%/2%
+                #   全部動かす    最大 1.36/1.29/1.41秒          5%/6%/3%
+                #   声の中だけ    （同じ数字）
+                #
+                #   「、」の7割は声が止まらない所なので、そこに**正しく**
+                #   置かれている切れ目まで近くの「間」へ引きずられる。
+                #   関数は残してあるが、呼んでいない。
             else:
                 say(u"音声に「間」が見つからず、切れ目は文字数のままです"
                     u"（--noise-db -40 で緩められます）。")
@@ -5312,7 +6996,27 @@ def main():
                                        emap, focus, mitame=mi,
                                        chaps=chaps_for_assign)
         write_plan(PLAN, slots, picked, fp_now)
+        # ■ 数えるのは**いちばん最後**（2026-10-09・検査が嘘をついたので移した）
+        #
+        # refine_cues の出口で数えていたら、そのあとで切り直す工程があって、
+        #     ○ 字幕はすべて「。」か「、」の所で切れています
+        # と出しながら「ルーデウスとロキシーの間に生まれる子供を」が残っていた。
+        # **途中で数えても、後ろで変わればそれまで。**
+        # 出来上がった割り当て表そのものを数える。
+        _hon = [x for x in slots if (x[2] or u"").strip()]
+        KUTEN_NASHI[0] = sum(
+            1 for i, x in enumerate(_hon)
+            if i < len(_hon) - 1 and x[2].strip()[-1] not in u"。！？、")
         say(u"音声 %s / 画像 %d枚 / 区切り %d枚ぶん" % (mmss(total), len(images), len(slots)))
+        if KUTEN_NASHI[0]:
+            say(u"⚠ 句読点の無い所で切った字幕が %d枚あります。"
+                u"そこは声が止まらないので必ずずれます。" % KUTEN_NASHI[0])
+            for i, x in enumerate(_hon):
+                if i < len(_hon) - 1 and x[2].strip()[-1] not in u"。！？、":
+                    say(u"     %s" % x[2].strip()[:34])
+        else:
+            say(u"○ 字幕はすべて「。」か「、」の所で切れています"
+                u"（声が止まらない所では切っていません）")
         say(u"割り当て表を書き出しました: " + os.path.join(HERE, PLAN))
         if a.plan:
             say(u"中身を確認し、必要なら画像の列を直してから「動画を作る.bat」を実行してください。")
@@ -5365,7 +7069,37 @@ def main():
         say(u"  気に入らない所は 確認用/直す_01.png を見て、差し替え.txt に数字を。")
 
     # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
-    kae = load_sashikae(os.path.join(HERE, SASHIKAE), images)
+    sashi_moji = {}
+    kae = load_sashikae(os.path.join(HERE, SASHIKAE), images, moji=sashi_moji)
+    # ■ 字幕の文が書いてあれば、**番号ではなく文で留める**（2026-10-12）
+    #
+    # 本人「元々私が指定した時とは字幕の長さが変わっているため、
+    #       私の指定した内容と字幕がリンクしていない部分があります」
+    # 番号は動く目印なので、文があるならそちらを信じる。
+    if sashi_moji:
+        utsushita = []
+        naoshi = {}
+        for no, img2 in sorted(kae.items()):
+            saki = moji_de_sagasu(sashi_moji.get(no), rows, ban, no)
+            if saki is None or saki == no:
+                naoshi[no] = img2
+                continue
+            naoshi[saki] = img2
+            utsushita.append((no, saki, sashi_moji.get(no)))
+        mijika = [(no, sashi_moji[no]) for no in sorted(sashi_moji)
+                  if sashi_moji[no] and disp_len(sashi_moji[no]) < 8
+                  and not any(sashi_moji[no] == (rows[ban[n2]][2] or u"").strip()
+                              for n2 in ban)]
+        if mijika:
+            say(u"差し替え.txt の3列目が短すぎて、字幕の文として使えません"
+                u"（番号で当てます）:")
+            for (no, tx3) in mijika[:6]:
+                say(u"  %3d番の3列目 「%s」 … 字幕の文を入れてください" % (no, tx3))
+        if utsushita:
+            say(u"字幕の切り方が変わっていたので、指定を文で留め直しました:")
+            for (mae2, ato2, tx3) in utsushita:
+                say(u"  %3d番 → %3d番  「%s」" % (mae2, ato2, (tx3 or u"")[:26]))
+        kae = naoshi
     if kae:
         kaeta = 0
         for no, img2 in sorted(kae.items()):
@@ -5380,8 +7114,25 @@ def main():
             i = ban[no]
             du, _mae2, tx2 = rows[i]
             rows[i] = (du, img2, tx2)
-            say(u"  差し替え: %3d番「%s」→ %s"
-                % (no, (tx2.strip() or u"（セリフなし）")[:22], img_code(img2) or img2))
+            # 当たった先の人が合っているかを、その場で見せる。
+            # 合っていなければ「番号がずれたまま」の合図になる。
+            shirase = u""
+            try:
+                setsu2 = (catalog or {}).get(img2) or u""
+                utsu = [c for c in CHARACTERS if c in setsu2]
+                hoshii3 = set()
+                for c in (bunmyaku_hito(slots, i, {}) or []):
+                    hoshii3.add(c)
+                    hoshii3.update(ONAJI_HITO.get(c, []))
+                if utsu and hoshii3 and not any(c in hoshii3 for c in utsu):
+                    shirase = u"   ← 人がちがいます（絵は %s / セリフは %s）" \
+                        % (u"・".join(utsu[:2]),
+                           u"・".join(list(hoshii3)[:2]))
+            except Exception:
+                pass
+            say(u"  差し替え: %3d番「%s」→ %s%s"
+                % (no, (tx2.strip() or u"（セリフなし）")[:22],
+                   img_code(img2) or img2, shirase))
             kaeta += 1
         say(u"差し替え.txt のとおり %d枚を入れ替えました（番号で指定されたもの）" % kaeta)
     elif not os.path.exists(os.path.join(HERE, SASHIKAE)):
@@ -5495,6 +7246,15 @@ def main():
             say(u"割り当て表にセリフが入っていないので、字幕は焼き込みません。")
         else:
             spans = chapter_spans(cues, chaps, total) if chaps else []
+            # 5列目があれば、章の区間ごとに引用元を出し分ける。
+            # 空の章は、上の 引用 の行（credit）に戻る。
+            if ov_aru and spans and a.credit is None:
+                shou_c = load_shou_credit(a.overlay)
+                if any(shou_c):
+                    credit = [(st, en,
+                               (shou_c[i] if i < len(shou_c) and shou_c[i]
+                                else credit))
+                              for i, (st, en, _t) in enumerate(spans)]
             ass = os.path.join(work, "burn.ass")
             card_ev = [(starts[i], ends[i], cards[i]) for i in sorted(cards)]
             n = write_ass(cues, ass, w, h, font, size, sub_chars, sub_lines,
@@ -5597,20 +7357,46 @@ def main():
     # いちばん長く映る絵でも右端を越えない速さにし、それを全部の絵で使う。
     # 章カードは動かさない（左右で絵と文字を分けているので、動くと崩れる）。
     kyori, hayasa, yoko, tate = 0, 0.0, 0, 0
-    muki = {}
+    muki, keika = {}, {}
     if ugokasu:
-        nagai = max((frames[i] / float(fps))
-                    for i in range(len(rows))
-                    if not rows[i][1].startswith(u"@@")) if rows else 0.0
+        # ■ 同じ絵が続く所は、ひと続きの動きにする
+        #   （2026-10-13・本人「同じ画像を字幕を跨いで使う場合、
+        #     字幕ごとに画像の動きをやり直すのは違和感がある」）
+        #
+        # 動きは crop の x に `min(距離, 速さ*t)` を入れて出しているが、
+        # **t は断片ごとに 0 から始まる。** だから同じ絵が2枚3枚続くと、
+        # 字幕が変わるたびに絵が元の位置へ戻って、また動き出していた。
+        #
+        # 直し: 同じ絵が続くひと続き（ひとかたまり）を見つけて、
+        #   ・向きは**かたまりに1つ**
+        #   ・経過は**かたまりの頭から**数える（keika[i] を足す）
+        # こうすると、最初の字幕から最後の字幕まで一定の速さで流れる。
+        kumi = []            # [(頭の添字, [添字...])]
+        for i in range(len(rows)):
+            if rows[i][1].startswith(u"@@"):
+                kumi.append(None)        # 章カードで必ず切れる
+                continue
+            if kumi and kumi[-1] is not None \
+                    and rows[kumi[-1][-1]][1] == rows[i][1]:
+                kumi[-1].append(i)
+            else:
+                kumi.append([i])
+        hitotsuzuki = [k for k in kumi if k]
+        # 速さは「いちばん長いひと続き」で使い切る形にする。
+        # 1枚ずつで決めると、続いた所で途中で端に当たって止まってしまう。
+        nagai = max((sum(frames[j] for j in k) / float(fps))
+                    for k in hitotsuzuki) if hitotsuzuki else 0.0
         bai = max(0.05, min(1.0, float(mi.get(u"動きの速さ", 0.75))))
         kyori, hayasa, yoko, tate = pan_kesan(w, h, kakudai, nagai, bai)
         if kyori:
             mae = None
-            for i in range(len(rows)):
-                if rows[i][1].startswith(u"@@"):
-                    continue          # 章カードは動かさない
-                mae = pan_muki(i, mae)
-                muki[i] = mae
+            for k in hitotsuzuki:
+                mae = pan_muki(k[0], mae)      # 向きはかたまりに1つ
+                t0 = 0.0
+                for j in k:
+                    muki[j] = mae
+                    keika[j] = t0              # かたまりの頭からの経過
+                    t0 += frames[j] / float(fps)
             kazu = {}
             for m in muki.values():
                 kazu[m] = kazu.get(m, 0) + 1
@@ -5622,10 +7408,17 @@ def main():
                    100.0 * min(kyori, hayasa * 2) / w))
             say(u"  方向はバラバラ（直前とはちがう向き）: "
                 + u" / ".join(u"%s %d枚" % (m, kazu.get(m, 0)) for m in PAN_MUKI))
+            tsuzuki = [k for k in hitotsuzuki if len(k) > 1]
+            if tsuzuki:
+                say(u"  同じ絵が続く %d か所は、ひと続きの動きにしました"
+                    u"（いちばん長いもの %d枚つづき・%.1f秒）"
+                    % (len(tsuzuki), max(len(k) for k in tsuzuki),
+                       max(sum(frames[j] for j in k) / float(fps)
+                           for k in tsuzuki)))
         else:
             ugokasu = False
 
-    def pan_chain(label_in, label_out, m):
+    def pan_chain(label_in, label_out, m, zure=0.0):
         u"""大きい絵から画面ぶんを切り出す。m が向き（None なら動かさない）。
 
         crop の x / y に t を入れると1コマずつ計算し直してくれる。
@@ -5634,7 +7427,8 @@ def main():
         """
         x0 = (yoko - kyori) / 2.0          # 横に動く帯の左端
         y0 = (tate - kyori) / 2.0          # 縦に動く帯の上端
-        susumu = u"min(%d,%.4f*t)" % (kyori, hayasa)
+        # zure … そのかたまりの頭からの経過。同じ絵が続く所をつなぐ。
+        susumu = u"min(%d,%.4f*(t+%.3f))" % (kyori, hayasa, max(0.0, zure))
         if m == u"左へ":        # 絵が左へ流れる＝切り出しが右へ進む
             x, y = u"'%.1f+%s'" % (x0, susumu), u"%.1f" % (tate / 2.0)
         elif m == u"右へ":
@@ -5660,13 +7454,16 @@ def main():
             fil = None
         # 章カードは元から画面ぴったりの大きさなので、切り出しも動きもしない
         kore = muki.get(i) if ugokasu else None
+        zure = keika.get(i, 0.0) if ugokasu else 0.0
         if ugokasu:
-            pan = pan_chain(u"0:v", u"c0", kore)
+            pan = pan_chain(u"0:v", u"c0", kore, zure)
             if mae is not None:
                 pan += pan_chain(u"1:v", u"c1", None)
             if fil:
                 fil = pan + fil.replace(u"[0:v]", u"[c0]").replace(u"[1:v]", u"[c1]")
-        key = (cache[img], frames[i], mae, fil, kore)
+        # **経過も鍵に入れること。** 入れないと、同じ絵・同じ尺の断片を
+        # 使い回してしまい、つないだ意味が無くなる。
+        key = (cache[img], frames[i], mae, fil, kore, round(zure, 3))
         seg = segcache.get(key)
         if seg is None:
             seg = os.path.join(segdir, "s%05d.mp4" % len(segcache))
@@ -5677,7 +7474,7 @@ def main():
                     cmd += ["-loop", "1", "-framerate", str(fps), "-i", mae]
                 cmd += ["-filter_complex", fil, "-map", "[v]"]
             elif ugokasu:
-                cmd += ["-vf", pan_chain(u"0:v", u"v", kore)
+                cmd += ["-vf", pan_chain(u"0:v", u"v", kore, zure)
                         .replace(u"[0:v]", u"").rstrip(u";").replace(u"[v]", u"")]
             cmd += ["-frames:v", str(frames[i]),
                     "-c:v", "libx264", "-preset", a.seg_preset,

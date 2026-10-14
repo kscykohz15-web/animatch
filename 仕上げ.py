@@ -85,6 +85,8 @@ KYOTSU = [u"画像カタログ.txt", u"話数マップ.txt", u"タグ一覧.txt"
           u"演出.txt", u"見た目.txt"]
 
 warui = []
+# 止めないが、必ず知らせる宿題（作りかけの機能など）
+SHUKUDAI = []
 
 
 def midashi(n, t):
@@ -100,17 +102,43 @@ def mmss(t):
     return u"%d:%02d" % (int(t) // 60, int(t) % 60)
 
 
+# ■ まだ台本が無い動画は、できてから見る（2026-10-08）
+#
+# 動画一覧.txt に先に行を足して、台本はこれから書く ── という途中の状態がある。
+# それを「字幕用がありません」で落とすと、
+# **すでに出来ている8本ぶんの掲示板まで出せなくなる。**
+# 実際にそれで止まり、本人にパックを届けられなかった。
+#
+# 線をゆるめたのではない。**無いものは検査しようがない**というだけ。
+# 黙って飛ばすと事故になるので、必ず名前を並べて知らせる。
+# 片方だけある（字幕用はあるのに読み上げ用が無い）のは作りかけの事故なので落とす。
+MIKANSEI = []
+_DAIHON2 = []
+for (nm, sub, tts) in DAIHON:
+    a1 = os.path.exists(os.path.join(B, sub))
+    b1 = os.path.exists(os.path.join(B, tts))
+    if not a1 and not b1:
+        MIKANSEI.append(nm)
+    else:
+        _DAIHON2.append((nm, sub, tts))
+if MIKANSEI:
+    print(u"… まだ台本が無いので、この %d本は検査しません: %s"
+          % (len(MIKANSEI), u" / ".join(MIKANSEI)))
+    print(u"   （動画一覧.txt には登録済み。台本ができたら自動で検査に入ります）")
+DAIHON = _DAIHON2
+DOUGA = [d for d in DOUGA if NAMAE.get(d) not in MIKANSEI]
+
 # ── ① 台本の組 ───────────────────────────────────────
 midashi(u"①", u"台本の組（動画一覧.txt の %d本）" % len(DAIHON))
 for (nm, sub, tts) in DAIHON:
     ps, pt = os.path.join(B, sub), os.path.join(B, tts)
     if not os.path.exists(ps):
-        warui.append(u"%s の字幕用がありません" % nm)
-        print(u"× %-6s 字幕用がありません" % nm)
+        warui.append(u"%s の字幕用がありません（読み上げ用はあります）" % nm)
+        print(u"× %-6s 字幕用がありません（読み上げ用はあります）" % nm)
         continue
     if not os.path.exists(pt):
-        warui.append(u"%s の読み上げ用がありません" % nm)
-        print(u"× %-6s 読み上げ用がありません" % nm)
+        warui.append(u"%s の読み上げ用がありません（字幕用はあります）" % nm)
+        print(u"× %-6s 読み上げ用がありません（字幕用はあります）" % nm)
         continue
     ds, dt = dan_of(ps), dan_of(pt)
     ks = sum(u"".join(ds).count(c) for c in u"。！？")
@@ -192,10 +220,26 @@ else:
     print(u"○ ZIPを作る %d か所とも共通を入れています" % yobi)
     # 置き場所.txt は掲示板ごとに中身が違うので共通(pushKyotsu)に入れられない。
     # 入れ忘れると、絵のフォルダを見にいく先が無いまま動画を作ることになる。
+    # ■ ここが落ちたら、**この board.src.html が古い**（2026-10-08・誤診の記録）
+    #
+    # 一度これを「作りかけの機能だから止めない」に変えたが、**誤りだった。**
+    # 公開中の掲示板を読んだら v144 で、置き場所.txt はZIPの2か所に
+    # ちゃんと入っていた。＝ 機能は完成していて、
+    # **こちらの scratchpad の board.src.html が遅れているだけ**だった。
+    #
+    # board.src.html は git に入れていないので、別のセッションが直しても
+    # こちらには来ない。**この検査が落ちたら、こちらの掲示板を出してはいけない。**
+    # 出すと相手の作業（掲示板2枚・置き場所）を丸ごと消す。
+    #
+    # そのときの渡し方は「公開中の掲示板を読んで、中の py-slideshow だけ
+    # 差し替えて出す」。board_v145.html を作ったのがその手順。
     nb = len(re.findall(r'name:"置き場所\.txt"', src))
     if nb < 2:
-        warui.append(u"置き場所.txt を入れているZIPが %d か所しかありません（2か所必要）" % nb)
+        warui.append(u"置き場所.txt がZIPに %d か所しかありません"
+                     u"（この board.src.html が古い可能性。公開中のものを確かめること）" % nb)
         print(u"× 置き場所.txt がZIPの %d か所にしか入っていません" % nb)
+        print(u"   この board.src.html が古いかもしれません。")
+        print(u"   公開中の掲示板を読んでから、まるごと出さずに中身だけ差し替えてください。")
     else:
         print(u"○ 置き場所.txt も ZIPの %d か所とも入ります" % nb)
     nai = [k for k in KYOTSU if u'"%s"' % k not in src]
@@ -230,13 +274,15 @@ else:
 
 # 動画一覧.txt の1本ごとに、掲示板の SCRIPTS に件があるか。
 # build.py も最後に見るが、そこまで20項目ぜんぶ走ってからになるので、ここでも見る。
+# まだ台本が無い動画は、掲示板にも載せようがない。できてから見る。
 nai_sc = [v.shirushi for v in _DOUGA
-          if not re.search(r"^    %s:\{name:" % re.escape(v.shirushi), src, re.M)]
+          if v.namae not in MIKANSEI
+          and not re.search(r"^    %s:\{name:" % re.escape(v.shirushi), src, re.M)]
 if nai_sc:
     warui.append(u"board.src.html の SCRIPTS に無い動画: " + u" ".join(nai_sc))
     print(u"× SCRIPTS に無い動画: " + u" ".join(nai_sc))
 else:
-    print(u"○ 動画 %d本とも SCRIPTS に件があります" % len(_DOUGA))
+    print(u"○ 動画 %d本とも SCRIPTS に件があります" % (len(_DOUGA) - len(MIKANSEI)))
 
 # 節の data-board が、build.py の知っている掲示板だけを指しているか
 ban_src = set(re.findall(r'<section data-board="([^"]+)"', src))
@@ -420,7 +466,9 @@ midashi(u"⑭", u"決め方を直したら、割り当て表が作り直され�
 # 指紋に混ぜている。ここが外れていないかを見る。
 ms = io.open(os.path.join(V, "make_slideshow.py"), encoding="utf-8").read()
 HISSU = [u"kugiri_awase", u"koma_awase", u"timeline_from_parts_srt",
-         u"place_in_chunk", u"assign_images"]
+         u"place_in_chunk", u"assign_images",
+         u"refine_cues", u"split_by_kuten", u"split_text_by_time",
+         u"koe_to_awaseru", u"jissoku_wariai"]
 m_k = re.search(r"def kime_kata_shirushi\(\):(.*?)\ndef ", ms, re.S)
 tsukatte = u"kime_kata_shirushi()" in ms.split(u"def inputs_fingerprint")[-1][:1500]
 if not m_k:
@@ -430,15 +478,24 @@ elif not tsukatte:
     warui.append(u"inputs_fingerprint が kime_kata_shirushi を使っていません")
     print(u"× 指紋に決め方の印が入っていません（直しても空振りします）")
 else:
+    # ■ ファイル全体を見ているか（2026-10-08・3回目の空振りのあと）
+    #
+    # 手で並べた関数だけを見ていたせいで、字幕を割る所が抜けていた。
+    # 本人の v144 が「⑥ 前回の割り当て表をそのまま使用」になり、
+    # 直した処理が1行も動かなかった。並べ忘れは3回起きている。
+    zentai = u"getsource(sys.modules[__name__])" in m_k.group(1)
     nai = [k for k in HISSU if k not in m_k.group(1)]
-    if nai:
+    if not zentai:
+        warui.append(u"決め方の印が make_slideshow.py 全体を見ていません")
+        print(u"× 印が関数の選び方に頼っています。並べ忘れると空振りします。")
+    elif nai:
         warui.append(u"決め方の印に入っていない関数: " + u" ".join(nai))
         print(u"× 次の関数が印に入っていません。直しても空振りします:")
         for k in nai:
             print(u"   " + k)
     else:
-        print(u"○ 決め方(%s)を直せば、割り当て表は必ず作り直されます"
-              % u"・".join(HISSU))
+        print(u"○ make_slideshow.py を1文字でも直せば、割り当て表は必ず作り直されます"
+              u"（関数を並べ忘れようがありません）")
 
 # ── ⑮ 人物ルールの条件が、本当にあるタグか ──────────
 midashi(u"⑮", u"人物ルールの条件が、出てくるタグかどうか")
@@ -522,4 +579,9 @@ for step in ("sync_py.py", "build.py"):
     if r.returncode != 0:
         print(out)
         sys.exit(1)
+if SHUKUDAI:
+    print(u"")
+    print(u"⚠ 作りかけのまま残っていること（出すのは止めません）:")
+    for x in SHUKUDAI:
+        print(u"   ・" + x)
 print(u"\nboard.html ができました。掲示板に出してください。")

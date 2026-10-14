@@ -55,6 +55,13 @@ def sagasu(*na):
     return None
 
 
+def disp_len(t):
+    u"""見た目の文字数。全角は1、半角は0.5として数える（字幕の折り返しと同じ）。"""
+    import unicodedata
+    return sum(2 if unicodedata.east_asian_width(c) in u"FWA" else 1
+               for c in (t or u"")) / 2.0
+
+
 def mmss(t):
     return u"%d:%02d" % (int(t // 60), int(t % 60))
 
@@ -67,13 +74,45 @@ def main():
         return 0
     ffmpeg = u"ffmpeg"
 
-    # ── ① 声が始まる瞬間（BGMの無い merged.wav で拾う）
+    # ── ① 声が始まる瞬間と、無音の区間（BGMの無い merged.wav で拾う）
     log = ff([ffmpeg, "-hide_banner", "-nostats", "-i", koe,
               "-af", "silencedetect=noise=-35dB:d=0.12", "-f", "null", "-"])
     hajimari = [0.0]
-    for m in re.finditer(r"silence_end:\s*([0-9.]+)", log):
-        hajimari.append(float(m.group(1)))
+    muon = []                       # (無音の始まり, 無音の終わり)
+    st0 = None
+    for m in re.finditer(r"silence_(start|end):\s*(-?[0-9.]+)", log):
+        if m.group(1) == "start":
+            st0 = float(m.group(2))
+        elif st0 is not None:
+            e0 = float(m.group(2))
+            muon.append((st0, e0))
+            hajimari.append(e0)
+            st0 = None
     hajimari.sort()
+    muon.sort()
+
+    def shaberi_chuu(t):
+        u"""その時刻は、声の途中か。途中なら「どれだけ入り込んでいるか」を返す。
+
+        ■ なぜこれを見るのか（2026-10-09・本人の言葉から）
+
+        本人はこう言った。
+          「喋っている途中で、次の字幕と画像に切り替わる」
+
+        ＝ 切り替わりが**声の真ん中**に落ちている。
+        それまでは「いちばん近い声の始まり」との差を測っていたが、
+        **近くにたまたま別の声の始まりがあれば小さく出てしまう。**
+        数字が小さく出る側に嘘をつく作りだった。
+
+        声の途中かどうかは、取りちがえようがない。
+        無音の中に入っていれば ○、声の中に入っていれば ×。
+        """
+        for (a1, b1) in muon:
+            if a1 - 0.02 <= t <= b1 + 0.02:
+                return 0.0          # 無音の中。正しい切り替わり
+        # 声の中。その声の始まりからどれだけ入り込んでいるか
+        mae = [b1 for (a1, b1) in muon if b1 <= t]
+        return (t - max(mae)) if mae else t
 
     # ── ② 一覧.txt を読む。章カードは img が @@ で始まる
     #
@@ -109,16 +148,65 @@ def main():
         return 0
 
     # 章カードぶんの無音を引いて、merged.wav の中の時刻に戻す
-    zure, card_byou = [], 0.0
+    mato, card_byou = [], 0.0
     for (no, st, du, img, tx) in rows:
         if img.startswith(u"@@"):
             card_byou += du
             continue
         if not tx:
             continue
-        moto = st - card_byou + LEAD      # 字幕は声の LEAD 秒前に出している
-        chikai = min(hajimari, key=lambda h: abs(h - moto))
-        zure.append((abs(chikai - moto), st, moto, chikai, tx))
+        mato.append((st - card_byou + LEAD, st, tx))   # 字幕は声の LEAD 秒前
+
+    # ■ 「いちばん近い声の始まり」で探すのをやめた（2026-10-09）
+    #
+    # 1枚ずつ独立に近いものを探していた。そのため、
+    # **本当は1秒早く出ている字幕でも、たまたま近くに別の声の始まりがあれば
+    # 「ずれ小」と出てしまう。** 数字が小さく出る側に嘘をつく作りだった。
+    #
+    # 字幕も声の始まりも、どちらも時間順に並んでいる。
+    # **順番を守って対応づければ**、取りちがえようがない。
+    # （検査用の材料では同じ欠陥を背番号で直したが、
+    #   本物を測るこちらに残っていた）
+    #
+    # 1枚うしろへずらすのに罰を置き、全体でいちばん無理のない対応を選ぶ。
+    n_s, n_h = len(mato), len(hajimari)
+    INF = float("inf")
+    # dp[i][j] = 字幕 i までを、声の始まり j までで説明したときの合計
+    dp = [[INF] * (n_h + 1) for _ in range(n_s + 1)]
+    kara = [[None] * (n_h + 1) for _ in range(n_s + 1)]
+    for j in range(n_h + 1):
+        dp[0][j] = 0.0
+    for i in range(1, n_s + 1):
+        moto = mato[i - 1][0]
+        for j in range(1, n_h + 1):
+            # 声の始まり j-1 を字幕 i に当てる
+            v = dp[i - 1][j - 1] + abs(hajimari[j - 1] - moto)
+            k = (i - 1, j - 1)
+            # 声の始まり j-1 は、どの字幕にも当てない（息継ぎなどで余るぶん）
+            if dp[i][j - 1] < v:
+                v, k = dp[i][j - 1], (i, j - 1)
+            dp[i][j] = v
+            kara[i][j] = k
+    zure = []
+    i, j = n_s, n_h
+    while i > 0:
+        pi, pj = kara[i][j]
+        if pi == i - 1:
+            moto, st, tx = mato[i - 1]
+            c = hajimari[j - 1]
+            # ■ 符号を残す（2026-10-14・本人の指摘）
+            #
+            # > 「この時」の音声のときには先に字幕と画像が次のものへ
+            # >  進んでおり、…「ずれ」の測定結果とも異なるので
+            # >  測定方法を変える必要があります
+            #
+            # そのとおりだった。ここは **abs** で向きを捨てていたので、
+            #   ・字幕が声より**早い**（字幕が先に進む）… 本人が見ているもの
+            #   ・字幕が声より**遅い**（字幕が居座る）
+            # の2つが同じ数字になっていた。本人に見えるのは前者だけ。
+            # 向きを残して、分けて数える。
+            zure.append((abs(c - moto), st, moto, c, tx, moto - c))
+        i, j = pi, pj
 
     n = len(zure)
     if not n:
@@ -147,15 +235,87 @@ def main():
     print(u"%.2f秒を超えたもの : %d枚 (%.0f%%)"
           % (GOUKAKU, len(waru), 100.0 * len(waru) / n))
 
+    # ── 向きで分ける（本人に見えるのは「字幕が先に進む」ほうだけ）
+    hayai = [z for z in zure if len(z) > 5 and z[5] > 0 and z[0] > GOUKAKU]
+    osoi = [z for z in zure if len(z) > 5 and z[5] <= 0 and z[0] > GOUKAKU]
+    print(u"")
+    print(u"   そのうち 字幕が声より**早い**（字幕が先に進む）: %d枚" % len(hayai))
+    print(u"            字幕が声より**遅い**（字幕が居座る）  : %d枚" % len(osoi))
+    if hayai:
+        print(u"   ← 見ていて気になるのはこちらです:")
+        for z in hayai[:8]:
+            print(u"      %s  %.2f秒早い   %s" % (mmss(z[1]), z[0], z[4][:30]))
+
+    # ── 声の途中で切り替わっていないか（本人が見ているのはこれ）
+    naka = []
+    for (d, st, moto, c, tx, _muki) in zure:
+        fukasa = shaberi_chuu(moto)
+        if fukasa > 0.15:
+            naka.append((fukasa, st, tx))
+    naka.sort(reverse=True)
+    print(u"")
+    if naka:
+        print(u"⚠ 声の途中で切り替わっている字幕 : %d枚 / %d枚 (%.0f%%)"
+              % (len(naka), n, 100.0 * len(naka) / n))
+        print(u"   （喋っている最中に次の字幕と絵へ変わります）")
+        for (f, st, tx) in naka[:12]:
+            print(u"   %s  声の %.2f秒 中で切り替え   %s" % (mmss(st), f, tx[:26]))
+    else:
+        print(u"○ 切り替わりはすべて、声の切れ目（無音）で起きています")
+
+    # ── もう1つの測り方: 比例配分の何割をもらったか（2026-10-13）
+    #
+    # 本人の言葉:
+    #   「字幕に対して次の字幕のセリフを五つか六つくらいは言葉を発してから
+    #     切り替わる部分があります。ただ、その後ろのセリフは音ずれが発生しない」
+    #
+    # 前の測り方（ずれの秒数）では 0.96秒 しか見えなかったが、
+    # 「その字幕がもらった尺 ÷ 文字数ぶんの比例配分」で測ると 0.32 と出る。
+    #
+    #   前 057  3.33秒 / 18文字 =  5.4字/秒   ← 余裕がありすぎる
+    #      058  0.83秒 / 17文字 = 20.5字/秒   ← **17文字は0.83秒では読めない**
+    #      合計 4.16秒 / 35文字 = 8.4字/秒    ← 合計は正しい。割り方だけ
+    #
+    # 1.00 が比例どおり。0.60 を下回るものは、作りの誤り。
+    hi = []
+    kei_du = sum(max(0.001, r[2]) for r in rows)
+    kei_mj = sum(disp_len(r[4]) for r in rows)
+    if kei_du > 0.01 and kei_mj > 0.01:
+        hayasa2 = kei_mj / kei_du
+        for r in rows:
+            mj = disp_len(r[4])
+            if mj > 0.01 and r[2] > 0.001:
+                hi.append((r[2] / (mj / hayasa2), r[1], r[4]))
+    hi.sort()
+    hi_roku = [x for x in hi if x[0] < 0.60]
+    print(u"")
+    if hi:
+        print(u"字幕の尺が、文字数に見合っているか（1.00 が比例どおり）")
+        print(u"   いちばん低い %.2f / 下から5%% %.2f"
+              % (hi[0][0], hi[max(0, len(hi) // 20)][0]))
+        if hi_roku:
+            print(u"⚠ 文字数から見て短すぎる字幕 : %d枚" % len(hi_roku))
+            print(u"   （前の字幕が居座り、次の声が始まってから切り替わります）")
+            for (x, t2, tx) in hi_roku[:10]:
+                print(u"   %s  比 %.2f   %s" % (mmss(t2), x, tx[:30]))
+        else:
+            print(u"○ 文字数から見て短すぎる字幕はありません")
+
     gyou = [u"# 字幕と声のずれ（BGMの無い merged.wav を基準に測ったもの）",
             u"# 章カードぶんの無音は引いてあります。",
             u"",
             u"いちばん大きいずれ\t%.2f秒" % zure[0][0],
             u"平均のずれ\t%.2f秒" % heikin,
             u"%.2f秒を超えたもの\t%d枚 / %d枚" % (GOUKAKU, len(waru), n),
-            u"", u"動画の時刻\tずれ\t字幕"]
-    for (d, st, moto, c, tx) in zure[:40]:
-        gyou.append(u"%s\t%.2f秒\t%s" % (mmss(st), d, tx))
+            u"声の途中で切り替わり\t%d枚 / %d枚" % (len(naka), n),
+            u"比例配分の最低\t%.2f" % (hi[0][0] if hi else 1.0),
+            u"字幕が声より早い（先に進む）\t%d枚" % len(hayai),
+            u"字幕が声より遅い（居座る）\t%d枚" % len(osoi),
+            u"文字数から見て短すぎる字幕\t%d枚 / %d枚" % (len(hi_roku), n),
+            u"", u"動画の時刻\tずれ\t向き\t字幕"]
+    for z in zure[:40]:
+        muki = u"早い" if (len(z) > 5 and z[5] > 0) else u"遅い"
+        gyou.append(u"%s\t%.2f秒\t%s\t%s" % (mmss(z[1]), z[0], muki, z[4]))
     try:
         if not os.path.isdir(u"確認用"):
             os.makedirs(u"確認用")
@@ -213,7 +373,7 @@ def main():
     print(u"")
     if waru:
         print(u"⚠ %.2f秒を超えてずれている所が %d枚 あります。" % (GOUKAKU, len(waru)))
-        for (d, st, moto, c, tx) in waru[:8]:
+        for (d, st, moto, c, tx, _m2) in waru[:8]:
             print(u"  %s  %.2f秒ずれ   %s" % (mmss(st), d, tx[:24]))
         print(u"  この時刻と文をチャットに貼ってください。")
     else:
