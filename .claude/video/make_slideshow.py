@@ -553,6 +553,58 @@ def muri_ni_kiru(text, n):
     return out
 
 
+def kiriyoi(text, i):
+    u"""text[i-1] と text[i] の間で切ってよいか（言葉の途中でないか）。
+
+    折り返し検査.py が「悪い継ぎ目」と呼ぶものと、同じ見方にしてあります。
+    """
+    if i <= 0 or i >= len(text):
+        return False
+    mae, ato = text[i - 1], text[i]
+    if mae in STRONG or mae in MEDIUM:
+        return True
+    a, b = kind_of(mae), kind_of(ato)
+    if a == "kanji" and b == "kanji":
+        return False
+    if a == "kata" and b == "kata":
+        return False
+    return True
+
+
+def muri_ni_kiru(text, n):
+    u"""どうしても入らないときの、最後の切り方（2026-10-14）
+
+    前は長さだけで**等分**していました。そのため
+
+        貴族の娘エリス・ボレアス・グ / レイラットの家庭教師として、
+
+    のように、カタカナの名前の真ん中で切れることがありました
+    （台本11本・字幕3467枚のうち2枚）。
+    等分の位置から**近い順に、切ってよい所**をさがして切ります。
+    上の例なら「ボレアス・」の後ろ（1文字ずらすだけ）で切れます。
+
+    折り返しは「熟語を割らない」が、幅を使い切ることより上です。
+    """
+    out, nokori = [], text
+    for k in range(n, 1, -1):
+        hoshii = int(round(len(nokori) / float(k)))
+        haba = max(1, len(nokori) // 4)          # ずらしすぎて片寄らせない
+        ichi = None
+        for d in range(0, haba + 1):
+            for i in (hoshii - d, hoshii + d):
+                if kiriyoi(nokori, i):
+                    ichi = i
+                    break
+            if ichi is not None:
+                break
+        if ichi is None:
+            ichi = max(1, min(hoshii, len(nokori) - 1))
+        out.append(nokori[:ichi])
+        nokori = nokori[ichi:]
+    out.append(nokori)
+    return out
+
+
 def kaigyou_naosu(t):
     u"""名前の中の改行の書き方を \\N にそろえる。
 
