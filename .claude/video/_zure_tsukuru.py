@@ -1,0 +1,284 @@
+# -*- coding: utf-8 -*-
+u"""字幕ずれ検査 ─ 本物と同じ形の材料を作る
+
+ねらい:
+  本人のPCでしか起きない「字幕と音声のずれ」を、こちらで再現して測る。
+  絵は関係ないので、音声・台本・subtitle.srt だけ本物そっくりに作る。
+
+本物の形（第6回の実測）:
+  1行ずつの音声 54個 / 実測 540.81秒 → merged.wav 534.44秒（0.9882倍）
+  文 102 → 字幕 180 → 区切り 267枚
+
+本物は「、」で細かく割れて 267枚になる。**そこが肝心**なので、
+文の中に「、」を入れ、**読点のかたまり1つ1つに正解の時刻を持たせる**。
+
+  54個の音声 × 2文 × 2〜3かたまり ＝ 約270枚（本物と同じ形）
+
+読む速さは かたまりごとに ±25% ばらつかせる。
+文字数の比で割る方法は、ここで必ず外れる。
+"""
+import io, os, re, struct, wave, random, math, json, shutil
+
+SR = 44100
+
+# 「、」で息を継がない割合。本人のログ(15/54の段落だけ実測できた)から逆算した値。
+TEN_IKI_NASHI = 0.27
+import sys
+random.seed(int(sys.argv[1]) if len(sys.argv)>1 else 20261005)
+
+KANA = u"アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロ"
+GO = [u"ヒトガミ", u"ルーデウス", u"ロキシー", u"エリス", u"オルステッド", u"シルフィエット",
+      u"老デウス", u"ララ", u"助言", u"運命", u"未来", u"転移", u"結婚", u"子供", u"妊娠",
+      u"魔大陸", u"ラノア魔法大学", u"ベガリット", u"ウェンポート", u"路地裏"]
+
+
+def kotoba(n):
+    t = u""
+    while len(t) < n:
+        t += random.choice(GO) if random.random() < 0.45 else random.choice(KANA)
+    return t[:n]
+
+
+# かたまりに付ける「背番号」。
+#
+# ■ なぜ要るか（2026-10-06・ここを直さないと何も測れない）
+#
+# 前は、出来た割り当て表と正解を **本文で突き合わせていた。**
+# ところが作った本文には同じ文字列が出てくるので、
+# 「本文が合わない 4枚」が出たとたんに**そこから先が1つずつ食いちがい**、
+# 2.66秒・2.37秒といった**偽のずれ**が並んだ。
+# それを本物のずれだと思って決め方を直しかけている（2回目）。
+#
+# かたまり1つ1つに重ならない背番号を付けておけば、
+# 突き合わせは一対一で決まり、**出た数字は全部本物**になる。
+# 背番号は **ふつうのカタカナ** で作る。
+# 小さい字や単位記号を使うと、字幕の折り返しや字数の数え方が変わり、
+# **検査したい仕組みそのものが別の動きになってしまう**（361枚に増えた）。
+BANGOU = KANA
+_renban = [0]
+
+
+def seban():
+    u"""0,1,2… を、ふつうのカタカナ3文字に直す（重ならない背番号）。"""
+    n = _renban[0]
+    _renban[0] += 1
+    b = len(BANGOU)
+    return u"".join(BANGOU[(n // b ** k) % b] for k in (2, 1, 0))
+
+
+def bun():
+    u"""「、」で2〜3つに割れる文を1つ作る。かたまりの並びで返す。"""
+    k = random.choice([2, 2, 3, 3, 4])
+    out = []
+    for i in range(k):
+        n = random.choice([5, 7, 9, 11, 14, 17, 20])
+        # 背番号を頭に付ける。これでかたまりの本文が重ならない。
+        out.append(seban() + kotoba(n) + (u"。" if i == k - 1 else u"、"))
+    return out
+
+
+def tone(sec, hz=440.0, vol=0.35):
+    u"""声のかわりの音。長さは秒で指定。
+
+    ■ 言葉の途中にも、細かい途切れを入れる（ここが肝心）
+
+    本物の声は、子音・破裂音で **言葉の途中でも 0.02〜0.07秒 切れる。**
+    入れていない材料で測ると、直ったように見えてしまう。
+
+    ■ 長さの根拠（当てずっぽうにしない）
+
+    本番のログで、0.10秒以上の間に 140か所が寄っていた。
+    ＝ **本物の「、」の息継ぎは、ほとんどが 0.10秒以上。**
+    一方、子音の途切れがそれより長くなることはない。
+    前の材料は 途中の途切れを 0.12秒まで・「、」を 0.06秒からにしていて、
+    **両者が重なりすぎていた**（どんな決め方でも区別できない形）。
+    """
+    k = int(round(sec * SR))
+    out = []
+    i = 0
+    tsugi = random.uniform(0.18, 0.45)      # 次に途切れるまで
+    while i < k:
+        if len(out) / float(SR) >= tsugi and k - i > int(0.25 * SR):
+            # ■ 語の途中の閉鎖を、しきい値の**上**にも作る
+            #   （2026-10-12・ここが材料に無かった）
+            #
+            # 機械が寄せ先の候補にするのは 0.085秒以上の無音。
+            # 前の材料の語中の途切れは 0.02〜0.07秒で、**全部しきい値の下**。
+            # つまり材料には「間違った寄せ先」が1つも無く、
+            # **どこへ飛んでも必ず正しい所に当たった。**
+            # だから寄せる窓を 0.35 → 1.20 に広げても数字が動かず、
+            # それを「無害の証拠」と読み違えた（本物は 3% → 12% に悪化）。
+            #
+            # 本物の「ッ」や破裂音の閉鎖は 0.09〜0.15秒＝**しきい値の上**。
+            # 語の途中なのに正しそうに見える寄せ先になる。
+            # 本人の「ルーデウス」が「ルッデスス」と読まれる件は、
+            # その偽の寄せ先を1つ増やす話でもある。
+            # 4回に1回ぐらいは、その長さの閉鎖を作る。
+            kire = int(round((random.uniform(0.09, 0.15)
+                              if (TSUMARU[0] and random.random() < 0.25)
+                              else random.uniform(0.02, 0.07)) * SR))
+            out += [0] * kire
+            i += kire
+            tsugi = len(out) / float(SR) + random.uniform(0.18, 0.45)
+            continue
+        out.append(int(32767 * vol * math.sin(2 * math.pi * hz * i / SR)
+                       * (0.6 + 0.4 * math.sin(2 * math.pi * 3.1 * i / SR))))
+        i += 1
+    return out[:k]
+
+
+def mu(sec):
+    u"""無音。本物はまったくの無ではなく、わずかな暗騒音がある。"""
+    k = int(round(sec * SR))
+    return [int(random.gauss(0, 12)) for _ in range(k)]
+
+
+def kaku(path, data):
+    w = wave.open(path, "wb")
+    w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)
+    w.writeframes(struct.pack("<%dh" % len(data), *data))
+    w.close()
+
+
+# ■ 既定は「前と同じ（やさしい）材料」。既存の線の意味を壊さないため。
+#   ZURE_KEZURU_BARA=1 と ZURE_TSUMARU=1 で「きつい材料」になる。
+#   ずれ検査.py が4段目でその2つを立てる。
+# つなぎ目で削る量をばらつかせるか（1 で本物と同じようにばらつく）。
+KEZURU_BARA = [os.environ.get(u"ZURE_KEZURU_BARA", u"0") == u"1"]
+# 語の途中に「しきい値より長い」閉鎖（ッ・破裂音）を作るか。
+TSUMARU = [os.environ.get(u"ZURE_TSUMARU", u"0") == u"1"]
+
+
+def main():
+    for d in (u"output", u"確認用", u"その他"):
+        if os.path.isdir(d):
+            shutil.rmtree(d)
+    os.makedirs(u"output")
+
+    PARTS = 54
+    bunretsu, dan = [], []      # かたまりの並び / 段落（＝1行ずつの音声）の中身
+    for p in range(PARTS):
+        dan.append([])
+        for _ in range(random.choice([1, 2, 2, 3])):
+            for kt in bun():
+                dan[-1].append(kt)
+                bunretsu.append(kt)
+
+    # 1行ずつの音声を作る。読む速さは 6.46字/秒 を中心に ±25% ばらつかせる。
+    # ばらつかせるのが肝心：文字数の比で割る方法は、ここで必ず外れる。
+    seikai = []                 # merged.wav での (開始, 終了)
+    merged, moto_kei = [], 0.0
+    for p, bs in enumerate(dan):
+        atama, oshiri = 0.25, 0.35          # VOICEPEAK が付ける前後の無音
+        oto = mu(atama)
+        naka = []
+        for i, t in enumerate(bs):
+            hayasa = 6.46 * random.uniform(0.75, 1.25)
+            byou = len(t) / hayasa
+            naka.append((len(oto) / float(SR), byou))
+            oto += tone(byou)
+            if i < len(bs) - 1:
+                # 「、」のあとは短い息継ぎ、「。」のあとは長めの間。
+                #
+                # ■ **「、」で息を継がないことがある**（2026-10-07・ここが肝心）
+                #
+                # 前の材料は「、」で**必ず**息継ぎを入れていた。
+                # そのせいで「声の区間の数」と「、で割った数」がいつも一致し、
+                # 実測の仕組みがほぼ毎回うまくいって、検査は 0.49秒と言っていた。
+                #
+                # **本物はそうではない。** 本人の第6回のログ:
+                #
+                #     15/54 の段落は、1行ずつの音声で文の長さを実測しました
+                #
+                # **54段落のうち15段落しか実測できていない。** 残り39段落は
+                # 当てずっぽうに落ちて、本人の画面で 2.08秒ずれていた。
+                #
+                # 1段落あたり「、」が4つなら 15/54 = 0.28 ≒ p**4 から
+                # **p ≒ 0.73** ＝ 「、」の約4分の1は息を継がない。
+                # そこに合わせる。ここを本物に寄せないと、
+                # **検査が通っても本人の画面では直っていない。**
+                if t.endswith(u"、"):
+                    if random.random() < TEN_IKI_NASHI:
+                        # 息を継がずに読み続けた。子音の途切れしか無い
+                        oto += mu(random.uniform(0.02, 0.07))
+                    else:
+                        oto += mu(random.choice([0.10, 0.14, 0.18, 0.25, 0.35]))
+                else:
+                    oto += mu(random.choice([0.30, 0.40, 0.55, 0.70, 0.85]))
+        oto += mu(oshiri)
+        kaku(os.path.join(u"output", u"%03d.wav" % (p + 1)), oto)
+        moto_kei += len(oto) / float(SR)
+
+        # merged.wav は前後の無音を**少しだけ**削ってつなぐ。
+        #
+        # 本物の実測: 540.81秒 → 534.44秒。53のつなぎ目で 6.37秒 ＝
+        # **1か所あたり 0.12秒しか削っていない。**
+        # 前は 0.48秒 削る材料にしていて、段落の境目そのものを潰していた。
+        # そのせいで「境目が見つからない」別の壊れ方を再現してしまった。
+        # ■ 削る量を段落ごとにばらつかせる（2026-10-12・ここが抜けていた）
+        #
+        # 前はどの段落も **ぴったり 0.12秒** 削っていた。
+        # そのせいで「1行ずつの音声で測った長さ」から出した見当が
+        # **誤差ゼロで正解に一致**し、寄せる窓が一度も必要にならなかった。
+        # 結果、JISSOKU_TOL を 0.35 → 1.20 に広げても
+        # **材料の数字が1つも動かず、それを「無害の証拠」と読み違えた。**
+        # 本物では 0.45秒超が 3% → 12% に悪化していた（v154）。
+        #
+        # 本物は無音を見て削るので、段落ごとにちがう。
+        # ならすと 0.12秒（本物の 540.81→534.44 と合う）になる幅でばらつかせる。
+        # これで見当に本物と同じ誤差が入り、窓の広さが数字に出る。
+        kezuru = random.uniform(0.04, 0.20) if KEZURU_BARA[0] else 0.12
+        hajime = len(merged) / float(SR)
+        kezuru_a = int(round(kezuru / 2.0 * SR))
+        kezuru_b = int(round(kezuru / 2.0 * SR))
+        nakami = oto[kezuru_a:len(oto) - kezuru_b]
+        for (st, du) in naka:
+            s2 = hajime + (st - kezuru / 2.0)
+            seikai.append((s2, s2 + du))
+        merged += nakami
+    kaku(u"merged.wav", merged)
+
+    # subtitle.srt（本文を合わせるためだけに使われる。時刻は雑でよい）
+    def mmss(t):
+        return u"%02d:%02d:%02d,%03d" % (t // 3600, (t % 3600) // 60, t % 60,
+                                         int((t - int(t)) * 1000))
+    srt, t0 = [], 0.0
+    for i, bs in enumerate(dan):
+        d0 = sum(seikai[j][1] - seikai[j][0] for j in range(
+            sum(len(x) for x in dan[:i]), sum(len(x) for x in dan[:i + 1])))
+        srt.append(u"%d\n%s --> %s\n%s\n" % (i + 1, mmss(t0), mmss(t0 + d0),
+                                             u"".join(bs)))
+        t0 += d0
+    io.open(u"subtitle.srt", "w", encoding="utf-8").write(u"\n".join(srt))
+
+    io.open(u"台本_字幕用.txt", "w", encoding="utf-8").write(
+        u"\n".join(u"".join(bs) for bs in dan) + u"\n")
+    io.open(u"台本_読み上げ用.txt", "w", encoding="utf-8").write(
+        u"\n".join(u"".join(bs) for bs in dan) + u"\n")
+
+    # 「文の頭」も覚えておく。
+    # ずれたとき、**どの仕組みのせいか**を名指しできるようにするため。
+    #   段落の頭   → kugiri_awase（1行ずつの音声の境目）
+    #   文の頭     → place_in_chunk（かたまりの中の文の切れ目）
+    #   それ以外   → koma_awase / split_by_kuten（「、」の切れ目）
+    bun_atama, n2 = [], 0
+    for bs in dan:
+        atarashii = True
+        for t in bs:
+            if atarashii:
+                bun_atama.append(n2)
+            atarashii = t.strip().endswith((u"。", u"！", u"？"))
+            n2 += 1
+    io.open(u"正解.json", "w", encoding="utf-8").write(
+        json.dumps({u"bun": bunretsu, u"seikai": seikai,
+                    u"atama": [sum(len(x) for x in dan[:i]) for i in range(len(dan))],
+                    u"bun_atama": bun_atama,
+                    u"moto": moto_kei, u"merged": len(merged) / float(SR)},
+                   ensure_ascii=False))
+    print(u"文 %d個 / 1行ずつの音声 %d個" % (len(bunretsu), PARTS))
+    print(u"実測 %.2f秒 → merged.wav %.2f秒 (%.4f倍)"
+          % (moto_kei, len(merged) / float(SR), len(merged) / float(SR) / moto_kei))
+
+
+if __name__ == "__main__":
+    main()
