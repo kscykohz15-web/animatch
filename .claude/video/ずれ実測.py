@@ -155,7 +155,20 @@ def main():
             continue
         if not tx:
             continue
-        mato.append((st - card_byou + LEAD, st, tx))   # 字幕は声の LEAD 秒前
+        # 字幕は声の LEAD 秒前に出る。4つめは**1枚前の字幕の文**。
+        #
+        # ■ なぜ1枚前も持つのか（2026-10-15・本人の指摘）
+        #
+        # > 「優しくしたのは、この時、」の字幕部分で、「この時」の音声の
+        # >  ときには先に字幕と画像が次のものへ進んでおり
+        #
+        # 本人が名前で言うのは、**画面に出ている字幕**＝1枚前。
+        # こちらは「次の字幕の開始がずれている」と、1枚うしろの名前で
+        # 出していた。だから
+        # > 「ずれ」の測定結果とも異なるので測定方法を変える必要があります
+        # になった。同じ所を指しているのに、名前が違っていた。
+        mato.append((st - card_byou + LEAD, st, tx,
+                     mato[-1][2] if mato else u""))
 
     # ■ 「いちばん近い声の始まり」で探すのをやめた（2026-10-09）
     #
@@ -194,18 +207,27 @@ def main():
         if pi == i - 1:
             moto, st, tx = mato[i - 1]
             c = hajimari[j - 1]
-            # ■ 符号を残す（2026-10-14・本人の指摘）
+            # ■ 符号を残す（2026-10-14）＋**向きの札を取りちがえていた直し**
             #
             # > 「この時」の音声のときには先に字幕と画像が次のものへ
             # >  進んでおり、…「ずれ」の測定結果とも異なるので
             # >  測定方法を変える必要があります
             #
-            # そのとおりだった。ここは **abs** で向きを捨てていたので、
-            #   ・字幕が声より**早い**（字幕が先に進む）… 本人が見ているもの
-            #   ・字幕が声より**遅い**（字幕が居座る）
-            # の2つが同じ数字になっていた。本人に見えるのは前者だけ。
-            # 向きを残して、分けて数える。
-            zure.append((abs(c - moto), st, moto, c, tx, moto - c))
+            # 向きを捨てていた（abs）のを直したのが 10-14。
+            # ところが **札を逆に付けていた**（2026-10-15 に気づいた）。
+            #
+            #   moto … その字幕の声が**出るはずの**時刻
+            #   c    … その字幕の声が**実際に出た**時刻
+            #
+            #   moto > c … 声のほうが先に始まった
+            #              ＝ 前の字幕が画面に**居座っている**
+            #   moto < c … 字幕が先に出て、声はまだ来ていない
+            #              ＝ 字幕と絵が**先に進んでいる**（本人が見ているもの）
+            #
+            # 逆に書いていたので、本人が見ているものを「遅い」と呼び、
+            # 見えないほうを「← 見ていて気になるのはこちら」と出していた。
+            zure.append((abs(c - moto), st, moto, c, tx, moto - c,
+                         mato[i - 1][3]))
         i, j = pi, pj
 
     n = len(zure)
@@ -236,30 +258,37 @@ def main():
           % (GOUKAKU, len(waru), 100.0 * len(waru) / n))
 
     # ── 向きで分ける（本人に見えるのは「字幕が先に進む」ほうだけ）
-    hayai = [z for z in zure if len(z) > 5 and z[5] > 0 and z[0] > GOUKAKU]
-    osoi = [z for z in zure if len(z) > 5 and z[5] <= 0 and z[0] > GOUKAKU]
+    # moto < c ＝ 字幕が先に出て声がまだ来ていない ＝ 字幕が先に進んでいる
+    susumu = [z for z in zure if len(z) > 5 and z[5] < 0 and z[0] > GOUKAKU]
+    izasuru = [z for z in zure if len(z) > 5 and z[5] >= 0 and z[0] > GOUKAKU]
     print(u"")
-    print(u"   そのうち 字幕が声より**早い**（字幕が先に進む）: %d枚" % len(hayai))
-    print(u"            字幕が声より**遅い**（字幕が居座る）  : %d枚" % len(osoi))
-    if hayai:
-        print(u"   ← 見ていて気になるのはこちらです:")
-        for z in hayai[:8]:
-            print(u"      %s  %.2f秒早い   %s" % (mmss(z[1]), z[0], z[4][:30]))
+    print(u"   そのうち 字幕と絵が**先に進む**（声がまだ来ていない）: %d枚"
+          % len(susumu))
+    print(u"            前の字幕が**居座る**（声がもう始まっている）  : %d枚"
+          % len(izasuru))
+    if susumu:
+        print(u"   ← 見ていて気になるのはこちらです"
+              u"（「 」の字幕が出ているあいだに、次の声が始まります）:")
+        for z in susumu[:8]:
+            print(u"      %s  %.2f秒 先に進む   「%s」→「%s」"
+                  % (mmss(z[1]), z[0], (z[6] or u"（先頭）")[:20], z[4][:20]))
 
     # ── 声の途中で切り替わっていないか（本人が見ているのはこれ）
     naka = []
-    for (d, st, moto, c, tx, _muki) in zure:
+    for z in zure:
+        d, st, moto, c, tx, _muki = z[0], z[1], z[2], z[3], z[4], z[5]
         fukasa = shaberi_chuu(moto)
         if fukasa > 0.15:
-            naka.append((fukasa, st, tx))
+            naka.append((fukasa, st, tx, z[6] if len(z) > 6 else u""))
     naka.sort(reverse=True)
     print(u"")
     if naka:
-        print(u"⚠ 声の途中で切り替わっている字幕 : %d枚 / %d枚 (%.0f%%)"
+        print(u"⚠ 声の途中で切り替わっている所 : %d枚 / %d枚 (%.0f%%)"
               % (len(naka), n, 100.0 * len(naka) / n))
-        print(u"   （喋っている最中に次の字幕と絵へ変わります）")
-        for (f, st, tx) in naka[:12]:
-            print(u"   %s  声の %.2f秒 中で切り替え   %s" % (mmss(st), f, tx[:26]))
+        print(u"   （「 」の字幕が画面に出ているあいだに、次の声が始まります）")
+        for (f, st, tx, mae_tx) in naka[:12]:
+            print(u"   %s  声の %.2f秒 中   「%s」→「%s」"
+                  % (mmss(st), f, (mae_tx or u"（先頭）")[:20], tx[:20]))
     else:
         print(u"○ 切り替わりはすべて、声の切れ目（無音）で起きています")
 
@@ -309,13 +338,16 @@ def main():
             u"%.2f秒を超えたもの\t%d枚 / %d枚" % (GOUKAKU, len(waru), n),
             u"声の途中で切り替わり\t%d枚 / %d枚" % (len(naka), n),
             u"比例配分の最低\t%.2f" % (hi[0][0] if hi else 1.0),
-            u"字幕が声より早い（先に進む）\t%d枚" % len(hayai),
-            u"字幕が声より遅い（居座る）\t%d枚" % len(osoi),
+            u"字幕と絵が先に進む\t%d枚" % len(susumu),
+            u"前の字幕が居座る\t%d枚" % len(izasuru),
             u"文字数から見て短すぎる字幕\t%d枚 / %d枚" % (len(hi_roku), n),
             u"", u"動画の時刻\tずれ\t向き\t字幕"]
+    gyou[-1] = u"動画の時刻\tずれ\t向き\t画面に出ている字幕\t次の字幕"
     for z in zure[:40]:
-        muki = u"早い" if (len(z) > 5 and z[5] > 0) else u"遅い"
-        gyou.append(u"%s\t%.2f秒\t%s\t%s" % (mmss(z[1]), z[0], muki, z[4]))
+        muki = u"先に進む" if (len(z) > 5 and z[5] < 0) else u"居座る"
+        gyou.append(u"%s\t%.2f秒\t%s\t%s\t%s"
+                    % (mmss(z[1]), z[0], muki,
+                       (z[6] if len(z) > 6 else u""), z[4]))
     try:
         if not os.path.isdir(u"確認用"):
             os.makedirs(u"確認用")

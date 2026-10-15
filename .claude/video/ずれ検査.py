@@ -167,6 +167,56 @@ KITSUI_WARIAI = 24.0
 # 線は「いまの実力に少し余裕」ではなく **0.6未満を1枚も出さない**。
 HIRITSU_YUKA = 0.60       # これを下回る字幕が1枚でもあれば落とす
 
+# ■ 「声の途中で切り替わり」の線（2026-10-15・本人の v158 の残り）
+#
+# 本人の v158 の報告は、これ1つだった。
+#
+#   ⚠ 声の途中で切り替わっている字幕 : 6枚 / 237枚 (3%)
+#
+# **ところがこの検査は、それを1つも測っていなかった。**
+# 測っていたのは「正解との秒数の差」「比例配分」「錨」だけ。
+# 秒数の差は LEAD(0.12秒)ぶん必ず出るので 0.45秒の線で見るしかなく、
+# 本人が見ている 0.43秒 や 0.34秒 は**線の下に隠れていた。**
+#
+# ■ 2つに分けてから線を引く。混ぜると、材料のクセに合わせて線が動く
+#
+#   (a) 正しい所には間があるのに、声の中へ置いた … **こちらの誤り**
+#   (b) 正しい所そのものに間が無い（息を継がずに読んだ「、」）
+#       … 置き方では直せない。切らずにくっつけるしかない
+#
+# 材料は (b) が本物よりずっと多い（「、」の4割に使える間が無い作り）。
+# そこを混ぜた数で線を引くと、**材料のクセを見張ることになる。**
+# 線は (a)（＝ naka_a）にだけ置く。
+#
+# ■ 線は、両側を測ってから置いた（乱数1〜3の (a) の枚数）
+#
+#            いま(上限44)   v158(上限36)
+#   54/54      15 14 11       25 21 17
+#   15/54      14 11 10       25 22 19
+#   実測なし    15 10 12       29 23 21
+#   きつい材料  12 17 23       24 26 29
+#
+# 上の3段は **18** に置く。いまの実力(最大15)に 3 の余裕があり、
+# v158 に戻れば 3通りのうち2つが落ちる（＝段として落ちる）。
+# 17 の1通りだけでは通るが、**3通り走る形なので必ず捕まる。**
+# 16 に詰めると余裕が 1 しかなく、乱数しだいで○×が変わる
+# ──「出来の良し悪しではなく、さいころを見ているだけ」になる。
+#
+# 4段目は **30**。ここだけ材料が違い、いま 23・v158 が 24 で**重なっている。**
+# 間に線を引くと、まさにさいころを見ることになる。
+# だからこの段は「ひどい悪化だけ捕まえる」緩い線にして、
+# **比べるのは上の表の数字そのもの**にする
+# （この段の絶対値でつまみを決めてはいけない、は前からの決めごと）。
+#
+# ■ 0 には置けない
+#
+# 上の (b) が材料に必ず残るので、0 にはならない。
+# これは「出来の証明」ではなく、**これ以上悪くなっていないの見張り**。
+GOUKAKU_NAKA = 18        # 実測 54/54
+HONBAN_NAKA = 18         # 実測 15/54
+YOBI_NAKA = 18           # 実測なし（予備の道）
+KITSUI_NAKA = 30         # きつい材料（重なっているので緩い線）
+
 # 4段目のあいだだけ立てる旗。_zure_tsukuru.py に env で渡す。
 KITSUI = [False]
 
@@ -265,21 +315,21 @@ def main():
     # 15/54 の段は「測れない所が多いときの予備」。
     # 札が古いせいで、いちばん本物から遠い段を「本物と同じ」として
     # 信じていた（v154 の判断ミスはそこから始まっている）。
-    for (tsukau, wari, nm, oo, he, wa, kitsui) in (
+    for (tsukau, wari, nm, oo, he, wa, kitsui, nk) in (
             (True, 1.0, u"実測 54/54(本物と同じ)", GOUKAKU_OOKII,
-             GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False),
+             GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False, GOUKAKU_NAKA),
             (True, 15.0 / 54.0, u"実測 15/54(測れない所が多いとき)", HONBAN_OOKII,
-             HONBAN_HEIKIN, HONBAN_WARIAI, False),
+             HONBAN_HEIKIN, HONBAN_WARIAI, False, HONBAN_NAKA),
             (False, 1.0, u"実測なし(予備の道)", YOBI_OOKII,
-             YOBI_HEIKIN, YOBI_WARIAI, False),
+             YOBI_HEIKIN, YOBI_WARIAI, False, YOBI_NAKA),
             # ■ 4段目（2026-10-12）。**偽の寄せ先がある材料。**
             #   ここが無かったせいで JISSOKU_TOL の広げすぎが見えなかった。
             (True, 1.0, u"きつい材料(偽の寄せ先あり)", KITSUI_OOKII,
-             KITSUI_HEIKIN, KITSUI_WARIAI, True)):
+             KITSUI_HEIKIN, KITSUI_WARIAI, True, KITSUI_NAKA)):
         print(u"── %s ──" % nm)
         jissoku_kirikae(tsukau, wari)
         KITSUI[0] = kitsui
-        if shirabe(a.kai, nm, oo, he, wa):
+        if shirabe(a.kai, nm, oo, he, wa, nk):
             warui.append(nm)
     print(u"")
     try:
@@ -293,7 +343,7 @@ def main():
     return 0
 
 
-def shirabe(kai, nm, oo, he, wa):
+def shirabe(kai, nm, oo, he, wa, nk=9999):
     warui = []
     for tane in range(1, kai + 1):
         k = hitotsu(tane)
@@ -305,7 +355,8 @@ def shirabe(kai, nm, oo, he, wa):
         shirushi = u"○" if (k[u"ookii"] <= oo and k[u"heikin"] <= he
                             and k[u"wariai"] <= wa
                             and anc[1] <= GOUKAKU_ANC
-                            and roku == 0) else u"×"
+                            and roku == 0
+                            and k.get(u"naka_a", 0) <= nk) else u"×"
         print(u"%s 乱数 %d  区切り %3d枚 / いちばん大きいずれ %.2f秒 / "
               u"平均 %.2f秒 / 0.45秒超 %.0f%%"
               % (shirushi, tane, k[u"kazu"], k[u"ookii"], k[u"heikin"], k[u"wariai"]))
@@ -318,6 +369,13 @@ def shirabe(kai, nm, oo, he, wa):
             print(u"     文の頭(place_in_chunk) 最大%.2f / "
                   u"「、」(koma_awase) 最大%.2f"
                   % (k[u"bun"][0], k[u"ten"][0]))
+        if u"naka_kazu" in k:
+            print(u"     声の途中で切り替わり %d枚 / うち直せる（正しい所に間がある）"
+                  u" %d枚（線 %d・深さ %.2f秒）"
+                  % (k[u"naka_kazu"], k.get(u"naka_a", 0), nk,
+                     k.get(u"naka_a_ookii", 0.0)))
+            for z in (k.get(u"naka_list") or [])[:3]:
+                print(u"       %7.2f  声の %.2f秒 中   %s" % (z[1], z[0], z[2]))
         if u"hiritsu_mn" in k:
             print(u"     比例配分 いちばん低い %.2f / 下から5%% %.2f / "
                   u"%.2f未満 %d枚"

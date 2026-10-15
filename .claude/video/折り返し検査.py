@@ -27,7 +27,9 @@ W, H = 1920, 1080
 # 前はここにも書き写していて、20選2本を足したときに
 # **2058枚のまま**（8本ぶん）数えていました。
 import 動画一覧 as _D
-SC = [v.sub for v in _D.yomu()]
+_aru, _nai = _D.dekiteiru()
+_D.dekiteiru_iu(_nai, u"折り返し検査:")
+SC = [v.sub for v in _aru]
 
 
 def cues_of(p):

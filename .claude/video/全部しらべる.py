@@ -11,7 +11,8 @@ try: sys.stdout.reconfigure(encoding="utf-8")
 except Exception: pass
 
 warui = 0
-douga = D.yomu()
+douga, _nai = D.dekiteiru()
+D.dekiteiru_iu(_nai, u"全部しらべる:")
 for v in douga:
     if not os.path.exists(v.overlay):
         print(u"× %s がありません" % os.path.basename(v.overlay)); warui += 1; continue

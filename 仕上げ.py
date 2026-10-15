@@ -60,6 +60,82 @@ HERE, B = sagasu()          # HERE=scratchpad の親（build.py がある所） 
 V = os.path.join(B, "video")
 sys.path.insert(0, V)
 
+
+def keijiban():
+    u"""**出す物そのもの**を返す。無ければ board.src.html に落ちる。（2026-10-15）
+
+    ここは2回誤診している。
+
+      ・2026-10-08 「置き場所.txt がZIPに1か所しか無い」→ 公開中の掲示板には
+        2か所ちゃんと入っていた。**scratchpad の board.src.html が遅れていただけ。**
+      ・2026-10-11 (v154) 同じことがまた起きた。
+
+    board.src.html は git に入れていないので、別のセッションが直しても
+    こちらには来ない。**そして出しているのは board.src.html ではない。**
+    いまの渡し方は「公開中の掲示板を読んで、中身だけ差し替える」なので、
+    検査するべきは**公開中のものの控え**である。
+
+    だから `公開中の掲示板.html` があればそれを見る。
+    どちらを見たかは必ず名前で出す（黙って切りかえると、また誤診する）。
+    """
+    ima = os.path.join(HERE, u"公開中の掲示板.html")
+    if os.path.exists(ima):
+        return ima, u"公開中の掲示板.html（出す物そのもの）"
+    return os.path.join(HERE, "board.src.html"), \
+        u"board.src.html（**古いかもしれません。公開中のものを控えてください**）"
+
+
+def repo_wo_utsusu():
+    u"""**リポジトリの道具を、検査する場所へ写してから測る。**（2026-10-15）
+
+    ここが抜けていた。道具は2か所にある。
+
+        リポジトリ  .claude/video/     … git に入る。本人に届くのはこちら
+        作業場所    scratchpad/video/  … 台本や画像があるので、検査はここで動く
+
+    検査は作業場所のほうを動かす。**写していなければ、古い道具を測る。**
+    実際に、作業場所の make_slideshow.py は 10月11日のもので止まっていて、
+    v155〜v158 の4版ぶん、**直したはずのコードを1度も測っていなかった。**
+    （どの版の控えとも md5 が合わないことで分かった）
+
+    同じ形の事故を、この一月で3回やっている。
+      ・メニューの 2 が Prepare を呼ばず、道具が本人のパソコンで入れ替わらなかった
+      ・掲示板の board.src.html が古く、出す物と検査する物が違っていた
+      ・そして今回、検査する物そのものが古かった
+
+    **見ていない所は必ず壊れる。** だから毎回ここで写し、
+    写したものを名前で出す。黙って写すと、また気づけない。
+    """
+    import glob as _g
+    import shutil as _sh
+    koko = os.path.dirname(os.path.abspath(__file__))
+    moto = os.path.join(koko, ".claude", "video")
+    if not os.path.isdir(moto):
+        print(u"[中断] リポジトリの .claude/video が見つかりません: %s" % moto)
+        print(u"       仕上げ.py は**リポジトリ直下**から動かしてください。")
+        print(u"       （scratchpad 側の控えから動かすと、古い道具を測ります）")
+        sys.exit(1)
+    kaeta = []
+    for f in sorted(os.listdir(moto)):
+        if not f.endswith((".py", ".txt", ".tsv")):
+            continue
+        a, b = os.path.join(moto, f), os.path.join(V, f)
+        try:
+            onaji = (os.path.exists(b)
+                     and open(a, "rb").read() == open(b, "rb").read())
+        except Exception:
+            onaji = False
+        if not onaji:
+            _sh.copy2(a, b)
+            kaeta.append(f)
+    for d in _g.glob(os.path.join(V, "__pycache__")):
+        _sh.rmtree(d, ignore_errors=True)
+    print(u"リポジトリの道具を検査する場所へ写しました: %d個が古かった%s"
+          % (len(kaeta), (u"（" + u" / ".join(kaeta[:10]) + u"）") if kaeta else u""))
+
+
+repo_wo_utsusu()
+
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -207,7 +283,9 @@ else:
 
 # ── ⑤ 配り忘れ ──────────────────────────────────────
 midashi(u"⑤", u"共通の設定が、どの動画のパックにも入るか")
-src = io.open(os.path.join(HERE, "board.src.html"), encoding="utf-8").read()
+_kp, _kna = keijiban()
+print(u"掲示板として見るもの: " + _kna)
+src = io.open(_kp, encoding="utf-8").read()
 # ZIPを作るところは2か所ある（制作パック と 台本保存/音声生成/動画化）。
 # 「1か所でも呼んでいればよい」にすると、片方だけ直したのを見逃す。
 # 効果音フォルダも miru_kekka.py も、それで消えた。
@@ -327,7 +405,7 @@ else:
 
 # ── ⑧ パック版 ──────────────────────────────────────
 midashi(u"⑧", u"パック版が掲示板の版と合っているか")
-src2 = io.open(os.path.join(HERE, "board.src.html"), encoding="utf-8").read()
+src2 = io.open(keijiban()[0], encoding="utf-8").read()
 m = re.search(r'PACK_VERSION\s*=\s*"v(\d+)"', src2)
 oboe = os.path.join(HERE, u".出した版.txt")
 dashita = 0
@@ -373,7 +451,7 @@ if not node:
 else:
     out_ps1 = os.path.join(HERE, "_menu.ps1")
     r = subprocess.run([node, os.path.join(V, "menu_dump.js"),
-                        os.path.join(HERE, "board.src.html"), out_ps1],
+                        keijiban()[0], out_ps1],
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if r.returncode != 0:
         print(r.stdout.decode("utf-8", "replace")[-800:])

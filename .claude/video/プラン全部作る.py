@@ -22,7 +22,8 @@ except Exception:
 
 if __name__ == "__main__":
     warui = 0
-    douga = D.yomu()
+    douga, _nai = D.dekiteiru()
+    D.dekiteiru_iu(_nai, u"プラン全部作る:")
     for v in douga:
         # 章→話数（20選は章→作品フォルダ）は tsukuru が
         # 画面表示_○○.txt の4列目から読みます

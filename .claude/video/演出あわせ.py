@@ -53,7 +53,9 @@ HONNIN.update(SANKOU)
 # どの台本で測るかも 動画一覧.txt にだけ書いてあります。
 # 前はここに4本だけ書き写していました。
 import 動画一覧 as _D
-KUMI = [(v.namae, v.overlay, v.sub) for v in _D.yomu()]
+_aru, _nai = _D.dekiteiru()
+_D.dekiteiru_iu(_nai, u"演出あわせ:")
+KUMI = [(v.namae, v.overlay, v.sub) for v in _aru]
 
 
 def kumitate(script):

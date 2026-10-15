@@ -51,6 +51,35 @@ def yomu(path=None, ban=None):
     return out
 
 
+def dekiteiru(path=None, ban=None):
+    u"""**台本ができている動画だけ**を返す（2026-10-15）。
+
+    動画一覧.txt には、先に行を足して台本はこれから書く ── という
+    途中の状態がある。`仕上げ.py` は自分のまわる所ではそれを飛ばして
+    「まだ台本が無いので検査しません」と出していたが、
+    **呼び出す道具（全部しらべる・プラン全部作る・折り返し検査・演出あわせ）
+    には伝えていなかった。** そちらは台本を開こうとして落ち、
+    4項目が「落ちた」と出ていた。
+
+    **直した所と関係ない所で落ちる検査は、見なくなる。** それがいちばん危ない。
+    飛ばしたものは名前で出す（黙って飛ばすと、本当に無いことに気づけない）。
+    """
+    out, nai = [], []
+    for v in yomu(path, ban):
+        if os.path.exists(v.sub):
+            out.append(v)
+        else:
+            nai.append(v.namae)
+    return out, nai
+
+
+def dekiteiru_iu(nai, dare=u""):
+    u"""飛ばしたものを1行で知らせる。"""
+    if nai:
+        print(u"%s… まだ台本が無いので飛ばします: %s"
+              % ((dare + u" ") if dare else u"", u" / ".join(nai)))
+
+
 if __name__ == "__main__":
     import sys
     try:

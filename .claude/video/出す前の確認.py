@@ -31,8 +31,17 @@ import re
 import sys
 
 REPO = os.path.dirname(os.path.abspath(__file__))
+# ■ 差し替えたものは、**差し替えたものぜんぶ**を見る（2026-10-15）
+#
+# ここに書いていないものは見ない。見ていない所は必ず壊れる
+# （この道具そのものが、その反省で出来ている）。
+# v159 で ずれ実測.py と 見た目.txt も差し替えたのに、
+# ここには make_slideshow.py と 話数を学ぶ.py しか無かった。
 IRERU = [(u"py-slideshow", u"make_slideshow.py"),
-         (u"py-manabu", u"話数を学ぶ.py")]
+         (u"py-manabu", u"話数を学ぶ.py"),
+         (u"py-zure", u"ずれ実測.py")]
+# Python ではないもの（中身の一致だけ見る。compile はしない）
+IRERU_TXT = [(u"kyotsu-mitame", u"見た目.txt")]
 
 
 def say(m):
@@ -48,7 +57,16 @@ def dasu(s):
 
 
 def naka(s, sid):
-    m = re.search(r'<script type="text/plain" id="%s">\n(.*?)\n</script>'
+    u"""そのブロックの中身。
+
+    ■ 改行が有る形と無い形が混ざっている（2026-10-15）
+
+    `>\n中身\n</script>` だけを見ていたので、掲示板に 1行目から
+    直に書いてあるブロック（kyotsu-mitame がそれ）が**取れずに
+    「入っていません」と出ていた。** 取れないものを「無い」と
+    言うのは、いちばん危ない嘘なので、両方の形を読む。
+    """
+    m = re.search(r'<script type="text/plain" id="%s">\n?(.*?)\n?</script>'
                   % re.escape(sid), s, re.S)
     return m.group(1) if m else None
 
@@ -114,6 +132,57 @@ def main():
                          % (sid, fn, len(t), len(honmono)))
         else:
             say(u"○ ④⑥ %-14s %s と1文字まで同じ（%d文字）" % (sid, fn, len(t)))
+
+    for sid, fn in IRERU_TXT:
+        t = naka(s, sid)
+        if t is None:
+            warui.append(u"%s が入っていません" % sid)
+            continue
+        t = t.replace(u"<\\/script", u"</script")
+        honmono = io.open(os.path.join(REPO, fn), encoding="utf-8-sig").read()
+        # 掲示板に入れるとき前後の改行は落ちるので、そこだけそろえて比べる
+        if t.strip(u"\n") != honmono.strip(u"\n"):
+            warui.append(u"%s の中身が %s と違います（%d文字 対 %d文字）"
+                         % (sid, fn, len(t), len(honmono)))
+        else:
+            say(u"○ ⑥ %-14s %s と同じ（%d文字）" % (sid, fn, len(t)))
+
+    # ⑦ 公開中にあって、出すほうから**消える**ものはないか（2026-10-15）
+    #
+    # ■ これが無くて、あやうく他人の仕事を消すところだった
+    #
+    # 差し替えのやり方は「公開中のものを読んで py-* だけ入れ替える」。
+    # **入れ替えるブロックの中身は、こちらのファイルで丸ごと上書きされる。**
+    # ところが公開中の掲示板には、**git に入っていない v159**（別のセッションが
+    # 出したもの）があった。気づかずに出せば、その
+    #   kiriyoi / load_shou_credit / muri_ni_kiru
+    # が黙って消えていた（メモリ61節）。
+    #
+    # ⑥（入れたブロックがこちらのファイルと1文字まで同じか）では見つからない。
+    # **⑥は「こちらのファイルが正しいか」を見ていない。**
+    # 消えるものがあるかどうかは、公開中のものと比べるしかない。
+    #
+    # 行ごとに全部比べると注記の差で埋まるので、**def の名前**で見る。
+    # 関数が消えるのは、まず間違いなく事故である。
+    if moto:
+        m0s = io.open(moto, encoding="utf-8").read()
+        kieru = {}
+        for sid, _fn in (IRERU + IRERU_TXT):
+            a, b = naka(m0s, sid), naka(s, sid)
+            if a is None or b is None:
+                continue
+            import re as _re
+            aa = set(_re.findall(r"^def ([A-Za-z_0-9]+)", a, _re.M))
+            bb = set(_re.findall(r"^def ([A-Za-z_0-9]+)", b, _re.M))
+            if aa - bb:
+                kieru[sid] = sorted(aa - bb)
+        if kieru:
+            for sid, ns in sorted(kieru.items()):
+                warui.append(u"%s から関数が消えます: %s"
+                             u"（公開中のほうが新しい可能性。git に無いものが"
+                             u"出ているかもしれません）" % (sid, u" / ".join(ns)))
+        else:
+            say(u"○ ⑦ 公開中にあって消えてしまう関数はありません")
 
     # ⑤ 版
     v = re.findall(r'PACK_VERSION\s*=\s*"v(\d+)"', s)

@@ -124,6 +124,90 @@ _hi_mn = round(_hi[0][0], 2) if _hi else 1.0
 _hi_sita = round(_hi[max(0, len(_hi) // 20)][0], 2) if _hi else 1.0
 _hi_roku = sum(1 for (x, _t) in _hi if x < 0.6)
 
+# ■ 本人が見ているものを、材料でも測る（2026-10-15・ここが抜けていた）
+#
+# 本人の v158 の残りは、これ1つだった。
+#
+#   ⚠ 声の途中で切り替わっている字幕 : 6枚 / 237枚 (3%)
+#      3:09  声の 0.54秒 中で切り替え   ルーデウスとロキシーの再会を…
+#      4:44  声の 0.43秒 中で切り替え   お礼にと魔眼を、それも相手の…
+#
+# **ところがこの検査は、それを1つも測っていなかった。**
+# 測っていたのは「正解との秒数の差」「比例配分」「錨」だけ。
+# 秒数の差は LEAD(0.12秒) ぶん必ず出るので 0.45秒の線で見るしかなく、
+# **0.43秒 や 0.34秒 の「声の途中」は線の下に隠れる。**
+# 本人の画面では、0.3秒でも喋っている最中に切り替われば分かる。
+#
+# ここは本人の ずれ実測.py と**同じ測り方**にする（-35dB / 0.12秒）。
+# 無音の中に入っていれば ○、声の中に入っていれば ×。
+# 取りちがえようがない測り方なので、線は「0枚」に置ける。
+import os as _os
+import re as _re
+import subprocess as _sp
+
+_LEAD = 0.12
+
+
+def _koe_sagasu():
+    for n in (_os.path.join(u"音声", u"merged.wav"), u"merged.wav"):
+        if _os.path.exists(n):
+            return n
+    return None
+
+
+def _muon(path):
+    r = _sp.run([u"ffmpeg", u"-hide_banner", u"-nostats", u"-i", path,
+                 u"-af", u"silencedetect=noise=-35dB:d=0.12",
+                 u"-f", u"null", u"-"],
+                stdout=_sp.PIPE, stderr=_sp.STDOUT)
+    log = r.stdout.decode("utf-8", "replace")
+    out, st = [], None
+    for m in _re.finditer(r"silence_(start|end):\s*(-?[0-9.]+)", log):
+        if m.group(1) == u"start":
+            st = float(m.group(2))
+        elif st is not None:
+            out.append((st, float(m.group(2))))
+            st = None
+    out.sort()
+    return out
+
+
+def _shaberi_chuu(t, muon):
+    u"""その時刻は声の途中か。途中なら、どれだけ入り込んでいるかを返す。"""
+    for (a1, b1) in muon:
+        if a1 - 0.02 <= t <= b1 + 0.02:
+            return 0.0
+    mae = [b1 for (a1, b1) in muon if b1 <= t]
+    return (t - max(mae)) if mae else t
+
+
+# ■ 「声の中」を2つに分ける。**混ぜると直せない。**（2026-10-15）
+#
+#   (a) 正しい所には間があるのに、声の中へ置いてしまった … **こちらの誤り**
+#   (b) 正しい所そのものに間が無い（息を継がずに読んだ「、」）
+#       … 置き方では直せない。切らずにくっつけるしかない
+#
+# 材料は正解を持っているので、この2つを取りちがえずに分けられる。
+# 線を置くのは (a) だけ。(b) を混ぜた数で線を引くと、
+# **材料のクセに合わせて線を動かすことになる**（前にやった失敗）。
+_naka, _naka_a = [], []
+_koe = _koe_sagasu()
+_mu = _muon(_koe) if _koe else []
+if _mu:
+    for (_d0, _st, _honto, _k0, _i0) in zure:
+        _f = _shaberi_chuu(_st + _LEAD, _mu)
+        if _f <= 0.15:
+            continue
+        # 正解の位置に間があるか（LEAD を足した「声が出る時刻」で見る）
+        _tadashii = _shaberi_chuu(_honto, _mu) <= 0.15
+        _naka.append((round(_f, 2), round(_st, 2), _k0, _tadashii))
+        if _tadashii:
+            _naka_a.append((round(_f, 2), round(_st, 2), _k0))
+_naka.sort(reverse=True)
+_naka_a.sort(reverse=True)
+_naka_ookii = _naka[0][0] if _naka else 0.0
+_naka_a_ookii = _naka_a[0][0] if _naka_a else 0.0
+
 zure.sort(reverse=True)
 n = len(zure)
 if u"--json" in sys.argv:
@@ -137,6 +221,11 @@ if u"--json" in sys.argv:
     print(json.dumps({u"kazu": len(rows), u"ookii": round(zure[0][0], 3) if zure else 0.0,
                       u"hiritsu_mn": _hi_mn, u"hiritsu_sita": _hi_sita,
                       u"hiritsu_roku": _hi_roku,
+                      u"naka_kazu": len(_naka),
+                      u"naka_ookii": _naka_ookii,
+                      u"naka_a": len(_naka_a),
+                      u"naka_a_ookii": _naka_a_ookii,
+                      u"naka_list": [[x[0], x[1], x[2][:24]] for x in _naka_a[:5]],
                       u"anc": matome(anc), u"naka": matome(naka),
                       u"bun": matome(bun_s), u"ten": matome(ten_s),
                       u"heikin": round(sum(z[0] for z in zure) / max(1, n), 3),
@@ -170,6 +259,20 @@ print(u"0.60 を下回るもの  : %d枚" % _hi_roku)
 for (x, t) in _hi[:5]:
     if x < 0.80:
         print(u"  %.2f  %s" % (x, (t or u"")[:34]))
+print(u"")
+if _koe is None:
+    print(u"（merged.wav が見つからないので、声の途中かどうかは測れていません）")
+elif _naka:
+    print(u"声の途中で切り替わっている字幕 : %d枚 / %d枚  いちばん深い %.2f秒"
+          % (len(_naka), len(rows), _naka_ookii))
+    print(u"  うち **正しい所には間があるのに声の中へ置いた** : %d枚（深さ %.2f秒）"
+          % (len(_naka_a), _naka_a_ookii))
+    for (f2, t2, x2) in _naka_a[:6]:
+        print(u"   %7.2f  声の %.2f秒 中で切り替え   %s" % (t2, f2, (x2 or u"")[:28]))
+    print(u"  のこりは、正しい所そのものに間が無い所"
+          u"（息を継がずに読んだ「、」。切らずにくっつけるしかない）")
+else:
+    print(u"○ 切り替わりはすべて、声の切れ目（無音）で起きています")
 print(u"")
 print(u"── どの仕組みのせいか ──")
 def shu(na, v):
