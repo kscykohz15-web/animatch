@@ -467,7 +467,16 @@ midashi(u"⑧", u"パック版が掲示板の版と合っているか")
 src2 = io.open(keijiban()[0], encoding="utf-8").read() \
     if keijiban()[0] else u""
 m = re.search(r'PACK_VERSION\s*=\s*"v(\d+)"', src2)
-oboe = os.path.join(HERE, u".出した版.txt")
+# ■ 出した版の控えは**リポジトリに置く**（2026-10-18）
+#
+# ここは作業場所の親に置いていた。/tmp が消えると 0 に戻るので、
+# ⑧ は「前回出したのは v0」としか言えず、
+# **版を上げ忘れても必ず通ってしまう。**見張りとして働いていなかった。
+# （実際、コンテナが作り直されたあと v159 を v0 と比べていた）
+oboe = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    ".claude", "video", u".出した版.txt")
+if not os.path.exists(oboe) and os.path.exists(os.path.join(HERE, u".出した版.txt")):
+    oboe = os.path.join(HERE, u".出した版.txt")
 dashita = 0
 if os.path.exists(oboe):
     try:
