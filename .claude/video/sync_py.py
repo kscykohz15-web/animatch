@@ -23,7 +23,20 @@ except Exception:
     pass
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+# ■ この道具は2か所から動く（2026-10-18）
+#
+#   ① 作業場所の親から   … 道具は <親>/scratchpad/video/、掲示板は <親>/
+#   ② リポジトリから     … 道具も掲示板も **自分と同じ .claude/video/**
+#
+# ずっと ① しか見ていなかった。/tmp が消えて ② から動かしたとき、
+# 掲示板は見つかるのに道具が見つからず
+# 「置き場所.py がありません」で止まっていた。
+# **自分の隣に道具があるなら、そこを使う。**
 V = os.path.join(HERE, "scratchpad", "video")
+if not os.path.exists(os.path.join(V, u"make_slideshow.py")) \
+        and os.path.exists(os.path.join(HERE, u"make_slideshow.py")):
+    V = HERE
 SRC = os.path.join(HERE, "board.src.html")
 
 # (置き場所の id, video/ の中のファイル名)
