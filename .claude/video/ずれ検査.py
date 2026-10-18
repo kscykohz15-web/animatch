@@ -220,6 +220,41 @@ KITSUI_NAKA = 30         # きつい材料（重なっているので緩い線�
 # 4段目のあいだだけ立てる旗。_zure_tsukuru.py に env で渡す。
 KITSUI = [False]
 
+# ■ 5段目「つなぎ目が狭い材料」の線（2026-10-18）
+#
+# 4段目までの材料は、段落のつなぎ目の無音が**必ず 0.40秒以上**あった。
+# つまり「錨の寄せ先が1つも無い」状態が1度も起きない作りで、
+# v160 で入れた「短い無音に降りて拾い直す」直しを、
+# **材料が1度も見ていなかった**（39節・62節と同じ形）。
+#
+# ZURE_TSUGIME_SEMAI=1 で、2割のつなぎ目を実質ゼロにする。
+# 降りる窓(make_slideshow.py の YOBI_MADO)を変えて5通りずつ測った実測:
+#
+#              錨最大  錨平均  全体最大  0.45超
+#   降りない     1.47   0.29    2.50    12%
+#   ±0.20秒     1.47   0.28    2.50    12%
+#   ±0.35秒     1.47   0.28    2.50    12%   ← いまの値
+#   ±0.60秒     2.75   0.80    3.92    36%   ← **悪くなる**
+#
+# 乱数ごとに見ると ±0.35秒 は 5通り中4通りで「降りない」より良く、
+# 悪くなった通りはひとつも無い
+# （錨最大 0.41→0.24 / 0.52→0.29 / 0.38→0.26 / 0.44→0.37）。
+# ±0.60秒 は窓が広すぎて「言葉の途中の息つぎ」を掴みにいく。
+#
+# 線は ±0.35秒 と ±0.60秒 の**あいだ**に引く。
+# 1.47 に詰めると余裕が無く、さいころを見ることになるので 2.00。
+SEMAI_OOKII = 3.00
+SEMAI_HEIKIN = 0.40
+SEMAI_WARIAI = 20.0
+SEMAI_ANC_OOKII = 2.00     # 錨のいちばん大きいずれ。**この段だけ見る。**
+SEMAI_ANC_HEIKIN = 0.40    # 錨の平均。0.30 だと余裕 0.02 でさいころになる。
+# 「声の中」はこの段では見ない。4段目が見ている。
+# 測っていない物に線を引かない（線は実測からしか引かない）。
+SEMAI_NAKA = 9999
+
+# 5段目のあいだだけ立てる旗。
+SEMAI = [False]
+
 YOBI_OOKII = 2.60
 YOBI_HEIKIN = 0.30
 YOBI_WARIAI = 12.0
@@ -273,6 +308,7 @@ def hitotsu(tane):
     env = dict(os.environ, PYTHONIOENCODING="utf-8")
     env[u"ZURE_KEZURU_BARA"] = u"1" if KITSUI[0] else u"0"
     env[u"ZURE_TSUMARU"] = u"1" if KITSUI[0] else u"0"
+    env[u"ZURE_TSUGIME_SEMAI"] = u"1" if SEMAI[0] else u"0"
     r = subprocess.run([sys.executable, u"_zure_tsukuru.py", str(tane)],
                        cwd=SAGYOU, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, env=env)
@@ -315,21 +351,33 @@ def main():
     # 15/54 の段は「測れない所が多いときの予備」。
     # 札が古いせいで、いちばん本物から遠い段を「本物と同じ」として
     # 信じていた（v154 の判断ミスはそこから始まっている）。
-    for (tsukau, wari, nm, oo, he, wa, kitsui, nk) in (
+    for (tsukau, wari, nm, oo, he, wa, kitsui, nk,
+         semai, anc_oo, anc_he) in (
             (True, 1.0, u"実測 54/54(本物と同じ)", GOUKAKU_OOKII,
-             GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False, GOUKAKU_NAKA),
+             GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False, GOUKAKU_NAKA,
+             False, None, None),
             (True, 15.0 / 54.0, u"実測 15/54(測れない所が多いとき)", HONBAN_OOKII,
-             HONBAN_HEIKIN, HONBAN_WARIAI, False, HONBAN_NAKA),
+             HONBAN_HEIKIN, HONBAN_WARIAI, False, HONBAN_NAKA,
+             False, None, None),
             (False, 1.0, u"実測なし(予備の道)", YOBI_OOKII,
-             YOBI_HEIKIN, YOBI_WARIAI, False, YOBI_NAKA),
+             YOBI_HEIKIN, YOBI_WARIAI, False, YOBI_NAKA,
+             False, None, None),
             # ■ 4段目（2026-10-12）。**偽の寄せ先がある材料。**
             #   ここが無かったせいで JISSOKU_TOL の広げすぎが見えなかった。
             (True, 1.0, u"きつい材料(偽の寄せ先あり)", KITSUI_OOKII,
-             KITSUI_HEIKIN, KITSUI_WARIAI, True, KITSUI_NAKA)):
+             KITSUI_HEIKIN, KITSUI_WARIAI, True, KITSUI_NAKA,
+             False, None, None),
+            # ■ 5段目（2026-10-18）。**つなぎ目が狭い材料。**
+            #   ここが無かったせいで「錨の寄せ先ゼロ」が1度も起きず、
+            #   v160 の直しを材料が見ていなかった。上の節を読むこと。
+            (True, 1.0, u"つなぎ目が狭い材料(錨の寄せ先ゼロ)", SEMAI_OOKII,
+             SEMAI_HEIKIN, SEMAI_WARIAI, True, SEMAI_NAKA,
+             True, SEMAI_ANC_OOKII, SEMAI_ANC_HEIKIN)):
         print(u"── %s ──" % nm)
         jissoku_kirikae(tsukau, wari)
         KITSUI[0] = kitsui
-        if shirabe(a.kai, nm, oo, he, wa, nk):
+        SEMAI[0] = semai
+        if shirabe(a.kai, nm, oo, he, wa, nk, anc_oo, anc_he):
             warui.append(nm)
     print(u"")
     try:
@@ -339,11 +387,17 @@ def main():
     if warui:
         print(u"× 字幕と声がずれています（%s）。" % u" / ".join(warui))
         return 1
-    print(u"○ 4段ぜんぶで、字幕と声はずれていません。")
+    print(u"○ 5段ぜんぶで、字幕と声はずれていません。")
     return 0
 
 
-def shirabe(kai, nm, oo, he, wa, nk=9999):
+def shirabe(kai, nm, oo, he, wa, nk=9999, anc_oo=None, anc_he=None):
+    u"""anc_oo / anc_he は**その段だけの錨の線**。None なら今まで通り。
+
+    錨の「いちばん大きいずれ」を見る段を増やしたのは 5段目から
+    （2026-10-18）。上の段の線は1つも動かしていない ──
+    検査が通るように線を動かさない、は前からの決めごと。
+    """
     warui = []
     for tane in range(1, kai + 1):
         k = hitotsu(tane)
@@ -354,7 +408,9 @@ def shirabe(kai, nm, oo, he, wa, nk=9999):
         roku = k.get(u"hiritsu_roku", 0)
         shirushi = u"○" if (k[u"ookii"] <= oo and k[u"heikin"] <= he
                             and k[u"wariai"] <= wa
-                            and anc[1] <= GOUKAKU_ANC
+                            and anc[1] <= (GOUKAKU_ANC if anc_he is None
+                                           else anc_he)
+                            and (anc_oo is None or anc[0] <= anc_oo)
                             and roku == 0
                             and k.get(u"naka_a", 0) <= nk) else u"×"
         print(u"%s 乱数 %d  区切り %3d枚 / いちばん大きいずれ %.2f秒 / "
@@ -388,9 +444,13 @@ def shirabe(kai, nm, oo, he, wa, nk=9999):
                       % (z[0], z[1], z[2], z[3][:20]))
     if warui:
         print(u"   %s の合格の線: いちばん大きいずれ %.2f秒まで / 平均 %.2f秒まで / "
-              u"0.45秒超 %.0f%%まで / 段落の境目の平均 %.2f秒まで / "
+              u"0.45秒超 %.0f%%まで / 段落の境目の平均 %.2f秒まで%s / "
               u"比例配分 %.2f未満は0枚"
-              % (nm, oo, he, wa, GOUKAKU_ANC, HIRITSU_YUKA))
+              % (nm, oo, he, wa,
+                 GOUKAKU_ANC if anc_he is None else anc_he,
+                 u"" if anc_oo is None
+                 else u" / 段落の境目の最大 %.2f秒まで" % anc_oo,
+                 HIRITSU_YUKA))
         return True
     print(u"   %s … %d通りすべて合格" % (nm, kai))
     return False

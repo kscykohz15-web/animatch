@@ -2247,6 +2247,22 @@ SAITEI_WARI = [0.90]
 # 0.09〜0.15秒）を候補に入れると、そちらへ吸い寄せられる。
 KOUHO_SAITAN = [0.18]
 
+# 寄せ先が1つも無かった段落の境目**だけ**、ここまで短い無音にも降りる。
+#
+# ■ 降りるときの窓は、本番の窓(mado=1.5秒)ではなく、この狭い窓（2026-10-18）
+#
+# 最初 mado のまま降りたら、つなぎ目の狭い材料で**悪くなった**。
+#   乱数2 錨の最大ずれ 1.47秒 → 2.75秒 / 乱数3 0.52秒 → 1.18秒
+# 1.5秒先の「言葉の途中の息つぎ」まで候補に入り、そちらへ吸い寄せられる。
+# 上の KOUHO_SAITAN の注意書きとまったく同じ失敗を、
+# 「寄せ先ゼロのときだけ」という条件を付けただけで繰り返していた。
+#
+# 削られて 0.18秒 を下回ったつなぎ目は、**見当のすぐ近くにある。**
+# 比例配分の見当は前後の錨が合っていれば数十分の1秒しか外れない。
+# だから窓を狭くすれば、外した時の損も窓の幅までで止まる。
+YOBI_SAITAN = [0.12]
+YOBI_MADO = [0.35]
+
 
 def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
     u"""文字数で割った切れ目(exp)を、本物の「間」(naka)へ寄せる。
@@ -3213,8 +3229,8 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
     # 動かす先が無いものを見当のまま残すより、短くても本物の無音に
     # 乗せたほうがよい ── 段落の境目は、必ず無音の中にあるのだから。
     yobi = sorted(max(a + 0.02, b - LEAD) for (a, b) in (sils or [])
-                  if 0.12 <= b - a < (saitan if saitan is not None
-                                      else KOUHO_SAITAN[0]))
+                  if YOBI_SAITAN[0] <= b - a < (saitan if saitan is not None
+                                                else KOUHO_SAITAN[0]))
     out, t = [0.0], 0.0
     nokezu, sukui = 0, 0
     for k in range(1, n):
@@ -3227,8 +3243,10 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
             saki = min(chikai)[1]
         else:
             # 本物の寄せ先が無い。短い無音に降りる。それも無ければ見当のまま。
+            # **窓は mado ではなく YOBI_MADO。** 上の節を読むこと。
             yo = [(abs(c - mezasu), c) for c in yobi
-                  if abs(c - mezasu) <= mado and c > t + 0.05]
+                  if abs(c - mezasu) <= min(mado, YOBI_MADO[0])
+                  and c > t + 0.05]
             if yo:
                 saki = min(yo)[1]
                 sukui += 1
@@ -3240,9 +3258,9 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
         t = saki
     out.append(total)
     if sukui or nokezu:
-        say(u"段落の境目: 短い無音(0.12秒)で拾い直した %d か所 / "
+        say(u"段落の境目: 短い無音(%.2f秒/±%.2f秒)で拾い直した %d か所 / "
             u"寄せ先が無く見当のままの %d か所"
-            u"%s" % (sukui, nokezu,
+            u"%s" % (YOBI_SAITAN[0], YOBI_MADO[0], sukui, nokezu,
                      u"（この %d か所は錨になるので、あとで直せません）" % nokezu
                      if nokezu else u""))
     return out
