@@ -706,9 +706,38 @@ if "--shirabe" in sys.argv:
     print(u"（--shirabe なので board.html は作っていません）")
     sys.exit(0)
 
+# ■ この2本は HERE(作業場所の親)にしか無いことにしていた（2026-10-18）
+#
+# /tmp が消えると両方とも消え、「全部通りました」と出した直後に
+#     can't open file '.../sync_py.py'
+# で EXIT=1 になっていた。**どちらもリポジトリには有る。**
+#
+# build.py は board.src.html に台本と効果音を流し込んで掲示板を2枚作る。
+# この入れ物に台本と効果音は無い（成果物は git に入れない決まり）ので、
+# 走らせても**中身の抜けた掲示板**しか出ない。
+# 出せない物を作って「出してください」と言うほうが危ないので、
+# 材料が無いときは作らずに、その旨を宿題に残す。
+#
+# なお、いまの渡し方は「公開中の掲示板を読んで、変えたブロックだけ
+# 差し替える」なので、board.html を作る道そのものを使っていない
+# （メモリ69-3節）。board.src.html は出したあとに合わせる。
+_repo_v = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                       ".claude", "video")
 for step in ("sync_py.py", "build.py"):
+    michi = os.path.join(HERE, step)
+    if not os.path.exists(michi):
+        michi = os.path.join(_repo_v, step)
+    if not os.path.exists(michi):
+        SHUKUDAI.append(u"%s が見つからないので動かしていません" % step)
+        continue
+    if step == "build.py" and not DAIHON:
+        SHUKUDAI.append(u"台本がこの入れ物に無いので build.py は動かしていません"
+                        u"（中身の抜けた掲示板になるため）")
+        print(u"\n── %s ─────────────────────────" % step)
+        print(u"… 台本が無いので作りません（落ちたのではなく、作っていません）")
+        continue
     print(u"\n── %s ─────────────────────────" % step)
-    r = subprocess.run([sys.executable, os.path.join(HERE, step)], cwd=HERE,
+    r = subprocess.run([sys.executable, michi], cwd=os.path.dirname(michi),
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                        env=dict(os.environ, PYTHONIOENCODING="utf-8"))
     out = r.stdout.decode("utf-8", "replace").rstrip()
@@ -721,4 +750,10 @@ if SHUKUDAI:
     print(u"⚠ 作りかけのまま残っていること（出すのは止めません）:")
     for x in SHUKUDAI:
         print(u"   ・" + x)
-print(u"\nboard.html ができました。掲示板に出してください。")
+if DAIHON:
+    print(u"\nboard.html ができました。掲示板に出してください。")
+else:
+    # まるごと出さない。公開中のものを読んで、変えたブロックだけ差し替える。
+    print(u"\n次は、公開中の掲示板を読んで**変えたブロックだけ**差し替え、")
+    print(u"  python .claude/video/出す前の確認.py <出すもの> --moto <公開中のもの>")
+    print(u"を通してから出してください（掲示板をまるごと作り直さないこと）。")
