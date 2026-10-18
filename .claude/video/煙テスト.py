@@ -104,10 +104,30 @@ def junbi():
           newline="\n").write(body)
     shutil.copy(os.path.join(HERE, u"見た目.txt"),
                 os.path.join(SAGYOU, u"見た目.txt"))
-    for nm in (u"カメラ.mp3", u"はさみ.mp3", u"カードをめくる.mp3", u"ドーン.mp3"):
+    # ■ 効果音は、無ければ**作る**（2026-10-18）
+    #
+    # ここは「リポジトリの 効果音/ から写す。無ければ写さない」だった。
+    # ところが mp3 は git に入っていない（掲示板に base64 で入っている）ので、
+    # **いつも写せず**、そのせいで下の「効果音:」が出ず、
+    # 煙テストが「効果音が入っていません」で落ちていた。
+    # 音の通り道が壊れたのではなく、**鳴らす物が無かっただけ。**
+    #
+    # 声も BGM も、この検査は lavfi で作っている。効果音だけ
+    # 「どこかに在るはず」にしていたのが抜けだった。同じように作る。
+    # 本物の mp3 が在れば、そちらを使う（そのほうが本番に近い）。
+    for nm, hz, byou in ((u"カメラ.mp3", 1200, 0.10),
+                         (u"はさみ.mp3", 900, 0.08),
+                         (u"カードをめくる.mp3", 600, 0.20),
+                         (u"ドーン.mp3", 180, 0.60)):
+        saki = os.path.join(SAGYOU, u"効果音", nm)
         src = os.path.join(HERE, u"効果音", nm)
         if os.path.exists(src):
-            shutil.copy(src, os.path.join(SAGYOU, u"効果音", nm))
+            shutil.copy(src, saki)
+            continue
+        ff(["-f", "lavfi", "-i",
+            "sine=frequency=%d:duration=%s" % (hz, byou),
+            "-af", "afade=t=out:st=0:d=%s" % byou,
+            "-ar", "44100", "-ac", "1", saki])
     ff(["-f", "lavfi", "-i", "sine=frequency=440:duration=5",
         "-ar", "44100", "-ac", "1", os.path.join(SAGYOU, u"BGM", u"てすと曲.wav")])
     # 声のかわり。台本の長さに合わせて 12秒

@@ -124,14 +124,28 @@ def hakaru(en_path):
         u"一瞬暗くなる": 100.0 * goukei[u"anten"] / cut,
         u"効果音が鳴る": 100.0 * goukei[u"se"] / cut,
         u"効果音のずれ": en.get("sezure", 0.0),
-    }, cut
+    }, cut, goukei[u"cut"]
 
 
 def main():
     p = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, u"演出.txt")
-    kekka, cut = hakaru(p)
+    kekka, cut, nama = hakaru(p)
     print(u"\n%s で、台本%d本(切り替わり %d か所)を計算した結果\n"
-          % (os.path.basename(p), len(KUMI), cut))
+          % (os.path.basename(p), len(KUMI), nama))
+    # ■ 台本が1本も無いときは「見ていない」と言う（2026-10-18）
+    #
+    # 切り替わりが 0 か所だと、下の cut は max(1, 0) で **1 をでっち上げる。**
+    # そのため「演出が入る間隔 0.00秒／本人の実測 14.00秒」と出て、
+    # 何も測っていないのに × が立っていた。
+    # /tmp が消えて台本が無くなった後、ずっとこれで落ちていた。
+    #
+    # **見られないものを「落ちた」と言わない。「見ていない」と言う**
+    # （メモリ69節）。本当に離れたときに埋もれる。
+    if nama == 0:
+        print(u"… 台本が1本も無いので、演出の数えようがありません。")
+        print(u"   （落ちたのではなく、見ていません。"
+              u"台本ができたら自動で見に行きます）")
+        return 0
     print(u"  %-26s %8s %8s %7s" % (u"", u"いまの設定", u"本人の実測", u"ちがい"))
     warui = 0
     for k in (u"演出が入る間隔", u"効果音のずれ", u"パッと切る(2コマ以内)",
