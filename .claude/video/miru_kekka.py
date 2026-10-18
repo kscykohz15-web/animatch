@@ -738,6 +738,27 @@ def main():
     tebiki = load_plan_tebiki(plan, code_hyou(rows))
     sashi = load_sashikae_ban(os.path.join(u"その他", u"差し替え.txt"))
 
+    # ■ @@全部おまかせ のときは、**採点も手加減しない**（2026-10-18）
+    #
+    # make_slideshow が 差し替え.txt と1行ずつの指定を使わないので、
+    # その番号の絵は**もう本人が選んだ絵ではない。**
+    # ここで「手で選んだから責めません」と外すと、
+    # 機械が当てた 26か所の批評がまるごと消え、
+    # 本人が「全部こちらでやってくれ」と言った回に限って
+    # **いちばん必要な指摘が出なくなる。**
+    # 旗を足したら、旗を見るところも全部足す（14.79節・パックの4か所と同じ話）。
+    zenbu = False
+    if plan and os.path.exists(plan):
+        for ln in io.open(plan, encoding="utf-8-sig",
+                          errors="replace").read().split(u"\n"):
+            if ln.lstrip().startswith(u"@@全部おまかせ"):
+                v = ln.split(u"\t")[-1].strip() if u"\t" in ln else u"はい"
+                zenbu = v not in (u"いいえ", u"no", u"0")
+    if zenbu:
+        note(u"@@全部おまかせ: 機械が全部当てた回なので、"
+             u"手加減せずに採点します（差し替え %d か所も見ます）" % len(sashi))
+        tebiki, sashi = {}, set()
+
     note(u"=== 動画の採点 ===")
     note(u"一覧      : %s  (%d か所)" % (ich, len(rows)))
     note(u"カタログ  : %s  (%d枚ぶんの説明)" % (a.catalog, len(tags)))

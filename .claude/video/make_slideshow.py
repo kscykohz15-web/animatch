@@ -466,8 +466,14 @@ def wrap_ja(text, per_line, max_lines):
 JIMAKU_YOHAKU = [0.03]
 
 
-def fit_to_box(text, usable, size, max_lines):
+def fit_to_box(text, usable, size, max_lines, yoko=1.0):
     """必ず usable(px) に収まる (行, 文字サイズ) を返す。
+
+    ■ yoko = 横つぶし（2026-10-18・本人の指定「もう少し大きく」）
+
+    1文字の幅が size ではなく size*yoko になる。縦の高さは size のまま。
+    **高さが読みやすさなので、横を少しつぶせば「大きく」できる。**
+    既定(1.0)のときの振る舞いは1つも変わらない。
 
     ■ 3行目を許すのをやめた（2026-10-14・本人の指定）
 
@@ -484,7 +490,7 @@ def fit_to_box(text, usable, size, max_lines):
         return [text], size
     # 1) その大きさのまま、行数を増やして入るか
     for n in range(1, max_lines + 1):
-        got = split_lines(text, usable / float(size), n)
+        got = split_lines(text, usable / float(size * yoko), n)
         if got:
             return got, size
     # 2) 行は増やさない。入る大きさまで縮める（はみ出させない）
@@ -498,7 +504,8 @@ def fit_to_box(text, usable, size, max_lines):
     # ここは幅から大きさを逆算するので、行が短いと base を超える。
     # 実際に 98px の字幕が 127px で出ていた（上の「グ|レ」の例）。
     # 縮めるための逃げ道なので、上は base で止める。
-    return best, max(20, min(int(size), int(usable / longest)))
+    # つぶしているぶん、同じ幅に入る大きさは 1/yoko 倍になる
+    return best, max(20, min(int(size), int(usable / (longest * yoko))))
 
 
 def kiriyoi(text, i):
@@ -699,6 +706,7 @@ MITAME_KITEI = {
     u"字幕のつなぐ上限": 0.0,
     # 動画ぜんぶで大きさを1つにそろえるか（はい/いいえ）
     u"字幕の大きさをそろえる": u"はい",
+    u"字幕の横つぶし": 92.0,
     u"字幕の色": u"FFFFFF", u"字幕のふち色": u"000000", u"字幕のふち": 0.115,
     u"字幕の最短": 0.0, u"同じ絵の上限": 3.0, u"書き出しの速さ": u"faster",
     u"引用の大きさ": 38.0, u"引用の色": u"FFFFFF",
@@ -858,6 +866,8 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     # どれが原因かは、下で名前を出す。
     honbun = [(st, en, _esc(tx)) for (st, en, tx) in cues if (tx or u"").strip()]
     soroeru = (mi.get(u"字幕の大きさをそろえる") or u"はい") not in (u"いいえ", u"no")
+    # 横つぶし。70〜100% だけ許す（それ以上つぶすと読めない）
+    tsubushi = max(70.0, min(100.0, float(mi.get(u"字幕の横つぶし") or 100.0))) / 100.0
     hitotsu = size
     kimeta = []
     if soroeru and honbun:
@@ -865,7 +875,8 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
             room2 = w - side * 2 - kouho * 0.25
             komaru = [tx for (st2, _e2, tx) in honbun
                       if st2 >= hook_until - 0.01
-                      and fit_to_box(tx, room2, kouho, max_lines)[1] != kouho]
+                      and fit_to_box(tx, room2, kouho, max_lines,
+                                     tsubushi)[1] != kouho]
             if kouho == int(size):
                 # **元の大きさを塞いでいる字幕**を覚えておく。
                 # ひとつ下(hitotsu+1)で困った字幕ではない ──
@@ -895,7 +906,7 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
             say(u"字幕の大きさは %dpx でそろっています（縮む字幕はありません）" % size)
 
     if not per_line:
-        per_line = max(8, int(usable / float(hitotsu)))
+        per_line = max(8, int(usable / float(hitotsu * tsubushi)))
     csize = max(16, int(round(base / max(6.0, mi[u"引用の大きさ"]))))   # 左上の引用
     chsize = max(20, int(round(base / max(6.0, mi[u"章の大きさ"]))))    # 右上の章
     pad = int(h * 0.022)
@@ -905,10 +916,13 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     fuchi_iro = ass_iro(mi[u"字幕のふち色"], u"000000")
 
     def style(name, fname, fsize, align, ml, mr, mv):
+        # ScaleX は字幕(Def/Hook)だけつぶす。
+        # 左上の引用と右上の章タイトルは幅に困っていないので 100 のまま。
+        sx = int(round(tsubushi * 100)) if name in (u"Def", u"Hook") else 100
         return (u"Style: %s,%s,%d,%s,&H000000FF,%s,&H78000000,-1,0,0,0,"
-                u"100,100,0,0,1,%.1f,%.1f,%d,%d,%d,%d,1"
+                u"%d,100,0,0,1,%.1f,%.1f,%d,%d,%d,%d,1"
                 % (name, fname, fsize, iro.get(name, u"&H00FFFFFF"), fuchi_iro,
-                   max(3.0, fsize * fuchi),
+                   sx, max(3.0, fsize * fuchi),
                    max(1.0, fsize * 0.035), align, ml, mr, mv))
 
     head = [
@@ -985,7 +999,8 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         hook = st < hook_until - 0.01
         base_size = int(size * 1.35) if hook else hitotsu
         room = w - side * 2 - base_size * 0.25
-        lines, fs = fit_to_box(tx, room, base_size, 3 if hook else max_lines)
+        lines, fs = fit_to_box(tx, room, base_size,
+                               3 if hook else max_lines, tsubushi)
         pre = u"{\\fs%d}" % fs if fs != hitotsu else u""
         body.append(u"Dialogue: 0,%s,%s,%s,,0,0,0,,%s%s"
                     % (ass_time(st), ass_time(en),
@@ -2272,6 +2287,24 @@ KOUHO_SAITAN = [0.18]
 YOBI_SAITAN = [0.12]
 YOBI_MADO = [0.35]
 
+# ■ 段落の境目を1つずつ書き出す（2026-10-18・本人の指定）
+#
+#   > ずれ方の測定方法がわかりませんが、字幕ごとに始まりと終わりで
+#   > 同じ画像が使われているのかで測定できればいいかなと思います
+#
+# その測り方では**何も測れません。** 絵は1字幕につき1枚で、
+# 絵と字幕は必ず同じ瞬間に切り替わる作りなので、始まりと終わりは
+# いつも同じ絵です（実測 0.003秒。ログの「○ 同じコマで切り替わっています」）。
+#
+# 本人が見ているのは「字幕と絵の組が、声に対して早い/遅い」。
+# そのうち**段落の境目(錨)だけは、あとの工程が一切動かせません。**
+# つまり外れたら誰も直せない。だから**ここを1行ずつ書き出す。**
+#
+# 書き出すのは、文字数から出した見当・寄せた先・動かした量・寄せ先の種類。
+# これを貼ってもらえれば、どの境目がなぜ外れたかが分かる
+# （「測れるようにしてから直す」── メモリ14.73節）。
+KUGIRI_LOG = []
+
 
 def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
     u"""文字数で割った切れ目(exp)を、本物の「間」(naka)へ寄せる。
@@ -3242,12 +3275,14 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
                                                 else KOUHO_SAITAN[0]))
     out, t = [0.0], 0.0
     nokezu, sukui = 0, 0
+    del KUGIRI_LOG[:]
     for k in range(1, n):
         nokori_honto = total - t
         nokori_yomi = float(sum(durs[k - 1:])) or 1.0
         mezasu = t + durs[k - 1] * (nokori_honto / nokori_yomi)
         chikai = [(abs(c - mezasu), c) for c in naka
                   if abs(c - mezasu) <= mado and c > t + 0.05]
+        shurui = u"0.20秒の無音"
         if chikai:
             saki = min(chikai)[1]
         else:
@@ -3259,13 +3294,28 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
             if yo:
                 saki = min(yo)[1]
                 sukui += 1
+                shurui = u"短い無音(%.2f秒まで降りた)" % YOBI_SAITAN[0]
             else:
                 saki = mezasu
                 nokezu += 1
+                shurui = u"**寄せ先なし・文字数の見当のまま**"
         saki = min(max(saki, t + 0.05), total - 0.05)
+        KUGIRI_LOG.append((k, mezasu, saki, shurui))
         out.append(saki)
         t = saki
     out.append(total)
+    # 動かした量が大きい境目を出す。**錨は誰も直せない**ので、
+    # 外れていたらここに出ているものが疑わしい。
+    ookii = sorted(KUGIRI_LOG, key=lambda x: -abs(x[2] - x[1]))
+    miseru = [x for x in ookii if abs(x[2] - x[1]) >= 0.20][:8]
+    if miseru:
+        say(u"段落の境目で、文字数の見当から 0.20秒以上動かした所 %d か所:"
+            % len([x for x in ookii if abs(x[2] - x[1]) >= 0.20]))
+        for (k2, mez, sak, shu) in miseru:
+            say(u"    %d:%02d  見当 %.2f秒 → 置いた %.2f秒 (%+.2f秒)  %s"
+                % (int(sak) // 60, int(sak) % 60, mez, sak, sak - mez, shu))
+        say(u"    ここが外れていたら、あとの工程では直せません（錨）。"
+            u"この行をチャットに貼ってください。")
     if sukui or nokezu:
         say(u"段落の境目: 短い無音(%.2f秒/±%.2f秒)で拾い直した %d か所 / "
             u"寄せ先が無く見当のままの %d か所"
@@ -3871,6 +3921,28 @@ def build_slots(cues, total, target):
     return merged
 
 
+# ■ 「次だけは全部こちらで割り当てる」の旗（2026-10-18・本人の指定）
+#
+#   > 私が指定した時と字幕の長さが変わっているので、私の指定が逆に
+#   > おかしくなっています。私が前指定した時の法則性から、次だけは
+#   > 私の割り当てを無視し、あなた自ら全ての割り当てを行なってください
+#
+# 画像プランに `@@全部おまかせ　はい` と書いてある間だけ、
+#   ・差し替え.txt（番号で留めた指定）
+#   ・おまかせ.txt（前の回に機械が当てたもの。番号で留めてある）
+#   ・画像プランの1行ずつの指定（#タグ）
+# の**3つぜんぶを使わない。**
+#
+# **@@話数 は残す。** あれは「どの話の絵から選ぶか」という枠で、
+# 1枚ずつの指定ではない。枠まで外すと全63話から選ぶことになり、
+# 本人の指定の意図（話数の対応）まで捨ててしまう。
+#
+# 番号で留めた指定は、字幕の切り方が変わると**ずれる**。
+# 文で留め直す仕組み(moji_de_sagasu)は入れてあるが、
+# 文そのものが変わった所は留め直せない。だから一度白紙に戻す。
+ZENBU_OMAKASE = [False]
+
+
 def load_imageplan(path):
     """キーワード→画像 の対応表を読む。戻り値 (rules, default, focus)。
 
@@ -3902,7 +3974,9 @@ def load_imageplan(path):
         if not files:
             continue
         k = key.strip()
-        if k in (u"@@話数", u"@@対象話数"):
+        if k == u"@@全部おまかせ":
+            ZENBU_OMAKASE[0] = files[0] not in (u"いいえ", u"no", u"0")
+        elif k in (u"@@話数", u"@@対象話数"):
             # 何度でも書ける。書いたところから下の行に効く。
             cur_focus = files
             if not focus:
@@ -3912,6 +3986,10 @@ def load_imageplan(path):
         else:
             rules.append([[x for x in k.split(u"|") if x], files, 0,
                           list(cur_focus)])
+    if ZENBU_OMAKASE[0]:
+        say(u"@@全部おまかせ: 画像プランの1行ずつの指定 %d行を**使いません**"
+            u"（@@話数 はそのまま使います）" % len(rules))
+        rules = []
     return rules, default, focus
 
 
@@ -7772,7 +7850,10 @@ def main():
         if (en.get("card") and chaps0 and not a.no_fx) else []
     ban, card_ban = toshi_bangou(rows, kaado)
     # ① 機械のおまかせ（直す.py が当てたもの）を先に当てる
-    oma = load_sashikae(os.path.join(HERE, OMAKASE), images)
+    oma = {} if ZENBU_OMAKASE[0] \
+        else load_sashikae(os.path.join(HERE, OMAKASE), images)
+    if ZENBU_OMAKASE[0] and os.path.exists(os.path.join(HERE, OMAKASE)):
+        say(u"@@全部おまかせ: おまかせ.txt を**使いません**（番号で留めてあるため）")
     if oma:
         n2 = 0
         for no, img2 in sorted(oma.items()):
@@ -7785,7 +7866,14 @@ def main():
 
     # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
     sashi_moji = {}
-    kae = load_sashikae(os.path.join(HERE, SASHIKAE), images, moji=sashi_moji)
+    if ZENBU_OMAKASE[0]:
+        kae = {}
+        if os.path.exists(os.path.join(HERE, SASHIKAE)):
+            say(u"@@全部おまかせ: 差し替え.txt を**使いません**"
+                u"（消してはいません。旗を外せば次からまた効きます）")
+    else:
+        kae = load_sashikae(os.path.join(HERE, SASHIKAE), images,
+                            moji=sashi_moji)
     # ■ 字幕の文が書いてあれば、**番号ではなく文で留める**（2026-10-12）
     #
     # 本人「元々私が指定した時とは字幕の長さが変わっているため、

@@ -39,7 +39,10 @@ REPO = os.path.dirname(os.path.abspath(__file__))
 # ここには make_slideshow.py と 話数を学ぶ.py しか無かった。
 IRERU = [(u"py-slideshow", u"make_slideshow.py"),
          (u"py-manabu", u"話数を学ぶ.py"),
-         (u"py-zure", u"ずれ実測.py")]
+         (u"py-zure", u"ずれ実測.py"),
+         # v162 で採点にも @@全部おまかせ を見せたので、ここにも足す。
+         # 「差し替えたものはぜんぶ見る」── 見ていない所は必ず壊れる。
+         (u"py-kekka", u"miru_kekka.py")]
 # Python ではないもの（中身の一致だけ見る。compile はしない）
 IRERU_TXT = [(u"kyotsu-mitame", u"見た目.txt")]
 
