@@ -866,19 +866,28 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
             komaru = [tx for (st2, _e2, tx) in honbun
                       if st2 >= hook_until - 0.01
                       and fit_to_box(tx, room2, kouho, max_lines)[1] != kouho]
+            if kouho == int(size):
+                # **元の大きさを塞いでいる字幕**を覚えておく。
+                # ひとつ下(hitotsu+1)で困った字幕ではない ──
+                # そちらを短くしても 1px 上がるだけで、元には戻らない。
+                # 「短くすれば元の大きさに戻せます」と言う以上、
+                # 名前を出すのは元の大きさを塞いでいる字幕でなければならない。
+                kimeta = komaru
             if not komaru:
                 hitotsu = kouho
                 break
-            kimeta = komaru
         else:
             hitotsu = 20
         if hitotsu != size:
             say(u"字幕の大きさを %dpx にそろえました（%dpx だと %d枚が縮むため）"
                 % (hitotsu, size, len(kimeta)))
             if kimeta:
-                say(u"  この字幕を台本で短くすると、%dpx に戻せます:" % size)
+                say(u"  この %d枚を台本で短くすると、%dpx に戻せます:"
+                    % (len(kimeta), size))
                 for tx in sorted(kimeta, key=lambda t: -disp_len(t))[:5]:
                     say(u"    %.0f文字  「%s」" % (disp_len(tx), tx))
+                if len(kimeta) > 5:
+                    say(u"    （ほか %d枚）" % (len(kimeta) - 5))
                 room3 = w - side * 2 - size * 0.25
                 say(u"    %dpx で2行に入るのは %d文字までです。"
                     % (size, max(8, int(room3 / float(size))) * max_lines))

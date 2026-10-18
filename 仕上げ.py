@@ -144,8 +144,16 @@ def repo_wo_utsusu():
         print(u"       （scratchpad 側の控えから動かすと、古い道具を測ります）")
         sys.exit(1)
     kaeta = []
+    # ■ .js と .html も写す（2026-10-18）
+    #
+    # ここが .py/.txt/.tsv だけだったので、
+    #   ⑪ menu_dump.js が無い  → 「menu.ps1 を取り出せませんでした」
+    #   ⑱ board.src.html が無い → 「見ていません」で素通り
+    # になっていた。**どちらもリポジトリには有る。**写していないだけ。
+    # ⑱ は「パックに何か足したら必ず2か所に足す」を見張る検査なので、
+    # ここが素通りすると、足し忘れたまま出すことになる。
     for f in sorted(os.listdir(moto)):
-        if not f.endswith((".py", ".txt", ".tsv")):
+        if not f.endswith((".py", ".txt", ".tsv", ".js", ".html")):
             continue
         a, b = os.path.join(moto, f), os.path.join(V, f)
         try:
