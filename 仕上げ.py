@@ -41,16 +41,31 @@ def sagasu():
       ・scratchpad の直下  … ふだん動かすのはこっち
       ・リポジトリ直下      … scratchpad が消えても残るように
     どちらから呼ばれても動くように、scratchpad を探しに行く。
+
+    ■ video/ が無くても作業場所と認める（2026-10-18）
+
+    前は「video/ がある所」だけを作業場所と見ていた。
+    ところが道具は repo_wo_utsusu で**これから写す**ので、
+    1回目は video/ が無い。コンテナが作り直されて /tmp が消えたとき、
+    それで「作業場所が見つかりません」と止まった（実際に止まった）。
+    **鍵と鍵穴が入れちがっていた。** video/ は作れるので、無くてもよい。
     """
     import glob
     koko = os.path.dirname(os.path.abspath(__file__))
+    tate = []
     for c in (os.path.join(koko, "scratchpad"),
               os.environ.get("CLAUDE_SCRATCHPAD", "")):
-        if c and os.path.isdir(os.path.join(c, "video")):
-            return os.path.dirname(c.rstrip(os.sep)), c
-    for c in sorted(glob.glob("/tmp/claude-*/*animatch*/*/scratchpad")):
+        if c and os.path.isdir(c):
+            tate.append(c)
+    tate += sorted(glob.glob("/tmp/claude-*/*animatch*/*/scratchpad"))
+    # video/ があるものを先に。無ければ、ある作業場所の先頭を使って作る。
+    for c in tate:
         if os.path.isdir(os.path.join(c, "video")):
             return os.path.dirname(c.rstrip(os.sep)), c
+    for c in tate:
+        os.makedirs(os.path.join(c, "video"))
+        print(u"作業場所に video/ がなかったので作りました: %s" % c)
+        return os.path.dirname(c.rstrip(os.sep)), c
     print(u"[中断] 作業場所(scratchpad)が見つかりません。")
     print(u"       CLAUDE_SCRATCHPAD にその場所を入れて、もう一度実行してください。")
     sys.exit(1)
@@ -81,8 +96,21 @@ def keijiban():
     ima = os.path.join(HERE, u"公開中の掲示板.html")
     if os.path.exists(ima):
         return ima, u"公開中の掲示板.html（出す物そのもの）"
-    return os.path.join(HERE, "board.src.html"), \
-        u"board.src.html（**古いかもしれません。公開中のものを控えてください**）"
+    # ■ board.src.html は git に入った（2026-10-18）
+    #
+    # 「git に入れていないので別のセッションの直しが来ない」が元の弱点で、
+    # そこは別のセッションが .claude/video/ に入れて解いてくれた。
+    # **作業場所(/tmp)は消えるが、リポジトリは消えない。**
+    # コンテナが作り直されて /tmp が空になったとき、
+    # ここが作業場所しか見ていなくて落ちた（実際に落ちた）。
+    koko = os.path.dirname(os.path.abspath(__file__))
+    repo = os.path.join(koko, ".claude", "video", "board.src.html")
+    if os.path.exists(repo):
+        return repo, u".claude/video/board.src.html（git のもの）"
+    furui = os.path.join(HERE, "board.src.html")
+    if os.path.exists(furui):
+        return furui, u"board.src.html（**古いかもしれません**）"
+    return None, u"（掲示板の控えがありません）"
 
 
 def repo_wo_utsusu():
@@ -286,7 +314,13 @@ else:
 midashi(u"⑤", u"共通の設定が、どの動画のパックにも入るか")
 _kp, _kna = keijiban()
 print(u"掲示板として見るもの: " + _kna)
-src = io.open(_kp, encoding="utf-8").read()
+if _kp is None:
+    # 見られないものを「落ちた」とは言わない。**見ていない**と言う。
+    SHUKUDAI.append(u"掲示板の控えが無いので ⑤⑧⑪ は見ていません")
+    print(u"… 掲示板の控えが無いので、⑤⑧⑪ は飛ばします")
+    src = u""
+else:
+    src = io.open(_kp, encoding="utf-8").read()
 # ZIPを作るところは2か所ある（制作パック と 台本保存/音声生成/動画化）。
 # 「1か所でも呼んでいればよい」にすると、片方だけ直したのを見逃す。
 # 効果音フォルダも miru_kekka.py も、それで消えた。
@@ -340,9 +374,25 @@ for line in io.open(os.path.join(V, u"演出.txt"), encoding="utf-8-sig") \
         oto.add(c[2])
     elif len(c) >= 2 and c[0] == u"章タイトルの音":
         oto.add(c[1])
-nuke = sorted(x for x in oto
-              if u'data-se="%s"' % x not in src
-              or not os.path.exists(os.path.join(V, u"効果音", x)))
+# ■ 「素材が無い」と「配り忘れ」を取りちがえない（2026-10-18）
+#
+# 音は掲示板に base64 で入っている。board.src.html は <!--DOCS--> の
+# 差し込み前の型なので、**型を見ているときは音が入っていなくて当たり前。**
+# 作業場所に 効果音/ が無いときも同じ。
+# そこを「×配り忘れ」と出すと、本当の配り忘れが埋もれる。
+kata = u"data-se=" not in src
+oto_nai = not os.path.isdir(os.path.join(V, u"効果音"))
+if kata or oto_nai:
+    riyuu = u" / ".join(
+        ([u"掲示板が型（音は差し込み前）"] if kata else [])
+        + ([u"作業場所に 効果音/ が無い"] if oto_nai else []))
+    SHUKUDAI.append(u"効果音の配りは見ていません（%s）" % riyuu)
+    print(u"… 効果音の配りは見ていません（%s）" % riyuu)
+    nuke = []
+else:
+    nuke = sorted(x for x in oto
+                  if u'data-se="%s"' % x not in src
+                  or not os.path.exists(os.path.join(V, u"効果音", x)))
 if nuke:
     warui.append(u"効果音が配られていません: " + u" ".join(nuke))
     print(u"× 演出.txt が使う音が掲示板に入っていません: " + u" ".join(nuke))
@@ -406,7 +456,8 @@ else:
 
 # ── ⑧ パック版 ──────────────────────────────────────
 midashi(u"⑧", u"パック版が掲示板の版と合っているか")
-src2 = io.open(keijiban()[0], encoding="utf-8").read()
+src2 = io.open(keijiban()[0], encoding="utf-8").read() \
+    if keijiban()[0] else u""
 m = re.search(r'PACK_VERSION\s*=\s*"v(\d+)"', src2)
 oboe = os.path.join(HERE, u".出した版.txt")
 dashita = 0
@@ -452,7 +503,7 @@ if not node:
 else:
     out_ps1 = os.path.join(HERE, "_menu.ps1")
     r = subprocess.run([node, os.path.join(V, "menu_dump.js"),
-                        keijiban()[0], out_ps1],
+                        keijiban()[0] or u"", out_ps1],
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if r.returncode != 0:
         print(r.stdout.decode("utf-8", "replace")[-800:])

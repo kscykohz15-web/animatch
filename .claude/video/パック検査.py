@@ -33,14 +33,26 @@ def yomu(p):
 
 
 def main():
+    # ■ まず自分の隣（git のもの）を見る（2026-10-18）
+    #
+    # 前は scratchpad の親だけを見ていた。board.src.html と sync_py.py は
+    # そのあと git（.claude/video/）に入ったので、そちらが本物。
+    # **作業場所(/tmp)は消えるが、リポジトリは消えない。**
+    # コンテナが作り直されたとき、ここが「ありません」で落ちた。
     here = os.path.dirname(os.path.abspath(__file__))
     oya = os.path.dirname(os.path.dirname(here))      # scratchpad の親
-    src = os.path.join(oya, u"board.src.html")
-    syn = os.path.join(oya, u"sync_py.py")
-    for p in (src, syn):
-        if not os.path.exists(p):
-            print(u"× %s がありません" % p)
-            return 1
+    def sagasu(nm):
+        for c in (os.path.join(here, nm), os.path.join(oya, nm)):
+            if os.path.exists(c):
+                return c
+        return None
+    src, syn = sagasu(u"board.src.html"), sagasu(u"sync_py.py")
+    if not src or not syn:
+        nai = [n for n, c in ((u"board.src.html", src), (u"sync_py.py", syn))
+               if not c]
+        print(u"… %s が無いので、パックの検査は飛ばします"
+              u"（落ちたのではなく、見ていません）" % u" / ".join(nai))
+        return 0
     s, y = yomu(src), yomu(syn)
 
     oki = set(re.findall(r'<script type="text/plain" id="(py-[^"]+)">', s))

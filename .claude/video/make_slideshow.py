@@ -697,6 +697,8 @@ MITAME_KITEI = {
     # **ここに無いキーは load_mitame が黙って落とす。** 一度それで
     # 「見た目.txt に書いたのに効かない」をやっているので、必ず足す。
     u"字幕のつなぐ上限": 0.0,
+    # 動画ぜんぶで大きさを1つにそろえるか（はい/いいえ）
+    u"字幕の大きさをそろえる": u"はい",
     u"字幕の色": u"FFFFFF", u"字幕のふち色": u"000000", u"字幕のふち": 0.115,
     u"字幕の最短": 0.0, u"同じ絵の上限": 3.0, u"書き出しの速さ": u"faster",
     u"引用の大きさ": 38.0, u"引用の色": u"FFFFFF",
@@ -823,8 +825,68 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     base = min(w, h)
     side = int(w * JIMAKU_YOHAKU[0])
     usable = w - side * 2 - size * 0.25      # フチの太さぶん余裕を見る
+    # ■ 字幕の大きさを、動画ぜんぶで1つにそろえる（2026-10-18・本人の指定）
+    #
+    # > 字幕の文字の大きさを一定してください。
+    # > 今は文字数が多いと小さくなっています。
+    #
+    # そのとおりで、fit_to_box は2行に入らない字幕だけ縮めていた。
+    # 本人の第6回を数えたら、98px で**7枚が縮んでいた**
+    # （うち2枚はつないだぶん、残り5枚は台本の長い行）。
+    # 1枚ごとに大きさが変わるので、見ていて落ち着かない。
+    #
+    # ■ 「大きいほうに合わせて幅を広げる」はもう出来ない
+    #
+    # > 横幅は画像の横幅の90%まで広げてもOKです
+    #
+    # ありがたいが、**いますでに 94% 使っている**（余白は片側3%）。
+    # 90% はいまより狭い。だから幅では解けない。
+    #
+    #   98px で 43文字 を2行に入れるには 1行22文字 ＝ 2156px 必要。
+    #   画面は 1920px しかない。
+    #
+    # ■ だから「ぜんぶが縮まずに入る、いちばん大きい大きさ」を1つ選ぶ
+    #
+    # 本人の第6回（いちばん長い字幕 43文字）での実測:
+    #
+    #   98px … 縮む字幕 7枚      81px … 縮む字幕 0枚（1行22文字・2行44文字）
+    #   93px …           6枚      83px …           1枚
+    #   86px …           4枚
+    #
+    # → 81px を選ぶ。**ぜんぶ同じ大きさになる。**
+    # 98px に戻したいときは、縮める原因になっている字幕を台本で短くする。
+    # どれが原因かは、下で名前を出す。
+    honbun = [(st, en, _esc(tx)) for (st, en, tx) in cues if (tx or u"").strip()]
+    soroeru = (mi.get(u"字幕の大きさをそろえる") or u"はい") not in (u"いいえ", u"no")
+    hitotsu = size
+    kimeta = []
+    if soroeru and honbun:
+        for kouho in range(int(size), 19, -1):
+            room2 = w - side * 2 - kouho * 0.25
+            komaru = [tx for (st2, _e2, tx) in honbun
+                      if st2 >= hook_until - 0.01
+                      and fit_to_box(tx, room2, kouho, max_lines)[1] != kouho]
+            if not komaru:
+                hitotsu = kouho
+                break
+            kimeta = komaru
+        else:
+            hitotsu = 20
+        if hitotsu != size:
+            say(u"字幕の大きさを %dpx にそろえました（%dpx だと %d枚が縮むため）"
+                % (hitotsu, size, len(kimeta)))
+            if kimeta:
+                say(u"  この字幕を台本で短くすると、%dpx に戻せます:" % size)
+                for tx in sorted(kimeta, key=lambda t: -disp_len(t))[:5]:
+                    say(u"    %.0f文字  「%s」" % (disp_len(tx), tx))
+                room3 = w - side * 2 - size * 0.25
+                say(u"    %dpx で2行に入るのは %d文字までです。"
+                    % (size, max(8, int(room3 / float(size))) * max_lines))
+        else:
+            say(u"字幕の大きさは %dpx でそろっています（縮む字幕はありません）" % size)
+
     if not per_line:
-        per_line = max(8, int(usable / float(size)))
+        per_line = max(8, int(usable / float(hitotsu)))
     csize = max(16, int(round(base / max(6.0, mi[u"引用の大きさ"]))))   # 左上の引用
     chsize = max(20, int(round(base / max(6.0, mi[u"章の大きさ"]))))    # 右上の章
     pad = int(h * 0.022)
@@ -853,7 +915,9 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         u"Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, "
         u"BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, "
         u"BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
-        style(u"Def", font, size, 2, side, side, int(h * safe_bottom)),
+        # そろえた大きさを Style そのものに入れる。
+        # 1行ごとに {\fs..} を付けると、字幕の数だけ上書きが並んで読みにくい。
+        style(u"Def", font, hitotsu, 2, side, side, int(h * safe_bottom)),
         style(u"Credit", font, csize, 7, int(w * 0.012), int(w * 0.012), pad),
         style(u"Chap", font, chsize, 9, int(w * 0.012), int(w * 0.012), pad),
         # ショートの冒頭に出す一言。画面の真ん中に大きく置く
@@ -908,15 +972,12 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         body.append(u"Dialogue: 2,%s,%s,Card,,0,0,0,,%s%s"
                     % (ass_time(st), ass_time(en), pre, u"\\N".join(gyou[:4])))
 
-    for (st, en, tx) in cues:
-        tx = _esc(tx)
-        if not tx.strip():
-            continue
+    for (st, en, tx) in honbun:
         hook = st < hook_until - 0.01
-        base_size = int(size * 1.35) if hook else size
+        base_size = int(size * 1.35) if hook else hitotsu
         room = w - side * 2 - base_size * 0.25
         lines, fs = fit_to_box(tx, room, base_size, 3 if hook else max_lines)
-        pre = u"{\\fs%d}" % fs if fs != base_size else u""
+        pre = u"{\\fs%d}" % fs if fs != hitotsu else u""
         body.append(u"Dialogue: 0,%s,%s,%s,,0,0,0,,%s%s"
                     % (ass_time(st), ass_time(en),
                        u"Hook" if hook else u"Def", pre, u"\\N".join(lines)))
@@ -3128,18 +3189,62 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
     # 一度ずれたまま次を見積もると、ずれが積み上がって窓から外れ、
     # そこから先が全部合わなくなる（実際そうなった）。
     # 合わせ直した位置から測り直せば、ずれは次に持ち越さない。
+    # ■ 寄せ先が無かった境目は、**短い無音にも降りて探す**（2026-10-18）
+    #
+    # 本人の指摘のひとつがここだった。
+    #
+    #   > 「キシリカ・キリシス」の部分で次の字幕と画像に移動
+    #
+    # 098「それが自称・魔界皇帝、キシリカ・キシリス。」は**段落の境目**で、
+    # ログもこう出していた ── 「段落の境目なので動かせません」。
+    #
+    # 段落の境目は錨になり、あとの工程（寄せ・消し）が一切手を出せない。
+    # **つまり、ここが外れたら誰も直せない。** 直せるのはこの関数だけ。
+    #
+    # 外れる筋はひとつしかない。候補（0.20秒以上の無音）が窓の中に
+    # 1つも無く、`mezasu`（文字数から出した見当）のまま置かれたとき。
+    # merged.wav はつなぎ目の無音を削るので、**削られて 0.20秒を下回った
+    # つなぎ目**では、候補が消える。そうなると見当のままになり、
+    # 比例配分でも「声の中」でもない、**ただの当てずっぽう**が錨になる。
+    #
+    # なので、見つからなかったときだけ 0.12秒まで降りて探す。
+    # **これは「寄せ先を広げる」のではなく「寄せ先ゼロを埋める」直し。**
+    # 0.20秒の候補があるときの振る舞いは1つも変えない（下の naka が先）。
+    # 動かす先が無いものを見当のまま残すより、短くても本物の無音に
+    # 乗せたほうがよい ── 段落の境目は、必ず無音の中にあるのだから。
+    yobi = sorted(max(a + 0.02, b - LEAD) for (a, b) in (sils or [])
+                  if 0.12 <= b - a < (saitan if saitan is not None
+                                      else KOUHO_SAITAN[0]))
     out, t = [0.0], 0.0
+    nokezu, sukui = 0, 0
     for k in range(1, n):
         nokori_honto = total - t
         nokori_yomi = float(sum(durs[k - 1:])) or 1.0
         mezasu = t + durs[k - 1] * (nokori_honto / nokori_yomi)
         chikai = [(abs(c - mezasu), c) for c in naka
                   if abs(c - mezasu) <= mado and c > t + 0.05]
-        saki = min(chikai)[1] if chikai else mezasu
+        if chikai:
+            saki = min(chikai)[1]
+        else:
+            # 本物の寄せ先が無い。短い無音に降りる。それも無ければ見当のまま。
+            yo = [(abs(c - mezasu), c) for c in yobi
+                  if abs(c - mezasu) <= mado and c > t + 0.05]
+            if yo:
+                saki = min(yo)[1]
+                sukui += 1
+            else:
+                saki = mezasu
+                nokezu += 1
         saki = min(max(saki, t + 0.05), total - 0.05)
         out.append(saki)
         t = saki
     out.append(total)
+    if sukui or nokezu:
+        say(u"段落の境目: 短い無音(0.12秒)で拾い直した %d か所 / "
+            u"寄せ先が無く見当のままの %d か所"
+            u"%s" % (sukui, nokezu,
+                     u"（この %d か所は錨になるので、あとで直せません）" % nokezu
+                     if nokezu else u""))
     return out
 
 
@@ -4342,6 +4447,40 @@ def setsumei(cat, k):
         else u" ".join(v)
 
 
+def shou_no_kotoba(title, cat):
+    u"""章の名前から、絵の説明と突き合わせる言葉を取り出す。
+
+    **カタログに実際に出てくる言葉だけ**を返す。
+    思いつきの言葉を足すと、どの絵にも当たらないまま
+    「当たらなかった」ことにも気づけないので、在る語だけに絞る。
+
+        「助言② / ウェンポートの路地裏」 → 路地裏・街 など
+        「助言③ / ラノア魔法大学へ行け」 → ラノア・魔法 など
+        「まとめ」「はじめに」           → なし（ひらがなだけ）
+
+    ひらがなだけの語（「なぜ」「まとめ」「ところ」）は外す。
+    どの章にも当たってしまい、目印にならないため。
+    """
+    if not cat or not title:
+        return []
+    goi = set()
+    for d in cat.values():
+        for x in (d or u"").split():
+            goi.add(x)
+    t = title.replace(u"/", u" ").replace(u"・", u" ")
+    out = []
+    for k in goi:
+        if len(k) < 2 or k not in t:
+            continue
+        # ひらがなだけの語は、目印にならないので使わない
+        if all(u"\u3040" <= c <= u"\u309f" for c in k):
+            continue
+        out.append(k)
+    # 長い語のほうが効く（「魔法大学」>「魔法」）
+    out.sort(key=lambda k: -len(k))
+    return out[:6]
+
+
 def card_no_e(rows, hajime, owari, title, cat):
     u"""章カードに使う絵を、その章の中から選ぶ。
 
@@ -4356,6 +4495,26 @@ def card_no_e(rows, hajime, owari, title, cat):
       ・「使用不可」「クレジット」「実写」は外す
     で選びます。カタログに説明が無ければ、今までどおり先頭の絵。
     """
+    # ■ 章の名前の「人以外の言葉」も見る（2026-10-18・本人の指摘）
+    #
+    # > 章の切り替わりの画像の出来が悪いです。
+    # > 文字の横にある画像は、もう少し章と関連性の強いものを選んでください
+    #
+    # 見たら、**人の名前しか見ていなかった。**
+    # ところが本人の章は、人ではなく場所や出来事が主である。
+    #
+    #   はじめに / ヒトガミの目的 / なぜ直接殺さないのか /
+    #   助言② ウェンポートの路地裏 / 助言③ ラノア魔法大学へ行け /
+    #   助言④ ベガリットに行くな / 老デウスの世界線でも / まとめ
+    #
+    # 12章のうち、人の名前が入っているのは4章だけ。
+    # 残り8章は「誰かが写っている絵」＋「アップ」＋「章の頭」の
+    # 3つしか手がかりが無く、**ほぼ章の頭の絵がそのまま出ていた。**
+    # 「路地裏」「ラノア」「魔法」はカタログに在るのに、見ていなかった。
+    #
+    # なので、章の名前から言葉を取り出して、絵の説明と突き合わせる。
+    # カタログに在る言葉だけを使うので、空振りしても悪さはしない。
+    kotoba = shou_no_kotoba(title, cat)
     namae = [c for c in uniq(CHARACTERS) if c in title]
     best, bscore = None, -1
     for i in range(hajime, owari):
@@ -4374,6 +4533,10 @@ def card_no_e(rows, hajime, owari, title, cat):
             sc += 6
         elif any(c in w for c in uniq(CHARACTERS)):
             sc += 3
+        # 章の名前の言葉が写っているほど、その章らしい絵。
+        # 人の名前（+6）より軽く、けれど「章の頭」（+1）よりはずっと重く。
+        atatta = [k for k in kotoba if k in w]
+        sc += 4 * min(2, len(atatta))
         if u"アップ" in w:
             sc += 2
         if u"二人" in w or u"三人" in w:
@@ -7387,6 +7550,36 @@ def main():
                                (mae2 or u"").strip()[:30],
                                (u"（つなぐと %d文字で入りません）" % kei2)
                                if kei2 else u"（段落の境目なので動かせません）"))
+                    # ■ 「入りません」だけでは直せない。**何をすれば消えるか**
+                    #   （2026-10-18・本人の「ヒトガミの助言は」の件）
+                    #
+                    # つなぐと上限を大きく超える所は、台本を数文字削っても
+                    # 届かない。本人の例は 69文字（上限44）だった。
+                    #
+                    #   「…ヒトガミの助言はすべて、」＋
+                    #   「ルーデウスとロキシーの再会を邪魔するもので…ので、」
+                    #
+                    # ここは **「、」で切ったのに、声が止まっていない**所。
+                    # 止まらない所に合わせ先は無いので、置き方では直らない。
+                    # 直すなら台本側で、**その「、」を「。」にする。**
+                    # 「。」なら読み上げが本当に止まるので、
+                    #   ・声に本物の間ができて、切れ目がそこへ乗る
+                    #   ・文が短くなって、つなぐ必要そのものが無くなる
+                    # の両方が効く。削る文字数より、こちらのほうが確実。
+                    tooi = [x for x in naka_nok
+                            if x[3] and x[3] > JIMAKU_TSUNAGU[0] + 4]
+                    if tooi:
+                        say(u"    ↑このうち %d か所は、台本を削るには遠すぎます"
+                            u"（上限 %d文字 に対して %d〜%d文字）。"
+                            % (len(tooi), JIMAKU_TSUNAGU[0],
+                               min(x[3] for x in tooi),
+                               max(x[3] for x in tooi)))
+                        say(u"      **その字幕の終わりの「、」を「。」に変える**のが"
+                            u"いちばん確かです。")
+                        say(u"      「。」なら読み上げが本当に止まるので、"
+                            u"声に間ができて切れ目がそこに乗り、文も短くなります。")
+                        say(u"      字幕用と読み上げ用の両方を直して、"
+                            u"1（音声）から作り直してください。")
                     # ■ どこを何文字減らせばよいかを出す（2026-10-12）
                     #
                     # つなぐには上限に収まらないといけない。収まらなければ
