@@ -8574,6 +8574,7 @@ MITAME_KITEI = {
     # 動画ぜんぶで大きさを1つにそろえるか（はい/いいえ）
     u"字幕の大きさをそろえる": u"はい",
     u"字幕の横つぶし": 92.0,
+    u"動きの細かさ": 3.0,
     u"字幕の色": u"FFFFFF", u"字幕のふち色": u"000000", u"字幕のふち": 0.115,
     u"字幕の最短": 0.0, u"同じ絵の上限": 3.0, u"書き出しの速さ": u"faster",
     u"引用の大きさ": 38.0, u"引用の色": u"FFFFFF",
@@ -11063,6 +11064,98 @@ def check_script_vs_srt(script, srt_path, names):
     say(u"")
 
 
+def koe_no_katamari(sils, total, atama=0.0):
+    u"""無音の並びから「声のかたまり」の並びを作る。(開始, 終了) の並び。"""
+    out, t = [], atama
+    for (a, b) in sorted(sils or []):
+        if a > t + 0.01:
+            out.append((t, a))
+        t = max(t, b)
+    if total > t + 0.01:
+        out.append((t, total))
+    return out
+
+
+# 突き合わせが使えたかどうかを、あとで報告するために覚えておく。
+TSUKIAWASE = [u""]
+
+
+def kugiri_tsukiawase(folder, names, total, sils, noise_db=-35):
+    u"""段落の境目を**測る**。寄せない。見当も使わない。（2026-10-19）
+
+    ■ やり方を一から考え直した（本人の指定）
+
+    > また同じところでずれています。一度やり方を一から考え直し、
+    > しっかりあなたの方でずれがないのか検証したうえで出力してください
+
+    これまでは「文字数から見当をつけて、近くの無音に寄せる」だった。
+    寄せ先の選び方を7回直して、7回とも同じ所が残った。
+    **寄せるという形そのものが間違っていた。** 当てに行くのをやめる。
+
+    ■ 気づいたこと ── 答えは最初から手元にあった
+
+    merged.wav は 1行ずつの音声をつないだもので、
+    つなぎ目の**無音だけ**を削る。**声そのものは1サンプルも変えていない。**
+
+    だから「声のかたまり」の並びは、1行ずつの音声を順に並べたものと
+    **同じ数・同じ長さで並ぶ。** 削られるのは、かたまりの外側だけ。
+
+        ① merged.wav の声のかたまりを順に並べる
+        ② 1行ずつの音声それぞれの、中のかたまりの数を数える
+        ③ その数の順に割り当てる
+           → その行の最初のかたまりの頭が、その段落の始まり
+
+    推測が1つも入らない。寄せ幅も窓も要らない。
+
+    ■ 自分で検証する
+
+    使う前に2つ確かめる。どちらかが合わなければ **None を返して
+    今までの道に戻す。** 測れていないのに測った顔をするほうが害が大きい。
+
+        ・かたまりの数が、1行ずつの合計と merged.wav で一致するか
+        ・対応づけたかたまりの**長さ**が 0.06秒 以内で一致するか
+
+    戻り値 (境目の並び, 説明) / 使えないときは (None, 理由)
+    """
+    oya = koe_no_katamari(sils, total)
+    if not oya:
+        return None, u"merged.wav に声のかたまりが見つかりません"
+    ko = []
+    for n in names:
+        p = os.path.join(folder, n)
+        d = audio_duration(p) or 0.0
+        if d <= 0:
+            return None, u"%s の長さが読めません" % n
+        r = koe_no_katamari(detect_silences(p, noise_db, 0.05), d)
+        if not r:
+            return None, u"%s に声のかたまりがありません" % n
+        ko.append(r)
+    kei = sum(len(r) for r in ko)
+    if kei != len(oya):
+        return None, (u"声のかたまりの数が合いません"
+                      u"（1行ずつの合計 %d / merged.wav %d）" % (kei, len(oya)))
+
+    out, i, warui = [], 0, []
+    for gi, r in enumerate(ko):
+        hajime = oya[i][0]
+        if gi == 0:
+            out.append(0.0)
+        else:
+            # 境目は「声が出る LEAD 秒前」。kugiri_awase と同じ置き方。
+            out.append(max(out[-1] + 0.05, min(hajime - LEAD, total - 0.05)))
+        for (a2, b2) in r:
+            if abs((oya[i][1] - oya[i][0]) - (b2 - a2)) > 0.06:
+                warui.append((gi + 1, b2 - a2, oya[i][1] - oya[i][0]))
+            i += 1
+    out.append(total)
+    if warui:
+        return None, (u"声のかたまりの長さが合いません（%d か所。はじめは %d行目で "
+                      u"1行ずつ %.2f秒 / merged.wav %.2f秒）"
+                      % (len(warui), warui[0][0], warui[0][1], warui[0][2]))
+    return out, (u"段落の境目を merged.wav と突き合わせて**測りました**"
+                 u"（声のかたまり %d個が1つずつ対応。推測も寄せもゼロ）" % kei)
+
+
 def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
     u"""1行ずつの音声の境目を、merged.wav の本物の無音に合わせ直す。
 
@@ -11197,7 +11290,8 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
 JIKKOKU_KUGIRI = []
 
 
-def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict=False):
+def timeline_from_parts_srt(script, folder, names, srt_path, total, sils,
+                            strict=False, noise_db=-35):
     """★ 1行ずつの音声の長さ + subtitle.srt の本文 から、正確な時刻表を作る。
 
     ・どこで区切れているか  → subtitle.srt の本文(これは正しい)
@@ -11257,7 +11351,14 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils, strict
 
     # 行の境目は、一律倍率ではなく merged.wav の本物の無音に合わせる。
     # 一律だと、削られた無音の量が行ごとにちがうぶんだけ途中でずれる。
-    kugiri = kugiri_awase(durs, total, sils)
+    # **まず測る。** 測れたらそれを使う（寄せない）。
+    kugiri, tsuki = kugiri_tsukiawase(folder, names, total, sils, noise_db)
+    TSUKIAWASE[0] = tsuki
+    if kugiri:
+        head += u" / " + tsuki
+    else:
+        head += u" / 突き合わせは使えませんでした(%s)。寄せに戻ります" % tsuki
+        kugiri = kugiri_awase(durs, total, sils)
     zure = max(abs(kugiri[k] - sum(durs[:k]) * scale) for k in range(len(kugiri))) \
         if len(kugiri) > 1 else 0.0
     if zure > 0.15:
@@ -11853,10 +11954,6 @@ def load_imageplan(path):
         else:
             rules.append([[x for x in k.split(u"|") if x], files, 0,
                           list(cur_focus)])
-    if ZENBU_OMAKASE[0]:
-        say(u"@@全部おまかせ: 画像プランの1行ずつの指定 %d行を**使いません**"
-            u"（@@話数 はそのまま使います）" % len(rules))
-        rules = []
     return rules, default, focus
 
 
@@ -14332,6 +14429,61 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     return out
 
 
+# ■ 挨拶は必ずこの人の絵（2026-10-19・本人の指定）
+#
+#   > 「どうもこんにちわかさです。」の毎回の挨拶の部分だけは
+#   >  必ずロキシーの画像をあてるようにしてください
+#
+# 当て方.txt にも規則として書いたが、タグが当たらないこともある。
+# 「必ず」なので、最後にここで押さえる。
+# **番号では書かない。** 本人のカタログはこちらに無いので、
+# 3-05-035 のような番号を書くと、絵が入れ替わった日に黙って空振りする。
+# 人物ルールで「その人が写っている」と分かっている絵から選ぶ。
+AISATSU = (u"どうもこんにちは", u"どうもこんにちわ", u"かさです")
+AISATSU_HITO = [u"ロキシー"]
+
+
+def aisatsu_pin(slots, picked, catalog, images, focus=None):
+    u"""挨拶の字幕に、必ず AISATSU_HITO の絵を当てる。
+
+    戻り値 (絵の並び, 当て直した数, 挨拶の字幕の数, 困りごと)
+    """
+    hito = AISATSU_HITO[0]
+    kazu = sum(1 for (_s, _d, tx) in slots
+               if any(x in (tx or u"") for x in AISATSU))
+    if not kazu:
+        return picked, 0, 0, u""
+    if not catalog or len(picked) != len(slots):
+        return picked, 0, kazu, u"カタログが無いので押さえられません"
+    kouho = [k for k in images if hito in (catalog.get(k) or u"")]
+    if not kouho:
+        return picked, 0, kazu, u"カタログに「%s」の絵が1枚もありません" % hito
+
+    def tokuten(k):
+        setsu = catalog.get(k) or u""
+        p = 0
+        if focus and any(f in k for f in focus):
+            p -= 8                      # まず対象話数の中から
+        if u"一人" in setsu:
+            p -= 2                      # 顔がはっきり分かるもの
+        if u"アップ" in setsu:
+            p -= 1
+        if u"使用不可" in setsu:
+            p += 50                     # 文字入り・実写は最後
+        return (p, natkey(k))
+
+    kouho.sort(key=tokuten)
+    out, n = list(picked), 0
+    for i, (_st, _du, tx) in enumerate(slots):
+        if not any(x in (tx or u"") for x in AISATSU):
+            continue
+        if hito in (catalog.get(out[i]) or u""):
+            continue                    # もう当たっている
+        out[i] = kouho[n % len(kouho)]
+        n += 1
+    return out, n, kazu, u""
+
+
 def write_plan(path, slots, images, fingerprint=u""):
     with io.open(path, "w", encoding="utf-8-sig", newline="") as f:
         f.write(u"# format: %d\r\n" % PLAN_FORMAT)
@@ -15328,8 +15480,9 @@ def main():
                     say(u"1行ずつの音声を見つけました: %s に %d個" % (pdir, len(pnames)))
                     sils0 = detect_silences(a.audio, a.noise_db, 0.05)
                     # ① subtitle.srt の本文が台本と完全に一致するときだけ使う
-                    got, note = timeline_from_parts_srt(script, pdir, pnames, a.srt,
-                                                        total, sils0, strict=True)
+                    got, note = timeline_from_parts_srt(
+                        script, pdir, pnames, a.srt, total, sils0,
+                        strict=True, noise_db=a.noise_db)
                     if got:
                         cues = got
                         JIKOKU[0] = u"① 音声＋subtitle.srt(本文一致) ＝ ずれません"
@@ -15345,8 +15498,9 @@ def main():
                         else:
                             say(u"  (%s)" % note)
                             # ③ ここまで来たら、やむを得ず文字数で振り分ける
-                            got, note = timeline_from_parts_srt(script, pdir, pnames,
-                                                                a.srt, total, sils0)
+                            got, note = timeline_from_parts_srt(
+                                script, pdir, pnames, a.srt, total, sils0,
+                                noise_db=a.noise_db)
                             if got:
                                 cues = got
                                 JIKOKU[0] = (u"③ 文字数で振り分け ＝ ずれます"
@@ -15521,7 +15675,22 @@ def main():
                             % (int(t2) // 60, int(t2) % 60, fu2,
                                (mae2 or u"").strip()[:30],
                                (u"（つなぐと %d文字で入りません）" % kei2)
-                               if kei2 else u"（段落の境目なので動かせません）"))
+                               if kei2 else
+                               # ■ **この文言が私を3回だました**（2026-10-19）
+                               #
+                               # ここは「錨だから消せない」という意味だが、
+                               # 「段落の境目」と書いていた。ところが
+                               # IKARI_DANRAKU=False のとき錨は**全部の字幕の頭**で、
+                               # 段落の境目とは別物（本人の回は段落54個に対して錨99）。
+                               #
+                               # そのせいで「段落の境目の求め方が悪い」と3回
+                               # 読みちがえ、正解と突き合わせたら段落の境目は
+                               # 0.001秒 で合っていた。**直す所を間違えていた。**
+                               # 言葉が正しくないと、原因まで間違える。
+                               (u"（錨なので動かせません。"
+                                u"錨＝%s）"
+                                % (u"段落の境目だけ" if IKARI_DANRAKU[0]
+                                   else u"**全部の字幕の頭**（段落の境目に限らない）"))))
                     # ■ 「入りません」だけでは直せない。**何をすれば消えるか**
                     #   （2026-10-18・本人の「ヒトガミの助言は」の件）
                     #
@@ -15630,6 +15799,29 @@ def main():
         picked = images
         if os.path.exists(a.imageplan):
             rules, default, focus = load_imageplan(a.imageplan)
+            # ■ 全部おまかせは「空にする」ではなく「当て方.txt に差し替える」
+            #   （2026-10-19・本人の「割り当てはイマイチ」）
+            #
+            # v162 では rules を**空にした。** そのせいで 192枚ぜんぶが
+            # 画像プランの `*`（既定の3タグ）に落ち、候補が数枚しか無くなって
+            # **同じ絵が5回出た**（使いすぎ 27→54か所・点数 97→94）。
+            # 「本人の指定を使わない」と「何も見ないで選ぶ」は別のこと。
+            #
+            # 当て方.txt は本人の27件の直しから起こした**法則性そのもの**で、
+            # 414行ある。1枚ずつの指定ではなく「この言葉にはこういう絵」
+            # という規則なので、字幕の切り方が変わってもずれない。
+            # プラン下書き.py がこれで画像プランを作っている。その元を直に使う。
+            if ZENBU_OMAKASE[0]:
+                _ate = os.path.join(HERE, u"当て方.txt")
+                if os.path.exists(_ate):
+                    _r2, _d2, _f2 = load_imageplan(_ate)
+                    say(u"@@全部おまかせ: 画像プランの1行ずつの指定 %d行は使わず、"
+                        u"当て方.txt の %d行の規則で当てます"
+                        u"（@@話数 と * はそのまま）" % (len(rules), len(_r2)))
+                    rules = _r2
+                else:
+                    say(u"@@全部おまかせ: 当て方.txt が見つかりません。"
+                        u"画像プランの指定をそのまま使います（%d行）" % len(rules))
             rules, default = plan_code_naosu(rules, default, images)
             if rules or default:
                 cat = load_catalog(a.catalog, images)
@@ -15639,6 +15831,15 @@ def main():
                 picked = assign_images(slots, images, rules, default, cat,
                                        emap, focus, mitame=mi,
                                        chaps=chaps_for_assign)
+                picked, _an, _ak, _ame = aisatsu_pin(slots, picked, cat,
+                                                     images, focus)
+                if _ame:
+                    say(u"⚠ 挨拶の絵: %s" % _ame)
+                elif _ak:
+                    say(u"挨拶の字幕 %d枚は %s の絵にします（本人の指定・必ず）"
+                        u"%s" % (_ak, AISATSU_HITO[0],
+                                 u"／%d枚を当て直しました" % _an if _an
+                                 else u"／すでに当たっていました"))
         write_plan(PLAN, slots, picked, fp_now)
         # ■ 数えるのは**いちばん最後**（2026-10-09・検査が嘘をついたので移した）
         #
@@ -16076,6 +16277,11 @@ def main():
                 u"2秒の絵なら %.0fpx（画面の %.1f%%）"
                 % (nagai, bai, hayasa, min(kyori, hayasa * 2),
                    100.0 * min(kyori, hayasa * 2) / w))
+            _K = max(1, min(4, int(round(float(mi.get(u"動きの細かさ", 3.0))))))
+            say(u"  動きの細かさ: 動く向きだけ %d倍に広げて切り、縮めます"
+                u"（刻みが 1/%d。%.2fpx/コマ → %.2fpx/コマ相当）"
+                % (_K, _K, hayasa / 30.0, hayasa * _K / 30.0)
+                if _K > 1 else u"  動きの細かさ: 1倍（整数の刻み。段がつきます）")
             say(u"  方向はバラバラ（直前とはちがう向き）: "
                 + u" / ".join(u"%s %d枚" % (m, kazu.get(m, 0)) for m in PAN_MUKI))
             tsuzuki = [k for k in hitotsuzuki if len(k) > 1]
@@ -16095,6 +16301,24 @@ def main():
         min / max で止めてあるので、どの向きでも端を越えない。
         動く帯は余りの**まん中**に置くので、絵の中心から大きく外れない。
         """
+        # ■ 動きの細かさ（2026-10-19・本人の指定「すこし角ついている」）
+        #
+        # crop の x は **整数に切り捨てられる。**
+        # 今回の本人の動画は 7.5px/秒 ＝ 0.25px/コマ だったので、
+        # **4コマに1回だけ 1px 跳ぶ。** これが「角」。
+        # （前回は最長4秒で 20.2px/秒＝0.67px/コマ。今回 10.73秒の
+        #   ひと続きがあるため遅くなり、段つきが目に見えるようになった）
+        #
+        # 直し: いったん K倍に広げて切り、そのあと縮める。
+        # 大きい側では 0.25×K px/コマ 動くので、刻みが 1/K になる。
+        #
+        # 細かい模様の絵で、コマ間の変化のばらつき（＝段つき）を実測:
+        #     K=1（いま） 平均14.39 / **ばらつき23.45**
+        #     K=2        平均13.18 / ばらつき13.23
+        #     K=3        平均13.36 / **ばらつき 8.28**  ← これにした
+        # zoompan も試したが、時間の変数が t でなく on で、
+        # こちらも整数で、しかもコマ数が狂うので使わない。
+        K = max(1, min(4, int(round(float(mi.get(u"動きの細かさ", 3.0))))))
         x0 = (yoko - kyori) / 2.0          # 横に動く帯の左端
         y0 = (tate - kyori) / 2.0          # 縦に動く帯の上端
         # zure … そのかたまりの頭からの経過。同じ絵が続く所をつなぐ。
@@ -16109,7 +16333,40 @@ def main():
             x, y = u"%.1f" % (yoko / 2.0), u"'%.1f-%s'" % (y0 + kyori, susumu)
         else:
             x, y = u"(iw-%d)/2" % w, u"(ih-%d)/2" % h
-        return u"[%s]crop=%d:%d:x=%s:y=%s[%s];" % (label_in, w, h, x, y, label_out)
+            return u"[%s]crop=%d:%d:x=%s:y=%s[%s];" \
+                % (label_in, w, h, x, y, label_out)
+        if K <= 1:
+            return u"[%s]crop=%d:%d:x=%s:y=%s[%s];" \
+                % (label_in, w, h, x, y, label_out)
+        # ■ **広げるのは「動く向きだけ」。** 縦横とも広げる必要はない。
+        #
+        # 動きは横か縦のどちらか一方なので、その向きだけ K倍にすれば
+        # 刻みは同じだけ細かくなる。画素は K倍で済み、K×K倍にならない。
+        # 実測（10秒の絵・段つきはコマ間の変化のばらつき）:
+        #
+        #                     段つき   書き出し時間
+        #   いま（K=1）        23.45      1.00倍
+        #   縦横とも3倍         8.28      **5.70倍**
+        #   動く向きだけ3倍     7.98      **1.03倍**  ← これにした
+        #   動く向きだけ4倍     7.87      1.06倍（これ以上細かくしても変わらない）
+        #
+        # **同じ滑らかさが、ほぼ無料で手に入る。**
+        susumuK = u"min(%d,%.4f*(t+%.3f))" % (kyori * K, hayasa * K,
+                                              max(0.0, zure))
+        if m in (u"左へ", u"右へ"):          # 横に動く → 横だけ広げる
+            hiro = u"scale=iw*%d:ih:flags=bicubic" % K
+            kir = u"%d:%d" % (w * K, h)
+            yK = u"%.1f" % (tate / 2.0)
+            xK = (u"'%.1f+%s'" % (x0 * K, susumuK) if m == u"左へ"
+                  else u"'%.1f-%s'" % ((x0 + kyori) * K, susumuK))
+        else:                                 # 縦に動く → 縦だけ広げる
+            hiro = u"scale=iw:ih*%d:flags=bicubic" % K
+            kir = u"%d:%d" % (w, h * K)
+            xK = u"%.1f" % (yoko / 2.0)
+            yK = (u"'%.1f+%s'" % (y0 * K, susumuK) if m == u"上へ"
+                  else u"'%.1f-%s'" % ((y0 + kyori) * K, susumuK))
+        return (u"[%s]%s,crop=%s:x=%s:y=%s,scale=%d:%d:flags=bicubic[%s];"
+                % (label_in, hiro, kir, xK, yK, w, h, label_out))
 
     shigoto = []          # あとでまとめて作る断片
     for i, (_du, img, _t) in enumerate(rows):
@@ -17197,7 +17454,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v162";
+  var PACK_VERSION = "v163";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
