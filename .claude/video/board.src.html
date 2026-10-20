@@ -11289,6 +11289,18 @@ def kugiri_awase(durs, total, sils, mado=1.5, saitan=0.20):
 # その中の文の切れ目は見当なので、錨にしてはいけない（2026-10-06）。
 JIKKOKU_KUGIRI = []
 
+# ■ 段落ごとに「時刻をどう作ったか」を覚える（2026-10-20）
+#
+# 本人の「同じところでずれる」を3回読みちがえた。
+# ログは錨のことを「段落の境目」と呼んでいて、
+# 正解と突き合わせたら段落の境目は 0.001秒 で合っていた。
+# **どの仕組みが置いた切れ目なのかが、どこにも出ていなかった。**
+#
+# 段落ごとに (境目の作り方, 中の切れ方) を残して 確認用 に書き出す。
+# 本人がそれを貼れば、悪い所がどの仕組みのせいか**一目で決まる。**
+# 推測で直す所を選ぶのを、これで終わりにする。
+DANRAKU_TSUKURIKATA = []
+
 
 def timeline_from_parts_srt(script, folder, names, srt_path, total, sils,
                             strict=False, noise_db=-35):
@@ -11366,6 +11378,8 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils,
 
     out = [None] * len(sents)
     jissoku = 0
+    del DANRAKU_TSUKURIKATA[:]
+    sakikata = u"突き合わせ(測った)" if tsuki and kugiri else u"寄せ(見当→無音)"
     for gi, took in enumerate(groups):
         a0, b0 = kugiri[gi], kugiri[gi + 1]
         # ■ その段落の 1行ぶんの音声から、文の長さを**実際に測る**
@@ -11408,6 +11422,10 @@ def timeline_from_parts_srt(script, folder, names, srt_path, total, sils,
                 jissoku += 1
         except Exception:
             wariai = None
+        DANRAKU_TSUKURIKATA.append(
+            (gi + 1, a0, b0, sakikata,
+             u"実測で割った" if wariai else u"**文字数で割った**",
+             (sents[took[0]] if took else u"")[:40]))
         for (idx, (s2, e2)) in zip(took, place_in_chunk(took, sents, a0, b0, sils,
                                                         wariai=wariai)):
             out[idx] = (max(0.0, s2 - LEAD), e2, sents[idx])
@@ -13867,8 +13885,11 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     hoka_pool = {}
     DAME = (u"使用不可", u"クレジット", u"実写", u"テロップ", u"提供")
 
-    def karu():
+    def karu(mada_dake=False):
         u"""同じ話数の中から、まだ上限に達していない絵を借りる。
+
+        mada_dake=True のときは「**1度も使っていない絵**」だけを返す。
+        交互に出るのを止めるために、繰り返す前にここを見にくる。
 
         ■ 借りるときも「誰が写っているか」を見ること
 
@@ -13878,6 +13899,8 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         セリフに出てくる人が写っている絵を先に探し、
         いなければ、その人が写っていない絵を借りる。
         """
+        # mada_dake のときは「1度も使っていない」＝ 回数 < 1
+        kagiri = 1 if mada_dake else jougen
         fk = u"|".join(cur["fols"])
         if not fk:
             return None
@@ -13906,7 +13929,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 dewa.extend([c] + ONAJI_HITO.get(c, []) + MITAME.get(c, []))
             for nokeru in (True, False):      # まず最近つかっていないものから
                 for k in hoka_pool[fk]:
-                    if tsukai.get(k, 0) >= jougen:
+                    if tsukai.get(k, 0) >= kagiri:
                         continue
                     if nokeru and k in saikin:
                         continue
@@ -13926,7 +13949,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if mawari:
             for nokeru in (True, False):
                 for k in hoka_pool[fk]:
-                    if tsukai.get(k, 0) >= jougen:
+                    if tsukai.get(k, 0) >= kagiri:
                         continue
                     if nokeru and k in saikin:
                         continue
@@ -13936,10 +13959,10 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
 
         # それでも見つからなければ、話数さえ合っていればよいとして借りる。
         for k in hoka_pool[fk]:
-            if tsukai.get(k, 0) < jougen and k not in saikin:
+            if tsukai.get(k, 0) < kagiri and k not in saikin:
                 return k
         for k in hoka_pool[fk]:
-            if tsukai.get(k, 0) < jougen:
+            if tsukai.get(k, 0) < kagiri:
                 return k
         return None
 
@@ -13965,19 +13988,40 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 return resolve(f, True)   # 話数の中に無いときだけ広げる
             return f
         n = len(lst)
-        # ① 最近つかっておらず、上限にも達していない絵
-        for step in range(n):
-            k = lst[(i + step) % n]
-            if k not in saikin and tsukai.get(k, 0) < jougen:
-                pools[pk][1] = i + step + 1
+        # ■ **まだ使っていない絵を先に取る**（2026-10-20・本人の指摘）
+        #
+        # > 絵の割り当てはひどくなりました
+        #
+        # 前は順送りで「上限(3回)未満なら取る」だった。
+        # そこへ「最近つかった絵は避ける」が掛かるので、
+        # 候補が2枚しか無い章では **2枚がピンポンする。**
+        # 本人の v163 の一覧に、はっきり出ていた:
+        #
+        #   070→9話/026  071→9話/045  072→9話/026
+        #   073→9話/045  074→9話/026  075→9話/045
+        #
+        # 本人の指定(手本.tsv)は 26枠に20枚で、同じ絵は多くても2回。
+        # **交互は1つもない。** つまり本人は「まだ使っていない絵」を探している。
+        # だから「上限未満」ではなく「**使った回数がいちばん少ない**」で選ぶ。
+        mada = [k for k in lst if tsukai.get(k, 0) == 0]
+        for k in mada:
+            if k not in saikin:
                 return k
-        # ② 上限に達していない絵（最近つかっていてもよい）
-        for step in range(n):
-            k = lst[(i + step) % n]
-            if tsukai.get(k, 0) < jougen:
-                pools[pk][1] = i + step + 1
-                return k
-        # ③ 候補がぜんぶ上限。章の話数の中から、まだ余裕のある絵を借りる。
+        if mada:
+            return mada[0]
+        # ② 候補はぜんぶ1回以上使っている。
+        #    **ここで繰り返す前に、同じ話数の未使用の絵を見にいく。**
+        #    話数は合っているのだから、同じ絵を2回出すより良い。
+        k = karu(mada_dake=True)
+        if k:
+            return k
+        # ③ それでも無ければ、上限未満のうち回数のいちばん少ないもの。
+        kouho = [k for k in lst if tsukai.get(k, 0) < jougen]
+        if kouho:
+            soto = [k for k in kouho if k not in saikin]
+            return min(soto or kouho,
+                       key=lambda x: (tsukai.get(x, 0), lst.index(x)))
+        # ④ 候補がぜんぶ上限。章の話数の中から、まだ余裕のある絵を借りる。
         #
         #    ここが無いと、候補が1枚しかない章で同じ絵が何度も出ます。
         #    実際「助言② ウェンポートの路地裏」の章で、38行を18種でまかない、
@@ -14484,6 +14528,44 @@ def aisatsu_pin(slots, picked, catalog, images, focus=None):
     return out, n, kazu, u""
 
 
+def write_danraku_tsukurikata(folder):
+    u"""段落ごとに「時刻をどう作ったか」を書き出す（2026-10-20）
+
+    本人の「同じところでずれる」を3回読みちがえた。
+    どの仕組みが置いた切れ目なのかが、どこにも出ていなかったのが原因。
+    これを 確認用/ずれ.txt と並べれば、**悪い所の犯人が一目で決まる。**
+    """
+    if not DANRAKU_TSUKURIKATA:
+        return 0
+    gyou = [u"# 段落ごとの「時刻の作り方」",
+            u"#",
+            u"# 確認用/ずれ.txt の悪い時刻を、この表の「開始〜終わり」で探してください。",
+            u"# その段落の作り方が、ずれの原因です。",
+            u"#   境目  … 段落のつなぎ目をどう決めたか",
+            u"#            突き合わせ(測った) … 1行ずつの音声と merged.wav を照合",
+            u"#            寄せ(見当→無音)    … 文字数の見当を近くの無音へ寄せた",
+            u"#   中    … その段落の中の文の切れ目をどう決めたか",
+            u"#            実測で割った      … その段落の音声の「間」で割った",
+            u"#            **文字数で割った** … 当てずっぽう。ここが怪しい",
+            u"",
+            u"番号\t開始\t終わり\t境目\t中\t先頭のセリフ"]
+    moji = 0
+    for (gi, a0, b0, sa, na, tx) in DANRAKU_TSUKURIKATA:
+        if u"文字数" in na:
+            moji += 1
+        gyou.append(u"%d\t%d:%05.2f\t%d:%05.2f\t%s\t%s\t%s"
+                    % (gi, int(a0) // 60, a0 % 60, int(b0) // 60, b0 % 60,
+                       sa, na, tx))
+    try:
+        if not os.path.isdir(folder):
+            os.makedirs(folder)
+        io.open(os.path.join(folder, u"時刻の作り方.txt"), "w",
+                encoding="utf-8", newline="\r\n").write(u"\r\n".join(gyou) + u"\r\n")
+    except Exception:
+        return 0
+    return moji
+
+
 def write_plan(path, slots, images, fingerprint=u""):
     with io.open(path, "w", encoding="utf-8-sig", newline="") as f:
         f.write(u"# format: %d\r\n" % PLAN_FORMAT)
@@ -14507,7 +14589,7 @@ def write_plan(path, slots, images, fingerprint=u""):
 # make_slideshow.py の決め方を直しても、設定が同じなら
 # 前の割り当て表がそのまま使われ、直したことが効かなかった。
 # （「同じ話数の中から別の絵を借りる」を入れた回が、まるまる空振りした）
-WARIATE_BAN = 8
+WARIATE_BAN = 9
 
 
 def kime_kata_shirushi():
@@ -15453,6 +15535,26 @@ def main():
         except Exception:
             say(u"割り当て表が古い形式なので作り直します。")
         say(u"(絵の割り当ては 画像プラン.txt から復元されます)")
+    # ■ @@全部おまかせ の旗は、**ここで先に読む**（2026-10-20）
+    #
+    # 旗は load_imageplan で立つ。ところがその関数は
+    # 「割り当て表を作り直すとき」しか呼ばれない。
+    # 使い回す回（指紋が一致した回）は呼ばれないので旗が立たず、
+    # **差し替え.txt の24枚が、新しい割り当ての上に重ね塗りされた。**
+    # 古い番号の指定と新しい割り当てという、混ぜてはいけない2つが混ざり、
+    # 採点の「ひどい」が 3か所 → 10か所 に増えた（本人の v163 の回）。
+    #
+    # 旗の読み取りだけを前に出す。中身の解釈は今までどおり後ろでやる。
+    if os.path.exists(a.imageplan):
+        try:
+            for _ln in io.open(a.imageplan, encoding="utf-8-sig",
+                               errors="replace").read() \
+                    .replace(u"\r\n", u"\n").split(u"\n"):
+                if _ln.lstrip().startswith(u"@@全部おまかせ"):
+                    _v = _ln.split(u"\t")[-1].strip() if u"\t" in _ln else u"はい"
+                    ZENBU_OMAKASE[0] = _v not in (u"いいえ", u"no", u"0")
+        except Exception:
+            pass
     if a.render and have and not stale and not newer:
         pass
     elif (not have) or a.plan or stale or newer:
@@ -15841,6 +15943,13 @@ def main():
                                  u"／%d枚を当て直しました" % _an if _an
                                  else u"／すでに当たっていました"))
         write_plan(PLAN, slots, picked, fp_now)
+        _mj = write_danraku_tsukurikata(os.path.join(HERE, KAKUNIN_DIR))
+        if DANRAKU_TSUKURIKATA:
+            say(u"確認用/時刻の作り方.txt を書きました（段落 %d個）。"
+                u"%s" % (len(DANRAKU_TSUKURIKATA),
+                         u"うち %d個は**文字数で割っています**（ここが怪しい所です）。"
+                         u"ずれ.txt と並べて貼ってください。" % _mj if _mj
+                         else u"ぜんぶ実測で割れています。"))
         # ■ 数えるのは**いちばん最後**（2026-10-09・検査が嘘をついたので移した）
         #
         # refine_cues の出口で数えていたら、そのあとで切り直す工程があって、
@@ -16009,6 +16118,48 @@ def main():
     elif not os.path.exists(os.path.join(HERE, SASHIKAE)):
         io.open(os.path.join(HERE, SASHIKAE), "w", encoding="utf-8",
                 newline="\r\n").write(SASHIKAE_ATAMA)
+
+    # --- 挨拶は**いちばん最後**に押さえる（2026-10-20・本人の指定）---
+    #
+    #   > 「どうもこんにちわかさです。」の毎回の挨拶の部分だけは
+    #   >  必ずロキシーの画像をあてるようにしてください
+    #
+    # v163 では assign_images の直後に押さえていたが、そのあとで
+    # **差し替え.txt の 2番（3-12-044＝老デウス）が上書きしていた。**
+    # 本人の一覧にそのまま出ていた（002 → Ⅲ12/044）。
+    # 「必ず」なので、差し替えより後、ここに置く。
+    if any(any(x in (r3[2] or u"") for x in AISATSU) for r3 in rows):
+        _hito = AISATSU_HITO[0]
+        _cat = load_catalog(a.catalog, images) \
+            if os.path.exists(a.catalog) else {}
+        _kou = [k for k in images if _hito in (_cat.get(k) or u"")]
+        if not _kou:
+            say(u"⚠ 挨拶の絵: カタログに「%s」の絵が1枚もありません" % _hito)
+        else:
+            def _aisatsu_ten(k):
+                w = _cat.get(k) or u""
+                p = 0
+                if u"一人" in w:
+                    p -= 2                  # 顔がはっきり分かるもの
+                if u"アップ" in w:
+                    p -= 1
+                if any(x in w for x in (u"使用不可", u"実写", u"文字あり")):
+                    p += 50                 # 出してはいけない絵は最後
+                return (p, natkey(k))
+            _kou.sort(key=_aisatsu_ten)
+            _n, _j = 0, 0
+            for _i in range(len(rows)):
+                _du, _im, _tx = rows[_i]
+                if not any(x in (_tx or u"") for x in AISATSU):
+                    continue
+                if _hito in (_cat.get(_im) or u""):
+                    continue                # もう当たっている
+                rows[_i] = (_du, _kou[_j % len(_kou)], _tx)
+                _j += 1
+                _n += 1
+            say(u"挨拶の字幕は %s の絵にします（差し替えより後で押さえます）%s"
+                % (_hito, u"／%d枚を当て直しました" % _n if _n
+                   else u"／すでに当たっていました"))
 
     # --- 画像を出力サイズにそろえる(同じ絵は1回だけ) ---
     work = os.path.join(HERE, SONOTA_DIR, "_work")
@@ -17454,7 +17605,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v163";
+  var PACK_VERSION = "v164";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
