@@ -2306,6 +2306,15 @@ YOBI_MADO = [0.35]
 # （「測れるようにしてから直す」── メモリ14.73節）。
 KUGIRI_LOG = []
 
+# 分類に使うため、最後に使った無音の表を覚えておく。
+SILS_SAIGO = []
+
+# ■ 「間の右端へそろえる」を切る旗（A/B で測るためだけ）
+#
+# MS_MIGIBATA=0 で切れる。既定は入り。
+# 値を決めるためではなく、**入れた効果を数字で見せるため**に置いている。
+MIGIBATA = [os.environ.get(u"MS_MIGIBATA", u"1") != u"0"]
+
 
 def ma_ni_yoseru(exp, naka, a0, b0, moji, tol=1.6, kuten=None):
     u"""文字数で割った切れ目(exp)を、本物の「間」(naka)へ寄せる。
@@ -3105,6 +3114,85 @@ def koe_no_naka_ugokasu(slots, sils, ikari):
     out = [(kugiri[i], max(0.12, kugiri[i + 1] - kugiri[i]), slots[i][2])
            for i in range(len(slots))]
     return out, ugokashi, ichiban
+
+
+def ma_no_migibata(slots, sils, lead=None, ikari=None):
+    u"""切れ目を、いま入っている「間」の**右端**へそろえる。
+
+    ■ これが本人の「音ズレ」の正体だった（2026-10-21・6回目でやっと）
+
+    本人の道具（ずれ実測.py）はこう測る。
+
+        moto … その字幕の声が**出るはずの**時刻 ＝ 字幕の開始 ＋ LEAD
+        c    … merged.wav で声が**実際に出た**時刻（無音の終わり）
+        moto < c なら「字幕と絵が先に進む」
+
+    つまり **切れ目は「間の終わり − LEAD」に無いと 0 にならない。**
+
+    ところが見当（mitsumori → _to_real）は、文字の割合を
+    「声が出ている時間」の上に乗せて実時間へ戻す作りで、
+    割合がちょうど区間の端に来ると **`a + (x - base)` が
+    その区間の終わり＝「間の始まり」**を返す。
+
+        間 = (b, b+g) のとき
+        置かれる所  b            ← 前の声が止まった瞬間
+        正しい所    b + g - LEAD ← 次の声が出る直前
+        ずれ        g - LEAD     ← **g がそのまま誤差になる**
+
+    本人の第6回の数字が、これと一粒ずつ合う。
+
+        平均 0.15秒    ← ふつうの「、」の息継ぎ 0.27秒 − 0.12
+        0.40〜0.55秒   ← 「。」のあとの間 0.52〜0.67秒 − 0.12
+        最大 0.80秒    ← 0.92秒の間
+        **53枚のうち52枚が「先に進む」** ← 片側にしか出ない誤差
+
+    片側にしか出ないずれは、置き場所の迷いではなく**ものさしのずれ**。
+    6回「どの間に寄せるか」を直していたが、**間は最初から合っていて、
+    その間のどちら端に置くかを間違えていた。**
+
+    ■ だから、ここは錨も動かす（ただし同じ無音の中だけ）
+
+    錨の役目は「あとの工程に**別の場所**へ引きずられないこと」。
+    同じ無音の中で端から端へ寄せるのは、場所を変えていない。
+    声をまたがないので、これまで3回失敗した「遠くの間に吸い寄せられる」
+    壊れ方は原理的に起きない。またぐ動きはここでは一切しない。
+
+    戻り値: (slots, 動かした数, いちばん大きく動かした秒数)
+    """
+    if len(slots) < 2 or not sils or not MIGIBATA[0]:
+        return slots, 0, 0.0
+    lead = LEAD if lead is None else lead
+    ma = sorted((a, b) for (a, b) in sils if b > a)
+    kugiri = [slots[0][0]] + [st + du for (st, du, _tx) in slots]
+    n = len(kugiri)
+    ugoita, ichiban = 0, 0.0
+    for i in range(1, n - 1):
+        t = kugiri[i]
+        # いま入っている無音を探す。入っていなければ何もしない。
+        naka = None
+        for (a, b) in ma:
+            if a - 0.02 <= t <= b + 0.02:
+                naka = (a, b)
+                break
+        if naka is None:
+            continue
+        a, b = naka
+        saki = max(a + 0.02, b - lead)
+        if saki <= t + 0.005:
+            continue                      # もう右端にある
+        # 順番は必ず守る。次の切れ目を越えない。
+        saki = min(saki, kugiri[i + 1] - 0.12)
+        if saki <= t + 0.005:
+            continue
+        ugoita += 1
+        ichiban = max(ichiban, saki - t)
+        kugiri[i] = saki
+    if not ugoita:
+        return slots, 0, 0.0
+    out = []
+    for i, (_st, _du, tx) in enumerate(slots):
+        out.append((kugiri[i], max(0.12, kugiri[i + 1] - kugiri[i]), tx))
+    return out, ugoita, ichiban
 
 
 def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=None,
@@ -5444,12 +5532,38 @@ def check_plan_words(rules, default, catalog):
                 if w and w not in goi:
                     nai.setdefault(w, []).append(key)
     if nai:
+        # ■ **近い言葉まで出す**（2026-10-21・本人「画像の割り当て駄目」）
+        #
+        # 名前と回数だけでは直せない。本人は「エルフ耳」と書いたのに
+        # カタログにその言葉が無く、6か所の指定が黙って空振りしていた。
+        # 本人から見れば「指定したのに効いていない」＝割り当てが悪い。
+        #
+        # カタログの語彙から近いものを出せば、その場で直せる。
+        # 当てずっぽうにしないため、① その言葉を含む/含まれる語
+        # ② 文字の重なりが半分以上の語 の順で出す。
+        def chikai(w):
+            fukumu = sorted([g for g in goi if (w in g or g in w) and g != w],
+                            key=len)[:3]
+            if fukumu:
+                return fukumu
+            mw = set(w)
+            nite = []
+            for g in goi:
+                kasa = len(mw & set(g))
+                if kasa and kasa * 2 >= min(len(mw), len(set(g))):
+                    nite.append((-kasa, len(g), g))
+            return [g for (_k, _l, g) in sorted(nite)[:3]]
+
         say(u"")
-        say(u"⚠ 画像プランのこの言葉は、カタログに一度も出てきません:")
+        say(u"⚠ 画像プランのこの言葉は、カタログに一度も出てきません"
+            u"（＝その指定は必ず空振りします）:")
         for w in sorted(nai, key=lambda x: -len(nai[x])):
-            say(u"    %-10s (%d か所)  例: %s" % (w, len(nai[w]), nai[w][0][:24]))
+            ch = chikai(w)
+            say(u"    %-10s (%d か所)  例: %s%s"
+                % (w, len(nai[w]), nai[w][0][:24],
+                   u"   → 近い言葉: " + u" ".join(ch) if ch else u""))
         say(u"  使える言葉は タグ一覧.txt にあります。")
-        say(u"  そのままでも動きますが、その指定は必ず空振りします。")
+        say(u"  **「近い言葉」に書きかえると、その指定が効くようになります。**")
         say(u"")
 
 
@@ -6699,6 +6813,93 @@ def write_danraku_tsukurikata(folder):
     return moji
 
 
+def write_jikoku_kuwashiku(folder, slots, sils=None, ikari=None):
+    u"""**字幕1枚ずつ**、その時刻がどう決まったかを書き出す（2026-10-21）
+
+    ■ 段落ごとでは足りなかった（本人の指摘から）
+
+    前の版は段落 54個の表だった。本人の ずれ.txt は「5:23」のような
+    **字幕の時刻**で並ぶので、段落の表では
+    「その段落が実測か文字数か」までしか分からない。
+    実際に本人の回では 54段落すべてが「実測」と出ていて、
+    **ログは「ぜんぶ実測で割れています」と言い、何も指せなかった。**
+
+    ここでは1枚ずつ、次の2つを並べる。
+
+      作り方 … 段落の境目 / 文の頭 / 「、」の切れ目
+      位置   … **間の右端 / 間の中（右端でない） / 声の中**
+
+    位置がいちばん大事。本人の道具(ずれ実測.py)はこう測るので、
+
+        moto = 字幕の開始 + 0.12秒 ＝ その字幕の声が出るはずの時刻
+        c    = 次の声が実際に出た時刻（無音の終わり）
+
+    **「間の右端」にある字幕はずれ 0.00、「間の中」にあるものは
+    右端までの距離がそのままずれになる。**
+    だから「間の中」と出た行が、ずれ.txt の悪い行とそのまま重なる。
+    """
+    if not slots:
+        return 0
+    ma = sorted((a, b) for (a, b) in (sils or []) if b > a)
+    ik = sorted(ikari or [])
+
+    def basho(t):
+        u"""その時刻は、間のどこにあるか。"""
+        for (a, b) in ma:
+            if a - 0.02 <= t <= b + 0.02:
+                migi = max(a + 0.02, b - LEAD)
+                if t >= migi - 0.06:
+                    return u"間の右端", 0.0
+                return u"間の中", migi - t
+        return u"**声の中**", 0.0
+
+    # 段落の境目（LEAD を引いた値で入っている）
+    def danraku_ka(t):
+        return any(abs(t - x) <= 0.06 for x in (JIKKOKU_KUGIRI or []))
+
+    gyou = [u"# 字幕1枚ずつの「時刻の作り方」",
+            u"#",
+            u"# 確認用/ずれ.txt の悪い時刻を、この表の「開始」で引いてください。",
+            u"#",
+            u"#  作り方  段落の境目 … 1行ずつの音声と merged.wav を突き合わせた所",
+            u"#          文の頭     … その段落の中の「。」の切れ目",
+            u"#          「、」     … 文の中の「、」の切れ目",
+            u"#  位置    間の右端   … 次の声が出る 0.12秒前。**ずれ 0.00 になる所**",
+            u"#          間の中     … 間には入っているが右端でない。",
+            u"#                       「右端まで」の秒数が、そのままずれになる",
+            u"#          **声の中** … 声の途中で切り替わっている。台本側の問題",
+            u"",
+            u"番号\t開始\t作り方\t位置\t右端まで\tセリフ"]
+    kazu = {u"間の右端": 0, u"間の中": 0, u"**声の中**": 0}
+    mae_kuten = True
+    for i, (st, _du, tx) in enumerate(slots):
+        t = st + LEAD
+        b, nokori = basho(t)
+        kazu[b] = kazu.get(b, 0) + 1
+        if danraku_ka(st):
+            tsukuri = u"段落の境目"
+        elif mae_kuten:
+            tsukuri = u"文の頭"
+        else:
+            tsukuri = u"「、」"
+        gyou.append(u"%03d\t%d:%05.2f\t%s\t%s\t%s\t%s"
+                    % (i + 1, int(st) // 60, st % 60, tsukuri, b,
+                       (u"%.2f秒" % nokori) if nokori > 0.005 else u"",
+                       (tx or u"").replace(u"\t", u" ")[:60]))
+        mae_kuten = (tx or u"").strip().endswith((u"。", u"！", u"？"))
+    gyou.insert(11, u"# いまの中身: 間の右端 %d枚 / 間の中 %d枚 / 声の中 %d枚"
+                % (kazu.get(u"間の右端", 0), kazu.get(u"間の中", 0),
+                   kazu.get(u"**声の中**", 0)))
+    try:
+        if not os.path.isdir(folder):
+            os.makedirs(folder)
+        io.open(os.path.join(folder, u"時刻の作り方_字幕ごと.txt"), "w",
+                encoding="utf-8", newline="\r\n").write(u"\r\n".join(gyou) + u"\r\n")
+    except Exception:
+        return 0
+    return kazu.get(u"間の中", 0) + kazu.get(u"**声の中**", 0)
+
+
 def write_plan(path, slots, images, fingerprint=u""):
     with io.open(path, "w", encoding="utf-8-sig", newline="") as f:
         f.write(u"# format: %d\r\n" % PLAN_FORMAT)
@@ -7419,9 +7620,26 @@ def write_cuts(final, rows, starts, ends, fol=u"確認用", chaps=None):
     本番と同じ状態で確かめられる。
     """
     ff = need("ffmpeg")
+    # ■ ここでフォルダをまるごと消していた（2026-10-21・本人の指摘）
+    #
+    #   > 時刻の作り方は生成されず。
+    #
+    # ログには「確認用/時刻の作り方.txt を書きました（段落 54個）」と
+    # 出ていて、嘘ではない。**書いたあと、ここで消していた。**
+    # 1枚ずつの動画を作る前にフォルダを空にしていたので、
+    # さきに書いた確認用の書類が毎回消えていた。
+    #
+    # 「落ちた」より「黙って消えた」のほうが危ない（メモリ63節）。
+    # これで3回目なので、**作る物だけ消す**ようにする。
     if os.path.isdir(fol):
-        shutil.rmtree(fol, ignore_errors=True)
-    os.makedirs(fol)
+        for _f in os.listdir(fol):
+            if _f.lower().endswith(u".mp4"):
+                try:
+                    os.remove(os.path.join(fol, _f))
+                except Exception:
+                    pass
+    else:
+        os.makedirs(fol)
     say(u"")
     say(u"1枚ずつの確認用動画を作っています (%d本)…" % len(rows))
     write_ichiran(rows, starts, ends, chaps=chaps)   # 表は 確認用、動画は 動画/分割版
@@ -7836,6 +8054,7 @@ def main():
         # 実測の切れ目(錨)は動かさないので、合っていた所が崩れることはない。
         if slots and not a.no_snap:
             sils_k = detect_silences(a.audio, a.noise_db, 0.04)
+            SILS_SAIGO[:] = sils_k
             if sils_k:
                 # ■ 「声の中に落ちている錨を、錨から外す」は測って悪かった
                 #   （2026-10-15・**4つめの「動かす」失敗**。入れていない）
@@ -7987,6 +8206,17 @@ def main():
                     say(u"  つなげなかった切れ目のうち %d か所を、本物の「間」へ"
                         u"動かしました（いちばん大きいもの %.2f秒）"
                         % (ug, ug_ichi))
+                # ■ 最後に、切れ目を「間の右端」へそろえる（2026-10-21）
+                #
+                # ここが本人の「音ズレ」の正体。詳しくは ma_no_migibata の
+                # 説明に書いた。**間は合っていて、端を間違えていた。**
+                # 声をまたがないので、これまでの寄せとは別の話。
+                slots, mb, mb_ichi = ma_no_migibata(slots, sils_k, ikari=ikari)
+                if mb:
+                    say(u"  切れ目 %d か所を、入っている「間」の右端"
+                        u"（次の声が出る %.2f秒前）へそろえました"
+                        u"（いちばん大きいもの %.2f秒）"
+                        % (mb, LEAD, mb_ichi))
                 # ■ 短すぎる字幕を名指しで出す（2026-10-12・本人の「と、」）
                 #
                 # 本人「「と、」だけの字幕があります。ここはそもそも台本が
@@ -8083,6 +8313,17 @@ def main():
                          u"うち %d個は**文字数で割っています**（ここが怪しい所です）。"
                          u"ずれ.txt と並べて貼ってください。" % _mj if _mj
                          else u"ぜんぶ実測で割れています。"))
+        # ■ 段落ごとでは、本人の ずれ.txt の行を指せなかった（2026-10-21）
+        #   1枚ずつの表も書く。詳しくは write_jikoku_kuwashiku の説明に。
+        _ku = write_jikoku_kuwashiku(os.path.join(HERE, KAKUNIN_DIR), slots,
+                                    SILS_SAIGO, None)
+        if slots:
+            say(u"確認用/時刻の作り方_字幕ごと.txt を書きました（字幕 %d枚）。"
+                u"%s" % (len(slots),
+                         u"うち %d枚は「間の右端」に乗っていません"
+                         u"（＝ずれが出る所）。ずれ.txt と並べて貼ってください。"
+                         % _ku if _ku
+                         else u"ぜんぶ「間の右端」に乗っています（ずれ 0.00）。"))
         # ■ 数えるのは**いちばん最後**（2026-10-09・検査が嘘をついたので移した）
         #
         # refine_cues の出口で数えていたら、そのあとで切り直す工程があって、

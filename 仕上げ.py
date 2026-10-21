@@ -686,6 +686,27 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"ずれ実測.py が本人のパソコンで落ちます")
 
+# ── ㉒ 切れ目が「間の右端」に乗るか ────────────────
+midashi(u"㉒", u"切れ目が「間の右端」に乗るか（音ズレの元）")
+# ■ 本人に6回「音ズレ駄目」と言われた原因（2026-10-21）
+#
+# 切れ目は正しい「間」に入っていた。**その間の真ん中に置いていた。**
+# 本人の道具はこう測る。
+#     moto = 字幕の開始 + 0.12秒（声が出るはずの時刻）
+#     c    = 次の声が実際に出た時刻（無音の終わり）
+# だから「間の終わり − 0.12秒」に無いとずれ 0 にならない。
+# 真ん中に置くと右端までの距離がそのままずれになり、
+# **必ず「先に進む」側に出る**（本人の53枚中52枚がそれ）。
+#
+# ここが元に戻っていないかを毎回見る。
+# 古い版に当てて、ちゃんと5件落ちることを確かめてから入れた。
+r = subprocess.run([sys.executable, os.path.join(V, u"_右端テスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"切れ目が「間の右端」に乗りません（音ズレが戻ります）")
+
 # ── ⑰ 絵を数字ひとつで直す仕組みが働くか ────────────
 midashi(u"⑰", u"絵を数字ひとつで直す仕組みが働くか")
 # 本人の工数をいちばん食うのが絵の直し。

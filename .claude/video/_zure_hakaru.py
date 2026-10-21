@@ -58,6 +58,7 @@ atama3 = {}
 for i, (tx2, _) in enumerate(zip(bun, seikai)):
     atama3.setdefault(tx2.strip()[:3], []).append(i)
 
+_LEAD = 0.12          # 字幕を声の何秒前に出すか（本体と同じ）
 zure, mitsukaranai = [], 0
 for (st, du, tx) in rows:
     k = tx.strip()
@@ -69,7 +70,17 @@ for (st, du, tx) in rows:
         continue
     i = hits[0]
     honto = seikai[i][0]
-    zure.append((abs(st - honto), st, honto, k, i))
+    # ■ **LEAD を足して比べる**（2026-10-21・6回「直った」と誤判した原因）
+    #
+    # 字幕は設計上、声の LEAD=0.12秒前に出す。だから
+    # 完璧に合っている字幕でも `st` と `honto` は 0.12秒ちがう。
+    # ここをそのまま引き算していたので、**この物差しには 0.12秒の床**が
+    # あり、平均は何をしても 0.12〜0.15秒より下がらなかった。
+    # その「0.15秒」を見て「もう合っている」と6回申し上げた。
+    #
+    # 本人の ずれ実測.py は `moto = 字幕の開始 + LEAD` で比べている。
+    # そちらが正しい。同じ比べ方にする。完璧なら 0.00 になる。
+    zure.append((abs((st + _LEAD) - honto), st, honto, k, i))
 
 # ■ ずれを「どの仕組みのせいか」で分ける（2026-10-06）
 #
@@ -145,7 +156,6 @@ import os as _os
 import re as _re
 import subprocess as _sp
 
-_LEAD = 0.12
 
 
 def _koe_sagasu():
