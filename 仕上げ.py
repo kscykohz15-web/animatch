@@ -707,6 +707,26 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"切れ目が「間の右端」に乗りません（音ズレが戻ります）")
 
+# ── ㉓ 差し替え.txt を、書きまちがいも含めて読めるか ──────────
+midashi(u"㉓", u"差し替え.txt を、書きまちがいも含めて読めるか")
+# ■ v166 で本人の動画が1本も作れなくなった（2026-10-22）
+#
+#   AttributeError: 'tuple' object has no attribute 'split'
+#
+# 「番号がまちがっているとき、使える幅まで出す」を足したときの誤り。
+# code_norm は文字列ではなく (期,話,通し番号) の組を返す。
+# **落ちたのは「番号がまちがっているとき」だけ通る枝**で、
+# こちらの材料には絵の番号が無いので、検査は一度もそこを通らなかった。
+# 70節（ずれ実測.py を2版続けて落とした）とまったく同じ失敗。
+# 番号のある絵をその場で作って、合っている番号・無い番号・
+# でたらめな文字・紙の候補を全部通す。
+r = subprocess.run([sys.executable, os.path.join(V, u"_差し替えテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"差し替え.txt の読み取りが本人のパソコンで落ちます")
+
 # ── ⑰ 絵を数字ひとつで直す仕組みが働くか ────────────
 midashi(u"⑰", u"絵を数字ひとつで直す仕組みが働くか")
 # 本人の工数をいちばん食うのが絵の直し。

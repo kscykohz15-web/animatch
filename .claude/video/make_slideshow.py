@@ -6586,13 +6586,74 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     base = {}
     for k in images:
         base.setdefault(k.split(u"/")[-1], []).append(k)
+
+    # ■ **ここで _match を使ってはいけない**（2026-10-22・嘘の知らせを出した）
+    #
+    # _match は「いま見ている段落の対象話数の中だけ」を探す作り
+    # （`cur["rank"]` があると、外まで探しに行かない）。
+    # ところがここは割り当てが終わったあとなので、
+    # **最後の段落の枠が残ったまま**。その枠で全部の行を調べていた。
+    #
+    # 本人の回のログ: 「大人 13枚 / 子供 0枚」。
+    # 5827枚に説明がついているのに、この数は小さすぎる。
+    # 13枚は「最後の段落の対象話数の中の 大人」だった。
+    # #キシリカ も #シルフィエット も、そこに居ないだけで
+    # 「どの絵にも当たりません」と出ていた。**人物ルールは正しかった。**
+    #
+    # ここが見たいのは「その言葉がカタログのどこかにあるか」なので、
+    # 枠を外して全部から探す。
+    # 言葉 → その言葉を持つ絵、の索引。670行 × 5688枚を素直に回すと
+    # 十数秒かかるので、1回だけ作って使い回す。
+    goi_idx = {}
+    for _k in images:
+        _d = cat.get(_k)
+        if _d:
+            for _w in set(_d.split()):
+                goi_idx.setdefault(_w, set()).add(_k)
+
+    _mochi_oboe = {}
+
+    def _mochi(w):
+        u"""その言葉を持つ絵。**元と同じく、部分一致で探す**（「髪」→「茶髪」）。"""
+        if w in _mochi_oboe:
+            return _mochi_oboe[w]
+        out = goi_idx.get(w)
+        if out is None:
+            out = set()
+            for g, ks in goi_idx.items():
+                if w in g:
+                    out |= ks
+        _mochi_oboe[w] = out
+        return out
+
+    def _zenbu(f):
+        if f.startswith(u"@"):
+            return [k for k in images if f[1:].strip() in k]
+        words = [w for w in f.lstrip(u"#").replace(u"　", u" ").split() if w]
+        if not words:
+            return []
+        hit = None
+        for w in words:
+            mochi = _mochi(w)
+            if not mochi:
+                hit = None
+                break
+            hit = set(mochi) if hit is None else (hit & mochi)
+            if not hit:
+                break
+        if hit:
+            return list(hit)
+        fs = set(fo for fo, d in (emap or {}).items()
+                 if all(w in d for w in words))
+        return [k for k in images if u"/" in k and k.split(u"/")[0] in fs]
+
     # カンマ区切りは「見つからなければ次」なので、
     # 1つでも当たった行は問題なし。全部外れた行だけを知らせる。
     for items in [r[1] for r in rules] + [default]:
         hit_any, bad = False, []
         for f in items:
             if f.startswith(u"@") or f.startswith(u"#"):
-                if _match(f[1:].strip() if f.startswith(u"@") else f):
+                if _zenbu(f):
                     hit_any = True
                 else:
                     bad.append(f)
@@ -6617,12 +6678,14 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         # 人の名前が 0枚なら、それは 人物ルール.txt の条件に当てはまる絵が
         # 1枚も無いということなので、そちらを直す。
         def kazu(w):
+            u"""その言葉を持つ絵が、**カタログ全体で**何枚あるか。"""
             try:
-                return len(_match(u"#" + w))
+                return len(_mochi(w))
             except Exception:
                 return -1
 
-        say(u"この行はどの絵にも当たりませんでした(既定の絵になります):")
+        say(u"この行はどの絵にも当たりませんでした"
+            u"（カタログ全体で探しています。既定の絵になります）:")
         for f in sorted(missing):
             kotoba = [w for w in f.lstrip(u"#@").split() if w]
             uchiwake = []
@@ -7676,21 +7739,21 @@ def load_sashikae(path, images, moji=None):
                 # よいのかが分からない。第11話は 69枚しか無いので
                 # 3-11-131 は端から存在しない。**使える幅を言えば、
                 # その場で直せる。**
+                # ■ code_norm は**文字列ではなく (期,話,通し番号) の組**を返す。
+                #   ここを文字列として split して、本人のパソコンで落とした
+                #   （2026-10-22・v166。動画が1本も作れなくなった）。
+                #   **本人の所でしか通らない枝を、検査が通っていなかった。**
                 nn = code_norm(shirushi)
                 aru = []
                 for k in images:
-                    kk = img_code(k)
-                    if kk and code_norm(kk) and \
-                            u"-".join(code_norm(kk).split(u"-")[:2]) == \
-                            u"-".join(nn.split(u"-")[:2]):
-                        try:
-                            aru.append(int(code_norm(kk).split(u"-")[2]))
-                        except Exception:
-                            pass
+                    c2 = code_norm(img_code(k))
+                    if c2 and c2[0] == nn[0] and c2[1] == nn[1]:
+                        aru.append(c2[2])
                 if aru:
-                    tasuke = (u"（その話数にあるのは %s-%03d 〜 %s-%03d の %d枚です）"
-                              % (u"-".join(nn.split(u"-")[:2]), min(aru),
-                                 u"-".join(nn.split(u"-")[:2]), max(aru), len(aru)))
+                    tasuke = (u"（その話数にあるのは %d-%02d-%03d 〜 %d-%02d-%03d の"
+                              u" %d枚です）"
+                              % (nn[0], nn[1], min(aru),
+                                 nn[0], nn[1], max(aru), len(aru)))
                 else:
                     tasuke = u"（その番号の絵が画像フォルダにありません）"
             machigai.append(u"%d番の「%s」に当たる絵がありません%s"
@@ -8574,6 +8637,13 @@ def main():
                     say(u"  声の途中に残った切れ目 %d か所を、**同じ文の別の「、」**へ"
                         u"ずらしました（字幕の文字は変えていません／"
                         u"いちばん大きいもの %.2f秒）" % (tz, tz_ichi))
+                    # ■ 上の一覧は、このずらしの**前**の状態（2026-10-22）
+                    #   順番のせいで「台本を直してください」と出した所を
+                    #   そのあと機械が直している。言わないと二度手間になる。
+                    say(u"  ↑ 上の「声の途中で切り替わったまま」の一覧は、"
+                        u"**このずらしの前**のものです。"
+                        u"ずらした %d か所は直っているので、"
+                        u"そこは台本を直さなくて構いません。" % tz)
                 slots, mb, mb_ichi = ma_no_migibata(slots, sils_k, ikari=ikari)
                 if mb:
                     say(u"  切れ目 %d か所を、入っている「間」の右端"
