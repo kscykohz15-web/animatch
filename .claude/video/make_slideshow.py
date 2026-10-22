@@ -3116,6 +3116,282 @@ def koe_no_naka_ugokasu(slots, sils, ikari):
     return out, ugokashi, ichiban
 
 
+# ■ 「文字数との釣り合いで、乗せる間を選び直す」（2026-10-22）
+#
+# 本人の screenshot（059「…優しくしたのは、この時、」）から作った。
+# 間の右端には乗っているのに尺が釣り合っていない所を、
+# 近くの別の間へ乗せ直す。
+#
+# ■ **1回目は効かなかった。測り方を間違えていたため。**
+#
+# はじめは「尺」で釣り合いを見ていた。ところが字幕は
+# 「次の声が出る 0.12秒前」まで出すので、**尺には後ろの無音が
+# まるごと入っている。** そのため「。」のあとの長い間を持つ字幕が
+# 「もらいすぎ」と出て、正しい所を動かしにいっていた。
+#
+#   尺で測る     乱数1 11枚 / 乱数2 14→13枚 / 乱数3 11→**12枚(悪化)**
+#   声だけで測る 乱数1 11枚 / 乱数2 14→12枚 / 乱数3 12→11枚
+#
+# （材料は本人と同じ形＋切れはしの途中にも息継ぎを入れた版。
+#   数字は「0.45秒を超えたもの」。悪くなった乱数は無い）
+#
+# 効き幅は小さい。材料は切れはしの区切りにしか間が無く、
+# 「紛らわしい間」が本物ほど多くないため。
+# 本人の回では 203枚中 56組が釣り合っていなかった。
+WARIAI_NAOSU = [os.environ.get(u"MS_WARIAI", u"1") != u"0"]
+
+
+def wariai_awase(slots, sils, danraku, mado=0.9):
+    u"""**どの間に乗せるか**を、文字数の比で決め直す（2026-10-22）
+
+    ■ 「間の右端」だけでは足りなかった（本人の第6回・添付画像の所）
+
+    本人が screenshot で指した 059
+
+        059  それでは今まで、ヒトガミがルーデウスに優しくしたのは、この時、
+        060  このタイミングで言うことを聞いてもらうためだったのか。
+
+    はどちらも「間の右端」に乗っていて、ずれ.txt にも出てこない。
+    それでも本人の画面では「この時、」の声の途中で切り替わる。
+
+    数えると理由が出た。**尺が文字数に見合っていない。**
+
+        059  31文字 / 3.65秒 = 8.5字/秒   比例配分の 0.92
+        060  27文字 / 3.85秒 = 7.0字/秒   比例配分の 1.11
+
+    つまり切れ目が 0.3秒ほど早い。**間には乗っているが、
+    乗る間を1つ間違えている。** 「、」の息継ぎは1文に何度もあるので、
+    位置が近いほうへ寄せると、手前の息継ぎに乗ってしまう。
+
+    「声の中か」でも「間の右端か」でも、これは捕まらない。
+    捕まるのは**比例配分**だけ。だからここでは位置ではなく
+    **文字数との釣り合い**で、乗せる間を選び直す。
+
+    段落の境目（実測で測った所）は動かさない。
+    窓は %s秒。遠くの間へ飛ばないための歯止め。
+    """ % mado
+    if len(slots) < 3 or not sils or not WARIAI_NAOSU[0]:
+        return slots, 0, 0.0
+    ik = sorted(danraku or [])
+
+    def ikari_ka(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    ma = sorted(max(a + 0.02, b - LEAD) for (a, b) in sils
+                if (b - a) >= KOUHO_SAITAN[0])
+    if not ma:
+        return slots, 0, 0.0
+    kugiri = [slots[0][0]] + [st + du for (st, du, _t) in slots]
+    moji = [max(0.5, disp_len((tx or u"").strip())) for (_s, _d, tx) in slots]
+    n = len(slots)
+    ugoita, ichiban = 0, 0.0
+
+    muon = sorted((a, b) for (a, b) in sils if b > a)
+
+    def koe_jikan(st2, en2):
+        u"""その区間のうち、**声が鳴っている時間**（koe_dake と同じ）。
+
+        ■ ここを尺のままやって、1回外した（2026-10-22）
+
+        字幕は「次の声が出る 0.12秒前」まで出すので、
+        **尺には後ろの無音がまるごと入っている。**
+        尺で釣り合いを見ると、「。」のあとの長い間を持つ字幕が
+        「もらいすぎ」と出て、正しい所を動かしにいってしまう。
+        （材料の A/B で1か所も良くならなかったのはこれが理由）
+        無音を引いて、声の時間だけで比べる。
+        """
+        naka2 = max(0.0, en2 - st2)
+        for (a1, b1) in muon:
+            if b1 <= st2 or a1 >= en2:
+                continue
+            naka2 -= max(0.0, min(b1, en2) - max(a1, st2))
+        return max(0.0, naka2)
+
+    def son(hidari, migi, i):
+        u"""切れ目 i を hidari〜migi に置いたときの、釣り合いの悪さ。"""
+        d1 = koe_jikan(hidari, migi)
+        d2 = koe_jikan(migi, kugiri[i + 1])
+        if d1 <= 0.05 or d2 <= 0.05:
+            return 1e9
+        kei = moji[i - 1] + moji[i]
+        zen = d1 + d2
+        w1 = zen * moji[i - 1] / kei
+        w2 = zen * moji[i] / kei
+        return abs(d1 / w1 - 1.0) + abs(d2 / w2 - 1.0)
+
+    for i in range(1, n):
+        t = kugiri[i]
+        if ikari_ka(t):
+            continue                       # 段落の境目は動かさない
+        ima = son(kugiri[i - 1], t, i)
+        if ima >= 1e8:
+            continue
+        erabu, yosa = None, ima
+        for saki in ma:
+            if abs(saki - t) > mado or abs(saki - t) < 0.01:
+                continue
+            if not (kugiri[i - 1] + 0.12 < saki < kugiri[i + 1] - 0.12):
+                continue
+            if ikari_ka(saki):
+                continue
+            # **はっきり良くなるときだけ動かす。**
+            # 僅差で動かすと、測るたびに行き先が変わる（さいころになる）。
+            tsugi = son(kugiri[i - 1], saki, i)
+            if tsugi < yosa - 0.08:
+                erabu, yosa = saki, tsugi
+        if erabu is None:
+            continue
+        ugoita += 1
+        ichiban = max(ichiban, abs(erabu - t))
+        kugiri[i] = erabu
+    if not ugoita:
+        return slots, 0, 0.0
+    out = []
+    for i, (_st, _du, tx) in enumerate(slots):
+        out.append((kugiri[i], max(0.12, kugiri[i + 1] - kugiri[i]), tx))
+    return out, ugoita, ichiban
+
+
+def koe_dake(st, en, muon):
+    u"""その区間のうち、声が鳴っている時間（無音を引いたもの）。"""
+    naka = max(0.0, en - st)
+    for (a, b) in muon:
+        if b <= st or a >= en:
+            continue
+        naka -= max(0.0, min(b, en) - max(a, st))
+    return max(0.0, naka)
+
+
+def tsuriai_son(d1, d2, m1, m2):
+    u"""2枚の声の時間が、文字数と釣り合っているか（0 が完全）。"""
+    if d1 <= 0.05 or d2 <= 0.05 or m1 <= 0 or m2 <= 0:
+        return 1e9
+    zen = d1 + d2
+    return abs(d1 / (zen * m1 / (m1 + m2)) - 1.0) \
+        + abs(d2 / (zen * m2 / (m1 + m2)) - 1.0)
+
+
+# 切り口を別の「、」へずらすのを切る旗（A/B 用）
+TEN_ZURASHI = [os.environ.get(u"MS_TENZURASHI", u"1") != u"0"]
+
+
+def ten_wo_zurasu(slots, sils, ue, mijika=0.0, mado=1.2):
+    u"""声の途中に落ちた切れ目を、**別の「、」へずらす**（2026-10-22）
+
+    ■ つなげない所に、まだ道が1本あった
+
+    声の途中で切り替わる所は、これまで「くっつけて消す」しか手が無かった。
+    くっつけるには2行に収まらないといけないので、本人の第6回では
+
+        5:23  つなぐと 68文字 … 入らない
+        3:09  つなぐと 69文字 … 入らない
+
+    と出て、**台本を直してください**で終わっていた。
+
+    けれど切る場所は「、」のどれでもよい。文を変えずに、
+    **切り口だけ隣の「、」へずらせば**、本物の間に乗ることがある。
+
+        いま   つまり二つ目の助言は、「路地裏を探せ」と言いながら、｜その実、…
+        ずらす つまり二つ目の助言は、「路地裏を探せ」と言いながら、その実、｜…
+                                                           27→31文字  42→38文字
+
+    どちらも2行に収まり、**字幕の文字はひとつも変わらない。**
+    声が本当に止まっている所に切れ目が乗るので、
+    そのまま 間の右端へそろえれば、ずれは 0 になる。
+
+    やるのは次を全部みたすときだけ:
+      ・いまの切れ目が声の真ん中に落ちている（＝すでに壊れている）
+      ・前の字幕が「。」で終わっていない（同じ文の中。文はまたがない）
+      ・ずらした先に、本物の間がある（窓 %s秒）
+      ・切った両方が2行に収まり、短すぎない
+
+    前後の字幕の**始まりと終わりは動かさない**ので、
+    まわりの時刻には一切さわらない。
+
+    戻り値: (slots, ずらした数, いちばん大きくずらした秒数)
+    """ % mado
+    if len(slots) < 2 or not sils or not TEN_ZURASHI[0]:
+        return slots, 0, 0.0
+    ma = sorted((a, b) for (a, b) in sils if b > a)
+
+    def migibata(a, b):
+        return max(a + 0.02, b - LEAD)
+
+    out = [list(x) for x in slots]
+    zurashita, ichiban = 0, 0.0
+    for i in range(1, len(out)):
+        mae, ima = out[i - 1], out[i]
+        t = ima[0]
+        # koe_no_naka_ka は**真偽**を返す（深さではない）。数と比べない。
+        if not koe_no_naka_ka(t, sils):
+            continue                      # 声の中でないなら、さわらない
+        if owari_bun(mae[2] or u""):
+            continue                      # 文をまたぐ切れ目はずらさない
+        hidari_moto, migi_moto = (mae[2] or u""), (ima[2] or u"")
+        zen = hidari_moto + migi_moto
+        if not zen.strip():
+            continue
+        a0, b0 = mae[0], ima[0] + ima[1]
+        if b0 - a0 < 1.0:
+            continue
+        # 切れる所＝「、」「。」の直後。いまの所は除く。
+        koho = [j for j in range(1, len(zen))
+                if zen[j - 1] in u"、。！？" and j != len(hidari_moto)]
+        if not koho:
+            continue
+        erabu = None
+        for j in koho:
+            hidari, migi = zen[:j], zen[j:]
+            if disp_len(hidari) > ue or disp_len(migi) > ue:
+                continue
+            if mijika and (disp_len(hidari) < mijika or disp_len(migi) < mijika):
+                continue
+            # 見当は「声が出ている時間」で割る（間の長さに振り回されない）
+            mitsu = mitsumori(a0, b0, [max(1, disp_len(hidari)),
+                                       max(1, disp_len(migi))], sils)
+            if not mitsu:
+                continue
+            me = mitsu[0]
+            for (a, b) in ma:
+                saki = migibata(a, b)
+                if not (a0 + 0.25 < saki < b0 - 0.25):
+                    continue
+                if abs(saki - me) > mado or abs(saki - t) > mado:
+                    continue
+                if koe_no_naka_ka(saki, sils):
+                    continue
+                # ■ **見当との近さで選ぶのをやめた**（2026-10-22）
+                #
+                # はじめは「見当にいちばん近い間」を選んでいた。
+                # 見当は文字数で割ったものなので ±25% ずれる。
+                # そのため**別の「、」の間を掴み**、材料の最大ずれが
+                # 1.15秒 → 1.80秒 に悪化した（乱数2）。
+                #
+                # 位置で選ばず、**声の時間が文字数と釣り合うか**で選ぶ。
+                # 切った両方の「声だけの時間」を文字数の比と比べ、
+                # 釣り合っているものだけを採る。釣り合わない間は
+                # そもそも別の「、」の所なので、これで落ちる。
+                d1 = koe_dake(a0, saki, ma)
+                d2 = koe_dake(saki, b0, ma)
+                son2 = tsuriai_son(d1, d2, disp_len(hidari), disp_len(migi))
+                if son2 > 0.25:
+                    continue
+                if erabu is None or son2 < erabu[0]:
+                    erabu = (son2, saki, hidari, migi)
+        if erabu is None:
+            continue
+        _k, saki, hidari, migi = erabu
+        if saki <= a0 + 0.12 or saki >= b0 - 0.12:
+            continue
+        zurashita += 1
+        ichiban = max(ichiban, abs(saki - t))
+        out[i - 1] = [a0, saki - a0, hidari]
+        out[i] = [saki, b0 - saki, migi]
+    if not zurashita:
+        return slots, 0, 0.0
+    return [tuple(x) for x in out], zurashita, ichiban
+
+
 def ma_no_migibata(slots, sils, lead=None, ikari=None):
     u"""切れ目を、いま入っている「間」の**右端**へそろえる。
 
@@ -3168,12 +3444,34 @@ def ma_no_migibata(slots, sils, lead=None, ikari=None):
     ugoita, ichiban = 0, 0.0
     for i in range(1, n - 1):
         t = kugiri[i]
-        # いま入っている無音を探す。入っていなければ何もしない。
+        # ■ 探すのは「**声が出るはずの時刻**が入っている無音」（2026-10-22）
+        #
+        # はじめは `t`（字幕の開始）が無音に入っているかで探していた。
+        # ところが本人の道具が見るのは `t + LEAD`（その字幕の声が
+        # 出るはずの時刻）で、**別の所を見ていた。**
+        #
+        # 字幕の開始が無音の 0.1秒ほど手前（＝前の声の最後にわずかに
+        # かかっている）とき、こちらは「無音に入っていない」として
+        # 動かさず、道具は「無音に入っているが右端でない」と数える。
+        # 本人の第6回で 0.45秒を超えて残った4か所のうち**3か所が
+        # これ**だった（0:39 0.55秒 / 2:18 0.49秒 / 7:56 0.44秒）。
+        #
+        #   015  間の中 0.42秒 → ずれ 0.55秒
+        #   046  間の中 0.37秒 → ずれ 0.49秒
+        #   164  間の中 0.24秒 → ずれ 0.44秒
+        #
+        # 道具と同じ見方にする。前の声の端にわずかにかかっているぶんは
+        # 右端へ寄せれば消える（動く幅はその無音の長さまでで止まる）。
         naka = None
         for (a, b) in ma:
-            if a - 0.02 <= t <= b + 0.02:
+            if a - 0.02 <= t + lead <= b + 0.02:
                 naka = (a, b)
                 break
+        if naka is None:
+            for (a, b) in ma:
+                if a - 0.02 <= t <= b + 0.02:
+                    naka = (a, b)
+                    break
         if naka is None:
             continue
         a, b = naka
@@ -6308,9 +6606,34 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             for f in bad:
                 missing.add(f)
     if missing:
+        # ■ **どの言葉で落ちたのかまで出す**（2026-10-22・本人「割り当てダメ」）
+        #
+        # 前は行を並べるだけだった。「#白髪 エルフ耳 が当たりません」と
+        # 言われても、白髪が無いのかエルフ耳が無いのかが分からない。
+        # **直せない知らせは、無いのと同じ。**
+        #
+        # 言葉ごとに「その言葉を持つ絵が何枚あるか」を数えて並べる。
+        # 0枚の言葉が犯人で、そこだけ書きかえれば行が生きる。
+        # 人の名前が 0枚なら、それは 人物ルール.txt の条件に当てはまる絵が
+        # 1枚も無いということなので、そちらを直す。
+        def kazu(w):
+            try:
+                return len(_match(u"#" + w))
+            except Exception:
+                return -1
+
         say(u"この行はどの絵にも当たりませんでした(既定の絵になります):")
         for f in sorted(missing):
-            say(u"    " + f)
+            kotoba = [w for w in f.lstrip(u"#@").split() if w]
+            uchiwake = []
+            for w in kotoba:
+                n2 = kazu(w)
+                uchiwake.append(u"%s %s" % (w, u"**0枚**" if n2 == 0
+                                            else (u"%d枚" % n2 if n2 > 0 else u"?")))
+            say(u"    %-18s %s" % (f, u" / ".join(uchiwake)))
+        say(u"  **0枚** と出た言葉が原因です。タグ一覧.txt の言葉に書きかえてください。")
+        say(u"  人の名前が 0枚のときは、人物ルール.txt のその人の条件に"
+            u"当てはまる絵が1枚もありません（条件のほうを直します）。")
     wide = []
     for items in [r[1] for r in rules] + [default]:
         for f in items:
@@ -7347,7 +7670,29 @@ def load_sashikae(path, images, moji=None):
         if not kimari:
             tasuke = u""
             if code_norm(shirushi):
-                tasuke = u"（その番号の絵が画像フォルダにありません）"
+                # ■ **使える番号の幅まで出す**（2026-10-22・本人の 3-11-131）
+                #
+                # 「その番号の絵がありません」だけでは、いくつに直せば
+                # よいのかが分からない。第11話は 69枚しか無いので
+                # 3-11-131 は端から存在しない。**使える幅を言えば、
+                # その場で直せる。**
+                nn = code_norm(shirushi)
+                aru = []
+                for k in images:
+                    kk = img_code(k)
+                    if kk and code_norm(kk) and \
+                            u"-".join(code_norm(kk).split(u"-")[:2]) == \
+                            u"-".join(nn.split(u"-")[:2]):
+                        try:
+                            aru.append(int(code_norm(kk).split(u"-")[2]))
+                        except Exception:
+                            pass
+                if aru:
+                    tasuke = (u"（その話数にあるのは %s-%03d 〜 %s-%03d の %d枚です）"
+                              % (u"-".join(nn.split(u"-")[:2]), min(aru),
+                                 u"-".join(nn.split(u"-")[:2]), max(aru), len(aru)))
+                else:
+                    tasuke = u"（その番号の絵が画像フォルダにありません）"
             machigai.append(u"%d番の「%s」に当たる絵がありません%s"
                             % (no, shirushi, tasuke))
             continue
@@ -8211,6 +8556,24 @@ def main():
                 # ここが本人の「音ズレ」の正体。詳しくは ma_no_migibata の
                 # 説明に書いた。**間は合っていて、端を間違えていた。**
                 # 声をまたがないので、これまでの寄せとは別の話。
+                # ■ 乗せる間を、文字数の比で選び直す（2026-10-22）
+                #   「間の右端」だけでは捕まらない所。詳しくは
+                #   wariai_awase の説明に（本人の添付画像の 059）。
+                slots, wa, wa_ichi = wariai_awase(slots, sils_k,
+                                                  JIKKOKU_KUGIRI)
+                if wa:
+                    say(u"  切れ目 %d か所を、**文字数との釣り合い**で"
+                        u"別の「間」へ乗せ直しました"
+                        u"（いちばん大きいもの %.2f秒）" % (wa, wa_ichi))
+                # ■ つなげない所は、切り口を別の「、」へずらす（2026-10-22）
+                #   文は変えない。詳しくは ten_wo_zurasu の説明に。
+                slots, tz, tz_ichi = ten_wo_zurasu(
+                    slots, sils_k, JIMAKU_TSUNAGU[0],
+                    mijika=max(6.0, float(mi.get(u"字幕の最短") or 6)))
+                if tz:
+                    say(u"  声の途中に残った切れ目 %d か所を、**同じ文の別の「、」**へ"
+                        u"ずらしました（字幕の文字は変えていません／"
+                        u"いちばん大きいもの %.2f秒）" % (tz, tz_ichi))
                 slots, mb, mb_ichi = ma_no_migibata(slots, sils_k, ikari=ikari)
                 if mb:
                     say(u"  切れ目 %d か所を、入っている「間」の右端"

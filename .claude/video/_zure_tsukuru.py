@@ -77,7 +77,7 @@ def bun():
     return out
 
 
-def tone(sec, hz=440.0, vol=0.35):
+def tone(sec, hz=440.0, vol=0.35, naka_iki=False):
     u"""声のかわりの音。長さは秒で指定。
 
     ■ 言葉の途中にも、細かい途切れを入れる（ここが肝心）
@@ -97,7 +97,32 @@ def tone(sec, hz=440.0, vol=0.35):
     out = []
     i = 0
     tsugi = random.uniform(0.18, 0.45)      # 次に途切れるまで
+    # ■ **切れはしの途中にも、ちゃんとした息継ぎを入れる**（2026-10-22）
+    #
+    # ここが材料に無かった。前は「間」が「、」「。」の所にしか無く、
+    # **紛らわしい寄せ先が1つも存在しなかった。**
+    # だから「間には乗っているのに、乗る間を1つ間違えている」という
+    # 壊れ方を、材料は一度も作れなかった。
+    #
+    # 本人の第6回 059「…優しくしたのは、この時、」がまさにそれで、
+    #   059  31文字 / 3.65秒 = 8.5字/秒   比例配分 0.92
+    #   060  27文字 / 3.85秒 = 7.0字/秒   比例配分 1.11
+    # と、間の右端に乗っているのに尺が釣り合っていない。
+    # 「声の中か」でも「右端か」でも捕まらない種類のずれ。
+    #
+    # 本物の読み上げは、長い切れはしの途中でも息を継ぐ。
+    # 4回に1回ぐらい、寄せ先の最短(0.18秒)より長い間を途中に作る。
+    naka_de = None
+    if naka_iki and sec > 1.2 and random.random() < 0.25:
+        naka_de = int(round(random.uniform(0.35, 0.65) * sec * SR))
     while i < k:
+        if naka_de is not None and i >= naka_de:
+            iki = int(round(random.uniform(0.20, 0.32) * SR))
+            out += [0] * iki
+            i += iki
+            naka_de = None
+            tsugi = len(out) / float(SR) + random.uniform(0.18, 0.45)
+            continue
         if len(out) / float(SR) >= tsugi and k - i > int(0.25 * SR):
             # ■ 語の途中の閉鎖を、しきい値の**上**にも作る
             #   （2026-10-12・ここが材料に無かった）
@@ -202,6 +227,12 @@ SEMAI = [os.environ.get(u"ZURE_TSUGIME_SEMAI", u"0") == u"1"]
 # きつい材料（既存）は今までどおり残す。どちらも測る。
 HONBAN = [os.environ.get(u"ZURE_HONBAN", u"0") == u"1"]
 
+# 切れはしの途中にも息継ぎ（＝紛らわしい寄せ先）を作るか。
+# 本番形では**必ず作る**。本物の読み上げはそうなっているので。
+NAKA_IKI = [os.environ.get(u"ZURE_NAKA_IKI",
+                           u"1" if os.environ.get(u"ZURE_HONBAN") == u"1"
+                           else u"0") == u"1"]
+
 
 def main():
     for d in (u"output", u"確認用", u"その他"):
@@ -233,7 +264,7 @@ def main():
             hayasa = 6.46 * random.uniform(0.75, 1.25)
             byou = len(t) / hayasa
             naka.append((len(oto) / float(SR), byou))
-            oto += tone(byou)
+            oto += tone(byou, naka_iki=NAKA_IKI[0])
             if i < len(bs) - 1:
                 # 「、」のあとは短い息継ぎ、「。」のあとは長めの間。
                 #

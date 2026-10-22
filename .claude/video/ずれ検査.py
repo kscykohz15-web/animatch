@@ -274,6 +274,23 @@ SEMAI_NAKA = 9999
 # 5段目のあいだだけ立てる旗。
 SEMAI = [False]
 
+# ■ 6段目（2026-10-22）。**本人の回と同じ形の材料。**
+#
+# ここが無かった。切れはしの途中にも息継ぎがある（＝紛らわしい寄せ先が
+# たくさんある）材料は、5段のどれも作っていなかった。
+# そのせいで「間には乗っているのに、乗る間を1つ間違えている」という
+# 壊れ方を、検査が**一度も見たことがなかった。**
+# 本人の screenshot（059「…優しくしたのは、この時、」）がそれ。
+#
+# 最後まで直した版で実測（3乱数）:
+#   最大 1.16 / 1.74 / 1.78   平均 0.07 / 0.08 / 0.07
+#   0.45超 5% / 6% / 5%       声の途中 27 / 17 / 25枚
+HONMONO_OOKII = 2.40
+HONMONO_HEIKIN = 0.16
+HONMONO_WARIAI = 9.0
+HONMONO_NAKA = 32
+HONMONO = [False]
+
 YOBI_OOKII = 2.60
 YOBI_HEIKIN = 0.15       # 実測 0.07・余裕 0.08
 YOBI_WARIAI = 12.0
@@ -328,6 +345,7 @@ def hitotsu(tane):
     env[u"ZURE_KEZURU_BARA"] = u"1" if KITSUI[0] else u"0"
     env[u"ZURE_TSUMARU"] = u"1" if KITSUI[0] else u"0"
     env[u"ZURE_TSUGIME_SEMAI"] = u"1" if SEMAI[0] else u"0"
+    env[u"ZURE_HONBAN"] = u"1" if HONMONO[0] else u"0"
     r = subprocess.run([sys.executable, u"_zure_tsukuru.py", str(tane)],
                        cwd=SAGYOU, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, env=env)
@@ -361,7 +379,7 @@ def main():
     a = ap.parse_args()
     if junbi() is None:
         return 1
-    warui = []
+    warui, dan_kazu = [], 0
     # ■ 「本物と同じ」の札を付けかえた（2026-10-12）
     #
     # 15/54 は **v146 のときの本物**。いまの本人のログは
@@ -391,11 +409,17 @@ def main():
             #   v160 の直しを材料が見ていなかった。上の節を読むこと。
             (True, 1.0, u"つなぎ目が狭い材料(錨の寄せ先ゼロ)", SEMAI_OOKII,
              SEMAI_HEIKIN, SEMAI_WARIAI, True, SEMAI_NAKA,
-             True, SEMAI_ANC_OOKII, SEMAI_ANC_HEIKIN)):
+             True, SEMAI_ANC_OOKII, SEMAI_ANC_HEIKIN),
+            # ■ 6段目（2026-10-22）。**本人の回と同じ形。**上の注記を読むこと。
+            (True, 1.0, u"本人の回と同じ形(切れはしの途中にも息継ぎ)",
+             HONMONO_OOKII, HONMONO_HEIKIN, HONMONO_WARIAI, False,
+             HONMONO_NAKA, False, None, None)):
         print(u"── %s ──" % nm)
+        dan_kazu += 1
         jissoku_kirikae(tsukau, wari)
         KITSUI[0] = kitsui
         SEMAI[0] = semai
+        HONMONO[0] = nm.startswith(u"本人の回と同じ形")
         if shirabe(a.kai, nm, oo, he, wa, nk, anc_oo, anc_he):
             warui.append(nm)
     print(u"")
@@ -406,7 +430,7 @@ def main():
     if warui:
         print(u"× 字幕と声がずれています（%s）。" % u" / ".join(warui))
         return 1
-    print(u"○ 5段ぜんぶで、字幕と声はずれていません。")
+    print(u"○ %d段ぜんぶで、字幕と声はずれていません。" % dan_kazu)
     return 0
 
 

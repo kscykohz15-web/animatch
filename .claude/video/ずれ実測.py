@@ -333,6 +333,80 @@ def main():
         else:
             print(u"○ 文字数から見て短すぎる字幕はありません")
 
+    # ── となり合う2枚の釣り合い（2026-10-22・本人の screenshot から）
+    #
+    # 本人が画面を撮って送ってきた所がこれだった。
+    #
+    #   059  それでは今まで、ヒトガミがルーデウスに優しくしたのは、この時、
+    #   060  このタイミングで言うことを聞いてもらうためだったのか。
+    #
+    # 059 は比 0.92、060 は 1.11。**どちらも 0.60 の線に掛からない。**
+    # だからここは「○ 短すぎる字幕はありません」と出ていた。
+    # けれど本人の画面では「この時、」の声の途中で切り替わる。
+    #
+    # ■ **尺ではなく「声だけの時間」で測る**（ここを間違えると嘘をつく）
+    #
+    # 字幕は「次の声が出る 0.12秒前」まで出しているので、
+    # **その字幕の尺には、後ろの無音がまるごと入っている。**
+    # 尺のまま文字数と比べると、「。」のあとの長い間を持つ字幕が
+    # 「尺をもらいすぎ」、次の字幕が「足りない」と出る。
+    # それは正しい作りなのに欠陥に見える（数えたら 203枚中 56組が出た）。
+    #
+    # 無音を引いて、**声が鳴っている時間だけ**で比べる。
+    # そうすれば残るのは本物の食いちがいだけになる。
+    def koe_jikan(st2, en2):
+        u"""その区間のうち、声が鳴っている時間。"""
+        naka2 = max(0.0, en2 - st2)
+        for (a1, b1) in muon:
+            if b1 <= st2 or a1 >= en2:
+                continue
+            naka2 -= max(0.0, min(b1, en2) - max(a1, st2))
+        return max(0.0, naka2)
+
+    tsuri, kei_koe, kei_mj2 = [], 0.0, 0.0
+    hyou = []
+    for q, r in enumerate(rows):
+        if r[3].startswith(u"@@") or not r[4]:
+            hyou.append(None)
+            continue
+        st2 = r[1] - sum(x[2] for x in rows[:q] if x[3].startswith(u"@@"))
+        kj = koe_jikan(st2, st2 + r[2])
+        mj2 = disp_len(r[4])
+        hyou.append((kj, mj2, r[1], r[4]))
+        kei_koe += kj
+        kei_mj2 += mj2
+    for q in range(len(hyou) - 1):
+        h1, h2 = hyou[q], hyou[q + 1]
+        if not h1 or not h2:
+            continue
+        if min(h1[1], h2[1]) < 1 or min(h1[0], h2[0]) < 0.05:
+            continue
+        # 2枚の声の時間を、文字数の比で割り直したらどうなるか
+        zen2 = h1[0] + h2[0]
+        beki = zen2 * h1[1] / (h1[1] + h2[1])
+        zure2 = beki - h1[0]
+        # ■ 線は 0.40秒（2026-10-22）
+        #
+        # 0.25秒だと材料で 89組／220枚 出た。読む速さは切れはしごとに
+        # ±25%ばらつくので、2秒の切れはしなら ±0.5秒は当たり前に出る。
+        # **数えきれないほど出る知らせは、無いのと同じ。**
+        # 本人の screenshot の所が 0.34秒だったので、そこは拾えないが、
+        # 嘘の山に埋めるよりは、確かなものだけ出す。
+        if abs(zure2) >= 0.40:
+            tsuri.append((abs(zure2), zure2, h1[2], h1[3], h2[3]))
+    tsuri.sort(reverse=True)
+    print(u"")
+    if tsuri:
+        print(u"⚠ となり合う2枚で、切れ目の位置が釣り合っていない所 : %d組"
+              % len(tsuri))
+        print(u"   （声だけの時間で測っています。+ は切れ目が**早すぎる**＝"
+              u"前の字幕の声の最後が、次の字幕の下で鳴ります）")
+        for (_a, z2, t2, a2, b2) in tsuri[:5]:
+            print(u"   %s  %+.2f秒   「%s」→「%s」"
+                  % (mmss(t2), z2, a2[:22], b2[:22]))
+    else:
+        print(u"○ となり合う2枚の切れ目は、どれも文字数と釣り合っています")
+
     gyou = [u"# 字幕と声のずれ（BGMの無い merged.wav を基準に測ったもの）",
             u"# 章カードぶんの無音は引いてあります。",
             u"",
@@ -344,6 +418,7 @@ def main():
             u"字幕と絵が先に進む\t%d枚" % len(susumu),
             u"前の字幕が居座る\t%d枚" % len(izasuru),
             u"文字数から見て短すぎる字幕\t%d枚 / %d枚" % (len(hi_roku), n),
+            u"となりと釣り合っていない切れ目\t%d組" % len(tsuri),
             u"", u"動画の時刻\tずれ\t向き\t字幕"]
     gyou[-1] = u"動画の時刻\tずれ\t向き\t画面に出ている字幕\t次の字幕"
     for z in zure[:40]:
@@ -351,6 +426,13 @@ def main():
         gyou.append(u"%s\t%.2f秒\t%s\t%s\t%s"
                     % (mmss(z[1]), z[0], muki,
                        (z[6] if len(z) > 6 else u""), z[4]))
+    if tsuri:
+        gyou.append(u"")
+        gyou.append(u"# となり合う2枚で、切れ目の位置が釣り合っていない所")
+        gyou.append(u"# + は切れ目が早すぎる（前の字幕の声の最後が次の下で鳴る）")
+        gyou.append(u"動画の時刻\t切れ目のずれ\t画面に出ている字幕\t次の字幕")
+        for (_a, z2, t2, a2, b2) in tsuri[:30]:
+            gyou.append(u"%s\t%+.2f秒\t%s\t%s" % (mmss(t2), z2, a2, b2))
     try:
         if not os.path.isdir(u"確認用"):
             os.makedirs(u"確認用")
