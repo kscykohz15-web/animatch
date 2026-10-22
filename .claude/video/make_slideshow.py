@@ -3179,6 +3179,22 @@ def wariai_awase(slots, sils, danraku, mado=0.9):
 
     ma = sorted(max(a + 0.02, b - LEAD) for (a, b) in sils
                 if (b - a) >= KOUHO_SAITAN[0])
+    # ■ **すでに声の中に落ちている切れ目だけ、短い間まで降りる**（2026-10-23）
+    #
+    # 本人の第6回に残った2か所は、どちらも
+    #   ・声の真ん中に落ちている（すでに壊れている）
+    #   ・となりとの釣り合いで「切れ目が 0.6秒 早い」
+    # なのに動かなかった。候補にする間を 0.18秒以上に絞っていたため。
+    #
+    #   4:44  それが自称・魔界皇帝、キシリカ・キシリス。  21文字/2.76秒 = 7.6字/秒
+    #         （0.56秒 足せば 6.3字/秒。読み上げの実測 6.46 とほぼ一致）
+    #
+    # 声の中にある切れ目は、どこへ行っても今より悪くはならない。
+    # そこだけ本人の道具と同じ 0.12秒まで降ろす。
+    # **合っている切れ目の候補は増やさない**（増やすと、過去3回失敗した
+    #   「言葉の途中の息つぎに吸い寄せられる」が戻る）。
+    ma_hiroi = sorted(max(a + 0.02, b - LEAD) for (a, b) in sils
+                      if (b - a) >= YOBI_SAITAN[0])
     if not ma:
         return slots, 0, 0.0
     kugiri = [slots[0][0]] + [st + du for (st, du, _t) in slots]
@@ -3227,7 +3243,8 @@ def wariai_awase(slots, sils, danraku, mado=0.9):
         if ima >= 1e8:
             continue
         erabu, yosa = None, ima
-        for saki in ma:
+        # 声の中に落ちている切れ目だけ、短い間も候補にする（上の注記）
+        for saki in (ma_hiroi if koe_no_naka_ka(t, sils) else ma):
             if abs(saki - t) > mado or abs(saki - t) < 0.01:
                 continue
             if not (kugiri[i - 1] + 0.12 < saki < kugiri[i + 1] - 0.12):
@@ -6771,6 +6788,40 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     naoshita = [0]
     kaoganai = [0]
 
+    zenin = [0]
+
+    def zenin_no_e(names, ima):
+        u"""名前の人が**全員**写っている絵を、対象話数の中から探す。
+
+        見つからなければ None。無理に変えないこと（別の壊れ方になる）。
+        """
+        hoshii = []
+        for c in names:
+            hoshii.append([c] + ONAJI_HITO.get(c, []))
+        erabi, erabi_kazu = None, None
+        for k in images:
+            if k == ima or u"/" not in k:
+                continue
+            if base_fols and k.split(u"/")[0] not in base_fols:
+                continue
+            d2 = cat.get(k)
+            if not d2:
+                continue
+            w2 = set(d2.split())
+            if any(x in w2 for x in DAME):
+                continue
+            if not all(any(x in w2 for x in mi) for mi in hoshii):
+                continue
+            if tsukai.get(k, 0) >= jougen:
+                continue
+            # 同じ条件なら、使っていない絵を先に。
+            n2 = tsukai.get(k, 0)
+            if erabi is None or n2 < erabi_kazu:
+                erabi, erabi_kazu = k, n2
+                if n2 == 0:
+                    break
+        return erabi
+
     def naoshi(pick, tx):
         """人ちがいの絵を選び直す。
 
@@ -6786,9 +6837,36 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         names = [c for c in uniq(CHARACTERS) if c in tx]
         if not names:
             return pick
-        for c in names:
-            if any(x in w for x in [c] + ONAJI_HITO.get(c, [])):
-                return pick                      # 合っている
+
+        def utsuru(ww, c):
+            return any(x in ww for x in [c] + ONAJI_HITO.get(c, []))
+
+        # ■ **名前が2人以上なら、全員写っている絵を先に探す**（2026-10-23）
+        #
+        # 本人の言葉（何度目かの指摘）:
+        #   > せめて音声や字幕で出てくる登場人物と画像に載っている人物くらい
+        #   > 合わせてください。これはマストです。
+        #
+        # ここは「**名前のうち誰か1人**でも写っていれば合格」だった。
+        # そのせいで
+        #   「ルーデウスはロキシーと結婚しているんですね。」
+        #    → ルーデウスと男2人の絵（ロキシーが居ない）
+        #   「ヒトガミいわく、ルーデウスとロキシーのその子供が、」
+        #    → ロキシーだけの絵（ヒトガミもルーデウスも居ない）
+        # が通っていた。採点も同じ線なので「ちゃんと合っていそう」と出る。
+        #
+        # 2人以上の名前が出ている文では、**全員写っている絵**を先に探す。
+        # 無ければ今までどおり（1人でも写っていればそのまま）。
+        # 絵が無いのに無理に変えることはしない。
+        iru = [c for c in names if utsuru(w, c)]
+        if len(names) >= 2 and len(iru) < len(names):
+            zen = zenin_no_e(names, pick)
+            if zen:
+                naoshita[0] += 1
+                zenin[0] += 1
+                return zen
+        if iru:
+            return pick                          # 合っている
         hoka = [c for c in uniq(CHARACTERS) if c in w]
         if not hoka:
             return pick                          # 誰も写っていないなら、そのまま
@@ -7062,6 +7140,9 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             % hikimodoshi)
     if naoshita[0]:
         say(u"人ちがいだった絵を %d枚 選び直しました" % naoshita[0])
+    if zenin[0]:
+        say(u"  うち %d枚は、**名前の人が全員写っている絵**に替えました"
+            u"（本人の指定・必ず）" % zenin[0])
     if kaoganai[0]:
         say(u"  うち %d枚は、その人の絵がこの話数に無いので"
             u"「誰も写っていない絵」にしました" % kaoganai[0])

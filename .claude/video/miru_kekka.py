@@ -793,6 +793,7 @@ def main():
     # 対象話数の中に、その人の絵が1枚でもあるか。
     nai_hito = set()
     nai_tsukatta = {}
+    tebiki_zure = []
     if kyoka:
         aru = set()
         for k, d in tags.items():
@@ -888,6 +889,26 @@ def main():
         hito = chars_in(tx)
         omomi = bunmyaku(rows, ri, han=han)
         yoi = [c for c in omomi if omomi[c] >= 0.5]
+        # ■ **手で選んだ絵でも、人が合っていなければ言う**（2026-10-23）
+        #
+        # 本人が画面を4枚送ってきて「人物くらい合わせてください」と言われた。
+        # そのうち2枚（005「いわゆる老デウスの壮絶な人生が…」・
+        # 015「これはヒトガミ自身の死を回避することで、」）は
+        # **本人の 差し替え.txt で選ばれた絵**だった。
+        # ここは「手で選んだ絵は責めない」ので、採点は何も言わずに通していた。
+        #
+        # 責めはしないが、**黙るのは違う。** 番号を言えば本人が直せる。
+        # （絵の番号は、絵を足したり消したりするとずれることがある）
+        if hito and desc and not is_zuhyou(img) and erabi:
+            w0 = set(desc.split())
+            atta0 = [c for c in hito
+                     if any(x in w0 for x in [c] + IIKAE.get(c, []))]
+            tarinai0 = [c for c in hito
+                        if c not in atta0 and c not in nai_hito]
+            if tarinai0:
+                tebiki_zure.append((r[u"no"], r.get(u"開始", u""), tx, img,
+                                    u"・".join(hito), u"・".join(atta0) or u"誰も",
+                                    u"・".join(tarinai0)))
         if hito and desc and not is_zuhyou(img) and not erabi:
             w = set(desc.split())
             atta = []
@@ -910,6 +931,28 @@ def main():
                     riyuu.append(u"人ちがい: セリフは【%s】／絵にその人はいません"
                                  % u"・".join(hito))
                     omosa += 5
+            elif len(hito) >= 2:
+                # ■ **1人でも写っていれば合格、にしない**（2026-10-23）
+                #
+                # 本人の言葉（何度目かの指摘）:
+                #   > せめて音声や字幕で出てくる登場人物と
+                #   > 画像に載っている人物くらい合わせてください。これはマスト
+                #
+                # ここは `atta` が1人でもあれば何も言わない作りだった。
+                #   「ルーデウスはロキシーと結婚しているんですね。」
+                #    → ルーデウスと男2人の絵（ロキシーが居ない）→ 無言で合格
+                # 採点が「ちゃんと合っていそう 193か所」と言っていたのはこれ。
+                #
+                # 名前が2人以上出ている文で**足りない人**がいたら、必ず言う。
+                # ただしその人の絵が対象話数に1枚も無いときは責めない。
+                tarinai = [c for c in hito
+                           if c not in atta and c not in nai_hito]
+                if tarinai:
+                    riyuu.append(u"人が足りない: セリフは【%s】／"
+                                 u"絵に居るのは【%s】（**%s** が写っていません）"
+                                 % (u"・".join(hito), u"・".join(atta) or u"誰も",
+                                    u"・".join(tarinai)))
+                    omosa += 6
 
         # ④ 情景ちがい / 手がかりなし
         muchi = False
@@ -968,6 +1011,20 @@ def main():
         for n, k, v in sugi[:20]:
             note(u"  %2d回  %s" % (n, k))
             note(u"        番号: %s" % u", ".join(v))
+        note(u"")
+
+    if tebiki_zure:
+        note(u"── **あなたが選んだ絵**で、名前の人が写っていない所 ──")
+        note(u"（差し替え.txt・画像プランで指定した絵です。機械は触りません。")
+        note(u"  直すなら その他/差し替え.txt のその番号を書きかえてください。")
+        note(u"  絵の番号は、絵を足したり消したりするとずれることがあります）")
+        for (no, hajime, tx2, img2, zen, ita, tari) in tebiki_zure[:15]:
+            note(u"  [%s] %s  %s" % (no, hajime, tx2[:34]))
+            note(u"        絵   : %s" % img2)
+            note(u"        セリフは【%s】／絵に居るのは【%s】"
+                 u"／**%s** が写っていません" % (zen, ita, tari))
+        if len(tebiki_zure) > 15:
+            note(u"  …ほか %d か所" % (len(tebiki_zure) - 15))
         note(u"")
 
     if nai_tsukatta:

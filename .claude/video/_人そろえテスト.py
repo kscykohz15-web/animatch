@@ -1,0 +1,153 @@
+# -*- coding: utf-8 -*-
+u"""セリフに出てくる人が、**全員**絵に写っているか（2026-10-23）
+
+■ 本人の言葉（何度目かの指摘）
+
+  > せめて音声や字幕で出てくる登場人物と画像に載っている人物くらい
+  > 合わせてください。これはマストです。
+
+前の版は「**名前のうち誰か1人**でも写っていれば合格」だった。そのため
+
+    「ルーデウスはロキシーと結婚しているんですね。」
+      → ルーデウスと男2人の絵（ロキシーが居ない）         通っていた
+    「ヒトガミいわく、ルーデウスとロキシーのその子供が、」
+      → ロキシーだけの絵（ヒトガミもルーデウスも居ない）   通っていた
+
+採点も同じ線なので「ちゃんと合っていそう 193か所」と出ていた。
+**両方とも「1人でも居れば合格」で、同じ見落としを二重にしていた。**
+
+ここでは、2人の名前が出ている文に対して
+  ・2人とも写っている絵がある  → **その絵が選ばれること**
+  ・1人しか写っている絵が無い  → 無理に変えないこと
+  ・採点が「人が足りない」と言うこと
+を、絵とカタログをその場で作って確かめる。ffmpeg も本物の絵も要らない。
+"""
+from __future__ import print_function
+import importlib.util
+import io
+import os
+import shutil
+import sys
+import tempfile
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
+warui = []
+
+
+def iu(ok, msg):
+    print(u"%s %s" % (u"○" if ok else u"×", msg))
+    if not ok:
+        warui.append(msg)
+
+
+def mochikomu(nm, path):
+    spec = importlib.util.spec_from_file_location(nm, path)
+    m = importlib.util.module_from_spec(spec)
+    sys.modules[nm] = m
+    spec.loader.exec_module(m)
+    return m
+
+
+WA = u"無職転生Ⅲ 第11話"
+
+
+def main():
+    ms = mochikomu(u"ms_hito", os.path.join(HERE, u"make_slideshow.py"))
+
+    # ── 絵とカタログをその場で作る（本人の並びと同じ形）
+    #   001 ルーデウスだけ / 002 ロキシーだけ / 003 **二人とも**
+    images = [u"%s/%03d_a_x2.png" % (WA, i) for i in range(1, 7)]
+    cat = {
+        images[0]: u"ルーデウス 一人 茶髪 室内 書斎",
+        images[1]: u"ロキシー 一人 青髪 室内",
+        images[2]: u"ルーデウス ロキシー 二人 茶髪 青髪 室内",
+        images[3]: u"ヒトガミ 一人 白髪 光る目",
+        images[4]: u"エリス 一人 赤髪",
+        images[5]: u"ルーデウス 一人 茶髪 夜",
+    }
+    slots = [(0.0, 2.0, u"ルーデウスはロキシーと結婚しているんですね。")]
+    # ■ **画像プランから当てる**（本人の回と同じ道）
+    #
+    #   本人のログ: 「192枚が直接一致 / 0枚がセリフの人名から」
+    #   ＝ 全部プラン経由で、人名から選ぶ道は一度も通っていない。
+    #   はじめ人名経由で試したら、**古い版でも通ってしまった**
+    #   （人名の道には「二人の絵を先に」がもともと入っているため）。
+    #   直したのは naoshi（プランで決まった絵を見直す所）なので、
+    #   材料も本人と同じくプラン経由にする。
+    #   プランに**ファイル名**で書くと「手で選んだ絵」になって
+#   naoshi が触らない。本人のプランはタグ指定なので、そろえる。
+    rules = [[[u"結婚"], [u"#書斎"], 0, []]]   # わざと「ルーデウスだけ」
+    default = [images[4]]
+
+    picked = ms.assign_images(slots, images, rules, default, catalog=cat)
+    iu(len(picked) == 1, u"1枚ぶん返ってきた（%d枚）" % len(picked))
+    if picked:
+        iu(picked[0] == images[2],
+           u"**二人とも写っている絵**が選ばれた（いま %s）"
+           % (picked[0] or u"なし").split(u"/")[-1])
+
+    # ── ② 二人の絵が無ければ、無理に変えない
+    cat2 = dict(cat)
+    del cat2[images[2]]
+    images2 = [k for k in images if k != images[2]]
+    rules2 = [[[u"結婚"], [u"#書斎"], 0, []]]
+    picked2 = ms.assign_images(slots, images2, rules2, [images[4]], catalog=cat2)
+    iu(picked2 and picked2[0] in (images[0], images[5]),
+       u"二人の絵が無いときは、片方だけの絵のままにする（いま %s）"
+       % ((picked2[0] if picked2 else u"なし") or u"なし").split(u"/")[-1])
+
+    # ── ③ 名前が1人だけの文では、今までどおり
+    slots3 = [(0.0, 2.0, u"ヒトガミには、未来を見る能力があります。")]
+    rules3 = [[[u"能力"], [u"#書斎"], 0, []]]   # わざと「ルーデウスだけ」
+    picked3 = ms.assign_images(slots3, images, rules3, [images[4]], catalog=cat)
+    iu(picked3 and picked3[0] == images[3],
+       u"名前が1人の文は、その人の絵（いま %s）"
+       % ((picked3[0] if picked3 else u"なし") or u"なし").split(u"/")[-1])
+
+    # ── ④ 採点が「人が足りない」と言うか
+    oku = tempfile.mkdtemp(prefix=u"hito_")
+    try:
+        io.open(os.path.join(oku, u"画像カタログ.txt"), "w",
+                encoding="utf-8", newline="\r\n").write(
+                u"# 目印\t説明\r\n" +
+                u"\r\n".join(u"%s\t%s" % (k, v) for k, v in sorted(cat.items()))
+                + u"\r\n")
+        io.open(os.path.join(oku, u"一覧.txt"), "w",
+                encoding="utf-8", newline="\r\n").write(
+                u"番号\t開始\t尺\t画像\t絵の話数\t台本の話数\tちがい\tセリフ\r\n"
+                u"001\t0:00\t2.00\t%s\t%s\t%s\t\t%s\r\n"
+                % (images[0], WA, WA,
+                   u"ルーデウスはロキシーと結婚しているんですね。"))
+        M = mochikomu(u"mk_hito", os.path.join(HERE, u"miru_kekka.py"))
+        rows = M.load_ichiran(os.path.join(oku, u"一覧.txt"))
+        tags = M.load_catalog(os.path.join(oku, u"画像カタログ.txt"))
+        iu(len(rows) == 1 and len(tags) >= 6,
+           u"採点に読ませる材料ができた（%d行 / %d枚）" % (len(rows), len(tags)))
+        hito = M.chars_in(u"ルーデウスはロキシーと結婚しているんですね。")
+        iu(u"ルーデウス" in hito and u"ロキシー" in hito,
+           u"セリフから2人の名前が取れる（%s）" % u"・".join(hito))
+        moto = io.open(os.path.join(HERE, u"miru_kekka.py"),
+                       encoding="utf-8").read()
+        iu(u"人が足りない" in moto,
+           u"採点に「人が足りない」の知らせがある"
+           u"（1人でも写っていれば合格、にしていない）")
+    finally:
+        shutil.rmtree(oku, ignore_errors=True)
+
+    print(u"")
+    if warui:
+        print(u"× %d件 落ちました" % len(warui))
+        return 1
+    print(u"○ ぜんぶ通りました")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
