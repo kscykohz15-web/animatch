@@ -4361,6 +4361,30 @@ def main():
     kyoka = load_plan_episodes(plan)
     tebiki = load_plan_tebiki(plan, code_hyou(rows))
     sashi = load_sashikae_ban(os.path.join(u"その他", u"差し替え.txt"))
+    # ■ **実際に当てた番号だけ**を「手で選んだ絵」として数える（2026-10-23）
+    #
+    # 差し替え.txt の番号だけの行は、字幕の切り方が変わると全部ずれるので、
+    # make_slideshow は前の回の控え（その他/_番号の控え.txt）で文に留め直し、
+    # 留められなかった行は**当てない。**
+    #
+    # ここで 差し替え.txt を直に読んで「本人が選んだから責めない」と
+    # していると、**機械が当てた絵を本人のものとして見逃す。**
+    # 同じ判断を2か所に書くと必ず片方を直し忘れるので、
+    # make_slideshow が書いた「使った番号」をそのまま使う。
+    tsuk = os.path.join(u"その他", u"_使った差し替え.txt")
+    if os.path.exists(tsuk):
+        kita = set()
+        for line in yomu(tsuk).split(u"\n"):
+            t = line.strip()
+            if t and not t.startswith(u"#") and t.isdigit():
+                kita.add(int(t))
+        tsukawanai = sashi - kita
+        sashi = sashi & kita
+        if tsukawanai:
+            note(u"差し替え.txt の %d か所は、字幕の切り方が変わったため"
+                 u"**使われていません**（機械が当てた絵として採点します）: %s"
+                 % (len(tsukawanai),
+                    u", ".join(u"%d番" % x for x in sorted(tsukawanai)[:12])))
 
     # ■ @@全部おまかせ のときは、**採点も手加減しない**（2026-10-18）
     #
@@ -4715,7 +4739,6 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-
 </script>
 <script type="text/plain" id="py-shiken">
 # -*- coding: utf-8 -*-
@@ -6156,7 +6179,6 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-
 </script>
 
 <script type="text/plain" id="py-manabu">
@@ -6950,7 +6972,6 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-
 </script>
 
 <script type="text/plain" id="py-ichiran">
@@ -11429,7 +11450,29 @@ def ma_no_migibata(slots, sils, lead=None, ikari=None):
     if len(slots) < 2 or not sils or not MIGIBATA[0]:
         return slots, 0, 0.0
     lead = LEAD if lead is None else lead
-    ma = sorted((a, b) for (a, b) in sils if b > a)
+    # ■ **本人の道具に見えない「間」に乗せてはいけない**（2026-10-23）
+    #
+    # ここは `if b > a` で、無音を**長さで選んでいなかった。**
+    # ところが sils は 0.04秒以上で拾ってあり（sils_k）、
+    # 本人の ずれ実測.py は **-35dB / 0.12秒以上**しか拾わない。
+    #
+    # つまり 0.04〜0.11秒 の小さな間に右端をそろえると、
+    #   こちら … 「右端にそろえた」（ずれ 0 のつもり）
+    #   本人   … その間が見えないので、**その前の本物の声の始まり**と
+    #            比べられて、間の手前ぜんぶがずれになる
+    # と、**二つの物差しが別の所を指す。**
+    #
+    # 第6回に残った2か所がこれに合う。どちらも
+    # 確認用/時刻の作り方_字幕ごと.txt では 位置=**声の中**（＝
+    # koe_no_naka_ka は 0.12秒以上しか見ないので、小さい間は無いものとして
+    # 数える）なのに、こちらは 170か所を「右端へそろえた」と言っていた。
+    # 同じ表で **間の中 0枚** になっているのも、これで説明がつく。
+    #
+    #   4:44  居座る 0.50秒  「それが自称・魔界皇帝、キシリカ・キシリス。」
+    #   3:09  居座る 0.51秒  「…ヒトガミの助言はすべて、」
+    #
+    # 物差しは本人のほうにそろえる。見えない間は候補から外す。
+    ma = sorted((a, b) for (a, b) in sils if (b - a) >= YOBI_SAITAN[0])
     kugiri = [slots[0][0]] + [st + du for (st, du, _tx) in slots]
     n = len(kugiri)
     ugoita, ichiban = 0, 0.0
@@ -11482,6 +11525,176 @@ def ma_no_migibata(slots, sils, lead=None, ikari=None):
     for i, (_st, _du, tx) in enumerate(slots):
         out.append((kugiri[i], max(0.12, kugiri[i + 1] - kugiri[i]), tx))
     return out, ugoita, ichiban
+
+
+# ■ 「声の中に残った切れ目を、本物の間へ移す」── 5回目（2026-10-23）
+#
+# 同じ所を4回やって4回やめている。**今回どこが違うのかを先に書く。**
+# ここを書かずに手を入れると、また同じ失敗に戻る。
+#
+#   (a) v153「直前に無音が終わった所へ戻す」
+#       → いつも手前へ動かした。最大 2.62秒 まで悪化。
+#   (b) koe_ni_awaseru「全部の切れ目を声の始まりへ合わせ直す」
+#       → 正しく置けている切れ目まで動かした。
+#   (c) ma_ni_warinaosu「2枚ぶんの本文を合わせて割り直す」
+#       → 本文の切り方まで変えて、その先が崩れた。
+#   (d) koe_no_naka_ugokasu（v159・UGOKASU_TSUKAU=False のまま）
+#       → **いちばん近い間**へ動かした。窓が 2.00秒 もあり、
+#         1.6秒 先の関係ない間へ飛んで 最大 0.92→1.66秒 に悪化。
+#
+# そして **wariai_awase（v166）は本人の回で1か所も動かなかった。**
+# 理由は (d) の中にもう書いてあった ──
+#
+#   > はじめは「比例配分がいちばん良くなる間」を選ばせた。
+#   > **1か所も動かなかった。**
+#   >   前の字幕 20文字 / 3.10秒 ＝ 比 1.00  ← いま（声の中・誤り）
+#   >   正しい所へ動かすと 2.26秒 ＝ 比 0.73  ← **下がる**
+#
+# **声の中にある切れ目は、釣り合いだけ見ると行儀よく見えることがある。**
+# wariai_awase は「いまより釣り合いが良くなる所」しか選べないので、
+# ここでは必ず空振りする。第6回の記録がそのとおりだった
+# （「文字数との釣り合いで乗せ直しました」の行が1行も出ていない）。
+#
+# ■ だから今回の違いは1つだけ。**「いまより良いか」を聞かない。**
+#
+#   ① 触るのは、本人の物差しで**声の中**と出た切れ目だけ（(b) との違い）。
+#   ② 候補は、本人の道具に**見える**間（0.12秒以上）の右端だけ。
+#      見えない小さな間に乗せても、本人の画面では直らない。
+#   ③ 選ぶのは**釣り合いがいちばん良い候補**。
+#      ただし「いまより良くなること」は**求めない。**
+#      声の中に落ちている切れ目は、釣り合いが何であろうと間違っている。
+#      間違っていると分かっている所に残す理由は無い（(d) の
+#      「近いほうを選ぶ」とも、wariai_awase の「良くなる所」とも違う）。
+#   ④ 窓は 1.2秒（(d) の 2.00秒 ではない）。さらに前後の字幕が
+#      文字数に見合う尺の SUKUU_YUKA 割を下回る候補は断る（歯止め）。
+#   ⑤ 本文は1文字も動かさない（(c) との違い）。
+#
+# 本人の第6回で狙っているのはこの2か所。どちらも 位置=**声の中**で、
+# となりとの釣り合いは「切れ目が早すぎる」と出ている。
+#
+#   3:09  居座る 0.51秒 ／ 釣り合い +0.64秒
+#   4:44  居座る 0.50秒 ／ 釣り合い +0.56秒
+#
+# **2つの物差しが逆を指している。** ずれ実測は順番を守って声の始まりに
+# 当てる作りなので、切れ目が2つの間のあいだに落ちると、近いほうの
+# （＝手前の）始まりに当たって「居座る」と出る。向きはそちらでは決まらない。
+# 向きを決められるのは釣り合いのほうだけなので、選ぶのは釣り合いでやる。
+NAKA_SUKUU = [os.environ.get(u"MS_NAKASUKUU", u"1") != u"0"]
+# 動かした先で、前後どちらの字幕も文字数に見合う尺の何割を保つか。
+# **これは調整値ではなく歯止め。** 下回る候補は選ばない。
+SUKUU_YUKA = [0.60]
+# ■ **行き先の釣り合いが、それ自体よくないなら動かさない**（2026-10-23）
+#
+# 「いまより良いかを聞かない」だけにしたら、材料で1か所だけ
+# **1.54秒まで悪化した。** 中身を見たらこうだった。
+#
+#   0:25 → 0:24  (-0.79秒)  釣り合い 0.283
+#   動かす前  字幕 25.58 / 声 26.33  ＝ ずれ 0.75
+#   動かした後 字幕 24.67 / 声 26.33  ＝ ずれ 1.54   ← **倍になった**
+#
+# つまり「今より良いか」を捨てたのは正しいが、
+# **行き先そのものが釣り合っていない候補まで選んでしまった。**
+# 材料の読む速さは切れはしごとに ±25% ばらつくので、
+# 釣り合いが 0.3 もずれている候補は、ただの当てずっぽうになる。
+#
+# だから「いまとの比べ」ではなく「**その候補の釣り合いの絶対値**」で切る。
+# 線は 0.25 ── ten_wo_zurasu が同じ理由で使っている線と同じにする。
+# 15か所のうち 6か所がこれで落ちるが、落ちた側は動かないだけで
+# 悪くはならない（声の中に残るので、台本側の知らせに出る）。
+SUKUU_SON_UE = [0.25]
+# 断った切れ目の中身。**7回外しているので、次は推測で直さない。**
+# 残った所ごとに「前後の見える間までの秒数」と「その候補の釣り合い」を
+# ログに出し、本人のログだけで原因が分かるようにする。
+SUKUU_KOTOWARI = []
+# 窓。(d) の 2.00秒 では 1.6秒先の関係ない間へ飛んだ。ここは
+# 「いちばん近い」ではなく「釣り合いがいちばん良い」で選ぶので、
+# 遠くの関係ない間は釣り合いが悪く、選ばれない。A/B 用に env で動かせる。
+try:
+    SUKUU_MADO = [float(os.environ.get(u"MS_SUKUU_MADO", u"1.60"))]
+except Exception:
+    SUKUU_MADO = [1.60]
+
+
+def koe_no_naka_sukuu(slots, sils, danraku, mado=None):
+    u"""声の中に残った切れ目を、**見える**間の右端へ移す。
+
+    上の注記に、4回やめた理由と今回の違いを全部書いてある。
+    戻り値: (slots, 動かした数, いちばん大きく動かした秒数, [知らせ])
+    """
+    if len(slots) < 2 or not sils or not NAKA_SUKUU[0]:
+        return slots, 0, 0.0, []
+    mado = SUKUU_MADO[0] if mado is None else mado
+    ik = sorted(danraku or [])
+
+    def ikari_ka(t):
+        return any(abs(t - x) <= 0.06 for x in ik)
+
+    # 本人の道具が見るのと同じ間（-35dB / 0.12秒以上）だけを候補にする
+    ma12 = [(a, b) for (a, b) in sils if (b - a) >= YOBI_SAITAN[0]]
+    kouho = sorted(set(max(a + 0.02, b - LEAD) for (a, b) in ma12))
+    if not kouho:
+        return slots, 0, 0.0, []
+    muon = sorted((a, b) for (a, b) in sils if b > a)
+    kugiri = [slots[0][0]] + [st + du for (st, du, _t) in slots]
+    moji = [max(0.5, disp_len((tx or u"").strip())) for (_s, _d, tx) in slots]
+    zen_koe = max(0.001, koe_dake(kugiri[0], kugiri[-1], muon))
+    hayasa = (sum(moji) or 1.0) / zen_koe      # この動画の実際の字/秒（声だけ）
+
+    def wari(q, a, b):
+        u"""字幕 q が a〜b をもらったとき、文字数に見合う尺の何割か。"""
+        hoshii = moji[q] / hayasa
+        return koe_dake(a, b, muon) / hoshii if hoshii > 0.001 else 1.0
+
+    ugoita, ichiban, shirase = 0, 0.0, []
+    del SUKUU_KOTOWARI[:]
+    for i in range(1, len(slots)):
+        t = kugiri[i]
+        if ikari_ka(t):
+            continue                   # 段落の境目は測ったもの。動かさない
+        if not koe_no_naka_ka(t, sils):
+            continue                   # 間に乗っている所には触らない
+        a0, b0 = kugiri[i - 1], kugiri[i + 1]
+        erabu, mita = None, []
+        for c in kouho:
+            if abs(c - t) > mado or abs(c - t) < 0.01:
+                continue
+            if c <= a0 + 0.20 or c >= b0 - 0.20:
+                continue
+            if ikari_ka(c):
+                continue               # 段落の境目は別の字幕のもの
+            son2 = tsuriai_son(koe_dake(a0, c, muon), koe_dake(c, b0, muon),
+                               moji[i - 1], moji[i])
+            w1, w2 = wari(i - 1, a0, c), wari(i, c, b0)
+            mita.append((c - t, son2 if son2 < 1e8 else None, min(w1, w2)))
+            if min(w1, w2) < SUKUU_YUKA[0]:
+                continue               # 歯止め。前後どちらかが短すぎになる
+            if son2 >= 1e8 or son2 > SUKUU_SON_UE[0]:
+                continue      # 行き先そのものが釣り合っていない（上の注記）
+            if erabu is None or son2 < erabu[0]:
+                erabu = (son2, c)
+        if erabu is None:
+            # **なぜ動かせなかったか**を残す（推測で直さないため）
+            _m = [x for x in mita if x[0] < 0]
+            _a = [x for x in mita if x[0] > 0]
+            mae = max(_m, key=lambda x: x[0]) if _m else None
+            ato = min(_a, key=lambda x: x[0]) if _a else None
+            SUKUU_KOTOWARI.append((t, (slots[i - 1][2] or u"").strip(),
+                                   mae, ato, len(mita)))
+            continue
+        saki = erabu[1]
+        ugoita += 1
+        ichiban = max(ichiban, abs(saki - t))
+        shirase.append((t, saki, (slots[i - 1][2] or u"").strip(),
+                        erabu[0]))
+        kugiri[i] = saki
+    if not ugoita:
+        return slots, 0, 0.0, []
+    for i in range(1, len(kugiri)):
+        if kugiri[i] <= kugiri[i - 1] + 0.12:
+            kugiri[i] = kugiri[i - 1] + 0.12
+    out = [(kugiri[i], max(0.12, kugiri[i + 1] - kugiri[i]), slots[i][2])
+           for i in range(len(slots))]
+    return out, ugoita, ichiban, shirase
 
 
 def place_in_chunk(sents_idx, sents, a0, b0, sils, tol=2.4, saitan=None,
@@ -14763,16 +14976,33 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     kaoganai = [0]
 
     zenin = [0]
+    ichibu = [0]
+    tarazu = []
 
-    def zenin_no_e(names, ima):
-        u"""名前の人が**全員**写っている絵を、対象話数の中から探す。
+    def zenin_no_e(names, ima, ima_kazu=0):
+        u"""名前の人が**できるだけ多く**写っている絵を、対象話数の中から探す。
 
-        見つからなければ None。無理に変えないこと（別の壊れ方になる）。
+        ■ 「全員か、さもなくば今のまま」では取りこぼす（2026-10-23）
+
+        v168 は「全員写っている絵」だけを探し、無ければ今のままにしていた。
+        その結果、採点が **17か所**で「人が足りない」と言った。
+        ところが 3人の名前が出ている文で
+          いまの絵 … 1人だけ写っている
+          別の絵   … 2人写っている（3人の絵はカタログに無い）
+        というとき、**2人の絵のほうが本人の決めごとに近い。**
+        全員の絵が無いことを理由に 1人の絵を残すのは、ただの取りこぼし。
+
+        だから「いまより多く写っている絵」を探し、
+        **写っている人数がいちばん多いもの**を採る。
+        同数なら使っていない絵を先に。
+        いまより多くならないなら None（無理に変えない ── 別の壊れ方になる）。
+
+        戻り値: (絵, その絵に写っている名前の人数)
         """
         hoshii = []
         for c in names:
             hoshii.append([c] + ONAJI_HITO.get(c, []))
-        erabi, erabi_kazu = None, None
+        erabi, erabi_ten = None, None
         for k in images:
             if k == ima or u"/" not in k:
                 continue
@@ -14784,17 +15014,18 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             w2 = set(d2.split())
             if any(x in w2 for x in DAME):
                 continue
-            if not all(any(x in w2 for x in mi) for mi in hoshii):
-                continue
+            kazu = sum(1 for mi in hoshii if any(x in w2 for x in mi))
+            if kazu <= ima_kazu:
+                continue          # いまの絵より良くならないなら、意味が無い
             if tsukai.get(k, 0) >= jougen:
                 continue
-            # 同じ条件なら、使っていない絵を先に。
-            n2 = tsukai.get(k, 0)
-            if erabi is None or n2 < erabi_kazu:
-                erabi, erabi_kazu = k, n2
-                if n2 == 0:
-                    break
-        return erabi
+            # 人数が多いほうが先。同数なら使っていない絵を先に。
+            ten = (-kazu, tsukai.get(k, 0))
+            if erabi is None or ten < erabi_ten:
+                erabi, erabi_ten = k, ten
+                if kazu == len(hoshii) and tsukai.get(k, 0) == 0:
+                    break         # 全員写っていて、まだ使っていない。これで良い
+        return erabi, (-erabi_ten[0] if erabi else 0)
 
     def naoshi(pick, tx):
         """人ちがいの絵を選び直す。
@@ -14834,11 +15065,17 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         # 絵が無いのに無理に変えることはしない。
         iru = [c for c in names if utsuru(w, c)]
         if len(names) >= 2 and len(iru) < len(names):
-            zen = zenin_no_e(names, pick)
+            zen, zen_kazu = zenin_no_e(names, pick, len(iru))
             if zen:
                 naoshita[0] += 1
-                zenin[0] += 1
+                if zen_kazu >= len(names):
+                    zenin[0] += 1
+                else:
+                    ichibu[0] += 1
                 return zen
+            # 名前の組み合わせの絵が、対象話数に1枚も無い。
+            # **無理に変えない**が、黙らない（絵を増やすか話数を足せば直る）。
+            tarazu.append((tuple(names), tuple(iru)))
         if iru:
             return pick                          # 合っている
         hoka = [c for c in uniq(CHARACTERS) if c in w]
@@ -15117,6 +15354,17 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     if zenin[0]:
         say(u"  うち %d枚は、**名前の人が全員写っている絵**に替えました"
             u"（本人の指定・必ず）" % zenin[0])
+    if ichibu[0]:
+        say(u"  うち %d枚は、全員の絵が無いので**いまより多く写っている絵**に"
+            u"替えました（1人→2人など）" % ichibu[0])
+    if tarazu:
+        from collections import Counter as _Cnt
+        kumi = _Cnt(x[0] for x in tarazu)
+        say(u"  ⚠ 名前の人が**全員そろった絵が1枚も無い**組み合わせが %d か所"
+            u"あります（絵を増やすか、使ってよい話数を足せば直ります）:"
+            % len(tarazu))
+        for (ks, n3) in kumi.most_common(6):
+            say(u"      %s … %d か所" % (u"＋".join(ks), n3))
     if kaoganai[0]:
         say(u"  うち %d枚は、その人の絵がこの話数に無いので"
             u"「誰も写っていない絵」にしました" % kaoganai[0])
@@ -15633,6 +15881,81 @@ SASHIKAE_ATAMA = u"""\ufeff# ─────────────────
 
 KOUHO_FILE = os.path.join(SONOTA_DIR, u"候補.txt")
 OMAKASE = os.path.join(SONOTA_DIR, u"おまかせ.txt")
+# ■ 番号だけの差し替えを、次の回でも正しい字幕に当てるための控え
+#   （2026-10-23・本人の「字幕の長さが変わっているからそのまま使えない」）
+#
+# > 私が前割り当てたものとは字幕の長さが変わっていることから
+# > そのまま使うとおかしいことになるため、そこは使わずに
+# > すべてあなたが割り当ててください。
+#
+# 差し替え.txt の番号は 確認用/一覧.txt の番号で、**字幕の切り方が
+# 変わると全部ずれる。** 本人は3列目に字幕の文を書けるが、26件ぜんぶに
+# 書くのは重い。そこで**こちらが毎回、番号と字幕の文の控えを残す。**
+#
+# 次の回は、番号だけの行でも控えの文で留め直せる。
+#   ・控えの文が今もある   → その字幕へ付いていく（番号が動いても合う）
+#   ・控えの文がもう無い   → 切り方が変わって消えた。**番号は当てにならない
+#                            ので使わない**（黙って隣に当てるより良い）
+#   ・控えが無い回（初回） → 番号だけの行は**ぜんぶ使わない**。
+#                            この回がまさにそれで、本人の指示どおりになる。
+HIKAE = os.path.join(SONOTA_DIR, u"_番号の控え.txt")
+# ■ 採点が「手で選んだ絵」を取りちがえないための控え（2026-10-23）
+#
+# miru_kekka.py は 差し替え.txt を直に読んで「ここは本人が選んだ絵だから
+# 人ちがいでは責めない」としている。ところが上の仕組みで、番号だけの行は
+# **使われないことがある。** そのまま採点すると、機械が当てた絵を
+# 「本人が選んだ絵」として見逃す ── いちばん危ない嘘になる。
+# だから**実際に当てた番号だけ**をこちらから渡す。
+# （同じ判断を2か所に書かない。書けば必ず片方を直し忘れる）
+TSUKATTA = os.path.join(SONOTA_DIR, u"_使った差し替え.txt")
+HIKAE_ATAMA = (u"# 差し替え.txt の番号を、次の回でも正しい字幕に当てるための控え。\n"
+               u"# この回に 確認用/一覧.txt へ出した「番号」と「字幕の文」です。\n"
+               u"# **消さないでください。** 消すと、番号だけの差し替えが\n"
+               u"# 次の回から使われなくなります（間違った絵を当てないため）。\n")
+
+
+def write_bangou_hikae(rows, ban):
+    u"""この回の 番号 → 字幕の文 を控える。"""
+    try:
+        if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
+            os.makedirs(os.path.join(HERE, SONOTA_DIR))
+        gyou = [HIKAE_ATAMA.rstrip(u"\n")]
+        for no in sorted(ban):
+            i = ban[no]
+            if i >= len(rows):
+                continue
+            tx = u" ".join((rows[i][2] or u"").split())
+            if tx:
+                gyou.append(u"%d\t%s" % (no, tx))
+        io.open(os.path.join(HERE, HIKAE), "w",
+                encoding="utf-8-sig", newline="\r\n").write(
+                u"\r\n".join(gyou) + u"\r\n")
+        return len(gyou) - 1
+    except Exception:
+        return 0
+
+
+def load_bangou_hikae():
+    u"""前の回の控え。{番号: 字幕の文}"""
+    out = {}
+    path = os.path.join(HERE, HIKAE)
+    if not os.path.exists(path):
+        return out
+    try:
+        for line in io.open(path, encoding="utf-8-sig",
+                            errors="replace").read() \
+                .replace("\r\n", "\n").split("\n"):
+            t = line.strip()
+            if not t or t.startswith(u"#") or u"\t" not in t:
+                continue
+            a, b = t.split(u"\t", 1)
+            try:
+                out[int(a.strip())] = b.strip()
+            except ValueError:
+                continue
+    except Exception:
+        return {}
+    return out
 
 
 def load_kouho(path):
@@ -16705,6 +17028,77 @@ def main():
                         u"（次の声が出る %.2f秒前）へそろえました"
                         u"（いちばん大きいもの %.2f秒）"
                         % (mb, LEAD, mb_ichi))
+                # ■ それでも声の中に残った切れ目を、見える間へ移す
+                #   （2026-10-23・4回やめた直しとの違いは
+                #     koe_no_naka_sukuu の上の注記に全部書いてある）
+                slots, sk, sk_ichi, sk_shi = koe_no_naka_sukuu(
+                    slots, sils_k, JIKKOKU_KUGIRI)
+                if sk:
+                    say(u"  声の中に残っていた切れ目 %d か所を、"
+                        u"**本人の道具に見える「間」の右端**へ移しました"
+                        u"（文字数との釣り合いで行き先を選びました／"
+                        u"いちばん大きいもの %.2f秒）" % (sk, sk_ichi))
+                    _miseru = os.environ.get(u"MS_SUKUU_SHOW") == u"1"
+                    for (t3, s3, tx3, son3) in sk_shi[:(99 if _miseru else 8)]:
+                        say(u"    %d:%02d → %d:%02d (%+.2f秒)  「%s」%s"
+                            % (int(t3) // 60, int(t3) % 60,
+                               int(s3) // 60, int(s3) % 60, s3 - t3,
+                               tx3[:28],
+                               (u"  [釣り合い %.3f]" % son3) if _miseru else u""))
+                # ■ **最後の状態で、残っている所を言い直す**（2026-10-23）
+                #
+                # 上の「声の途中で切り替わったまま」の一覧は、つなぎの直後に
+                # 出している。そのあと ten_wo_zurasu と koe_no_naka_sukuu が
+                # いくつか直すので、**あの一覧は古い。**
+                # 本人は毎回この一覧を見て台本を直すかどうかを決めるので、
+                # 古い一覧を出したままにすると、直さなくてよい所を直させる。
+                # ここで最後の slots で数え直して、**本当に残った所だけ**を言う。
+                nokori2 = []
+                for _q in range(1, len(slots)):
+                    _t = slots[_q][0]
+                    if any(abs(_t - _x) <= 0.06 for _x in (JIKKOKU_KUGIRI or [])):
+                        continue        # 段落の境目は測ったもの
+                    if koe_no_naka_ka(_t, sils_k):
+                        nokori2.append((_t, (slots[_q - 1][2] or u"").strip(),
+                                        (slots[_q][2] or u"").strip()))
+                if nokori2:
+                    say(u"")
+                    say(u"⚠ **ここまでやっても声の途中で切り替わる所が %d か所**"
+                        u"残りました（最後の状態で数え直したもの）:"
+                        % len(nokori2))
+                    _kot = dict((round(x[0], 2), x) for x in SUKUU_KOTOWARI)
+                    for (_t, _mae, _ato) in nokori2[:8]:
+                        say(u"    %d:%02d  「%s」→「%s」"
+                            % (int(_t) // 60, int(_t) % 60,
+                               _mae[-18:], _ato[:18]))
+                        # ■ **なぜ動かせなかったか**を数字で添える
+                        #   （7回外しているので、次は推測で直さない）
+                        _k = _kot.get(round(_t, 2))
+                        if not _k:
+                            continue
+                        _, _, _m2, _a2, _n2 = _k
+
+                        def _iu(x):
+                            if not x:
+                                return u"無し"
+                            return (u"%+.2f秒 先に間（釣り合い %s・尺 %.2f）"
+                                    % (x[0],
+                                       (u"%.2f" % x[1]) if x[1] is not None
+                                       else u"測れず", x[2]))
+                        say(u"        近い間: 手前 %s ／ 先 %s"
+                            % (_iu(_m2), _iu(_a2)))
+                    say(u"   ここは**読み上げがその「、」で止まっていません。**")
+                    say(u"   止まっていない所に合わせ先が無いので、"
+                        u"置き方ではもう直りません。")
+                    say(u"   直すなら台本側で、上の「→」の**手前の字幕の"
+                        u"終わりの「、」を「。」に変えてください。**")
+                    say(u"   「。」なら読み上げが本当に止まるので、"
+                        u"声に本物の間ができて、切れ目がそこへ乗ります。")
+                    say(u"   字幕用と読み上げ用の**両方**を直して、"
+                        u"1（音声）から作り直してください。")
+                elif sk or tz:
+                    say(u"  ○ 声の途中で切り替わる所は、"
+                        u"**最後の状態では残っていません。**")
                 # ■ 短すぎる字幕を名指しで出す（2026-10-12・本人の「と、」）
                 #
                 # 本人「「と、」だけの字幕があります。ここはそもそも台本が
@@ -16913,6 +17307,51 @@ def main():
     else:
         kae = load_sashikae(os.path.join(HERE, SASHIKAE), images,
                             moji=sashi_moji)
+    # ■ 番号だけの行は、**前の回の控え**で文に直してから当てる
+    #   （2026-10-23・本人の指示。詳しくは HIKAE の上の注記）
+    #
+    # > 私が前割り当てたものとは字幕の長さが変わっていることから
+    # > そのまま使うとおかしいことになるため、そこは使わずに
+    # > すべてあなたが割り当ててください。
+    #
+    # 控えが無い回（この仕組みを入れた最初の回）は、番号だけの行を
+    # **ぜんぶ使わない。** 本人の指示がそのまま叶う形になる。
+    hikae = load_bangou_hikae()
+    hikae_kara = set()          # 控えの文で留め直した番号（落とす判断に使う）
+    kazu_dake = [no for no in sorted(kae)
+                 if not (sashi_moji.get(no) or u"").strip()]
+    if kazu_dake and not hikae:
+        for no in kazu_dake:
+            del kae[no]
+        say(u"差し替え.txt の **番号だけの指定 %d か所は使いません。**"
+            % len(kazu_dake))
+        say(u"  字幕の切り方が変わると番号は全部ずれるので、"
+            u"そのまま当てると隣の絵になります。")
+        say(u"  この回は機械が当てます（本人の指示）。"
+            u"この回から %s に番号と字幕の文を控えるので、"
+            u"次の回からは番号だけでも正しい字幕に付いていきます。" % HIKAE)
+        say(u"  いますぐ効かせたいときは、差し替え.txt の3列目に"
+            u"その字幕の文を入れてください。")
+    elif kazu_dake:
+        tsuita, kieta = 0, []
+        hikae_kara.update(x for x in kazu_dake if (hikae.get(x) or u"").strip())
+        for no in kazu_dake:
+            tx3 = (hikae.get(no) or u"").strip()
+            if tx3:
+                sashi_moji[no] = tx3
+                tsuita += 1
+            else:
+                kieta.append(no)
+        for no in kieta:
+            del kae[no]
+        if tsuita:
+            say(u"差し替え.txt の番号だけの指定 %d か所を、"
+                u"前の回の控え（%s）の字幕の文で留め直します。"
+                % (tsuita, HIKAE))
+        if kieta:
+            say(u"  このうち %d か所は控えに無い番号でした。"
+                u"番号は当てにならないので使いません: %s"
+                % (len(kieta), u", ".join(u"%d番" % x for x in kieta[:10])))
     # ■ 字幕の文が書いてあれば、**番号ではなく文で留める**（2026-10-12）
     #
     # 本人「元々私が指定した時とは字幕の長さが変わっているため、
@@ -16921,8 +17360,14 @@ def main():
     if sashi_moji:
         utsushita = []
         naoshi = {}
+        kie2 = []
         for no, img2 in sorted(kae.items()):
             saki = moji_de_sagasu(sashi_moji.get(no), rows, ban, no)
+            if saki is None and no in hikae_kara:
+                # 控えから入れた文が、いまの字幕のどこにも無い。
+                # ＝ 切り方が変わって消えた所。番号で当てると隣になる。
+                kie2.append(no)
+                continue
             if saki is None or saki == no:
                 naoshi[no] = img2
                 continue
@@ -16941,7 +17386,14 @@ def main():
             say(u"字幕の切り方が変わっていたので、指定を文で留め直しました:")
             for (mae2, ato2, tx3) in utsushita:
                 say(u"  %3d番 → %3d番  「%s」" % (mae2, ato2, (tx3 or u"")[:26]))
+        if kie2:
+            say(u"前の回の字幕が **いまはもう無い** %d か所は使いません"
+                u"（切り方が変わって消えた所。番号で当てると隣の絵になります）:"
+                % len(kie2))
+            for no in kie2[:8]:
+                say(u"  %3d番  「%s」" % (no, (hikae.get(no) or u"")[:26]))
         kae = naoshi
+    tsukatta_no = []
     if kae:
         kaeta = 0
         for no, img2 in sorted(kae.items()):
@@ -16976,10 +17428,35 @@ def main():
                 % (no, (tx2.strip() or u"（セリフなし）")[:22],
                    img_code(img2) or img2, shirase))
             kaeta += 1
+            tsukatta_no.append(no)
         say(u"差し替え.txt のとおり %d枚を入れ替えました（番号で指定されたもの）" % kaeta)
     elif not os.path.exists(os.path.join(HERE, SASHIKAE)):
         io.open(os.path.join(HERE, SASHIKAE), "w", encoding="utf-8",
                 newline="\r\n").write(SASHIKAE_ATAMA)
+
+    # ■ この回の 番号 → 字幕の文 を控える（2026-10-23）
+    #
+    # 本人が差し替えの番号を読むのは、この番号づけ（章カードも1コマ）。
+    # **次の回に字幕の切り方が変わっても、この控えがあれば文で留め直せる。**
+    # 番号だけの指定が黙って隣の絵に当たる事故は、これで終わりにする。
+    # 実際に当てた差し替えの番号を、採点のために残す（上の注記）
+    try:
+        if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
+            os.makedirs(os.path.join(HERE, SONOTA_DIR))
+        io.open(os.path.join(HERE, TSUKATTA), "w",
+                encoding="utf-8-sig", newline="\r\n").write(
+                u"\r\n".join(
+                    [u"# make_slideshow が**実際に当てた**差し替えの番号。",
+                     u"# 採点(miru_kekka.py)はこれを見て「手で選んだ絵」を数えます。",
+                     u"# 自動で作り直されるので、手で直す必要はありません。"]
+                    + [u"%d" % x for x in sorted(tsukatta_no)]) + u"\r\n")
+    except Exception:
+        pass
+    _hk = write_bangou_hikae(rows, ban)
+    if _hk:
+        say(u"%s に 番号と字幕の文 %d行を控えました"
+            u"（次の回も番号だけの差し替えが正しい字幕に付いていきます）"
+            % (HIKAE, _hk))
 
     # --- 挨拶は**いちばん最後**に押さえる（2026-10-20・本人の指定）---
     #
@@ -17599,7 +18076,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 </script>
 <script type="text/plain" data-se="はさみ.mp3">SUQzAwCAAAAQAFRQRTEAAAARAAAAKGMpVGFpcmEgS29tb3JpAFBSSVYAAAAOAABQZWFrVmFsdWUAoX8AAFBSSVYAAAARAABBdmVyYWdlTGV2ZWwAew8AAFdYWFgAAAAfAAAAAGh0dHA6Ly90YWlyYS1rb21vcmkuanBuLm9yZy8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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qqqqqqqqqqqqqqqqqqqqqqqq//ukZJQP8AAAaQcAAAgAAA0g4AABAAABpAAAACAAADSAAAAEqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</script>
 <script type="text/plain" data-se="カメラ.mp3">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</script>
@@ -25685,7 +26161,7 @@ Reゼロから始める異世界生活	#一人 アップ, #アップ, #立ち姿
     return out;
   }
 
-  var PACK_VERSION = "v168";
+  var PACK_VERSION = "v169";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "mushoku";
   function packVersion(){

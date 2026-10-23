@@ -98,6 +98,48 @@ def main():
        and not out.get(9),
        u"まとめて読んでも、合っているものだけ当たる（%d枚）" % len(out))
 
+    # ⑦ 番号の控え（2026-10-23・本人の「字幕の長さが変わっている」）
+    #
+    # > 私が前割り当てたものとは字幕の長さが変わっていることから
+    # > そのまま使うとおかしいことになるため、そこは使わずに
+    # > すべてあなたが割り当ててください。
+    #
+    # 控えを書いて読み直し、**切り方が変わっても文で留め直せる**ことと、
+    # **控えに無い番号は使わない**ことを見る。
+    moto_here = ms.HERE
+    try:
+        ms.HERE = oku
+        os.makedirs(os.path.join(oku, ms.SONOTA_DIR))
+        rows1 = [(1.0, u"a.png", u"まずヒトガミの目的。"),
+                 (1.0, u"b.png", u"これはヒトガミ自身の死を回避することで、"),
+                 (1.0, u"c.png", u"その手段として、")]
+        ban1 = {1: 0, 2: 1, 3: 2}
+        n = ms.write_bangou_hikae(rows1, ban1)
+        iu(n == 3, u"番号の控えを3行書いた（%d行）" % n)
+        hik = ms.load_bangou_hikae()
+        iu(hik.get(1) == u"まずヒトガミの目的。",
+           u"控えを読み直せる（1番「%s」）" % hik.get(1))
+
+        # 次の回：章カードが1枚入って番号が1つずつずれた形
+        rows2 = [(1.0, u"z.png", u"（カードのぶん）"),
+                 (1.0, u"a.png", u"まずヒトガミの目的。"),
+                 (1.0, u"b.png", u"これはヒトガミ自身の死を回避することで、")]
+        ban2 = {1: 0, 2: 1, 3: 2}
+        saki = ms.moji_de_sagasu(hik.get(1), rows2, ban2, 1)
+        iu(saki == 2,
+           u"控えの文で「1番 → 2番」へ留め直せる（いま %s）" % saki)
+        # 控えに無い番号は None（＝使わない側に回る）
+        iu(ms.moji_de_sagasu(hik.get(99), rows2, ban2, 99) is None,
+           u"控えに無い番号は文で留められない（使わない側に回る）")
+        # 控えの文がもう無いとき
+        rows3 = [(1.0, u"q.png", u"まったく別のことを言っています。")]
+        iu(ms.moji_de_sagasu(hik.get(1), rows3, {1: 0}, 1) is None,
+           u"控えの文がいまの字幕に無ければ None（番号で当てない）")
+        iu(u"_番号の控え" in ms.HIKAE,
+           u"控えの置き場所は その他/_番号の控え.txt（%s）" % ms.HIKAE)
+    finally:
+        ms.HERE = moto_here
+
     import shutil
     shutil.rmtree(oku, ignore_errors=True)
     print(u"")

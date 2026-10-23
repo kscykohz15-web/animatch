@@ -737,6 +737,30 @@ def main():
     kyoka = load_plan_episodes(plan)
     tebiki = load_plan_tebiki(plan, code_hyou(rows))
     sashi = load_sashikae_ban(os.path.join(u"その他", u"差し替え.txt"))
+    # ■ **実際に当てた番号だけ**を「手で選んだ絵」として数える（2026-10-23）
+    #
+    # 差し替え.txt の番号だけの行は、字幕の切り方が変わると全部ずれるので、
+    # make_slideshow は前の回の控え（その他/_番号の控え.txt）で文に留め直し、
+    # 留められなかった行は**当てない。**
+    #
+    # ここで 差し替え.txt を直に読んで「本人が選んだから責めない」と
+    # していると、**機械が当てた絵を本人のものとして見逃す。**
+    # 同じ判断を2か所に書くと必ず片方を直し忘れるので、
+    # make_slideshow が書いた「使った番号」をそのまま使う。
+    tsuk = os.path.join(u"その他", u"_使った差し替え.txt")
+    if os.path.exists(tsuk):
+        kita = set()
+        for line in yomu(tsuk).split(u"\n"):
+            t = line.strip()
+            if t and not t.startswith(u"#") and t.isdigit():
+                kita.add(int(t))
+        tsukawanai = sashi - kita
+        sashi = sashi & kita
+        if tsukawanai:
+            note(u"差し替え.txt の %d か所は、字幕の切り方が変わったため"
+                 u"**使われていません**（機械が当てた絵として採点します）: %s"
+                 % (len(tsukawanai),
+                    u", ".join(u"%d番" % x for x in sorted(tsukawanai)[:12])))
 
     # ■ @@全部おまかせ のときは、**採点も手加減しない**（2026-10-18）
     #
