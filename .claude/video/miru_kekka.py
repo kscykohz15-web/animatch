@@ -972,11 +972,50 @@ def main():
                 tarinai = [c for c in hito
                            if c not in atta and c not in nai_hito]
                 if tarinai:
-                    riyuu.append(u"人が足りない: セリフは【%s】／"
-                                 u"絵に居るのは【%s】（**%s** が写っていません）"
-                                 % (u"・".join(hito), u"・".join(atta) or u"誰も",
-                                    u"・".join(tarinai)))
-                    omosa += 6
+                    # ■ **2種類に分ける**（2026-10-23・v169 の採点を数えて）
+                    #
+                    # v169 で「人が足りない」が 17か所 出た。中身を分けると
+                    # はっきり2つあった。
+                    #
+                    #   **一人**の絵   9か所  023 038 050 058 066 070 079 111 153
+                    #   **二人/大勢**  8か所  164 016 018 028 031 078 090 187
+                    #
+                    # 後ろの8か所は、絵には**ちゃんと2人写っている。**
+                    # カタログが2人目の名前を書いていないだけである
+                    # （「二人 ロキシー 青髪…」＝人数は二人、名前は1つ）。
+                    # これは**絵の選び方ではなくカタログ側の抜け**なので、
+                    # 同じ言い方で並べると直す所を間違える。
+                    #
+                    # 前の9か所は一人しか写っていない絵で、2人の名前が出ている
+                    # 文には**原理的に合わない。** こちらは絵の選び方の誤り。
+                    #
+                    # **数を減らすために分けるのではない**（それは隠すこと）。
+                    # どちらも出すが、直す所が違うので名前を変える。
+                    w_n = set(desc.split()) if desc else set()
+                    ninzu = (3 if u"大勢" in w_n else
+                             2 if u"二人" in w_n else
+                             1 if u"一人" in w_n else 0)
+                    if ninzu and ninzu < len(hito):
+                        riyuu.append(
+                            u"人が足りない（**%s**の絵）: セリフは【%s】／"
+                            u"絵に居るのは【%s】（**%s** が写っていません）"
+                            u"／%d人の文に%sの絵は入りません"
+                            % (u"一人" if ninzu == 1 else u"二人",
+                               u"・".join(hito), u"・".join(atta) or u"誰も",
+                               u"・".join(tarinai), len(hito),
+                               u"一人" if ninzu == 1 else u"二人"))
+                        omosa += 6
+                    else:
+                        riyuu.append(
+                            u"カタログに2人目の名前がありません: セリフは【%s】／"
+                            u"絵は**%s**だが名前は【%s】だけ"
+                            u"（**%s** かどうかカタログに書いてない）"
+                            % (u"・".join(hito),
+                               u"大勢" if ninzu == 3 else
+                               u"二人" if ninzu == 2 else u"人数不明",
+                               u"・".join(atta) or u"誰も",
+                               u"・".join(tarinai)))
+                        omosa += 6
 
         # ④ 情景ちがい / 手がかりなし
         muchi = False

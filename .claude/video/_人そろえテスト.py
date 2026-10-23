@@ -111,6 +111,45 @@ def main():
        u"名前が1人の文は、その人の絵（いま %s）"
        % ((picked3[0] if picked3 else u"なし") or u"なし").split(u"/")[-1])
 
+    # ── ⑤ **一人の絵は、二人の絵に替える**（2026-10-23・v169 の採点から）
+    #
+    # v169 で「人が足りない」が 17か所 出た。数えると
+    #   **一人**の絵   9か所（023 038 050 058 066 070 079 111 153）
+    #   **二人/大勢**  8か所（164 016 018 028 031 078 090 187）
+    # で、前の9か所は**一人しか写っていない絵**だった。
+    # 2人の名前が出ている文に一人の絵は**原理的に合わない**ので、
+    # 全員そろった絵が無くても、せめて人数の合う絵に替える。
+    #
+    # ここが肝: 替え先のカタログは **名前が1つだけ**（「ロキシー 二人 …」）。
+    # 名前の数は増えないので、v169 の `kazu <= ima_kazu` では動かない。
+    img5 = list(images) + [u"%s/007_a_x2.png" % WA]
+    cat5 = dict(cat)
+    del cat5[images[2]]                    # 二人とも名前がある絵は無しにする
+    img5.remove(images[2])
+    cat5[img5[-1]] = u"ロキシー 二人 青髪 室内"   # 人数は二人／名前は1つ
+    picked5 = ms.assign_images(slots, img5, [[[u"結婚"], [u"#書斎"], 0, []]],
+                               [images[4]], catalog=cat5)
+    iu(picked5 and picked5[0] == img5[-1],
+       u"一人の絵のままにせず、**人数の合う二人の絵**に替えた（いま %s）"
+       % ((picked5[0] if picked5 else u"なし") or u"なし").split(u"/")[-1])
+
+    # ⑤-2 すでに二人の絵なら、同じ良さの絵へは**動かさない**（迷子にしない）
+    cat6 = dict(cat5)
+    cat6[images[0]] = u"ルーデウス 二人 茶髪 室内 書斎"   # はじめから二人の絵
+    picked6 = ms.assign_images(slots, img5, [[[u"結婚"], [u"#書斎"], 0, []]],
+                               [images[4]], catalog=cat6)
+    iu(picked6 and picked6[0] == images[0],
+       u"すでに二人の絵なら、同じ良さの絵へは動かさない（いま %s）"
+       % ((picked6[0] if picked6 else u"なし") or u"なし").split(u"/")[-1])
+
+    # ⑤-3 全員そろった絵があれば、そちらが上（①の決めごとは変わっていない）
+    picked7 = ms.assign_images(slots, images,
+                               [[[u"結婚"], [u"#書斎"], 0, []]],
+                               [images[4]], catalog=cat)
+    iu(picked7 and picked7[0] == images[2],
+       u"全員そろった絵があれば、人数より**全員**が上（いま %s）"
+       % ((picked7[0] if picked7 else u"なし") or u"なし").split(u"/")[-1])
+
     # ── ④ 採点が「人が足りない」と言うか
     oku = tempfile.mkdtemp(prefix=u"hito_")
     try:

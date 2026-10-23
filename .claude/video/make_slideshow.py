@@ -5472,6 +5472,10 @@ def load_person_rules(path):
     return out
 
 
+# 「二人なのに名前が1人以下」の知らせは1回だけ（カタログは3回読まれる）
+TARAZU_IUTA = [False]
+
+
 def apply_person_rules(tags, rules):
     """見た目のタグから人物名を足す。
 
@@ -5512,6 +5516,44 @@ def apply_person_rules(tags, rules):
         say(u"人物ルール: %d枚に名前を付けました" % tsuita)
     if keshita:
         say(u"人物ルール: %d枚から、合わない名前を外しました" % keshita)
+    # ■ **カタログが2人目の名前を書いていない絵**を数える（2026-10-23）
+    #
+    # v169 の採点で「人が足りない」が 17か所 出た。数えると2種類あった。
+    #
+    #   **一人**の絵   9か所  → 絵の選び方の誤り（zenin_no_e で直した）
+    #   **二人/大勢**  8か所  → 絵には**ちゃんと2人写っている**
+    #
+    # 後ろは「二人 ロキシー 青髪 長い髪 …」のように、人数は二人なのに
+    # 名前が1つしか無い絵。**カタログ側の抜け**なので、絵を選び直しても
+    # 直らない。直すのは 人物ルール.txt か、その絵の説明のほう。
+    # **どれだけあるかを先に出す**（大きさが分からないと直し方を選べない）。
+    if TARAZU_IUTA[0]:
+        return tags
+    try:
+        namae = set(CHARACTERS) | set(r[0] for r in rules)
+        kei, tarinai = 0, {}
+        for k in tags:
+            w = set((tags.get(k) or u"").split())
+            if not (u"二人" in w or u"大勢" in w):
+                continue
+            kei += 1
+            if len([x for x in namae if x in w]) >= 2:
+                continue
+            fol = k.split(u"/")[0] if u"/" in k else u"（フォルダなし）"
+            tarinai[fol] = tarinai.get(fol, 0) + 1
+        n2 = sum(tarinai.values())
+        if n2:
+            TARAZU_IUTA[0] = True
+            say(u"カタログ: 「二人／大勢」の絵 %d枚のうち "
+                u"**%d枚は名前が1人以下**です" % (kei, n2))
+            say(u"  （絵には2人写っているのに、カタログが2人目を書いていません。"
+                u"**絵の選び直しでは直りません。**")
+            say(u"   人物ルール.txt の条件をゆるめるか、"
+                u"その絵の説明を書き直すと直ります）")
+            for fol, n3 in sorted(tarinai.items(), key=lambda x: -x[1])[:5]:
+                say(u"      %-24s %d枚" % (fol, n3))
+    except Exception:
+        pass
     return tags
 
 
@@ -6982,31 +7024,72 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
 
     zenin = [0]
     ichibu = [0]
+    ninzu = [0]
     tarazu = []
 
-    def zenin_no_e(names, ima, ima_kazu=0):
+    def utsuru_ninzu(w2):
+        u"""その絵に**何人まで**写っているか（カタログの人数のタグ）。
+
+        タグ一覧.txt の「人数」は 人物なし / 一人 / 二人 / 大勢 の4つ。
+        """
+        if u"大勢" in w2:
+            return 3
+        if u"二人" in w2:
+            return 2
+        if u"一人" in w2:
+            return 1
+        return 0                  # 人物なし、または人数のタグが無い
+
+
+    def zenin_no_e(names, ima, ima_kazu=0, ima_w=None):
         u"""名前の人が**できるだけ多く**写っている絵を、対象話数の中から探す。
 
         ■ 「全員か、さもなくば今のまま」では取りこぼす（2026-10-23）
 
         v168 は「全員写っている絵」だけを探し、無ければ今のままにしていた。
-        その結果、採点が **17か所**で「人が足りない」と言った。
-        ところが 3人の名前が出ている文で
-          いまの絵 … 1人だけ写っている
-          別の絵   … 2人写っている（3人の絵はカタログに無い）
-        というとき、**2人の絵のほうが本人の決めごとに近い。**
+        3人の名前が出ている文で、いまの絵が1人・別の絵が2人なら、
+        **2人の絵のほうが本人の決めごとに近い。**
         全員の絵が無いことを理由に 1人の絵を残すのは、ただの取りこぼし。
 
-        だから「いまより多く写っている絵」を探し、
-        **写っている人数がいちばん多いもの**を採る。
-        同数なら使っていない絵を先に。
-        いまより多くならないなら None（無理に変えない ── 別の壊れ方になる）。
+        ■ **人数のタグも見る**（2026-10-23・v169 の採点から）
+
+        v169 の採点で「人が足りない」が 17か所 出た。中身を分けると
+        はっきり2種類あった。
+
+            **一人**の絵を当てていた   9か所  023 038 050 058 066 070 079 111 153
+            **二人/大勢**の絵だった    8か所  164 016 018 028 031 078 090 187
+
+        後ろの8か所は、絵には**ちゃんと2人写っている。**
+        カタログが2人目の名前を書いていないだけ（「二人 ロキシー 青髪…」の
+        ように、人数は二人なのに名前が1つしか無い）。これは絵の選び方では
+        なくカタログ側の抜けなので、ここでは直せない。
+
+        けれど前の9か所は**一人しか写っていない絵**で、
+        2人の名前が出ている文には**原理的に合わない。**
+        全員そろった絵が無いからといって、一人の絵で止まる理由は無い。
+        **せめて人数の合う絵（二人／大勢）に替える。**
+
+        だから順位はこうする（上が強い）。
+
+            ① 名前が写っている人数が多い
+            ② 人数のタグが、セリフの人数に近い（一人の絵より二人の絵）
+            ③ まだ使っていない
+
+        ①が同じなら②で選ぶ。**いまの絵より①②が良くならないなら None**
+        （無理に変えない ── それは別の壊れ方になる）。
 
         戻り値: (絵, その絵に写っている名前の人数)
         """
         hoshii = []
         for c in names:
             hoshii.append([c] + ONAJI_HITO.get(c, []))
+        hoshii_n = len(hoshii)
+
+        def yosa(w2, kazu):
+            u"""①名前の人数 ②人数のタグの近さ（大きいほど良い）"""
+            return (kazu, min(utsuru_ninzu(w2), hoshii_n))
+
+        ima_yosa = yosa(ima_w or set(), ima_kazu)
         erabi, erabi_ten = None, None
         for k in images:
             if k == ima or u"/" not in k:
@@ -7020,15 +7103,16 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             if any(x in w2 for x in DAME):
                 continue
             kazu = sum(1 for mi in hoshii if any(x in w2 for x in mi))
-            if kazu <= ima_kazu:
+            y = yosa(w2, kazu)
+            if y <= ima_yosa:
                 continue          # いまの絵より良くならないなら、意味が無い
             if tsukai.get(k, 0) >= jougen:
                 continue
-            # 人数が多いほうが先。同数なら使っていない絵を先に。
-            ten = (-kazu, tsukai.get(k, 0))
+            # 良い順。同じなら使っていない絵を先に。
+            ten = (-y[0], -y[1], tsukai.get(k, 0))
             if erabi is None or ten < erabi_ten:
                 erabi, erabi_ten = k, ten
-                if kazu == len(hoshii) and tsukai.get(k, 0) == 0:
+                if kazu == hoshii_n and tsukai.get(k, 0) == 0:
                     break         # 全員写っていて、まだ使っていない。これで良い
         return erabi, (-erabi_ten[0] if erabi else 0)
 
@@ -7070,17 +7154,22 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         # 絵が無いのに無理に変えることはしない。
         iru = [c for c in names if utsuru(w, c)]
         if len(names) >= 2 and len(iru) < len(names):
-            zen, zen_kazu = zenin_no_e(names, pick, len(iru))
+            zen, zen_kazu = zenin_no_e(names, pick, len(iru), w)
             if zen:
                 naoshita[0] += 1
                 if zen_kazu >= len(names):
                     zenin[0] += 1
-                else:
+                elif zen_kazu > len(iru):
                     ichibu[0] += 1
+                else:
+                    # 名前の人数は増えないが、**人数のタグが合う絵**に替えた
+                    # （一人の絵 → 二人の絵。上の注記の 9か所がこれ）
+                    ninzu[0] += 1
                 return zen
             # 名前の組み合わせの絵が、対象話数に1枚も無い。
             # **無理に変えない**が、黙らない（絵を増やすか話数を足せば直る）。
-            tarazu.append((tuple(names), tuple(iru)))
+            # いまの絵が「一人」なら、それは**原理的に合わない**ので分けて数える。
+            tarazu.append((tuple(names), tuple(iru), utsuru_ninzu(w)))
         if iru:
             return pick                          # 合っている
         hoka = [c for c in uniq(CHARACTERS) if c in w]
@@ -7362,6 +7451,10 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     if ichibu[0]:
         say(u"  うち %d枚は、全員の絵が無いので**いまより多く写っている絵**に"
             u"替えました（1人→2人など）" % ichibu[0])
+    if ninzu[0]:
+        say(u"  うち %d枚は、**人数の合う絵**に替えました"
+            u"（一人の絵 → 二人／大勢の絵。2人の名前が出ている文に"
+            u"一人の絵は原理的に合わないため）" % ninzu[0])
     if tarazu:
         from collections import Counter as _Cnt
         kumi = _Cnt(x[0] for x in tarazu)
@@ -7370,6 +7463,11 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             % len(tarazu))
         for (ks, n3) in kumi.most_common(6):
             say(u"      %s … %d か所" % (u"＋".join(ks), n3))
+        hitori_nokori = [x for x in tarazu if x[2] == 1]
+        if hitori_nokori:
+            say(u"      このうち %d か所は**一人の絵のまま**です"
+                u"（人数の合う絵も対象話数にありません）。"
+                u"話数を足すか、絵を増やしてください。" % len(hitori_nokori))
     if kaoganai[0]:
         say(u"  うち %d枚は、その人の絵がこの話数に無いので"
             u"「誰も写っていない絵」にしました" % kaoganai[0])
