@@ -42,7 +42,11 @@ IRERU = [(u"py-slideshow", u"make_slideshow.py"),
          (u"py-zure", u"ずれ実測.py"),
          # v162 で採点にも @@全部おまかせ を見せたので、ここにも足す。
          # 「差し替えたものはぜんぶ見る」── 見ていない所は必ず壊れる。
-         (u"py-kekka", u"miru_kekka.py")]
+         (u"py-kekka", u"miru_kekka.py"),
+         # v170 の採点で「カタログに2人目の名前が無い絵が 2373枚」と出た。
+         # 付け直す口（--二人だけ）を miru.py に足したので、ここにも足す。
+         # **見ていない所は必ず壊れる。**
+         (u"py-miru", u"miru.py")]
 # Python ではないもの（中身の一致だけ見る。compile はしない）
 IRERU_TXT = [(u"kyotsu-mitame", u"見た目.txt")]
 

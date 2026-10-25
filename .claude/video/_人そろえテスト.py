@@ -150,6 +150,39 @@ def main():
        u"全員そろった絵があれば、人数より**全員**が上（いま %s）"
        % ((picked7[0] if picked7 else u"なし") or u"なし").split(u"/")[-1])
 
+    # ── ⑥ カタログの「2人目を描写していない絵」を選べるか（2026-10-23）
+    #
+    # v170 の採点で天井が見えた。
+    #   カタログ: 「二人／大勢」の絵 2389枚のうち **2373枚は名前が1人以下**
+    # ＝ 2人とも名前が付いている絵は 6370枚中 16枚しか無い。
+    # 絵の選び方をどう直しても越えられないので、カタログを付け直す。
+    # 対象を絞る口（miru.py --二人だけ）が、正しい絵だけを選ぶかを見る。
+    import importlib.util as _iu
+    _sp = _iu.spec_from_file_location(u"m_miru", os.path.join(HERE, u"miru.py"))
+    _mi = _iu.module_from_spec(_sp)
+    sys.modules[u"m_miru"] = _mi
+    _sp.loader.exec_module(_mi)
+    import tempfile as _tf
+    _d = _tf.mkdtemp(prefix=u"futari_")
+    _p = os.path.join(_d, u"c.txt")
+    io.open(_p, "w", encoding="utf-8").write(
+        u"# あたま\n"
+        u"A/001.png\t二人 ロキシー 青髪 長い髪 制服\n"        # 1色 → 対象
+        u"A/002.png\tルーデウス ロキシー 二人 茶髪 青髪\n"    # 2色 → 対象外
+        u"A/003.png\t一人 ルーデウス 茶髪\n"                  # 一人 → 対象外
+        u"B/004.png\t大勢 ヒトガミ 光る目\n"                  # 0色 → 対象
+        u"B/005.png\tルーデウス 二人 茶髪 長い髪 ローブ\n")   # 1色 → 対象
+    _naosu = _mi.read_futari(_p)
+    iu(_naosu == set([u"A/001.png", u"B/004.png", u"B/005.png"]),
+       u"2人目を描写していない絵だけを選ぶ（いま %d枚 %s）"
+       % (len(_naosu), u",".join(sorted(x.split(u"/")[-1] for x in _naosu))))
+    iu(u"A/002.png" not in _naosu,
+       u"2人目の髪の色が書いてある絵は飛ばす（二度手間にしない）")
+    iu(u"A/003.png" not in _naosu,
+       u"「一人」の絵は対象にしない")
+    import shutil as _sh
+    _sh.rmtree(_d, ignore_errors=True)
+
     # ── ④ 採点が「人が足りない」と言うか
     oku = tempfile.mkdtemp(prefix=u"hito_")
     try:

@@ -246,6 +246,56 @@ def read_skip(path):
     return out
 
 
+def read_futari(path):
+    u"""「二人／大勢」なのに**2人目を描写していない**絵を返す（付け直す対象）。
+
+    ■ なぜこの口が要るか（2026-10-23・本人の第6回）
+
+    本人の決めごとは「セリフに出てくる人が、全員写っている絵」。
+    ところが第6回の採点で、こう出た。
+
+        カタログ: 「二人／大勢」の絵 2389枚のうち **2373枚は名前が1人以下**
+
+    **2人とも名前が付いている絵は、6370枚のうち16枚しか無い。**
+    だから「2人そろった絵」を名前で探すのは原理的に無理だった。
+    採点の「ひどい 18件」のうち **14件がこれ**で、
+    絵の選び方をどう直しても越えられない天井だった。
+
+    2人目を聞く仕組み（hair_color2 ほか）は 2026-10-06 に入っている。
+    入る前に作ったカタログがそのまま残っているだけなので、
+    **その絵だけ付け直せばよい。** 6370枚を見直す必要はない。
+
+    カタログは「同じ画像に当たった行の説明をつなげる」作りなので、
+    付け直した説明は古い説明に**足される**（打ち消さない）。
+
+    ■ 見るのは「名前の数」ではなく「**髪の色の数**」
+
+    名前は 人物ルール.txt が**あとから**付けるので、カタログの字面には
+    入っていない（RULES に主要人物は居ない）。名前で数えると、
+    ルールが名前を付けてくれる絵まで対象にしてしまう。
+
+    2人目の人物は hair_color2 から来るので、
+    **髪の色が1つしか書かれていなければ、2人目を描写していない。**
+    これがいちばん直な印で、どの名前のルールにも依らない。
+    """
+    out = set()
+    if not os.path.exists(path):
+        return out
+    iro = set(JP_HAIR.values())
+    for ln in io.open(path, encoding="utf-8-sig", errors="replace"):
+        ln = ln.rstrip(u"\r\n")
+        if not ln.strip() or ln.lstrip().startswith(u"#") or u"\t" not in ln:
+            continue
+        k, setsu = ln.split(u"\t", 1)
+        w = set(setsu.split())
+        if not (u"二人" in w or u"大勢" in w):
+            continue
+        if len([x for x in iro if x in w]) >= 2:
+            continue          # 2人目の髪の色が書いてある＝描写ずみ
+        out.add(k.strip())
+    return out
+
+
 def read_done(path):
     done = set()
     if not os.path.exists(path):
@@ -1121,6 +1171,8 @@ def main():
     ap.add_argument("--renew", "--入れ直す", dest="irenaoshi", action="store_true",
                     help=u"説明の形が新しくなったので、全部の絵を見直す"
                          u"（途中で止めても続きから）")
+    ap.add_argument("--futari", "--二人だけ", dest="futari", action="store_true",
+                    help=u"「二人／大勢」なのに名前が1人以下の絵だけ付け直す")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--fake", action="store_true", help=u"自己テスト")
     ap.add_argument("--probe", action="store_true",
@@ -1164,9 +1216,22 @@ def main():
         if done:
             say(u"  すでに新しい形で済んでいる: %d枚（続きから進みます）" % len(done))
         say(u"  途中で止めても大丈夫です。もう一度同じ命令で続きから進みます。")
+    elif a.futari:
+        # 「二人／大勢」なのに名前が1人以下の絵だけを未済にする（上の注記）
+        naosu = read_futari(a.catalog)
+        zenbu = read_done(a.catalog)
+        done = zenbu - naosu
+        say(u"**「二人／大勢」なのに2人目を描写していない絵だけ**を付け直します。")
+        say(u"  カタログ %d枚のうち %d枚が対象です（残り %d枚は飛ばします）"
+            % (len(zenbu), len(naosu), len(zenbu) - len(naosu)))
+        if not naosu:
+            say(u"  対象がありません。2人目の名前はもう付いています。")
+        say(u"  古い説明は消さずに、新しい説明を足します"
+            u"（読むほうは説明をつなげるので、2人目の名前が増えます）。")
+        say(u"  途中で止めても大丈夫です。もう一度同じ命令で続きから進みます。")
     else:
         done = set() if a.redo else read_done(a.catalog)
-    if not a.redo and not a.irenaoshi:
+    if not a.redo and not a.irenaoshi and not a.futari:
         tobasu = read_skip(SKIP)
         if tobasu:
             say(u"前に見られなかった %d枚は飛ばします (%s を消すとまた見ます)"
@@ -1175,7 +1240,7 @@ def main():
     if a.redo:
         say(u"やり直しなので、すでに説明がついている画像も見ます。")
         say(u"  (古い説明は消さずに、新しい説明を足します)")
-    elif a.irenaoshi:
+    elif a.irenaoshi or a.futari:
         pass
     elif done:
         say(u"すでに説明がついている: %d枚" % len(done))

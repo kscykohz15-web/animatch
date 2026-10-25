@@ -7173,8 +7173,20 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if iru:
             return pick                          # 合っている
         hoka = [c for c in uniq(CHARACTERS) if c in w]
-        if not hoka:
-            return pick                          # 誰も写っていないなら、そのまま
+        # ■ **誰も写っていない絵で止めない**（2026-10-23・v170 の採点から）
+        #
+        #   [184] 「ヒトガミの目的は、」 → 絵の中: **人物なし**
+        #   → 人ちがい: セリフは【ヒトガミ】／絵にその人はいません
+        #
+        # ここは「誰も写っていないなら、そのまま」で**即座に返していた。**
+        # 「別人の顔より、誰も写っていない絵のほうがまし」という理屈だが、
+        # それは**その人の絵が1枚も無いとき**の話で、
+        # 探す前に諦める理由にはならない。第13話にはヒトガミの絵がある。
+        #
+        # 下の「名前で探す」をまず通し、見つからなければ最後の
+        # 「誰も写っていない絵」へ落ちる（そこは前と同じ道）。
+        # 名前で探して駄目なら pick に戻るので、悪くなることはない。
+        #
         # 選び直すときは、かならず対象話数の中から探す。
         # (ここを忘れると、他の期の絵を拾ってきてしまう)
         cur["fols"] = base_fols
@@ -7193,6 +7205,10 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         # **別人の顔より、誰も写っていない絵のほうがましなので、**
         # 同じ話数の中から「ほかの人が写っていない絵」に替える。
         # それも無ければ、そのときは諦める。
+        if not hoka:
+            # もとの絵にも誰も写っていない。**ここで替えても良くならない。**
+            # （名前で探す道は上で通したが、見つからなかった）
+            return pick
         for k in images:
             if u"/" not in k or k.split(u"/")[0] not in cur["rank"]:
                 continue
