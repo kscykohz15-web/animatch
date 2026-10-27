@@ -46,7 +46,11 @@ IRERU = [(u"py-slideshow", u"make_slideshow.py"),
          # v170 の採点で「カタログに2人目の名前が無い絵が 2373枚」と出た。
          # 付け直す口（--二人だけ）を miru.py に足したので、ここにも足す。
          # **見ていない所は必ず壊れる。**
-         (u"py-miru", u"miru.py")]
+         (u"py-miru", u"miru.py"),
+         # v175 で「絵ではないフォルダ」、v176 で「髪の色」を
+         # 置き場所.py に移した。**道具3本が同じ一覧を見る前提**なので、
+         # ここが古いと miru.py だけ新しい一覧で動く。
+         (u"py-basho", u"置き場所.py")]
 # Python ではないもの（中身の一致だけ見る。compile はしない）
 IRERU_TXT = [(u"kyotsu-mitame", u"見た目.txt")]
 

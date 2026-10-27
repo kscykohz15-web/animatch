@@ -185,8 +185,20 @@ def apply_person_rules(tags, rules):
                 keshita += 1
             add = [x for x in add if x not in rm]
         if add:
-            # 同じ絵に何人も付くと絞り込めないので、先頭2人まで
-            words = add[:2] + words
+            # 同じ絵に何人も付くと絞り込めないので、**写っている人数まで**。
+            #
+            # ■ **割り当てと同じ線にする**（2026-10-27）
+            #
+            # make_slideshow.py の同じ所と**1字も違えてはいけない。**
+            # ここだけ「先頭2人まで」にすると
+            #   割り当て … 大勢の絵に ルーデウス も付いている（全員そろった）
+            #   採点     … ルーデウス が無い → 「人が足りない」
+            # となり、**直したのに採点が落とす。**
+            # 本人の決めごと（CLAUDE.md）:
+            # 「割り当てと採点の両方がこの線。片方だけ直すと、また黙って通る」
+            # 見張りは _人そろえテスト.py ⑪（2つの道具が同じ名前を出すか）。
+            ue = 3 if u"大勢" in w else 2
+            words = add[:ue] + words
             tsuita += 1
         tags[k] = u" ".join(words)
     if tsuita:

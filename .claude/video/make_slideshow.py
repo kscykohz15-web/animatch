@@ -1033,6 +1033,15 @@ try:
 except Exception:
     TSUKAWANAI_FOL = (u"一覧", u"確認用", u"素材", u"_選んだ画像", u"候補")
 
+# 髪の色の言葉。カタログの「2人目を書いたか」を数えるのに使う。
+# miru.py の JP_HAIR と同じものを 置き場所.py に置いてある
+# （食いちがうと「2色目を書いたのに1色しか数えない」が黙って通る）。
+try:
+    KAMI_IRO = tuple(置き場所.kami_iro())
+except Exception:
+    KAMI_IRO = (u"青髪", u"赤髪", u"緑髪", u"金髪", u"茶髪",
+                u"白髪", u"黒髪", u"紫髪", u"桃色の髪", u"橙の髪")
+
 
 def _walk_images(root):
     """話数フォルダなど、下の階層もたどって画像を集める。
@@ -5516,8 +5525,23 @@ def apply_person_rules(tags, rules):
                 keshita += 1
             add = [x for x in add if x not in rm]
         if add:
-            # 同じ絵に何人も付くと絞り込めないので、先頭2人まで
-            words = add[:2] + words
+            # 同じ絵に何人も付くと絞り込めないので、**写っている人数まで**。
+            #
+            # ■ 「先頭2人まで」だと ルーデウス が黙って落ちていた（2026-10-27）
+            #
+            # 人物ルール.txt は「見分けやすい人」を上に置いてあるので、
+            # ルーデウス は17番目 ──
+            # **髪の色だけで当たる規則の中ではいちばん後ろ**。
+            # 2人目の髪の色が入ると当たる規則が増えるので、
+            #
+            #   大勢 茶髪 青髪 紫髪 大人
+            #     → ザノバ(紫髪 大人)・ロキシー(青髪) で枠が埋まり、
+            #       **台本でいちばん名前が出る ルーデウス が入らない。**
+            #
+            # 大勢の絵は3人まで入れる。
+            # 二人の絵は2人のままで正しい（**ゆるめない**）。
+            ue = 3 if u"大勢" in w else 2
+            words = add[:ue] + words
             tsuita += 1
         tags[k] = u" ".join(words)
     if tsuita:
@@ -5539,16 +5563,41 @@ def apply_person_rules(tags, rules):
         return tags
     try:
         namae = set(CHARACTERS) | set(r[0] for r in rules)
+        iro = set(KAMI_IRO)
         kei, tarinai = 0, {}
+        # ■ **足りない絵を2種類に分ける**（2026-10-27）
+        #
+        # 「名前が1人以下」には、直し方の違う2種類が混ざっている。
+        #
+        #   髪の色が1つしか書いていない → **カタログ側の抜け。**
+        #                                 miru.py --二人だけ で付け直す
+        #   髪の色が2つ書いてあるのに
+        #   名前が1人以下               → **人物ルール.txt が追いついていない。**
+        #                                 付け直しても減らない
+        #
+        # 分けずに1つの数で出していたので、本人の付け直し（1時間半）が
+        # 効いたのかどうかが**ログから分からなかった**。
+        # どの色の組で落ちているかも出す（ゆるめる規則がすぐ分かる）。
+        iro_nashi, iro_ari, kumi = 0, 0, {}
+        mujun = 0
         for k in tags:
             w = set((tags.get(k) or u"").split())
             if not (u"二人" in w or u"大勢" in w):
                 continue
             kei += 1
+            if u"一人" in w or u"人物なし" in w:
+                mujun += 1      # つなげた説明どうしで人数が食いちがっている
             if len([x for x in namae if x in w]) >= 2:
                 continue
             fol = k.split(u"/")[0] if u"/" in k else u"（フォルダなし）"
             tarinai[fol] = tarinai.get(fol, 0) + 1
+            iro_k = sorted(x for x in iro if x in w)
+            if len(iro_k) >= 2:
+                iro_ari += 1
+                ki = u"+".join(iro_k[:3])
+                kumi[ki] = kumi.get(ki, 0) + 1
+            else:
+                iro_nashi += 1
         n2 = sum(tarinai.values())
         if n2:
             TARAZU_IUTA[0] = True
@@ -5558,8 +5607,19 @@ def apply_person_rules(tags, rules):
                 u"**絵の選び直しでは直りません。**")
             say(u"   人物ルール.txt の条件をゆるめるか、"
                 u"その絵の説明を書き直すと直ります）")
+            say(u"  内わけ: 髪の色が1つだけ %d枚"
+                u"（miru.py --二人だけ で直る）／"
+                u"2つ以上あるのに名前が1人以下 %d枚"
+                u"（**人物ルール.txt を直さないと減りません**）"
+                % (iro_nashi, iro_ari))
+            for ki, n3 in sorted(kumi.items(), key=lambda x: -x[1])[:5]:
+                say(u"      %-18s %d枚  ← この組に当たる規則がありません"
+                    % (ki, n3))
             for fol, n3 in sorted(tarinai.items(), key=lambda x: -x[1])[:5]:
                 say(u"      %-24s %d枚" % (fol, n3))
+            if mujun:
+                say(u"  （%d枚は「一人」とも書いてあります。"
+                    u"付け直しで人数の答えが変わった絵です）" % mujun)
     except Exception:
         pass
     return tags

@@ -224,6 +224,134 @@ def main():
     iu(tuple(ms.TSUKAWANAI_FOL) == tuple(_ok.tsukawanai_fol()),
        u"make_slideshow.py が置き場所と同じ一覧を見ている")
 
+    # ── ⑧ **髪の色の言葉**が道具どうしで食いちがっていないか（2026-10-27）
+    #
+    # 「2人目を描写していない絵」を選ぶ側（miru.py の read_futari）と、
+    # 「2人目が書かれたか」を数える側（make_slideshow.py の知らせ）で
+    # 色の一覧が違うと、
+    #   miru.py           … 2色目を書いたつもり
+    #   make_slideshow.py … 1色しか数えない
+    # となり、**どちらも黙って通る。** 置き場所.py に1回だけ置いてある。
+    iu(len(_ok.kami_iro()) >= 8 and u"茶髪" in _ok.kami_iro(),
+       u"置き場所.py が髪の色を持っている（%d色）" % len(_ok.kami_iro()))
+    iu(set(_mi.KAMI_IRO) == set(_ok.kami_iro()),
+       u"miru.py が置き場所と同じ色を見ている")
+    iu(set(ms.KAMI_IRO) == set(_ok.kami_iro()),
+       u"make_slideshow.py が置き場所と同じ色を見ている")
+    iu(set(_mi.JP_HAIR.values()) == set(_ok.kami_iro()),
+       u"miru.py が絵に書き込む色と、数える色がそろっている")
+
+    # ── ⑨ **大勢の絵で ルーデウス が落ちないか**（2026-10-27）
+    #
+    # 人物ルール.txt は「見分けやすい人」を上に置いてあるので、
+    # ルーデウス は17番目 ── 髪の色だけで当たる規則ではいちばん後ろ。
+    # 2人目の髪の色が入ると当たる規則が増えるので、「先頭2人まで」だと
+    #
+    #   大勢 茶髪 青髪 紫髪 大人
+    #     → ザノバ(紫髪 大人)・ロキシー(青髪) で枠が埋まり、
+    #       **台本でいちばん名前が出る ルーデウス が入らなかった。**
+    #
+    # 本人の付け直し（2人目の色を足す）で当たる規則が増えるため、
+    # この落ち方は**付け直すほど増える。**
+    _ru = ms.load_person_rules(os.path.join(HERE, u"人物ルール.txt"))
+    iu(len(_ru) >= 20, u"人物ルール.txt を読めた（%d行）" % len(_ru))
+    _na = set(ms.CHARACTERS) | set(r[0] for r in _ru)
+
+    def _namae_no(setsu):
+        t = {u"x/1.png": setsu}
+        ms.TARAZU_IUTA[0] = True          # 知らせは出さない
+        ms.apply_person_rules(t, _ru)
+        return set(x for x in _na if x in set(t[u"x/1.png"].split()))
+
+    _g = _namae_no(u"大勢 茶髪 青髪 紫髪 大人 長い髪 室内")
+    iu(u"ルーデウス" in _g,
+       u"大勢の絵で ルーデウス が落ちない（%s）" % u"・".join(sorted(_g)))
+    iu(len(_g) >= 3,
+       u"大勢の絵は3人まで名前が付く（%d人）" % len(_g))
+
+    # 二人の絵は2人のまま（**ゆるめていない**）
+    _g2 = _namae_no(u"二人 茶髪 青髪 長い髪 少年少女 室内 昼")
+    iu(_g2 == set([u"ルーデウス", u"ロキシー"]),
+       u"二人の絵は2人のまま（%s）" % u"・".join(sorted(_g2)))
+
+    # ── ⑩ **足りない絵を、直し方で2つに分けて数えるか**（2026-10-27）
+    #
+    # 「名前が1人以下」には直し方の違う2種類が混ざっていた。
+    #   髪の色が1つだけ    → カタログ側。miru.py --二人だけ で直る
+    #   色は2つあるのに    → 人物ルール.txt 側。**付け直しても減らない**
+    # 1つの数で出していたので、1時間半かけた付け直しが効いたのかどうかが
+    # ログから分からなかった。
+    _mo = io.open(os.path.join(HERE, u"make_slideshow.py"),
+                  encoding="utf-8").read()
+    iu(u"髪の色が1つだけ" in _mo and u"2つ以上あるのに名前が1人以下" in _mo,
+       u"知らせが「カタログ側」と「人物ルール側」に分かれている")
+    _t2 = {
+        u"F1/a.png": u"二人 ロキシー 青髪 長い髪 帽子 室内",
+        u"F2/c.png": u"二人 黒髪 橙の髪 大人 室内",
+        u"F2/d.png": u"二人 黒髪 橙の髪 大人 街",
+        u"F4/g.png": u"二人 茶髪 青髪 長い髪 少年少女",
+    }
+    ms.TARAZU_IUTA[0] = False
+    _dame = []
+    _moto_say = ms.say
+    try:
+        ms.say = lambda *a, **k: _dame.append(
+            u" ".join(unicode(x) if str is bytes else str(x) for x in a))
+        ms.apply_person_rules(_t2, _ru)
+    finally:
+        ms.say = _moto_say
+    _zen = u"\n".join(_dame)
+    iu(u"髪の色が1つだけ 1枚" in _zen,
+       u"カタログ側を 1枚 と数えた")
+    iu(u"2つ以上あるのに名前が1人以下 2枚" in _zen,
+       u"人物ルール側を 2枚 と数えた")
+    iu(u"橙の髪+黒髪" in _zen,
+       u"どの色の組で落ちているかを出す（ゆるめる規則が分かる）")
+
+    # ── ⑪ **割り当てと採点が、同じ絵に同じ名前を出すか**（2026-10-27）
+    #
+    # 人物ルールを当てる所は make_slideshow.py と miru_kekka.py の
+    # **2か所にある**（採点は1本で動くので借りられない）。
+    # 片方だけ直すと
+    #   割り当て … 大勢の絵に ルーデウス も付いた（全員そろった）
+    #   採点     … ルーデウス が無い → 「人が足りない」
+    # となり、**直したのに採点が落とす。**
+    # 本人の決めごと（CLAUDE.md）:
+    # 「割り当てと採点の両方がこの線。片方だけ直すと、また黙って通る」
+    M2 = mochikomu(u"mk_onaji", os.path.join(HERE, u"miru_kekka.py"))
+    _ru2 = M2.load_person_rules(os.path.join(HERE, u"人物ルール.txt"))
+    iu(len(_ru2) == len(_ru),
+       u"2つの道具が同じ人物ルールを読む（%d行 / %d行）"
+       % (len(_ru), len(_ru2)))
+    _tameshi = [
+        u"大勢 茶髪 青髪 紫髪 大人 長い髪 室内",
+        u"大勢 茶髪 緑髪 大人 戦闘",
+        u"二人 茶髪 青髪 長い髪 少年少女 室内 昼",
+        u"二人 エリス 赤髪 茶髪 鎧 剣 長い髪 大人 戦闘",
+        u"一人 茶髪 少年少女 室内",
+        u"大勢 金髪 桃色の髪 白髪 大人 城",
+    ]
+    _chigau = []
+    for _se in _tameshi:
+        _a = {u"x/1.png": _se}
+        _b = {u"x/1.png": _se}
+        ms.TARAZU_IUTA[0] = True
+        ms.apply_person_rules(_a, _ru)
+        _moto2 = M2.say
+        try:
+            M2.say = lambda *a, **k: None
+            M2.apply_person_rules(_b, _ru2)
+        finally:
+            M2.say = _moto2
+        if _a[u"x/1.png"].split() != _b[u"x/1.png"].split():
+            _chigau.append((_se, _a[u"x/1.png"], _b[u"x/1.png"]))
+    for _se, _x, _y in _chigau:
+        print(u"      %s" % _se)
+        print(u"        割り当て %s" % _x)
+        print(u"        採点     %s" % _y)
+    iu(not _chigau,
+       u"割り当てと採点が、%d通りぜんぶで同じ名前を出す" % len(_tameshi))
+
     # ── ④ 採点が「人が足りない」と言うか
     oku = tempfile.mkdtemp(prefix=u"hito_")
     try:

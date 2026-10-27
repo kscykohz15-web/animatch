@@ -312,7 +312,9 @@ def read_futari(path):
     out = set()
     if not os.path.exists(path):
         return out
-    iro = set(JP_HAIR.values())
+    # 色の言葉は 置き場所.py に1回だけ置いてある
+    # （make_slideshow.py の数えるほうと食いちがうと、どちらも黙って通る）。
+    iro = set(KAMI_IRO)
     for ln in io.open(path, encoding="utf-8-sig", errors="replace"):
         ln = ln.rstrip(u"\r\n")
         if not ln.strip() or ln.lstrip().startswith(u"#") or u"\t" not in ln:
@@ -546,6 +548,15 @@ LOCAL_PROMPT = (
 JP_HAIR = {"blue": u"青髪", "red": u"赤髪", "green": u"緑髪", "blonde": u"金髪",
            "brown": u"茶髪", "white": u"白髪", "black": u"黒髪", "purple": u"紫髪",
            "pink": u"桃色の髪", "orange": u"橙の髪"}
+# 髪の色の言葉は 置き場所.py にも置いてある（カタログを数える側が使う）。
+# 食いちがうと「2色目を書いたのに1色しか数えない」が黙って通るので、
+# _人そろえテスト.py ⑨ で同じかどうかを見張る。
+try:
+    import 置き場所
+    KAMI_IRO = tuple(置き場所.kami_iro())
+except Exception:
+    KAMI_IRO = tuple(JP_HAIR.values())
+
 JP_PLACE = {"indoor": u"室内", "forest": u"森", "cave": u"洞窟", "street": u"街",
             "castle": u"城", "field": u"草原", "snow": u"雪", "sky": u"空",
             "water": u"水辺", "desert": u"荒野"}
