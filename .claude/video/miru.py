@@ -308,6 +308,19 @@ def read_futari(path):
     return out
 
 
+def nokori_kazu(names, sumi, tobasu, mada=None):
+    u"""まだ見ていない枚数。
+
+    mada（2人目がまだの絵）を渡すと、**それも残りに数える。**
+    --二人だけ の対象はカタログに載っているので、
+    「カタログに無い絵」だけを数えると対象がまるごと落ちる。
+    """
+    if mada is None:
+        return len([n for n in names if n not in sumi and n not in tobasu])
+    return len([n for n in names
+                if (n not in sumi or n in mada) and n not in tobasu])
+
+
 def read_done(path):
     done = set()
     if not os.path.exists(path):
@@ -1501,8 +1514,22 @@ def main():
         say(u"")
         say(u"見られなかった %d枚を %s に控えました。次からは飛ばします。"
             % (len(set(akirame)), SKIP))
-    nokori_n = len([n for n in names if n not in read_done(a.catalog)
-                    and n not in read_skip(SKIP)])
+    # ■ **--二人だけ のとき、ここが嘘をついていた**（2026-10-27・本人のログ）
+    #
+    # 本人の 30枚お試しの最後に「まだ 653枚 残っています」と出た。
+    # ところが本当に残っていたのは **3185枚ぶん**で、**5倍小さく**出した。
+    #
+    # 理由: --二人だけ の対象は「2人目を描写していない絵」で、それは
+    # カタログに**載っている**（＝ read_done に入っている）。
+    # だから「read_done に無い絵」だけを数えると、対象がまるごと落ちて、
+    # 「まだ説明が1行も無い絵」の数（653枚）だけが出る。
+    #
+    # 残り時間の見積りをこれで立てられてしまう。**数字で嘘をつくのが
+    # いちばん高くつく**（音ズレで6回やった）ので、旗ごとに数え方を分ける。
+    sumi = read_done(a.catalog)
+    tobasu2 = read_skip(SKIP)
+    nokori_n = nokori_kazu(names, sumi, tobasu2,
+                           read_futari(a.catalog) if a.futari else None)
     if nokori_n:
         say(u"")
         say(u"まだ %d枚 残っています。" % nokori_n)
