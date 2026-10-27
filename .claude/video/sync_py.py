@@ -77,7 +77,17 @@ def main():
         if u"</script" in body:
             print(u"[中断] %s に </script が入っています。そのままでは貼れません。" % name)
             return 1
-        atarashii = u'<script type="text/plain" id="%s">\n%s</script>' \
+        # ■ **閉じタグの前に改行をもう1つ置く**（2026-10-27）
+        #
+        # 出す前の確認.py は `>\n?(.*?)\n?</script>` で中身を取り出すので、
+        # 閉じタグの直前の改行を**1つ食べる。** ここで改行を1つしか置かないと、
+        # 取り出した中身がファイルより1文字短くなり、
+        #   ・sync_py.py        …「同期しました」（通る）
+        #   ・出す前の確認.py   …「中身が違います（1文字短い）」（落ちる）
+        # と**道具どうしで物差しが食いちがう。** v174 を出す所で実際に止まった
+        # （5ブロックぜんぶ「343423文字 対 343424文字」）。
+        # もう1つ置けば、取り出したものがファイルと1文字まで同じになる。
+        atarashii = u'<script type="text/plain" id="%s">\n%s\n</script>' \
             % (ident, body if body.endswith(u"\n") else body + u"\n")
         pat = re.compile(r'<script type="text/plain" id="%s">.*?</script>' % re.escape(ident),
                          re.S)
