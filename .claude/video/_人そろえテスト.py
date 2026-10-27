@@ -352,6 +352,105 @@ def main():
     iu(not _chigau,
        u"割り当てと採点が、%d通りぜんぶで同じ名前を出す" % len(_tameshi))
 
+    # ── ⑫ **1回空だっただけで絵をあきらめないか**（2026-10-27・本人のログ）
+    #
+    # 本人の 3212枚ぶんの付け直しで、空の答えが 264回 出て
+    # **266枚が 見られなかった画像.txt に入り、次からは飛ばされる**ことになった。
+    # ログに出た 99件を数えると **83件はふつうの絵**（一覧シートではない）で、
+    # 「続けて何回目」は **1・2・3 しか無かった** ──
+    # つまり**どの絵も2回続けては失敗していない。** モデルの調子だった。
+    # ファイルの頭は「何度やっても見られなかった画像です」なのに、
+    # **1回しか見ていなかった。**
+    #
+    # ここは「1回目は空・2回目は中身」を返すニセの Ollama で、
+    #   ・絵をあきらめていないか（見られなかった画像.txt を作らないか）
+    #   ・2回目の答えがカタログに入っているか
+    #   ・**本当にダメな絵はちゃんとあきらめるか**（名前のとおりか）
+    # を見る。
+    oku2 = tempfile.mkdtemp(prefix=u"nido_")
+    try:
+        e_dir = os.path.join(oku2, u"絵", u"無職転生 第1話")
+        os.makedirs(e_dir)
+        for nm in (u"001_x2.png", u"002_x2.png", u"003_x2.png"):
+            io.open(os.path.join(e_dir, nm), "w", encoding="utf-8").write(u"")
+        for f in (u"miru.py", u"置き場所.py"):
+            shutil.copy2(os.path.join(HERE, f), os.path.join(oku2, f))
+
+        def hashiru(dame=u""):
+            u"""ニセの Ollama で miru.py を1回走らせる。dame に入る絵は何度でも空。"""
+            moto_cwd, moto_argv = os.getcwd(), list(sys.argv)
+            os.chdir(oku2)
+            sys.argv = [u"miru.py", u"--images", u"絵", u"--all"]
+            try:
+                _sp = _iu.spec_from_file_location(u"m_nido", os.path.join(oku2, u"miru.py"))
+                _m = _iu.module_from_spec(_sp)
+                sys.modules[u"m_nido"] = _m
+                _sp.loader.exec_module(_m)
+                yonda = {}
+
+                def nise(host, model, imgdir, rep, side, timeout, form_state):
+                    yonda[rep] = yonda.get(rep, 0) + 1
+                    form_state["raw"] = u""
+                    if dame and dame in rep:
+                        return u""
+                    return u"" if yonda[rep] == 1 else u"一人 ロキシー 青髪 室内"
+
+                _m.ask_local = nise
+                _m.pick_local_model = lambda *a, **k: u"(ニセ)"
+                _m.http_json = lambda *a, **k: {}
+                _m.time.sleep = lambda n: None
+                _m.rebuild_epmap = lambda *a, **k: None
+                _m.log_save = lambda *a, **k: None
+                try:
+                    _m.main()
+                except SystemExit:
+                    pass
+                return yonda
+            finally:
+                os.chdir(moto_cwd)
+                sys.argv = moto_argv
+
+        _sk = os.path.join(oku2, u"見られなかった画像.txt")
+        _cat = os.path.join(oku2, u"画像カタログ.txt")
+        _y = hashiru()
+        iu(not os.path.exists(_sk),
+           u"1回空だっただけでは絵をあきらめない（見られなかった画像.txt を作らない）")
+        iu(_y and min(_y.values()) == 2,
+           u"空だった絵は、ちょうど2回見る（いま %s回）"
+           % u"・".join(str(v) for v in sorted(set(_y.values()))))
+        _naka = io.open(_cat, encoding="utf-8-sig").read() \
+            if os.path.exists(_cat) else u""
+        _gyo = [x for x in _naka.replace(u"\r\n", u"\n").split(u"\n")
+                if u"\t" in x and not x.lstrip().startswith(u"#")
+                and u"ロキシー" in x]
+        iu(len(_gyo) == 3,
+           u"2回目の答えが3枚ぜんぶカタログに入った（いま %d枚）" % len(_gyo))
+
+        # 本当にダメな絵は、ちゃんとあきらめる（ファイルの名前のとおり）
+        for f in (u"画像カタログ.txt", u"見られなかった画像.txt", u"タグ一覧.txt"):
+            _f = os.path.join(oku2, f)
+            if os.path.exists(_f):
+                os.remove(_f)
+        hashiru(dame=u"002")
+        _nokoshi = io.open(_sk, encoding="utf-8-sig").read() \
+            if os.path.exists(_sk) else u""
+        iu(u"002_x2.png" in _nokoshi,
+           u"2回ともダメな絵は、ちゃんとあきらめる")
+        iu(u"001_x2.png" not in _nokoshi and u"003_x2.png" not in _nokoshi,
+           u"**巻きこまれた絵は落とさない**（いっしょに空だった2枚）")
+
+        # ⑫-2 **走るほうと数えるほうで、飛ばす絵が同じか**（2026-10-27）
+        #
+        # 走るほうは --二人だけ のとき 見られなかった画像.txt を**見ない**のに、
+        # 残りを数えるほうは、どの旗でも引いていた。
+        # 「走るときは見に行くのに、残りからは引く」── **物差しが2つ**
+        # （メモリ 84節と同じ形）。
+        _mo2 = io.open(os.path.join(HERE, u"miru.py"), encoding="utf-8").read()
+        iu(u"tobasu2 = set() if (a.redo or a.irenaoshi or a.futari)" in _mo2,
+           u"残りを数えるほうも、走るほうと同じ決め方で飛ばす")
+    finally:
+        shutil.rmtree(oku2, ignore_errors=True)
+
     # ── ④ 採点が「人が足りない」と言うか
     oku = tempfile.mkdtemp(prefix=u"hito_")
     try:

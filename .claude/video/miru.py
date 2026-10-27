@@ -1370,98 +1370,153 @@ def main():
 
         say(u"")
         say(u"見てもらっています。止めても、そこまでの結果は残ります。")
-        for gi, (rep, members) in enumerate(groups):
-            try:
-                if a.fake:
-                    tags = to_tags({"people": 1, "hair_color": "blue", "wearing": ["hat"],
-                                    "holding": ["staff"], "gender": "female",
-                                    "place": "cave", "time_of_day": "night",
-                                    "mood": "tense", "action": "walking",
-                                    "closeup": False, "text_on_screen": False})
-                else:
-                    tags = ask_local(a.host, model, a.images, rep, a.side, a.timeout, form_state)
-            except OllamaError as e:
-                stat["ng"] += 1
-                warui[0] += 1
-                say(u"  %s でつまずきました: %s" % (rep, e))
-                tags = None
-                fails.append(u"%s" % e)
-                akirame += list(members)
-                if stat["ng"] >= 5 and stat["img"] == 0:
-                    say(u"")
-                    say(u"5回続けて失敗したので止めます。")
-                    diagnose(fails)
+        # ■ **1回空だっただけで「何度やっても見られなかった」にしていた**
+        #
+        #   （2026-10-27・本人の付け直しログ）
+        #
+        # 本人の 3212枚ぶんの付け直しで、空の答えが 264回 出た。
+        # ログに出た 99件を数えると **83件はふつうの絵**（一覧シートではない）で、
+        # しかも「続けて何回目」は **1・2・3 しか無い** ──
+        # つまり**どの絵も2回続けては失敗していない。**
+        #
+        # 空が3つ出ると道具は自分で
+        #   「json」の書き方に変える → モデルを降ろして20秒待つ → 戻す
+        # と立て直している。**つまり絵が悪いのではなく、モデルの調子だった。**
+        # ところが空になった絵はその場で 見られなかった画像.txt に入り、
+        # **次からは飛ばす。** ファイルの頭には
+        # 「何度やっても見られなかった画像です」と書いてあるのに、
+        # **1回しか見ていない。** 266枚が黙って永久に落ちた。
+        #
+        # 1回の答えでは「絵が悪い」のか「モデルの調子」なのか分からない。
+        # **分かる方法はもう一度見ることだけ。**
+        # だから空だったものは2周目に回し、モデルを入れ直してから
+        # もう一度だけ聞く。**2回目も空だったものだけ**をあきらめる
+        # （ファイルの名前のとおりになる）。
+        machi = list(groups)      # これから見るもの
+        nido = []                 # 空だったので、あとでもう一度見るもの
+        mitame = [0]              # 何枚目か（やり直しぶんも通しで数える）
+        zenbu = [len(groups)]     # ぜんぶで何枚ぶんか
+        for mawari in (1, 2):
+            if mawari == 2:
+                if tomatta[0] or not nido:
                     break
-            except Exception as e:
-                stat["ng"] += 1
-                say(u"  %s でつまずきました: %s" % (rep, e))
-                tags = None
-            if tags:
-                append_catalog(a.catalog, [(m, tags) for m in members], lock)
-                if a.irenaoshi:
-                    tsuika_sumi(SUMI, members, lock)
-                stat["img"] += len(members)
+                say(u"")
+                say(u"── 空で返ってきた %d枚ぶんを、もう一度だけ見ます ──"
+                    % len(nido))
+                say(u"  （モデルの調子が悪いときに当たっただけかもしれません。"
+                    u"降ろして入れ直してから聞きます）")
+                try:
+                    http_json(a.host + "/api/generate",
+                              {"model": model, "keep_alive": 0, "prompt": ""},
+                              timeout=30)
+                except Exception:
+                    pass
+                time.sleep(20)
+                form_state["i"] = 0
                 kara[0] = 0
                 warui[0] = 0
-                if form_state["i"] != 0:
-                    # 一度うまくいったなら、いちばん良い書き方に戻す。
-                    # 戻さないと、数枚の失敗のせいで残り全部が
-                    # 形の指定なしになり、答えが途中で切れ続ける。
-                    say(u"  「%s」に戻します" % FORMS[0])
-                    form_state["i"] = 0
-            elif not a.fake:
-                # 「答えは返ってきたが、中身が空」。ここを数えないと、
-                # 何時間も回した末に1枚も残っていない、ということが起きる。
-                kara[0] += 1
-                stat["kara"] += 1
-                akirame += list(members)
-                if kara[0] <= 3 or kara[0] % 50 == 0:
-                    say(u"  %s から何も取れませんでした (%d回続けて)"
-                        % (rep, kara[0]))
-                    r = (form_state.get("raw") or u"")[:160].replace(u"\n", u" ")
-                    say(u"    返ってきたもの: %s" % (r if r.strip() else u"(からっぽ)"))
-                    if form_state.get("done"):
-                        say(u"    終わった理由: %s" % form_state["done"])
-                if kara[0] in (5, 11, 17) and form_state["i"] + 1 < len(FORMS):
-                    form_state["i"] += 1
-                    say(u"  「%s」の書き方に変えて、やり直してみます"
-                        % FORMS[form_state["i"]])
-                if kara[0] == 8:
-                    # 一度メモリを空けてもらって、間を置いてから続ける
-                    say(u"  モデルをいったん降ろして、20秒待ってから続けます…")
-                    try:
-                        http_json(a.host + "/api/generate",
-                                  {"model": model, "keep_alive": 0, "prompt": ""},
-                                  timeout=30)
-                    except Exception:
-                        pass
-                    time.sleep(20)
-                if kara[0] >= 25:
-                    say(u"")
-                    say(u"══════════════════════════════════════")
-                    say(u"25回続けて何も取れませんでした。原因を調べます。")
-                    say(u"══════════════════════════════════════")
-                    say(u"Ollama は「できました」と返しますが、中身が空です。")
-                    if form_state.get("nums"):
-                        say(u"直前の数字: %s" % form_state["nums"])
-                    try:
-                        kirikomi(a.host, model, a.images, rep, a.side, a.timeout)
-                    except Exception as e:
-                        say(u"  調べられませんでした: %s" % e)
-                    say(u"ここまでの分は残っています。やり直せば続きから見ます。")
-                    say(u"この画面を 画像しらべ.txt ごとチャットに貼ってください。")
-                    tomatta[0] = True
-                    break
-            n = gi + 1
-            if n <= 3 or n % 20 == 0 or n == len(groups):
-                el = time.time() - t0
-                rest = (el / n) * (len(groups) - n)
-                say(u"  %d / %d  (画像 %d枚ぶん / 1枚 %.1f秒 / 残り およそ %s)"
-                    % (n, len(groups), stat["img"], el / n, nokori(rest)))
-            if n == 3 and not a.fake:
-                say(u"  ── 最初の3枚の見立て ──")
-                say(u"     " + (tags or u"(取れませんでした)"))
-                say(u"  この調子でよければ、そのままお待ちください。")
+                machi, nido = nido, []
+                zenbu[0] += len(machi)
+            for (rep, members) in machi:
+                try:
+                    if a.fake:
+                        tags = to_tags({"people": 1, "hair_color": "blue", "wearing": ["hat"],
+                                        "holding": ["staff"], "gender": "female",
+                                        "place": "cave", "time_of_day": "night",
+                                        "mood": "tense", "action": "walking",
+                                        "closeup": False, "text_on_screen": False})
+                    else:
+                        tags = ask_local(a.host, model, a.images, rep, a.side, a.timeout, form_state)
+                except OllamaError as e:
+                    stat["ng"] += 1
+                    warui[0] += 1
+                    say(u"  %s でつまずきました: %s" % (rep, e))
+                    tags = None
+                    fails.append(u"%s" % e)
+                    if mawari == 1:
+                        nido.append((rep, members))
+                    else:
+                        akirame += list(members)
+                    if stat["ng"] >= 5 and stat["img"] == 0:
+                        say(u"")
+                        say(u"5回続けて失敗したので止めます。")
+                        tomatta[0] = True
+                        diagnose(fails)
+                        break
+                except Exception as e:
+                    stat["ng"] += 1
+                    say(u"  %s でつまずきました: %s" % (rep, e))
+                    tags = None
+                if tags:
+                    append_catalog(a.catalog, [(m, tags) for m in members], lock)
+                    if a.irenaoshi:
+                        tsuika_sumi(SUMI, members, lock)
+                    stat["img"] += len(members)
+                    kara[0] = 0
+                    warui[0] = 0
+                    if form_state["i"] != 0:
+                        # 一度うまくいったなら、いちばん良い書き方に戻す。
+                        # 戻さないと、数枚の失敗のせいで残り全部が
+                        # 形の指定なしになり、答えが途中で切れ続ける。
+                        say(u"  「%s」に戻します" % FORMS[0])
+                        form_state["i"] = 0
+                elif not a.fake:
+                    # 「答えは返ってきたが、中身が空」。ここを数えないと、
+                    # 何時間も回した末に1枚も残っていない、ということが起きる。
+                    kara[0] += 1
+                    stat["kara"] += 1
+                    if mawari == 1:
+                        nido.append((rep, members))
+                    else:
+                        akirame += list(members)
+                    if kara[0] <= 3 or kara[0] % 50 == 0:
+                        say(u"  %s から何も取れませんでした (%d回続けて)"
+                            % (rep, kara[0]))
+                        r = (form_state.get("raw") or u"")[:160].replace(u"\n", u" ")
+                        say(u"    返ってきたもの: %s" % (r if r.strip() else u"(からっぽ)"))
+                        if form_state.get("done"):
+                            say(u"    終わった理由: %s" % form_state["done"])
+                    if kara[0] in (5, 11, 17) and form_state["i"] + 1 < len(FORMS):
+                        form_state["i"] += 1
+                        say(u"  「%s」の書き方に変えて、やり直してみます"
+                            % FORMS[form_state["i"]])
+                    if kara[0] == 8:
+                        # 一度メモリを空けてもらって、間を置いてから続ける
+                        say(u"  モデルをいったん降ろして、20秒待ってから続けます…")
+                        try:
+                            http_json(a.host + "/api/generate",
+                                      {"model": model, "keep_alive": 0, "prompt": ""},
+                                      timeout=30)
+                        except Exception:
+                            pass
+                        time.sleep(20)
+                    if kara[0] >= 25:
+                        say(u"")
+                        say(u"══════════════════════════════════════")
+                        say(u"25回続けて何も取れませんでした。原因を調べます。")
+                        say(u"══════════════════════════════════════")
+                        say(u"Ollama は「できました」と返しますが、中身が空です。")
+                        if form_state.get("nums"):
+                            say(u"直前の数字: %s" % form_state["nums"])
+                        try:
+                            kirikomi(a.host, model, a.images, rep, a.side, a.timeout)
+                        except Exception as e:
+                            say(u"  調べられませんでした: %s" % e)
+                        say(u"ここまでの分は残っています。やり直せば続きから見ます。")
+                        say(u"この画面を 画像しらべ.txt ごとチャットに貼ってください。")
+                        tomatta[0] = True
+                        break
+                mitame[0] += 1
+                n = mitame[0]
+                if n <= 3 or n % 20 == 0 or n == zenbu[0]:
+                    el = time.time() - t0
+                    rest = (el / n) * (zenbu[0] - n)
+                    say(u"  %d / %d  (画像 %d枚ぶん / 1枚 %.1f秒 / 残り およそ %s)"
+                        % (n, zenbu[0], stat["img"], el / n, nokori(rest)))
+                if n == 3 and not a.fake:
+                    say(u"  ── 最初の3枚の見立て ──")
+                    say(u"     " + (tags or u"(取れませんでした)"))
+                    say(u"  この調子でよければ、そのままお待ちください。")
 
     # ───────── api
     else:
@@ -1557,7 +1612,17 @@ def main():
     # 残り時間の見積りをこれで立てられてしまう。**数字で嘘をつくのが
     # いちばん高くつく**（音ズレで6回やった）ので、旗ごとに数え方を分ける。
     sumi = read_done(a.catalog)
-    tobasu2 = read_skip(SKIP)
+    # ■ **数えるほうと走るほうで、飛ばす絵が食いちがっていた**（2026-10-27）
+    #
+    # 走るほうは
+    #     if not a.redo and not a.irenaoshi and not a.futari:
+    #         done = done | read_skip(SKIP)
+    # と、--二人だけ のときは **見られなかった画像.txt を見ない**。
+    # ところが残りを数えるほうは、どの旗でも引いていた。
+    # つまり「走るときは見に行くのに、残りからは引く」── **物差しが2つ。**
+    # メモリ 84節と同じ形（こちらは「ずれ 0」、本人の画面では大きなずれ）。
+    # 走るほうと同じ決め方にそろえる。
+    tobasu2 = set() if (a.redo or a.irenaoshi or a.futari) else read_skip(SKIP)
     nokori_n = nokori_kazu(names, sumi, tobasu2,
                            read_futari(a.catalog) if a.futari else None)
     if nokori_n:
