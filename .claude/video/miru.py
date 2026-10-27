@@ -110,9 +110,28 @@ def natkey(name):
 
 # ══════════════════════════════ 画像を集める / まとめる
 
+# 絵ではないフォルダ（一覧シートなど）。置き場所.py に1回だけ置いてある。
+try:
+    TSUKAWANAI_FOL = tuple(置き場所.tsukawanai_fol())
+except Exception:
+    TSUKAWANAI_FOL = (u"一覧", u"確認用", u"素材", u"_選んだ画像", u"候補")
+
+
 def walk_images(root):
+    u"""画像を集める。
+
+    ■ **一覧シートを入れてはいけない**（2026-10-27・本人の付け直しログ）
+
+    ここは絵ではないフォルダを外していなかったので、
+      一覧/1-02_02.png / 無職転生Ⅱ 第4話/一覧_03.png
+    のような貼り合わせシート 327枚まで説明づけしていた。
+    make_slideshow.py は外しているので、**二つの道具が別のものを見て
+    いた**（6697枚 対 6370枚）。動画に使われないものに時間を使い、
+    カタログも汚れる。外す一覧は 置き場所.py に1回だけ置いてある。
+    """
     out = []
     for cur, dirs, files in os.walk(root):
+        dirs[:] = [d for d in dirs if d not in TSUKAWANAI_FOL]
         dirs.sort(key=natkey)
         rel = os.path.relpath(cur, root)
         rel = u"" if rel == "." else rel.replace(os.sep, u"/")

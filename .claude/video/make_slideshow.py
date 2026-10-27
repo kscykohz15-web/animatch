@@ -1023,7 +1023,15 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
 # 画像フォルダの中に「一覧」フォルダが 327枚 あり、それが候補に
 # 入っていた。どの #指定 にも当たらないので、**既定の絵として
 # 何度も選ばれていた。** 絵ではないものを動画に出してはいけない。
-TSUKAWANAI_FOL = (u"一覧", u"確認用", u"素材", u"_選んだ画像", u"候補")
+# ■ 一覧は **置き場所.py に1回だけ**（2026-10-27）
+#
+# ここにしか無かったので miru.py が外しておらず、327枚の一覧シートを
+# 説明づけしていた。道と同じく共通の置き場から取る。
+# 古い 置き場所.py でも動くよう、無ければ今までの字面に落ちる。
+try:
+    TSUKAWANAI_FOL = tuple(置き場所.tsukawanai_fol())
+except Exception:
+    TSUKAWANAI_FOL = (u"一覧", u"確認用", u"素材", u"_選んだ画像", u"候補")
 
 
 def _walk_images(root):

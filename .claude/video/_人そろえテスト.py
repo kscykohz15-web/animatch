@@ -202,6 +202,28 @@ def main():
     import shutil as _sh
     _sh.rmtree(_d, ignore_errors=True)
 
+    # ── ⑦ 道具どうしで「絵ではないフォルダ」が食いちがっていないか
+    #       （2026-10-27・本人の付け直しログから）
+    #
+    # 画像フォルダには絵でないものも入っている（一覧シート 327枚）。
+    #   make_slideshow.py … 外していた
+    #   miru.py           … **外していなかった**
+    # その結果 6697枚 対 6370枚 で、miru.py は動画に使われない
+    # 一覧シートを説明づけし、カタログも汚していた。
+    # **どちらが候補にする絵かが、道具で違っていた。**
+    # 一覧は 置き場所.py に1回だけ置いてある。3つがそろっているか見る。
+    _sp2 = _iu.spec_from_file_location(u"m_oki", os.path.join(HERE, u"置き場所.py"))
+    _ok = _iu.module_from_spec(_sp2)
+    sys.modules[u"m_oki"] = _ok
+    _sp2.loader.exec_module(_ok)
+    iu(u"一覧" in _ok.tsukawanai_fol(),
+       u"置き場所.py が「絵ではないフォルダ」を持っている（%s）"
+       % u"・".join(_ok.tsukawanai_fol()))
+    iu(tuple(_mi.TSUKAWANAI_FOL) == tuple(_ok.tsukawanai_fol()),
+       u"miru.py が置き場所と同じ一覧を見ている")
+    iu(tuple(ms.TSUKAWANAI_FOL) == tuple(_ok.tsukawanai_fol()),
+       u"make_slideshow.py が置き場所と同じ一覧を見ている")
+
     # ── ④ 採点が「人が足りない」と言うか
     oku = tempfile.mkdtemp(prefix=u"hito_")
     try:
