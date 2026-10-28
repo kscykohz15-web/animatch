@@ -942,9 +942,21 @@ def main():
             tarinai0 = [c for c in hito
                         if c not in atta0 and c not in nai_hito]
             if tarinai0:
+                # ■ **「絵に居るのは【誰も】」だけでは直せない**（2026-10-28）
+                #
+                # 本人の採点で、手で選んだ24枚のうち**12枚**が
+                # 「絵に居るのは【誰も】」になった（うち8枚はヒトガミ）。
+                # ところがここは**カタログの中身を出していなかった**ので、
+                #   ・カタログに説明が無いのか
+                #   ・説明はあるが名前が付いていないのか
+                #   ・どのタグまでは取れているのか
+                # が**本人にもこちらにも分からない。**
+                # あやしい場所のほうは「絵の中」を出しているのに、
+                # いちばん直したい所だけ出していなかった。
+                # desc を持たせる（直す規則がそのまま読める）。
                 tebiki_zure.append((r[u"no"], r.get(u"開始", u""), tx, img,
                                     u"・".join(hito), u"・".join(atta0) or u"誰も",
-                                    u"・".join(tarinai0)))
+                                    u"・".join(tarinai0), desc))
         if hito and desc and not is_zuhyou(img) and not erabi:
             w = set(desc.split())
             atta = []
@@ -1066,6 +1078,10 @@ def main():
     ten = 100
     if rows:
         warui_n = len([x for x in warui if x[0] >= 3])
+        # 手で選んだ絵の人ちがいも数に入れる（上の ■ を見てください）。
+        # 同じ番号を二重に数えないよう、warui に入っていない物だけ足す。
+        _warui_no = set(x[1][u"no"] for x in warui if x[0] >= 3)
+        warui_n += len([1 for t in tebiki_zure if t[0] not in _warui_no])
         ten = int(round(100.0 * (len(rows) - warui_n) / len(rows)))
     hidoi = [x for x in warui if x[0] >= 5]
     chuu = [x for x in warui if 3 <= x[0] < 5]
@@ -1076,6 +1092,22 @@ def main():
     note(u"使いすぎだけ             : %d か所" % (len(warui) - len(hidoi) - len(chuu)))
     note(u"絵で表せる言葉が無い     : %d か所 （台本しだい。割り当ての失敗ではない）"
          % len(mikoshi))
+    # ■ **点数が、本人の見ている画面と合っていなかった**（2026-10-28）
+    #
+    # 本人:「画像は全然だめです。」 採点:「93 点 / 100」
+    #
+    # 手で選んだ絵は「機械は責めない」ので warui に入れていなかった。
+    # その結果、**人が1人も写っていない 12 か所が点数から消えていた**
+    # （24枚のうち12枚。しかも動画の頭から並んでいる）。
+    # 責めないのは正しいが、**数から消すのは違う。**
+    # 本人が見るのは出来た動画で、誰が選んだ絵かは画面に出ない。
+    #
+    # 「ひどい」には入れない（機械の失敗ではない）。
+    # **自分の行で出して、点数にも入れる。** 誰が直すかも書く。
+    if tebiki_zure:
+        note(u"手で選んだ絵で人ちがい   : %d か所 "
+             u"（**機械は直せません。**その他/差し替え.txt の番号を書きかえてください）"
+             % len(tebiki_zure))
     note(u"おおよその点数           : %d 点 / 100" % ten)
     if nashi:
         note(u"※ カタログに説明が無い絵が %d か所ありました（採点できていません）" % nashi)
@@ -1093,9 +1125,10 @@ def main():
         note(u"（差し替え.txt・画像プランで指定した絵です。機械は触りません。")
         note(u"  直すなら その他/差し替え.txt のその番号を書きかえてください。")
         note(u"  絵の番号は、絵を足したり消したりするとずれることがあります）")
-        for (no, hajime, tx2, img2, zen, ita, tari) in tebiki_zure[:15]:
+        for (no, hajime, tx2, img2, zen, ita, tari, de2) in tebiki_zure[:15]:
             note(u"  [%s] %s  %s" % (no, hajime, tx2[:34]))
             note(u"        絵   : %s" % img2)
+            note(u"        絵の中: %s" % ((de2 or u"").strip() or u"（カタログに説明がありません）"))
             note(u"        セリフは【%s】／絵に居るのは【%s】"
                  u"／**%s** が写っていません" % (zen, ita, tari))
         if len(tebiki_zure) > 15:
