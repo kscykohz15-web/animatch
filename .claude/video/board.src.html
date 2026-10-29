@@ -2053,9 +2053,26 @@ RULES = [
     (u"ヒトガミ",      lambda v: v["glow"]),
     (u"フィッツ",      lambda v: v["hair"] in ("white",) and "sunglasses" in v["wear"]),
     (u"シルフィエット", lambda v: v["hair"] == "white" and v["ears"] and v["sex"] == "female"),
-    (u"ロキシー",      lambda v: v["hair"] in ("blue", "purple")
+    # ■ **紫髪をロキシーにしていた**（2026-10-29・本人の採点 [023]）
+    #
+    #     [023] 龍神オルステッドと手を組み、ヒトガミを完全に封じ込めてしまう。
+    #           絵の中: 一人 **ロキシー 紫髪** 長い髪 少年少女 アップ
+    #
+    # ここは blue と purple を同じに見ていた。ところが 人物ルール.txt は
+    #
+    #     ロキシー  青髪 …        （青髪だけ）
+    #     ザノバ    紫髪 大人
+    #     キシリカ  紫髪 子供
+    #
+    # と、**紫髪には別の持ち主がいる。** 道具2つが同じ色で違う答えを出していた。
+    # しかも名前はカタログの字面に書き込まれるので、
+    # **人物ルール.txt では取り消せない**（`-ロキシー 紫髪` を足すと、
+    # 2人目の色が入った「青髪＋紫髪」の絵からロキシーが消えてしまう）。
+    # 直すのはこちら。人物ルール.txt に合わせて青髪だけにする。
+    # 見張りは _人そろえテスト.py ⑭。
+    (u"ロキシー",      lambda v: v["hair"] == "blue"
                                  and ("hat" in v["wear"] or "staff" in v["hold"])),
-    (u"ロキシー",      lambda v: v["hair"] in ("blue", "purple") and v["sex"] == "female"),
+    (u"ロキシー",      lambda v: v["hair"] == "blue" and v["sex"] == "female"),
     (u"エリス",        lambda v: v["hair"] == "red" and v["sex"] == "female"
                                  and (v["long"] or "sword" in v["hold"])),
     (u"ルイジェルド",  lambda v: v["hair"] == "green" and "spear" in v["hold"]),
@@ -4830,8 +4847,25 @@ def main():
                 # あやしい場所のほうは「絵の中」を出しているのに、
                 # いちばん直したい所だけ出していなかった。
                 # desc を持たせる（直す規則がそのまま読める）。
+                # ■ **「絵に居るのは【誰も】」が嘘に読めた**（2026-10-29）
+                #
+                #     絵の中: 一人 ロキシー 青髪 少年少女 アップ
+                #     セリフは【ルーデウス】／絵に居るのは【誰も】
+                #
+                # カタログは**ロキシーと書いてある**のに「誰も」と出る。
+                # ここが言いたいのは「**セリフの人が**誰も居ない」だが、
+                # 「誰も写っていない」と読める。
+                # こちらも本人も、カタログに説明が無いのだと読んで、
+                # **1往復まるごと誤診した。**
+                # 絵に写っている人（セリフに出ていない人も）を並べる。
+                iru0 = [c for c in CHARACTERS
+                        if any(x in w0 for x in [c] + IIKAE.get(c, []))]
                 tebiki_zure.append((r[u"no"], r.get(u"開始", u""), tx, img,
-                                    u"・".join(hito), u"・".join(atta0) or u"誰も",
+                                    u"・".join(hito),
+                                    u"・".join(atta0) or
+                                    (u"セリフの人は居ない（写っているのは %s）"
+                                     % u"・".join(iru0) if iru0
+                                     else u"カタログに名前が1つも無い"),
                                     u"・".join(tarinai0), desc))
         if hito and desc and not is_zuhyou(img) and not erabi:
             w = set(desc.split())
@@ -5009,6 +5043,22 @@ def main():
                  u"／**%s** が写っていません" % (zen, ita, tari))
         if len(tebiki_zure) > 15:
             note(u"  …ほか %d か所" % (len(tebiki_zure) - 15))
+        # ■ **「どうしたらいいの」に答える**（2026-10-29・本人の一言）
+        #
+        # 本人:「結局何をしたらいいの？」
+        #
+        # ここは番号と理由を並べていたが、**次に何をするか**を書いていない。
+        # この12か所は機械が触れない（手で選んだ絵だから）ので、
+        # **その行を消す**と機械が選び直す。実際、機械が自分で選んだ所では
+        # ヒトガミの絵（光る目）をちゃんと当てている。
+        # 消す行をそのまま並べる。
+        note(u"")
+        note(u"  ── **この %d行を その他/差し替え.txt から消すと、"
+             u"機械が選び直します** ──" % len(tebiki_zure))
+        note(u"  （機械は自分で選べる所では、ちゃんと名前の合う絵を当てています。")
+        note(u"    番号で指定している間は、機械はそこに触れません）")
+        for (no, _h, tx3, _i, _z, _it, _ta, _d) in tebiki_zure:
+            note(u"      %s番   %s" % (no, tx3[:30]))
         note(u"")
 
     if nai_tsukatta:
@@ -26702,7 +26752,7 @@ Reゼロから始める異世界生活	#一人 アップ, #アップ, #立ち姿
     return out;
   }
 
-  var PACK_VERSION = "v178";
+  var PACK_VERSION = "v179";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "mushoku";
   function packVersion(){

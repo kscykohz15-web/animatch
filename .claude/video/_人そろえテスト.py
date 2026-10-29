@@ -476,6 +476,47 @@ def main():
     _ms2 = io.open(os.path.join(HERE, u"make_slideshow.py"), encoding="utf-8").read()
     iu(u"枚には説明が1行もありません" in _ms2,
        u"説明が1行も無い絵の枚数を言う（引き算を手でやらせない）")
+    iu(u"から消すと、" in _mk and u"機械が選び直します" in _mk,
+       u"**次に何をするか**を書く（消す行をそのまま並べる）")
+
+    # ── ⑭ **miru.py と 人物ルール.txt が同じ色で同じ答えを出すか**
+    #       （2026-10-29・本人の採点 [023]）
+    #
+    #     [023] 龍神オルステッドと手を組み、ヒトガミを完全に封じ込めてしまう。
+    #           絵の中: 一人 **ロキシー 紫髪** 長い髪 少年少女 アップ
+    #
+    # miru.py は blue と purple を同じに見てロキシーと書いていた。
+    # 人物ルール.txt では 紫髪 は ザノバ(大人) / キシリカ(子供) で、
+    # ロキシーは 青髪 だけ。**道具2つが同じ色で違う答えを出していた。**
+    # 名前はカタログの字面に書き込まれるので、人物ルール.txt では取り消せない。
+    #
+    # ここは「色 → 名前」で、2つの道具の答えが食いちがわないかを見る。
+    def _nise(hair, sex=u"female", age=u"child"):
+        return {"hair": hair, "wear": [], "hold": [], "ears": False,
+                "beast": False, "sex": sex, "age": age, "glow": False,
+                "dark": False, "beard": False, "long": False}
+
+    def _miru_na(hair, **kw):
+        for nm, ok in _mi.RULES:
+            try:
+                if ok(_nise(hair, **kw)):
+                    return nm
+            except Exception:
+                pass
+        return u""
+
+    iu(_miru_na(u"blue") == u"ロキシー",
+       u"青髪はロキシー（miru.py）")
+    iu(_miru_na(u"purple") != u"ロキシー",
+       u"**紫髪はロキシーにしない**（人物ルール.txt では ザノバ／キシリカ）"
+       u"（いま %s）" % (_miru_na(u"purple") or u"名前なし"))
+    # 人物ルール.txt のほうでも、紫髪だけでロキシーが付かないこと
+    _ru3 = ms.load_person_rules(os.path.join(HERE, u"人物ルール.txt"))
+    _t3 = {u"x/1.png": u"一人 紫髪 長い髪 少年少女 アップ"}
+    ms.TARAZU_IUTA[0] = True
+    ms.apply_person_rules(_t3, _ru3)
+    iu(u"ロキシー" not in _t3[u"x/1.png"].split(),
+       u"人物ルール.txt でも、紫髪だけではロキシーが付かない")
 
     # ── ④ 採点が「人が足りない」と言うか
     oku = tempfile.mkdtemp(prefix=u"hito_")

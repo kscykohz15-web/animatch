@@ -589,9 +589,26 @@ RULES = [
     (u"ヒトガミ",      lambda v: v["glow"]),
     (u"フィッツ",      lambda v: v["hair"] in ("white",) and "sunglasses" in v["wear"]),
     (u"シルフィエット", lambda v: v["hair"] == "white" and v["ears"] and v["sex"] == "female"),
-    (u"ロキシー",      lambda v: v["hair"] in ("blue", "purple")
+    # ■ **紫髪をロキシーにしていた**（2026-10-29・本人の採点 [023]）
+    #
+    #     [023] 龍神オルステッドと手を組み、ヒトガミを完全に封じ込めてしまう。
+    #           絵の中: 一人 **ロキシー 紫髪** 長い髪 少年少女 アップ
+    #
+    # ここは blue と purple を同じに見ていた。ところが 人物ルール.txt は
+    #
+    #     ロキシー  青髪 …        （青髪だけ）
+    #     ザノバ    紫髪 大人
+    #     キシリカ  紫髪 子供
+    #
+    # と、**紫髪には別の持ち主がいる。** 道具2つが同じ色で違う答えを出していた。
+    # しかも名前はカタログの字面に書き込まれるので、
+    # **人物ルール.txt では取り消せない**（`-ロキシー 紫髪` を足すと、
+    # 2人目の色が入った「青髪＋紫髪」の絵からロキシーが消えてしまう）。
+    # 直すのはこちら。人物ルール.txt に合わせて青髪だけにする。
+    # 見張りは _人そろえテスト.py ⑭。
+    (u"ロキシー",      lambda v: v["hair"] == "blue"
                                  and ("hat" in v["wear"] or "staff" in v["hold"])),
-    (u"ロキシー",      lambda v: v["hair"] in ("blue", "purple") and v["sex"] == "female"),
+    (u"ロキシー",      lambda v: v["hair"] == "blue" and v["sex"] == "female"),
     (u"エリス",        lambda v: v["hair"] == "red" and v["sex"] == "female"
                                  and (v["long"] or "sword" in v["hold"])),
     (u"ルイジェルド",  lambda v: v["hair"] == "green" and "spear" in v["hold"]),
