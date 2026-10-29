@@ -55,6 +55,36 @@ def main():
         return 0
     s, y = yomu(src), yomu(syn)
 
+    # ■ その board.src.html が、本当に「型」かどうかを先に見る（2026-10-29）
+    #
+    #   v165 で、控えの board.src.html が**出来上がった掲示板で上書き**された。
+    #   そのまま v179 まで気づかなかった（2.4MB → 4.7MB）。
+    #   出来上がったほうにも道具の一覧は入っているので、この検査は通ってしまう。
+    #   ところが型ではないので
+    #     ・@@DOUGA_DAIHON@@ が無い   → build.py が台本を流し込めない
+    #     ・osusume の節が無い        → おすすめの掲示板が二度と作れない
+    #   になる。実際に、おすすめアニメ紹介の掲示板が20版ぶん取り残された。
+    #
+    #   **出す物（board.html）と型（board.src.html）を、同じ名前で置かない。**
+    #   見分け方は「印が入っているか」「doc- の中身が展開されていないか」。
+    kata = []
+    if u"@@DOUGA_DAIHON@@" not in s:
+        kata.append(u"@@DOUGA_DAIHON@@ が無い")
+    if u"@@DOUGA_SETTEI@@" not in s:
+        kata.append(u"@@DOUGA_SETTEI@@ が無い")
+    if u'data-board="osusume"' not in s:
+        kata.append(u"osusume の節が無い")
+    if re.search(r'<script type="text/plain" id="doc-', s):
+        kata.append(u"doc- が展開済み（出来上がった掲示板です）")
+    if kata:
+        print(u"× これは掲示板の「型」ではありません: %s" % src)
+        for k in kata:
+            print(u"   ・" + k)
+        print(u"   出来上がった board.html を board.src.html に上書きしていませんか。")
+        print(u"   型として生きている版を git の履歴から戻してください。")
+        return 1
+    print(u"○ board.src.html は型です（印と osusume の節があります）")
+
     oki = set(re.findall(r'<script type="text/plain" id="(py-[^"]+)">', s))
     def esc(t):
         u"""sync_py.py は日本語を \\uXXXX で書いてあるので、戻してから比べる。"""
