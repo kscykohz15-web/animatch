@@ -768,6 +768,31 @@ def main():
                 kita.add(int(t))
         tsukawanai = sashi - kita
         sashi = sashi & kita
+    # ■ **こちらが「必ず」と押さえた絵も、手で選んだ絵**（2026-10-29）
+    #
+    #     [002] どうもこんにちは、かさです。
+    #           絵の中: 一人 ロキシー 青髪 長い髪 少年少女 アップ
+    #           → 話数ちがい（この章は Ⅲ第11話/第12話/第5話/第14話 の話）
+    #
+    # 挨拶は本人の「必ずロキシー」を make_slideshow が最後に押さえる所で、
+    # **話数はわざと見ていない**（挨拶はチャンネルの顔で、どの話数でもよい）。
+    # ところがそれが採点に渡っていなかったので、
+    # **重さ6の「ひどい」として毎回数えていた。**
+    # CLAUDE.md:「手で選んだ絵は機械の判定より上。**5か所すべてで例外にする**」
+    # ── 採点もその1つ。make_slideshow が書いた番号をそのまま使う
+    # （同じ判断を2か所に書かない）。
+    osae = os.path.join(u"その他", u"_押さえた絵.txt")
+    if os.path.exists(osae):
+        _o = set()
+        for line in yomu(osae).split(u"\n"):
+            t = line.strip()
+            if t and not t.startswith(u"#") and t.isdigit():
+                _o.add(int(t))
+        if _o:
+            sashi = sashi | _o
+            note(u"こちらが「必ず」と押さえた絵 %d か所も、"
+                 u"手で選んだ絵として数えます: %s"
+                 % (len(_o), u", ".join(u"%d番" % x for x in sorted(_o)[:8])))
         if tsukawanai:
             note(u"差し替え.txt の %d か所は、字幕の切り方が変わったため"
                  u"**使われていません**（機械が当てた絵として採点します）: %s"

@@ -8108,6 +8108,10 @@ HIKAE = os.path.join(SONOTA_DIR, u"_番号の控え.txt")
 # だから**実際に当てた番号だけ**をこちらから渡す。
 # （同じ判断を2か所に書かない。書けば必ず片方を直し忘れる）
 TSUKATTA = os.path.join(SONOTA_DIR, u"_使った差し替え.txt")
+# こちらが「必ず」と決めて押さえた絵（いまは挨拶だけ）。
+# _使った差し替え.txt とは別にする ── あちらは採点が 差し替え.txt と
+# かけ算するので、差し替え.txt に無い番号を足しても消えてしまう。
+OSAETA = os.path.join(SONOTA_DIR, u"_押さえた絵.txt")
 HIKAE_ATAMA = (u"# 差し替え.txt の番号を、次の回でも正しい字幕に当てるための控え。\n"
                u"# この回に 確認用/一覧.txt へ出した「番号」と「字幕の文」です。\n"
                u"# **消さないでください。** 消すと、番号だけの差し替えが\n"
@@ -9687,6 +9691,7 @@ def main():
                 return (p, natkey(k))
             _kou.sort(key=_aisatsu_ten)
             _n, _j = 0, 0
+            _pinned = []        # 押さえた所（採点に渡す）
             for _i in range(len(rows)):
                 _du, _im, _tx = rows[_i]
                 if not any(x in (_tx or u"") for x in AISATSU):
@@ -9694,11 +9699,48 @@ def main():
                 if _hito in (_cat.get(_im) or u""):
                     continue                # もう当たっている
                 rows[_i] = (_du, _kou[_j % len(_kou)], _tx)
+                _pinned.append(_i)
                 _j += 1
                 _n += 1
             say(u"挨拶の字幕は %s の絵にします（差し替えより後で押さえます）%s"
                 % (_hito, u"／%d枚を当て直しました" % _n if _n
                    else u"／すでに当たっていました"))
+            # ■ **押さえた所を採点にも渡す**（2026-10-29・本人の採点 [002]）
+            #
+            #     [002] どうもこんにちは、かさです。
+            #           絵の中: 一人 ロキシー 青髪 長い髪 少年少女 アップ
+            #           → 話数ちがい（この章は Ⅲ第11話/第12話/第5話/第14話 の話）
+            #
+            # ここは本人の「必ずロキシー」をこちらが押さえた所で、
+            # **話数はわざと見ていない**（挨拶はチャンネルの顔で、
+            # どの話数の絵でもよい）。ところが採点には何も渡していないので、
+            # **重さ6の「ひどい」として数えられていた。**
+            # 差し替えのときと同じ形で渡す（判断を2か所に書かない）。
+            # ここは番号で書かないので、採点には**押さえた番号**を渡す。
+            try:
+                _gyaku = {}
+                for _no3, _i3 in (ban or {}).items():
+                    _gyaku[_i3] = _no3
+                _pin = sorted(_gyaku[_i4] for _i4 in _pinned if _i4 in _gyaku)
+                # **_使った差し替え.txt には足さない。** 採点はそちらを
+                # 差し替え.txt と**かけ算**している（当てていない指定を
+                # 本人のものと見ないため）。挨拶は差し替え.txt に無いので、
+                # 足しても消える。別のファイルで渡す。
+                io.open(os.path.join(HERE, OSAETA), "w",
+                        encoding="utf-8-sig", newline="\r\n").write(
+                        u"\r\n".join(
+                            [u"# こちらが**必ず**と決めて押さえた絵の番号。",
+                             u"# いまは挨拶（必ず %s）だけです。" % _hito,
+                             u"# 採点(miru_kekka.py)はこれを見て、"
+                             u"話数ちがい・人ちがいで責めません。",
+                             u"# 自動で作り直されるので、手で直す必要はありません。"]
+                            + [u"%d" % x for x in _pin]) + u"\r\n")
+                if _pin:
+                    say(u"  挨拶の %s番 は採点にも「押さえた絵」として渡します"
+                        u"（話数はわざと見ていないので、責めさせない）"
+                        % u"・".join(u"%d" % x for x in _pin))
+            except Exception:
+                pass
 
     # --- 画像を出力サイズにそろえる(同じ絵は1回だけ) ---
     work = os.path.join(HERE, SONOTA_DIR, "_work")
