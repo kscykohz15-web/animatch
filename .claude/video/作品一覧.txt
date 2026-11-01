@@ -153,10 +153,10 @@ heroine	1	新世紀エヴァンゲリオン
 heroine	2	CLANNAD
 heroine	3	とらドラ！
 heroine	4	STEINS;GATE
-heroine	5	冴えない彼女の育てかた
-heroine	6	やはり俺の青春ラブコメはまちがっている。
-heroine	7	ダーリン・イン・ザ・フランキス
-heroine	8	Re:ゼロから始める異世界生活
+heroine	5	やはり俺の青春ラブコメはまちがっている。
+heroine	6	冴えない彼女の育てかた
+heroine	7	Re:ゼロから始める異世界生活
+heroine	8	ダーリン・イン・ザ・フランキス
 heroine	9	かぐや様は告らせたい
 heroine	10	五等分の花嫁
 heroine	11	鬼滅の刃
