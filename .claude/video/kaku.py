@@ -130,6 +130,25 @@ def load_yomi_dict(path):
             a, b = s.split(u"\t", 1)
             if a.strip():
                 dic.append((a.strip(), b.strip()))
+    # ■ 読みが句読点を落としていないか（2026-11-01）
+    #
+    #   本文は字幕用と読み上げ用で**完全に一致**させる決めごとです。
+    #   読みのほうで「。」や「！」を落とすと、文の数が合わなくなり
+    #   仕上げ.py ① が落ちます。ところが①は数しか言わないので、
+    #   どの語が原因かが分かりませんでした（令和版で 200 対 198）。
+    #   **ここで名前を出します。**
+    warui = []
+    for (a, b) in dic:
+        for c in u"。、！？":
+            if a.count(c) != b.count(c):
+                warui.append((a, b, c, a.count(c), b.count(c)))
+                break
+    if warui:
+        say(u"")
+        say(u"[注意] 読み辞書の読みが、句読点を落としています。")
+        say(u"       本文は完全に一致させる決まりなので、文の数が合わなくなります。")
+        for (a, b, c, n1, n2) in warui[:12]:
+            say(u"   %s → %s （%s の数が %d↔%d）" % (a, b, c, n1, n2))
     return dic, keep
 
 
