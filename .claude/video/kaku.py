@@ -515,7 +515,15 @@ def main():
             t, n = to_yomi(line, dic, keep)
             zen += n
             lines.append(t)
-        io.open(out, "w", encoding="utf-8-sig", newline="").write(
+        # ■ 台本に BOM を付けてはいけない（2026-11-01）
+        #
+        #   VOICEPEAK は台本を cp932 で読むので、先頭の見えない3バイトで
+        #   落ちます。v141 で読み上げ用8本に BOM が付いていた事故
+        #   （メモリ19節）の出どころは、**ここ**でした。
+        #   そのときはファイルから BOM を外しただけで、道具は直っていませんでした。
+        #   なので新しい台本を作るたびに、また付いていました。
+        #   仕上げ.py ⑫ が見張りますが、**付けない側で直すのが本筋**です。
+        io.open(out, "w", encoding="utf-8", newline="").write(
             u"\r\n".join(lines).strip() + u"\r\n")
         say(u"%s を書きました。" % out)
         say(u"「は」を %d か所、「ワ」に変えました。" % zen)
