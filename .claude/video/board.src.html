@@ -197,6 +197,21 @@
   .stage input:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   .savenote{font-size:11.5px; color:var(--ink-3);}
 
+  /* 紹介する作品の入れ替え */
+  .skcard{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+          padding:16px 18px; display:flex; flex-direction:column; gap:9px;}
+  .skhead{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px;}
+  .skname{font-size:16px; font-weight:700;}
+  .skcount{font-size:12.5px; color:var(--ink-3); font-variant-numeric:tabular-nums;}
+  .skcard textarea{width:100%; box-sizing:border-box; background:var(--surface-2);
+    color:var(--ink); border:1px solid var(--line-2); border-radius:9px; padding:10px 12px;
+    font-family:inherit; font-size:13.5px; line-height:1.9; resize:vertical;}
+  .skcard textarea:focus{outline:2px solid var(--accent); outline-offset:-1px;}
+  .skrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+  .skstate{font-size:11.5px; color:var(--ink-3);}
+  .skstate.ng{color:var(--alert); font-weight:700;}
+  .skstate.ok{color:var(--ok); font-weight:700;}
+
   /* ---- facts / rules ---- */
   .facts{display:flex; flex-direction:column;}
   .fact{display:grid; grid-template-columns:130px 1fr; gap:4px 18px; padding:13px 0;
@@ -356,6 +371,17 @@
     <p class="lede">タイトルを開くと、軸・構成・尺・ファイル名が出ます。工程のチェックはこのページに保存されます。</p>
     <div class="inv" id="inv"></div>
     <div class="savenote" id="savenote" style="margin-top:10px;">工程チェックの保存を準備中…</div>
+  </section>
+
+  <section data-board="osusume" id="sakuhin">
+    <h2>紹介する作品（ここで入れ替えられます）</h2>
+    <p class="lede">各回で紹介する作品です。<b>1行に1作品</b>、紹介する順に並んでいます。
+      入れ替えたら「保存」を押してください。<b>そのあとチャットで「○○の作品を変えた」と言ってください。</b>
+      こちらが読んで、作品一覧.txt と台本を作り直します。</p>
+    <div class="recs" id="sk-list"></div>
+    <div class="savenote" id="sk-note" style="margin-top:10px;"></div>
+
+    <script type="text/plain" id="sakuhin-ichiran">@@FILE:video/作品一覧.txt@@</script>
   </section>
 
   <section>
@@ -19637,7 +19663,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v180";
+  var PACK_VERSION = "v181";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -21152,6 +21178,122 @@ if __name__ == "__main__":
     renderStrip(); renderEpInfo(); renderRecs();
   }
 
+  // ── 紹介する作品（おすすめの掲示板だけ。節が無ければ何もしません）
+  //
+  //   置き場所は 作品一覧.txt **ただ一つ**。ここはその窓です。
+  //   入れ替えたものは db（このページ）に残り、こちらが読んで
+  //   作品一覧.txt と台本を作り直します。
+  var SK = {jun:[], dai:{}, moto:{}, ima:{}, dirty:{}};
+
+  function skYomu(){
+    var el = $("sakuhin-ichiran");
+    if(!el) return false;
+    var raw = (el.textContent || "").replace(/\r\n/g, "\n");
+    raw.split("\n").forEach(function(line){
+      var t = line.replace(/^\uFEFF/, "");
+      if(!t.trim() || t.charAt(0) === "#") return;
+      var c = t.split("\t");
+      if(c.length < 3) return;
+      var a = c[0].trim();
+      if(a === "題"){
+        var b = c[1].trim();
+        SK.dai[b] = c[2].trim();
+        if(SK.jun.indexOf(b) < 0) SK.jun.push(b);
+      } else {
+        (SK.moto[a] = SK.moto[a] || []).push(c[2].trim());
+        if(SK.jun.indexOf(a) < 0) SK.jun.push(a);
+      }
+    });
+    SK.jun.forEach(function(b){ SK.ima[b] = (SK.moto[b] || []).slice(); });
+    return SK.jun.length > 0;
+  }
+
+  function skGyou(b){
+    var ta = $("sk-t-" + b);
+    if(!ta) return [];
+    return ta.value.replace(/\r\n/g, "\n").split("\n")
+      .map(function(x){ return x.trim(); })
+      .filter(function(x){ return x !== "" && x.charAt(0) !== "#"; });
+  }
+  function skKazu(b){
+    var k = $("sk-n-" + b);
+    if(k) k.textContent = skGyou(b).length + "作品";
+  }
+  function skJoutai(b, t, cls){
+    var e = $("sk-s-" + b);
+    if(e){ e.textContent = t; e.className = "skstate" + (cls ? " " + cls : ""); }
+  }
+
+  function skHozon(b){
+    var w = skGyou(b);
+    if(!w.length){ skJoutai(b, "1作品も入っていません。", "ng"); return; }
+    if(!dbns){ skJoutai(b, "このページでは残せません（読み取り専用）。", "ng"); return; }
+    skJoutai(b, "保存しています…", "");
+    dbns.doc("sakuhin/" + b).set({
+      ban: b, dai: SK.dai[b] || b, works: w,
+      updated: new Date().toISOString()
+    }).then(function(){
+      SK.ima[b] = w; SK.dirty[b] = false;
+      skJoutai(b, "保存しました（" + w.length + "作品）。チャットで「"
+               + (SK.dai[b] || b) + "の作品を変えた」と言ってください。", "ok");
+    }).catch(function(e){
+      skJoutai(b, "保存できませんでした（" + ((e && e.code) || "不明") + "）。", "ng");
+    });
+  }
+
+  function skEgaku(){
+    var box = $("sk-list");
+    if(!box) return;
+    box.textContent = "";
+    SK.jun.forEach(function(b){
+      var c = document.createElement("div"); c.className = "skcard";
+      var h = document.createElement("div"); h.className = "skhead";
+      var n = document.createElement("div"); n.className = "skname";
+      n.textContent = SK.dai[b] || b;
+      var k = document.createElement("div"); k.className = "skcount"; k.id = "sk-n-" + b;
+      h.appendChild(n); h.appendChild(k); c.appendChild(h);
+
+      var ta = document.createElement("textarea");
+      ta.id = "sk-t-" + b;
+      ta.rows = Math.max(6, (SK.ima[b] || []).length + 1);
+      ta.spellcheck = false;
+      ta.value = (SK.ima[b] || []).join("\n");
+      ta.addEventListener("input", function(){
+        SK.dirty[b] = true; skKazu(b); skJoutai(b, "保存していません。", "");
+      });
+      c.appendChild(ta);
+
+      var row = document.createElement("div"); row.className = "skrow";
+      var save = document.createElement("button");
+      save.type = "button"; save.className = "draftbtn"; save.textContent = "保存";
+      save.addEventListener("click", function(){ skHozon(b); });
+      var back = document.createElement("button");
+      back.type = "button"; back.className = "askbtn2";
+      back.textContent = "ファイルの中身に戻す";
+      back.addEventListener("click", function(){
+        SK.ima[b] = (SK.moto[b] || []).slice();
+        var t2 = $("sk-t-" + b);
+        if(t2) t2.value = SK.ima[b].join("\n");
+        SK.dirty[b] = true; skKazu(b);
+        skJoutai(b, "戻しました。保存を押すと残ります。", "");
+      });
+      var st = document.createElement("span");
+      st.className = "skstate"; st.id = "sk-s-" + b;
+      row.appendChild(save); row.appendChild(back); row.appendChild(st);
+      c.appendChild(row);
+      box.appendChild(c);
+      skKazu(b);
+    });
+    // db が返ってきたら ④ が「保存されます」に書きかえます。
+    // 返ってこない道（window.claude が無い・grant されない・落ちた）でも
+    // 「読み込んでいます…」のまま止まらないよう、先にこちらを出します。
+    var n1 = $("sk-note");
+    if(n1) n1.textContent = "入れ替えはこの表示の中だけです（このページには残りません）。";
+  }
+
+  var SK_ARU = skYomu();
+  if(SK_ARU) skEgaku();
+
   if(window.claude && window.claude.use){
     window.claude.use("db").then(function(db){
       if(!db){
@@ -21189,7 +21331,28 @@ if __name__ == "__main__":
       }catch(e){
         dbns.collection("irai").get().then(function(r){
           renderIrai(dbodies(r));
-        }).catch(function(){ renderIrai([]); });
+    }).catch(function(){ renderIrai([]); });
+      }
+
+          // ④ 紹介する作品（掲示板で入れ替えたもの）
+      if(SK_ARU){
+        var skNote = $("sk-note");
+        if(skNote) skNote.textContent = "入れ替えは、このページに保存されます。";
+        try{
+          dbns.collection("sakuhin").onSnapshot(function(r){
+            dbodies(r).forEach(function(d){
+              var b = d && d.ban;
+              if(!b || !SK.dai[b] || SK.dirty[b]) return;
+              if(!d.works || !d.works.length) return;
+              SK.ima[b] = [].slice.call(d.works);
+              var ta = $("sk-t-" + b);
+              if(ta && document.activeElement !== ta){
+                ta.value = SK.ima[b].join("\n");
+                skKazu(b);
+              }
+            });
+          });
+        }catch(e){}
       }
     }).catch(function(){
       $("savenote").textContent = "工程チェックはこの表示内だけで保持されます。";
