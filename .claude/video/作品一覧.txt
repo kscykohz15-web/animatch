@@ -218,9 +218,9 @@ fukusen	20	推しの子
 owari	1	カウボーイビバップ
 owari	2	灰羽連盟
 owari	3	CLANNAD AFTER STORY
-owari	4	Angel Beats!
-owari	5	あの日見た花の名前を僕達はまだ知らない。
-owari	6	鋼の錬金術師 FULLMETAL ALCHEMIST
+owari	4	鋼の錬金術師 FULLMETAL ALCHEMIST
+owari	5	Angel Beats!
+owari	6	あの日見た花の名前を僕達はまだ知らない。
 owari	7	魔法少女まどか☆マギカ
 owari	8	STEINS;GATE
 owari	9	四月は君の嘘
@@ -229,34 +229,34 @@ owari	11	宝石の国
 owari	12	ヴァイオレット・エヴァーガーデン
 owari	13	SSSS.GRIDMAN
 owari	14	ヴィンランド・サガ
-owari	15	86 エイティシックス
-owari	16	平家物語
-owari	17	サマータイムレンダ
-owari	18	オッドタクシー
+owari	15	オッドタクシー
+owari	16	86 エイティシックス
+owari	17	平家物語
+owari	18	サマータイムレンダ
 owari	19	進撃の巨人
 owari	20	チ。地球の運動について
 
 題	kakushi	ワクワクが止まらない　実力隠しアニメ20選
-kakushi	1	暗殺教室
-kakushi	2	ワンパンマン
-kakushi	3	モブサイコ100
-kakushi	4	魔法科高校の劣等生
+kakushi	1	デスノート
+kakushi	2	コードギアス 反逆のルルーシュ
+kakushi	3	魔法科高校の劣等生
+kakushi	4	暗殺教室
 kakushi	5	オーバーロード
-kakushi	6	無能なナナ
-kakushi	7	真の仲間じゃないと勇者のパーティーを追い出されたので
-kakushi	8	魔王学院の不適合者
-kakushi	9	SPY×FAMILY
-kakushi	10	スパイ教室
-kakushi	11	陰の実力者になりたくて！
-kakushi	12	英雄王、武を極めるため転生す
-kakushi	13	聖者無双
-kakushi	14	転生貴族の異世界冒険録
-kakushi	15	アラフォー賢者の異世界生活日記
-kakushi	16	最強陰陽師の異世界転生記
-kakushi	17	転生したら第七王子だったので
-kakushi	18	シャングリラ・フロンティア
-kakushi	19	サイレント・ウィッチ
-kakushi	20	ひきこまり吸血姫の悶々
+kakushi	6	ワンパンマン
+kakushi	7	モブサイコ100
+kakushi	8	約束のネバーランド
+kakushi	9	魔王学院の不適合者
+kakushi	10	無能なナナ
+kakushi	11	真の仲間じゃないと勇者のパーティーを追い出されたので
+kakushi	12	SPY×FAMILY
+kakushi	13	陰の実力者になりたくて！
+kakushi	14	スパイ教室
+kakushi	15	聖者無双
+kakushi	16	ひきこまり吸血姫の悶々
+kakushi	17	シャングリラ・フロンティア
+kakushi	18	薬屋のひとりごと
+kakushi	19	転生したら第七王子だったので
+kakushi	20	サイレント・ウィッチ 沈黙の魔女の隠しごと
 
 題	zoku2027	2027年放送決定　待ちきれない続編アニメ
 zoku2027	1	SAKAMOTO DAYS
