@@ -134,6 +134,9 @@ def main():
     if shiranai:
         shinu(u"data-board に知らない掲示板があります: " + u" ".join(sorted(shiranai)))
 
+    # 片方の掲示注にしか入らないデータの塊
+    KATAHOU = ((u"sakuhin-ichiran", u"osusume"),)
+
     dekita = []
     for (ban, out_name, title, eyebrow) in BAN:
         douga = [v for v in zenbu if v.ban == ban]
@@ -238,6 +241,21 @@ def main():
         for mm in re.finditer(r'<script type="text/plain" id="doc-[^"]+">\n(.)', s):
             if mm.group(1) == u"﻿":
                 shinu(u"台本に BOM が残っています。")
+
+        # ■ **片方だけのものが、もう片方に混ざっていないか**（2026-11-02）
+        #
+        # 作品一覧.txt の script を節に入れず裸で置いたので、
+        # **無職転生の掲示注にも入ってしまった**（おすすめの作品 240行）。
+        # 出す前の確認.py ① が「増えた:sakuhin-ichiran」で拾ってくれたが、
+        # あれは --moto を渡したときだけ動く。**ここで必ず見る。**
+        for (bid, dare) in KATAHOU:
+            aru = (u'id="%s"' % bid) in s
+            if aru and ban != dare:
+                shinu(u"%s は %s の掲示注だけのものですが、%s に入っています。\n"
+                      u"       節（<section data-board=\"%s\" hidden>）に入れてください。"
+                      % (bid, dare, out_name, dare))
+            if (not aru) and ban == dare:
+                shinu(u"%s が %s に入っていません。" % (bid, out_name))
 
         io.open(os.path.join(HERE, out_name), "w", encoding="utf-8", newline="\n").write(s)
         dekita.append((out_name, title, len(douga), len(s.encode("utf-8")) / 1048576.0))
