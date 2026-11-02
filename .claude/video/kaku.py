@@ -130,6 +130,25 @@ def load_yomi_dict(path):
             a, b = s.split(u"\t", 1)
             if a.strip():
                 dic.append((a.strip(), b.strip()))
+    # ■ 読みが句読点を落としていないか（2026-11-01）
+    #
+    #   本文は字幕用と読み上げ用で**完全に一致**させる決めごとです。
+    #   読みのほうで「。」や「！」を落とすと、文の数が合わなくなり
+    #   仕上げ.py ① が落ちます。ところが①は数しか言わないので、
+    #   どの語が原因かが分かりませんでした（令和版で 200 対 198）。
+    #   **ここで名前を出します。**
+    warui = []
+    for (a, b) in dic:
+        for c in u"。、！？":
+            if a.count(c) != b.count(c):
+                warui.append((a, b, c, a.count(c), b.count(c)))
+                break
+    if warui:
+        say(u"")
+        say(u"[注意] 読み辞書の読みが、句読点を落としています。")
+        say(u"       本文は完全に一致させる決まりなので、文の数が合わなくなります。")
+        for (a, b, c, n1, n2) in warui[:12]:
+            say(u"   %s → %s （%s の数が %d↔%d）" % (a, b, c, n1, n2))
     return dic, keep
 
 
@@ -515,7 +534,15 @@ def main():
             t, n = to_yomi(line, dic, keep)
             zen += n
             lines.append(t)
-        io.open(out, "w", encoding="utf-8-sig", newline="").write(
+        # ■ 台本に BOM を付けてはいけない（2026-11-01）
+        #
+        #   VOICEPEAK は台本を cp932 で読むので、先頭の見えない3バイトで
+        #   落ちます。v141 で読み上げ用8本に BOM が付いていた事故
+        #   （メモリ19節）の出どころは、**ここ**でした。
+        #   そのときはファイルから BOM を外しただけで、道具は直っていませんでした。
+        #   なので新しい台本を作るたびに、また付いていました。
+        #   仕上げ.py ⑫ が見張りますが、**付けない側で直すのが本筋**です。
+        io.open(out, "w", encoding="utf-8", newline="").write(
             u"\r\n".join(lines).strip() + u"\r\n")
         say(u"%s を書きました。" % out)
         say(u"「は」を %d か所、「ワ」に変えました。" % zen)
