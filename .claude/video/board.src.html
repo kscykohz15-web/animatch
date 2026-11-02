@@ -207,7 +207,8 @@
     color:var(--ink); border:1px solid var(--line-2); border-radius:9px; padding:10px 12px;
     font-family:inherit; font-size:13.5px; line-height:1.9; resize:vertical;}
   .skcard textarea:focus{outline:2px solid var(--accent); outline-offset:-1px;}
-  .skrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+  .skrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:2px;}
+  .sbody h4.skh{margin:6px 0 0; font-size:13px; color:var(--ink-2); font-weight:700;}
   .skstate{font-size:11.5px; color:var(--ink-3);}
   .skstate.ng{color:var(--alert); font-weight:700;}
   .skstate.ok{color:var(--ok); font-weight:700;}
@@ -313,7 +314,7 @@
     <div class="locked" id="locked"></div>
   </section>
 
-  <section data-board="mushoku" id="iraisec">
+  <section id="iraisec">
     <h2>台本の依頼</h2>
     <p class="lede">ここで出した依頼は、次にこのボードを開いたときに私(Claude)が読みます。
       直してほしい所は、具体的に書くほど正確に直せます。</p>
@@ -373,17 +374,8 @@
     <div class="savenote" id="savenote" style="margin-top:10px;">工程チェックの保存を準備中…</div>
   </section>
 
-  <section data-board="osusume" id="sakuhin">
-    <h2>紹介する作品（ここで入れ替えられます）</h2>
-    <p class="lede">各回で紹介する作品です。<b>1行に1作品</b>、紹介する順に並んでいます。
-      入れ替えたら「保存」を押してください。<b>チャットで言わなくても、こちらが気づきます。</b>
-      1時間おきに見回って、変わっていれば 作品一覧.txt と台本を作り直します
-      （急ぐときは、ひと言いただければすぐ見ます）。</p>
-    <div class="recs" id="sk-list"></div>
-    <div class="savenote" id="sk-note" style="margin-top:10px;"></div>
-
-    <script type="text/plain" id="sakuhin-ichiran">@@FILE:video/作品一覧.txt@@</script>
-  </section>
+  <!-- 紹介する作品の一覧。表と直す口は「台本インベントリ」のカードの中にあります。 -->
+  <script type="text/plain" id="sakuhin-ichiran">@@FILE:video/作品一覧.txt@@</script>
 
   <section>
     <h2>素材集め（単体で使いたいとき）</h2>
@@ -19180,12 +19172,69 @@ if __name__ == "__main__":
       body.appendChild(el("div","packnote",
         "zipが1つ届きます。解凍して「はじめる.bat」をダブルクリックすると、メニューが出ます。" +
         "台本の保存・音声作り・動画作り・画像の候補出しまで、そこから番号を選ぶだけです。" +
-        "作られる場所は C:\\Youtube動画\\無職転生\\" + s.name + "\\ です。"));
+        // おおもとの道は 置き場所_○○.txt にだけ書きます。
+        // build.py が @@OOMOTO@@ を掲示板ごとに置きかえます。
+        "作られる場所は @@OOMOTO@@\\" + s.name + "\\ です。"));
 
       body.appendChild(el("div","files", s.files));
+
+      // ■ 紹介する作品（作品一覧.txt に載っている回だけ）
+      //
+      //   本人の指定（2026-11-02）:
+      //   「それぞれの紹介タイトルをクリックすると、その変更ができ、
+      //     台本の修正ができるようにしてください」
+      //   下にあった独立の節をやめ、ここへ入れました。
+      if(SK.dai[id]){
+        body.appendChild(el("h4","skh","紹介する作品（1行に1作品・紹介する順）"));
+        var ta2 = document.createElement("textarea");
+        ta2.id = "sk-t-" + id;
+        ta2.rows = Math.max(6, (SK.ima[id] || []).length + 1);
+        ta2.spellcheck = false;
+        ta2.value = (id in SK.draft) ? SK.draft[id] : (SK.ima[id] || []).join("\n");
+        ta2.addEventListener("input", function(){
+          SK.draft[id] = ta2.value; SK.dirty[id] = true;
+          skKazu(id); skJoutai(id, "保存していません。", "");
+        });
+        body.appendChild(ta2);
+
+        var row2 = el("div","skrow");
+        var sv = el("button","draftbtn","保存");
+        sv.type = "button";
+        sv.addEventListener("click", function(){ skHozon(id); });
+        var bk = el("button","askbtn2","ファイルの中身に戻す");
+        bk.type = "button";
+        bk.addEventListener("click", function(){
+          SK.draft[id] = (SK.moto[id] || []).join("\n");
+          var t3 = $("sk-t-" + id);
+          if(t3) t3.value = SK.draft[id];
+          SK.dirty[id] = true; skKazu(id);
+          skJoutai(id, "戻しました。保存を押すと残ります。", "");
+        });
+        var cnt = el("span","skcount"); cnt.id = "sk-n-" + id;
+        var stt = el("span","skstate"); stt.id = "sk-s-" + id;
+        row2.appendChild(sv); row2.appendChild(bk);
+        row2.appendChild(cnt); row2.appendChild(stt);
+        body.appendChild(row2);
+        body.appendChild(el("div","packnote",
+          "入れ替えて保存すると、こちらが気づいて台本を作り直します"
+          + "（1時間おきに見ています。チャットで言わなくて大丈夫です）。"));
+      }
+
+      // ■ 台本を直す（依頼は下の「台本の依頼」に並びます）
+      var fixrow = el("div","btnrow");
+      var fx = el("button","askbtn2 pri","台本を直す");
+      fx.type = "button";
+      fx.addEventListener("click", function(){
+        openIrai({id: "inv-" + id, title: s.name, script: id}, body, fx);
+      });
+      fixrow.appendChild(fx);
+      body.appendChild(fixrow);
+
       d.appendChild(body);
       box.appendChild(d);
     });
+    // 作品の数は、要素が画面に入ってから数えます
+    SK.jun.forEach(function(b){ if($("sk-t-" + b)) skKazu(b); });
   }
 
   /* ---------- 台本ビューア ---------- */
@@ -19704,7 +19753,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v182";
+  var PACK_VERSION = "v183";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -21166,6 +21215,12 @@ if __name__ == "__main__":
   }
 
   if($("strip")){ renderStrip(); renderEpInfo(); renderRecs(); }
+  // ■ 紹介する作品は renderInv() が使うので、**その前に**読みます（2026-11-02）
+  //   var は巻き上がるので落ちずに undefined のまま読まれ、
+  //   「Cannot read properties of undefined」で画面が真っ白になった。
+  var SK = {jun:[], dai:{}, moto:{}, ima:{}, dirty:{}, draft:{}};
+  var SK_ARU = skYomu();
+
   renderInv(); renderStats();
 
   /* ---------- db: 工程チェック / 放送進捗 / 依頼 ---------- */
@@ -21224,7 +21279,6 @@ if __name__ == "__main__":
   //   置き場所は 作品一覧.txt **ただ一つ**。ここはその窓です。
   //   入れ替えたものは db（このページ）に残り、こちらが読んで
   //   作品一覧.txt と台本を作り直します。
-  var SK = {jun:[], dai:{}, moto:{}, ima:{}, dirty:{}};
 
   function skYomu(){
     var el = $("sakuhin-ichiran");
@@ -21293,58 +21347,7 @@ if __name__ == "__main__":
     });
   }
 
-  function skEgaku(){
-    var box = $("sk-list");
-    if(!box) return;
-    box.textContent = "";
-    SK.jun.forEach(function(b){
-      var c = document.createElement("div"); c.className = "skcard";
-      var h = document.createElement("div"); h.className = "skhead";
-      var n = document.createElement("div"); n.className = "skname";
-      n.textContent = SK.dai[b] || b;
-      var k = document.createElement("div"); k.className = "skcount"; k.id = "sk-n-" + b;
-      h.appendChild(n); h.appendChild(k); c.appendChild(h);
 
-      var ta = document.createElement("textarea");
-      ta.id = "sk-t-" + b;
-      ta.rows = Math.max(6, (SK.ima[b] || []).length + 1);
-      ta.spellcheck = false;
-      ta.value = (SK.ima[b] || []).join("\n");
-      ta.addEventListener("input", function(){
-        SK.dirty[b] = true; skKazu(b); skJoutai(b, "保存していません。", "");
-      });
-      c.appendChild(ta);
-
-      var row = document.createElement("div"); row.className = "skrow";
-      var save = document.createElement("button");
-      save.type = "button"; save.className = "draftbtn"; save.textContent = "保存";
-      save.addEventListener("click", function(){ skHozon(b); });
-      var back = document.createElement("button");
-      back.type = "button"; back.className = "askbtn2";
-      back.textContent = "ファイルの中身に戻す";
-      back.addEventListener("click", function(){
-        SK.ima[b] = (SK.moto[b] || []).slice();
-        var t2 = $("sk-t-" + b);
-        if(t2) t2.value = SK.ima[b].join("\n");
-        SK.dirty[b] = true; skKazu(b);
-        skJoutai(b, "戻しました。保存を押すと残ります。", "");
-      });
-      var st = document.createElement("span");
-      st.className = "skstate"; st.id = "sk-s-" + b;
-      row.appendChild(save); row.appendChild(back); row.appendChild(st);
-      c.appendChild(row);
-      box.appendChild(c);
-      skKazu(b);
-    });
-    // db が返ってきたら ④ が「保存されます」に書きかえます。
-    // 返ってこない道（window.claude が無い・grant されない・落ちた）でも
-    // 「読み込んでいます…」のまま止まらないよう、先にこちらを出します。
-    var n1 = $("sk-note");
-    if(n1) n1.textContent = "入れ替えはこの表示の中だけです（このページには残りません）。";
-  }
-
-  var SK_ARU = skYomu();
-  if(SK_ARU) skEgaku();
 
   if(window.claude && window.claude.use){
     window.claude.use("db").then(function(db){
@@ -21388,8 +21391,6 @@ if __name__ == "__main__":
 
           // ④ 紹介する作品（掲示板で入れ替えたもの）
       if(SK_ARU){
-        var skNote = $("sk-note");
-        if(skNote) skNote.textContent = "入れ替えは、このページに保存されます。";
         try{
           dbns.collection("sakuhin").onSnapshot(function(r){
             dbodies(r).forEach(function(d){
