@@ -135,17 +135,17 @@ rabukome	5	からかい上手の高木さん
 rabukome	6	恋は雨上がりのように
 rabukome	7	かぐや様は告らせたい
 rabukome	8	五等分の花嫁
-rabukome	9	宇崎ちゃんは遊びたい！
+rabukome	9	俺物語!!
 rabukome	10	ホリミヤ
 rabukome	11	古見さんは、コミュ症です。
 rabukome	12	その着せ替え人形は恋をする
 rabukome	13	山田くんとLv999の恋をする
-rabukome	14	久保さんは僕を許さない
+rabukome	14	青春ブタ野郎はバニーガール先輩の夢を見ない
 rabukome	15	僕の心のヤバイやつ
 rabukome	16	君のことが大大大大大好きな100人の彼女
 rabukome	17	ゆびさきと恋々
 rabukome	18	アオのハコ
-rabukome	19	時々ボソッとロシア語でデレる隣のアーリャさん
+rabukome	19	スキップとローファー
 rabukome	20	薫る花は凛と咲く
 
 題	heroine	心を持っていかれた　最高のヒロイン20選
@@ -236,7 +236,7 @@ owari	18	サマータイムレンダ
 owari	19	進撃の巨人
 owari	20	チ。地球の運動について
 
-題	kakushi	ワクワクが止まらない　実力隠しアニメ20選
+題	kakushi	バレた瞬間が気持ちよすぎる　実は最強アニメ20選
 kakushi	1	デスノート
 kakushi	2	コードギアス 反逆のルルーシュ
 kakushi	3	魔法科高校の劣等生
@@ -247,15 +247,15 @@ kakushi	7	モブサイコ100
 kakushi	8	約束のネバーランド
 kakushi	9	魔王学院の不適合者
 kakushi	10	無能なナナ
-kakushi	11	真の仲間じゃないと勇者のパーティーを追い出されたので
+kakushi	11	ようこそ実力至上主義の教室へ
 kakushi	12	SPY×FAMILY
 kakushi	13	陰の実力者になりたくて！
-kakushi	14	スパイ教室
-kakushi	15	聖者無双
-kakushi	16	ひきこまり吸血姫の悶々
+kakushi	14	DARKER THAN BLACK -黒の契約者-
+kakushi	15	とある魔術の禁書目録
+kakushi	16	伝説の勇者の伝説
 kakushi	17	シャングリラ・フロンティア
 kakushi	18	薬屋のひとりごと
-kakushi	19	転生したら第七王子だったので
+kakushi	19	斉木楠雄のΨ難
 kakushi	20	サイレント・ウィッチ 沈黙の魔女の隠しごと
 
 題	zoku2027	2027年放送決定　待ちきれない続編アニメ
