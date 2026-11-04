@@ -20,6 +20,23 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import OpenAI from "openai";
 
+// ⚠️⚠️ 旧採点基準（0〜10の整数）のスクリプト ⚠️⚠️
+// 現行の採点基準は docs/scoring-criteria-v2.md（0.1刻み・厳しめ）。
+// このスクリプトを走らせると小数スコアが整数に丸められ、本人評価(rating_source='user')も上書きされる。
+if (String(process.env.ALLOW_LEGACY_SCORING ?? "false") !== "true") {
+  console.error(
+    [
+      "⛔ 旧採点基準のスクリプトなので実行を中止しました。",
+      "   全件再採点    : node scripts/step5-ai-score10-v2-fullscan.mjs",
+      "   新規作品のみ  : node scripts/step6-ai-score10-v2-delta.mjs",
+      "   分布の確認    : node scripts/report-score-distribution.mjs",
+      "   どうしても旧基準で実行する場合は ALLOW_LEGACY_SCORING=true を設定してください。",
+    ].join("\n")
+  );
+  process.exit(1);
+}
+
+
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const SUPABASE_URL =
