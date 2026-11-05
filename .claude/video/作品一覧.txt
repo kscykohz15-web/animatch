@@ -27,8 +27,8 @@ yohaku	7	TEXHNOLYZE
 yohaku	8	蟲師
 yohaku	9	エルゴプラクシー
 yohaku	10	電脳コイル
-yohaku	11	モノノ怪
-yohaku	12	ぼくらの
+yohaku	11	ぼくらの
+yohaku	12	モノノ怪
 yohaku	13	四畳半神話大系
 yohaku	14	魔法少女まどか☆マギカ
 yohaku	15	輪るピングドラム
@@ -41,12 +41,12 @@ yohaku	20	平家物語
 題	saikin	ここ最近の名作20選
 saikin	1	葬送のフリーレン
 saikin	2	ダンジョン飯
-saikin	3	忘却バッテリー
-saikin	4	狼と香辛料
+saikin	3	僕の心のヤバイやつ 第2期
+saikin	4	忘却バッテリー
 saikin	5	響け！ユーフォニアム3
-saikin	6	【推しの子】第2期
-saikin	7	負けヒロインが多すぎる！
-saikin	8	僕の心のヤバイやつ 第2期
+saikin	6	狼と香辛料 MERCHANT MEETS THE WISE WOLF
+saikin	7	【推しの子】第2期
+saikin	8	負けヒロインが多すぎる！
 saikin	9	ダンダダン
 saikin	10	Re:ゼロから始める異世界生活 第3期
 saikin	11	チ。地球の運動について
@@ -62,24 +62,24 @@ saikin	20	光が死んだ夏
 
 題	narou	なろう系アニメ総まとめ
 narou	1	ログ・ホライズン
-narou	2	オーバーロード
-narou	3	この素晴らしい世界に祝福を！
-narou	4	シャングリラ・フロンティア
-narou	5	転生したらスライムだった件
-narou	6	無職転生
-narou	7	乙女ゲー世界はモブに厳しい世界です
-narou	8	転生したら第七王子だったので
-narou	9	Re:ゼロから始める異世界生活
-narou	10	盾の勇者の成り上がり
-narou	11	陰の実力者になりたくて！
-narou	12	最凶の支援職【話術士】
-narou	13	異世界居酒屋のぶ
-narou	14	本好きの下剋上
-narou	15	薬屋のひとりごと
-narou	16	とんでもスキルで異世界放浪メシ
-narou	17	魔法科高校の劣等生
-narou	18	ありふれた職業で世界最強
-narou	19	魔王学院の不適合者
+narou	2	魔法科高校の劣等生
+narou	3	オーバーロード
+narou	4	この素晴らしい世界に祝福を！
+narou	5	Re:ゼロから始める異世界生活
+narou	6	異世界居酒屋のぶ
+narou	7	転生したらスライムだった件
+narou	8	盾の勇者の成り上がり
+narou	9	ありふれた職業で世界最強
+narou	10	本好きの下剋上
+narou	11	魔王学院の不適合者
+narou	12	無職転生
+narou	13	乙女ゲー世界はモブに厳しい世界です
+narou	14	陰の実力者になりたくて！
+narou	15	とんでもスキルで異世界放浪メシ
+narou	16	シャングリラ・フロンティア
+narou	17	薬屋のひとりごと
+narou	18	転生したら第七王子だったので
+narou	19	最凶の支援職【話術士】
 narou	20	サイレント・ウィッチ
 
 題	heisei	平成版　最高に面白かったアニメ20選
@@ -151,41 +151,41 @@ rabukome	20	薫る花は凛と咲く
 題	heroine	心を持っていかれた　最高のヒロイン20選
 heroine	1	新世紀エヴァンゲリオン
 heroine	2	CLANNAD
-heroine	3	とらドラ！
-heroine	4	STEINS;GATE
-heroine	5	やはり俺の青春ラブコメはまちがっている。
-heroine	6	冴えない彼女の育てかた
-heroine	7	Re:ゼロから始める異世界生活
-heroine	8	ダーリン・イン・ザ・フランキス
-heroine	9	かぐや様は告らせたい
-heroine	10	五等分の花嫁
-heroine	11	鬼滅の刃
-heroine	12	その着せ替え人形は恋をする
-heroine	13	SPY×FAMILY
-heroine	14	リコリス・リコイル
-heroine	15	ぼっち・ざ・ろっく！
-heroine	16	チェンソーマン
-heroine	17	推しの子
-heroine	18	葬送のフリーレン
-heroine	19	薬屋のひとりごと
-heroine	20	狼と香辛料
+heroine	3	狼と香辛料
+heroine	4	とらドラ！
+heroine	5	STEINS;GATE
+heroine	6	やはり俺の青春ラブコメはまちがっている。
+heroine	7	冴えない彼女の育てかた
+heroine	8	Re:ゼロから始める異世界生活
+heroine	9	ダーリン・イン・ザ・フランキス
+heroine	10	かぐや様は告らせたい
+heroine	11	五等分の花嫁
+heroine	12	鬼滅の刃
+heroine	13	その着せ替え人形は恋をする
+heroine	14	SPY×FAMILY
+heroine	15	リコリス・リコイル
+heroine	16	ぼっち・ざ・ろっく！
+heroine	17	チェンソーマン
+heroine	18	推しの子
+heroine	19	葬送のフリーレン
+heroine	20	薬屋のひとりごと
 
 題	kakusei	鳥肌が止まらない　激アツすぎた覚醒20選
 kakusei	1	幽☆遊☆白書
-kakusei	2	NARUTO
-kakusei	3	BLEACH
-kakusei	4	ONE PIECE
-kakusei	5	鋼の錬金術師 FULLMETAL ALCHEMIST
-kakusei	6	コードギアス 反逆のルルーシュ
-kakusei	7	天元突破グレンラガン
-kakusei	8	七つの大罪
-kakusei	9	ソードアート・オンライン
-kakusei	10	オーバーロード
-kakusei	11	Re:ゼロから始める異世界生活
-kakusei	12	盾の勇者の成り上がり
-kakusei	13	僕のヒーローアカデミア
-kakusei	14	ワンパンマン
-kakusei	15	進撃の巨人
+kakusei	2	ONE PIECE
+kakusei	3	NARUTO
+kakusei	4	BLEACH
+kakusei	5	コードギアス 反逆のルルーシュ
+kakusei	6	天元突破グレンラガン
+kakusei	7	鋼の錬金術師 FULLMETAL ALCHEMIST
+kakusei	8	ソードアート・オンライン
+kakusei	9	進撃の巨人
+kakusei	10	七つの大罪
+kakusei	11	オーバーロード
+kakusei	12	ワンパンマン
+kakusei	13	Re:ゼロから始める異世界生活
+kakusei	14	僕のヒーローアカデミア
+kakusei	15	盾の勇者の成り上がり
 kakusei	16	鬼滅の刃
 kakusei	17	呪術廻戦
 kakusei	18	チェンソーマン
@@ -196,22 +196,22 @@ kakusei	20	ダンダダン
 fukusen	1	新世紀エヴァンゲリオン
 fukusen	2	ひぐらしのなく頃に
 fukusen	3	CLANNAD
-fukusen	4	Angel Beats!
-fukusen	5	魔法少女まどか☆マギカ
-fukusen	6	STEINS;GATE
-fukusen	7	氷菓
-fukusen	8	PSYCHO-PASS サイコパス
-fukusen	9	四畳半神話大系
-fukusen	10	約束のネバーランド
+fukusen	4	四畳半神話大系
+fukusen	5	Angel Beats!
+fukusen	6	魔法少女まどか☆マギカ
+fukusen	7	STEINS;GATE
+fukusen	8	氷菓
+fukusen	9	PSYCHO-PASS サイコパス
+fukusen	10	進撃の巨人
 fukusen	11	Re:ゼロから始める異世界生活
-fukusen	12	進撃の巨人
-fukusen	13	無職転生
-fukusen	14	東京リベンジャーズ
-fukusen	15	86 エイティシックス
-fukusen	16	Vivy -Fluorite Eye's Song-
-fukusen	17	サマータイムレンダ
+fukusen	12	約束のネバーランド
+fukusen	13	呪術廻戦
+fukusen	14	無職転生
+fukusen	15	東京リベンジャーズ
+fukusen	16	86 エイティシックス
+fukusen	17	Vivy -Fluorite Eye's Song-
 fukusen	18	オッドタクシー
-fukusen	19	呪術廻戦
+fukusen	19	サマータイムレンダ
 fukusen	20	推しの子
 
 題	owari	完璧な終わり方　余韻がやばすぎるアニメ20選
@@ -220,20 +220,20 @@ owari	2	灰羽連盟
 owari	3	CLANNAD AFTER STORY
 owari	4	鋼の錬金術師 FULLMETAL ALCHEMIST
 owari	5	Angel Beats!
-owari	6	あの日見た花の名前を僕達はまだ知らない。
-owari	7	魔法少女まどか☆マギカ
-owari	8	STEINS;GATE
-owari	9	四月は君の嘘
-owari	10	少女終末旅行
-owari	11	宝石の国
-owari	12	ヴァイオレット・エヴァーガーデン
-owari	13	SSSS.GRIDMAN
-owari	14	ヴィンランド・サガ
-owari	15	オッドタクシー
-owari	16	86 エイティシックス
-owari	17	平家物語
-owari	18	サマータイムレンダ
-owari	19	進撃の巨人
+owari	6	魔法少女まどか☆マギカ
+owari	7	STEINS;GATE
+owari	8	あの日見た花の名前を僕達はまだ知らない。
+owari	9	進撃の巨人
+owari	10	四月は君の嘘
+owari	11	少女終末旅行
+owari	12	宝石の国
+owari	13	ヴァイオレット・エヴァーガーデン
+owari	14	SSSS.GRIDMAN
+owari	15	ヴィンランド・サガ
+owari	16	オッドタクシー
+owari	17	86 エイティシックス
+owari	18	平家物語
+owari	19	サマータイムレンダ
 owari	20	チ。地球の運動について
 
 題	kakushi	バレた瞬間が気持ちよすぎる　実は最強アニメ20選

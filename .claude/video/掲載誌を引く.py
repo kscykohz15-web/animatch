@@ -144,6 +144,11 @@ def hiku(kiji):
         if m:
             kiji = m.group(1).strip()
             continue
+        # **曖昧さ回避のページは記事ではない**（2026-11-05）。
+        # 「涼宮ハルヒの憂鬱」は一覧ページで、本体は「(小説)」のほう。
+        # ここで止まっていたので、「無い」と返して次の候補名へ進める。
+        if re.search(u"\\{\\{(aimai|Aimai|曖昧さ回避|dabpage)", t):
+            return u"", u"曖昧さ回避のページです"
         return t, u""
     return t, u""
 
@@ -159,13 +164,18 @@ def kirei(v):
     v = v.split(u"→")[-1].split(u"、")[0]
     nakami = re.findall(u"\\[\\[([^\\]]+)\\]\\]", v)
     if nakami:
-        v = nakami[0].split(u"|")[0]
+        # 「[[週刊ヤングジャンプ#となりのヤングジャンプ|となりのヤングジャンプ]]」
+        # のように節へのリンクになっているときは、**縦棒の右（表示名）**が
+        # 本当の誌名。前は左を取って「週刊ヤングジャンプ」にしていた
+        # （ワンパンマンで間違えた・2026-11-05）。
+        bu = nakami[0].split(u"|")
+        v = bu[-1] if (len(bu) > 1 and u"#" in bu[0]) else bu[0]
     v = v.replace(u"[[", u"").replace(u"]]", u"").replace(u"'''", u"")
     v = v.split(u"#")[0]
     # 記事名の後ろの但し書きと、ウィキの注記を落とす
     v = re.sub(u"[ 　]*[（(](雑誌|漫画|小説|文庫本|レーベル)[）)]", u"", v)
     # 別の版のレーベルは要らない（本好きの下剋上の「児童書版：TOジュニア文庫」）
-    if re.match(u"^(児童書版|文庫版|新装版|完全版)[：:]", v):
+    if re.match(u"^(児童書版|文庫版|新装版|完全版|ソフトカバー版|愛蔵版)[：:]", v):
         return u""
     v = re.sub(u"^(単行本版)[：:]", u"", v)
     return v.strip().strip(u"-–—").strip()
@@ -191,38 +201,49 @@ def kirei_zenbu(raw):
 
 
 def saguru(t, gensaku):
-    u"""原作の種類で、見る欄と物差しを変えて探す。
+    u"""原作の種類で見る欄を変え、**候補を全部**「｜」で繋いで返す。
 
-    1つの欄に雑誌が何本も並ぶときの選び方は、原作の種類で逆になる。
+    ■ 1つに決めるのをやめた（2026-11-05・4回作り直した）
+      1つの欄に雑誌が並ぶとき、どれが本当の掲載誌かは機械では決まらない。
 
-      漫画   → **最後** を取る。移った順に並ぶので、最後が今の掲載誌
-               （斉木楠雄は「少年ジャンプNEXT!→週刊少年ジャンプ」、
-                かぐや様は「ミラクルジャンプ→週刊ヤングジャンプ」）
-      ラノベ → **最初** を取る。原作のレーベルが先で、あとに
-               児童書版などが並ぶ（本好きの下剋上の TOジュニア文庫）
+        最初を取る → 斉木楠雄が「少年ジャンプNEXT!」、
+                     かぐや様が「ミラクルジャンプ」（どちらも創刊時の掲載誌）
+        最後を取る → 進撃の巨人が「別冊少年マガジン」から
+                     「週刊少年マガジン」に、推しの子が
+                     「週刊ヤングジャンプ」から「少年ジャンプ+」に化けた
+        1つだけ通す → 35本が「？」になった。鬼滅も進撃も薬屋も落ちる
+
+      **決めるのは書く側の仕事。** ここは記事が挙げている誌名を全部渡す。
+      放送情報検査.py は、台本の誌名が**そのどれかと合っていれば**通す。
+      これで「記事に書いていない誌名」だけが落ちる。
     """
     if gensaku in (u"ライトノベル", u"小説", u"ウェブ小説"):
         ran = (u"レーベル", u"レーベル1")
-        rashii, dame, ushiro = BUNKO, None, False
+        rashii, dame = BUNKO, None
     else:
         ran = (u"掲載誌", u"掲載誌1", u"雑誌")
-        rashii, dame, ushiro = ZASSHI, BUNKO, True
+        rashii, dame = ZASSHI, BUNKO
+    out = []
     for k in ran:
         for m in re.finditer(u"^\\s*\\|\\s*" + k + u"\\s*=\\s*(.*)$", t, re.M):
-            tooru = [v for v in kirei_zenbu(m.group(1))
-                     if rashii.search(v) and not (dame and dame.search(v))]
-            if tooru:
-                return tooru[-1] if ushiro else tooru[0]
-    # **Category から拾うのはやめた**（2026-11-05）。
-    # 分類のカテゴリを雑誌名と間違える事故が止まらなかった。
-    #   オーバーロード  → 「ライトノベルを原作とする漫画作品」
-    #   ダンジョン飯    → 「ハイファンタジー漫画」
-    #   灰羽連盟        → 「ラディクスエースエンタテインメント」
-    #   少女終末旅行    → 「BUNCH COMICSのアニメ作品」
-    # 落とす言葉を足しても次の形がすり抜ける。
-    # **infobox の 掲載誌／レーベル に無ければ「？」。**
-    # 「？」の作品は、台本に掲載誌を書かない。それでいい。
-    return u""
+            for v in kirei_zenbu(m.group(1)):
+                if not rashii.search(v) or (dame and dame.search(v)):
+                    continue
+                v = KAIMEI.get(v, v)
+                if v not in out:
+                    out.append(v)
+    # 小説が原作のときだけ、infobox が無い記事の Category から文庫を拾う。
+    # 「ヴァイオレット・エヴァーガーデン」は infobox が無く、
+    # [[Category:KAエスマ文庫]] しか手がかりがない。
+    # **雑誌側ではやらない。** 分類名を雑誌名と間違える事故は全部そちらで出た
+    # （「ハイファンタジー漫画」「BUNCH COMICSのアニメ作品」）。
+    if not out and rashii is BUNKO:
+        for m in re.finditer(u"\\[\\[Category:([^\\]|]+)\\]\\]", t):
+            c = m.group(1).strip()
+            if len(c) <= 30 and BUNKO.search(c) and not BUNRUI.search(c):
+                out.append(c)
+                break
+    return u"｜".join(out[:5])
 
 
 def main():
@@ -231,7 +252,8 @@ def main():
     except Exception:
         pass
     gyou = [ln.rstrip(u"\n") for ln in io.open(JOHO, encoding="utf-8-sig")]
-    nozomi = list(sys.argv[1:])
+    zenbu = u"--全部" in sys.argv or "--all" in sys.argv
+    nozomi = [a for a in sys.argv[1:] if not a.startswith("--")]
     kazu = {u"引けた": 0, u"だめ": 0, u"そのまま": 0}
     out = []
     for g in gyou:
@@ -247,7 +269,7 @@ def main():
             out.append(u"\t".join(c))
             kazu[u"そのまま"] += 1
             continue
-        if not nozomi and ima and ima != u"？":
+        if not nozomi and not zenbu and ima and ima != u"？":
             out.append(u"\t".join(c))
             kazu[u"そのまま"] += 1
             continue
@@ -267,9 +289,18 @@ def main():
             kazu[u"引けた"] += 1
             say(u"○ %s → %s" % (na, v))
         else:
-            c[9] = u"？"
-            kazu[u"だめ"] += 1
-            say(u"× %s → 引けません %s" % (na, err))
+            # **引けなかったときに前の値を消さない**（2026-11-05）。
+            # ウィキが 429 を返すことが多いので、消すと引き直すたびに
+            # 入っていた誌名が失われます。
+            if ima and ima != u"？":
+                c[9] = ima
+                kazu[u"そのまま"] += 1
+                say(u"… %s → 引けません（前の「%s」を残します） %s"
+                    % (na, ima, err))
+            else:
+                c[9] = u"？"
+                kazu[u"だめ"] += 1
+                say(u"× %s → 引けません %s" % (na, err))
         out.append(u"\t".join(c))
 
     io.open(JOHO, "w", encoding="utf-8").write(u"\n".join(out) + u"\n")

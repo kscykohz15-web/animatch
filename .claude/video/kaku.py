@@ -149,6 +149,13 @@ def load_yomi_dict(path):
         say(u"       本文は完全に一致させる決まりなので、文の数が合わなくなります。")
         for (a, b, c, n1, n2) in warui[:12]:
             say(u"   %s → %s （%s の数が %d↔%d）" % (a, b, c, n1, n2))
+    # ■ 長い語を先に当てる（2026-11-05）
+    #
+    #   辞書は上から順に当てるので、短い語が先にあると長い語に届きません。
+    #   「CLANNAD」が先にあったので「CLANNAD AFTER STORY」が
+    #   「クラナド AFTER STORY」になり、**英字が読み上げに残りました。**
+    #   辞書に足す場所を気にしなくてよいように、ここで並べ替えます。
+    dic.sort(key=lambda ab: -len(ab[0]))
     return dic, keep
 
 

@@ -36,9 +36,9 @@ SEISAKU = {
     u"ぴえろ": u"Studio Pierrot", u"サイエンスサル": u"Science SARU",
     u"ホワイトフォックス": u"WHITE FOX", u"動画工房": u"Doga Kobo",
     u"キネマシトラス": u"Kinema Citrus", u"デイヴィッドプロダクション": u"David Production",
-    u"ティーエムエス": u"TMS Entertainment", u"エイトビット": u"8bit",
+    u"ティーエムエス": u"TMS Entertainment", u"エイトビット": u"8-bit",
     u"東映アニメーション": u"Toei Animation", u"フィール": u"feel.",
-    u"エイトビット": u"8bit", u"エー・シー・ジー・ティー": u"A.C.G.T.",
+    u"エイトビット": u"8-bit", u"エー・シー・ジー・ティー": u"A.C.G.T.",
     u"アジアド": u"Ajiado", u"アートランド": u"Artland", u"アスリード": u"Asread",
     u"ビブリーアニメーションスタジオ": u"Bibury Animation Studios",
     u"ブレインズ・ベース": u"Brain's Base",
@@ -57,7 +57,8 @@ SEISAKU = {
     u"手塚プロダクション": u"Tezuka Productions",
     u"トライアングルスタッフ": u"Triangle Staff",
     u"つむぎ秋田アニメラボ": u"Tsumugi Akita Anime Lab",
-    u"ボンズフィルム": u"bones film",
+    u"ボンズフィルム": u"bones film", u"パッショーネ": u"Passione",
+    u"エンジ": u"ENGI", u"エニシヤ": u"ENISHIYA",
 }
 # 台本の言い方と、AniList の原作の種類
 GENSAKU = {u"漫画": u"漫画", u"ライトノベル": u"ライトノベル", u"小説": u"小説",
@@ -85,7 +86,7 @@ def narasu(x):
 def narasu2(x):
     u"""掲載誌の突き合わせ用。感嘆符・中黒・空白・大小文字をそろえる。
     台本では「月刊スピリッツ」、ウィキでは「月刊!スピリッツ」。"""
-    return re.sub(u"[\\s\\u3000!！?？・\\-ー—–]+", u"", x).lower()
+    return re.sub(u"[\\s\\u3000!！?？・\\-ー—–+＋☆・:：;；]+", u"", x).lower()
 
 
 def yomu_joho():
@@ -100,7 +101,8 @@ def yomu_joho():
         if len(c) >= 8:
             out[c[0]] = {u"年": c[1], u"季": c[2], u"話数": c[3],
                          u"原作": c[4], u"制作": c[5],
-                         u"掲載誌": c[9] if len(c) >= 10 else u""}
+                         u"掲載誌": c[9] if len(c) >= 10 else u"",
+                         u"なろう": c[10] if len(c) >= 11 else u""}
     return out
 
 
@@ -163,7 +165,9 @@ def main():
         mc = (re.search(u"制作は([^、。]+?)のオリジナル作品", h)
               or re.search(u"制作は([^、。]+)", h))
         if mc:
-            kaku = [x for x in re.split(u"と|／|/", mc.group(1)) if x]
+            # 「制作はマッドハウスです。」の「です」を落とす
+            moto = re.sub(u"(です|でした|になります)$", u"", mc.group(1))
+            kaku = [x for x in re.split(u"と|／|/", moto) if x]
             shirabe = [narasu(x) for x in j[u"制作"].split(u"／")]
             for k in kaku:
                 k = k.strip()
@@ -187,23 +191,30 @@ def main():
         if u"オリジナル" in h and j[u"原作"] != u"オリジナル":
             warui.append(u"%s … オリジナルと書いていますが、調べでは %s"
                          % (na, j[u"原作"]))
+        # 「小説家になろう発」は、**引いて確かめたものだけ**通す
+        # （2026-11-05）。前は一律で落としていたが、なろう系の回では
+        # 1本ずつ言うことになるので、なろうを引く.py が入れた11列目を見る。
+        # オーバーロードは別の投稿サイト発で、そこを間違えていた。
         if u"なろう" in h:
-            warui.append(u"%s … 「なろう」と書いています。**こちらで確かめられません。"
-                         u"書かないこと**" % na)
+            if j.get(u"なろう") != u"はい":
+                warui.append(u"%s … 「なろう」と書いていますが、調べでは %s です。"
+                             u"**なろうを引く.py で「はい」のものだけ書くこと**"
+                             % (na, j.get(u"なろう") or u"未確認"))
 
         # 掲載誌／レーベル（台本に「◯◯連載の漫画が」「◯◯のライトノベルが」）
         # **引けていないものを書いたら落とす。** 原作者名の代わりに出す所なので、
         # ここを記憶で書くと、読み間違いと同じ事故になる（紹介の型 9節①）。
         mk = (re.search(u"([^、。]+?)連載の(?:漫画|ライトノベル|小説)が原作", h)
               or re.search(u"、([^、。]+?)の(?:ライトノベル|小説)が原作", h))
-        if mk:
+        if mk and u"なろう" not in mk.group(1):
             kaita = mk.group(1).strip()
             shirabe = j[u"掲載誌"].strip()
             if not shirabe or shirabe in (u"？", u"－"):
                 warui.append(u"%s … 掲載誌「%s」は放送情報.txt に入っていません。"
                              u"**掲載誌を引く.py で引けたものだけ書くこと**"
                              % (na, kaita))
-            elif narasu2(kaita) != narasu2(shirabe):
+            elif narasu2(kaita) not in [narasu2(x)
+                                        for x in shirabe.split(u"｜")]:
                 warui.append(u"%s … 掲載誌が台本 %s／調べ %s"
                              % (na, kaita, shirabe))
 

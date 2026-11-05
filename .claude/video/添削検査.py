@@ -57,6 +57,10 @@ def miru(path):
     # ② 原作者の名前
     for g in d:
         for m in re.finditer(u"([^\\s、。]{1,12})先生", g):
+            # 助詞で終わる形は人名ではない（「隠しているのが先生」で
+            # 一度誤検知した・2026-11-05）
+            if re.search(u"[がはのもでとをにへや]$", m.group(1)):
+                continue
             warui.append(u"原作者らしい名前「%s先生」。**制作会社＋掲載誌に"
                          u"置きかえること**" % m.group(1))
         if re.search(u"原作は[^、。]*(先生|さん|氏)", g):
@@ -87,9 +91,13 @@ def miru(path):
             warui.append(u"あらすじに立場が付いていません: " + g[:46])
 
     # ⑥ 100字超
-    for s in re.split(u"(?<=。)", t.replace(u"\n", u"")):
-        if len(s) > 100:
-            warui.append(u"%d字の文があります: %s" % (len(s), s[:40]))
+    #   **段落ごとに切る**（2026-11-05）。前は本文をまるごと繋いでから
+    #   「。」で切っていたので、句点の無い作品名の行が次の段落と
+    #   くっついて、ありもしない107字の文が出ていた。
+    for g in d:
+        for s in re.split(u"(?<=。)", g):
+            if len(s) > 100:
+                warui.append(u"%d字の文があります: %s" % (len(s), s[:40]))
 
     # ⑦ 段落
     if len(d) != 109:

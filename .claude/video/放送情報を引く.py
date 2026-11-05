@@ -69,6 +69,10 @@ BETSUMEI = {
 }
 
 
+# OVA も候補に入れる作品（テレビ版が別物として存在するもの）
+OVA_MO = {u"フリクリ"}
+
+
 def narasu(t):
     u"""名前をそろえる。全角と半角、記号、空白、大文字小文字の違いを消す。"""
     if not t:
@@ -111,7 +115,12 @@ def hiku(na):
             #
             #   前作の有無では決まらない。**頼んだ名前と題名が一致するか**で
             #   選ぶ。一致が無いときだけ、形と古さで選ぶ。
+            # ■ OVA も見る作品（2026-11-05）
+            #   「フリクリ」は2000年のOVAが本体で、2018年のテレビ版は別物。
+            #   テレビだけを見ていると 2018年 全6話 になる。
             RUI = ("TV", "TV_SHORT", "ONA")
+            if na in OVA_MO:
+                RUI = RUI + ("OVA",)
             nokori = [m for m in ms if m.get("format") in RUI] or ms
             pitari = [m for m in nokori
                       if narasu(m["title"].get("native")) == narasu(sagasu)
@@ -144,13 +153,26 @@ def yomu():
 
 
 def kaku(d):
+    u"""書き戻す。
+
+    ■ 10列目（掲載誌）を消さないこと（2026-11-05）
+      掲載誌は 掲載誌を引く.py がウィキペディアから入れた列で、
+      こちらは触りません。前は9列だけ書いていたので、
+      **この道具を回すと掲載誌が全部消える**所でした。
+    """
     with io.open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(u"# 放送情報 ─ AniList から引いたもの（放送情報を引く.py）\n")
         f.write(u"# **こちらの記憶で書かない。台本の数字はここと合わせる。**\n")
         f.write(u"# 年が ？ のものは引けなかった。台本に数字を書かない。\n")
-        f.write(u"# 作品名\t年\t季\t話数\t原作\t制作\t続編数\t向こうの題名\t形式\n")
+        f.write(u"# 10列目の掲載誌は 掲載誌を引く.py、11列目のなろうは\n")
+        f.write(u"# なろうを引く.py が入れる（ここでは触らない）。\n")
+        f.write(u"# 作品名\t年\t季\t話数\t原作\t制作\t続編数\t向こうの題名"
+                u"\t形式\t掲載誌\tなろう\n")
         for k in sorted(d):
-            f.write(u"\t".join(d[k]) + u"\n")
+            c = list(d[k])
+            while len(c) < 11:
+                c.append(u"")
+            f.write(u"\t".join(c) + u"\n")
 
 
 def sakuhin_ichiran():
@@ -182,6 +204,11 @@ def main():
     say(u"%d作品を AniList から引きます（1作品に1秒ほど）" % len(hoshii))
     hikenai = []
     for i, na in enumerate(hoshii):
+        # ■ 10列目(掲載誌)と11列目(なろう)は別の道具が入れた列なので、
+        #   引き直しても**そのまま持ち越す**（2026-11-05）。
+        #   前は9列で上書きしていたので、フリクリを引き直したときに
+        #   その2列が消えました。
+        nokosu = list(mochi.get(na, [])[9:])
         m = hiku(na)
         if not m or not m.get("startDate", {}).get("year"):
             hikenai.append(na)
@@ -199,6 +226,7 @@ def main():
                          st, u"%d" % zoku,
                          (m["title"].get("native") or m["title"].get("romaji") or u""),
                          m.get("format") or u"？"]
+        mochi[na] = mochi[na] + nokosu
         if (i + 1) % 20 == 0:
             say(u"  %d / %d" % (i + 1, len(hoshii)))
             kaku(mochi)
@@ -208,7 +236,8 @@ def main():
     say(u"")
     say(u"放送情報.txt に %d作品ぶん入っています。" % len(mochi))
     hen = [v for v in mochi.values()
-           if len(v) > 8 and v[8] not in (u"TV", u"TV_SHORT", u"ONA", u"？")]
+           if len(v) > 8 and v[8] not in (u"TV", u"TV_SHORT", u"ONA", u"？")
+           and v[0] not in OVA_MO]
     if hikenai or hen:
         say(u"")
         if hikenai:
