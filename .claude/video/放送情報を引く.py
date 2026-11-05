@@ -23,6 +23,7 @@ u"""放送年・季・話数・原作の種類・制作会社を **AniList か�
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -31,7 +32,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, u"放送情報.txt")
 ICHIRAN = os.path.join(HERE, u"作品一覧.txt")
 
-Q = (u"query ($s: String) { Page(perPage: 1) { media(search: $s, type: ANIME, "
+Q = (u"query ($s: String) { Page(perPage: 8) { media(search: $s, type: ANIME, "
      u"sort: SEARCH_MATCH) { format episodes status source "
      u"title { romaji native } startDate { year month } "
      u"studios(isMain: true) { nodes { name } } "
@@ -55,9 +56,22 @@ def say(m):
     sys.stdout.flush()
 
 
+# ■ そのままでは当たらない作品の、検索に使う名前
+BETSUMEI = {
+    u"エルゴプラクシー": u"Ergo Proxy",
+    u"サカモトデイズ": u"SAKAMOTO DAYS",
+    u"Re:ゼロから始める異世界生活 第3期": u"Re:Zero kara Hajimeru Isekai Seikatsu 3rd Season",
+    u"チ。地球の運動について": u"Chi. Chikyuu no Undou ni Tsuite",
+    u"幽☆遊☆白書": u"Yuu Yuu Hakusho",
+    u"怪獣8号": u"Kaiju No. 8",
+    u"ぼっち・ざ・ろっく！": u"Bocchi the Rock!",
+    u"かぐや様は告らせたい": u"Kaguya-sama wa Kokurasetai",
+}
+
+
 def hiku(na):
     u"""1作品引く。curl を使う（urllib は 403 になる）。"""
-    body = json.dumps({"query": Q, "variables": {"s": na}})
+    body = json.dumps({"query": Q, "variables": {"s": BETSUMEI.get(na, na)}})
     for i in range(4):
         try:
             r = subprocess.run(
@@ -69,7 +83,43 @@ def hiku(na):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             d = json.loads(r.stdout.decode("utf-8"))
             ms = d.get("data", {}).get("Page", {}).get("media") or []
-            return ms[0] if ms else None
+            if not ms:
+                return None
+            # ■ **テレビシリーズを選ぶ**（2026-11-05）
+            #   perPage 1 で先頭を取っていたら、暗殺教室が2013年のOVA、
+            #   幽☆遊☆白書が2009年の1話ものに当たっていた。
+            #   検索が別物に当たっても黙って通る形だった。
+            #
+            # ■ **続編を拾わない**（同じ日）
+            #   それを直したら、今度はサカモトデイズが第2期(2027年)に
+            #   当たった。前作がある(PREQUEL)ものは、こちらから
+            #   「第◯期」と頼んだときだけ選ぶ。
+            hoshii_zoku = bool(re.search(
+                u"第\\s*\\d+\\s*期|[Ss]eason|2nd|3rd|4th|Ⅱ|Ⅲ", na))
+
+            def mae_ari(m):
+                return any(e["relationType"] == "PREQUEL"
+                           and e["node"]["type"] == "ANIME"
+                           for e in m["relations"]["edges"])
+
+            # ■ **先に「続編でないもの」で絞り、そのあとで形だけを見る**（同じ日）
+            #   形を先に見たら、サカモトデイズ（配信のONAが第1期）で
+            #   2027年のテレビ第2期を選んでしまった。
+            #   順番が逆だと、配信で始まった作品を全部取り違える。
+            RUI = ("TV", "TV_SHORT", "ONA")
+            nokori = [m for m in ms if m.get("format") in RUI] or ms
+            if not hoshii_zoku:
+                saki = [m for m in nokori if not mae_ari(m)]
+                if saki:
+                    nokori = saki
+            for f in RUI:
+                for m in nokori:
+                    if m.get("format") == f:
+                        return m
+            # ■ ここに来たのは、テレビ・配信のどれでもなかったとき。
+            #   怪獣8号は検索の上位に特番と総集編しか出てこなかった。
+            #   **黙って先頭を返さない。** 形式をそのまま残して知らせる。
+            return nokori[0]
         except Exception:
             if i == 3:
                 return None
@@ -95,7 +145,7 @@ def kaku(d):
         f.write(u"# 放送情報 ─ AniList から引いたもの（放送情報を引く.py）\n")
         f.write(u"# **こちらの記憶で書かない。台本の数字はここと合わせる。**\n")
         f.write(u"# 年が ？ のものは引けなかった。台本に数字を書かない。\n")
-        f.write(u"# 作品名\t年\t季\t話数\t原作\t制作\t続編数\t向こうの題名\n")
+        f.write(u"# 作品名\t年\t季\t話数\t原作\t制作\t続編数\t向こうの題名\t形式\n")
         for k in sorted(d):
             f.write(u"\t".join(d[k]) + u"\n")
 
@@ -132,7 +182,7 @@ def main():
         m = hiku(na)
         if not m or not m.get("startDate", {}).get("year"):
             hikenai.append(na)
-            mochi[na] = [na, u"？", u"？", u"？", u"？", u"？", u"0", u"引けませんでした"]
+            mochi[na] = [na, u"？", u"？", u"？", u"？", u"？", u"0", u"引けませんでした", u"？"]
         else:
             st = u"／".join(n["name"] for n in m["studios"]["nodes"]) or u"？"
             zoku = len([e for e in m["relations"]["edges"]
@@ -144,7 +194,8 @@ def main():
                          u"%s" % (m.get("episodes") or u"？"),
                          MOTO.get(m.get("source") or u"", m.get("source") or u"？"),
                          st, u"%d" % zoku,
-                         (m["title"].get("native") or m["title"].get("romaji") or u"")]
+                         (m["title"].get("native") or m["title"].get("romaji") or u""),
+                         m.get("format") or u"？"]
         if (i + 1) % 20 == 0:
             say(u"  %d / %d" % (i + 1, len(hoshii)))
             kaku(mochi)
@@ -153,11 +204,20 @@ def main():
 
     say(u"")
     say(u"放送情報.txt に %d作品ぶん入っています。" % len(mochi))
-    if hikenai:
+    hen = [v for v in mochi.values()
+           if len(v) > 8 and v[8] not in (u"TV", u"TV_SHORT", u"ONA", u"？")]
+    if hikenai or hen:
         say(u"")
-        say(u"[注意] %d作品が引けませんでした。**台本に数字を書かないこと。**" % len(hikenai))
-        for x in hikenai:
-            say(u"   " + x)
+        if hikenai:
+            say(u"[注意] %d作品が引けませんでした。**台本に数字を書かないこと。**"
+                % len(hikenai))
+            for x in hikenai:
+                say(u"   " + x)
+        if hen:
+            say(u"[注意] %d作品が、テレビでも配信でもないものに当たっています。"
+                u"**別名を足して引き直すこと。**" % len(hen))
+            for v in hen:
+                say(u"   %-24s %s年 %s話 [%s] %s" % (v[0], v[1], v[3], v[8], v[7]))
         return 1
     say(u"○ 全部引けました。")
     return 0
