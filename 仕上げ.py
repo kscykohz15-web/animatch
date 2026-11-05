@@ -860,6 +860,51 @@ if "--shirabe" in sys.argv:
 # （メモリ69-3節）。board.src.html は出したあとに合わせる。
 _repo_v = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                        ".claude", "video")
+
+
+def _dasu_mono_wo_sorou():
+    u"""**出す物を作る道具と型も、リポジトリから写す。**（2026-11-05）
+
+    repo_wo_utsusu() は scratchpad/video/ しか写していなかった。
+    ところが build.py と sync_py.py と board.src.html は
+    **scratchpad の親**（HERE）のほうを先に見るので、そちらが古いと
+    検査は新しい物を見て、出す物は古い物から作られる。
+
+    実際にやった。board.src.html をリポジトリで v185 に上げ、
+    ⑧ は「○ パック版 v185」と言ったのに、**出来た掲示板は v184 だった。**
+    親のほうの型が v184 のままだったから。
+
+    メモリ93節と、この節の上に並んでいる3つの事故と、同じ形。
+    **「出す物と検査する物が違っていた」を4回目にしない。**
+    """
+    import shutil as _sh
+    kaeta = []
+    for f in (u"board.src.html", u"build.py", u"sync_py.py"):
+        moto = os.path.join(_repo_v, f)
+        saki = os.path.join(HERE, f)
+        if not os.path.exists(moto):
+            continue
+        if f == u"board.src.html":
+            # 型でないものを写さない（93節：出来上がった掲示板で上書きされた）
+            k = io.open(moto, encoding="utf-8", errors="replace").read()
+            if u"@@ONLY:" not in k or u"var SCRIPTS" not in k:
+                print(u"[注意] リポジトリの board.src.html が型ではないので"
+                      u"写しません")
+                continue
+        if os.path.exists(saki):
+            import hashlib as _h
+
+            def h(p):
+                return _h.md5(io.open(p, "rb").read()).hexdigest()
+            if h(moto) == h(saki):
+                continue
+        _sh.copy2(moto, saki)
+        kaeta.append(f)
+    if kaeta:
+        print(u"\n出す物の側も、リポジトリから写しました: " + u" / ".join(kaeta))
+
+
+_dasu_mono_wo_sorou()
 for step in ("sync_py.py", "build.py"):
     michi = os.path.join(HERE, step)
     if not os.path.exists(michi):
