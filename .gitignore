@@ -48,3 +48,6 @@ next-env.d.ts
 .claude/video/_ずれ検査/
 .claude/video/_絵と字幕/
 .claude/video/_見本/
+
+# 検査が作る一時フォルダ（130MB・毎回作り直される）
+/.claude/video/_閉じ検査/
