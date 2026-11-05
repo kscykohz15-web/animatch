@@ -171,6 +171,49 @@ def repo_wo_utsusu():
           % (len(kaeta), (u"（" + u" / ".join(kaeta[:10]) + u"）") if kaeta else u""))
 
 
+def hitotsu_dake():
+    u"""**この検査を2つ同時に走らせない。**（2026-11-05）
+
+    一度やった。1本目がまだ走っているのに2本目を出し、
+    途中で1本目を止めた。2つとも同じ作業場所に材料を作るので、
+    ⑯ の音ズレが **merged.wav と正解表を取り違えて** 2.47秒のずれを出した。
+    単独で測り直すと 0.84秒（合格の線は 1.30秒）で、**嘘のずれ**だった。
+
+    音ズレは v169 で消えたものなので（メモリ86節）、
+    ここで嘘が出ると「壊れた」と誤診して、直っているものを触ってしまう。
+    **だから機械で止める。**
+
+    鍵は作業場所に置く。中に書いた番号のものが本当に生きているかを見るので、
+    前の回が落ちたまま残っていても次は動く。
+    """
+    kagi = os.path.join(B, u".仕上げ中.txt")
+    if os.path.exists(kagi):
+        try:
+            furui = int(io.open(kagi, encoding="utf-8").read().strip())
+        except Exception:
+            furui = 0
+        ikiteru = False
+        if furui > 0:
+            try:
+                os.kill(furui, 0)
+                ikiteru = True
+            except OSError:
+                ikiteru = False
+        if ikiteru:
+            print(u"[中断] 仕上げ.py が番号 %d でもう走っています。"
+                  u"**2つ同時に走らせないこと。**" % furui)
+            print(u"   同じ作業場所に材料を作るので、⑯ の音ズレが"
+                  u"嘘のずれを出します（2026-11-05 に実際に出た）。")
+            print(u"   終わるのを待つか、その番号を止めてから、もう一度。")
+            sys.exit(2)
+        print(u"（前の回の鍵が残っていました。番号 %d はもう居ないので進みます）"
+              % furui)
+    io.open(kagi, "w", encoding="utf-8").write(u"%d" % os.getpid())
+    import atexit
+    atexit.register(lambda: os.path.exists(kagi) and os.remove(kagi))
+
+
+hitotsu_dake()
 repo_wo_utsusu()
 
 try:
