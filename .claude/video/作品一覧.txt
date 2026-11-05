@@ -96,8 +96,8 @@ heisei	10	天元突破グレンラガン
 heisei	11	とらドラ！
 heisei	12	鋼の錬金術師 FULLMETAL ALCHEMIST
 heisei	13	化物語
-heisei	14	STEINS;GATE
-heisei	15	魔法少女まどか☆マギカ
+heisei	14	魔法少女まどか☆マギカ
+heisei	15	STEINS;GATE
 heisei	16	進撃の巨人
 heisei	17	ハイキュー！！
 heisei	18	四月は君の嘘
@@ -119,9 +119,9 @@ reiwa	11	薬屋のひとりごと
 reiwa	12	ダンジョン飯
 reiwa	13	忘却バッテリー
 reiwa	14	怪獣8号
-reiwa	15	ダンダダン
-reiwa	16	チ。地球の運動について
-reiwa	17	負けヒロインが多すぎる！
+reiwa	15	負けヒロインが多すぎる！
+reiwa	16	ダンダダン
+reiwa	17	チ。地球の運動について
 reiwa	18	サカモトデイズ
 reiwa	19	ガチアクタ
 reiwa	20	光が死んだ夏
@@ -131,21 +131,21 @@ rabukome	1	とらドラ！
 rabukome	2	ニセコイ
 rabukome	3	月刊少女野崎くん
 rabukome	4	冴えない彼女の育てかた
-rabukome	5	からかい上手の高木さん
-rabukome	6	恋は雨上がりのように
-rabukome	7	かぐや様は告らせたい
-rabukome	8	五等分の花嫁
-rabukome	9	俺物語!!
-rabukome	10	ホリミヤ
-rabukome	11	古見さんは、コミュ症です。
-rabukome	12	その着せ替え人形は恋をする
-rabukome	13	山田くんとLv999の恋をする
-rabukome	14	青春ブタ野郎はバニーガール先輩の夢を見ない
+rabukome	5	俺物語!!
+rabukome	6	からかい上手の高木さん
+rabukome	7	恋は雨上がりのように
+rabukome	8	青春ブタ野郎はバニーガール先輩の夢を見ない
+rabukome	9	かぐや様は告らせたい
+rabukome	10	五等分の花嫁
+rabukome	11	ホリミヤ
+rabukome	12	古見さんは、コミュ症です。
+rabukome	13	その着せ替え人形は恋をする
+rabukome	14	山田くんとLv999の恋をする
 rabukome	15	僕の心のヤバイやつ
-rabukome	16	君のことが大大大大大好きな100人の彼女
-rabukome	17	ゆびさきと恋々
-rabukome	18	アオのハコ
-rabukome	19	スキップとローファー
+rabukome	16	スキップとローファー
+rabukome	17	君のことが大大大大大好きな100人の彼女
+rabukome	18	ゆびさきと恋々
+rabukome	19	アオのハコ
 rabukome	20	薫る花は凛と咲く
 
 題	heroine	心を持っていかれた　最高のヒロイン20選
