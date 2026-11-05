@@ -32,7 +32,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, u"放送情報.txt")
 ICHIRAN = os.path.join(HERE, u"作品一覧.txt")
 
-Q = (u"query ($s: String) { Page(perPage: 8) { media(search: $s, type: ANIME, "
+Q = (u"query ($s: String) { Page(perPage: 10) { media(search: $s, type: ANIME, "
      u"sort: SEARCH_MATCH) { format episodes status source "
      u"title { romaji native } startDate { year month } "
      u"studios(isMain: true) { nodes { name } } "
@@ -69,9 +69,22 @@ BETSUMEI = {
 }
 
 
+def narasu(t):
+    u"""名前をそろえる。全角と半角、記号、空白、大文字小文字の違いを消す。"""
+    if not t:
+        return u""
+    t = t.lower()
+    z = u"０１２３４５６７８９ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ"
+    h = u"0123456789abcdefghijklmnopqrstuvwxyz"
+    t = t.translate({ord(a): b for a, b in zip(z, h)})
+    t = re.sub(u"[\\s　・･:：!！?？~〜～\\-－—‐、。,.'\"「」『』【】\\[\\]()（）]", u"", t)
+    return t
+
+
 def hiku(na):
     u"""1作品引く。curl を使う（urllib は 403 になる）。"""
-    body = json.dumps({"query": Q, "variables": {"s": BETSUMEI.get(na, na)}})
+    sagasu = BETSUMEI.get(na, na)
+    body = json.dumps({"query": Q, "variables": {"s": sagasu}})
     for i in range(4):
         try:
             r = subprocess.run(
@@ -85,40 +98,30 @@ def hiku(na):
             ms = d.get("data", {}).get("Page", {}).get("media") or []
             if not ms:
                 return None
-            # ■ **テレビシリーズを選ぶ**（2026-11-05）
-            #   perPage 1 で先頭を取っていたら、暗殺教室が2013年のOVA、
-            #   幽☆遊☆白書が2009年の1話ものに当たっていた。
-            #   検索が別物に当たっても黙って通る形だった。
+            # ■ **題名が一致するものを選ぶ**（2026-11-05・3回作り直した）
             #
-            # ■ **続編を拾わない**（同じ日）
-            #   それを直したら、今度はサカモトデイズが第2期(2027年)に
-            #   当たった。前作がある(PREQUEL)ものは、こちらから
-            #   「第◯期」と頼んだときだけ選ぶ。
-            hoshii_zoku = bool(re.search(
-                u"第\\s*\\d+\\s*期|[Ss]eason|2nd|3rd|4th|Ⅱ|Ⅲ", na))
-
-            def mae_ari(m):
-                return any(e["relationType"] == "PREQUEL"
-                           and e["node"]["type"] == "ANIME"
-                           for e in m["relations"]["edges"])
-
-            # ■ **先に「続編でないもの」で絞り、そのあとで形だけを見る**（同じ日）
-            #   形を先に見たら、サカモトデイズ（配信のONAが第1期）で
-            #   2027年のテレビ第2期を選んでしまった。
-            #   順番が逆だと、配信で始まった作品を全部取り違える。
+            #   最初は先頭を取っていた → 暗殺教室が2013年のOVAに当たった
+            #   テレビを優先した       → サカモトデイズが2027年の第2期に当たった
+            #                            （第1期が配信なので）
+            #   続編を外した           → ワンパンマンと魔法科が変な配信版に
+            #                            当たった。**テレビ第1期のほうに
+            #                            「前作あり」が付いていた**（OVAなどが
+            #                            前作として登録されている）ので、
+            #                            正解を捨てていた。
+            #
+            #   前作の有無では決まらない。**頼んだ名前と題名が一致するか**で
+            #   選ぶ。一致が無いときだけ、形と古さで選ぶ。
             RUI = ("TV", "TV_SHORT", "ONA")
             nokori = [m for m in ms if m.get("format") in RUI] or ms
-            if not hoshii_zoku:
-                saki = [m for m in nokori if not mae_ari(m)]
-                if saki:
-                    nokori = saki
-            for f in RUI:
-                for m in nokori:
-                    if m.get("format") == f:
-                        return m
-            # ■ ここに来たのは、テレビ・配信のどれでもなかったとき。
-            #   怪獣8号は検索の上位に特番と総集編しか出てこなかった。
-            #   **黙って先頭を返さない。** 形式をそのまま残して知らせる。
+            pitari = [m for m in nokori
+                      if narasu(m["title"].get("native")) == narasu(sagasu)
+                      or narasu(m["title"].get("romaji")) == narasu(sagasu)]
+            if pitari:
+                nokori = pitari
+            nokori.sort(key=lambda m: (
+                RUI.index(m["format"]) if m.get("format") in RUI else 9,
+                m["startDate"].get("year") or 9999,
+                m["startDate"].get("month") or 99))
             return nokori[0]
         except Exception:
             if i == 3:

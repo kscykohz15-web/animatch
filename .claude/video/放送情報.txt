@@ -6,14 +6,14 @@ TEXHNOLYZE	2003	春	22	オリジナル	MADHOUSE	0	TEXHNOLYZE	TV
 serial experiments lain	1998	夏	13	オリジナル	Triangle Staff	0	serial experiments lain	TV
 ぼくらの	2007	春	24	漫画	GONZO	0	ぼくらの	TV
 エルゴプラクシー	2006	冬	23	オリジナル	Manglobe	0	Ergo Proxy	TV
-フリクリ	2023	秋	3	オリジナル	Production I.G／NUT	0	フリクリ シューゲイザー	TV
+フリクリ	2018	春	6	オリジナル	Production I.G／Signal.MD	1	フリクリ プログレ	TV
 フリップフラッパーズ	2016	秋	13	オリジナル	Studio 3Hz	0	フリップフラッパーズ	TV
 モノノ怪	2007	夏	12	オリジナル	Toei Animation	0	モノノ怪	TV
 四畳半神話大系	2010	春	11	その他	MADHOUSE	0	四畳半神話大系	TV
 宝石の国	2017	秋	12	漫画	Orange	0	宝石の国	TV
 少女終末旅行	2017	秋	12	漫画	WHITE FOX	0	少女終末旅行	TV
 少女革命ウテナ	1997	春	39	オリジナル	J.C.STAFF	0	少女革命ウテナ	TV
-平家物語	1993	秋	56	？	？	0	人形歴史スペクタクル 平家物語	TV
+平家物語	2021	夏	11	その他	Science SARU	0	平家物語	ONA
 惡の華	2013	春	13	漫画	ZEXCS	0	惡の華	TV
 新世紀エヴァンゲリオン	1995	秋	26	オリジナル	GAINAX／Tatsunoko Production	1	新世紀エヴァンゲリオン	TV
 灰羽連盟	2002	秋	13	その他	Radix	0	灰羽連盟	TV
