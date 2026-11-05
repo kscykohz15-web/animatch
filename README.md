@@ -46,7 +46,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | 全作品を新基準で再採点 | `node scripts/step5-ai-score10-v2-fullscan.mjs` |
 | 新規作品だけ採点 | `node scripts/step6-ai-score10-v2-delta.mjs` |
 | 分布チェック（甘すぎ検知） | `node scripts/report-score-distribution.mjs` |
+| CSVの採点結果をDBへ投入 | `node scripts/seed-scores-from-csv.mjs` |
 | 基準の自己診断（APIキー不要） | `node scripts/test/score-v2-selftest.mjs` |
 | プロンプトの目視確認（APIキー不要） | `node scripts/test/score-v2-print-prompt.mjs` |
 
 旧基準（0〜10の整数）のスクリプト（`step5-ai-score10-fullscan.mjs` / `step5-ai-score10-fill-empty.mjs` / `step6-ai-score10-delta.mjs` / `fill-ai-scores-10.mjs` / `step5-ai-fill-tempo-music-depression-*.mjs`）は、小数スコアを丸めてしまうため既定で実行を中止する。どうしても必要な場合のみ `ALLOW_LEGACY_SCORING=true`。
+
+933作品の採点済みデータは `data/animatch_評価済み_933作品.xlsx` と `data/scores-v2-933works.csv`（詳細は `docs/scoring-criteria-v2.md` §8）。
