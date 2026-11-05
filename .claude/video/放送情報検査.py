@@ -19,6 +19,30 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+# 台本のカタカナ表記と、AniList の英字表記の対応。
+# **ここに無い制作会社を台本に書いたら落ちる。** 書く前にここへ足すこと。
+SEISAKU = {
+    u"マッドハウス": u"MADHOUSE", u"サンライズ": u"Sunrise", u"ボンズ": u"bones",
+    u"ラルケ": u"Lerche", u"ゼクシズ": u"ZEXCS", u"ブリッジ": u"Bridge",
+    u"シルバーリンク": u"SILVER LINK.", u"ネクサス": u"Nexus", u"シーツーシー": u"C2C",
+    u"クローバーワークス": u"CloverWorks", u"ウィットスタジオ": u"WIT STUDIO",
+    u"J.C.スタッフ": u"J.C.STAFF", u"スタジオ五組": u"Studio Gokumi",
+    u"オー・エル・エム": u"OLM", u"東宝アニメーションスタジオ": u"TOHO animation STUDIO",
+    u"ピー・エー・ワークス": u"P.A. WORKS", u"京都アニメーション": u"Kyoto Animation",
+    u"シャフト": u"Shaft", u"マッパ": u"MAPPA", u"ユーフォーテーブル": u"ufotable",
+    u"ワイト": u"WIT STUDIO", u"プロダクション・アイジー": u"Production I.G",
+    u"エイワンピクチャーズ": u"A-1 Pictures", u"トリガー": u"TRIGGER",
+    u"ぴえろ": u"Studio Pierrot", u"サイエンスサル": u"Science SARU",
+    u"ホワイトフォックス": u"WHITE FOX", u"動画工房": u"Doga Kobo",
+    u"キネマシトラス": u"Kinema Citrus", u"デイヴィッドプロダクション": u"David Production",
+    u"ティーエムエス": u"TMS Entertainment", u"エイトビット": u"8bit",
+    u"東映アニメーション": u"Toei Animation", u"フィール": u"feel.",
+}
+# 台本の言い方と、AniList の原作の種類
+GENSAKU = {u"漫画": u"漫画", u"ライトノベル": u"ライトノベル", u"小説": u"小説",
+           u"オリジナル": u"オリジナル", u"ゲーム": u"ゲーム",
+           u"ウェブ小説": u"ウェブ小説"}
 JOHO = os.path.join(HERE, u"放送情報.txt")
 
 TSUNAGI = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
@@ -101,6 +125,38 @@ def main():
         mw = re.search(u"全(\\d+)話", h)
         if mw and j[u"話数"] != u"？" and mw.group(1) != j[u"話数"]:
             warui.append(u"%s … 話数が台本 %s／調べ %s" % (na, mw.group(1), j[u"話数"]))
+
+        # 制作会社（台本に「制作は◯◯」と書いたとき）
+        mc = (re.search(u"制作は([^、。]+?)のオリジナル作品", h)
+              or re.search(u"制作は([^、。]+)", h))
+        if mc:
+            kaku = [x for x in re.split(u"と|／|/", mc.group(1)) if x]
+            shirabe = [x.strip() for x in j[u"制作"].split(u"／")]
+            for k in kaku:
+                k = k.strip()
+                if k not in SEISAKU:
+                    warui.append(u"%s … 制作「%s」が対応表にありません。"
+                                 u"**放送情報検査.py の SEISAKU に足すこと**" % (na, k))
+                elif SEISAKU[k] not in shirabe:
+                    warui.append(u"%s … 制作が台本 %s(%s)／調べ %s"
+                                 % (na, k, SEISAKU[k], j[u"制作"]))
+
+        # 原作の種類（台本に「◯◯が原作となっています」と書いたとき）
+        mg = re.search(u"(漫画|ライトノベル|小説|ゲーム)が原作", h)
+        if mg:
+            kaku = mg.group(1)
+            shirabe = j[u"原作"]
+            # 「小説」はライトノベルも小説も通す
+            ok = (kaku == shirabe
+                  or (kaku == u"小説" and shirabe in (u"ライトノベル", u"ウェブ小説")))
+            if not ok:
+                warui.append(u"%s … 原作が台本 %s／調べ %s" % (na, kaku, shirabe))
+        if u"オリジナル" in h and j[u"原作"] != u"オリジナル":
+            warui.append(u"%s … オリジナルと書いていますが、調べでは %s"
+                         % (na, j[u"原作"]))
+        if u"なろう" in h:
+            warui.append(u"%s … 「なろう」と書いています。**こちらで確かめられません。"
+                         u"書かないこと**" % na)
 
     say(u"作品 %d本を見ました（放送情報.txt は %d本ぶん）" % (mita, len(joho)))
     if warui:
