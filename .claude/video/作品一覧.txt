@@ -1,0 +1,274 @@
+﻿# ─────────────────────────────────────────────
+# 作品一覧 ─ **各紹介動画で紹介する作品は、ここだけに書きます**
+#
+# 掲示板（おすすめアニメ紹介）の「紹介する作品」の節に出ます。
+# 掲示板で入れ替えたものは、そのページの中に残ります（db）。
+# **入れ替えたらチャットで言ってください。** こちらが読んで、
+# このファイルと台本を作り直します。
+#
+# 書式（タブ区切り）
+#   題  <タブ> 印 <タブ> 動画の題名
+#   印  <タブ> 番号 <タブ> 作品名
+#
+#   印 … 動画一覧.txt の印と同じ（画面の doc-○○-sub と同じ）
+#
+# 並びは「紹介する順」です。年代順の回は、放送の古い順に並べてあります。
+# ─────────────────────────────────────────────
+
+
+題	yohaku	思考の楽園　解釈の余白を残した傑作アニメ20選
+yohaku	1	新世紀エヴァンゲリオン
+yohaku	2	少女革命ウテナ
+yohaku	3	serial experiments lain
+yohaku	4	無限のリヴァイアス
+yohaku	5	フリクリ
+yohaku	6	灰羽連盟
+yohaku	7	TEXHNOLYZE
+yohaku	8	蟲師
+yohaku	9	エルゴプラクシー
+yohaku	10	電脳コイル
+yohaku	11	ぼくらの
+yohaku	12	モノノ怪
+yohaku	13	四畳半神話大系
+yohaku	14	魔法少女まどか☆マギカ
+yohaku	15	輪るピングドラム
+yohaku	16	惡の華
+yohaku	17	フリップフラッパーズ
+yohaku	18	宝石の国
+yohaku	19	少女終末旅行
+yohaku	20	平家物語
+
+題	saikin	ここ最近の名作20選
+saikin	1	葬送のフリーレン
+saikin	2	ダンジョン飯
+saikin	3	僕の心のヤバイやつ 第2期
+saikin	4	忘却バッテリー
+saikin	5	響け！ユーフォニアム3
+saikin	6	狼と香辛料 MERCHANT MEETS THE WISE WOLF
+saikin	7	【推しの子】第2期
+saikin	8	負けヒロインが多すぎる！
+saikin	9	ダンダダン
+saikin	10	Re:ゼロから始める異世界生活 第3期
+saikin	11	チ。地球の運動について
+saikin	12	アオのハコ
+saikin	13	メダリスト
+saikin	14	薬屋のひとりごと 第2期
+saikin	15	全修。
+saikin	16	サカモトデイズ
+saikin	17	機動戦士Gundam GQuuuuuuX
+saikin	18	タコピーの原罪
+saikin	19	ガチアクタ
+saikin	20	光が死んだ夏
+
+題	narou	なろう系アニメ総まとめ
+narou	1	ログ・ホライズン
+narou	2	魔法科高校の劣等生
+narou	3	オーバーロード
+narou	4	この素晴らしい世界に祝福を！
+narou	5	Re:ゼロから始める異世界生活
+narou	6	異世界居酒屋のぶ
+narou	7	転生したらスライムだった件
+narou	8	盾の勇者の成り上がり
+narou	9	ありふれた職業で世界最強
+narou	10	本好きの下剋上
+narou	11	魔王学院の不適合者
+narou	12	無職転生
+narou	13	乙女ゲー世界はモブに厳しい世界です
+narou	14	陰の実力者になりたくて！
+narou	15	とんでもスキルで異世界放浪メシ
+narou	16	シャングリラ・フロンティア
+narou	17	薬屋のひとりごと
+narou	18	転生したら第七王子だったので
+narou	19	最凶の支援職【話術士】
+narou	20	サイレント・ウィッチ
+
+題	heisei	平成版　最高に面白かったアニメ20選
+heisei	1	幽☆遊☆白書
+heisei	2	新世紀エヴァンゲリオン
+heisei	3	カウボーイビバップ
+heisei	4	カードキャプターさくら
+heisei	5	犬夜叉
+heisei	6	攻殻機動隊 STAND ALONE COMPLEX
+heisei	7	鋼の錬金術師
+heisei	8	涼宮ハルヒの憂鬱
+heisei	9	コードギアス 反逆のルルーシュ
+heisei	10	天元突破グレンラガン
+heisei	11	とらドラ！
+heisei	12	鋼の錬金術師 FULLMETAL ALCHEMIST
+heisei	13	化物語
+heisei	14	魔法少女まどか☆マギカ
+heisei	15	STEINS;GATE
+heisei	16	進撃の巨人
+heisei	17	ハイキュー！！
+heisei	18	四月は君の嘘
+heisei	19	ワンパンマン
+heisei	20	ヴァイオレット・エヴァーガーデン
+
+題	reiwa	令和版　最高に面白かったアニメ20選
+reiwa	1	鬼滅の刃
+reiwa	2	ヴィンランド・サガ
+reiwa	3	呪術廻戦
+reiwa	4	SPY×FAMILY
+reiwa	5	リコリス・リコイル
+reiwa	6	ぼっち・ざ・ろっく！
+reiwa	7	チェンソーマン
+reiwa	8	僕の心のヤバイやつ
+reiwa	9	推しの子
+reiwa	10	葬送のフリーレン
+reiwa	11	薬屋のひとりごと
+reiwa	12	ダンジョン飯
+reiwa	13	忘却バッテリー
+reiwa	14	怪獣8号
+reiwa	15	負けヒロインが多すぎる！
+reiwa	16	ダンダダン
+reiwa	17	チ。地球の運動について
+reiwa	18	サカモトデイズ
+reiwa	19	ガチアクタ
+reiwa	20	光が死んだ夏
+
+題	rabukome	ニヤニヤが止まらない　最高のラブコメアニメ20選
+rabukome	1	とらドラ！
+rabukome	2	ニセコイ
+rabukome	3	月刊少女野崎くん
+rabukome	4	冴えない彼女の育てかた
+rabukome	5	俺物語!!
+rabukome	6	からかい上手の高木さん
+rabukome	7	恋は雨上がりのように
+rabukome	8	青春ブタ野郎はバニーガール先輩の夢を見ない
+rabukome	9	かぐや様は告らせたい
+rabukome	10	五等分の花嫁
+rabukome	11	ホリミヤ
+rabukome	12	古見さんは、コミュ症です。
+rabukome	13	その着せ替え人形は恋をする
+rabukome	14	山田くんとLv999の恋をする
+rabukome	15	僕の心のヤバイやつ
+rabukome	16	スキップとローファー
+rabukome	17	君のことが大大大大大好きな100人の彼女
+rabukome	18	ゆびさきと恋々
+rabukome	19	アオのハコ
+rabukome	20	薫る花は凛と咲く
+
+題	heroine	心を持っていかれた　最高のヒロイン20選
+heroine	1	新世紀エヴァンゲリオン
+heroine	2	CLANNAD
+heroine	3	狼と香辛料
+heroine	4	とらドラ！
+heroine	5	STEINS;GATE
+heroine	6	やはり俺の青春ラブコメはまちがっている。
+heroine	7	冴えない彼女の育てかた
+heroine	8	Re:ゼロから始める異世界生活
+heroine	9	ダーリン・イン・ザ・フランキス
+heroine	10	かぐや様は告らせたい
+heroine	11	五等分の花嫁
+heroine	12	鬼滅の刃
+heroine	13	その着せ替え人形は恋をする
+heroine	14	SPY×FAMILY
+heroine	15	リコリス・リコイル
+heroine	16	ぼっち・ざ・ろっく！
+heroine	17	チェンソーマン
+heroine	18	推しの子
+heroine	19	葬送のフリーレン
+heroine	20	薬屋のひとりごと
+
+題	kakusei	鳥肌が止まらない　激アツすぎた覚醒20選
+kakusei	1	幽☆遊☆白書
+kakusei	2	ONE PIECE
+kakusei	3	NARUTO
+kakusei	4	BLEACH
+kakusei	5	コードギアス 反逆のルルーシュ
+kakusei	6	天元突破グレンラガン
+kakusei	7	鋼の錬金術師 FULLMETAL ALCHEMIST
+kakusei	8	ソードアート・オンライン
+kakusei	9	進撃の巨人
+kakusei	10	七つの大罪
+kakusei	11	オーバーロード
+kakusei	12	ワンパンマン
+kakusei	13	Re:ゼロから始める異世界生活
+kakusei	14	僕のヒーローアカデミア
+kakusei	15	盾の勇者の成り上がり
+kakusei	16	鬼滅の刃
+kakusei	17	呪術廻戦
+kakusei	18	チェンソーマン
+kakusei	19	怪獣8号
+kakusei	20	ダンダダン
+
+題	fukusen	背筋が凍る　えぐすぎた伏線回収20選
+fukusen	1	新世紀エヴァンゲリオン
+fukusen	2	ひぐらしのなく頃に
+fukusen	3	CLANNAD
+fukusen	4	四畳半神話大系
+fukusen	5	Angel Beats!
+fukusen	6	魔法少女まどか☆マギカ
+fukusen	7	STEINS;GATE
+fukusen	8	氷菓
+fukusen	9	PSYCHO-PASS サイコパス
+fukusen	10	進撃の巨人
+fukusen	11	Re:ゼロから始める異世界生活
+fukusen	12	約束のネバーランド
+fukusen	13	呪術廻戦
+fukusen	14	無職転生
+fukusen	15	東京リベンジャーズ
+fukusen	16	86 エイティシックス
+fukusen	17	Vivy -Fluorite Eye's Song-
+fukusen	18	オッドタクシー
+fukusen	19	サマータイムレンダ
+fukusen	20	推しの子
+
+題	owari	完璧な終わり方　余韻がやばすぎるアニメ20選
+owari	1	カウボーイビバップ
+owari	2	灰羽連盟
+owari	3	CLANNAD AFTER STORY
+owari	4	鋼の錬金術師 FULLMETAL ALCHEMIST
+owari	5	Angel Beats!
+owari	6	魔法少女まどか☆マギカ
+owari	7	STEINS;GATE
+owari	8	あの日見た花の名前を僕達はまだ知らない。
+owari	9	進撃の巨人
+owari	10	四月は君の嘘
+owari	11	少女終末旅行
+owari	12	宝石の国
+owari	13	ヴァイオレット・エヴァーガーデン
+owari	14	SSSS.GRIDMAN
+owari	15	ヴィンランド・サガ
+owari	16	オッドタクシー
+owari	17	86 エイティシックス
+owari	18	平家物語
+owari	19	サマータイムレンダ
+owari	20	チ。地球の運動について
+
+題	kakushi	バレた瞬間が気持ちよすぎる　実は最強アニメ20選
+kakushi	1	デスノート
+kakushi	2	コードギアス 反逆のルルーシュ
+kakushi	3	魔法科高校の劣等生
+kakushi	4	暗殺教室
+kakushi	5	オーバーロード
+kakushi	6	ワンパンマン
+kakushi	7	モブサイコ100
+kakushi	8	約束のネバーランド
+kakushi	9	魔王学院の不適合者
+kakushi	10	無能なナナ
+kakushi	11	ようこそ実力至上主義の教室へ
+kakushi	12	SPY×FAMILY
+kakushi	13	陰の実力者になりたくて！
+kakushi	14	DARKER THAN BLACK -黒の契約者-
+kakushi	15	とある魔術の禁書目録
+kakushi	16	伝説の勇者の伝説
+kakushi	17	シャングリラ・フロンティア
+kakushi	18	薬屋のひとりごと
+kakushi	19	斉木楠雄のΨ難
+kakushi	20	サイレント・ウィッチ 沈黙の魔女の隠しごと
+
+題	zoku2027	2027年放送決定　待ちきれない続編アニメ
+zoku2027	1	SAKAMOTO DAYS
+zoku2027	2	あかね噺
+zoku2027	3	真・侍伝 YAIBA
+zoku2027	4	マリッジトキシン
+zoku2027	5	ザ・ファブル
+zoku2027	6	ゴールデンカムイ
+zoku2027	7	スキップとローファー
+zoku2027	8	忘却バッテリー
+zoku2027	9	猫と竜
+zoku2027	10	ダークギャザリング
+zoku2027	11	暴食のベルセルク
+zoku2027	12	真夜中ハートチューン
+zoku2027	13	転生したらスライムだった件
