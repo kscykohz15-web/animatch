@@ -47,6 +47,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | 新規作品だけ採点 | `node scripts/step6-ai-score10-v2-delta.mjs` |
 | 分布チェック（甘すぎ検知） | `node scripts/report-score-distribution.mjs` |
 | CSVの採点結果をDBへ投入 | `node scripts/seed-scores-from-csv.mjs` |
+| 閲覧ページ（スマホ/PC対応）を生成 | `node scripts/build-score-viewer.mjs` → `data/score-viewer.html` |
 | 基準の自己診断（APIキー不要） | `node scripts/test/score-v2-selftest.mjs` |
 | プロンプトの目視確認（APIキー不要） | `node scripts/test/score-v2-print-prompt.mjs` |
 

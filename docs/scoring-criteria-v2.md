@@ -122,6 +122,9 @@
   - `採点v2` シート: 原作・ジャンル・6項目・私的(総合)・合計(100点)・公的・項目差・評価元・根拠
   - `採点基準` シート: この基準と、原作・ジャンルの区分一覧
 - 機械可読データ: `data/scores-v2-933works.csv`
+- 閲覧用ページ: `data/score-viewer.html`（スマホ・PC両対応。検索／原作・ジャンル・年代の絞り込み／12種類の並べ替え）
+  - 生成: `node scripts/build-score-viewer.mjs`（CSVを読み、`scripts/templates/score-viewer.html` に差し込む）
+  - 点数を更新したらCSVを作り直して再生成すればページも最新になる
 - DBへの投入: `node scripts/seed-scores-from-csv.mjs`（`DRY_RUN=true` で確認）
 
 ### 内訳
