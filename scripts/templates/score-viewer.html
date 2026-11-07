@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap">
 <style>
-/* レイアウト: sticky な絞り込み帯 + 1枚のカード列。狭い幅では縦積み、720px以上で表形式の行に組み替える */
+/* レイアウト: sticky な操作帯 +「一覧（カード）」と「ランキング（作品名だけ・開くと内訳）」の2モード。720px以上でカードは横組みの行になる */
 :root{
   --bg:#f6f8f9; --surface:#ffffff; --surface-2:#eceff3; --fg:#141c24; --fg-2:#5b6a78; --fg-3:#8796a4;
   --line:#d7dee6; --line-2:#e7ecf1; --accent:#0f7478; --accent-soft:rgba(15,116,120,.1); --own:#8a5a12; --own-soft:rgba(176,126,33,.14);
@@ -27,6 +27,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6;-webkit-text-size-adjust:100%}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
 .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1180px;margin:0 auto}
@@ -41,21 +42,39 @@ h1{font-family:var(--disp);font-weight:700;font-size:clamp(25px,6.4vw,38px);line
 .facts{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--fg-2)}
 .facts b{font-family:var(--mono);font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums}
 
-/* ===== 絞り込み ===== */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-block:10px}
+/* ===== 操作帯 ===== */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-block:9px}
 .bar-in{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 input[type="search"],select{font-family:inherit;font-size:14px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 11px;min-width:0}
-input[type="search"]{flex:1 1 220px}
-select{flex:0 1 auto;max-width:48%}
+input[type="search"]{flex:1 1 200px}
+select{flex:0 1 auto}
 input[type="search"]:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:2px;gap:2px}
+.seg button{font-family:inherit;font-size:13px;font-weight:500;color:var(--fg-2);background:none;border:0;border-radius:7px;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);font-weight:700;box-shadow:var(--shadow)}
 .toggle{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--fg-2);background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 11px;cursor:pointer;user-select:none}
 .toggle input{accent-color:var(--accent);margin:0}
-button.ghost{font-family:inherit;font-size:13px;color:var(--fg-2);background:none;border:1px solid var(--line);border-radius:9px;padding:8px 11px;cursor:pointer}
+button.ghost{font-family:inherit;font-size:13px;color:var(--fg-2);background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 button.ghost:hover{color:var(--fg);border-color:var(--fg-3)}
+button.ghost[aria-expanded="true"]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.pill{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--accent);color:var(--bg);border-radius:999px;padding:0 6px;line-height:17px}
+
+/* ===== 絞り込みパネル ===== */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);padding:14px;margin-top:14px;display:grid;gap:14px}
+.fgroup h4{margin:0 0 7px;font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--fg-3)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip-btn{font-family:inherit;font-size:12.5px;color:var(--fg-2);background:var(--surface-2);border:1px solid transparent;border-radius:999px;padding:5px 11px;cursor:pointer;display:inline-flex;gap:5px;align-items:baseline}
+.chip-btn:hover{color:var(--fg)}
+.chip-btn em{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--fg-3);font-variant-numeric:tabular-nums}
+.chip-btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:700}
+.chip-btn[aria-pressed="true"] em{color:var(--accent)}
+.sum{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-block:12px 0;font-size:12px;color:var(--fg-2)}
+.sum .tag{display:inline-flex;align-items:center;gap:5px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:3px 6px 3px 10px;font-weight:700;font-size:12px}
+.sum .tag button{font-family:inherit;font-size:13px;line-height:1;color:inherit;background:none;border:0;cursor:pointer;padding:0 3px}
 .count{font-size:12.5px;color:var(--fg-2);padding-block:12px 10px;display:flex;flex-wrap:wrap;gap:4px 14px}
 .count b{font-family:var(--mono);color:var(--fg);font-variant-numeric:tabular-nums}
 
-/* ===== 1作品 ===== */
+/* ===== 一覧（カード） ===== */
 #list{display:flex;flex-direction:column;gap:10px;padding-bottom:4px}
 .row{background:var(--surface);border:1px solid var(--line-2);border-radius:13px;box-shadow:var(--shadow);padding:13px 14px;display:grid;gap:11px}
 .row.own{border-color:var(--own);box-shadow:0 0 0 1px var(--own-soft),var(--shadow)}
@@ -83,6 +102,28 @@ button.ghost:hover{color:var(--fg);border-color:var(--fg-3)}
 .b2 .t i,.b2 b{color:var(--c-mid)}.b2 .t i{background:var(--c-mid)}
 .b1 .t i,.b1 b{color:var(--c-low)}.b1 .t i{background:var(--c-low)}
 .b0 .t i,.b0 b{color:var(--c-weak)}.b0 .t i{background:var(--c-weak)}
+
+/* ===== ランキング（作品名だけ・開くと内訳） ===== */
+#rank{background:var(--surface);border:1px solid var(--line-2);border-radius:13px;box-shadow:var(--shadow);overflow:hidden}
+.rk{border-bottom:1px solid var(--line-2)}
+.rk:last-child{border-bottom:0}
+.rk>summary{display:flex;align-items:center;gap:10px;padding:10px 13px;cursor:pointer;list-style:none;min-width:0}
+.rk>summary::-webkit-details-marker{display:none}
+.rk>summary:hover{background:var(--surface-2)}
+.rk .no{flex:0 0 auto;width:30px;text-align:right;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--fg-3);font-variant-numeric:tabular-nums}
+.rk.top .no{color:var(--accent)}
+.rk .nm{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:500;line-height:1.4;overflow-wrap:anywhere}
+.rk .yr{font-size:11px;color:var(--fg-3);font-family:var(--mono);margin-left:6px;white-space:nowrap}
+.rk .sc{flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.rk .caret{flex:0 0 auto;color:var(--fg-3);font-size:11px;transition:transform .15s}
+.rk[open] .caret{transform:rotate(180deg)}
+.rk[open]{background:var(--surface-2)}
+.rk[open]>summary{font-weight:700}
+.rk.ownrow .nm::after{content:"本人評価";font-size:9.5px;font-weight:700;color:var(--own);background:var(--own-soft);border-radius:4px;padding:1px 5px;margin-left:7px;white-space:nowrap}
+.rk-body{padding:2px 13px 14px 43px;display:grid;gap:10px}
+.rk-body .axes{gap:10px 12px}
+@media (prefers-reduced-motion:reduce){.rk .caret{transition:none}}
+
 .more{display:block;width:100%;font-family:inherit;font-size:14px;font-weight:500;color:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px;margin-block:14px 6px;cursor:pointer}
 .more:hover{background:var(--accent-soft)}
 .empty{text-align:center;color:var(--fg-2);font-size:14px;padding:40px 10px}
@@ -92,8 +133,9 @@ button.ghost:hover{color:var(--fg);border-color:var(--fg-3)}
 .legend h2{font-family:var(--disp);font-size:17px;font-weight:600;margin-bottom:12px}
 .defs{display:grid;grid-template-columns:1fr;gap:10px 26px;font-size:12.5px;color:var(--fg-2)}
 .defs div{display:grid;grid-template-columns:84px minmax(0,1fr);gap:10px}
-.defs dt,.defs b{color:var(--fg);font-weight:700;font-size:12px}
-.bands{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.defs dt{color:var(--fg);font-weight:700;font-size:12px}
+.defs dd{margin:0}
+.bands{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .band{font-size:11px;font-family:var(--mono);border-radius:5px;padding:2px 7px;background:var(--surface-2)}
 .foot{font-size:11.5px;color:var(--fg-3);margin-top:18px}
 
@@ -104,35 +146,47 @@ button.ghost:hover{color:var(--fg);border-color:var(--fg-3)}
   .axes{grid-column:2;grid-row:1 / span 2;grid-template-columns:repeat(6,minmax(0,1fr));gap:0 10px;align-content:start}
   .ttl h3{font-size:16.5px}
   .defs{grid-template-columns:1fr 1fr}
-  select{max-width:none}
+  .panel{grid-template-columns:1fr;padding:16px 18px}
+  .rk-body{padding-left:53px}
+  .rk-body .axes{grid-template-columns:repeat(6,minmax(0,1fr))}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
 <div class="wrap">
   <header class="top">
     <p class="eyebrow">AniMatch / 採点基準 v2</p>
     <h1>アニメ採点台帳</h1>
-    <p class="lede">2001〜2024年の全933作品を、シナリオ・作画・世界観・心・テンポ・音楽の6項目で0.1刻みに採点した一覧。検索と絞り込み、並べ替えができます。</p>
+    <p class="lede">2001〜2024年の全933作品を、シナリオ・作画・世界観・心・テンポ・音楽の6項目で0.1刻みに採点した一覧。原作やジャンルは複数選べます。</p>
     <div class="facts" id="facts"></div>
   </header>
 </div>
 
 <div class="bar">
-  <div class="wrap bar-in">
-    <input type="search" id="q" placeholder="作品名で検索" autocomplete="off" spellcheck="false">
-    <select id="sort" aria-label="並べ替え"></select>
-    <select id="src" aria-label="原作で絞り込み"></select>
-    <select id="genre" aria-label="ジャンルで絞り込み"></select>
-    <select id="year" aria-label="年代で絞り込み"></select>
-    <label class="toggle"><input type="checkbox" id="ownonly">本人評価のみ</label>
-    <button class="ghost" id="reset" type="button">条件をクリア</button>
+  <div class="wrap">
+    <div class="bar-in">
+      <input type="search" id="q" placeholder="作品名で検索" autocomplete="off" spellcheck="false">
+      <select id="sort" aria-label="並べ替え"></select>
+      <div class="seg" role="group" aria-label="表示の切り替え">
+        <button type="button" id="v-list" aria-pressed="true">一覧</button>
+        <button type="button" id="v-rank" aria-pressed="false">ランキング</button>
+      </div>
+      <button class="ghost" id="filt" type="button" aria-expanded="false" aria-controls="panel">絞り込み<span class="pill" id="fcount" hidden>0</span></button>
+      <label class="toggle"><input type="checkbox" id="ownonly">本人評価のみ</label>
+      <button class="ghost" id="reset" type="button">条件をクリア</button>
+    </div>
   </div>
 </div>
 
 <div class="wrap">
+  <div class="panel" id="panel" hidden>
+    <div class="fgroup"><h4>原作（複数選択可）</h4><div class="chips" id="g-src"></div></div>
+    <div class="fgroup"><h4>ジャンル（複数選択可）</h4><div class="chips" id="g-genre"></div></div>
+    <div class="fgroup"><h4>年代（複数選択可）</h4><div class="chips" id="g-year"></div></div>
+  </div>
+  <div class="sum" id="sum" hidden></div>
   <p class="count" id="count"></p>
   <div id="list"></div>
+  <div id="rank" hidden></div>
   <button class="more" id="more" type="button" hidden></button>
 
   <section class="legend">
@@ -160,6 +214,7 @@ const DATA=/*__DATA__*/[];
 const BANDS=[["9.5〜10.0","伝説級"],["8.8〜9.4","神"],["8.0〜8.7","非常に強い"],["7.0〜7.9","良い"],["6.0〜6.9","やや良〜平凡"],["5.0〜5.9","平凡"],["3.5〜4.9","弱い"],["2.0〜3.4","かなり弱い"],["0.1〜1.9","崩壊"]];
 const SORTS=[["tot_d","総合点が高い順"],["tot_a","総合点が低い順"],["k_d","公的評価が高い順"],["y_d","新しい順"],["y_a","古い順"],["t_a","作品名順"],
  ["a0_d","シナリオが高い順"],["a1_d","作画が高い順"],["a2_d","世界観が高い順"],["a3_d","心・感情が高い順"],["a4_d","テンポが高い順"],["a5_d","音楽が高い順"]];
+const SORTKEY={tot_d:"p",tot_a:"p",k_d:"k",y_d:"y",y_a:"y",t_a:"p"};
 
 const $=id=>document.getElementById(id);
 const norm=s=>String(s||"").normalize("NFKC").toLowerCase().replace(/[\s　]/g,"")
@@ -170,15 +225,47 @@ const med=a=>{if(!a.length)return 0;const s=[...a].sort((x,y)=>x-y),m=s.length>>
 
 DATA.forEach(d=>{d._n=norm(d.t)});
 
-function fill(sel,vals,all){
-  sel.innerHTML="";
-  const o=document.createElement("option");o.value="";o.textContent=all;sel.appendChild(o);
-  vals.forEach(v=>{const e=document.createElement("option");e.value=v;e.textContent=v;sel.appendChild(e)});
+/* ---- 状態 ---- */
+const state={view:"list",sel:{o:new Set(),g:new Set(),y:new Set()}};
+const SAVE="animatch-score-viewer-v2";
+function save(){
+  try{localStorage.setItem(SAVE,JSON.stringify({
+    view:state.view,sort:$("sort").value,own:$("ownonly").checked,
+    o:[...state.sel.o],g:[...state.sel.g],y:[...state.sel.y]
+  }))}catch(e){}
 }
-const uniq=k=>[...new Set(DATA.map(d=>d[k]))];
-fill($("src"),uniq("o").sort((a,b)=>DATA.filter(d=>d.o===b).length-DATA.filter(d=>d.o===a).length),"原作：すべて");
-fill($("genre"),uniq("g").sort((a,b)=>DATA.filter(d=>d.g===b).length-DATA.filter(d=>d.g===a).length),"ジャンル：すべて");
-fill($("year"),uniq("y").sort((a,b)=>b-a).map(y=>y+"年"),"年代：すべて");
+function load(){
+  try{
+    const s=JSON.parse(localStorage.getItem(SAVE)||"null");
+    if(!s)return;
+    if(s.sort)$("sort").value=s.sort;
+    $("ownonly").checked=!!s.own;
+    state.view=s.view==="rank"?"rank":"list";
+    ["o","g","y"].forEach(k=>{(s[k]||[]).forEach(v=>state.sel[k].add(String(v)))});
+  }catch(e){}
+}
+
+/* ---- 選択肢 ---- */
+const counts=k=>DATA.reduce((m,d)=>(m[d[k]]=(m[d[k]]||0)+1,m),{});
+function chipGroup(box,key,vals){
+  box.innerHTML="";
+  vals.forEach(([v,n])=>{
+    const b=document.createElement("button");
+    b.type="button";b.className="chip-btn";b.dataset.key=key;b.dataset.val=v;
+    b.setAttribute("aria-pressed",state.sel[key].has(v)?"true":"false");
+    b.innerHTML=`${v}<em>${n}</em>`;
+    b.addEventListener("click",()=>{
+      state.sel[key].has(v)?state.sel[key].delete(v):state.sel[key].add(v);
+      b.setAttribute("aria-pressed",state.sel[key].has(v)?"true":"false");
+      render(true);
+    });
+    box.appendChild(b);
+  });
+}
+const cO=counts("o"),cG=counts("g"),cY=counts("y");
+chipGroup($("g-src"),"o",Object.entries(cO).sort((a,b)=>b[1]-a[1]));
+chipGroup($("g-genre"),"g",Object.entries(cG).sort((a,b)=>b[1]-a[1]));
+chipGroup($("g-year"),"y",Object.entries(cY).map(([v,n])=>[String(v),n]).sort((a,b)=>b[0].localeCompare(a[0])));
 SORTS.forEach(([v,l])=>{const o=document.createElement("option");o.value=v;o.textContent=l;$("sort").appendChild(o)});
 $("bands").innerHTML=BANDS.map(([r,l])=>`<span class="band">${r} ${l}</span>`).join("");
 
@@ -191,12 +278,15 @@ $("facts").innerHTML=[
 ].map(s=>`<span>${s}</span>`).join("");
 $("foot").textContent="本人評価17作品はオーナー本人の点数で、AIが付けた点数とは区別しています。根拠は各作品の1行コメントに記載。";
 
-let shown=0,view=[];
-const CHUNK=40;
-
+/* ---- 絞り込み ---- */
 function current(){
-  const q=norm($("q").value), s=$("src").value, g=$("genre").value, y=$("year").value, own=$("ownonly").checked;
-  let r=DATA.filter(d=>(!q||d._n.includes(q))&&(!s||d.o===s)&&(!g||d.g===g)&&(!y||d.y+"年"===y)&&(!own||d.r==="user"));
+  const q=norm($("q").value),own=$("ownonly").checked,S=state.sel;
+  let r=DATA.filter(d=>
+    (!q||d._n.includes(q))&&
+    (!S.o.size||S.o.has(d.o))&&
+    (!S.g.size||S.g.has(d.g))&&
+    (!S.y.size||S.y.has(String(d.y)))&&
+    (!own||d.r==="user"));
   const k=$("sort").value;
   const cmp={tot_d:(a,b)=>b.p-a.p,tot_a:(a,b)=>a.p-b.p,k_d:(a,b)=>b.k-a.k,
     y_d:(a,b)=>b.y-a.y||b.p-a.p,y_a:(a,b)=>a.y-b.y||b.p-a.p,t_a:(a,b)=>a.t.localeCompare(b.t,"ja")};
@@ -204,53 +294,128 @@ function current(){
   else{const i=+k[1];r.sort((a,b)=>b.a[i]-a.a[i]||b.p-a.p)}
   return r;
 }
+function syncSummary(){
+  const S=state.sel,tags=[];
+  [["o","原作"],["g","ジャンル"],["y","年代"]].forEach(([k,label])=>{
+    S[k].forEach(v=>tags.push(`<span class="tag">${label}：${v}${k==="y"?"年":""}<button type="button" data-k="${k}" data-v="${v}" aria-label="${v}の絞り込みを外す">✕</button></span>`));
+  });
+  const n=tags.length;
+  $("fcount").hidden=n===0;$("fcount").textContent=n;
+  $("sum").hidden=n===0;
+  $("sum").innerHTML=n?`<span>絞り込み中：</span>${tags.join("")}`:"";
+  $("sum").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    state.sel[b.dataset.k].delete(b.dataset.v);
+    document.querySelectorAll(`.chip-btn[data-key="${b.dataset.k}"][data-val="${CSS.escape(b.dataset.v)}"]`)
+      .forEach(c=>c.setAttribute("aria-pressed","false"));
+    render(true);
+  }));
+}
 
-function card(d){
-  const el=document.createElement("article");
-  el.className="row"+(d.r==="user"?" own":"");
-  const axes=AX.map(([label],i)=>{
+/* ---- 1作品の表示 ---- */
+function axesHtml(d){
+  return AX.map(([label],i)=>{
     const v=d.a[i];
     return `<div class="ax b${band(v)}"><span class="k">${label}<em>${fmt(v)}</em></span><span class="t"><i style="width:${Math.max(3,v*10)}%"></i></span></div>`;
   }).join("");
+}
+function metaHtml(d){
+  return `<span>${d.y}年${d.s||""}</span><span class="chip">${d.o}</span><span class="chip g">${d.g}</span>`+
+    `<span>公的 <span class="num">${fmt(d.k)}</span></span><span>合計 <span class="num">${fmt(d.p*10)}</span>/100</span>`;
+}
+function card(d){
+  const el=document.createElement("article");
+  el.className="row"+(d.r==="user"?" own":"");
   el.innerHTML=
     `<div class="head">
        <div class="tot b${band(d.p)}"><b>${fmt(d.p)}</b><span>私的</span></div>
        <div class="ttl">
          <h3>${d.t}${d.r==="user"?'<span class="badge">本人評価</span>':""}</h3>
-         <div class="meta">
-           <span>${d.y}年${d.s||""}</span>
-           <span class="chip">${d.o}</span><span class="chip g">${d.g}</span>
-           <span>公的 <span class="num">${fmt(d.k)}</span></span>
-           <span>合計 <span class="num">${fmt(d.p*10)}</span>/100</span>
-         </div>
+         <div class="meta">${metaHtml(d)}</div>
        </div>
      </div>
      <p class="note">${d.n||""}</p>
-     <div class="axes">${axes}</div>`;
+     <div class="axes">${axesHtml(d)}</div>`;
+  return el;
+}
+function rankRow(d,rank,metric){
+  const el=document.createElement("details");
+  el.className="rk"+(rank<=3?" top":"")+(d.r==="user"?" ownrow":"");
+  const val=metric==="p"?d.p:metric==="k"?d.k:metric==="y"?null:d.a[metric];
+  const shown=val===null?d.p:val;
+  el.innerHTML=
+    `<summary>
+       <span class="no">${rank}</span>
+       <span class="nm">${d.t}<span class="yr">${d.y}</span></span>
+       <span class="sc b${band(shown)}"><b>${fmt(shown)}</b></span>
+       <span class="caret">▼</span>
+     </summary>
+     <div class="rk-body">
+       <div class="meta">${metaHtml(d)}</div>
+       <div class="axes">${axesHtml(d)}</div>
+       <p class="note">${d.n||""}</p>
+     </div>`;
+  const sc=el.querySelector(".sc b");
+  sc.style.color=getComputedStyle(el.querySelector(".sc")).color;
   return el;
 }
 
+/* ---- 描画 ---- */
+let shown=0,view=[];
+function chunk(){return state.view==="rank"?100:40}
 function render(reset){
-  if(reset){view=current();shown=0;$("list").innerHTML=""}
+  if(reset){view=current();shown=0;$("list").innerHTML="";$("rank").innerHTML="";syncSummary();save()}
+  const isRank=state.view==="rank";
+  $("list").hidden=isRank;$("rank").hidden=!isRank;
+  const k=$("sort").value;
+  const metric=SORTKEY[k]!==undefined?SORTKEY[k]:+k[1];
   const frag=document.createDocumentFragment();
-  view.slice(shown,shown+CHUNK).forEach(d=>frag.appendChild(card(d)));
-  $("list").appendChild(frag);
-  shown=Math.min(shown+CHUNK,view.length);
+  view.slice(shown,shown+chunk()).forEach((d,i)=>{
+    frag.appendChild(isRank?rankRow(d,shown+i+1,metric):card(d));
+  });
+  (isRank?$("rank"):$("list")).appendChild(frag);
+  shown=Math.min(shown+chunk(),view.length);
   const rest=view.length-shown;
   $("more").hidden=rest<=0;
   $("more").textContent=rest>0?`さらに表示（残り ${rest} 件）`:"";
-  if(!view.length&&reset)$("list").innerHTML='<p class="empty">条件に合う作品がありません。</p>';
+  const host=isRank?$("rank"):$("list");
+  if(!view.length){host.innerHTML='<p class="empty">条件に合う作品がありません。</p>';host.hidden=false}
   const t=view.map(d=>d.p);
+  const label=(SORTS.find(s=>s[0]===k)||[])[1]||"";
   $("count").innerHTML=view.length
-    ?[`<span><b>${view.length}</b> 件を表示</span>`,`<span>総合点の中央値 <b>${fmt(med(t))}</b></span>`,`<span>最高 <b>${fmt(Math.max(...t))}</b> / 最低 <b>${fmt(Math.min(...t))}</b></span>`].join("")
+    ?[`<span><b>${view.length}</b> 件${isRank?`を${label}でランキング`:"を表示"}</span>`,
+      `<span>総合点の中央値 <b>${fmt(med(t))}</b></span>`,
+      `<span>最高 <b>${fmt(Math.max(...t))}</b> / 最低 <b>${fmt(Math.min(...t))}</b></span>`].join("")
     :"";
 }
 
-["q","sort","src","genre","year","ownonly"].forEach(id=>{
-  const el=$(id);
-  el.addEventListener(id==="q"?"input":"change",()=>render(true));
-});
+/* ---- 操作 ---- */
+["q","sort","ownonly"].forEach(id=>$(id).addEventListener(id==="q"?"input":"change",()=>render(true)));
 $("more").addEventListener("click",()=>render(false));
-$("reset").addEventListener("click",()=>{$("q").value="";$("src").value="";$("genre").value="";$("year").value="";$("ownonly").checked=false;$("sort").value="tot_d";render(true)});
+$("filt").addEventListener("click",()=>{
+  const open=$("panel").hidden;
+  $("panel").hidden=!open;$("filt").setAttribute("aria-expanded",open?"true":"false");
+});
+function setView(v){
+  state.view=v;
+  $("v-list").setAttribute("aria-pressed",v==="list"?"true":"false");
+  $("v-rank").setAttribute("aria-pressed",v==="rank"?"true":"false");
+  render(true);
+  window.scrollTo({top:0,behavior:"instant"});
+}
+$("v-list").addEventListener("click",()=>setView("list"));
+$("v-rank").addEventListener("click",()=>setView("rank"));
+$("reset").addEventListener("click",()=>{
+  $("q").value="";$("ownonly").checked=false;$("sort").value="tot_d";
+  ["o","g","y"].forEach(k=>state.sel[k].clear());
+  document.querySelectorAll(".chip-btn").forEach(c=>c.setAttribute("aria-pressed","false"));
+  render(true);
+});
+
+load();
+$("v-list").setAttribute("aria-pressed",state.view==="list"?"true":"false");
+$("v-rank").setAttribute("aria-pressed",state.view==="rank"?"true":"false");
+document.querySelectorAll(".chip-btn").forEach(c=>{
+  c.setAttribute("aria-pressed",state.sel[c.dataset.key].has(c.dataset.val)?"true":"false");
+});
 render(true);
 </script>
