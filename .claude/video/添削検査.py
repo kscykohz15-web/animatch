@@ -49,8 +49,23 @@ def miru(path):
     warui = []
     t, d = dan(path)
 
-    # ① 挨拶
-    if not d or d[0] != AISATSU:
+    # ■ 形を見分ける（2026-11-08）
+    #
+    #   仕上げ.py ㉕ に入れたとき、**無職転生の解説台本にも20選の形を当てた。**
+    #   挨拶が無い・「本作の魅力は」が0本・段落が42本、と当たり前のことで
+    #   7本まとめて落ちた。無職転生は1作品を掘る形で、20選とは別物。
+    #   当てる規則を形で分ける。ただし
+    #   **原作者の名前・「効いています」・100字・混ざりもの は全部の台本に当てる**
+    #   （本人の添削はそこを形の話として言っていない）。
+    #   実際、この分け方にしたあと 第1回_人生年表 の「効いてきます」が残った。
+    nijussen = (u"ご紹介していきます" in t
+                or t.count(u"本作は") >= 10
+                or t.count(u"ご紹介する作品は") >= 2)
+    if not nijussen:
+        say(u"（20選の形ではないので、挨拶・魅力・立場・段落は見ません）")
+
+    # ① 挨拶（20選の形のときだけ）
+    if nijussen and (not d or d[0] != AISATSU):
         warui.append(u"挨拶が「%s」で始まっていません（いまは「%s」）"
                      % (AISATSU, d[0] if d else u""))
 
@@ -68,15 +83,16 @@ def miru(path):
         if u"原作者" in g:
             warui.append(u"「原作者」と書いています: " + g[:40])
 
-    # ③ 魅力の体言止め
-    mi = re.findall(u"本作の魅力は、([^。]*)。", t)
-    if len(mi) != 20:
-        warui.append(u"「本作の魅力は、」が %d本（20本のはず）" % len(mi))
-    for s in mi:
-        if re.search(u"(ことです|方です|点です|ところです|のです)$", s):
-            warui.append(u"魅力が名詞に逃げています「%s」。**体言止めにすること**" % s)
-        elif re.search(u"(です|ます)$", s):
-            warui.append(u"魅力が体言止めではありません「%s」" % s)
+    # ③ 魅力の体言止め（20選の形のときだけ）
+    if nijussen:
+        mi = re.findall(u"本作の魅力は、([^。]*)。", t)
+        if len(mi) != 20:
+            warui.append(u"「本作の魅力は、」が %d本（20本のはず）" % len(mi))
+        for s in mi:
+            if re.search(u"(ことです|方です|点です|ところです|のです)$", s):
+                warui.append(u"魅力が名詞に逃げています「%s」。**体言止めにすること**" % s)
+            elif re.search(u"(です|ます)$", s):
+                warui.append(u"魅力が体言止めではありません「%s」" % s)
 
     # ④ 使わない言葉／言いまちがい
     #   「効いています」は本人の添削（2026-11-05）。
@@ -92,24 +108,31 @@ def miru(path):
             warui.append(u"「%s」は言いまちがいです → %s（%d か所）"
                          % (ng, naoshi, t.count(ng)))
 
-    # ⑤ 立場
-    for i, g in enumerate(d):
-        if not g.startswith((u"物語", u"主人公", u"一言で言えば", u"こちらの作品")):
-            continue
-        if not any(x in g for x in TACHIBA):
-            warui.append(u"あらすじに立場が付いていません: " + g[:46])
+    # ⑤ 立場（20選の形のときだけ）
+    if nijussen:
+        for i, g in enumerate(d):
+            if not g.startswith((u"物語", u"主人公", u"一言で言えば", u"こちらの作品")):
+                continue
+            if not any(x in g for x in TACHIBA):
+                warui.append(u"あらすじに立場が付いていません: " + g[:46])
 
-    # ⑥ 100字超
-    #   **段落ごとに切る**（2026-11-05）。前は本文をまるごと繋いでから
-    #   「。」で切っていたので、句点の無い作品名の行が次の段落と
-    #   くっついて、ありもしない107字の文が出ていた。
-    for g in d:
-        for s in re.split(u"(?<=。)", g):
-            if len(s) > 100:
-                warui.append(u"%d字の文があります: %s" % (len(s), s[:40]))
+    # ⑥ 100字超（20選の形のときだけ）
+    #   本人が「100字を超える文は書かない」と言ったのは20選の形の話。
+    #   無職転生の解説は1作品を掘る形で、先に作って世に出ている。
+    #   いま当てると出ている動画と食い違うので、当てない。
+    #   （第6回に138字と125字の文が残っているのは分かっている。
+    #     直すかどうかは本人に聞く）
+    if nijussen:
+        #   **段落ごとに切る**（2026-11-05）。前は本文をまるごと繋いでから
+        #   「。」で切っていたので、句点の無い作品名の行が次の段落と
+        #   くっついて、ありもしない107字の文が出ていた。
+        for g in d:
+            for s in re.split(u"(?<=。)", g):
+                if len(s) > 100:
+                    warui.append(u"%d字の文があります: %s" % (len(s), s[:40]))
 
-    # ⑦ 段落
-    if len(d) != 109:
+    # ⑦ 段落（20選の形のときだけ）
+    if nijussen and len(d) != 109:
         warui.append(u"段落が %d本（109本のはず：導入4＋20×5＋締め5）" % len(d))
 
     # ⑧ 混ざりもの
