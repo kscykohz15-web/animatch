@@ -1,0 +1,152 @@
+# 続編情報 ─ AniList から引いたもの（続編を引く.py）
+# **こちらの記憶で書かない。台本の「第N期まで」「劇場版」はここと合わせる。**
+# 作品名	TVの本数	一覧（形式:年季:話数:続柄:題名 を ｜ でつないだもの）
+# 続柄 SUMMARY は総集編。劇場版と書いてよいが「新作」ではない。
+86 エイティシックス	2	TV:2021春:11:－:86－エイティシックス－｜TV:2021秋:12:－:86－エイティシックス－ 第2クール
+Angel Beats!	1	TV:2010春:13:－:Angel Beats!｜SPECIAL:2010秋:2:SIDE_STORY:エンジェルビーツ 特別篇｜SPECIAL:2010秋:1:SIDE_STORY:エンジェルビーツ! アナザーエピローグ
+BLEACH	5	TV:2004秋:366:－:BLEACH｜SPECIAL:2004秋:1:ALTERNATIVE:BLEACH memories in the rain｜SPECIAL:2006冬:1:SIDE_STORY:BLEACH The Sealed Sword Frenzy｜MOVIE:2006秋:1:SIDE_STORY:BLEACH MEMORIES OF NOBODY｜MOVIE:2007秋:1:SIDE_STORY:BLEACH The DiamondDust Rebellion もう一つの氷輪丸｜MOVIE:2008秋:1:SIDE_STORY:BLEACH Fade to Black 君の名を呼ぶ｜MOVIE:2010秋:1:SIDE_STORY:BLEACH 地獄篇｜TV:2022秋:13:－:BLEACH 千年血戦篇｜TV:2023夏:13:－:BLEACH 千年血戦篇-訣別譚-｜TV:2024秋:14:－:BLEACH 千年血戦篇-相剋譚-｜TV:2026夏:10:－:BLEACH 千年血戦篇-禍進譚-
+CLANNAD	2	MOVIE:2007夏:1:ALTERNATIVE:劇場版 クラナド｜TV:2007秋:23:－:ＣＬＡＮＮＡＤ -クラナド-｜TV:2008秋:24:－:ＣＬＡＮＮＡＤ ~After Story~ クラナド アフターストーリー
+CLANNAD AFTER STORY	1	MOVIE:2007夏:1:ALTERNATIVE:劇場版 クラナド｜TV:2008秋:24:－:ＣＬＡＮＮＡＤ ~After Story~ クラナド アフターストーリー
+DARKER THAN BLACK -黒の契約者-	2	TV:2007春:25:－:DARKER THAN BLACK -黒の契約者-｜SPECIAL:2008冬:1:－:DARKER THAN BLACK -黒の契約者- 桜の花の満開の下｜TV:2009秋:12:－:DARKER THAN BLACK -流星の双子-｜SPECIAL:2010冬:4:－:DARKER THAN BLACK -黒の契約者- 外伝
+NARUTO	3	TV:2002秋:220:－:NARUTO -ナルト-｜SPECIAL:2003春:1:SIDE_STORY:NARUTO -ナルト- 紅き四つ葉のクローバーを探せ｜SPECIAL:2003秋:1:SIDE_STORY:NARUTO -ナルト- 滝隠れの死闘 オレが英雄だってばよ！｜MOVIE:2004夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 大活劇!雪姫忍法帖だってばよ!!｜MOVIE:2005夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 大激突!幻の地底遺跡だってばよ｜MOVIE:2006夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 大興奮!みかづき島のアニマル騒動だってばよ｜TV:2007冬:500:－:NARUTO -ナルト- 疾風伝｜MOVIE:2007夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 疾風伝｜MOVIE:2008夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 疾風伝 絆｜MOVIE:2009夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 疾風伝 火の意志を継ぐ者｜SPECIAL:2009秋:1:SIDE_STORY:NARUTO -ナルト- THE CROSS ROADS｜SPECIAL:2010夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- そよかぜ伝 ナルトと魔神と3つのお願いだってばよ!!｜MOVIE:2010夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- 疾風伝 ザ・ロストタワー｜MOVIE:2011夏:1:SIDE_STORY:劇場版 NARUTO -ナルト- ブラッド・プリズン｜MOVIE:2011夏:1:SIDE_STORY:NARUTO -ナルト- 炎の中忍試験! ナルトvs木ノ葉丸!!｜MOVIE:2012夏:1:SIDE_STORY:ROAD TO NINJA -NARUTO THE MOVIE-｜MOVIE:2014秋:1:SIDE_STORY:THE LAST -NARUTO THE MOVIE-｜MOVIE:2015夏:1:－:BORUTO -NARUTO THE MOVIE-｜SPECIAL:2016夏:1:－:BORUTO -NARUTO THE MOVIE- ナルトが火影になった日｜TV:2017春:293:ALTERNATIVE:BORUTO-ボルト- NARUTO NEXT GENERATIONS｜SPECIAL:2022秋:1:SUMMARY:ROAD OF NARUTO
+ONE PIECE	3	TV:1999秋:？:－:ONE PIECE｜MOVIE:2000冬:1:SIDE_STORY:ONE PIECE (Movie)｜SPECIAL:2000秋:1:SIDE_STORY:ONE PIECE TVスペシャル 海のヘソの大冒険篇｜MOVIE:2001冬:1:SIDE_STORY:ONE PIECE ねじまき島の冒険｜SPECIAL:2001冬:1:SIDE_STORY:ONE PIECE ねじまき島の冒険 ジャンゴのダンスカーニバル｜SPECIAL:2002冬:1:SIDE_STORY:ONE PIECE 夢のサッカー王!｜MOVIE:2002冬:1:SIDE_STORY:ONE PIECE 珍獣島のチョッパー王国｜MOVIE:2003冬:1:SIDE_STORY:ONE PIECE THE MOVIE デッドエンドの冒険｜SPECIAL:2003春:1:SIDE_STORY:ONE PIECE： 大海原にひらけ! でっかいでっカイ父の夢｜SPECIAL:2003秋:1:SIDE_STORY:ONE PIECE 守れ! 最後の大舞台｜SPECIAL:2004冬:1:SIDE_STORY:ONE PIECE めざせ! 海賊野球王｜MOVIE:2004冬:1:SIDE_STORY:ONE PIECE 呪われた聖剣｜MOVIE:2005冬:1:SIDE_STORY:ONE PIECE THE MOVIE オマツリ男爵と秘密の島｜SPECIAL:2005秋:1:SIDE_STORY:ONE PIECE 年末特別企画！麦わらのルフィ親分捕物帖｜MOVIE:2006冬:1:SIDE_STORY:ONE PIECE THE MOVIE カラクリ城のメカ巨兵｜MOVIE:2007冬:1:SUMMARY:ONE PIECE エピソードオブアラバスタ 砂漠の王女と海賊たち｜MOVIE:2008冬:1:SUMMARY:ONE PIECE THE MOVIE エピソードオブチョッパー+ 冬に咲く、奇跡の桜｜MOVIE:2009秋:1:SIDE_STORY:ONE PIECE FILM STRONG WORLD｜MOVIE:2011冬:1:SIDE_STORY:ONE PIECE 3D 麦わらチェイス｜SPECIAL:2011夏:1:SUMMARY:ONE PIECE エピソードオブアラバスタ 砂漠の王女と海賊たち｜MOVIE:2011秋:1:SIDE_STORY:ONE PIECE 3D 激走! トラップコースター｜SPECIAL:2012夏:1:SUMMARY:ONE PIECE エピソードオブナミ 〜航海士の涙と仲間の絆〜｜SPECIAL:2012秋:1:SIDE_STORY:ONE PIECE エピソードオブルフィ 〜ハンドアイランドの冒険〜｜SPECIAL:2012秋:2:SIDE_STORY:ONE PIECE FILM Z『GLORIOUS ISLAND』｜MOVIE:2012秋:1:SIDE_STORY:ONE PIECE FILM Z｜SPECIAL:2013夏:1:SUMMARY:ONE PIECE エピソードオブメリー 〜もうひとりの仲間の物語〜｜SPECIAL:2014夏:1:SIDE_STORY:ONE PIECE “3D2Y” エースの死を越えて! ルフィ仲間との誓い｜SPECIAL:2015夏:1:SUMMARY:ONE PIECE エピソードオブサボ ~3兄弟の絆 奇跡の再会と受け継がれる意志~｜SPECIAL:2015秋:1:SIDE_STORY:ONE PIECE 〜アドベンチャー オブ ネブランディア〜｜SPECIAL:2016夏:1:SIDE_STORY:ONE PIECE 〜ハートオブゴールド〜｜MOVIE:2016夏:1:SIDE_STORY:ONE PIECE FILM GOLD｜SPECIAL:2016夏:1:SIDE_STORY:ONE PIECE FILM GOLD 〜episode 0〜 711ver.｜MOVIE:2016秋:1:SIDE_STORY:東京ワンピースタワー トンガリ島の大秘宝｜SPECIAL:2017夏:1:SUMMARY:ONE PIECE エピソードオブ東の海〜ルフィと4人の仲間の大冒険!!〜｜SPECIAL:2018夏:1:SUMMARY:ONE PIECE エピソードオブ空島｜MOVIE:2019夏:1:SIDE_STORY:ONE PIECE STAMPEDE｜MOVIE:2022夏:1:SIDE_STORY:ONE PIECE FILM RED｜SPECIAL:2024秋:1:SIDE_STORY:ONE PIECE FAN LETTER｜TV:2024秋:21:SUMMARY:SPECIAL EDITED VERSION『ONE PIECE』魚人島編｜SPECIAL:2025冬:1:SIDE_STORY:ONE PIECE オリジナルエピソード／ルフィ、ロー｜ONA:2025春:5:SIDE_STORY:恋するワンピース｜TV_SHORT:2026冬:12:SPIN_OFF:CHOPPER's｜SPECIAL:2026夏:1:SIDE_STORY:ONE PIECE HEROINES｜MOVIE:2027:1:SIDE_STORY:ONE PIECE FILM GOD VALLEY｜MOVIE:2029:1:SIDE_STORY:ONE PIECE FILM BAAD
+PSYCHO-PASS サイコパス	3	TV:2012秋:22:－:PSYCHO-PASS サイコパス｜TV:2014秋:11:－:PSYCHO-PASS サイコパス2｜MOVIE:2015冬:1:－:劇場版 PSYCHO-PASS サイコパス｜MOVIE:2019冬:1:－:PSYCHO-PASS サイコパス Sinners of the System Case.1 - 罪と罰｜MOVIE:2019冬:1:－:PSYCHO-PASS サイコパス Sinners of the System Case.2 - First Guardian｜MOVIE:2019冬:1:－:PSYCHO-PASS サイコパス Sinners of the System Case.3 - 恩讐の彼方に____｜TV:2019秋:8:－:PSYCHO-PASS サイコパス3｜ONA:2020冬:3:－:PSYCHO-PASS サイコパス 3 FIRST INSPECTOR｜MOVIE:2023春:1:－:劇場版 PSYCHO-PASS サイコパス PROVIDENCE
+Re:ゼロから始める異世界生活	7	TV:2016春:25:－:Re：ゼロから始める異世界生活｜TV_SHORT:2016春:11:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム)｜TV_SHORT:2016春:14:SPIN_OFF:Re：プチから始める異世界生活｜TV:2020夏:13:－:Re：ゼロから始める異世界生活 2nd Season｜ONA:2020夏:13:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム) 2nd Season｜TV:2021冬:12:－:Re：ゼロから始める異世界生活 2nd Season Part 2｜ONA:2021冬:12:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム) 2nd Season Part 2｜TV:2024秋:16:－:Re：ゼロから始める異世界生活 3rd season｜ONA:2024秋:16:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム) 3rd Season｜TV:2026春:19:－:Re：ゼロから始める異世界生活 4th season｜ONA:2026春:19:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム) 4th Season
+Re:ゼロから始める異世界生活 第3期	2	TV:2024秋:16:－:Re：ゼロから始める異世界生活 3rd season｜ONA:2024秋:16:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム) 3rd Season｜TV:2026春:19:－:Re：ゼロから始める異世界生活 4th season｜ONA:2026春:19:SPIN_OFF:Re：ゼロから始める休憩時間(ブレイクタイム) 4th Season
+SAKAMOTO DAYS	1	ONA:2025冬:11:－:SAKAMOTO DAYS｜ONA:2025夏:11:－:SAKAMOTO DAYS 第２クール｜TV:2027冬:？:－:SAKAMOTO DAYS 第2期
+SPY×FAMILY	4	TV:2022春:12:－:SPY×FAMILY｜TV:2022秋:13:－:SPY×FAMILY 第2クール｜TV:2023秋:12:－:SPY×FAMILY Season 2｜MOVIE:2023秋:1:SIDE_STORY:SPY×FAMILY CODE： White｜TV:2025秋:13:－:SPY×FAMILY Season 3
+SSSS.GRIDMAN	2	TV:2018秋:12:－:SSSS.GRIDMAN｜TV:2021春:12:－:SSSS.DYNAZENON｜MOVIE:2023冬:1:SUMMARY:SSSS.GRIDMAN Movie｜MOVIE:2023冬:1:SUMMARY:SSSS.DYNAZENON Movie｜MOVIE:2023冬:1:－:グリッドマン ユニバース
+STEINS;GATE	1	TV:2011春:24:－:シュタインズ・ゲート｜MOVIE:2013春:1:SIDE_STORY:劇場版 シュタインズゲート 負荷領域のデジャヴ｜ONA:2014秋:4:SIDE_STORY:Steins;Gate 聡明叡智のコグニティブ・コンピューティング
+TEXHNOLYZE	1	TV:2003春:22:－:TEXHNOLYZE
+Vivy -Fluorite Eye's Song-	1	TV:2021春:13:－:Vivy -Fluorite Eye’s Song-｜SPECIAL:2021夏:1:ALTERNATIVE:Vivy -Fluorite Eye’s Song- ： PILOT MOVIE
+serial experiments lain	1	TV:1998夏:13:－:serial experiments lain
+【推しの子】第2期	3	TV:2024夏:13:－:【推しの子】第2期｜TV:2026冬:11:－:【推しの子】第3期｜TV:？:？:－:【推しの子】第4期 Final Season
+あかね噺	2	TV:2026春:12:－:あかね噺｜TV:2027冬:？:－:あかね噺 第2期
+あの日見た花の名前を僕達はまだ知らない。	1	TV:2011春:11:－:あの日見た花の名前を僕達はまだ知らない。｜SPECIAL:2012冬:1:SIDE_STORY:あの日見た花の名前を僕達はまだ知らない。「めんまへの手紙」｜MOVIE:2013夏:1:ALTERNATIVE:劇場版 あの日見た花の名前を僕達はまだ知らない。
+ありふれた職業で世界最強	3	TV:2019夏:13:－:ありふれた職業で世界最強｜ONA:2019夏:13:SIDE_STORY:ありふれた職業で世界最強 ピクチャードラマ｜SPECIAL:2019秋:2:SIDE_STORY:ありふれた職業で世界最強｜TV:2022冬:12:－:ありふれた職業で世界最強 2nd season｜SPECIAL:2022冬:1:SIDE_STORY:ありふれた職業で世界最強 2nd season 未放送エピソード｜TV:2024秋:16:－:ありふれた職業で世界最強 3rd season
+かぐや様は告らせたい	4	TV:2019冬:12:－:かぐや様は告らせたい～天才たちの恋愛頭脳戦～｜TV:2020春:12:－:かぐや様は告らせたい？～天才たちの恋愛頭脳戦～｜ONA:2021秋:1:SIDE_STORY:第３期『かぐや様は告らせたい-ウルトラロマンティック-』 ／ ティザーPV 「石上優は語りたい」｜TV:2022春:13:－:かぐや様は告らせたい-ウルトラロマンティック-｜TV:2023春:4:－:かぐや様は告らせたい -ファーストキッスは終わらない-｜SPECIAL:2025秋:2:－:かぐや様は告らせたい 大人への階段｜MOVIE:？:1:－:かぐや様は告らせたい 完結編
+からかい上手の高木さん	3	TV:2018冬:12:－:からかい上手の高木さん｜TV:2019夏:12:－:からかい上手の高木さん 2｜TV:2022冬:12:－:からかい上手の高木さん３｜MOVIE:2022春:1:－:劇場版 からかい上手の高木さん
+この素晴らしい世界に祝福を！	5	TV:2016冬:10:－:この素晴らしい世界に祝福を！｜TV:2017冬:10:－:この素晴らしい世界に祝福を！2｜MOVIE:2019夏:1:－:この素晴らしい世界に祝福を！紅伝説｜TV:2023春:12:SPIN_OFF:この素晴らしい世界に爆焔を！｜TV:2024春:11:－:この素晴らしい世界に祝福を！３｜TV:2027:？:－:この素晴らしい世界に祝福を！4
+その着せ替え人形は恋をする	2	TV:2022冬:12:－:その着せ替え人形は恋をする｜TV:2025夏:12:－:その着せ替え人形は恋をする Season 2
+とある魔術の禁書目録	6	TV:2008秋:24:－:とある魔術の禁書目録｜SPECIAL:2009冬:2:SIDE_STORY:とある魔術のいんでっくすたん｜TV:2009秋:24:SPIN_OFF:とある科学の超電磁砲｜TV:2010秋:24:－:とある魔術の禁書目録II｜SPECIAL:2011冬:2:SIDE_STORY:とある魔術のいんでっくすたん｜MOVIE:2013冬:1:SIDE_STORY:劇場版 とある魔術の禁書目録 エンデュミオンの奇蹟｜TV:2018秋:26:－:とある魔術の禁書目録III｜SPECIAL:2018秋:2:SIDE_STORY:とある魔術の禁書目録たんIII｜TV:2019夏:12:SPIN_OFF:とある科学の一方通行【アクセラレータ】｜TV:2026秋:？:SPIN_OFF:とある暗部の少女共棲
+とらドラ！	1	TV:2008秋:25:－:とらドラ！｜SPECIAL:2009冬:4:SIDE_STORY:とらドラ! SOS!｜SPECIAL:2009春:1:SIDE_STORY:とらどら！亜美モノマネ１５０連発！！
+とんでもスキルで異世界放浪メシ	2	TV:2023冬:12:－:とんでもスキルで異世界放浪メシ｜TV:2025秋:12:－:とんでもスキルで異世界放浪メシ2
+ひぐらしのなく頃に	3	TV:2006春:26:－:ひぐらしのなく頃に｜TV:2007夏:24:－:ひぐらしのなく頃に解｜SPECIAL:2007夏:1:SIDE_STORY:ひぐらしのなく頃に 猫殺し編｜SPECIAL:2007夏:24:SIDE_STORY:うら☆ひぐ｜TV:？:？:ALTERNATIVE:ひぐらしのなく頃に (新アニメ)
+ぼくらの	1	TV:2007春:24:－:ぼくらの
+ぼっち・ざ・ろっく！	2	TV:2022秋:12:－:ぼっち・ざ・ろっく！｜MOVIE:2024春:1:SUMMARY:ぼっち・ざ・ろっく！Re：｜MOVIE:2024夏:1:SUMMARY:ぼっち・ざ・ろっく！ Re：Re：｜TV:？:？:－:ぼっち・ざ・ろっく！ 2期
+やはり俺の青春ラブコメはまちがっている。	3	TV:2013春:13:－:やはり俺の青春ラブコメはまちがっている。｜TV:2015春:13:－:やはり俺の青春ラブコメはまちがっている。続｜TV:2020夏:12:－:やはり俺の青春ラブコメはまちがっている。完
+ゆびさきと恋々	1	TV:2024冬:12:－:ゆびさきと恋々｜ONA:2024冬:12:SIDE_STORY:ゆびさきぷち
+ようこそ実力至上主義の教室へ	5	TV:2017夏:12:－:ようこそ実力至上主義の教室へ｜TV:2022夏:13:－:ようこそ実力至上主義の教室へ 2nd Season｜TV:2024冬:13:－:ようこそ実力至上主義の教室へ 3rd Season｜TV:2026春:16:－:ようこそ実力至上主義の教室へ 4th Season 2年生編1学期｜TV:？:？:－:ようこそ実力至上主義の教室へ 5th Season
+アオのハコ	1	ONA:2024秋:25:－:アオのハコ｜TV:2026秋:12:－:アオのハコ Season２
+エルゴプラクシー	1	TV:2006冬:23:－:Ergo Proxy
+オッドタクシー	1	TV:2021春:13:－:オッドタクシー｜SPECIAL:2022冬:1:SIDE_STORY:オッドタクシー オリジナルピクチャードラマ｜MOVIE:2022春:1:ALTERNATIVE:映画 オッドタクシー イン・ザ・ウッズ
+オーバーロード	4	TV:2015夏:13:－:オーバーロード｜SPECIAL:2015夏:8:SIDE_STORY:オーバーロード ぷれぷれぷれあです｜ONA:2015夏:1:SIDE_STORY:オーバーロード ぷれぷれぷれあです 特別編｜MOVIE:2017冬:1:SUMMARY:劇場版総集編 オーバーロード 不死者の王｜MOVIE:2017冬:1:SUMMARY:劇場版総集編 オーバーロード 漆黒の英雄｜TV:2018冬:13:－:オーバーロードⅡ｜ONA:2018冬:13:SIDE_STORY:オーバーロード ぷれぷれぷれあです2｜TV:2018夏:13:－:オーバーロードⅢ｜ONA:2018夏:13:SIDE_STORY:オーバーロード ぷれぷれぷれあです3｜TV:2022夏:13:－:オーバーロードⅣ｜ONA:2022夏:13:SIDE_STORY:オーバーロード ぷれぷれぷれあです4｜MOVIE:2024夏:1:－:オーバーロード 聖王国編
+カウボーイビバップ	1	TV:1998春:26:－:カウボーイビバップ｜SPECIAL:1998春:1:SUMMARY:カウボーイビバップ よせあつめブルース｜MOVIE:2001夏:1:SIDE_STORY:カウボーイビバップ天国の扉｜SPECIAL:2012秋:1:SIDE_STORY:アインのなつやすみ
+カードキャプターさくら	2	TV:1998春:70:－:カードキャプターさくら｜MOVIE:1999夏:1:SIDE_STORY:劇場版 カードキャプターさくら｜SPECIAL:2000夏:1:SIDE_STORY:ケロちゃんにおまかせ！｜MOVIE:2000夏:1:－:劇場版 カードキャプターさくら 封印されたカード｜TV:2018冬:22:－:カードキャプターさくら クリアカード編
+ガチアクタ	2	TV:2025夏:24:－:ガチアクタ｜TV:？:？:－:ガチアクタ 第2期
+コードギアス 反逆のルルーシュ	2	TV:2006秋:25:－:コードギアス 反逆のルルーシュ｜SPECIAL:2007冬:9:SIDE_STORY:コードギアス 反逆のルルーシュ ピクチャードラマ｜TV:2008春:25:－:コードギアス 反逆のルルーシュ R2｜SPECIAL:2008夏:9:SIDE_STORY:コードギアス 反逆のルルーシュ 続編 ピクチャードラマ｜SPECIAL:2008夏:9:SIDE_STORY:コードギアス 反逆のルルーシュ おまけFLASH「帰ってきたBABA劇場」｜SPECIAL:2010春:1:SIDE_STORY:コードギアス 反逆のルルーシュ キセキの誕生日 ピクチャードラマ｜SPECIAL:2014冬:1:SIDE_STORY:コードギアス 反逆のルルーシュ 続編 ピクチャードラマ TURN 12.06 ラストモラトリアム｜SPECIAL:2017春:1:SIDE_STORY:コードギアス 反逆のルルーシュ キセキのアニバーサリー｜MOVIE:2017秋:1:ALTERNATIVE:コードギアス 反逆のルルーシュⅠ 興道
+ゴールデンカムイ	5	TV:2018春:12:－:ゴールデンカムイ｜ONA:2018春:46:SPIN_OFF:ゴールデンカムイ 「ゴールデン道画劇場」｜TV:2018秋:12:－:ゴールデンカムイ 第二期｜TV:2020秋:12:－:ゴールデンカムイ 第三期｜TV:2022秋:13:－:ゴールデンカムイ 第四期｜MOVIE:2025秋:2:ALTERNATIVE:ゴールデンカムイ 札幌ビール工場編｜TV:2026冬:13:－:ゴールデンカムイ 最終章
+サイレント・ウィッチ	1	TV:2025夏:13:－:サイレント・ウィッチ 沈黙の魔女の隠しごと
+サイレント・ウィッチ 沈黙の魔女の隠しごと	1	TV:2025夏:13:－:サイレント・ウィッチ 沈黙の魔女の隠しごと
+サカモトデイズ	1	ONA:2025冬:11:－:SAKAMOTO DAYS｜ONA:2025夏:11:－:SAKAMOTO DAYS 第２クール｜TV:2027冬:？:－:SAKAMOTO DAYS 第2期
+サマータイムレンダ	1	TV:2022春:25:－:サマータイムレンダ
+ザ・ファブル	2	TV:2024春:25:－:ザ・ファブル｜TV:2027冬:？:－:ザ・ファブル 第2期
+シャングリラ・フロンティア	3	ONA:2023夏:9:SIDE_STORY:シャングリラ・フロンティア ミニアニメ｜TV:2023秋:25:－:シャングリラ・フロンティア｜TV:2024秋:25:－:シャングリラ・フロンティア 2nd season｜TV:2027冬:？:－:シャングリラ・フロンティア 3rd season
+スキップとローファー	2	TV:2023春:12:－:スキップとローファー｜TV:2027春:？:－:スキップとローファー 2nd season
+ソードアート・オンライン	6	TV:2012夏:25:－:ソードアート・オンライン｜SPECIAL:2013秋:1:－:ソードアート・オンライン Extra Edition｜TV:2014夏:24:－:ソードアート・オンライン II｜MOVIE:2017冬:1:－:ソードアート・オンライン -オーディナル・スケール-｜ONA:2018冬:1:PARENT:Sword Art Online Fatal Bullet -The Third Episode- ＜パイロット版＞｜TV:2018春:12:SPIN_OFF:ソードアート・オンライン オルタナティブ ガンゲイル・オンライン｜TV:2018秋:24:－:ソードアート・オンライン アリシゼーション｜TV:2019秋:12:－:ソードアート・オンライン アリシゼーション War of Underworld｜TV:2020夏:11:－:ソードアート・オンライン アリシゼーション War of Underworld 最終章 (2nd Season)｜MOVIE:2021秋:1:ALTERNATIVE:劇場版 ソードアート・オンライン プログレッシブ 星なき夜のアリア｜MOVIE:2026夏:1:ALTERNATIVE:Unanswered//butterfly： Sword Art Online｜MOVIE:2028:？:－:ソードアート・オンライン - インテグラル・ドメイン -
+タコピーの原罪	0	ONA:2025春:6:－:タコピーの原罪｜MOVIE:2026秋:1:SUMMARY:タコピーの原罪 -ありがとう、また明日-
+ダンジョン飯	1	TV:2024冬:24:－:ダンジョン飯｜ONA:2027秋:？:－:ダンジョン飯 第２期
+ダンダダン	3	TV:2024秋:12:－:ダンダダン｜TV:2025夏:12:－:ダンダダン 第2期｜TV:2027:？:－:ダンダダン 第3期
+ダークギャザリング	2	TV:2023夏:25:－:ダークギャザリング｜TV:2027:？:－:ダークギャザリング 第2期
+ダーリン・イン・ザ・フランキス	1	TV:2018冬:24:－:ダーリン・イン・ザ・フランキス
+チ。地球の運動について	1	TV:2024秋:25:－:チ。-地球の運動について-
+チェンソーマン	1	TV:2022秋:12:－:チェンソーマン｜ONA:2025夏:5:SIDE_STORY:チェンソー びより｜MOVIE:2025夏:1:－:チェンソーマン レゼ篇
+デスノート	1	TV:2006秋:37:－:DEATH NOTE｜SPECIAL:2007夏:2:SUMMARY:DEATH NOTE リライト
+ニセコイ	2	TV:2014冬:20:－:ニセコイ｜TV:2015春:12:－:ニセコイ：
+ハイキュー！！	3	TV:2014春:25:－:ハイキュー!!｜MOVIE:2015夏:1:SUMMARY:ハイキュー!! 終わりと始まり｜MOVIE:2015夏:1:SUMMARY:ハイキュー!! 勝者と敗者｜TV:2015秋:25:－:ハイキュー!! セカンドシーズン｜SPECIAL:2015秋:1:SIDE_STORY:ハイキュー!! VS赤点｜TV:2016秋:10:－:ハイキュー!! 烏野高校 VS 白鳥沢学園高校｜MOVIE:2017夏:1:SUMMARY:ハイキュー!! 才能とセンス｜MOVIE:2017夏:1:SUMMARY:ハイキュー!! コンセプトの戦い
+フリクリ	4	OVA:2000春:6:－:フリクリ｜TV:2018春:6:－:フリクリ プログレ｜TV:2018夏:6:－:フリクリ オルタナ｜TV:2023夏:3:－:フリクリ グランジ｜TV:2023秋:3:－:フリクリ シューゲイザー
+フリップフラッパーズ	1	TV:2016秋:13:－:フリップフラッパーズ
+ホリミヤ	2	TV:2021冬:13:－:ホリミヤ｜TV:2023夏:13:SIDE_STORY:ホリミヤ -piece-
+マリッジトキシン	2	TV:2026春:13:－:マリッジトキシン｜TV:2027冬:？:－:マリッジトキシン 第2期
+メダリスト	2	TV:2025冬:13:－:メダリスト｜TV:2026冬:9:－:メダリスト 第2期｜MOVIE:2027冬:1:－:劇場版 メダリスト
+モノノ怪	1	TV:2007夏:12:－:モノノ怪
+モブサイコ100	3	TV:2016夏:12:－:モブサイコ100｜SPECIAL:2016夏:6:SIDE_STORY:モブサイコmini｜TV:2019冬:13:－:モブサイコ100 II｜TV:2022秋:12:－:モブサイコ100 Ⅲ｜SPECIAL:2026夏:1:SIDE_STORY:モブサイコ100 10周年記念特別映像
+リコリス・リコイル	1	TV:2022夏:13:－:リコリス・リコイル｜ONA:2025春:6:SIDE_STORY:リコリス・リコイル Friends are thieves of time.
+ログ・ホライズン	3	TV:2013秋:25:－:ログ・ホライズン｜TV:2014秋:25:－:ログ・ホライズン 2｜TV:2021冬:12:－:ログ・ホライズン　円卓崩壊
+ワンパンマン	4	TV:2015秋:12:－:ワンパンマン｜TV:2019春:12:－:ワンパンマン 2｜TV:2025秋:12:－:ワンパンマン３｜TV:2027冬:？:－:ワンパンマン 第3期第2クール
+ヴァイオレット・エヴァーガーデン	1	TV:2018冬:13:－:ヴァイオレット・エヴァーガーデン｜MOVIE:2019夏:1:－:ヴァイオレット・エヴァーガーデン 外伝~永遠と自動手記人形~｜MOVIE:2020夏:1:－:劇場版 ヴァイオレット・エヴァーガーデン
+ヴィンランド・サガ	2	TV:2019夏:24:－:ヴィンランド・サガ｜TV:2023冬:24:－:ヴィンランド・サガ SEASON2｜ONA:2023冬:1:SIDE_STORY:ヴィンランド・サガ SEASON2 Drowning in the Shadow｜ONA:2023春:1:SIDE_STORY:ヴィンランド・サガ SEASON2 Same old story
+七つの大罪	7	TV:2014秋:24:－:七つの大罪｜TV:2016夏:4:－:七つの大罪 聖戦の予兆｜TV:2018冬:24:－:七つの大罪 戒めの復活｜MOVIE:2018夏:1:SIDE_STORY:劇場版 七つの大罪 天空の囚われ人｜TV:2019秋:24:－:七つの大罪 神々の逆鱗｜TV:2021冬:24:－:七つの大罪 憤怒の審判｜MOVIE:2021夏:1:－:七つの大罪 光に呪われし者たち｜ONA:2022秋:1:SPIN_OFF:七つの大罪 怨嗟のエジンバラ 前編｜TV:2023秋:24:－:七つの大罪 黙示録の四騎士｜TV:2024秋:12:－:七つの大罪 黙示録の四騎士 第2期
+乙女ゲー世界はモブに厳しい世界です	2	TV:2022春:12:－:乙女ゲー世界はモブに厳しい世界です｜TV:2026夏:12:－:乙女ゲー世界はモブに厳しい世界です2
+五等分の花嫁	3	TV:2019冬:12:－:五等分の花嫁｜TV:2021冬:12:－:五等分の花嫁∬｜MOVIE:2022春:1:－:映画 五等分の花嫁｜SPECIAL:2023夏:2:－:五等分の花嫁∽｜SPECIAL:2024夏:2:－:五等分の花嫁＊｜TV:？:？:SIDE_STORY:五等分の花嫁【春夏秋冬】
+伝説の勇者の伝説	1	TV:2010夏:24:－:伝説の勇者の伝説
+俺物語!!	1	TV:2015春:24:－:俺物語!!
+僕のヒーローアカデミア	9	TV:2016春:13:－:僕のヒーローアカデミア｜TV:2017春:25:－:僕のヒーローアカデミア２｜TV:2018春:25:－:僕のヒーローアカデミア３｜MOVIE:2018夏:1:SIDE_STORY:僕のヒーローアカデミア THE MOVIE 〜2人の英雄〜｜TV:2019秋:25:－:僕のヒーローアカデミア４｜MOVIE:2019秋:1:SIDE_STORY:僕のヒーローアカデミア THE MOVIE ヒーローズ：ライジング｜ONA:2020夏:2:SIDE_STORY:僕のヒーローアカデミア 生き残れ！決死のサバイバル訓練｜TV:2021冬:25:－:僕のヒーローアカデミア５｜MOVIE:2021夏:1:SIDE_STORY:僕のヒーローアカデミア THE MOVIE ワールド ヒーローズ ミッション｜ONA:2022夏:2:SIDE_STORY:僕のヒーローアカデミア 5 (ONA)｜TV:2022秋:25:－:僕のヒーローアカデミア６｜TV:2024春:21:－:僕のヒーローアカデミア 7｜MOVIE:2024夏:1:SIDE_STORY:僕のヒーローアカデミア THE MOVIE： ユア ネクスト｜TV:2025春:13:SPIN_OFF:ヴィジランテ -僕のヒーローアカデミア ILLEGALS-｜TV:2025秋:11:－:僕のヒーローアカデミア FINAL SEASON｜SPECIAL:2026春:1:－:僕のヒーローアカデミア No. 170+1 「More」｜SPECIAL:2026夏:1:－:僕のヒーローアカデミア I am a hero too
+僕の心のヤバイやつ	3	TV:2023春:12:－:僕の心のヤバイやつ｜ONA:2023秋:1:SIDE_STORY:僕の心のヤバイやつ ツイヤバ｜TV:2024冬:13:－:僕の心のヤバイやつ 第2期｜MOVIE:2026冬:1:SUMMARY:劇場版 僕の心のヤバイやつ｜TV:2027春:？:－:僕の心のヤバイやつ 第3期
+僕の心のヤバイやつ 第2期	2	TV:2024冬:13:－:僕の心のヤバイやつ 第2期｜MOVIE:2026冬:1:SUMMARY:劇場版 僕の心のヤバイやつ｜TV:2027春:？:－:僕の心のヤバイやつ 第3期
+光が死んだ夏	2	TV:2025夏:12:－:光が死んだ夏｜TV:？:？:－:光が死んだ夏 第二期
+全修。	1	TV:2025冬:12:－:全修。
+冴えない彼女の育てかた	2	TV:2015冬:13:－:冴えない彼女の育てかた｜TV:2017春:12:－:冴えない彼女の育てかた ♭｜MOVIE:2019秋:1:－:冴えない彼女の育てかた Fine
+化物語	6	TV:2009夏:15:－:化物語｜TV:2012冬:11:－:偽物語｜TV:2013夏:26:－:〈物語〉シリーズ セカンドシーズン｜TV:2014秋:4:－:憑物語｜TV:2015秋:12:－:終物語｜ONA:2016冬:12:SIDE_STORY:暦物語｜TV:2017夏:7:－:終物語（下）｜SPECIAL:2022冬:1:ALTERNATIVE:化物語 PV
+古見さんは、コミュ症です。	2	TV:2021秋:12:－:古見さんは、コミュ症です。｜TV:2022春:12:－:古見さんは、コミュ症です。2
+君のことが大大大大大好きな100人の彼女	3	TV:2023秋:12:－:君のことが大大大大大好きな100人の彼女｜TV:2025冬:12:－:君のことが大大大大大好きな100人の彼女 第2期｜TV:2026夏:12:－:君のことが大大大大大好きな100人の彼女 第3期
+呪術廻戦	3	TV:2020秋:24:－:呪術廻戦｜TV:2023夏:23:－:呪術廻戦 第2期｜MOVIE:2025春:1:ALTERNATIVE:呪術廻戦 懐玉・玉折｜MOVIE:2025秋:1:SUMMARY:呪術廻戦『渋谷事変 特別編集版』×『死滅回游 先行上映』｜TV:2026冬:12:－:呪術廻戦 死滅回游 前編
+四月は君の嘘	1	TV:2014秋:22:－:四月は君の嘘
+四畳半神話大系	1	TV:2010春:11:－:四畳半神話大系｜SPECIAL:2010夏:3:SIDE_STORY:四畳半神話大系 特典｜MOVIE:2017春:1:SPIN_OFF:夜は短し歩けよ乙女｜ONA:2022夏:6:SPIN_OFF:四畳半タイムマシンブルース
+天元突破グレンラガン	1	TV:2007春:27:－:天元突破グレンラガン｜SPECIAL:2008春:8:SPIN_OFF:グレンラガン パラレルワークス｜MOVIE:2008夏:1:ALTERNATIVE:天元突破グレンラガン 紅蓮篇｜MOVIE:2009春:1:ALTERNATIVE:天元突破グレンラガン 螺巌篇｜SPECIAL:2010春:7:SPIN_OFF:グレンラガン パラレルワークス 2
+宝石の国	1	ONA:2013夏:1:ALTERNATIVE:宝石の国PV｜TV:2017秋:12:－:宝石の国
+少女終末旅行	1	TV:2017秋:12:－:少女終末旅行｜ONA:2017秋:12:SIDE_STORY:少女週末授業
+少女革命ウテナ	1	TV:1997春:39:－:少女革命ウテナ｜MOVIE:1999夏:1:ALTERNATIVE:少女革命ウテナ アドゥレセンス黙示録
+山田くんとLv999の恋をする	1	TV:2023春:13:－:山田くんとLv999の恋をする
+平家物語	0	ONA:2021夏:11:－:平家物語
+幽☆遊☆白書	0	SPECIAL:2009秋:1:－:幽☆遊☆白書
+忘却バッテリー	2	TV:2024春:12:－:忘却バッテリー (TV)｜TV:2027:？:－:忘却バッテリー (TV) 第2期
+怪獣8号	2	TV:2024春:12:－:怪獣８号｜ONA:2024秋:31:SIDE_STORY:ミニっと！かいじゅう８号｜MOVIE:2025冬:1:SUMMARY:怪獣8号 第1期総集編｜SPECIAL:2025冬:1:SIDE_STORY:怪獣8号 保科の休日｜TV:2025夏:11:－:怪獣８号 第２期｜SPECIAL:2026夏:4:SIDE_STORY:怪獣８号 鳴海の平日｜MOVIE:2027:1:－:怪獣８号 完結編
+恋は雨上がりのように	1	TV:2018冬:12:－:恋は雨上がりのように
+惡の華	1	TV:2013春:13:－:惡の華
+推しの子	4	TV:2023春:11:－:【推しの子】｜TV:2024夏:13:－:【推しの子】第2期｜TV:2026冬:11:－:【推しの子】第3期｜TV:？:？:－:【推しの子】第4期 Final Season
+攻殻機動隊 STAND ALONE COMPLEX	4	MOVIE:1995秋:1:ALTERNATIVE:GHOST IN THE SHELL / 攻殻機動隊｜TV:2002秋:26:－:攻殻機動隊 STAND ALONE COMPLEX｜SPECIAL:2002秋:26:SIDE_STORY:攻殻機動隊 STAND ALONE COMPLEX： Section9 Science File “タチコマな日々”｜TV:2004冬:26:－:攻殻機動隊 S.A.C. 2nd GIG｜SPECIAL:2004冬:3:SIDE_STORY:攻殻機動隊 STAND ALONE COMPLEX-インターバル-｜SPECIAL:2004夏:26:SPIN_OFF:攻殻機動隊 STAND ALONE COMPLEX： Section9 Science File “タチコマな日々”｜SPECIAL:2006夏:1:－:攻殻機動隊 STAND ALONE COMPLEX Solid State Society｜TV_SHORT:2007春:12:SIDE_STORY:攻殻機動隊 STAND ALONE COMPLEX タチコマな日々｜SPECIAL:2007夏:1:SIDE_STORY:攻殻機動隊 ウチコマナ日々｜SPECIAL:2011夏:3:SIDE_STORY:攻殻機動隊 S.A.C. Solid State Society 3D タチコマな日々｜MOVIE:2013春:1:SPIN_OFF:攻殻機動隊ARISE -GHOST IN THE SHELL- border：1 Ghost Pain｜ONA:2020春:12:－:攻殻機動隊 SAC_2045｜MOVIE:2021秋:1:ALTERNATIVE:攻殻機動隊 SAC_2045 持続可能戦争｜ONA:2022春:12:－:攻殻機動隊 SAC_2045 シーズン２｜MOVIE:2023秋:1:ALTERNATIVE:攻殻機動隊 SAC_2045 最後の人間｜TV:2026夏:10:ALTERNATIVE:攻殻機動隊 THE GHOST IN THE SHELL
+斉木楠雄のΨ難	2	ONA:2013夏:1:ALTERNATIVE:斉木楠雄のΨ難 (ONA)｜TV_SHORT:2016夏:120:－:斉木楠雄のΨ難｜TV:2018冬:24:－:斉木楠雄のΨ難 2｜SPECIAL:2018秋:1:－:斉木楠雄のΨ難 完結編｜ONA:2019秋:6:－:斉木楠雄のΨ難 Ψ始動編
+新世紀エヴァンゲリオン	1	TV:1995秋:26:－:新世紀エヴァンゲリオン｜MOVIE:1997冬:1:SUMMARY:新世紀エヴァンゲリオン劇場版 シト新生｜MOVIE:1997夏:1:－:新世紀エヴァンゲリオン劇場版 Air/まごころを、君に｜ONA:2007冬:24:SPIN_OFF:ぷちえゔぁ｜MOVIE:2007夏:1:－:ヱヴァンゲリヲン新劇場版：序｜MOVIE:2009春:1:－:ヱヴァンゲリヲン新劇場版：破｜MOVIE:2012秋:1:－:ヱヴァンゲリヲン新劇場版：Q｜MOVIE:2021冬:1:－:シン・エヴァンゲリオン劇場版：||
+暗殺教室	1	SPECIAL:2013秋:1:－:暗殺教室｜TV:2015冬:22:ALTERNATIVE:暗殺教室
+暴食のベルセルク	2	ONA:2023夏:6:SIDE_STORY:まったり解説 暴食のベルセルク｜TV:2023秋:12:－:暴食のベルセルク｜TV:2027:？:－:暴食のベルセルク第2期
+最凶の支援職【話術士】	0	ONA:2024秋:12:－:最凶の支援職【話術士】である俺は世界最強クランを従える
+月刊少女野崎くん	1	TV:2014夏:12:－:月刊少女野崎くん｜SPECIAL:2014夏:6:SIDE_STORY:月刊少女野崎くん ミニOVAs
+本好きの下剋上	5	TV:2019秋:14:－:本好きの下剋上 司書になるためには手段を選んでいられません｜TV:2020春:12:－:本好きの下剋上 司書になるためには手段を選んでいられません 第2期｜TV:2022春:10:－:本好きの下剋上 司書になるためには手段を選んでいられません 第3期｜TV:2026春:24:－:本好きの下剋上 領主の養女｜TV:？:？:－:本好きの下剋上 貴族院の自称図書委員
+東京リベンジャーズ	4	TV:2021春:24:－:東京リベンジャーズ｜ONA:2021春:24:SPIN_OFF:ちびりべ｜TV:2023冬:13:－:東京リベンジャーズ 聖夜決戦編｜TV:2023秋:13:－:東京リベンジャーズ 天竺編｜ONA:2024秋:18:SPIN_OFF:童話リベンジャーズ｜TV:2026秋:13:－:東京リベンジャーズ 三天戦争編
+機動戦士Gundam GQuuuuuuX	2	TV:1979春:43:PARENT:機動戦士ガンダム｜TV:2025春:12:－:機動戦士Gundam GQuuuuuuX
+氷菓	1	TV:2012春:22:－:氷菓
+涼宮ハルヒの憂鬱	3	TV:2006春:14:ALTERNATIVE:涼宮ハルヒの憂鬱｜ONA:2009冬:25:SPIN_OFF:涼宮ハルヒちゃんの憂鬱｜ONA:2009冬:13:SPIN_OFF:にょろーん☆ちゅるやさん｜TV:2009春:28:－:涼宮ハルヒの憂鬱｜MOVIE:2010冬:1:－:涼宮ハルヒの消失｜TV:2015春:16:SPIN_OFF:長門有希ちゃんの消失
+灰羽連盟	1	TV:2002秋:13:－:灰羽連盟
+無職転生	6	TV:2021冬:11:－:無職転生 ～異世界行ったら本気だす～｜TV:2021秋:12:－:無職転生 ～異世界行ったら本気だす～ 第2クール｜SPECIAL:2022冬:1:SIDE_STORY:無職転生 ～異世界行ったら本気だす～ 第2クール エリスのゴブリン討伐｜TV:2023夏:13:－:無職転生Ⅱ ～異世界行ったら本気だす～｜TV:2024春:12:－:無職転生Ⅱ ～異世界行ったら本気だす～ 第2クール｜TV:2026夏:14:－:無職転生Ⅲ ～異世界行ったら本気だす～｜TV:2027:？:－:無職転生Ⅲ ～異世界行ったら本気だす～ 第2クール
+無能なナナ	1	TV:2020秋:13:－:無能なナナ｜ONA:2020秋:12:SPIN_OFF:無能なナナ ミニアニメ
+無限のリヴァイアス	1	TV:1999秋:26:－:無限のリヴァイアス｜ONA:2000:6:SPIN_OFF:無限のリヴァイアス イリュージョン
+犬夜叉	4	TV:2000秋:167:－:犬夜叉｜MOVIE:2001秋:1:SIDE_STORY:犬夜叉 時代を越える想い｜MOVIE:2002秋:1:SIDE_STORY:犬夜叉 鏡の中の夢幻城｜MOVIE:2003秋:1:SIDE_STORY:犬夜叉 天下覇道の剣｜MOVIE:2004秋:1:SIDE_STORY:犬夜叉 紅蓮の蓬莱島｜SPECIAL:2008夏:1:ALTERNATIVE:犬夜叉 黒い鉄砕牙｜TV:2009秋:26:－:犬夜叉 完結編｜TV:2020秋:24:－:半妖の夜叉姫｜TV:2021秋:24:－:半妖の夜叉姫 弐の章
+狼と香辛料	2	TV:2008冬:13:－:狼と香辛料｜TV:2024春:25:ALTERNATIVE:狼と香辛料 MERCHANT MEETS THE WISE WOLF
+狼と香辛料 MERCHANT MEETS THE WISE WOLF	3	TV:2008冬:13:ALTERNATIVE:狼と香辛料｜TV:2024春:25:－:狼と香辛料 MERCHANT MEETS THE WISE WOLF｜TV:2027:？:－:狼と香辛料 MERCHANT MEETS THE WISE WOLF 2期
+猫と竜	1	ONA:2026春:12:－:猫と竜｜TV:2027:？:－:猫と竜 第2期
+異世界居酒屋のぶ	0	ONA:2018春:24:－:異世界居酒屋～古都アイテーリアの居酒屋のぶ～
+盾の勇者の成り上がり	5	TV:2019冬:25:－:盾の勇者の成り上がり｜TV:2022春:13:－:盾の勇者の成り上がり Season 2｜TV:2023秋:12:－:盾の勇者の成り上がり Season 3｜TV:2025夏:12:－:盾の勇者の成り上がり Season 4｜TV:2027:？:－:盾の勇者の成り上がり Season 5
+真・侍伝 YAIBA	3	TV:1993春:52:ALTERNATIVE:剣勇伝説YAIBA｜TV:2025春:24:－:真･侍伝 YAIBA｜TV:2027冬:？:－:真•侍伝 YAIBA 第二期
+真夜中ハートチューン	2	TV:2026冬:12:－:真夜中ハートチューン｜TV:2027:？:－:真夜中ハートチューン 第2期
+約束のネバーランド	2	TV:2019冬:12:－:約束のネバーランド｜TV:2021冬:11:－:約束のネバーランド2
+葬送のフリーレン	3	TV:2023夏:28:－:葬送のフリーレン｜ONA:2023秋:12:SIDE_STORY:葬送のフリーレン ～●●の魔法～｜ONA:2025春:6:SIDE_STORY:葬送のフリーレン ～●●の魔法～ 2クール｜TV:2026冬:10:－:葬送のフリーレン 第2期｜ONA:2026冬:6:SIDE_STORY:葬送のフリーレン ～●●の魔法～ 3クール｜TV:2027秋:？:－:葬送のフリーレン 第3期
+薫る花は凛と咲く	1	TV:2025夏:13:－:薫る花は凛と咲く
+薬屋のひとりごと	4	TV:2023秋:24:－:薬屋のひとりごと｜ONA:2023秋:24:SIDE_STORY:猫猫のひとりごと｜TV:2025冬:24:－:薬屋のひとりごと 第2期｜ONA:2025冬:24:SIDE_STORY:猫猫のひとりごと 第2期｜TV:2026秋:12:－:薬屋のひとりごと 第3期｜ONA:2026秋:？:SIDE_STORY:猫猫のひとりごと 第3期｜MOVIE:2026秋:1:SIDE_STORY:薬屋のひとりごと 亡妃の秘宝｜TV:2027春:12:－:薬屋のひとりごと 第3期 第2クール
+薬屋のひとりごと 第2期	3	TV:2025冬:24:－:薬屋のひとりごと 第2期｜ONA:2025冬:24:SIDE_STORY:猫猫のひとりごと 第2期｜TV:2026秋:12:－:薬屋のひとりごと 第3期｜ONA:2026秋:？:SIDE_STORY:猫猫のひとりごと 第3期｜MOVIE:2026秋:1:SIDE_STORY:薬屋のひとりごと 亡妃の秘宝｜TV:2027春:12:－:薬屋のひとりごと 第3期 第2クール
+蟲師	3	TV:2005秋:26:－:蟲師｜SPECIAL:2014冬:1:－:蟲師 特別篇「日蝕む翳」｜TV:2014春:10:－:蟲師 続章｜SPECIAL:2014夏:1:－:蟲師 続章「棘のみち」｜TV:2014秋:10:－:蟲師 続章 2｜MOVIE:2015春:1:－:蟲師 特別編「鈴の雫」
+負けヒロインが多すぎる！	2	TV:2024夏:12:－:負けヒロインが多すぎる！｜TV:？:？:－:負けヒロインが多すぎる！第2期
+転生したらスライムだった件	3	TV:2018秋:24:－:転生したらスライムだった件｜TV:2021春:12:SPIN_OFF:転生したらスライムだった件 転スラ日記｜ONA:2022冬:2:SIDE_STORY:転生したらスライムだった件 救われるラミリス｜TV:2027春:？:SPIN_OFF:転生したらスライムだった件 クレイマンREVENGE
+転生したら第七王子だったので	2	TV:2024春:12:－:転生したら第七王子だったので、気ままに魔術を極めます｜TV:2025夏:12:－:転生したら第七王子だったので、気ままに魔術を極めます 第2期
+輪るピングドラム	1	TV:2011夏:24:－:輪るピングドラム｜MOVIE:2022春:1:ALTERNATIVE:RE：cycle of the PENGUINDRUM ［前編］ 君の列車は生存戦略｜MOVIE:2022夏:1:ALTERNATIVE:RE：cycle of the PENGUINDRUM ［後編］ 僕は君を愛してる
+進撃の巨人	7	TV:2013春:25:－:進撃の巨人｜MOVIE:2014秋:1:ALTERNATIVE:劇場版「進撃の巨人」前編～紅蓮の弓矢～｜MOVIE:2015春:1:ALTERNATIVE:劇場版「進撃の巨人」後編～自由の翼～｜TV:2015秋:12:SPIN_OFF:進撃！巨人中学校｜TV:2017春:12:－:進撃の巨人 Season２｜MOVIE:2018冬:1:SUMMARY:劇場版「進撃の巨人」Season 2～覚醒の咆哮～｜TV:2018夏:12:－:進撃の巨人 Season３｜TV:2019春:10:－:進撃の巨人 Season３ Part.2｜MOVIE:2020夏:1:SUMMARY:進撃の巨人 〜クロニクル〜｜TV:2020秋:16:－:進撃の巨人 The Final Season｜TV:2022冬:12:－:進撃の巨人 The Final Season Part 2｜SPECIAL:2023冬:1:－:進撃の巨人 The Final Season完結編 前編｜SPECIAL:2023秋:1:－:進撃の巨人 The Final Season完結編 後編
+鋼の錬金術師	2	TV:2003秋:51:－:鋼の錬金術師｜SPECIAL:2005冬:1:SUMMARY:鋼の錬金術師 Reflections｜MOVIE:2005夏:1:－:鋼の錬金術師 シャンバラを征く者｜TV:2009春:64:ALTERNATIVE:鋼の錬金術師 FULLMETAL ALCHEMIST
+鋼の錬金術師 FULLMETAL ALCHEMIST	2	TV:2003秋:51:ALTERNATIVE:鋼の錬金術師｜TV:2009春:64:－:鋼の錬金術師 FULLMETAL ALCHEMIST｜SPECIAL:2009夏:16:SPIN_OFF:鋼の錬金術師 FULLMETAL ALCHEMIST 荒川弘 描き下ろし4コマ劇場｜MOVIE:2011夏:1:SIDE_STORY:鋼の錬金術師 嘆きの丘の聖なる星
+陰の実力者になりたくて！	3	TV:2022秋:20:－:陰の実力者になりたくて！｜ONA:2022秋:17:SIDE_STORY:かげじつ！｜TV:2023秋:12:－:陰の実力者になりたくて！ 2nd season｜TV_SHORT:2023秋:12:SIDE_STORY:かげじつ！せかんど｜MOVIE:2027:1:－:劇場版 陰の実力者になりたくて！ 残響編
+電脳コイル	1	TV:2007春:26:－:電脳コイル
+青春ブタ野郎はバニーガール先輩の夢を見ない	2	TV:2018秋:13:－:青春ブタ野郎はバニーガール先輩の夢を見ない｜MOVIE:2019春:1:－:青春ブタ野郎はゆめみる少女の夢を見ない｜MOVIE:2023春:1:－:青春ブタ野郎はおでかけシスターの夢を見ない｜MOVIE:2023秋:1:－:青春ブタ野郎はランドセルガールの夢を見ない｜TV:2025夏:13:－:青春ブタ野郎はサンタクロースの夢を見ない｜MOVIE:2026秋:1:－:青春ブタ野郎はディアフレンドの夢を見ない
+響け！ユーフォニアム3	1	TV:2024春:13:－:響け！ユーフォニアム３｜SPECIAL:2024春:6:SIDE_STORY:響け！ユーフォニアム３Extra Episode｜MOVIE:2026春:1:SUMMARY:最終楽章 響け！ユーフォニアム 前編｜MOVIE:2026夏:1:SUMMARY:最終楽章 響け！ユーフォニアム後編
+鬼滅の刃	5	TV:2019春:26:－:鬼滅の刃｜MOVIE:2020秋:1:－:鬼滅の刃 無限列車編｜TV:2021秋:7:ALTERNATIVE:鬼滅の刃 無限列車編 (TV)｜TV:2021秋:11:－:鬼滅の刃 遊郭編｜TV:2023春:11:－:鬼滅の刃 刀鍛冶の里編｜TV:2024春:8:－:鬼滅の刃 柱稽古編｜MOVIE:2025夏:1:－:劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来｜MOVIE:？:1:－:劇場版「鬼滅の刃」無限城編 第二章｜MOVIE:？:1:－:劇場版「鬼滅の刃」無限城編 第終章
+魔法少女まどか☆マギカ	2	TV:2011冬:12:－:魔法少女まどか☆マギカ｜MOVIE:2012秋:1:ALTERNATIVE:劇場版 魔法少女まどか☆マギカ 始まりの物語｜MOVIE:2012秋:1:ALTERNATIVE:劇場版 魔法少女まどか☆マギカ 永遠の物語｜MOVIE:2013秋:1:－:劇場版 魔法少女まどか☆マギカ 叛逆の物語｜TV:2020冬:13:SPIN_OFF:マギアレコード 魔法少女まどか☆マギカ外伝｜MOVIE:2026夏:1:－:劇場版 魔法少女まどか☆マギカ〈ワルプルギスの廻天〉
+魔法科高校の劣等生	4	TV:2014春:26:－:魔法科高校の劣等生｜MOVIE:2017春:1:SIDE_STORY:劇場版 魔法科高校の劣等生 星を呼ぶ少女｜TV:2020秋:13:－:魔法科高校の劣等生 来訪者編｜TV:2021夏:13:SPIN_OFF:魔法科高校の優等生｜TV:2024春:13:－:魔法科高校の劣等生 第3シーズン｜MOVIE:2026春:1:－:劇場版 魔法科高校の劣等生 四葉継承編
+魔王学院の不適合者	3	TV:2020夏:13:－:魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～｜TV:2023冬:12:－:魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ Ⅱ｜TV:2024春:12:－:魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ Ⅱ 2クール

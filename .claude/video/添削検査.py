@@ -78,10 +78,19 @@ def miru(path):
         elif re.search(u"(です|ます)$", s):
             warui.append(u"魅力が体言止めではありません「%s」" % s)
 
-    # ④ 使わない言葉
+    # ④ 使わない言葉／言いまちがい
+    #   「効いています」は本人の添削（2026-11-05）。
+    #   それ以外は、こちらが書いて見つかった言いまちがい。見つけたらここに足す。
     for ng in (u"効いています", u"効いてきます", u"効いており"):
         if ng in t:
             warui.append(u"「%s」は使いません（%d か所）" % (ng, t.count(ng)))
+    for ng, naoshi in ((u"特質して", u"特に／特筆して"),
+                       (u"御座います", u"ございます"),
+                       (u"成程", u"なるほど"),
+                       (u"熱いです", u"熱い一本です（体言止めに）")):
+        if ng in t:
+            warui.append(u"「%s」は言いまちがいです → %s（%d か所）"
+                         % (ng, naoshi, t.count(ng)))
 
     # ⑤ 立場
     for i, g in enumerate(d):

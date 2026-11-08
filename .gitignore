@@ -51,3 +51,4 @@ next-env.d.ts
 
 # 検査が作る一時フォルダ（130MB・毎回作り直される）
 /.claude/video/_閉じ検査/
+__pycache__/

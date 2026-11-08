@@ -829,6 +829,64 @@ print(r.stdout.decode("utf-8", "replace").rstrip())
 if r.returncode != 0:
     warui.append(u"本人の直し(29〜37番)を機械だけで再現できていません（文脈検査.py）")
 
+# ── ㉕ 台本を2周 添削する（事実との乖離・言い方）───────────────
+midashi(u"㉕", u"台本を2周 添削する（事実との乖離・言い方）")
+# ■ 本人の指定（2026-11-08）
+#
+#   「今後はあなたの方でも2回は事実との乖離や間違いがないのか毎回添削する」
+#
+# 本人が11本を読んで、こちらが落としていたものを11件出してくれた。
+# そのうち**機械で止められるもの**をここに入れた。1周目と2周目は別の物を見る：
+#
+#   1周目（放送情報検査.py）… 第一期の 年・季・話数・制作・原作・掲載誌・なろう
+#   2周目（事実検査.py）  … 続編の数・劇場版の有無・「放送」と「公開」・
+#                            並び順・つなぎの年・「いちばん新しい」の限定
+#   そのうえで（添削検査.py）… 本人の添削4つ・立場・100字・段落・言いまちがい
+#
+# **「放送情報.txt にある＝確かめた」ではない。** 確かめていたのは第一期だけで、
+# 「第二期まで放送されています」は誰も見ていなかった（100カノは第三期まで出ていた）。
+#
+# ここで止められないもの（人が読む所）:
+#   人物の立場・あらすじの中身。本人が見つけたのは全部これだった ──
+#   五条新菜は衣装ではなく**頭師**／古見さんは只野と**だけ**ではない／
+#   ダンダダンは信じているものが**逆**／ルルーシュは**亡国ではなく帝国の**皇子。
+#   だから㉕を通しても「読んだ」ことにはならない。
+DAIHON_ICHIRAN = []
+try:
+    for _ln in io.open(os.path.join(V, u"動画一覧.txt"), encoding="utf-8-sig"):
+        _t = _ln.rstrip(u"\n").replace(u"\r", u"")
+        if not _t or _t.startswith(u"#"):
+            continue
+        _c = _t.split(u"\t")
+        if len(_c) >= 3:
+            _michi = os.path.join(B, _c[2].replace(u"/", os.sep))
+            if os.path.isfile(_michi):
+                DAIHON_ICHIRAN.append(_michi)
+except Exception as e:
+    print(u"（動画一覧.txt が読めません: %s）" % e)
+
+if not DAIHON_ICHIRAN:
+    print(u"（台本が1本も無いので、添削は飛ばします）")
+else:
+    for _na, _dougu in ((u"1周目 年・季・話数・制作・原作", u"放送情報検査.py"),
+                        (u"2周目 続編・劇場版・言い方", u"事実検査.py"),
+                        (u"本人の添削4つ・立場・100字", u"添削検査.py")):
+        _p = os.path.join(V, _dougu)
+        if not os.path.isfile(_p):
+            print(u"（%s が無いので飛ばします）" % _dougu)
+            continue
+        _r = subprocess.run([sys.executable, u"-I", _p] + DAIHON_ICHIRAN,
+                            cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                            env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+        _out = _r.stdout.decode("utf-8", "replace").rstrip()
+        _warn = [x for x in _out.split(u"\n") if x.lstrip().startswith((u"×", u"!"))]
+        print(u"  %-26s %s" % (_na, u"○ 通りました" if _r.returncode == 0
+                               else u"× 落ちました"))
+        for x in _warn[:12]:
+            print(u"     " + x.strip())
+        if _r.returncode != 0:
+            warui.append(u"台本の添削が通りません（%s）" % _dougu)
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
