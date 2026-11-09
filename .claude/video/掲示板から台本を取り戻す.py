@@ -21,6 +21,19 @@ u"""公開中の掲示板から、台本・効果音・BGM・図を取り出し�
       <script type="text/plain" data-fig="rou" data-name="図_….jpg">…</script>
 
   **掲示板は台本だけの控えではない。** ここから全部戻す。
+
+■ 取り戻すのは「掲示板が新しいとき」だけ（2026-11-09・事故った）
+  効果音を戻すために、**まだ古い版の掲示板**に対してこれを回した。
+  音は戻ったが、**台本38本が古い版で上書きされた。**
+  掲示板(v187)は正しいのに、作業場所の台本だけ v186 に巻き戻っていて、
+  本人の添削11件とこちらの10件が**全部消えていた。**
+
+  「掲示板が控えそのもの」は**掲示板が新しいときだけ**成り立つ。
+  出す前の掲示板から戻すと、直したものが消える。
+
+  だから、いまは**中身が違う台本があったら止まる。**
+  承知のうえで戻すときは `--上書き` を付ける。
+  音と図だけ戻したいときは `--音だけ`。
 """
 import html
 import io
@@ -40,8 +53,44 @@ for ln in io.open(V + u"動画一覧.txt", encoding="utf-8-sig"):
     if len(c) >= 4:
         michi[c[0]] = (c[2], c[3])
 
+uwagaki = u"--上書き" in sys.argv
+oto_dake = u"--音だけ" in sys.argv
+hikisu = [x for x in sys.argv[1:] if not x.startswith(u"--")]
+
+# ■ 先に見る：掲示板の中身と、いまの台本が違っていないか
+if not oto_dake and not uwagaki:
+    chigau = []
+    for p in hikisu:
+        s0 = io.open(p, encoding="utf-8", errors="replace").read()
+        for m in re.finditer(
+                u'<script type="text/plain" id="doc-([a-z0-9]+)-(sub|tts)">(.*?)</script>',
+                s0, re.S):
+            shirushi, kind, naka = m.group(1), m.group(2), m.group(3)
+            if shirushi not in michi:
+                continue
+            saki = michi[shirushi][0 if kind == "sub" else 1]
+            out = os.path.join(B, saki.replace(u"/", os.sep))
+            if not os.path.isfile(out):
+                continue
+            ima = io.open(out, encoding="utf-8-sig").read().replace(u"\r\n", u"\n")
+            keiji = html.unescape(naka).lstrip(u"\n").replace(u"\r\n", u"\n")
+            if ima.strip() != keiji.strip():
+                chigau.append((u"%s-%s" % (shirushi, kind), len(ima), len(keiji), out))
+    if chigau:
+        print(u"[中断] 掲示板の中身と、いまの台本が違うものが %d件あります。" % len(chigau))
+        for na, a, b2, _ in chigau[:12]:
+            print(u"   ・%-12s いまの台本 %d文字 / 掲示板 %d文字 %s"
+                  % (na, a, b2, u"← 台本のほうが新しいかもしれません"))
+        print(u"")
+        print(u"**出す前の掲示板から戻すと、直したものが消えます。**")
+        print(u"（2026-11-09 にこれで本人の添削11件とこちらの10件を消しました）")
+        print(u"")
+        print(u"   ・掲示板のほうが新しいと分かっているなら  --上書き")
+        print(u"   ・音と図だけ戻したいなら                --音だけ")
+        sys.exit(1)
+
 dashita = 0
-for p in sys.argv[1:]:
+for p in ([] if oto_dake else hikisu):
     s = io.open(p, encoding="utf-8", errors="replace").read()
     for m in re.finditer(
             u'<script type="text/plain" id="doc-([a-z0-9]+)-(sub|tts)">(.*?)</script>',
@@ -68,7 +117,7 @@ print(u"台本 %d本を書き戻しました" % dashita)
 import base64
 
 oto = 0
-for p2 in sys.argv[1:]:
+for p2 in hikisu:
     s2 = io.open(p2, encoding="utf-8", errors="replace").read()
     for ana, saki in (
             (u'<script type="text/plain" data-se="([^"]+)">(.*?)</script>',
