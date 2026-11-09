@@ -14,9 +14,17 @@ u"""公開中の掲示板の中の台本だけを入れ替え、パック版と�
 ■ 何を入れ替えるか
   ① <script type="text/plain" id="doc-<印>-sub">…</script> の中身
   ② 同じく -tts
-  ③ var PACK_VERSION = "vNNN";
-  ④ SCRIPTS の一覧にある chars（字数）と min（分）
+  ③ <script type="text/plain" id="plan-<印>">  画像プラン_○○.txt
+  ④ <script type="text/plain" id="over-<印>">  画面表示_○○.txt
+  ⑤ var PACK_VERSION = "vNNN";
+  ⑥ SCRIPTS の一覧にある chars（字数）と min（分）
      ※ 字数・分は台本から数え直す。6.46字/秒（実測）。
+
+■ 台本だけ入れ替えて、プランと画面表示を忘れた（2026-11-09・事故った）
+  ラブコメ20選を本人の並びに直して出したのに、**掲示板の中の画像プランには
+  古い導入がそのまま残っていた**（「放送された古い順に並べてあります」）。
+  台本・画像プラン・画面表示は**同じ掲示板の中に3つ並んでいる。**
+  1つだけ入れ替えると、残り2つが古いまま黙って出ていく。
 
 ■ 包み方（メモリ 69-4）
   `出す前の確認.py` は前後の改行を1つずつ外して取り出すので、
@@ -98,6 +106,29 @@ def main():
             if mae.strip() != naka.strip():
                 kaeta.append(u"%s-%s（%d→%d文字）"
                              % (shirushi, shurui, len(mae), len(naka)))
+
+        # ③④ 画像プランと画面表示（名前は 動画一覧.txt の2列目）
+        for shurui, moto2 in ((u"plan", u"画像プラン_%s.txt" % na),
+                              (u"over", u"画面表示_%s.txt" % na)):
+            f2 = os.path.join(V, moto2)
+            if not os.path.isfile(f2):
+                tobashita.append(u"%s-%s（%s が無い）" % (shirushi, shurui, moto2))
+                continue
+            naka2 = html.escape(
+                io.open(f2, encoding="utf-8-sig").read().replace(u"\r\n", u"\n").strip(u"\n"),
+                quote=False)
+            ana2 = re.compile(
+                u'(<script type="text/plain" id="%s-%s">)(.*?)(</script>)'
+                % (shurui, re.escape(shirushi)), re.S)
+            m2 = ana2.search(s)
+            if not m2:
+                tobashita.append(u"%s-%s（掲示板に枠が無い）" % (shirushi, shurui))
+                continue
+            mae2 = m2.group(2)
+            s = ana2.sub(lambda m: m.group(1) + u"\n" + naka2 + u"\n" + m.group(3), s, count=1)
+            if mae2.strip() != naka2.strip():
+                kaeta.append(u"%s-%s（%d→%d文字）"
+                             % (shirushi, shurui, len(mae2), len(naka2)))
 
         # SCRIPTS の字数と分を合わせる
         f = os.path.join(B, sub.replace(u"/", os.sep))
