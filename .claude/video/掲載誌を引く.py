@@ -39,6 +39,9 @@ JOHO = os.path.join(HERE, u"放送情報.txt")
 
 # ウィキペディアの記事名が作品名と違うもの
 KIJI = {
+    # 「IS」は短すぎて記事にたどり着けない（2026-11-09）
+    u"IS": u"IS 〈インフィニット・ストラトス〉",
+    u"To LOVEる": u"To LOVEる -とらぶる-",
     u"鋼の錬金術師 FULLMETAL ALCHEMIST": u"鋼の錬金術師",
     u"ホリミヤ": u"堀さんと宮村くん",
     u"DARKER THAN BLACK -黒の契約者-": u"DARKER THAN BLACK",

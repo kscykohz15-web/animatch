@@ -39,7 +39,19 @@ SEISAKU = {
     u"トムス・エンタテインメント": u"TMS Entertainment", u"エイトビット": u"8-bit",
     u"東映アニメーション": u"Toei Animation", u"フィール": u"feel.",
     u"エイトビット": u"8-bit", u"エー・シー・ジー・ティー": u"A.C.G.T.",
-    u"亜細亜堂": u"Ajiado", u"アートランド": u"Artland", u"アスリード": u"Asread",
+    u"亜細亜堂": u"Ajiado",
+    # 2026-11-09 に足した分。
+    # **ローマ字から当て字せず、その会社の記事で見た名前。**
+    #   ジーベック … XEBEC の日本語名（ja.wikipedia の記事名）
+    #   パインジャム … PINE JAM の記事は パインジャム へ転送される
+    #   アニメインターナショナルカンパニー … 俺妹の第1期。AIC の内部スタジオ名が AIC Build
+    # ■ 行末に # でコメントを書いたら、同じ行にあった2社を飲み込んだ（その場で検査が捕まえた）。
+    #   **この表では行末コメントを書かない。**
+    u"ジーベック": u"Xebec",
+    u"パインジャム": u"PINE JAM",
+    u"アニメインターナショナルカンパニー": u"AIC Build",
+    u"アートランド": u"Artland",
+    u"アスリード": u"Asread",
     u"ビブリーアニメーションスタジオ": u"Bibury Animation Studios",
     u"ブレインズ・ベース": u"Brain's Base",
     u"サイゲームスピクチャーズ": u"CygamesPictures",

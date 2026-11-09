@@ -66,6 +66,9 @@ BETSUMEI = {
     u"怪獣8号": u"Kaiju No. 8",
     u"ぼっち・ざ・ろっく！": u"Bocchi the Rock!",
     u"かぐや様は告らせたい": u"Kaguya-sama wa Kokurasetai",
+    # 短すぎて当たらない題名（2026-11-09）
+    u"IS": u"IS〈インフィニット・ストラトス〉",
+    u"To LOVEる": u"To LOVEる -とらぶる-",
 }
 
 
