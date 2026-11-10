@@ -128,7 +128,27 @@ def tebiki(out):
     return nokosu
 
 
-def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
+# ■ 作品の頭の1文だけは公式画像（本人の指定・2026-11-10）
+#
+# > ここでは二枚目の画像のような字幕配置で、画像のオフィシャルのもの。
+# > そして、それ以降は一枚目のように右上と左上にそれぞれ情報書いておきながら、
+# > あとはしゃべる内容を普段通りの字幕で展開してください。
+#
+# 20選の台本は、作品の頭で
+#   「最初にご紹介する作品は、ニセコイ、制作はシャフト。」
+# と言う。章の切れ目はその「、」の後に来るので、章の頭から
+# **「。」で終わる字幕まで**が、その1文の残り（作品名と制作）になる。
+# そこに #公式 を先頭の候補として足す（引けなければ次のタグに流れる）。
+#
+# はじめに・おわりにの章には足しません。右上に「作品名\N2014年冬」と
+# 年と季が入っている章だけが作品の章です（画面表示_○○.txt の3列目）。
+KOUSHIKI = u"#公式"
+SAKUHIN_SHOU = re.compile(r"\d{4}年(春|夏|秋|冬)")
+KOU_SAIGO = [0]           # 直前に作ったプランで #公式 を書いた字幕の枚数
+
+
+def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None,
+            koushiki=False):
     ate = load_atekata(os.path.join(HERE, u"当て方.txt"))
     cues = cues_of(script)
     _credit, chaps = M.load_overlay(overlay) if os.path.exists(overlay) else (u"", [])
@@ -153,6 +173,8 @@ def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
 
     gyou, atta = [], 0
     ima_wasuu = None
+    kou_nokori = 0        # あと何枚の字幕が「作品の頭の1文」か
+    kou_kazu = 0
     # 最初の章より前にも字幕があります。見出しを付けずに書くと、
     # それが「手で選んだ絵」の枠の中に見えてしまい、作り直すたびに
     # 枠が太っていきました（4行→8行→12行）。必ず見出しの下に置きます。
@@ -168,6 +190,9 @@ def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
             if w and w != ima_wasuu:
                 gyou.append(u"@@話数\t" + u", ".join(w))
                 ima_wasuu = w
+            # 作品の章（右上に年と季がある章）の頭の1文だけ、公式画像。
+            # 4枚は念のための上限。ふつうは「作品名」「制作は○○。」の2枚。
+            kou_nokori = 4 if (koushiki and SAKUHIN_SHOU.search(title)) else 0
         k = key_of(c)
         if not k:
             continue
@@ -179,6 +204,11 @@ def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
             best = kitei
         else:
             atta += 1
+        if kou_nokori > 0:
+            best = [KOUSHIKI] + list(best)
+            kou_kazu += 1
+            # 「。」まで来たら、その1文はおしまい
+            kou_nokori = 0 if c.strip().rstrip().endswith(u"。") else kou_nokori - 1
         gyou.append(u"%s\t%s" % (k, u", ".join(best)))
 
     nm = os.path.basename(out)
@@ -188,6 +218,7 @@ def tsukuru(script, overlay, out, midashi, shou_wasuu=None, kitei=None):
     body += u"\n".join(gyou) + u"\n\n"
     body += u"# 何にも当たらなかったとき\n*\t" + u", ".join(kitei) + u"\n"
     io.open(out, "w", encoding="utf-8", newline="\n").write(body)
+    KOU_SAIGO[0] = kou_kazu
     return len(cues), atta
 
 

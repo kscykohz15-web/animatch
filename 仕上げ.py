@@ -892,6 +892,26 @@ else:
         if _r.returncode != 0:
             warui.append(u"台本の添削が通りません（%s）" % _dougu)
 
+# ── ㉖ 作品の頭の1文が公式画像になるか ─────────────────
+midashi(u"㉖", u"作品の頭の1文が公式画像になるか（20選）")
+# ■ 本人の指定（2026-11-10）
+#
+#   > ここでは二枚目の画像のような字幕配置で、画像のオフィシャルのもの。
+#   > C:\Youtube動画\おすすめアニメ\画像 … アニメ作品ごとに保存しており、
+#   > 公式画像は「1」という名前で保存しております。
+#
+# **公式画像は本人のパソコンにしかありません。** こちらの作業場所には
+# 作品フォルダも 1.jpg も無いので、**この枝はこちらでは一度も通りません。**
+# 「通らない枝は、壊れても分からない」── ㉑・㉓ とまったく同じ形なので、
+# 作品フォルダをその場で作って、引ける・引けない・外のものを拾わない・
+# 章カードも同じ絵にする・はじめにには付けない を全部通します。
+r = subprocess.run([sys.executable, os.path.join(V, u"_公式テスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip())
+if r.returncode != 0:
+    warui.append(u"作品の頭の1文が公式画像になりません（本人の指定）")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

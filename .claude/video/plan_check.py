@@ -86,6 +86,14 @@ def catalog_of(path):
 # **本人のPCでは本物のカタログがあるので、そこで本当の答えが出る。**
 HONMONO_SAITEI = 1000
 
+# ■ #公式 はタグではありません（本人の指定・2026-11-10）
+#
+# 作品フォルダに「1」という名前で置いてある公式画像を指す書き方で、
+# カタログの説明の言葉ではないので、タグの綴り検査からは外します。
+# 引けなかったときは make_slideshow が名指しで言います
+#   「○○ に公式画像（1.jpg など）がありません」
+KOUSHIKI = u"#公式"
+
 
 def shinu_tags(rows, catalog):
     u"""#タグ のうち、カタログの絵に1枚も当たらないものを返す。
@@ -99,7 +107,7 @@ def shinu_tags(rows, catalog):
     out = {}
     for keys, files in rows:
         for f in files:
-            if not f.startswith(u"#"):
+            if not f.startswith(u"#") or f == KOUSHIKI:
                 continue
             hitsuyou = set(f[1:].split())
             if not hitsuyou:
@@ -159,7 +167,7 @@ def shirabe(plan, script, shizuka=False):
     warui_tag = set()
     for keys, files in rows:
         for f in files:
-            if not f.startswith(u"#"):
+            if not f.startswith(u"#") or f == KOUSHIKI:
                 continue
             for w in f[1:].split():
                 if w not in tags:

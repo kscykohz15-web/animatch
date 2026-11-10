@@ -27,11 +27,17 @@ if __name__ == "__main__":
     for v in douga:
         # 章→話数（20選は章→作品フォルダ）は tsukuru が
         # 画面表示_○○.txt の4列目から読みます
-        n, a = P.tsukuru(v.sub, v.overlay, v.plan, v.midashi)
+        # 20選は、作品の頭の1文だけ公式画像（作品フォルダの「1」）にする。
+        # 無職転生は作品フォルダではなく話数フォルダなので、付けません。
+        n, a = P.tsukuru(v.sub, v.overlay, v.plan, v.midashi,
+                         koushiki=(v.ban == u"osusume"))
+        kou = P.KOU_SAIGO[0]
         k, wariai = plan_check.shirabe(v.plan, v.sub, shizuka=True)
         mark = u"×" if k else u"○"
-        print(u"%s 画像プラン_%-7s 字幕%3d枚 / 当て方 %3d枚 / 当たる %3.0f%%  %s"
-              % (mark, v.namae, n, a, wariai, u" / ".join(k) if k else u""))
+        print(u"%s 画像プラン_%-7s 字幕%3d枚 / 当て方 %3d枚 / 当たる %3.0f%%%s  %s"
+              % (mark, v.namae, n, a, wariai,
+                 (u" / 公式 %2d枚" % kou) if kou else u"",
+                 u" / ".join(k) if k else u""))
         warui += bool(k)
     print(u"\n%d本中 %d本に問題があります。" % (len(douga), warui))
     sys.exit(1 if warui else 0)
