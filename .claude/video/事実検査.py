@@ -107,6 +107,24 @@ def yomu_hoso():
     return out
 
 
+# ■ 説明の流れが変わった（2026-11-10・本人の指定）
+#
+#   前  最初にご紹介する作品は、ニセコイ
+#       本作は2014年の冬に放送された全20話の作品で、第二期まで放送されています。
+#       制作はシャフト、週刊少年ジャンプ連載の漫画が原作となっています。
+#
+#   後  最初にご紹介する作品は、ニセコイ、制作はシャフト。
+#       本作は週刊少年ジャンプ連載の漫画が原作となっており、2014年の冬に
+#       放送が開始された全20話の作品です。第二期まで放送されています。
+#
+#   **制作会社が作品名の行へ移った。** 作品名を取るときは、うしろの
+#   「、制作は◯◯。」を外す。外さないと作品名が
+#   「ニセコイ、制作はシャフト。」になって、どの表にも当たらない。
+def sakuhinmei(t):
+    u"""作品名の行から、作品名だけを取る。"""
+    return re.sub(u"、制作は[^、。]*。?$", u"", t.strip()).strip()
+
+
 def dan(path):
     return [x.strip() for x in
             io.open(path, encoding="utf-8-sig").read().replace("\r\n", "\n").split("\n")
@@ -180,7 +198,7 @@ def main():
             m = re.search(u"(?:%s)、?(.+)$" % TSUNAGI, x)
             if not m:
                 continue
-            na = m.group(1).strip()
+            na = sakuhinmei(m.group(1))
             if i + 1 >= len(p) or not p[i + 1].startswith(u"本作は"):
                 continue
             h = p[i + 1]
@@ -281,7 +299,7 @@ def main():
         for x in p:
             m3 = re.search(u"(?:%s)、?(.+)$" % TSUNAGI, x)
             if m3:
-                ima = m3.group(1).strip()
+                ima = sakuhinmei(m3.group(1))
                 continue
             if not ima:
                 continue
@@ -319,7 +337,7 @@ def main():
         for i, x in enumerate(p):
             m = re.search(u"(?:%s)、?(.+)$" % TSUNAGI, x)
             if m:
-                nami.append((m.group(1).strip(), x[:m.start()].strip()))
+                nami.append((sakuhinmei(m.group(1)), x[:m.start()].strip()))
         if u"古い順" in u"".join(p[:8]):
             for i in range(1, len(nami)):
                 y1, k1 = hoso_hiku(hoso, nami[i - 1][0])
