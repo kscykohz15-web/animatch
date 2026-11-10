@@ -135,6 +135,35 @@ def miru(path):
     if nijussen and len(d) != 109:
         warui.append(u"段落が %d本（109本のはず：導入4＋20×5＋締め5）" % len(d))
 
+    # ⑦-2 1作品の尺（本人の指定・2026-11-10）
+    #
+    #   > できれば動画の尺は作品一つの説明に対し30秒から50秒の間に収めてください。
+    #   > 説明が淡々としているため、長すぎると見ていて飽きます。
+    #
+    #   読み上げ 6.46字/秒 なので 30秒=194字 / 50秒=323字。
+    #   5段落（つなぎ・情報・あらすじ・魅力・締め）を合わせて数える。
+    if nijussen:
+        TS2 = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
+               u"続く作品は|続いては|次の作品は|最後にご紹介する作品は")
+        nagai, mijikai = [], []
+        for i, g in enumerate(d):
+            m2 = re.search(u"(?:%s)、?(.+)$" % TS2, g)
+            if not m2 or i + 4 >= len(d):
+                continue
+            ji2 = sum(len(re.sub(u"\\s", u"", d[i + k])) for k in range(5))
+            byou = ji2 / 6.46
+            na2 = re.sub(u"、制作は.*$", u"", m2.group(1)).strip()
+            if byou > 50:
+                nagai.append(u"%s %.0f秒" % (na2[:16], byou))
+            elif byou < 30:
+                mijikai.append(u"%s %.0f秒" % (na2[:16], byou))
+        if nagai:
+            warui.append(u"50秒を超える作品が %d本: %s"
+                         % (len(nagai), u" / ".join(nagai[:6])))
+        if mijikai:
+            warui.append(u"30秒に足りない作品が %d本: %s"
+                         % (len(mijikai), u" / ".join(mijikai[:6])))
+
     # ⑧ 混ざりもの
     if u"**" in t:
         warui.append(u"強調の星印が混ざっています")
