@@ -3405,6 +3405,13 @@ def load_yomi_dict(path):
         say(u"       本文は完全に一致させる決まりなので、文の数が合わなくなります。")
         for (a, b, c, n1, n2) in warui[:12]:
             say(u"   %s → %s （%s の数が %d↔%d）" % (a, b, c, n1, n2))
+    # ■ 長い語を先に当てる（2026-11-05）
+    #
+    #   辞書は上から順に当てるので、短い語が先にあると長い語に届きません。
+    #   「CLANNAD」が先にあったので「CLANNAD AFTER STORY」が
+    #   「クラナド AFTER STORY」になり、**英字が読み上げに残りました。**
+    #   辞書に足す場所を気にしなくてよいように、ここで並べ替えます。
+    dic.sort(key=lambda ab: -len(ab[0]))
     return dic, keep
 
 
@@ -13918,6 +13925,15 @@ def card_no_e(rows, hajime, owari, title, cat):
     #
     # なので、章の名前から言葉を取り出して、絵の説明と突き合わせる。
     # カタログに在る言葉だけを使うので、空振りしても悪さはしない。
+    # ■ 作品の頭は公式画像（本人の指定・2026-11-10）
+    #
+    # 20選の章カードは「最初にご紹介する作品は、○○、制作は○○。」の
+    # ところに出る。本人の指定では**そこだけは公式画像**なので、
+    # 章の頭で公式画像を使っているなら、カードもそれにそろえる。
+    # カタログの点数では選べません（公式画像に説明は付いていない）。
+    for i in range(hajime, min(owari, hajime + 3)):
+        if wa_koushiki(rows[i][1]):
+            return rows[i][1]
     kotoba = shou_no_kotoba(title, cat)
     namae = [c for c in uniq(CHARACTERS) if c in title]
     best, bscore = None, -1
@@ -14728,7 +14744,10 @@ def check_plan_words(rules, default, catalog):
         if isinstance(key, list):
             key = u"|".join(key)
         for f in files:
-            if not f.startswith(u"#"):
+            # #公式 はタグではなく「作品フォルダの1」を指す書き方。
+            # ここに来るのは引けなかったときだけなので、黙って通す
+            # （名指しは plan_code_naosu が済ませている）。
+            if not f.startswith(u"#") or f == KOUSHIKI:
                 continue
             for w in f.lstrip(u"#").split():
                 if w and w not in goi:
@@ -14779,10 +14798,24 @@ def plan_code_naosu(rules, default, images):
 
     番号で書いた絵は「人が見て選んだ絵」として扱われるので、
     使用不可の判定も、使いすぎの上限も越えて、そのまま使われる。
+
+    あわせて `#公式` も読みかえる（本人の指定・2026-11-10）。
+    その行の `@@話数`（20選では作品フォルダ）の中から
+    **ファイル名が「1」の絵**を引く。番号では指せない ──
+    `code_norm` は「期-話-通し番号」で、第N話の形の話数フォルダ専用。
+    引けなかったら落として、次の候補（タグ）に任せ、**名前で言う。**
     """
     naoshita, fumei = 0, []
+    kou, kou_nai = 0, []
 
-    def hitotsu(f):
+    def hitotsu(f, fols):
+        # #公式 … その作品フォルダの「1」。@@話数 の中だけで探す。
+        if f == KOUSHIKI:
+            atta = koushiki_e(fols, images)
+            if atta:
+                return atta
+            kou_nai.append(fols[0] if fols else u"(@@話数なし)")
+            return None          # 落として、次の候補（タグ）に任せる
         if f.startswith(u"#") or f.startswith(u"@") or not code_norm(f):
             return f
         atta = code_to_img(f, images)
@@ -14791,17 +14824,44 @@ def plan_code_naosu(rules, default, images):
         fumei.append(f)
         return f
 
+    def hitokumi(moto, fols):
+        u"""候補の並びを読みかえる。#公式 が引けなかったものは落とす。
+
+        返すのは (読みかえた並び, 読みかえた数, 公式画像を当てた数)。
+        全部落ちてしまうときは、元のまま返します
+        （候補が空の規則を作ると、その行の指定がまるごと消えるので）。
+        """
+        ato = [hitotsu(f, fols) for f in moto]
+        nokori = [f for f in ato if f is not None]
+        if not nokori:
+            return list(moto), 0, 0
+        kazu = sum(1 for a, b in zip(moto, ato) if b is not None and a != b)
+        # 引けた #公式 だけを数える（引けなかったものは落ちているので数えない）
+        k = sum(1 for a, b in zip(moto, ato)
+                if a == KOUSHIKI and b is not None)
+        # 番号の読みかえと公式画像は別の行で出すので、数も分ける
+        return nokori, kazu - k, k
+
     for r in rules:
         mae = list(r[1])
-        r[1] = [hitotsu(f) for f in r[1]]
-        naoshita += sum(1 for a, b in zip(mae, r[1]) if a != b)
+        r[1], kazu, k = hitokumi(mae, r[3] if len(r) > 3 else [])
+        naoshita += kazu
+        kou += k
     mae = list(default)
-    default = [hitotsu(f) for f in default]
-    naoshita += sum(1 for a, b in zip(mae, default) if a != b)
+    default, kazu, k = hitokumi(mae, [])
+    naoshita += kazu
+    kou += k
     if naoshita:
         say(u"画像プランの絵の番号 %d個を、絵の名前に読みかえました" % naoshita)
+    if kou:
+        say(u"公式画像（作品フォルダの「1」）を %d か所に当てました" % kou)
     for f in sorted(set(fumei)):
         say(u"  × 画像プランの %s に当たる絵が画像フォルダにありません" % f)
+    # ■ 公式画像が無いときは**黙って別の絵にしない**
+    #   作品の頭の1文は本人の指定で公式画像なので、無いなら名前で言う。
+    for fol in sorted(set(kou_nai)):
+        say(u"  × %s に公式画像（1.jpg など）がありません"
+            u"（作品の頭はタグの絵になります）" % fol)
     return rules, default
 
 
@@ -17023,6 +17083,51 @@ def code_to_img(t, images):
     return sorted(atari)[0] if atari else None
 
 
+# ---------------------------------------------- 公式画像（作品フォルダの「1」）
+#
+# 本人の指定（2026-11-10）:
+#   「C:\Youtube動画\おすすめアニメ\画像 画像はこちらのフォルダに、
+#     アニメ作品ごとに保存しており、公式画像は「1」という名前で
+#     保存しております。」
+#
+# 20選の台本は、作品の頭で「最初にご紹介する作品は、ニセコイ、
+# 制作はシャフト。」と言う。本人の指定では**ここだけは公式画像**で、
+# そのあとは普段どおりの字幕に戻る。
+#
+# ファイル名が「1」であることしか決まっていないので、拡張子は見ません
+# （1.jpg / 1.png / 1.webp のどれでも拾います）。
+# 番号（3-05-035）では指せません ── あちらは「期-話-通し番号」なので、
+# 第N話という形の話数フォルダしか読めない（code_norm が 1〜3期に限る）。
+KOUSHIKI = u"#公式"
+
+
+def _e_namae(img):
+    u"""絵の名前からファイル名だけを取り出す（フォルダ名を落とす）。"""
+    return img.rsplit(u"/", 1)[-1] if img else u""
+
+
+def koushiki_e(fols, images):
+    u"""#公式 → その作品フォルダに「1」という名前で置いてある絵。
+
+    @@話数 に書いてあるフォルダを、左から順に探します。
+    見つからなければ None（そのときは次の候補＝タグに任せる）。
+    """
+    for fol in (fols or []):
+        atari = [k for k in images
+                 if u"/" in k and k.rsplit(u"/", 1)[0] == fol
+                 and os.path.splitext(_e_namae(k))[0] == u"1"]
+        if atari:
+            return sorted(atari)[0]
+    return None
+
+
+def wa_koushiki(img):
+    u"""その絵が公式画像（作品フォルダ直下の「1」）か。"""
+    if not img or img.startswith(u"@@") or u"/" not in img:
+        return False
+    return os.path.splitext(_e_namae(img))[0] == u"1"
+
+
 def shou_no_wasuu(rows, chaps):
     u"""各行が「台本のうえで何話の内容か」を出す。
 
@@ -17938,10 +18043,18 @@ def main():
                 _ate = os.path.join(HERE, u"当て方.txt")
                 if os.path.exists(_ate):
                     _r2, _d2, _f2 = load_imageplan(_ate)
+                    # ■ #公式 の行だけは残す（2026-11-10・本人の指定）
+                    #
+                    # 作品の頭の1文を公式画像にするのは**本人の指定**で、
+                    # 「おまかせ」で捨ててよいものではない。当て方.txt には
+                    # @@話数 が無いので、ここで落とすと黙って消える
+                    # （「パックに何か足したら必ず2か所」と同じ落とし穴）。
+                    _kou = [r for r in rules if KOUSHIKI in r[1]]
                     say(u"@@全部おまかせ: 画像プランの1行ずつの指定 %d行は使わず、"
                         u"当て方.txt の %d行の規則で当てます"
-                        u"（@@話数 と * はそのまま）" % (len(rules), len(_r2)))
-                    rules = _r2
+                        u"（@@話数 と * と #公式 %d行はそのまま）"
+                        % (len(rules), len(_r2), len(_kou)))
+                    rules = _kou + _r2
                 else:
                     say(u"@@全部おまかせ: 当て方.txt が見つかりません。"
                         u"画像プランの指定をそのまま使います（%d行）" % len(rules))
@@ -18368,9 +18481,11 @@ def main():
                 _, moto, title = card_moto[ci]
                 key = u"@@card%02d" % ci
                 png = os.path.join(cdir, "card%02d.png" % ci)
+                # 公式画像は丸ごと見せるもの。背景を抜くと絵が壊れます。
+                nuki = en.get("card_nuki", True) and not wa_koushiki(moto)
                 _, ok = make_card(cache[moto], png, w, h,
                                   en["card_iro"], en["card_hidari"],
-                                  nuki=en.get("card_nuki", True))
+                                  nuki=nuki)
                 if ok:
                     nuketa += 1
                 cache[key] = png
