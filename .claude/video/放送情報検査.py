@@ -45,11 +45,14 @@ SEISAKU = {
     #   ジーベック … XEBEC の日本語名（ja.wikipedia の記事名）
     #   パインジャム … PINE JAM の記事は パインジャム へ転送される
     #   アニメインターナショナルカンパニー … 俺妹の第1期。AIC の内部スタジオ名が AIC Build
+    #     アマガミSS は「AIC」そのもの（2026-11-11）。**同じ会社が AniList では2つの名前**
+    #     なので、ここだけ組にしてある。突き合わせは「どれか1つが合えばよい」。
+    #     （「AIC」1つにしたら俺妹が落ちた ── 突き合わせは部分一致ではなく、名前まるごと）
     # ■ 行末に # でコメントを書いたら、同じ行にあった2社を飲み込んだ（その場で検査が捕まえた）。
     #   **この表では行末コメントを書かない。**
     u"ジーベック": u"Xebec",
     u"パインジャム": u"PINE JAM",
-    u"アニメインターナショナルカンパニー": u"AIC Build",
+    u"アニメインターナショナルカンパニー": (u"AIC Build", u"AIC"),
     u"アートランド": u"Artland",
     u"アスリード": u"Asread",
     u"ビブリーアニメーションスタジオ": u"Bibury Animation Studios",
@@ -209,9 +212,13 @@ def main():
                 if k not in SEISAKU:
                     warui.append(u"%s … 制作「%s」が対応表にありません。"
                                  u"**放送情報検査.py の SEISAKU に足すこと**" % (na, k))
-                elif narasu(SEISAKU[k]) not in shirabe:
-                    warui.append(u"%s … 制作が台本 %s(%s)／調べ %s"
-                                 % (na, k, SEISAKU[k], j[u"制作"]))
+                else:
+                    # 同じ会社が AniList で2つの名前を持つことがある（組で書く）
+                    kouho = SEISAKU[k] if isinstance(SEISAKU[k], (tuple, list)) \
+                        else (SEISAKU[k],)
+                    if not any(narasu(x) in shirabe for x in kouho):
+                        warui.append(u"%s … 制作が台本 %s(%s)／調べ %s"
+                                     % (na, k, u"・".join(kouho), j[u"制作"]))
 
         # 原作の種類（台本に「◯◯が原作となっています」と書いたとき）
         mg = re.search(u"(漫画|ライトノベル|小説|ゲーム)が原作", h)

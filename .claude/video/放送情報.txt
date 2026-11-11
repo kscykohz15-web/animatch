@@ -44,6 +44,7 @@ serial experiments lain	1998	夏	13	オリジナル	Triangle Staff	0	serial expe
 ゆびさきと恋々	2024	冬	12	漫画	Ajiado	0	ゆびさきと恋々	TV	デザート	いいえ
 ようこそ実力至上主義の教室へ	2017	夏	12	ライトノベル	Lerche	1	ようこそ実力至上主義の教室へ	TV	MF文庫J	いいえ
 アオのハコ	2024	秋	25	漫画	Telecom Animation Film	1	アオのハコ	ONA	週刊少年ジャンプ	いいえ
+アマガミSS	2010	夏	25	ゲーム	AIC	1	アマガミSS	TV	－	いいえ
 エルゴプラクシー	2006	冬	23	オリジナル	Manglobe	0	Ergo Proxy	TV	－	いいえ
 オッドタクシー	2021	春	13	オリジナル	OLM／P.I.C.S.	0	オッドタクシー	TV	－	いいえ
 オーバーロード	2015	夏	13	ライトノベル	MADHOUSE	1	オーバーロード	TV	？	いいえ

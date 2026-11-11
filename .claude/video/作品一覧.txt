@@ -140,7 +140,7 @@ rabukome	10	五等分の花嫁
 rabukome	11	ホリミヤ
 rabukome	12	俺の妹がこんなに可愛いわけがない
 rabukome	13	その着せ替え人形は恋をする
-rabukome	14	魔王の俺が奴隷エルフを嫁にしたんだが、どう愛でればいい?
+rabukome	14	アマガミSS
 rabukome	15	僕の心のヤバイやつ
 rabukome	16	スキップとローファー
 rabukome	17	さくら荘のペットな彼女

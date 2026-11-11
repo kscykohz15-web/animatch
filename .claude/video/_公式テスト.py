@@ -81,6 +81,19 @@ def main():
     iu(ms.koushiki_e([u"とらドラ"], images) == u"とらドラ/1.png",
        u"① 拡張子が png でも引いた")
 
+    # ── ①-2 フォルダ名は部分一致で当たる（@@話数 と同じ当て方）
+    #    画面表示.txt の4列目は短く書いてある。本人のフォルダは
+    #    「Just Because！」（全角の！つき）、4列目は「Just Because」。
+    images2 = images + [u"Just Because！/1.jpg", u"Just Because！/0002.jpg",
+                        u"アマガミSS/1.png", u"アマガミSS+ plus/1.jpg"]
+    iu(ms.koushiki_e([u"Just Because"], images2) == u"Just Because！/1.jpg",
+       u"①-2 短く書いたフォルダ名でも公式画像を引く（部分一致）")
+    iu(ms.koushiki_e([u"アマガミSS"], images2) == u"アマガミSS/1.png",
+       u"①-2 ぴったり同じ名前があれば、そちらを先に取る")
+    iu(ms.koushiki_e([u"アマガミ"], images2) in (u"アマガミSS/1.png",
+                                                 u"アマガミSS+ plus/1.jpg"),
+       u"①-2 2つのフォルダに当たっても落ちない")
+
     # ── ② @@話数 が複数あるときは左から
     iu(ms.koushiki_e([u"五等分の花嫁", u"ニセコイ"], images) == u"ニセコイ/1.jpg",
        u"② 1枚目に無ければ次の作品フォルダを見る")

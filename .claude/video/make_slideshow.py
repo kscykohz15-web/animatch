@@ -8532,11 +8532,27 @@ def koushiki_e(fols, images):
 
     @@話数 に書いてあるフォルダを、左から順に探します。
     見つからなければ None（そのときは次の候補＝タグに任せる）。
+
+    ■ フォルダ名は**部分一致**で当てる（2026-11-11・出した翌日に気づいた）
+
+    @@話数 の当て方は `resolve_focus` の `w == f or w in f` ── 部分一致。
+    画面表示.txt の4列目は、だからわざと短く書いてある
+    （「Just Because」→ 本人のフォルダは「Just Because！」／
+      「魔王の俺が奴隷エルフを嫁にしたんだが」→ うしろに続きがある）。
+    ここだけ `==` で比べていたので、**名前を短く書いた作品では
+    公式画像が一生引けなかった。** 絵は当たるのに公式画像だけ無い、になる。
+    **同じ名前を当てる所が2か所あって、当て方が違っていた。**
+    ぴったり同じ名前を先に見て、無ければ部分一致で探す。
+    空の名前は何にでも含まれてしまうので、見ない。
     """
+    ichi = [k for k in images
+            if u"/" in k and os.path.splitext(_e_namae(k))[0] == u"1"]
     for fol in (fols or []):
-        atari = [k for k in images
-                 if u"/" in k and k.rsplit(u"/", 1)[0] == fol
-                 and os.path.splitext(_e_namae(k))[0] == u"1"]
+        if not fol:
+            continue
+        atari = [k for k in ichi if k.rsplit(u"/", 1)[0] == fol]
+        if not atari:
+            atari = [k for k in ichi if fol in k.rsplit(u"/", 1)[0]]
         if atari:
             return sorted(atari)[0]
     return None
