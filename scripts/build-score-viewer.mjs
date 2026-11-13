@@ -39,7 +39,7 @@ const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").
 const rows = parseCsv(fs.readFileSync(CSV, "utf-8"));
 const head = rows.shift().map((h) => h.trim());
 const ix = Object.fromEntries(head.map((h, i) => [h, i]));
-const AXES = ["story_10", "animation_10", "world_10", "emotion_10", "tempo_10", "music_10"];
+const AXES = ["story_10", "animation_10", "world_10", "emotion_10", "tempo_10", "music_10", "cute_10"];
 
 const data = rows.map((r) => ({
   t: esc(r[ix.title]),

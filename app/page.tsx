@@ -42,6 +42,7 @@ type AnimeWork = {
   emotion_10?: number | null;
   tempo_10?: number | null;
   music_10?: number | null;
+  cute_10?: number | null;
   gore_10?: number | null;
   depression_10?: number | null;
   ero_10?: number | null;
@@ -420,6 +421,8 @@ const OVERALL_WEIGHTS: { key: keyof AnimeWork; w: number; label: string }[] = [
   { key: "emotion_10", w: 2.5, label: "心" },
   { key: "tempo_10", w: 1.0, label: "テンポ" },
   { key: "music_10", w: 1.0, label: "音楽" },
+  // キャラの可愛さだけ重みは他項目の半分
+  { key: "cute_10", w: 0.5, label: "可愛さ" },
 ];
 
 function overallScore100(a: AnimeWork): number | null {
@@ -505,6 +508,7 @@ const WANTED_COLS = [
   "emotion_10",
   "tempo_10",
   "music_10",
+  "cute_10",
   "gore_10",
   "depression_10",
   "ero_10",
@@ -1582,6 +1586,7 @@ function yearOk(a: AnimeWork) {
       { k: "tempo_10", label: "テンポ" },
       { k: "music_10", label: "音楽" },
       { k: "animation_10", label: "作画" },
+      { k: "cute_10", label: "キャラの可愛さ" },
     ];
 
     const diffs = pairs
@@ -1635,6 +1640,7 @@ function yearOk(a: AnimeWork) {
       { key: "tempo_10", label: "テンポ" },
       { key: "music_10", label: "音楽" },
       { key: "animation_10", label: "作画" },
+      { key: "cute_10", label: "キャラの可愛さ" },
     ];
 
     const userAvg: Record<string, number> = {};
@@ -1749,6 +1755,7 @@ const scored = candidates
       { k: "tempo_10", label: "テンポ" },
       { k: "music_10", label: "音楽" },
       { k: "animation_10", label: "作画" },
+      { k: "cute_10", label: "キャラの可愛さ" },
     ];
 
     const diffs = pairs
@@ -1799,6 +1806,7 @@ const scored = candidates
       { key: "tempo_10", w: 1.0 },
       { key: "music_10", w: 1.0 },
       { key: "animation_10", w: 1.0 },
+      { key: "cute_10", w: 0.5 },
     ];
 
     const baseGenresN = new Set(getGenreArray(base.genre).map((x) => normalizeForCompare(x)));

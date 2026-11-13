@@ -42,6 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | 用途 | コマンド |
 |---|---|
 | DB準備（numeric(3,1)化・0→NULL・rating_source追加） | `sql/20261104_scores_numeric_1dp.sql` を Supabase SQL Editor で実行 |
+| DB準備（キャラの可愛さ cute_10 を追加） | `sql/20261113_add_cute_10.sql` を Supabase SQL Editor で実行 |
 | 本人評価17作品の投入 | `node scripts/seed-user-ratings-v2.mjs`（`DRY_RUN=true`で確認） |
 | 全作品を新基準で再採点 | `node scripts/step5-ai-score10-v2-fullscan.mjs` |
 | 新規作品だけ採点 | `node scripts/step6-ai-score10-v2-delta.mjs` |

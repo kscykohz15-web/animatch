@@ -42,12 +42,13 @@ function check(name, cond, extra) {
 }
 
 console.log("== 1. 項目定義 ==");
-check("6項目ある", AXES.length === 6, AXES.length);
-check("重み合計が10", AXES.reduce((s, a) => s + a.weight, 0) === 10);
+check("7項目ある", AXES.length === 7, AXES.length);
+check("重み合計が10.5（可愛さは半分の0.5）", AXES.reduce((s, a) => s + a.weight, 0) === 10.5);
 check(
-  "配点が 25/10/20/25/10/10%",
-  JSON.stringify(AXES.map((a) => a.weight * 10)) === JSON.stringify([25, 10, 20, 25, 10, 10])
+  "重みが 2.5/1/2/2.5/1/1/0.5",
+  JSON.stringify(AXES.map((a) => a.weight)) === JSON.stringify([2.5, 1, 2, 2.5, 1, 1, 0.5])
 );
+check("キャラの可愛さは標準項目(1.0)の半分", AXES.at(-1).weight === AXES[1].weight / 2);
 
 console.log("\n== 2. 数値ルール ==");
 check("10.4 → 10.0 にクランプ", clampScore1dp(10.4) === 10);
@@ -58,12 +59,12 @@ check("上限は10.0", SCORE_MAX === 10);
 
 console.log("\n== 3. パーサ ==");
 const good = parseScoreResponse(
-  '```json\n{"story_10":7.3,"animation_10":6.1,"world_10":8.2,"emotion_10":5.4,"tempo_10":7.0,"music_10":6.6,"confidence":0.62,"rationale_short":"テスト"}\n```'
+  '```json\n{"story_10":7.3,"animation_10":6.1,"world_10":8.2,"emotion_10":5.4,"tempo_10":7.0,"music_10":6.6,"cute_10":4.2,"confidence":0.62,"rationale_short":"テスト"}\n```'
 );
 check("コードフェンス付きJSONを読める", good.ok === true, good);
 check("confidenceを拾う", good.confidence === 0.62);
-check("総合点が正しい", totalScore100(good.scores) === 67.9, totalScore100(good.scores));
-check("項目差が正しい", scoreSpread(good.scores) === 2.8, scoreSpread(good.scores));
+check("総合点が正しい（可愛さは半分の重み）", totalScore100(good.scores) === 66.6, totalScore100(good.scores));
+check("項目差が正しい", scoreSpread(good.scores) === 4.0, scoreSpread(good.scores));
 
 const partial = parseScoreResponse('{"story_10":7.3}');
 check("6項目そろわない出力は不採用", partial.ok === false && partial.reason.startsWith("missing_axes"), partial);
@@ -73,15 +74,18 @@ console.log("\n== 4. 本人評価アンカー（17作品・改変されていな
 check("17作品ある", USER_RATINGS_17.length === 17, USER_RATINGS_17.length);
 let userShapeOk = true;
 for (const a of USER_RATINGS_17) {
-  if (a.s.length !== 6) userShapeOk = false;
-  for (const v of a.s) {
+  if (a.s.length !== 7) userShapeOk = false;
+  // 本人が付けた6項目は整数のまま。7項目目（キャラの可愛さ）はAI推定なので0.1刻み。
+  for (const v of a.s.slice(0, 6)) {
     if (!Number.isInteger(v) || v < 1 || v > 10) userShapeOk = false;
   }
+  const c = a.s[6];
+  if (!(c >= 0.1 && c <= 10)) userShapeOk = false;
   if (!a.note) userShapeOk = false;
 }
-check("全作品が6項目・1〜10の整数・コメント付き", userShapeOk);
+check("本人の6項目は整数のまま＋可愛さ(AI推定)が付いている", userShapeOk);
 const aot = USER_RATINGS_17.find((a) => a.title === "進撃の巨人");
-check("進撃の巨人の本人評価が 10/9/8/8/7/8", JSON.stringify(aot?.s) === JSON.stringify([10, 9, 8, 8, 7, 8]), aot?.s);
+check("進撃の巨人の本人評価6項目が 10/9/8/8/7/8", JSON.stringify(aot?.s.slice(0, 6)) === JSON.stringify([10, 9, 8, 8, 7, 8]), aot?.s);
 const haikyu = USER_RATINGS_17.find((a) => a.title.startsWith("ハイキュー"));
 check("ハイキューの心が10", haikyu?.s[3] === 10);
 
@@ -92,13 +96,13 @@ check(
   "先頭が本人提示の進撃の巨人 9.5/9.0/8.1/8.0/7.5/7.0",
   strictAot.title === "進撃の巨人" &&
     strictAot.source === "user" &&
-    JSON.stringify(strictAot.s) === JSON.stringify([9.5, 9.0, 8.1, 8.0, 7.5, 7.0]),
+    JSON.stringify(strictAot.s.slice(0, 6)) === JSON.stringify([9.5, 9.0, 8.1, 8.0, 7.5, 7.0]),
   strictAot
 );
 let strictShapeOk = true;
 const flat = [];
 for (const a of STRICT_SCALE_ANCHORS) {
-  if (a.s.length !== 6 || !a.note || !["user", "ai"].includes(a.source)) strictShapeOk = false;
+  if (a.s.length !== 7 || !a.note || !["user", "ai"].includes(a.source)) strictShapeOk = false;
   for (const v of a.s) {
     if (!(v >= SCORE_MIN && v <= SCORE_MAX)) strictShapeOk = false;
     if (Math.abs(v * 10 - Math.round(v * 10)) > 1e-9) strictShapeOk = false;
@@ -149,6 +153,8 @@ for (const needle of [
   "アンカーA：オーナー本人の評価",
   "アンカーB：新基準の数値スケール",
   "進撃の巨人 | S9.5",
+  "キャラの可愛さ",
+  "cute_10",
   "anilist_popularity",
 ]) {
   check(`プロンプトに「${needle}」が入っている`, prompt.includes(needle));
