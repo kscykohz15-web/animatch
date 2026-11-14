@@ -10,7 +10,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const CSV = process.env.CSV_PATH || path.resolve(process.cwd(), "data", "scores-v2-933works.csv");
+const CSV = process.env.CSV_PATH || path.resolve(process.cwd(), "data", "scores-v2.csv");
 const TPL = path.resolve(process.cwd(), "scripts", "templates", "score-viewer.html");
 const OUT = process.env.OUT_PATH || path.resolve(process.cwd(), "data", "score-viewer.html");
 
@@ -51,6 +51,7 @@ const data = rows.map((r) => ({
   p: Number(r[ix.shiteki_10]),
   k: Number(r[ix.kouteki_10]),
   r: r[ix.rating_source] === "user" ? "user" : "ai",
+  u: r[ix.seen] === "unseen" ? 1 : 0,
   n: esc(r[ix.note]),
 }));
 
