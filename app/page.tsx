@@ -43,6 +43,8 @@ type AnimeWork = {
   tempo_10?: number | null;
   music_10?: number | null;
   cute_10?: number | null;
+  action_10?: number | null;
+  main_genre?: string | null;
   gore_10?: number | null;
   depression_10?: number | null;
   ero_10?: number | null;
@@ -425,10 +427,53 @@ const OVERALL_WEIGHTS: { key: keyof AnimeWork; w: number; label: string }[] = [
   { key: "cute_10", w: 0.3, label: "可愛さ" },
 ];
 
+/** バトル/格闘ジャンル専用の8項目目 */
+const ACTION_WEIGHT = { key: "action_10" as keyof AnimeWork, w: 1.0, label: "バトルの熱さ" };
+const ACTION_GENRES = ["バトル", "格闘"];
+
+/** ジャンルごとに「最も重要な2項目」。その2項目だけ重みを3倍にする（scripts/lib/score-criteria-v2.mjs と同じ） */
+const GENRE_BOOST: Record<string, string[]> = {
+  バトル: ["animation_10", "action_10"],
+  格闘: ["animation_10", "action_10"],
+  異世界: ["world_10", "story_10"],
+  ファンタジー: ["world_10", "story_10"],
+  SF: ["world_10", "story_10"],
+  冒険: ["world_10", "story_10"],
+  歴史: ["world_10", "story_10"],
+  ミステリー: ["story_10", "world_10"],
+  サスペンス: ["story_10", "world_10"],
+  ホラー: ["world_10", "emotion_10"],
+  魔法少女: ["world_10", "emotion_10"],
+  ロボット: ["world_10", "animation_10"],
+  コメディ: ["tempo_10", "cute_10"],
+  ギャンブル: ["story_10", "tempo_10"],
+  青春: ["emotion_10", "story_10"],
+  社会派: ["story_10", "emotion_10"],
+  お仕事: ["story_10", "emotion_10"],
+  スポーツ: ["emotion_10", "tempo_10"],
+  恋愛: ["emotion_10", "cute_10"],
+  ラブコメ: ["cute_10", "emotion_10"],
+  ハーレム: ["cute_10", "animation_10"],
+  学園: ["emotion_10", "cute_10"],
+  百合: ["emotion_10", "cute_10"],
+  日常: ["cute_10", "tempo_10"],
+  グルメ: ["animation_10", "emotion_10"],
+  音楽: ["music_10", "emotion_10"],
+  アイドル: ["music_10", "cute_10"],
+};
+const BOOST_FACTOR = 3;
+
+function weightsForWork(a: AnimeWork) {
+  const genre = String(a.main_genre ?? "").trim();
+  const base = ACTION_GENRES.includes(genre) ? [...OVERALL_WEIGHTS, ACTION_WEIGHT] : OVERALL_WEIGHTS;
+  const boost = GENRE_BOOST[genre] ?? [];
+  return base.map((item) => ({ ...item, w: boost.includes(String(item.key)) ? item.w * BOOST_FACTOR : item.w }));
+}
+
 function overallScore100(a: AnimeWork): number | null {
   let sumW = 0;
   let sum = 0;
-  for (const item of OVERALL_WEIGHTS) {
+  for (const item of weightsForWork(a)) {
     const v = toScore10((a as any)[item.key]);
     if (v === null) continue;
     sumW += item.w;
@@ -509,6 +554,8 @@ const WANTED_COLS = [
   "tempo_10",
   "music_10",
   "cute_10",
+  "action_10",
+  "main_genre",
   "gore_10",
   "depression_10",
   "ero_10",

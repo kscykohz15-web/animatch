@@ -9,6 +9,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { GENRE_BOOST, ACTION_GENRES, AXES as LIB_AXES, ACTION_AXIS } from "./lib/score-criteria-v2.mjs";
 
 const CSV = process.env.CSV_PATH || path.resolve(process.cwd(), "data", "scores-v2.csv");
 const TPL = path.resolve(process.cwd(), "scripts", "templates", "score-viewer.html");
@@ -48,6 +49,7 @@ const data = rows.map((r) => ({
   o: esc(r[ix.source]),
   g: esc(r[ix.genre]),
   a: AXES.map((k) => Number(r[ix[k]])),
+  x: r[ix.action_10] === "" ? null : Number(r[ix.action_10]),
   p: Number(r[ix.shiteki_10]),
   k: Number(r[ix.kouteki_10]),
   r: r[ix.rating_source] === "user" ? "user" : "ai",
@@ -61,7 +63,13 @@ if (bad.length) throw new Error(`不正な行が ${bad.length} 件あります: 
 const tpl = fs.readFileSync(TPL, "utf-8");
 const marker = "/*__DATA__*/[]";
 if (!tpl.includes(marker)) throw new Error("テンプレートに差し込み位置がありません");
-const html = tpl.replace(marker, JSON.stringify(data));
+const boostMarker = "/*__BOOST__*/{}";
+if (!tpl.includes(boostMarker)) throw new Error("テンプレートにジャンル配点の差し込み位置がありません");
+const keyIndex = Object.fromEntries([...LIB_AXES, ACTION_AXIS].map((a, i) => [a.key, i]));
+const boost = Object.fromEntries(Object.entries(GENRE_BOOST).map(([g, ks]) => [g, ks.map((k) => keyIndex[k])]));
+const html = tpl
+  .replace(marker, JSON.stringify(data))
+  .replace(boostMarker, JSON.stringify({ boost, action: ACTION_GENRES }));
 
 fs.writeFileSync(OUT, html, "utf-8");
 console.log(`✅ ${data.length}作品 → ${OUT} (${(Buffer.byteLength(html) / 1024).toFixed(0)} KB)`);

@@ -30,6 +30,63 @@ export const AXES = [
 
 export const AXIS_KEYS = AXES.map((a) => a.key);
 
+/**
+ * バトル/格闘ジャンル専用の8項目目。戦闘の激しさ・爽快感・ワクワク感。
+ * 他ジャンルの作品では採点せず（NULL）、総合点の計算にも入らない。
+ */
+export const ACTION_AXIS = { key: "action_10", label: "バトルの熱さ", weight: 1.0 };
+export const ACTION_GENRES = ["バトル", "格闘"];
+
+/** ジャンルごとに「最も重要な2項目」。その2項目は重みを3倍にする。 */
+export const BOOST_FACTOR = 3;
+export const GENRE_BOOST = {
+  バトル: ["animation_10", "action_10"],
+  格闘: ["animation_10", "action_10"],
+  異世界: ["world_10", "story_10"],
+  ファンタジー: ["world_10", "story_10"],
+  SF: ["world_10", "story_10"],
+  冒険: ["world_10", "story_10"],
+  歴史: ["world_10", "story_10"],
+  ミステリー: ["story_10", "world_10"],
+  サスペンス: ["story_10", "world_10"],
+  ホラー: ["world_10", "emotion_10"],
+  魔法少女: ["world_10", "emotion_10"],
+  ロボット: ["world_10", "animation_10"],
+  コメディ: ["tempo_10", "cute_10"],
+  ギャンブル: ["story_10", "tempo_10"],
+  青春: ["emotion_10", "story_10"],
+  社会派: ["story_10", "emotion_10"],
+  お仕事: ["story_10", "emotion_10"],
+  スポーツ: ["emotion_10", "tempo_10"],
+  恋愛: ["emotion_10", "cute_10"],
+  ラブコメ: ["cute_10", "emotion_10"],
+  ハーレム: ["cute_10", "animation_10"],
+  学園: ["emotion_10", "cute_10"],
+  百合: ["emotion_10", "cute_10"],
+  日常: ["cute_10", "tempo_10"],
+  グルメ: ["animation_10", "emotion_10"],
+  音楽: ["music_10", "emotion_10"],
+  アイドル: ["music_10", "cute_10"],
+};
+
+/** そのジャンルで使う項目一覧（バトル系だけ8項目） */
+export function axesFor(genre) {
+  return ACTION_GENRES.includes(genre) ? [...AXES, ACTION_AXIS] : AXES;
+}
+
+/** そのジャンルの重み（重要2項目は3倍） */
+export function weightsFor(genre) {
+  const boost = GENRE_BOOST[genre] ?? [];
+  return axesFor(genre).map((a) => ({ ...a, weight: boost.includes(a.key) ? a.weight * BOOST_FACTOR : a.weight }));
+}
+
+/** そのジャンルの配点（%）。確認・表示用 */
+export function sharesFor(genre) {
+  const w = weightsFor(genre);
+  const sum = w.reduce((s, a) => s + a.weight, 0);
+  return w.map((a) => ({ key: a.key, label: a.label, weight: a.weight, share: Math.round((a.weight / sum) * 1000) / 10 }));
+}
+
 export const SCORE_MIN = 0.1;
 export const SCORE_MAX = 10.0;
 
@@ -66,7 +123,7 @@ export function extractJsonObject(text) {
  * AIの生出力 → { scores, confidence, rationale } / エラー理由
  * 6項目が全部そろっていない場合は書き込み不可（NULLのまま残す）。
  */
-export function parseScoreResponse(raw) {
+export function parseScoreResponse(raw, genre) {
   const jsonText = extractJsonObject(raw);
   if (!jsonText) return { ok: false, reason: "json_extract_failed" };
 
@@ -79,7 +136,7 @@ export function parseScoreResponse(raw) {
 
   const scores = {};
   const missing = [];
-  for (const key of AXIS_KEYS) {
+  for (const key of axesFor(genre).map((a) => a.key)) {
     const v = clampScore1dp(obj[key]);
     if (v === null) missing.push(key);
     else scores[key] = v;
@@ -100,11 +157,15 @@ export function parseScoreResponse(raw) {
   };
 }
 
-/** 総合点（100点満点・小数1位） */
-export function totalScore100(scores) {
+/**
+ * 総合点（100点満点・小数1位）。
+ * genre を渡すとそのジャンルの重み（重要2項目が3倍、バトル系は8項目）で計算する。
+ * 渡さなければ共通の7項目・基本の重み。
+ */
+export function totalScore100(scores, genre) {
   let sum = 0;
   let sumW = 0;
-  for (const axis of AXES) {
+  for (const axis of weightsFor(genre)) {
     const v = Number(scores?.[axis.key]);
     if (!Number.isFinite(v)) return null;
     sum += v * axis.weight;
@@ -115,8 +176,8 @@ export function totalScore100(scores) {
 }
 
 /** 1作品内の項目差（0に近いほど「全項目同じ点」= 悪い兆候） */
-export function scoreSpread(scores) {
-  const vals = AXIS_KEYS.map((k) => Number(scores[k])).filter((v) => Number.isFinite(v));
+export function scoreSpread(scores, genre) {
+  const vals = axesFor(genre).map((a) => Number(scores[a.key])).filter((v) => Number.isFinite(v));
   if (!vals.length) return 0;
   return Math.round((Math.max(...vals) - Math.min(...vals)) * 10) / 10;
 }

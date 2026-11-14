@@ -30,6 +30,7 @@ import {
 } from "../lib/score-criteria-v2.mjs";
 import { USER_RATINGS_17, STRICT_SCALE_ANCHORS } from "../lib/score-anchors-v2.mjs";
 import { normalizeTitle, buildTitleIndex, findTitleMatches } from "../lib/title-match.mjs";
+import { GENRE_BOOST, ACTION_GENRES, ACTION_AXIS, weightsFor, sharesFor, axesFor } from "../lib/score-criteria-v2.mjs";
 
 let failures = 0;
 function check(name, cond, extra) {
@@ -51,6 +52,17 @@ check(
 check("シナリオは標準項目(1.0)の1.5倍の2.5をさらに1.5倍した3.75", AXES[0].weight === 2.5 * 1.5);
 check("キャラの可愛さは0.5の0.6倍で0.3", Math.round(AXES.at(-1).weight * 10) / 10 === 0.3);
 
+console.log("\n== 1-2. ジャンル別配点 ==");
+check("27ジャンル全てに重要2項目が定義されている", Object.keys(GENRE_BOOST).length === 27, Object.keys(GENRE_BOOST).length);
+check("どのジャンルもちょうど2項目", Object.values(GENRE_BOOST).every((v) => v.length === 2));
+const allKeys = new Set([...AXIS_KEYS, ACTION_AXIS.key]);
+check("指定された項目名がすべて実在する", Object.values(GENRE_BOOST).flat().every((k) => allKeys.has(k)));
+check("action_10はバトル系ジャンルだけ", Object.entries(GENRE_BOOST).filter(([, v]) => v.includes("action_10")).map(([g]) => g).join(",") === ACTION_GENRES.join(","));
+check("バトルは作画とバトルの熱さが3倍", weightsFor("バトル").filter((a) => a.weight === 3).map((a) => a.key).join(",") === "animation_10,action_10");
+check("ミステリーはシナリオ11.25・世界観6.0", weightsFor("ミステリー").find((a) => a.key === "story_10").weight === 11.25 && weightsFor("ミステリー").find((a) => a.key === "world_10").weight === 6);
+check("バトル系だけ8項目", axesFor("バトル").length === 8 && axesFor("ミステリー").length === 7);
+check("どのジャンルも配点合計が100%", Object.keys(GENRE_BOOST).every((g) => Math.abs(sharesFor(g).reduce((s, x) => s + x.share, 0) - 100) < 0.5));
+
 console.log("\n== 2. 数値ルール ==");
 check("10.4 → 10.0 にクランプ", clampScore1dp(10.4) === 10);
 check("0 → 0.1 にクランプ（0は使わない）", clampScore1dp(0) === SCORE_MIN);
@@ -64,7 +76,10 @@ const good = parseScoreResponse(
 );
 check("コードフェンス付きJSONを読める", good.ok === true, good);
 check("confidenceを拾う", good.confidence === 0.62);
-check("総合点が正しい（新しい重み）", totalScore100(good.scores) === 67.7, totalScore100(good.scores));
+check("総合点が正しい（共通の重み）", totalScore100(good.scores) === 67.7, totalScore100(good.scores));
+check("ミステリーはシナリオ重視で点が変わる", totalScore100(good.scores, "ミステリー") === 71.9, totalScore100(good.scores, "ミステリー"));
+check("バトルはバトルの熱さが無いと計算できない", totalScore100(good.scores, "バトル") === null);
+check("バトルの熱さを足せば計算できる", totalScore100({ ...good.scores, action_10: 8.0 }, "バトル") !== null);
 check("項目差が正しい", scoreSpread(good.scores) === 4.0, scoreSpread(good.scores));
 
 const partial = parseScoreResponse('{"story_10":7.3}');
