@@ -1,7 +1,7 @@
 /**
  * scripts/build-score-viewer.mjs
  *
- * ✅ data/scores-v2-933works.csv から、スマホ・PC両対応の閲覧ページ data/score-viewer.html を生成する
+ * ✅ data/scores-v2.csv から、スマホ・PC両対応の閲覧ページ data/score-viewer.html を生成する
  * ✅ テンプレートは scripts/templates/score-viewer.html（/*__DATA__*​/ の位置にJSONを差し込む）
  *
  * 実行: node scripts/build-score-viewer.mjs

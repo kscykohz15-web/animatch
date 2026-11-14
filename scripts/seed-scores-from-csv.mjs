@@ -1,16 +1,17 @@
 /**
  * scripts/seed-scores-from-csv.mjs
  *
- * ✅ CSVの採点結果を anime_works に投入する（既定は data/scores-v2-933works.csv）
+ * ✅ CSVの採点結果を anime_works に投入する（既定は data/scores-v2.csv）
  * ✅ タイトルは正規化して照合。候補が複数 / 未マッチの行は書き込まずに報告するだけ
  * ✅ rating_source は CSV の値（user / ai）をそのまま入れる
  * ✅ DRY_RUN=true で確認のみ
+ * ℹ️ 未視聴作品（seen=unseen）はDBに無ければ「未マッチ」として報告されるだけで、書き込みは起きない
  *
  * 事前に sql/20261104_scores_numeric_1dp.sql を実行しておくこと（整数カラムだと小数が丸められる）。
  *
  * 実行例（PowerShell）:
  *   $env:DRY_RUN="true"; node .\scripts\seed-scores-from-csv.mjs
- *   $env:CSV_PATH="data\scores-v2-933works.csv"; $env:DRY_RUN="false"; node .\scripts\seed-scores-from-csv.mjs
+ *   $env:CSV_PATH="data\scores-v2.csv"; $env:DRY_RUN="false"; node .\scripts\seed-scores-from-csv.mjs
  */
 
 import fs from "node:fs";
@@ -29,7 +30,7 @@ if (!SUPABASE_URL || !SERVICE_ROLE) throw new Error("Missing SUPABASE env (NEXT_
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE, { auth: { persistSession: false } });
 
-const CSV_PATH = process.env.CSV_PATH || path.resolve(process.cwd(), "data", "scores-v2-933works.csv");
+const CSV_PATH = process.env.CSV_PATH || path.resolve(process.cwd(), "data", "scores-v2.csv");
 const DRY_RUN = String(process.env.DRY_RUN ?? "false") === "true";
 const OVERWRITE_USER = String(process.env.OVERWRITE_USER ?? "false") === "true";
 const LIMIT = Number(process.env.LIMIT ?? 0);
