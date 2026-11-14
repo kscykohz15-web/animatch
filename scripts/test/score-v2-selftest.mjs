@@ -43,12 +43,13 @@ function check(name, cond, extra) {
 
 console.log("== 1. 項目定義 ==");
 check("7項目ある", AXES.length === 7, AXES.length);
-check("重み合計が10.5（可愛さは半分の0.5）", AXES.reduce((s, a) => s + a.weight, 0) === 10.5);
+check("重み合計が11.55", Math.round(AXES.reduce((s, a) => s + a.weight, 0) * 100) / 100 === 11.55);
 check(
-  "重みが 2.5/1/2/2.5/1/1/0.5",
-  JSON.stringify(AXES.map((a) => a.weight)) === JSON.stringify([2.5, 1, 2, 2.5, 1, 1, 0.5])
+  "重みが 3.75/1/2/2.5/1/1/0.3",
+  JSON.stringify(AXES.map((a) => a.weight)) === JSON.stringify([3.75, 1, 2, 2.5, 1, 1, 0.3])
 );
-check("キャラの可愛さは標準項目(1.0)の半分", AXES.at(-1).weight === AXES[1].weight / 2);
+check("シナリオは標準項目(1.0)の1.5倍の2.5をさらに1.5倍した3.75", AXES[0].weight === 2.5 * 1.5);
+check("キャラの可愛さは0.5の0.6倍で0.3", Math.round(AXES.at(-1).weight * 10) / 10 === 0.3);
 
 console.log("\n== 2. 数値ルール ==");
 check("10.4 → 10.0 にクランプ", clampScore1dp(10.4) === 10);
@@ -63,7 +64,7 @@ const good = parseScoreResponse(
 );
 check("コードフェンス付きJSONを読める", good.ok === true, good);
 check("confidenceを拾う", good.confidence === 0.62);
-check("総合点が正しい（可愛さは半分の重み）", totalScore100(good.scores) === 66.6, totalScore100(good.scores));
+check("総合点が正しい（新しい重み）", totalScore100(good.scores) === 67.7, totalScore100(good.scores));
 check("項目差が正しい", scoreSpread(good.scores) === 4.0, scoreSpread(good.scores));
 
 const partial = parseScoreResponse('{"story_10":7.3}');

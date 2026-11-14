@@ -195,7 +195,7 @@ button.ghost[aria-expanded="true"]{color:var(--accent);border-color:var(--accent
   <section class="legend">
     <h2>採点の見方</h2>
     <div class="defs">
-      <div><dt>配点</dt><dd>シナリオ23.8% / 作画9.5% / 世界観19.0% / 心・感情23.8% / テンポ9.5% / 音楽9.5% / キャラの可愛さ4.8%</dd></div>
+      <div><dt>配点</dt><dd>シナリオ32.5% / 心・感情21.6% / 世界観17.3% / 作画8.7% / テンポ8.7% / 音楽8.7% / キャラの可愛さ2.6%</dd></div>
       <div><dt>私的</dt><dd>7項目を上の配点で加重した総合点（0.1〜10.0）。好みの基準</dd></div>
       <div><dt>公的</dt><dd>世間一般での評価・話題性の推定値。人気が高いだけでは上げない</dd></div>
       <div><dt>本人評価</dt><dd>オーナー本人が付けた17作品。金色の枠で区別（他はこの基準でAIが採点）</dd></div>
@@ -205,7 +205,7 @@ button.ghost[aria-expanded="true"]{color:var(--accent);border-color:var(--accent
       <div><dt>心・感情</dt><dd>感動・感情移入・心に刺さる描写</dd></div>
       <div><dt>テンポ</dt><dd>速さではなくダレなさ。中だるみや引き伸ばしは減点</dd></div>
       <div><dt>音楽</dt><dd>曲の良さではなく感情と没入をどれだけ増幅しているか</dd></div>
-      <div><dt>キャラの可愛さ</dt><dd>ヒロインやキャラの可愛さ・魅力・萌え。可愛さが主武器なら9点台、男性中心や劇画調は4点台以下。<b>総合点への効きは他項目の半分（×0.5）</b></dd></div>
+      <div><dt>キャラの可愛さ</dt><dd>ヒロインやキャラの可愛さ・魅力・萌え。可愛さが主武器なら9点台、男性中心や劇画調は4点台以下。<b>総合点への効きは最も軽い（2.6%）</b></dd></div>
     </div>
     <div class="bands" id="bands"></div>
     <p class="foot" id="foot"></p>
@@ -213,7 +213,7 @@ button.ghost[aria-expanded="true"]{color:var(--accent);border-color:var(--accent
 </div>
 
 <script>
-const AX=[["シナリオ","story"],["作画","anim"],["世界観","world"],["心","emo"],["テンポ","tempo"],["音楽","music"],["可愛さ ×0.5","cute"]];
+const AX=[["シナリオ","story"],["作画","anim"],["世界観","world"],["心","emo"],["テンポ","tempo"],["音楽","music"],["可愛さ","cute"]];
 const DATA=/*__DATA__*/[];
 const BANDS=[["9.5〜10.0","伝説級"],["8.8〜9.4","神"],["8.0〜8.7","非常に強い"],["7.0〜7.9","良い"],["6.0〜6.9","やや良〜平凡"],["5.0〜5.9","平凡"],["3.5〜4.9","弱い"],["2.0〜3.4","かなり弱い"],["0.1〜1.9","崩壊"]];
 const SORTS=[["tot_d","総合点が高い順"],["tot_a","総合点が低い順"],["k_d","公的評価が高い順"],["y_d","新しい順"],["y_a","古い順"],["t_a","作品名順"],

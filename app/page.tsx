@@ -415,14 +415,14 @@ function sumKnownEpisodes(list: AnimeWork[]) {
  *  新・総合評価（100点→★5）
  * ========================= */
 const OVERALL_WEIGHTS: { key: keyof AnimeWork; w: number; label: string }[] = [
-  { key: "story_10", w: 2.5, label: "シナリオ" },
+  { key: "story_10", w: 3.75, label: "シナリオ" },
   { key: "animation_10", w: 1.0, label: "作画" },
   { key: "world_10", w: 2.0, label: "世界観" },
   { key: "emotion_10", w: 2.5, label: "心" },
   { key: "tempo_10", w: 1.0, label: "テンポ" },
   { key: "music_10", w: 1.0, label: "音楽" },
-  // キャラの可愛さだけ重みは他項目の半分
-  { key: "cute_10", w: 0.5, label: "可愛さ" },
+  // シナリオは標準項目の1.5倍、キャラの可愛さは0.3
+  { key: "cute_10", w: 0.3, label: "可愛さ" },
 ];
 
 function overallScore100(a: AnimeWork): number | null {
@@ -1800,13 +1800,13 @@ const scored = candidates
     if (!base) return alert("該当作品が見つかりませんでした（候補から選ぶのがおすすめ）");
 
     const axes: { key: keyof AnimeWork; w: number }[] = [
-      { key: "story_10", w: 2.5 },
+      { key: "story_10", w: 3.75 },
       { key: "world_10", w: 2.0 },
       { key: "emotion_10", w: 2.5 },
       { key: "tempo_10", w: 1.0 },
       { key: "music_10", w: 1.0 },
       { key: "animation_10", w: 1.0 },
-      { key: "cute_10", w: 0.5 },
+      { key: "cute_10", w: 0.3 },
     ];
 
     const baseGenresN = new Set(getGenreArray(base.genre).map((x) => normalizeForCompare(x)));
