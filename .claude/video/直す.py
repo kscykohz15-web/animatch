@@ -120,6 +120,10 @@ def fuan(r, tags, tsukai, rows=None, i=None, han=None):
     img, tx = r[u"img"], r[u"text"]
     if not img or img.startswith(u"@@") or M.is_zuhyou(img):
         return 0, u""
+    if M.folder_of(img) == getattr(M, u"MUJI_FOL", u"_無地"):
+        # 作品のフォルダが無い章の無地の絵。わざと出しているので、直す相手ではない
+        # （ここで候補を当てると、別の作品の絵が戻ってくる）
+        return 0, u""
     desc = M.cat_lookup(tags, img)
     if desc is None:
         return 6, u"この絵の説明がカタログにありません"

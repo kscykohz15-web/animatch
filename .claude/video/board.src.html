@@ -19599,7 +19599,7 @@ if __name__ == "__main__":
         "      }",
         "    }",
         "    if ($f -eq '画像カタログ.txt' -or $f -eq '話数マップ.txt') {",
-        "      if ((TabLines $dst) -ge (TabLines $src)) {",
+        "      if ((TabLines $dst) -gt (TabLines $src)) {",
         "        Write-Host ('  手元の ' + $f + ' のほうが詳しいので、そのまま使います (' + (TabLines $dst) + '行)') -ForegroundColor DarkGray",
         "        continue",
         "      }",
@@ -19971,7 +19971,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v191";
+  var PACK_VERSION = "v192";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -20058,7 +20058,7 @@ if __name__ == "__main__":
 "    if ($f -eq '画像カタログ.txt' -or $f -eq '話数マップ.txt') {",
 "      $ns = @(Get-Content $src -Encoding UTF8 | Where-Object { $_ -match \"`t\" }).Count",
 "      $nd = @(Get-Content $dst -Encoding UTF8 | Where-Object { $_ -match \"`t\" }).Count",
-"      if ($nd -ge $ns) {",
+"      if ($nd -gt $ns) {",
 "        Write-Host ('  手元の ' + $f + ' のほうが詳しいので、そのまま使います (' + $nd + '行)') -ForegroundColor DarkGray",
 "        continue",
 "      }",

@@ -291,6 +291,21 @@ HONMONO_WARIAI = 9.0
 HONMONO_NAKA = 32
 HONMONO = [False]
 
+# ■ 7段目「subtitle.srt だけ句読点が違う材料」（2026-11-11）
+#
+# 本人のラブコメ20選（v191）:
+#     ⚠ 台本と subtitle.srt の本文が違います。
+#       台本  … 続く作品は、とらドラ！、制作はJ.C.スタッフ。
+#       音声側… 続く作品は、とらドラ！制作はJ.C.スタッフ。
+#     ★ 1行ずつの音声 109個 … 段落と1対1。段落の境目は正確、中の文は文字数で配分。
+#     そのうち 0枚は、1行ずつの音声で測った長さで割りました
+#     いちばん大きいずれ 1.36秒 / 0.45秒を超えたもの 21枚 (7%)
+#
+# 「、」が1つ無いだけで、**測る道をまるごと降りていた。**
+# 6段目までの材料は srt が台本とぴったり同じなので、この落ち方を一度も見ていない。
+# srt の「、」を全部落とした材料で、**1段目と同じ線**を通す（同じ道を通るはずなので）。
+SRT_KUTOU = [False]
+
 YOBI_OOKII = 2.60
 YOBI_HEIKIN = 0.15       # 実測 0.07・余裕 0.08
 YOBI_WARIAI = 12.0
@@ -346,6 +361,7 @@ def hitotsu(tane):
     env[u"ZURE_TSUMARU"] = u"1" if KITSUI[0] else u"0"
     env[u"ZURE_TSUGIME_SEMAI"] = u"1" if SEMAI[0] else u"0"
     env[u"ZURE_HONBAN"] = u"1" if HONMONO[0] else u"0"
+    env[u"ZURE_SRT_KUTOU"] = u"1" if SRT_KUTOU[0] else u"0"
     r = subprocess.run([sys.executable, u"_zure_tsukuru.py", str(tane)],
                        cwd=SAGYOU, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, env=env)
@@ -413,13 +429,18 @@ def main():
             # ■ 6段目（2026-10-22）。**本人の回と同じ形。**上の注記を読むこと。
             (True, 1.0, u"本人の回と同じ形(切れはしの途中にも息継ぎ)",
              HONMONO_OOKII, HONMONO_HEIKIN, HONMONO_WARIAI, False,
-             HONMONO_NAKA, False, None, None)):
+             HONMONO_NAKA, False, None, None),
+            # ■ 7段目（2026-11-11）。**subtitle.srt だけ句読点が違う。**上の注記を読むこと。
+            (True, 1.0, u"srtの句読点が違う(20選の形)", GOUKAKU_OOKII,
+             GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False, GOUKAKU_NAKA,
+             False, None, None)):
         print(u"── %s ──" % nm)
         dan_kazu += 1
         jissoku_kirikae(tsukau, wari)
         KITSUI[0] = kitsui
         SEMAI[0] = semai
         HONMONO[0] = nm.startswith(u"本人の回と同じ形")
+        SRT_KUTOU[0] = nm.startswith(u"srtの句読点が違う")
         if shirabe(a.kai, nm, oo, he, wa, nk, anc_oo, anc_he):
             warui.append(nm)
     print(u"")

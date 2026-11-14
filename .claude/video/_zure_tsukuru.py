@@ -226,6 +226,11 @@ SEMAI = [os.environ.get(u"ZURE_TSUGIME_SEMAI", u"0") == u"1"]
 # つなぎ目も本物どおりにして、**突き合わせが通る形**＝本人の形にする。
 # きつい材料（既存）は今までどおり残す。どちらも測る。
 HONBAN = [os.environ.get(u"ZURE_HONBAN", u"0") == u"1"]
+# ■ subtitle.srt だけ句読点が違う材料（2026-11-11・本人のログ：ラブコメ20選）
+#   台本は「とらドラ！、制作は」、subtitle.srt は「とらドラ！制作は」。
+#   1文字ちがうだけで測る道をまるごと降りていた（いちばん大きいずれ 1.36秒）。
+#   材料の srt は台本とぴったり同じだったので、**一度も見ていなかった。**
+SRT_KUTOU = [os.environ.get(u"ZURE_SRT_KUTOU", u"0") == u"1"]
 
 # 切れはしの途中にも息継ぎ（＝紛らわしい寄せ先）を作るか。
 # 本番形では**必ず作る**。本物の読み上げはそうなっているので。
@@ -335,8 +340,12 @@ def main():
     for i, bs in enumerate(dan):
         d0 = sum(seikai[j][1] - seikai[j][0] for j in range(
             sum(len(x) for x in dan[:i]), sum(len(x) for x in dan[:i + 1])))
+        hon = u"".join(bs)
+        if SRT_KUTOU[0]:
+            # 20選の形：subtitle.srt を作る側が句読点を落とす（「とらドラ！、」→「とらドラ！」）
+            hon = hon.replace(u"、", u"")
         srt.append(u"%d\n%s --> %s\n%s\n" % (i + 1, mmss(t0), mmss(t0 + d0),
-                                             u"".join(bs)))
+                                             hon))
         t0 += d0
     io.open(u"subtitle.srt", "w", encoding="utf-8").write(u"\n".join(srt))
 

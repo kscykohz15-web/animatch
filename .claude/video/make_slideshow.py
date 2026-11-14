@@ -1516,14 +1516,39 @@ def _norm(t):
     return u"".join(t.split())
 
 
+# 突き合わせるときに無視する字（句読点・かっこ・空白）
+KUTOU_MUSHI = u"、。，．,.！？!?・…「」『』（）() 　"
+
+
+def _norm_k(t):
+    u"""句読点も落とした形。**台本と subtitle.srt を突き合わせるときだけ**使う。"""
+    return u"".join(ch for ch in u"".join(t.split()) if ch not in KUTOU_MUSHI)
+
+
 def group_sentences(sents, chunks):
-    """台本の文を、音声のかたまり(SRTの各キュー)に振り分ける。"""
+    """台本の文を、音声のかたまり(SRTの各キュー)に振り分ける。
+
+    ■ 句読点は見ない（2026-11-11・本人のログ：ラブコメ20選）
+
+        台本  … 続く作品は、とらドラ！、制作はJ.C.スタッフ。
+        音声側… 続く作品は、とらドラ！制作はJ.C.スタッフ。
+
+    subtitle.srt を作る側が「！」のあとの「、」を落とす。前は1文字でも違うと
+    「subtitle.srt の本文が台本と一致しません」で**測る道をまるごと降りて**、
+    1行ずつの音声の長さを足して一律 0.9882倍する道（段落の境目も測らない・
+    文は文字数で割る）に落ちていた。本人の画面で いちばん大きいずれ 1.36秒・
+    「0枚は1行ずつの音声で測った長さで割りました」。
+
+    無職転生の台本には「！、」が無いので当たらなかった。20選は
+    「とらドラ！、制作は…」と題名のすぐあとに「、」が来るので、**必ず当たる。**
+    ここで知りたいのは「どの文がどの音声か」で、言葉が同じなら決まる。
+    """
     groups, i = [], 0
     for ch in chunks:
-        target = _norm(ch)
+        target = _norm_k(ch)
         acc, took = u"", []
         while i < len(sents):
-            nxt = acc + _norm(sents[i])
+            nxt = acc + _norm_k(sents[i])
             if not target.startswith(nxt):
                 break
             acc = nxt
@@ -3794,6 +3819,17 @@ def check_script_vs_srt(script, srt_path, names):
     a = _norm(u"".join(paras))
     b = _norm(u"".join(chunks))
     if a == b:
+        return
+    # ■ 句読点だけの違いは、台本が変わったのではない（2026-11-11・本人のログ）
+    #
+    #     台本  … 続く作品は、とらドラ！、制作はJ.C.スタッフ。
+    #     音声側… 続く作品は、とらドラ！制作はJ.C.スタッフ。
+    #
+    # subtitle.srt を作る側が「！」のあとの「、」を落とす。20選は
+    # 「とらドラ！、制作は…」と題名のすぐあとに「、」が来るので必ず当たり、
+    # **録り直したばかりの音声に「1 で音声を作り直してください」と出ていた。**
+    # 言葉が同じなら黙る。違うのが言葉のときだけ知らせる。
+    if _norm_k(a) == _norm_k(b):
         return
     # どこから違うか
     i = 0
@@ -6568,11 +6604,23 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if f and f not in folders:
             folders.append(f)
     def resolve_focus(want):
-        """書かれた話数名を、実際のフォルダ名の並びに直す。"""
+        """書かれた話数名を、実際のフォルダ名の並びに直す。
+
+        ■ ぴったり同じ名前があれば、**それだけ**を使う（2026-11-11）
+
+        前は `w == f or w in f` で、部分一致したものを全部入れていた。
+        本人のフォルダには「七つの大罪」と「sin 七つの大罪」が両方あり、
+        「七つの大罪」と書くと**別の作品の絵まで対象に入る。**
+        （「マギ」は「魔法少女まどか☆マギカ」にも当たる）
+        ぴったりが無いときだけ、今までどおり部分一致で探す。
+        """
         out2 = []
         for w in (want or []):
-            for f in folders:
-                if (w == f or w in f) and f not in out2:
+            if not w:
+                continue
+            pittari = [f for f in folders if w == f]
+            for f in (pittari or [f for f in folders if w in f]):
+                if f not in out2:
                     out2.append(f)
         return out2
 
@@ -7390,6 +7438,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     # 既定の話数をそれに差し替えます。画像プランに @@話数 が書いてある行は
     # そちらが勝つので、手で決めたものは今までどおり優先されます。
     shou_kiri = {}
+    sakuhin_nai = []          # 作品フォルダが無い章 (題, 4列目)
     if chaps:
         tsukatta = set()
         for (key, title, eps) in chaps:
@@ -7400,6 +7449,22 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                     fs = resolve_focus(eps)
                     if fs:
                         shou_kiri[i] = (title, fs)
+                    elif not any(fol_code(e) for e in eps):
+                        # ■ 作品フォルダの回で、その作品のフォルダが無い
+                        #   （2026-11-11・本人のログ）
+                        #
+                        # 前はここで何もしなかったので、**前の章の作品の絵**と
+                        # **カタログ全体から借りた絵**が出ていた。ラブコメの動画に
+                        # ゆびさきと恋々 41枚・乙女ゲー世界 39枚・エヴァ 20枚。
+                        # 掲示板には「黙って他の作品から借りてくることはありません」
+                        # と書いてあるのに、借りていた。
+                        #
+                        # 別の作品の絵を出すくらいなら、**何も出さない。**
+                        # 章の区切りだけ覚えておき、あとで無地の絵に置きかえる。
+                        # （話数フォルダ＝無職転生の回は今までどおり。
+                        #   近い話数から借りるのが正しいので、ここには来ない）
+                        shou_kiri[i] = (title, [])
+                        sakuhin_nai.append((title, list(eps)))
                     else:
                         say(u"  章「%s」の話数が見つかりません: %s"
                             % (title.replace(u"\\N", u" "), u", ".join(eps)))
@@ -7587,9 +7652,89 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 tsukai[erabi] = tsukai.get(erabi, 0) + 1
                 hikimodoshi += 1
 
+    # ■ 作品フォルダの回は、**その作品の絵しか出さない**（2026-11-11・本人のログ）
+    #
+    # おすすめ紹介の絵には、1枚ごとの説明（画像カタログ）がまだ無い。
+    # 本人のログ:「絵 12961枚のうち 12961枚には説明が1行もありません」。
+    # 説明が無いと #穏やか も #室内 も当たらないので、道具は
+    # 「対象話数の中に見つからず、他の話数から選びました」と言って
+    # **話数マップの言葉が合う別の作品**へ出ていく。
+    # 上の引き戻しも「説明のある絵」しか見ないので、戻せない。
+    #
+    # 無職転生の回なら「近い話数から借りる」は正しい。同じ作品だから。
+    # **作品フォルダの回では、外へ出たら別の作品**になる。札が合わないことより、
+    # 作品が違うことのほうがずっと悪い（本人の採点で「ひどい 207 か所」）。
+    #
+    #   その章のフォルダに**説明が1枚も無い**とき
+    #       → 札は見ずに、そのフォルダの絵を**使っていない順・ばらけた順**に当てる
+    #   その章の作品の**フォルダそのものが無い**とき
+    #       → 無地の絵（MUJI）。別の作品の絵は出さない
+    #
+    # 説明のあるフォルダ（無職転生）は、この段を素通りする。
+    sakuhin_modoshi, muji_kazu = 0, 0
+    if shou_kiri:
+        naka_cache = {}
+
+        def naka_no_e(fols3):
+            u"""そのフォルダの絵（公式画像と使用不可は除く）を、ばらけた順に。"""
+            kk = u"|".join(fols3)
+            if kk not in naka_cache:
+                lst = [k for k in images
+                       if u"/" in k and k.split(u"/")[0] in fols3
+                       and not wa_koushiki(k)]
+                naka_cache[kk] = (barakeru(sorted(lst, key=natkey)),
+                                  any(setsumei(catalog, k) for k in lst))
+            return naka_cache[kk]
+
+        ima3 = list(moto_base)
+        nai3 = False
+        for idx in range(len(out)):
+            if idx in shou_kiri:
+                ima3 = shou_kiri[idx][1]
+                nai3 = not ima3
+            img = out[idx]
+            if img in tebiki:
+                continue          # 手で選んだ絵・公式画像・図表はそのまま
+            if nai3:
+                if img != MUJI:
+                    tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+                    out[idx] = MUJI
+                    muji_kazu += 1
+                continue
+            if not ima3 or not img or u"/" not in img:
+                continue
+            if img.split(u"/")[0] in ima3:
+                continue          # もうその作品の絵
+            lst3, setsumei_ari = naka_no_e(ima3)
+            if setsumei_ari or not lst3:
+                continue          # 説明のあるフォルダは上の引き戻しの持ち場
+            mae3 = out[idx - 1] if idx else None
+            ato3 = out[idx + 1] if idx + 1 < len(out) else None
+            kouho3 = [k for k in lst3 if k != mae3 and k != ato3] or lst3
+            erabi3 = min(kouho3, key=lambda k: (tsukai.get(k, 0), lst3.index(k)))
+            tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+            out[idx] = erabi3
+            tsukai[erabi3] = tsukai.get(erabi3, 0) + 1
+            sakuhin_modoshi += 1
+        for k in [k for k, v in tsukai.items() if v <= 0]:
+            del tsukai[k]
+
     say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
         u"%d枚が同じ文から引き継ぎ / 全%d枚"
         % (hit, namae, carried, len(slots)))
+    if sakuhin_modoshi:
+        say(u"別の作品へ出ていた絵を %d枚 その章の作品の中へ戻しました"
+            u"（その作品の絵に1枚ごとの説明が無いので、札は見ずに順に当てています。"
+            u"札まで合わせたいときは「8 画像をぜんぶ見てもらう」）" % sakuhin_modoshi)
+    if sakuhin_nai:
+        say(u"")
+        say(u"⚠ **作品のフォルダが無い章が %d つあります。** 別の作品の絵は出さず、"
+            u"その章は無地にしました（%d枚）:" % (len(sakuhin_nai), muji_kazu))
+        for (t3, e3) in sakuhin_nai:
+            say(u"    %s  ← 画像フォルダに「%s」を作って絵を入れてください"
+                % (t3.replace(u"\\N", u" "), u" / ".join(e3)))
+        say(u"  入れたら「2 動画だけ作る」で、その章だけ絵が入ります。")
+        say(u"")
     if hikimodoshi:
         say(u"章の話数から外れていた絵を %d枚 その章の中に引き戻しました"
             % hikimodoshi)
@@ -8558,6 +8703,57 @@ def koushiki_e(fols, images):
     return None
 
 
+# ---------------------------------------------- 無地の絵（作品のフォルダが無い章）
+#
+# 作品フォルダの回で、その作品のフォルダが無い章に出す。
+# **別の作品の絵を出すくらいなら、何も出さない**（2026-11-11・本人のログ）。
+#
+# 名前は「_無地/無地.png」。画像フォルダには置かない（本人の絵の中に
+# 道具の作った物を混ぜない）。作業フォルダの その他/ に作り、
+# 「名前 → 置き場所」の表にだけ足す。絵の一覧には入れないので、
+# 札で選ばれることも、説明づけ（miru.py）に回ることもない。
+MUJI = u"_無地/無地.png"
+
+
+def muji_tsukuru(w, h, iro=u"141024"):
+    u"""無地の絵を その他/無地.png に作って、その道を返す。作れなければ None。"""
+    d = os.path.join(HERE, SONOTA_DIR)
+    out = os.path.join(d, u"無地.png")
+    try:
+        if not os.path.isdir(d):
+            os.makedirs(d)
+        iro = re.sub(u"[^0-9A-Fa-f]", u"", iro or u"")[:6] or u"141024"
+        run([need("ffmpeg"), "-y", "-loglevel", "error", "-f", "lavfi",
+             "-i", "color=c=0x%s:s=%dx%d" % (iro, w, h), "-frames:v", "1", out])
+    except Exception:
+        return None
+    return out if os.path.exists(out) else None
+
+
+def barakeru(lst):
+    u"""並びを、**どこで切っても全体にばらけている順**に入れ替える。
+
+    作品フォルダの絵は名前順＝ほぼ話の順に並んでいる。頭から14枚使うと
+    第1話の絵ばかりになるので、まんなか・4分の1・4分の3…の順に取る。
+    """
+    n = len(lst)
+    if n < 3:
+        return list(lst)
+    haba = 1
+    while haba < n:
+        haba *= 2
+
+    def gyaku(i):
+        r, b = 0, haba // 2
+        while b:
+            if i & 1:
+                r |= b
+            i >>= 1
+            b >>= 1
+        return r
+    return [lst[i] for i in sorted(range(n), key=gyaku)]
+
+
 def wa_koushiki(img):
     u"""その絵が公式画像（作品フォルダ直下の「1」）か。"""
     if not img or img.startswith(u"@@") or u"/" not in img:
@@ -8939,6 +9135,8 @@ def main():
         die(u"%s がありません。先に「音声を生成する.bat」を実行してください。" % a.audio)
 
     images, imgpath = list_images(a.images, a.figs)
+    # 無地の絵の置き場所を教えておく（絵の一覧には入れない。MUJI の所を参照）
+    imgpath[MUJI] = os.path.join(HERE, SONOTA_DIR, u"無地.png")
     io.open(IMGLIST, "w", encoding="utf-8-sig", newline="").write(
         u"# %s の中にある画像 %d 枚\r\n" % (a.images, len(images)) + u"\r\n".join(images) + u"\r\n")
 
@@ -9883,6 +10081,10 @@ def main():
     if ugokasu:
         nw = int(round(w * kakudai)); nw -= nw % 2
         nh = int(round(h * kakudai)); nh -= nh % 2
+    if MUJI in uniq:
+        # 作品のフォルダが無い章がある。無地の絵をここで作る（章タイトルと同じ色）
+        if not muji_tsukuru(w, h, en.get("card_iro")):
+            die(u"無地の絵（その他/無地.png）を作れませんでした。ffmpeg を確かめてください。")
     for img in uniq:
         src = img if os.path.isabs(img) else imgpath.get(img, os.path.join(a.images, img))
         if not os.path.exists(src):

@@ -408,6 +408,10 @@ def load_plan_episodes(path):
     return []
 
 
+# make_slideshow.MUJI のフォルダ名。作品のフォルダが無い章に出す無地の絵。
+MUJI_FOL = u"_無地"
+
+
 def folder_of(img):
     if u"/" in img:
         return img.rsplit(u"/", 1)[0]
@@ -870,6 +874,7 @@ def main():
     warui = []      # (重さ, 番号, 種類, 説明)
     mikoshi = []    # 絵で表せる言葉が無いセリフ
     nashi = 0       # カタログに無い
+    muji = []       # 無地の絵（作品のフォルダが無い章）
     KAWARI.update(load_kawari(u"人物ルール.txt"))
     han = bun_han(rows)          # 文の範囲は1回だけ計算する
     for ri, r in enumerate(rows):
@@ -879,6 +884,13 @@ def main():
         # カタログに載っているはずがなく、11か所ぜんぶ「説明がありません」と
         # 出て、直しようのない指摘で埋まっていた。
         if img.startswith(u"@@"):
+            continue
+        if folder_of(img) == MUJI_FOL:
+            # 作品のフォルダが無い章の、無地の絵（2026-11-11）。
+            # make_slideshow が**わざと**出している ── 別の作品の絵を出さないため。
+            # 「説明が無い」「話数ちがい」では責めず、別の行で数える。
+            # 直すのは割り当てではなく、絵を集めること。
+            muji.append(r)
             continue
         desc = cat_lookup(tags, img) if not is_zuhyou(img) else u"（図表スライド）"
         riyuu = []
@@ -935,7 +947,12 @@ def main():
         yurusu = r.get(u"daihon") or kyoka
         fol = folder_of(img)
         if yurusu and fol and not is_zuhyou(img) and not erabi:
-            if fol not in yurusu:
+            # ■ 当て方は make_slideshow の resolve_focus と同じ（2026-11-11）
+            #   ぴったり同じ名前、無ければ部分一致。前は `fol not in yurusu` で
+            #   **名前まるごと**しか見ていなかったので、4列目を短く書いた作品
+            #   （Just Because → 本人のフォルダは Just Because！）は、
+            #   合っている絵まで「話数ちがい」に数えていた。
+            if not any(w == fol or (w and w in fol) for w in yurusu):
                 riyuu.append(u"話数ちがい（この章は %s の話）" % u" / ".join(yurusu))
                 omosa += 6
 
@@ -1128,12 +1145,15 @@ def main():
     hidoi = [x for x in warui if x[0] >= 5]
     chuu = [x for x in warui if 3 <= x[0] < 5]
     note(u"── 結果 ──")
-    note(u"ちゃんと合っていそう     : %d か所" % (len(rows) - len(warui)))
+    note(u"ちゃんと合っていそう     : %d か所" % (len(rows) - len(warui) - len(muji)))
     note(u"ひどい (人・話数ちがい)  : %d か所" % len(hidoi))
     note(u"中くらい (情景ちがい)    : %d か所" % len(chuu))
     note(u"使いすぎだけ             : %d か所" % (len(warui) - len(hidoi) - len(chuu)))
     note(u"絵で表せる言葉が無い     : %d か所 （台本しだい。割り当ての失敗ではない）"
          % len(mikoshi))
+    if muji:
+        note(u"無地（作品のフォルダが無い）: %d か所 （絵を集めると入ります。"
+             u"別の作品の絵は出していません）" % len(muji))
     # ■ **点数が、本人の見ている画面と合っていなかった**（2026-10-28）
     #
     # 本人:「画像は全然だめです。」 採点:「93 点 / 100」
