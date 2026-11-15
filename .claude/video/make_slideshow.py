@@ -9109,7 +9109,7 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
     #   この .py は掲示板の <script type="text/plain"> に貼られて本人に届く。
     #   本物の閉じタグを書くと、そこで掲示板のブロックが切れてしまう
     #   （sync_py.py が「閉じタグが入っています」で止めた）。書き出すときに戻す。
-    #   差し込む所の印も英大文字にしない（@@DATA@@ だと build.py が
+    #   差し込む所の印も英大文字にしない（英大文字の印は build.py が
     #   「埋められなかった印」と見て止める）。
     html = IREKAE_TEMPLATE.replace(u"<@@/script>", u"<" + u"/script>") \
         .replace(u"@@題@@", D[u"title"].replace(u"<", u"＜")) \

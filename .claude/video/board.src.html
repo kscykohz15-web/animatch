@@ -17256,7 +17256,7 @@ IREKAE_KIROKU = u"_取り込んだ入れ替え.txt"
 IREKAE_TEMPLATE = u"""<!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>入れ替え表 ― @@TITLE@@</title>
+<title>入れ替え表 ― @@題@@</title>
 <style>
 :root{--bg:#f6f6f4;--card:#fff;--ink:#161615;--ink2:#55554f;--ink3:#8b8b85;--line:#e2e2de;--acc:#1a5fd0;--pick:#e6efff;--te:#fff4d6;--ng:#b3261e}
 @media (prefers-color-scheme:dark){:root{--bg:#121211;--card:#1c1c1b;--ink:#f0f0ec;--ink2:#bdbdb7;--ink3:#8a8a84;--line:#2e2e2b;--acc:#7fb0ff;--pick:#1b2a44;--te:#3a3218;--ng:#ff8a80}}
@@ -17332,7 +17332,7 @@ figure .lb{position:absolute;left:4px;top:3px;font-size:10.5px;background:rgba(0
 </div>
 <div id="toast" hidden></div>
 <script>
-const D = @@DATA@@;
+const D = @@データ@@;
 const KEY = "irekae:" + D.title + ":" + D.made;
 let picks = {};
 try { picks = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { picks = {}; }
@@ -17712,9 +17712,11 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
     #   この .py は掲示板の <script type="text/plain"> に貼られて本人に届く。
     #   本物の閉じタグを書くと、そこで掲示板のブロックが切れてしまう
     #   （sync_py.py が「閉じタグが入っています」で止めた）。書き出すときに戻す。
+    #   差し込む所の印も英大文字にしない（英大文字の印は build.py が
+    #   「埋められなかった印」と見て止める）。
     html = IREKAE_TEMPLATE.replace(u"<@@/script>", u"<" + u"/script>") \
-        .replace(u"@@TITLE@@", D[u"title"].replace(u"<", u"＜")) \
-        .replace(u"@@DATA@@", js)
+        .replace(u"@@題@@", D[u"title"].replace(u"<", u"＜")) \
+        .replace(u"@@データ@@", js)
     out = os.path.join(fol, IREKAE_HTML)
     io.open(out, "w", encoding="utf-8", newline="\n").write(html)
     say(u"確認用/入れ替え表.html を書きました（字幕 %d か所・候補の作品 %d）。"
