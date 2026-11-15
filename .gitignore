@@ -52,3 +52,10 @@ next-env.d.ts
 # 検査が作る一時フォルダ（130MB・毎回作り直される）
 /.claude/video/_閉じ検査/
 __pycache__/
+
+# 動画の道具の検査が、その場で作って消す作業フォルダ（材料の絵・音・動画が入る）
+/.claude/video/_*作業/
+/.claude/video/_*テスト作業/
+/.claude/video/_ずれ検査/
+/.claude/video/_煙テスト/
+/.claude/video/__pycache__/
