@@ -103,7 +103,8 @@ def overlay_fols(path):
         if len(c) >= 4 and c[3].strip():
             for w in c[3].replace(u"、", u",").split(u","):
                 w = w.strip()
-                if w:
+                # ＊全作品 ＝ その回で紹介する作品フォルダぜんぶ（フォルダの名前ではない）
+                if w and w != u"＊全作品":
                     out.append((c[2].replace(u"\\N", u" "), w))
     return out
 

@@ -624,6 +624,52 @@ def kaigyou_naosu(t):
     return t.replace(u"\\n", u"\\N")
 
 
+# ------------------------------------------------ 作品の章（おすすめ紹介の回）
+#
+# 本人の指定（2026-11-15・ラブコメ20選を見て）:
+#
+#   ① はじめにの章の絵は、動画内で紹介する作品群の中から。関係ない絵は出さない。
+#      右上の「はじめに」は出さなくていい
+#   ③「最初の作品は」等の作品が切り替わるシーンは、エフェクトで切り替える
+#   ④ タイトルと制作会社を言うところは、公式画像＋下の帯に「制作：○○」「作品名」
+#
+# 作品の章は、右上の名前に「2014年冬」のような年と季がある章（107-3）。
+SAKUHIN_SHOU_RE = re.compile(u"\\d{4}年(春|夏|秋|冬)")
+MUDAI = u"－"                 # 3列目がこれの章は、右上に何も出さない（章カードも出さない）
+ZEN_SAKUHIN = u"＊全作品"       # 4列目がこれの章は、その回で紹介する作品フォルダぜんぶ
+DAIJI = [True]                # 作品の頭の1文を「題字の画面」にするか（演出.txt）
+
+
+def wa_sakuhin_shou(title):
+    u"""その章が作品の章か（右上の名前に年と季がある）。"""
+    return bool(SAKUHIN_SHOU_RE.search(title or u""))
+
+
+def bun_atama(texts, i):
+    u"""i 番目の字幕が入っている**文の頭**の番号。
+
+    「続いての作品は、」「アマガミSS、」「制作は○○。」は1つの文。
+    鍵（作品名）が当たるのは2枚目だが、場面が変わるのは1枚目から。
+    前の字幕が「。」「！」「？」で終わっている所まで戻る。空の行（章カード）でも止まる。
+    """
+    while i > 0:
+        mae = (texts[i - 1] or u"").strip()
+        if not mae or mae.endswith((u"。", u"！", u"？", u"!", u"?")):
+            break
+        i -= 1
+    return i
+
+
+def shou_atama(texts, i, title):
+    u"""章の頭の番号。**作品の章だけ**、鍵の当たった字幕からその文の頭まで戻す。
+
+    章の頭を数える所は5つある（右上の名前・絵のフォルダ・章カード・演出・一覧）。
+    1つでも別の数え方をすると、絵は変わったのに右上は前の作品、になる。
+    **5つともここを通す。**（無職転生の章は今までどおり。鍵の当たった字幕が頭）
+    """
+    return bun_atama(texts, i) if wa_sakuhin_shou(title) else i
+
+
 def load_overlay(path):
     """左上の引用と、右上のチャプターを読む。"""
     credit, chaps = u"", []
@@ -640,7 +686,53 @@ def load_overlay(path):
             eps = [x.strip() for x in c[3].replace(u"、", u",").split(u",")
                    if x.strip()] if len(c) >= 4 else []
             chaps.append((c[1], kaigyou_naosu(c[2]), eps))
+    # ■ ＊全作品 ＝ その回で紹介する作品フォルダぜんぶ（2026-11-15・本人の指定）
+    #   はじめに・おわりにの絵を、紹介する作品の中から出すための書き方。
+    #   作品を入れ替えても、ここは書きかえなくてよい（名前を並べると必ず古くなる）。
+    zen = []
+    for (_k, t, eps) in chaps:
+        if wa_sakuhin_shou(t):
+            for e in eps:
+                if e != ZEN_SAKUHIN and e not in zen:
+                    zen.append(e)
+    chaps = [(k, t, (zen if ZEN_SAKUHIN in eps else eps)) for (k, t, eps) in chaps]
     return credit, chaps
+
+
+def load_chosaku(path):
+    u"""著作権.txt を読む。  作品フォルダ名 <タブ> ©表記
+
+    本人の指定（2026-11-15）:
+      「画面左上にある字幕について、ここは使用している作品の引用元を記載する。
+        ニセコイの画像を使用している場合は ©古味直志/集英社・アニプレックス・MBS」
+
+    **章ではなく、いま出ている絵のフォルダ**で決める。はじめにの章では
+    いろいろな作品の絵が出るので、章ごとに1つでは合わない。
+    """
+    out = {}
+    if not path or not os.path.exists(path):
+        return out
+    for line in io.open(path, encoding="utf-8-sig", errors="replace") \
+            .read().replace("\r\n", "\n").split("\n"):
+        if not line.strip() or line.lstrip().startswith(u"#") or u"\t" not in line:
+            continue
+        k, v = line.split(u"\t", 1)
+        k, v = k.strip(), v.strip()
+        if k and v and v not in (u"？", u"?"):
+            out[k] = v
+    return out
+
+
+def chosaku_hiku(tbl, fol):
+    u"""フォルダ名から ©表記。ぴったり、無ければ部分一致（@@話数 と同じ当て方）。"""
+    if not tbl or not fol:
+        return u""
+    if fol in tbl:
+        return tbl[fol]
+    for k in sorted(tbl, key=len, reverse=True):
+        if k in fol or fol in k:
+            return tbl[k]
+    return u""
 
 
 def load_shou_credit(path):
@@ -803,11 +895,12 @@ def chapter_spans(cues, chaps, total):
     """キーワードが最初に出てくるキューを、その章の開始にする。"""
     marks = []
     used = set()
+    hon = [c[2] for c in cues]
     for (key, title, _eps) in chaps:
         for i, (st, _en, tx) in enumerate(cues):
             if i in used or key not in tx:
                 continue
-            marks.append([st, title])
+            marks.append([cues[shou_atama(hon, i, title)][0], title])
             used.add(i)
             break
     marks.sort(key=lambda m: m[0])
@@ -827,7 +920,8 @@ def _esc(t):
 
 def write_ass(cues, path, w, h, font, size, per_line, max_lines,
               credit=u"", chapters=None, total=0.0, safe_bottom=0.062,
-              hook_until=0.0, mi=None, cards=None, hidari=0.5):
+              hook_until=0.0, mi=None, cards=None, hidari=0.5,
+              daiji=None, daiji_iro=u"FFF36B"):
     # 文字の大きさは「短いほうの辺」を基準にする。
     # 高さ基準にすると、縦動画(1080x1920)で字幕が倍の大きさになってしまう。
     mi = mi or dict(MITAME_KITEI)
@@ -865,7 +959,13 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     # → 81px を選ぶ。**ぜんぶ同じ大きさになる。**
     # 98px に戻したいときは、縮める原因になっている字幕を台本で短くする。
     # どれが原因かは、下で名前を出す。
-    honbun = [(st, en, _esc(tx)) for (st, en, tx) in cues if (tx or u"").strip()]
+    # 題字の画面のあいだは、ふつうの字幕を出さない（下の帯に 制作 と 作品名 を出す）
+    daiji = list(daiji or [])
+
+    def daiji_naka(t):
+        return any(d0 - 0.001 <= t < d1 - 0.001 for (d0, d1, _a, _b) in daiji)
+    honbun = [(st, en, _esc(tx)) for (st, en, tx) in cues
+              if (tx or u"").strip() and not daiji_naka(st)]
     soroeru = (mi.get(u"字幕の大きさをそろえる") or u"はい") not in (u"いいえ", u"no")
     # 横つぶし。70〜100% だけ許す（それ以上つぶすと読めない）
     tsubushi = max(70.0, min(100.0, float(mi.get(u"字幕の横つぶし") or 100.0))) / 100.0
@@ -949,6 +1049,9 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         # 章タイトルのカード。右半分の真ん中に置く
         style(u"Card", font, int(size * 1.15), 5,
               int(w * hidari) + int(w * 0.02), int(w * 0.02), 0),
+        # 題字の画面の帯に出す字（作品名・制作）。位置は1行ずつ \pos で決める
+        style(u"Daiji", font, size, 5, 0, 0, 0),
+        style(u"Obi", font, 20, 7, 0, 0, 0),
         u"",
         u"[Events]",
         u"Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
@@ -968,6 +1071,14 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
                         % (ass_time(0.0), ass_time(total), _esc(credit)))
     chw = max(6, int((w * 0.46) / float(chsize)))
     for (st, en, title) in (chapters or []):
+        if (title or u"").strip() == MUDAI:
+            continue              # 右上に何も出さない章（はじめに）
+        # 題字の画面のあいだは右上を出さない（本人の見本どおり。出るのは公式画像と下の帯だけ）
+        for (d0, d1, _a, _b) in daiji:
+            if d0 - 0.01 <= st < d1:
+                st = d1
+        if en <= st:
+            continue
         lines = []
         for part in _esc(title.replace(u"\\N", u"\x00")).split(u"\x00"):
             if part.strip():
@@ -995,6 +1106,36 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         pre = u"{\\fs%d}" % fs if fs != cardsz else u""
         body.append(u"Dialogue: 2,%s,%s,Card,,0,0,0,,%s%s"
                     % (ass_time(st), ass_time(en), pre, u"\\N".join(gyou[:4])))
+
+    # ■ 題字の画面の帯（本人の見本：下に黄色い帯・上の行に「制作：○○」・帯の中に作品名）
+    if daiji:
+        ox0, ox1 = int(w * 0.125), int(w * 0.895)
+        oy1 = h + int(h * 0.03)              # 下は画面の外まで（下の角は見せない）
+        oy0 = int(h * 0.885)
+        rr = int(h * 0.035)
+        bgr = re.sub(u"[^0-9A-Fa-f]", u"", daiji_iro or u"")[:6].upper() or u"FFF36B"
+        bgr = bgr[4:6] + bgr[2:4] + bgr[0:2]
+        zu = (u"m %d %d l %d %d b %d %d %d %d %d %d l %d %d l %d %d l %d %d "
+              u"b %d %d %d %d %d %d"
+              % (ox0 + rr, oy0, ox1 - rr, oy0,
+                 ox1, oy0, ox1, oy0, ox1, oy0 + rr,
+                 ox1, oy1, ox0, oy1, ox0, oy0 + rr,
+                 ox0, oy0, ox0, oy0, ox0 + rr, oy0))
+        haba = (ox1 - ox0) - size * 0.6
+        for (d0, d1, seisaku, sakuhin) in daiji:
+            body.append(u"Dialogue: 0,%s,%s,Obi,,0,0,0,,{\\an7\\pos(0,0)\\bord0\\shad0"
+                        u"\\1c&H%s&\\1a&H10&\\p1}%s{\\p0}"
+                        % (ass_time(d0), ass_time(d1), bgr, zu))
+            l1, f1 = fit_to_box(_esc(sakuhin), haba, int(size * 1.02), 1)
+            body.append(u"Dialogue: 1,%s,%s,Daiji,,0,0,0,,{\\an5\\pos(%d,%d)\\fs%d}%s"
+                        % (ass_time(d0), ass_time(d1), w // 2,
+                           int((oy0 + h) / 2.0) - int(h * 0.004), f1,
+                           u"".join(l1)))
+            if seisaku:
+                l2, f2 = fit_to_box(u"制作：" + _esc(seisaku), haba, int(size * 0.86), 1)
+                body.append(u"Dialogue: 1,%s,%s,Daiji,,0,0,0,,{\\an5\\pos(%d,%d)\\fs%d}%s"
+                            % (ass_time(d0), ass_time(d1), w // 2,
+                               oy0 - int(f2 * 0.62), f2, u"".join(l2)))
 
     for (st, en, tx) in honbun:
         hook = st < hook_until - 0.01
@@ -1599,6 +1740,7 @@ def card_basho(rows, chaps):
     （別々に数えていたせいで番号が1つずれていた）
     """
     out, tsukatta = [], set()
+    hon = [r[2] for r in rows]
     for (key, title, _eps) in (chaps or []):
         for i in range(len(rows)):
             if i in tsukatta or key not in rows[i][2]:
@@ -1606,9 +1748,56 @@ def card_basho(rows, chaps):
             tsukatta.add(i)
             if i == 0:
                 break          # いちばん最初はカードを入れない
-            out.append((i, title))
+            if (title or u"").strip() == MUDAI:
+                break          # 右上に何も出さない章（はじめに）はカードも入れない
+            if DAIJI[0] and wa_sakuhin_shou(title):
+                # 作品の章は、声の無い1.5秒のカードをはさまない。
+                # 題名と制作を言う1文そのものを「題字の画面」にする（daiji_basho）。
+                break
+            out.append((shou_atama(hon, i, title), title))
             break
     out.sort()
+    return out
+
+
+def daiji_basho(rows, chaps):
+    u"""作品の頭の1文（題名と制作を言う文）が、どの行からどの行までか。
+
+    本人の指定（2026-11-15）:
+      ③「最初の作品は」等の作品が切り替わるシーンは、エフェクトで切り替える
+      ④ タイトルと制作会社を説明するところの字幕は、添付のような配置
+
+    返すのは (頭の行, 終わりの行, 章の名前, 作品名, 制作) の並び。
+    文は「最初にご紹介する作品は、ニセコイ、制作はシャフト。」の形（104節）。
+    「とらドラ！、制作は…」は「！」で文が切れるので、**「制作は」のある行まで**を1文と見る。
+    """
+    out, tsukatta = [], set()
+    hon = [r[2] for r in rows]
+    for (key, title, _eps) in (chaps or []):
+        if not wa_sakuhin_shou(title):
+            continue
+        for i in range(len(rows)):
+            if i in tsukatta or key not in hon[i]:
+                continue
+            tsukatta.add(i)
+            s0 = bun_atama(hon, i)
+            e0 = i
+            for j in range(i, min(len(rows), i + 5)):
+                if u"制作は" in hon[j]:
+                    e0 = j
+                    break
+            while e0 + 1 < len(rows) and e0 - i < 6 \
+                    and not hon[e0].rstrip().endswith((u"。", u"！", u"？")):
+                e0 += 1
+            bun = u"".join(x.strip() for x in hon[s0:e0 + 1])
+            m = re.search(u"(?:作品は|続いては)、?(.+?)、?制作は(.+?)。?$", bun)
+            if m:
+                sakuhin, seisaku = m.group(1).strip(u"、 "), m.group(2).strip(u"。 ")
+            else:
+                sakuhin = u"".join(x for x in title.split(u"\\N")[:-1]) or title
+                seisaku = u""
+            out.append((s0, e0, title, sakuhin, seisaku))
+            break
     return out
 
 
@@ -4794,6 +4983,10 @@ def load_enshutsu(path):
                 pass
         elif c[0] == u"章タイトル" and len(c) >= 2:
             out["card"] = c[1] not in (u"いいえ", u"なし", u"0", u"off", u"OFF")
+        elif c[0] == u"作品の頭の画面" and len(c) >= 2:
+            out["daiji"] = c[1] not in (u"いいえ", u"なし", u"0", u"off", u"OFF")
+        elif c[0] == u"作品の頭の帯の色" and len(c) >= 2:
+            out["daiji_iro"] = c[1]
         elif c[0] == u"章タイトルの秒数" and len(c) >= 2:
             try:
                 out["card_byou"] = max(0.3, min(6.0, float(c[1])))
@@ -4851,11 +5044,13 @@ def kimeru_basho(rows, starts, chaps, en):
     n = len(rows)
     kind = {}
     if chaps:
+        hon = [r[2] for r in rows]
         for (key, _title, _eps) in chaps:
             for i in range(n):
                 if key in rows[i][2]:
-                    if i > 0:
-                        kind[i] = u"章"
+                    j = shou_atama(hon, i, _title)
+                    if j > 0:
+                        kind[j] = u"章"
                     break
     for i in range(1, n):
         if i in kind:
@@ -7447,6 +7642,9 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             for i, (_s2, _d2, t2) in enumerate(slots):
                 if i not in tsukatta and key in t2:
                     fs = resolve_focus(eps)
+                    tsukatta.add(i)
+                    # 作品の章は、鍵の当たった字幕ではなく**その文の頭**から（shou_atama）
+                    i = shou_atama([x[2] for x in slots], i, title)
                     if fs:
                         shou_kiri[i] = (title, fs)
                     elif not any(fol_code(e) for e in eps):
@@ -8771,12 +8969,13 @@ def shou_no_wasuu(rows, chaps):
     if not chaps:
         return out
     kiri, tsukatta = {}, set()
+    hon = [r[2] for r in rows]
     for (key, _title, eps) in chaps:
         if not eps:
             continue
         for i, (_du, _img, tx) in enumerate(rows):
             if i not in tsukatta and key in tx:
-                kiri[i] = eps
+                kiri[shou_atama(hon, i, _title)] = eps
                 tsukatta.add(i)
                 break
     ima = []
@@ -9801,6 +10000,7 @@ def main():
     # 本人が読む番号は 確認用/一覧.txt と コマ一覧（章カードも1コマ）なので、
     # ここで同じ番号にそろえてから当てる。
     en = load_enshutsu(a.enshutsu)
+    DAIJI[0] = bool(en.get("daiji", True))
     _credit0, chaps0 = load_overlay(a.overlay) if os.path.exists(a.overlay) \
         else (u"", [])
     kaado = card_basho(rows, chaps0) \
@@ -10138,6 +10338,51 @@ def main():
         say(u"  うち %d枚は背景を消してキャラだけにしました（残り %d枚は"
             u"抜けなかったので絵のまま）" % (nuketa, len(cards) - nuketa))
 
+    # --- 作品の頭の1文を「題字の画面」にする（本人の指定・2026-11-15）---
+    #
+    #   ③「最初の作品は」等の作品が切り替わるシーンは、エフェクトで切り替える
+    #   ④ タイトルと制作会社を説明するところの字幕は、添付（暗殺教室の画面）の配置
+    #
+    # はじめは「左に公式画像・右に題名」のカードに組んで見せたら、本人から
+    #
+    #   > 右半分の文字は必要なく、各アニメの画像の1と名前のついた画像を
+    #   > そのまま貼るだけで、この時の字幕は中央下側のものを採用し、
+    #   > 右側のものは消してください
+    #
+    # だから**公式画像をそのまま全面に出す。** 組まない・切り抜かない・右に字を置かない。
+    # 字幕は下の帯（制作：○○／作品名）だけ。右上の章の名前もこのあいだは出さない。
+    #
+    # 前は声の無い1.5秒の章カードをはさんでから、題名の文をふつうの字幕で出していた。
+    # いまは**題名と制作を言う1文そのもの**がこの画面。尺は伸びない。
+    # 入るときのエフェクトは 演出.txt の「区切り 章」（ページめくり）。
+    daiji = []
+    if DAIJI[0] and chaps0:
+        kou_nashi = []
+        for (s0, e0, title, sakuhin, seisaku) in daiji_basho(rows, chaps0):
+            moto = None
+            for j in range(s0, e0 + 1):
+                if wa_koushiki(rows[j][1]):
+                    moto = rows[j][1]
+                    break
+            if moto is None:
+                # 公式画像が無い作品。その文のすぐあとに出る絵（その作品の絵）を出す
+                kou_nashi.append(sakuhin)
+                for j in list(range(e0 + 1, min(len(rows), e0 + 4))) + [e0]:
+                    if not rows[j][1].startswith(u"@@"):
+                        moto = rows[j][1]
+                        break
+            if not moto or moto not in cache:
+                continue
+            # 文のあいだは1枚の絵（「続いての作品は、」だけ別の絵、にしない）
+            for j in range(s0, e0 + 1):
+                rows[j] = (rows[j][0], moto, rows[j][2])
+            daiji.append((s0, e0, title, sakuhin, seisaku))
+        if daiji:
+            say(u"作品の頭の1文 %d か所を「題字の画面」にしました"
+                u"（公式画像をそのまま全面に・下の帯に 制作 と 作品名）" % len(daiji))
+        for nm in kou_nashi:
+            say(u"  ! %s は公式画像（1.jpg など）が無いので、その作品のほかの絵を出しています" % nm)
+
     # --- 切り替わりをフレームにそろえる(絵と字幕を1フレームも狂わせない) ---
     fps = a.fps
     ends, cum = [], 0.0
@@ -10184,19 +10429,54 @@ def main():
                                (shou_c[i] if i < len(shou_c) and shou_c[i]
                                 else credit))
                               for i, (st, en, _t) in enumerate(spans)]
+            # ■ 左上は**いま出ている絵の作品**の ©（本人の指定・2026-11-15）
+            #   著作権.txt に作品フォルダごとの表記がある。無い作品は、
+            #   今までどおり章の5列目 → 引用 の行に戻る（調べていない © は書かない）。
+            chosaku = load_chosaku(os.path.join(HERE, u"著作権.txt")) \
+                if a.credit is None else {}
+            if chosaku:
+                def moto_credit(t):
+                    if isinstance(credit, (list, tuple)):
+                        for (c0, c1, ctx) in credit:
+                            if c0 <= t < c1:
+                                return ctx
+                        return u""
+                    return credit or u""
+                ev, atatta, nashi_fol = [], 0, set()
+                for i, (_du, img, _tx) in enumerate(rows):
+                    fol = e_no(img)
+                    ctx = chosaku_hiku(chosaku, fol) if fol else u""
+                    if ctx:
+                        atatta += 1
+                    else:
+                        if fol and fol != MUJI.split(u"/")[0]:
+                            nashi_fol.add(fol)
+                        ctx = moto_credit(starts[i])
+                    if ev and ev[-1][2] == ctx and abs(ev[-1][1] - starts[i]) < 0.01:
+                        ev[-1] = (ev[-1][0], ends[i], ctx)
+                    else:
+                        ev.append((starts[i], ends[i], ctx))
+                credit = ev
+                say(u"  左上の引用: 絵の作品に合わせて出します（%d枚が 著作権.txt に当たり・"
+                    u"切り替わり %d 回）" % (atatta, len(ev)))
+                for f3 in sorted(nashi_fol)[:12]:
+                    say(u"    ! %s の ©表記が 著作権.txt にありません（共通の表記を出しています）" % f3)
             ass = os.path.join(work, "burn.ass")
             card_ev = [(starts[i], ends[i], cards[i]) for i in sorted(cards)]
+            daiji_ev = [(starts[s0], ends[e0], seisaku, sakuhin)
+                        for (s0, e0, _t, sakuhin, seisaku) in daiji]
             n = write_ass(cues, ass, w, h, font, size, sub_chars, sub_lines,
                           credit=credit, chapters=spans, total=total,
                           safe_bottom=a.safe_bottom, hook_until=a.hook_sec,
-                          mi=mi, cards=card_ev, hidari=en["card_hidari"])
+                          mi=mi, cards=card_ev, hidari=en["card_hidari"],
+                          daiji=daiji_ev, daiji_iro=en.get("daiji_iro", u"FFF36B"))
             dup = sum(1 for i in range(1, len(cues))
                       if cues[i][2] == cues[i - 1][2])
             say(u"字幕を焼き込みます (%d枚 / %s %dpx / 画像1枚につき字幕1つ)"
                 % (n, font, size))
             longest = max(len(c[2]) for c in cues)
             say(u"  いちばん長いセリフ %d文字 / 同じ字幕の連続 %d箇所" % (longest, dup))
-            if credit:
+            if credit and not isinstance(credit, (list, tuple)):
                 say(u"  左上の引用: " + credit)
             if spans:
                 say(u"  右上のチャプター: %d本" % len(spans))

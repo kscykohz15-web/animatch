@@ -52,7 +52,8 @@ IRERU = [(u"py-slideshow", u"make_slideshow.py"),
          # ここが古いと miru.py だけ新しい一覧で動く。
          (u"py-basho", u"置き場所.py")]
 # Python ではないもの（中身の一致だけ見る。compile はしない）
-IRERU_TXT = [(u"kyotsu-mitame", u"見た目.txt")]
+IRERU_TXT = [(u"kyotsu-mitame", u"見た目.txt"),
+             (u"kyotsu-chosaku", u"著作権.txt")]
 
 
 def say(m):
@@ -101,9 +102,19 @@ def main():
         if m0 != ids:
             kieta = [x for x in m0 if x not in ids]
             fueta = [x for x in ids if x not in m0]
-            warui.append(u"py-* の並びが変わりました 消えた:%s 増えた:%s"
-                         % (u",".join(kieta) or u"なし",
-                            u",".join(fueta) or u"なし"))
+            # ■ **わざと足したもの**は --fueta で名前を言う（2026-11-15）
+            #   著作権.txt を共通に足したとき、ここが「増えた」で止めた。
+            #   止めるのは正しい（取りこぼしと見分けが付かない）。だから
+            #   足した人が名前で言い、それ以外が増えていたら今までどおり落とす。
+            yurusu = set(x for a2 in sys.argv[1:] if a2.startswith(u"--fueta=")
+                         for x in a2.split(u"=", 1)[1].split(u",") if x)
+            if not kieta and fueta and all(x in yurusu for x in fueta) \
+                    and [x for x in ids if x not in fueta] == m0:
+                say(u"○ ① 増えたのは、足すと言ったものだけ: %s" % u",".join(fueta))
+            else:
+                warui.append(u"py-* の並びが変わりました 消えた:%s 増えた:%s"
+                             % (u",".join(kieta) or u"なし",
+                                u",".join(fueta) or u"なし"))
         else:
             say(u"○ ① 公開中のものと同じ並び・同じ数")
     elif len(ids) < 50:

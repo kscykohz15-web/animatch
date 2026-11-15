@@ -238,7 +238,7 @@ NAMAE = dict((v.shirushi, v.namae) for v in _DOUGA)
 # パックに必ず入っていないといけないもの
 KYOTSU = [u"画像カタログ.txt", u"話数マップ.txt", u"タグ一覧.txt", u"企画と台本の型.txt",
           u"台本の知恵.txt", u"紹介の型.txt", u"読み辞書.txt", u"人物ルール.txt",
-          u"演出.txt", u"見た目.txt"]
+          u"演出.txt", u"見た目.txt", u"著作権.txt"]
 
 warui = []
 # 止めないが、必ず知らせる宿題（作りかけの機能など）
@@ -937,6 +937,24 @@ for _dougu, _nani in ((u"フォルダ検査.py", u"4列目の名前が本人の�
     print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
     if r.returncode != 0:
         warui.append(_nani)
+
+# ── ㉘ おすすめ紹介の回を、小さな材料で本当に最後まで作る ─────────
+midashi(u"㉘", u"おすすめ紹介の回を、小さな材料で本当に作る（題字・©・はじめに）")
+# ■ 本人の指定（2026-11-15・ラブコメ20選を見て）
+#   ① はじめにの絵は紹介する作品の中から・右上の「はじめに」は出さない
+#   ② 左上は、いま出ている絵の作品の ©表記
+#   ③ 作品が切り替わるシーンはエフェクトで切り替える
+#   ④ タイトルと制作会社を言うところは、公式画像＋下の帯に「制作：○○」「作品名」
+#
+# 4つとも「作品フォルダの回」だけの枝で、⑥ の煙テスト（無職転生の形）は一度も通らない。
+# 作品フォルダ・公式画像・著作権.txt をその場で作り、完成.mp4 まで走らせて、
+# 字幕ファイルの中身（帯・左上・右上）と一覧（別の作品の絵が無いこと）を見る。
+r = subprocess.run([sys.executable, os.path.join(V, u"_題字テスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"おすすめ紹介の回が最後まで作れません（題字の画面・©・はじめに）")
 
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
