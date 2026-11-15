@@ -4465,6 +4465,10 @@ def load_plan_episodes(path):
     return []
 
 
+# make_slideshow.MUJI のフォルダ名。作品のフォルダが無い章に出す無地の絵。
+MUJI_FOL = u"_無地"
+
+
 def folder_of(img):
     if u"/" in img:
         return img.rsplit(u"/", 1)[0]
@@ -4927,6 +4931,7 @@ def main():
     warui = []      # (重さ, 番号, 種類, 説明)
     mikoshi = []    # 絵で表せる言葉が無いセリフ
     nashi = 0       # カタログに無い
+    muji = []       # 無地の絵（作品のフォルダが無い章）
     KAWARI.update(load_kawari(u"人物ルール.txt"))
     han = bun_han(rows)          # 文の範囲は1回だけ計算する
     for ri, r in enumerate(rows):
@@ -4936,6 +4941,13 @@ def main():
         # カタログに載っているはずがなく、11か所ぜんぶ「説明がありません」と
         # 出て、直しようのない指摘で埋まっていた。
         if img.startswith(u"@@"):
+            continue
+        if folder_of(img) == MUJI_FOL:
+            # 作品のフォルダが無い章の、無地の絵（2026-11-11）。
+            # make_slideshow が**わざと**出している ── 別の作品の絵を出さないため。
+            # 「説明が無い」「話数ちがい」では責めず、別の行で数える。
+            # 直すのは割り当てではなく、絵を集めること。
+            muji.append(r)
             continue
         desc = cat_lookup(tags, img) if not is_zuhyou(img) else u"（図表スライド）"
         riyuu = []
@@ -4992,7 +5004,12 @@ def main():
         yurusu = r.get(u"daihon") or kyoka
         fol = folder_of(img)
         if yurusu and fol and not is_zuhyou(img) and not erabi:
-            if fol not in yurusu:
+            # ■ 当て方は make_slideshow の resolve_focus と同じ（2026-11-11）
+            #   ぴったり同じ名前、無ければ部分一致。前は `fol not in yurusu` で
+            #   **名前まるごと**しか見ていなかったので、4列目を短く書いた作品
+            #   （Just Because → 本人のフォルダは Just Because！）は、
+            #   合っている絵まで「話数ちがい」に数えていた。
+            if not any(w == fol or (w and w in fol) for w in yurusu):
                 riyuu.append(u"話数ちがい（この章は %s の話）" % u" / ".join(yurusu))
                 omosa += 6
 
@@ -5185,12 +5202,15 @@ def main():
     hidoi = [x for x in warui if x[0] >= 5]
     chuu = [x for x in warui if 3 <= x[0] < 5]
     note(u"── 結果 ──")
-    note(u"ちゃんと合っていそう     : %d か所" % (len(rows) - len(warui)))
+    note(u"ちゃんと合っていそう     : %d か所" % (len(rows) - len(warui) - len(muji)))
     note(u"ひどい (人・話数ちがい)  : %d か所" % len(hidoi))
     note(u"中くらい (情景ちがい)    : %d か所" % len(chuu))
     note(u"使いすぎだけ             : %d か所" % (len(warui) - len(hidoi) - len(chuu)))
     note(u"絵で表せる言葉が無い     : %d か所 （台本しだい。割り当ての失敗ではない）"
          % len(mikoshi))
+    if muji:
+        note(u"無地（作品のフォルダが無い）: %d か所 （絵を集めると入ります。"
+             u"別の作品の絵は出していません）" % len(muji))
     # ■ **点数が、本人の見ている画面と合っていなかった**（2026-10-28）
     #
     # 本人:「画像は全然だめです。」 採点:「93 点 / 100」
@@ -5515,6 +5535,10 @@ def fuan(r, tags, tsukai, rows=None, i=None, han=None):
     """
     img, tx = r[u"img"], r[u"text"]
     if not img or img.startswith(u"@@") or M.is_zuhyou(img):
+        return 0, u""
+    if M.folder_of(img) == getattr(M, u"MUJI_FOL", u"_無地"):
+        # 作品のフォルダが無い章の無地の絵。わざと出しているので、直す相手ではない
+        # （ここで候補を当てると、別の作品の絵が戻ってくる）
         return 0, u""
     desc = M.cat_lookup(tags, img)
     if desc is None:
@@ -6080,7 +6104,7 @@ OUT = os.path.join(u"確認用", u"説明文.txt")
 # 章の名前の頭に付く通し番号。目次では外す。
 MARU = u"①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳"
 # 作品ではない章。目次には出さない。
-HAZUSU = (u"はじめに", u"おわりに", u"まとめ")
+HAZUSU = (u"はじめに", u"おわりに", u"まとめ", u"－")   # 「－」＝右上に何も出さない章（はじめに）
 
 
 def say(t):
@@ -9203,6 +9227,52 @@ def kaigyou_naosu(t):
     return t.replace(u"\\n", u"\\N")
 
 
+# ------------------------------------------------ 作品の章（おすすめ紹介の回）
+#
+# 本人の指定（2026-11-15・ラブコメ20選を見て）:
+#
+#   ① はじめにの章の絵は、動画内で紹介する作品群の中から。関係ない絵は出さない。
+#      右上の「はじめに」は出さなくていい
+#   ③「最初の作品は」等の作品が切り替わるシーンは、エフェクトで切り替える
+#   ④ タイトルと制作会社を言うところは、公式画像＋下の帯に「制作：○○」「作品名」
+#
+# 作品の章は、右上の名前に「2014年冬」のような年と季がある章（107-3）。
+SAKUHIN_SHOU_RE = re.compile(u"\\d{4}年(春|夏|秋|冬)")
+MUDAI = u"－"                 # 3列目がこれの章は、右上に何も出さない（章カードも出さない）
+ZEN_SAKUHIN = u"＊全作品"       # 4列目がこれの章は、その回で紹介する作品フォルダぜんぶ
+DAIJI = [True]                # 作品の頭の1文を「題字の画面」にするか（演出.txt）
+
+
+def wa_sakuhin_shou(title):
+    u"""その章が作品の章か（右上の名前に年と季がある）。"""
+    return bool(SAKUHIN_SHOU_RE.search(title or u""))
+
+
+def bun_atama(texts, i):
+    u"""i 番目の字幕が入っている**文の頭**の番号。
+
+    「続いての作品は、」「アマガミSS、」「制作は○○。」は1つの文。
+    鍵（作品名）が当たるのは2枚目だが、場面が変わるのは1枚目から。
+    前の字幕が「。」「！」「？」で終わっている所まで戻る。空の行（章カード）でも止まる。
+    """
+    while i > 0:
+        mae = (texts[i - 1] or u"").strip()
+        if not mae or mae.endswith((u"。", u"！", u"？", u"!", u"?")):
+            break
+        i -= 1
+    return i
+
+
+def shou_atama(texts, i, title):
+    u"""章の頭の番号。**作品の章だけ**、鍵の当たった字幕からその文の頭まで戻す。
+
+    章の頭を数える所は5つある（右上の名前・絵のフォルダ・章カード・演出・一覧）。
+    1つでも別の数え方をすると、絵は変わったのに右上は前の作品、になる。
+    **5つともここを通す。**（無職転生の章は今までどおり。鍵の当たった字幕が頭）
+    """
+    return bun_atama(texts, i) if wa_sakuhin_shou(title) else i
+
+
 def load_overlay(path):
     """左上の引用と、右上のチャプターを読む。"""
     credit, chaps = u"", []
@@ -9216,10 +9286,60 @@ def load_overlay(path):
         elif len(c) >= 3 and c[0] in (u"章", u"chapter"):
             # 4列目は「この章はアニメの何話の内容か」。カンマ区切りで複数可。
             # 絵をその話数から選ぶのと、章カードの絵を選ぶのに使います。
-            eps = [x.strip() for x in c[3].replace(u"、", u",").split(u",")
+            # ■ 区切りは半角の「,」だけ（2026-11-15）。全角の「、」は**題名の一部**。
+            #   「転生したら第七王子だったので、気ままに魔術を極めます」が2つに割れていた。
+            #   1作品の章では両方とも同じフォルダに部分一致して気づかなかったが、
+            #   ＊全作品 で並べたら「話数マップに無いフォルダ: 気ままに魔術を極めます」と出た。
+            eps = [x.strip() for x in c[3].split(u",")
                    if x.strip()] if len(c) >= 4 else []
             chaps.append((c[1], kaigyou_naosu(c[2]), eps))
+    # ■ ＊全作品 ＝ その回で紹介する作品フォルダぜんぶ（2026-11-15・本人の指定）
+    #   はじめに・おわりにの絵を、紹介する作品の中から出すための書き方。
+    #   作品を入れ替えても、ここは書きかえなくてよい（名前を並べると必ず古くなる）。
+    zen = []
+    for (_k, t, eps) in chaps:
+        if wa_sakuhin_shou(t):
+            for e in eps:
+                if e != ZEN_SAKUHIN and e not in zen:
+                    zen.append(e)
+    chaps = [(k, t, (zen if ZEN_SAKUHIN in eps else eps)) for (k, t, eps) in chaps]
     return credit, chaps
+
+
+def load_chosaku(path):
+    u"""著作権.txt を読む。  作品フォルダ名 <タブ> ©表記
+
+    本人の指定（2026-11-15）:
+      「画面左上にある字幕について、ここは使用している作品の引用元を記載する。
+        ニセコイの画像を使用している場合は ©古味直志/集英社・アニプレックス・MBS」
+
+    **章ではなく、いま出ている絵のフォルダ**で決める。はじめにの章では
+    いろいろな作品の絵が出るので、章ごとに1つでは合わない。
+    """
+    out = {}
+    if not path or not os.path.exists(path):
+        return out
+    for line in io.open(path, encoding="utf-8-sig", errors="replace") \
+            .read().replace("\r\n", "\n").split("\n"):
+        if not line.strip() or line.lstrip().startswith(u"#") or u"\t" not in line:
+            continue
+        k, v = line.split(u"\t", 1)
+        k, v = k.strip(), v.strip()
+        if k and v and v not in (u"？", u"?"):
+            out[k] = v
+    return out
+
+
+def chosaku_hiku(tbl, fol):
+    u"""フォルダ名から ©表記。ぴったり、無ければ部分一致（@@話数 と同じ当て方）。"""
+    if not tbl or not fol:
+        return u""
+    if fol in tbl:
+        return tbl[fol]
+    for k in sorted(tbl, key=len, reverse=True):
+        if k in fol or fol in k:
+            return tbl[k]
+    return u""
 
 
 def load_shou_credit(path):
@@ -9382,11 +9502,12 @@ def chapter_spans(cues, chaps, total):
     """キーワードが最初に出てくるキューを、その章の開始にする。"""
     marks = []
     used = set()
+    hon = [c[2] for c in cues]
     for (key, title, _eps) in chaps:
         for i, (st, _en, tx) in enumerate(cues):
             if i in used or key not in tx:
                 continue
-            marks.append([st, title])
+            marks.append([cues[shou_atama(hon, i, title)][0], title])
             used.add(i)
             break
     marks.sort(key=lambda m: m[0])
@@ -9406,7 +9527,8 @@ def _esc(t):
 
 def write_ass(cues, path, w, h, font, size, per_line, max_lines,
               credit=u"", chapters=None, total=0.0, safe_bottom=0.062,
-              hook_until=0.0, mi=None, cards=None, hidari=0.5):
+              hook_until=0.0, mi=None, cards=None, hidari=0.5,
+              daiji=None, daiji_iro=u"FFF36B"):
     # 文字の大きさは「短いほうの辺」を基準にする。
     # 高さ基準にすると、縦動画(1080x1920)で字幕が倍の大きさになってしまう。
     mi = mi or dict(MITAME_KITEI)
@@ -9444,7 +9566,13 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
     # → 81px を選ぶ。**ぜんぶ同じ大きさになる。**
     # 98px に戻したいときは、縮める原因になっている字幕を台本で短くする。
     # どれが原因かは、下で名前を出す。
-    honbun = [(st, en, _esc(tx)) for (st, en, tx) in cues if (tx or u"").strip()]
+    # 題字の画面のあいだは、ふつうの字幕を出さない（下の帯に 制作 と 作品名 を出す）
+    daiji = list(daiji or [])
+
+    def daiji_naka(t):
+        return any(d0 - 0.001 <= t < d1 - 0.001 for (d0, d1, _a, _b) in daiji)
+    honbun = [(st, en, _esc(tx)) for (st, en, tx) in cues
+              if (tx or u"").strip() and not daiji_naka(st)]
     soroeru = (mi.get(u"字幕の大きさをそろえる") or u"はい") not in (u"いいえ", u"no")
     # 横つぶし。70〜100% だけ許す（それ以上つぶすと読めない）
     tsubushi = max(70.0, min(100.0, float(mi.get(u"字幕の横つぶし") or 100.0))) / 100.0
@@ -9528,6 +9656,9 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         # 章タイトルのカード。右半分の真ん中に置く
         style(u"Card", font, int(size * 1.15), 5,
               int(w * hidari) + int(w * 0.02), int(w * 0.02), 0),
+        # 題字の画面の帯に出す字（作品名・制作）。位置は1行ずつ \pos で決める
+        style(u"Daiji", font, size, 5, 0, 0, 0),
+        style(u"Obi", font, 20, 7, 0, 0, 0),
         u"",
         u"[Events]",
         u"Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
@@ -9547,6 +9678,14 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
                         % (ass_time(0.0), ass_time(total), _esc(credit)))
     chw = max(6, int((w * 0.46) / float(chsize)))
     for (st, en, title) in (chapters or []):
+        if (title or u"").strip() == MUDAI:
+            continue              # 右上に何も出さない章（はじめに）
+        # 題字の画面のあいだは右上を出さない（本人の見本どおり。出るのは公式画像と下の帯だけ）
+        for (d0, d1, _a, _b) in daiji:
+            if d0 - 0.01 <= st < d1:
+                st = d1
+        if en <= st:
+            continue
         lines = []
         for part in _esc(title.replace(u"\\N", u"\x00")).split(u"\x00"):
             if part.strip():
@@ -9574,6 +9713,36 @@ def write_ass(cues, path, w, h, font, size, per_line, max_lines,
         pre = u"{\\fs%d}" % fs if fs != cardsz else u""
         body.append(u"Dialogue: 2,%s,%s,Card,,0,0,0,,%s%s"
                     % (ass_time(st), ass_time(en), pre, u"\\N".join(gyou[:4])))
+
+    # ■ 題字の画面の帯（本人の見本：下に黄色い帯・上の行に「制作：○○」・帯の中に作品名）
+    if daiji:
+        ox0, ox1 = int(w * 0.125), int(w * 0.895)
+        oy1 = h + int(h * 0.03)              # 下は画面の外まで（下の角は見せない）
+        oy0 = int(h * 0.885)
+        rr = int(h * 0.035)
+        bgr = re.sub(u"[^0-9A-Fa-f]", u"", daiji_iro or u"")[:6].upper() or u"FFF36B"
+        bgr = bgr[4:6] + bgr[2:4] + bgr[0:2]
+        zu = (u"m %d %d l %d %d b %d %d %d %d %d %d l %d %d l %d %d l %d %d "
+              u"b %d %d %d %d %d %d"
+              % (ox0 + rr, oy0, ox1 - rr, oy0,
+                 ox1, oy0, ox1, oy0, ox1, oy0 + rr,
+                 ox1, oy1, ox0, oy1, ox0, oy0 + rr,
+                 ox0, oy0, ox0, oy0, ox0 + rr, oy0))
+        haba = (ox1 - ox0) - size * 0.6
+        for (d0, d1, seisaku, sakuhin) in daiji:
+            body.append(u"Dialogue: 0,%s,%s,Obi,,0,0,0,,{\\an7\\pos(0,0)\\bord0\\shad0"
+                        u"\\1c&H%s&\\1a&H10&\\p1}%s{\\p0}"
+                        % (ass_time(d0), ass_time(d1), bgr, zu))
+            l1, f1 = fit_to_box(_esc(sakuhin), haba, int(size * 1.02), 1)
+            body.append(u"Dialogue: 1,%s,%s,Daiji,,0,0,0,,{\\an5\\pos(%d,%d)\\fs%d}%s"
+                        % (ass_time(d0), ass_time(d1), w // 2,
+                           int((oy0 + h) / 2.0) - int(h * 0.004), f1,
+                           u"".join(l1)))
+            if seisaku:
+                l2, f2 = fit_to_box(u"制作：" + _esc(seisaku), haba, int(size * 0.86), 1)
+                body.append(u"Dialogue: 1,%s,%s,Daiji,,0,0,0,,{\\an5\\pos(%d,%d)\\fs%d}%s"
+                            % (ass_time(d0), ass_time(d1), w // 2,
+                               oy0 - int(f2 * 0.62), f2, u"".join(l2)))
 
     for (st, en, tx) in honbun:
         hook = st < hook_until - 0.01
@@ -10095,14 +10264,39 @@ def _norm(t):
     return u"".join(t.split())
 
 
+# 突き合わせるときに無視する字（句読点・かっこ・空白）
+KUTOU_MUSHI = u"、。，．,.！？!?・…「」『』（）() 　"
+
+
+def _norm_k(t):
+    u"""句読点も落とした形。**台本と subtitle.srt を突き合わせるときだけ**使う。"""
+    return u"".join(ch for ch in u"".join(t.split()) if ch not in KUTOU_MUSHI)
+
+
 def group_sentences(sents, chunks):
-    """台本の文を、音声のかたまり(SRTの各キュー)に振り分ける。"""
+    """台本の文を、音声のかたまり(SRTの各キュー)に振り分ける。
+
+    ■ 句読点は見ない（2026-11-11・本人のログ：ラブコメ20選）
+
+        台本  … 続く作品は、とらドラ！、制作はJ.C.スタッフ。
+        音声側… 続く作品は、とらドラ！制作はJ.C.スタッフ。
+
+    subtitle.srt を作る側が「！」のあとの「、」を落とす。前は1文字でも違うと
+    「subtitle.srt の本文が台本と一致しません」で**測る道をまるごと降りて**、
+    1行ずつの音声の長さを足して一律 0.9882倍する道（段落の境目も測らない・
+    文は文字数で割る）に落ちていた。本人の画面で いちばん大きいずれ 1.36秒・
+    「0枚は1行ずつの音声で測った長さで割りました」。
+
+    無職転生の台本には「！、」が無いので当たらなかった。20選は
+    「とらドラ！、制作は…」と題名のすぐあとに「、」が来るので、**必ず当たる。**
+    ここで知りたいのは「どの文がどの音声か」で、言葉が同じなら決まる。
+    """
     groups, i = [], 0
     for ch in chunks:
-        target = _norm(ch)
+        target = _norm_k(ch)
         acc, took = u"", []
         while i < len(sents):
-            nxt = acc + _norm(sents[i])
+            nxt = acc + _norm_k(sents[i])
             if not target.startswith(nxt):
                 break
             acc = nxt
@@ -10153,6 +10347,7 @@ def card_basho(rows, chaps):
     （別々に数えていたせいで番号が1つずれていた）
     """
     out, tsukatta = [], set()
+    hon = [r[2] for r in rows]
     for (key, title, _eps) in (chaps or []):
         for i in range(len(rows)):
             if i in tsukatta or key not in rows[i][2]:
@@ -10160,9 +10355,56 @@ def card_basho(rows, chaps):
             tsukatta.add(i)
             if i == 0:
                 break          # いちばん最初はカードを入れない
-            out.append((i, title))
+            if (title or u"").strip() == MUDAI:
+                break          # 右上に何も出さない章（はじめに）はカードも入れない
+            if DAIJI[0] and wa_sakuhin_shou(title):
+                # 作品の章は、声の無い1.5秒のカードをはさまない。
+                # 題名と制作を言う1文そのものを「題字の画面」にする（daiji_basho）。
+                break
+            out.append((shou_atama(hon, i, title), title))
             break
     out.sort()
+    return out
+
+
+def daiji_basho(rows, chaps):
+    u"""作品の頭の1文（題名と制作を言う文）が、どの行からどの行までか。
+
+    本人の指定（2026-11-15）:
+      ③「最初の作品は」等の作品が切り替わるシーンは、エフェクトで切り替える
+      ④ タイトルと制作会社を説明するところの字幕は、添付のような配置
+
+    返すのは (頭の行, 終わりの行, 章の名前, 作品名, 制作) の並び。
+    文は「最初にご紹介する作品は、ニセコイ、制作はシャフト。」の形（104節）。
+    「とらドラ！、制作は…」は「！」で文が切れるので、**「制作は」のある行まで**を1文と見る。
+    """
+    out, tsukatta = [], set()
+    hon = [r[2] for r in rows]
+    for (key, title, _eps) in (chaps or []):
+        if not wa_sakuhin_shou(title):
+            continue
+        for i in range(len(rows)):
+            if i in tsukatta or key not in hon[i]:
+                continue
+            tsukatta.add(i)
+            s0 = bun_atama(hon, i)
+            e0 = i
+            for j in range(i, min(len(rows), i + 5)):
+                if u"制作は" in hon[j]:
+                    e0 = j
+                    break
+            while e0 + 1 < len(rows) and e0 - i < 6 \
+                    and not hon[e0].rstrip().endswith((u"。", u"！", u"？")):
+                e0 += 1
+            bun = u"".join(x.strip() for x in hon[s0:e0 + 1])
+            m = re.search(u"(?:作品は|続いては)、?(.+?)、?制作は(.+?)。?$", bun)
+            if m:
+                sakuhin, seisaku = m.group(1).strip(u"、 "), m.group(2).strip(u"。 ")
+            else:
+                sakuhin = u"".join(x for x in title.split(u"\\N")[:-1]) or title
+                seisaku = u""
+            out.append((s0, e0, title, sakuhin, seisaku))
+            break
     return out
 
 
@@ -12374,6 +12616,17 @@ def check_script_vs_srt(script, srt_path, names):
     b = _norm(u"".join(chunks))
     if a == b:
         return
+    # ■ 句読点だけの違いは、台本が変わったのではない（2026-11-11・本人のログ）
+    #
+    #     台本  … 続く作品は、とらドラ！、制作はJ.C.スタッフ。
+    #     音声側… 続く作品は、とらドラ！制作はJ.C.スタッフ。
+    #
+    # subtitle.srt を作る側が「！」のあとの「、」を落とす。20選は
+    # 「とらドラ！、制作は…」と題名のすぐあとに「、」が来るので必ず当たり、
+    # **録り直したばかりの音声に「1 で音声を作り直してください」と出ていた。**
+    # 言葉が同じなら黙る。違うのが言葉のときだけ知らせる。
+    if _norm_k(a) == _norm_k(b):
+        return
     # どこから違うか
     i = 0
     while i < min(len(a), len(b)) and a[i] == b[i]:
@@ -13280,10 +13533,14 @@ def load_imageplan(path):
             if len(parts) < 2:
                 continue
             key, imgs = parts
-        files = [x.strip() for x in imgs.replace(u"、", u",").split(u",") if x.strip()]
+        k = key.strip()
+        if k in (u"@@話数", u"@@対象話数"):
+            # フォルダ名の並びは半角の「,」だけで区切る（全角の「、」は題名の一部）
+            files = [x.strip() for x in imgs.split(u",") if x.strip()]
+        else:
+            files = [x.strip() for x in imgs.replace(u"、", u",").split(u",") if x.strip()]
         if not files:
             continue
-        k = key.strip()
         if k == u"@@全部おまかせ":
             ZENBU_OMAKASE[0] = files[0] not in (u"いいえ", u"no", u"0")
         elif k in (u"@@話数", u"@@対象話数"):
@@ -13337,6 +13594,10 @@ def load_enshutsu(path):
                 pass
         elif c[0] == u"章タイトル" and len(c) >= 2:
             out["card"] = c[1] not in (u"いいえ", u"なし", u"0", u"off", u"OFF")
+        elif c[0] == u"作品の頭の画面" and len(c) >= 2:
+            out["daiji"] = c[1] not in (u"いいえ", u"なし", u"0", u"off", u"OFF")
+        elif c[0] == u"作品の頭の帯の色" and len(c) >= 2:
+            out["daiji_iro"] = c[1]
         elif c[0] == u"章タイトルの秒数" and len(c) >= 2:
             try:
                 out["card_byou"] = max(0.3, min(6.0, float(c[1])))
@@ -13394,11 +13655,13 @@ def kimeru_basho(rows, starts, chaps, en):
     n = len(rows)
     kind = {}
     if chaps:
+        hon = [r[2] for r in rows]
         for (key, _title, _eps) in chaps:
             for i in range(n):
                 if key in rows[i][2]:
-                    if i > 0:
-                        kind[i] = u"章"
+                    j = shou_atama(hon, i, _title)
+                    if j > 0:
+                        kind[j] = u"章"
                     break
     for i in range(1, n):
         if i in kind:
@@ -15147,11 +15410,23 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if f and f not in folders:
             folders.append(f)
     def resolve_focus(want):
-        """書かれた話数名を、実際のフォルダ名の並びに直す。"""
+        """書かれた話数名を、実際のフォルダ名の並びに直す。
+
+        ■ ぴったり同じ名前があれば、**それだけ**を使う（2026-11-11）
+
+        前は `w == f or w in f` で、部分一致したものを全部入れていた。
+        本人のフォルダには「七つの大罪」と「sin 七つの大罪」が両方あり、
+        「七つの大罪」と書くと**別の作品の絵まで対象に入る。**
+        （「マギ」は「魔法少女まどか☆マギカ」にも当たる）
+        ぴったりが無いときだけ、今までどおり部分一致で探す。
+        """
         out2 = []
         for w in (want or []):
-            for f in folders:
-                if (w == f or w in f) and f not in out2:
+            if not w:
+                continue
+            pittari = [f for f in folders if w == f]
+            for f in (pittari or [f for f in folders if w in f]):
+                if f not in out2:
                     out2.append(f)
         return out2
 
@@ -15969,6 +16244,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     # 既定の話数をそれに差し替えます。画像プランに @@話数 が書いてある行は
     # そちらが勝つので、手で決めたものは今までどおり優先されます。
     shou_kiri = {}
+    sakuhin_nai = []          # 作品フォルダが無い章 (題, 4列目)
     if chaps:
         tsukatta = set()
         for (key, title, eps) in chaps:
@@ -15977,8 +16253,27 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             for i, (_s2, _d2, t2) in enumerate(slots):
                 if i not in tsukatta and key in t2:
                     fs = resolve_focus(eps)
+                    tsukatta.add(i)
+                    # 作品の章は、鍵の当たった字幕ではなく**その文の頭**から（shou_atama）
+                    i = shou_atama([x[2] for x in slots], i, title)
                     if fs:
                         shou_kiri[i] = (title, fs)
+                    elif not any(fol_code(e) for e in eps):
+                        # ■ 作品フォルダの回で、その作品のフォルダが無い
+                        #   （2026-11-11・本人のログ）
+                        #
+                        # 前はここで何もしなかったので、**前の章の作品の絵**と
+                        # **カタログ全体から借りた絵**が出ていた。ラブコメの動画に
+                        # ゆびさきと恋々 41枚・乙女ゲー世界 39枚・エヴァ 20枚。
+                        # 掲示板には「黙って他の作品から借りてくることはありません」
+                        # と書いてあるのに、借りていた。
+                        #
+                        # 別の作品の絵を出すくらいなら、**何も出さない。**
+                        # 章の区切りだけ覚えておき、あとで無地の絵に置きかえる。
+                        # （話数フォルダ＝無職転生の回は今までどおり。
+                        #   近い話数から借りるのが正しいので、ここには来ない）
+                        shou_kiri[i] = (title, [])
+                        sakuhin_nai.append((title, list(eps)))
                     else:
                         say(u"  章「%s」の話数が見つかりません: %s"
                             % (title.replace(u"\\N", u" "), u", ".join(eps)))
@@ -16166,9 +16461,89 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 tsukai[erabi] = tsukai.get(erabi, 0) + 1
                 hikimodoshi += 1
 
+    # ■ 作品フォルダの回は、**その作品の絵しか出さない**（2026-11-11・本人のログ）
+    #
+    # おすすめ紹介の絵には、1枚ごとの説明（画像カタログ）がまだ無い。
+    # 本人のログ:「絵 12961枚のうち 12961枚には説明が1行もありません」。
+    # 説明が無いと #穏やか も #室内 も当たらないので、道具は
+    # 「対象話数の中に見つからず、他の話数から選びました」と言って
+    # **話数マップの言葉が合う別の作品**へ出ていく。
+    # 上の引き戻しも「説明のある絵」しか見ないので、戻せない。
+    #
+    # 無職転生の回なら「近い話数から借りる」は正しい。同じ作品だから。
+    # **作品フォルダの回では、外へ出たら別の作品**になる。札が合わないことより、
+    # 作品が違うことのほうがずっと悪い（本人の採点で「ひどい 207 か所」）。
+    #
+    #   その章のフォルダに**説明が1枚も無い**とき
+    #       → 札は見ずに、そのフォルダの絵を**使っていない順・ばらけた順**に当てる
+    #   その章の作品の**フォルダそのものが無い**とき
+    #       → 無地の絵（MUJI）。別の作品の絵は出さない
+    #
+    # 説明のあるフォルダ（無職転生）は、この段を素通りする。
+    sakuhin_modoshi, muji_kazu = 0, 0
+    if shou_kiri:
+        naka_cache = {}
+
+        def naka_no_e(fols3):
+            u"""そのフォルダの絵（公式画像と使用不可は除く）を、ばらけた順に。"""
+            kk = u"|".join(fols3)
+            if kk not in naka_cache:
+                lst = [k for k in images
+                       if u"/" in k and k.split(u"/")[0] in fols3
+                       and not wa_koushiki(k)]
+                naka_cache[kk] = (barakeru(sorted(lst, key=natkey)),
+                                  any(setsumei(catalog, k) for k in lst))
+            return naka_cache[kk]
+
+        ima3 = list(moto_base)
+        nai3 = False
+        for idx in range(len(out)):
+            if idx in shou_kiri:
+                ima3 = shou_kiri[idx][1]
+                nai3 = not ima3
+            img = out[idx]
+            if img in tebiki:
+                continue          # 手で選んだ絵・公式画像・図表はそのまま
+            if nai3:
+                if img != MUJI:
+                    tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+                    out[idx] = MUJI
+                    muji_kazu += 1
+                continue
+            if not ima3 or not img or u"/" not in img:
+                continue
+            if img.split(u"/")[0] in ima3:
+                continue          # もうその作品の絵
+            lst3, setsumei_ari = naka_no_e(ima3)
+            if setsumei_ari or not lst3:
+                continue          # 説明のあるフォルダは上の引き戻しの持ち場
+            mae3 = out[idx - 1] if idx else None
+            ato3 = out[idx + 1] if idx + 1 < len(out) else None
+            kouho3 = [k for k in lst3 if k != mae3 and k != ato3] or lst3
+            erabi3 = min(kouho3, key=lambda k: (tsukai.get(k, 0), lst3.index(k)))
+            tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+            out[idx] = erabi3
+            tsukai[erabi3] = tsukai.get(erabi3, 0) + 1
+            sakuhin_modoshi += 1
+        for k in [k for k, v in tsukai.items() if v <= 0]:
+            del tsukai[k]
+
     say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
         u"%d枚が同じ文から引き継ぎ / 全%d枚"
         % (hit, namae, carried, len(slots)))
+    if sakuhin_modoshi:
+        say(u"別の作品へ出ていた絵を %d枚 その章の作品の中へ戻しました"
+            u"（その作品の絵に1枚ごとの説明が無いので、札は見ずに順に当てています。"
+            u"札まで合わせたいときは「8 画像をぜんぶ見てもらう」）" % sakuhin_modoshi)
+    if sakuhin_nai:
+        say(u"")
+        say(u"⚠ **作品のフォルダが無い章が %d つあります。** 別の作品の絵は出さず、"
+            u"その章は無地にしました（%d枚）:" % (len(sakuhin_nai), muji_kazu))
+        for (t3, e3) in sakuhin_nai:
+            say(u"    %s  ← 画像フォルダに「%s」を作って絵を入れてください"
+                % (t3.replace(u"\\N", u" "), u" / ".join(e3)))
+        say(u"  入れたら「2 動画だけ作る」で、その章だけ絵が入ります。")
+        say(u"")
     if hikimodoshi:
         say(u"章の話数から外れていた絵を %d枚 その章の中に引き戻しました"
             % hikimodoshi)
@@ -16858,6 +17233,496 @@ def moji_de_sagasu(hoshii, rows, ban, moto_no):
     return None
 
 
+# ------------------------------------------------ 入れ替え表（本人の指定・2026-11-15）
+#
+# > 最終的に画像を指定して修正する工程が必要かと思っています。
+# > 画像のみを違うものに変更する工程を簡略化し楽にしたいので考えて提案してください。
+#   → 「入れ替え表作って」
+#
+# 前のやり方（N の紙・差し替え.txt に番号）は、**絵に説明がある**前提で候補を出す。
+# おすすめ紹介の絵には説明が無いので、候補が「0 か所」になっていた。
+#
+#   ① 動画を作ると 確認用/入れ替え表.html ができる（ブラウザで開く1枚）
+#   ② 字幕ごとに「いまの絵」と「その章の作品フォルダの絵ぜんぶ」が並ぶ。押すだけ
+#   ③ 保存 → ダウンロードに「入れ替え_<動画>.txt」
+#   ④ はじめる.bat → 2 で、それを 差し替え.txt に**自動で取り込む**（動かさなくてよい）
+#
+# 取り込み先は 差し替え.txt ただ1つ。採点も 直す.py も今までどおりそこを見る
+# （「手で選んだ絵」の置き場所を2か所にしない）。3列目に字幕の文を書くので、
+# 字幕の切り方が変わっても付いていく。
+TE_IDX = set()                  # 差し替え.txt で入れ替えた行（題字の画面が先に使う）
+IREKAE_HTML = u"入れ替え表.html"
+IREKAE_KIROKU = u"_取り込んだ入れ替え.txt"
+IREKAE_TEMPLATE = u"""<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>入れ替え表 ― @@TITLE@@</title>
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--ink:#161615;--ink2:#55554f;--ink3:#8b8b85;--line:#e2e2de;--acc:#1a5fd0;--pick:#e6efff;--te:#fff4d6;--ng:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#121211;--card:#1c1c1b;--ink:#f0f0ec;--ink2:#bdbdb7;--ink3:#8a8a84;--line:#2e2e2b;--acc:#7fb0ff;--pick:#1b2a44;--te:#3a3218;--ng:#ff8a80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 "Yu Gothic UI","Meiryo",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 22px 12px}
+h1{margin:0;font-size:20px}
+.sub{color:var(--ink3);font-size:12.5px}
+ol.how{margin:6px 0 8px;padding-left:20px;color:var(--ink2);font-size:13.5px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bar .sp{flex:1}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px}
+button:hover{border-color:var(--ink3)}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+button:disabled{opacity:.4;cursor:default}
+#cnt{font-weight:700}
+main{padding:10px 22px 80px;display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:64px 1fr 200px 22px 200px 150px;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.row.picked{background:var(--pick);border-color:var(--acc)}
+.row.hidden{display:none}
+.no{font-size:22px;font-weight:700;color:var(--ink2);text-align:right;font-variant-numeric:tabular-nums}
+.no small{display:block;font-size:11px;font-weight:400;color:var(--ink3)}
+.tx{margin:0;font-size:14.5px}
+.tag{display:inline-block;font-size:11px;border-radius:99px;padding:0 8px;margin-right:4px;border:1px solid var(--line);color:var(--ink2)}
+.tag.te{background:var(--te)}
+.tag.dj{border-color:var(--acc);color:var(--acc)}
+figure{margin:0;width:200px;aspect-ratio:16/9;background:#000;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;position:relative}
+figure img{width:100%;height:100%;object-fit:contain}
+figure .lb{position:absolute;left:4px;top:3px;font-size:10.5px;background:rgba(0,0,0,.6);color:#fff;padding:0 5px;border-radius:4px}
+.arrow{color:var(--ink3);text-align:center}
+.btns{display:flex;flex-direction:column;gap:6px}
+.note{font-size:12px;color:var(--ink3)}
+#modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:stretch;justify-content:center;padding:24px}
+#modal[hidden]{display:none}
+.sheet{background:var(--card);border-radius:12px;width:min(1400px,100%);display:flex;flex-direction:column;overflow:hidden}
+.mh{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.mh .t{flex:1;font-weight:700}
+.mh select{font:inherit;padding:4px 8px;border-radius:6px}
+.grid{flex:1;overflow:auto;padding:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;align-content:start}
+.th{cursor:pointer;border:2px solid transparent;border-radius:8px;padding:3px;background:var(--bg)}
+.th:hover{border-color:var(--ink3)}
+.th.cur{border-color:var(--ink2)}
+.th.sel{border-color:var(--acc);background:var(--pick)}
+.th figure{width:100%}
+.th .fn{font-size:11.5px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fh{grid-column:1/-1;font-weight:700;margin-top:6px;border-bottom:1px solid var(--line)}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;font-size:14px;max-width:90vw}
+#toast[hidden]{display:none}
+@media (max-width:900px){.row{grid-template-columns:48px 1fr;}.row figure,.row .arrow{grid-column:2}.btns{grid-column:2;flex-direction:row}}
+</style></head><body>
+<header>
+  <h1>入れ替え表</h1>
+  <div class="sub" id="sub"></div>
+  <ol class="how">
+    <li>替えたい字幕の <b>絵を選ぶ</b> を押して、使いたい絵を押します（その章の作品の絵が並びます）</li>
+    <li>終わったら <b>保存</b>。「irekae.txt」がダウンロードに入ります（動かさなくて大丈夫です）</li>
+    <li><b>はじめる.bat → 2</b>（動画だけ作る）。保存した選び方を読み込んで、その絵に入れ替えます</li>
+  </ol>
+  <div class="bar">
+    <span id="cnt"></span>
+    <label class="note"><input type="checkbox" id="only"> 選んだ所だけ見る</label>
+    <span class="sp"></span>
+    <button id="clear">全部取り消す</button>
+    <button id="save" class="pri">保存</button>
+  </div>
+</header>
+<main id="list"></main>
+<div id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="mh"><div class="t" id="mt"></div><select id="mf"></select><button id="mclose">閉じる（Esc）</button></div>
+    <div class="grid" id="mg"></div>
+  </div>
+</div>
+<div id="toast" hidden></div>
+<script>
+const D = @@DATA@@;
+const KEY = "irekae:" + D.title + ":" + D.made;
+let picks = {};
+try { picks = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { picks = {}; }
+const $ = (id) => document.getElementById(id);
+const src = (k) => D.root + "/" + k.split("/").map(encodeURIComponent).join("/");
+function keep(){ try { localStorage.setItem(KEY, JSON.stringify(picks)); } catch(e) {} }
+function toast(t){ const e=$("toast"); e.textContent=t; e.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>{e.hidden=true;},6000); }
+function el(tag, cls, txt){ const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+function fig(u, lb){ const f=el("figure"); if(u){ const i=el("img"); i.loading="lazy"; i.src=u; i.alt=""; f.appendChild(i); } else { f.textContent="（絵なし）"; } if(lb){ f.appendChild(el("span","lb",lb)); } return f; }
+
+$("sub").textContent = D.title + "　／　この表を作った時刻 " + D.made + "　／　字幕 " + D.rows.length + " 枚";
+
+function render(){
+  const L = $("list"); L.textContent = "";
+  for (const r of D.rows){
+    const box = el("div","row"); box.id = "r" + r.n[0];
+    const no = el("div","no", r.n.length>1 ? (r.n[0] + "〜") : String(r.n[0]));
+    no.appendChild(el("small",null,r.t)); box.appendChild(no);
+    const meta = el("div");
+    if (r.kind === "daiji") meta.appendChild(el("span","tag dj","作品の頭の画面"));
+    if (r.te) meta.appendChild(el("span","tag te","手で選んだ絵"));
+    meta.appendChild(el("p","tx", r.tx || (r.kind === "card" ? "（章のカード）" : "")));
+    if (r.kind === "card") meta.appendChild(el("div","note","章のカードは入れ替えられません"));
+    if (r.kind === "muji") meta.appendChild(el("div","note","この作品の絵のフォルダがありません。画像フォルダに作ると、ここに絵が並びます"));
+    box.appendChild(meta);
+    box.appendChild(fig(r.cur, "いま"));
+    box.appendChild(el("div","arrow","→"));
+    const p = picks[r.n[0]];
+    if (p && p !== "-") box.appendChild(fig(src(p), "選んだ絵"));
+    else if (p === "-") { const f = fig(null); f.textContent = "機械に任せる"; box.appendChild(f); }
+    else { const f = fig(null); f.textContent = "そのまま"; box.appendChild(f); }
+    const b = el("div","btns");
+    if (r.kind !== "card" && D.chap[r.c] && D.chap[r.c].length){
+      const bp = el("button","pri","絵を選ぶ"); bp.onclick = () => openPicker(r); b.appendChild(bp);
+    }
+    if (p){ const bu = el("button",null,"取り消す"); bu.onclick = () => { for (const n of r.n) delete picks[n]; keep(); render(); }; b.appendChild(bu); }
+    if (r.te && !p){ const ba = el("button",null,"機械に任せる"); ba.title = "手で選んだ絵を外して、道具に選ばせます"; ba.onclick = () => { for (const n of r.n) picks[n] = "-"; keep(); render(); }; b.appendChild(ba); }
+    box.appendChild(b);
+    if (p) box.classList.add("picked");
+    if ($("only").checked && !p) box.classList.add("hidden");
+    L.appendChild(box);
+  }
+  const n = D.rows.filter(r => picks[r.n[0]]).length;
+  $("cnt").textContent = "選んだ所 " + n + " か所";
+  $("save").disabled = n === 0;
+}
+
+let cur = null;
+function openPicker(r){
+  cur = r;
+  $("mt").textContent = (r.n.length>1 ? r.n[0]+"〜"+r.n[r.n.length-1] : r.n[0]) + "番　" + (r.tx || "");
+  const fs = D.chap[r.c];
+  const sel = $("mf"); sel.textContent = "";
+  if (fs.length > 1){ const o = el("option",null,"すべての作品（" + fs.length + "）"); o.value = "-1"; sel.appendChild(o); }
+  for (const fi of fs){ const o = el("option",null,D.fol[fi] + "（" + D.files[fi].length + "枚）"); o.value = String(fi); sel.appendChild(o); }
+  const mine = r.curKey ? D.fol.indexOf(r.curKey.split("/")[0]) : -1;
+  sel.value = (mine >= 0 && fs.includes(mine)) ? String(mine) : String(fs.length > 1 ? -1 : fs[0]);
+  sel.hidden = fs.length <= 1;
+  grid();
+  $("modal").hidden = false;
+  $("mg").scrollTop = 0;
+}
+function grid(){
+  const g = $("mg"); g.textContent = "";
+  const v = parseInt($("mf").value, 10);
+  const fs = v >= 0 ? [v] : D.chap[cur.c];
+  const p = picks[cur.n[0]];
+  for (const fi of fs){
+    if (fs.length > 1) g.appendChild(el("div","fh",D.fol[fi]));
+    for (const fn of D.files[fi]){
+      const k = D.fol[fi] + "/" + fn;
+      const t = el("div","th");
+      if (k === cur.curKey) t.classList.add("cur");
+      if (k === p) t.classList.add("sel");
+      t.appendChild(fig(src(k), k === cur.curKey ? "いま" : (fn.replace(/\\.[^.]+$/,"") === "1" ? "公式画像" : null)));
+      t.appendChild(el("div","fn",fn));
+      t.title = k;
+      t.onclick = () => {
+        for (const n of cur.n) { if (k === cur.curKey) delete picks[n]; else picks[n] = k; }
+        keep(); close(); render();
+        const b = $("r" + cur.n[0]); if (b) b.scrollIntoView({block:"center"});
+      };
+      g.appendChild(t);
+    }
+  }
+}
+function close(){ $("modal").hidden = true; }
+$("mf").onchange = grid;
+$("mclose").onclick = close;
+$("modal").onclick = (e) => { if (e.target.id === "modal") close(); };
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+$("only").onchange = render;
+$("clear").onclick = () => { if (confirm("選んだ絵を全部取り消しますか？")) { picks = {}; keep(); render(); } };
+$("save").onclick = () => {
+  const by = {}; for (const r of D.rows) for (const n of r.n) by[n] = r;
+  const ns = Object.keys(picks).map(Number).sort((a,b)=>a-b);
+  const lines = [
+    "# 入れ替え表で選んだ絵（" + D.title + "／表を作った時刻 " + D.made + "）",
+    "#@title\\t" + D.title,
+    "# 番号<タブ>絵<タブ>字幕の文。絵が「-」の行は「手で選んだ絵を外して、機械に任せる」",
+    "# このファイルは はじめる.bat → 2 のときに 差し替え.txt へ自動で取り込まれます",
+  ];
+  for (const n of ns){ const r = by[n]; if (!r) continue; lines.push(n + "\\t" + picks[n] + "\\t" + (r.txs[r.n.indexOf(n)] || "")); }
+  const blob = new Blob(["﻿" + lines.join("\\r\\n") + "\\r\\n"], {type:"text/plain"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  // ファイル名は**英数字だけ**にする。日本語の名前は、ブラウザや環境によって
+  // 「download」に置きかわることがある（こちらの確かめで実際にそうなった）。
+  // どの動画の選び方かは、ファイルの中の #@title の行で見分ける。
+  a.download = "irekae.txt"; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 3000);
+  toast("保存しました（ダウンロードに「irekae.txt」）。はじめる.bat → 2 で入れ替わります");
+};
+render();
+<@@/script>
+</body></html>
+"""
+
+
+def irekae_basho():
+    u"""入れ替え_<動画>.txt を探す所。ダウンロード・確認用・その他・作業フォルダ。"""
+    out = []
+    home = os.path.expanduser(u"~")
+    for d in (os.path.join(home, u"Downloads"), os.path.join(home, u"ダウンロード"),
+              os.path.join(os.environ.get(u"USERPROFILE", home), u"Downloads"),
+              os.path.join(HERE, u"確認用"), os.path.join(HERE, SONOTA_DIR), HERE):
+        if d not in out and os.path.isdir(d):
+            out.append(d)
+    return out
+
+
+def irekae_dare(path):
+    u"""入れ替えファイルの #@title の行（どの動画の選び方か）。無ければ None。"""
+    try:
+        for line in io.open(path, encoding="utf-8-sig", errors="replace"):
+            if line.startswith(u"#@title\t"):
+                return line.split(u"\t", 1)[1].strip()
+    except Exception:
+        pass
+    return None
+
+
+def irekae_gyou(path):
+    u"""入れ替えファイルの行を読む。[(番号, 絵 または "-", 字幕の文)]"""
+    out = []
+    for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
+            .replace("\r\n", "\n").split("\n"):
+        if not line.strip() or line.lstrip().startswith(u"#"):
+            continue
+        c = [x.strip() for x in line.split(u"\t")]
+        if len(c) < 2 or not c[0].isdigit() or not c[1]:
+            continue
+        out.append((int(c[0]), c[1], c[2] if len(c) >= 3 else u""))
+    return out
+
+
+def irekae_maji(gyou_atarashii, path_sashi, hizuke=u""):
+    u"""差し替え.txt に取り込む。返すのは (入れた数, 外した数)。
+
+    同じ所を指している行は**新しいほうだけ残す**：
+      ・字幕の文（3列目）が同じ行
+      ・文の無い行は、番号が同じ行
+    絵が「-」の行は「手で選んだ絵を外す」＝消すだけで、足さない。
+    """
+    aru = []
+    if os.path.exists(path_sashi):
+        aru = io.open(path_sashi, encoding="utf-8-sig", errors="replace").read() \
+            .replace("\r\n", "\n").split("\n")
+    bun = set(tx for (_n, _e, tx) in gyou_atarashii if tx)
+    ban = set(n for (n, _e, _tx) in gyou_atarashii)
+    nokosu = []
+    for line in aru:
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            nokosu.append(line)
+            continue
+        c = [x.strip() for x in t.split(u"\t")] if u"\t" in t \
+            else re.split(r"[\u3000 ]+", t, maxsplit=1)
+        no = int(c[0]) if c and c[0].isdigit() else None
+        tx = c[2] if (u"\t" in t and len(c) >= 3) else u""
+        if (tx and tx in bun) or (not tx and no is not None and no in ban):
+            continue
+        nokosu.append(line)
+    while nokosu and not nokosu[-1].strip():
+        nokosu.pop()
+    ireta = [g for g in gyou_atarashii if g[1] != u"-"]
+    if ireta:
+        nokosu.append(u"")
+        nokosu.append(u"# 入れ替え表から（%s）" % hizuke)
+        for (n, e, tx) in ireta:
+            nokosu.append(u"%d\t%s\t%s" % (n, e, tx) if tx else u"%d\t%s" % (n, e))
+    io.open(path_sashi, "w", encoding="utf-8", newline="\r\n").write(
+        u"\n".join(nokosu) + u"\n")
+    return len(ireta), len(gyou_atarashii) - len(ireta)
+
+
+def irekae_torikomu():
+    u"""ダウンロードにある入れ替え表の保存（irekae.txt）を、差し替え.txt に取り込む。
+
+    ■ 名前は英数字（irekae.txt）。どの動画のものかは**中の #@title** で見分ける
+      日本語の名前（入れ替え_○○.txt）は、ブラウザや環境によって「download」に
+      置きかわることがあった（こちらの確かめで実際にそうなった）。
+      ブラウザは同じ名前だと「irekae (1).txt」にするので、頭の名前で探す。
+
+    一度取り込んだファイルは その他/_取り込んだ入れ替え.txt に控え、二度は入れない
+    （あとで本人が 差し替え.txt を手で直したのを、古い選び方で上書きしないため）。
+    """
+    na = os.path.basename(os.path.abspath(HERE))
+    atama = u"入れ替え_" + na
+    kiroku = os.path.join(HERE, SONOTA_DIR, IREKAE_KIROKU)
+    mita = set()
+    if os.path.exists(kiroku):
+        for line in io.open(kiroku, encoding="utf-8-sig", errors="replace"):
+            if line.strip() and not line.startswith(u"#"):
+                mita.add(line.rstrip(u"\r\n"))
+    kouho = []
+    for d in irekae_basho():
+        try:
+            names = os.listdir(d)
+        except Exception:
+            continue
+        for f in names:
+            if not f.lower().endswith(u".txt"):
+                continue
+            p = os.path.join(d, f)
+            if f.lower().startswith(u"irekae"):
+                if irekae_dare(p) != na:
+                    continue        # 別の動画の選び方
+            elif f.startswith(atama):
+                nokori = f[len(atama):-4].strip()
+                if nokori and not re.match(r"^\(\d+\)$", nokori):
+                    continue        # 別の動画（名前の頭が同じだけ）
+                dare = irekae_dare(p)
+                if dare is not None and dare != na:
+                    continue
+            else:
+                continue
+            sirushi = u"%s\t%d\t%d" % (os.path.abspath(p), int(os.path.getmtime(p)),
+                                        os.path.getsize(p))
+            if sirushi in mita:
+                continue
+            kouho.append((os.path.getmtime(p), p, sirushi))
+    if not kouho:
+        return 0
+    if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
+        os.makedirs(os.path.join(HERE, SONOTA_DIR))
+    sashi = os.path.join(HERE, SASHIKAE)
+    if os.path.exists(sashi):
+        shutil.copy2(sashi, os.path.join(HERE, SONOTA_DIR, u"_差し替え_取り込む前.txt"))
+    zen = 0
+    for (mt, p, sirushi) in sorted(kouho):
+        g = irekae_gyou(p)
+        ireta, hazushi = irekae_maji(
+            g, sashi, time.strftime(u"%Y-%m-%d %H:%M", time.localtime(mt)))
+        say(u"入れ替え表の選び方を 差し替え.txt に取り込みました: %d か所%s（%s）"
+            % (ireta, (u"・機械に任せる %d か所" % hazushi) if hazushi else u"", p))
+        zen += ireta + hazushi
+        with io.open(kiroku, "a", encoding="utf-8") as f:
+            f.write(sirushi + u"\n")
+    return zen
+
+
+def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
+                daiji=None, fol=u"確認用"):
+    u"""確認用/入れ替え表.html を書く。ブラウザで開いて、押すだけで絵を選び直せる。
+
+    番号は 確認用/一覧.txt と同じ（章カードも1コマ）。差し替え.txt の番号と同じ数え方。
+    候補は**その字幕の章の作品フォルダ**の絵だけ（別の作品は並べない）。
+    作品の頭の1文（題字の画面）は1行にまとめ、選ぶと文ぜんぶの絵が替わる。
+    """
+    import json
+    try:
+        from pathlib import Path
+    except Exception:
+        return None
+
+    def uri(p):
+        try:
+            return Path(os.path.abspath(p)).as_uri()
+        except Exception:
+            return u""
+
+    if not os.path.isdir(fol):
+        os.makedirs(fol)
+    fols = []
+    files = {}
+    for k in images:
+        if u"/" not in k:
+            continue
+        f = k.split(u"/", 1)[0]
+        if f == MUJI.split(u"/")[0]:
+            continue
+        if f not in files:
+            files[f] = []
+            fols.append(f)
+        files[f].append(k.split(u"/", 1)[1])
+    fols.sort(key=natkey)
+    fidx = dict((f, i) for i, f in enumerate(fols))
+
+    def tsukau(names):
+        out = []
+        for w in names:
+            w = w.strip()
+            if not w:
+                continue
+            hit = [f for f in fols if f == w] or [f for f in fols if w in f]
+            for f in hit:
+                if fidx[f] not in out:
+                    out.append(fidx[f])
+        return out
+
+    daihon = shou_no_wasuu(rows, chaps) if chaps else [u""] * len(rows)
+    zenbu = tsukau([e for (_k, _t, eps) in (chaps or []) for e in eps]) \
+        or list(range(len(fols)))
+    chap, ckey = [], {}
+
+    def chap_no(s):
+        fs = tsukau(s.split(u" / ")) if s else []
+        if not fs:
+            fs = zenbu
+        k = u",".join(str(x) for x in fs)
+        if k not in ckey:
+            ckey[k] = len(chap)
+            chap.append(fs)
+        return ckey[k]
+
+    te = set()
+    tp = os.path.join(HERE, TSUKATTA)
+    if os.path.exists(tp):
+        for line in io.open(tp, encoding="utf-8-sig", errors="replace"):
+            t = line.strip()
+            if t.isdigit():
+                te.add(int(t))
+    dj = {}
+    for (s0, e0, _t, _a, _b) in (daiji or []):
+        for j in range(s0, e0 + 1):
+            dj[j] = s0
+    out_rows = []
+    i = 0
+    while i < len(rows):
+        _du, img, tx = rows[i]
+        if i in dj:
+            s0 = dj[i]
+            mem = [j for j in range(i, len(rows)) if dj.get(j) == s0]
+            kind = u"daiji"
+        else:
+            mem = [i]
+            kind = u"card" if img.startswith(u"@@card") else \
+                (u"muji" if img == MUJI else u"e")
+        p = imgpath.get(img) or cache.get(img) or u""
+        out_rows.append({
+            u"n": [j + 1 for j in mem],
+            u"t": mmss(starts[i]),
+            u"tx": u"".join((rows[j][2] or u"").strip() for j in mem),
+            u"txs": [(rows[j][2] or u"").strip() for j in mem],
+            u"cur": uri(p) if p and os.path.exists(p) else u"",
+            u"curKey": img if (u"/" in img and not img.startswith(u"@@")
+                               and img != MUJI) else u"",
+            u"kind": kind,
+            u"te": any((j + 1) in te for j in mem),
+            u"c": chap_no(daihon[i]) if kind != u"muji" else -1,
+        })
+        i = mem[-1] + 1
+    # 無地の章は候補なし（その作品のフォルダが無い）
+    chap.append([])
+    for r in out_rows:
+        if r[u"c"] == -1:
+            r[u"c"] = len(chap) - 1
+    D = {u"title": os.path.basename(os.path.abspath(HERE)),
+         u"made": time.strftime(u"%Y-%m-%d %H:%M"),
+         u"root": uri(root).rstrip(u"/"),
+         u"fol": fols,
+         u"files": [sorted(files[f], key=natkey) for f in fols],
+         u"chap": chap,
+         u"rows": out_rows}
+    js = json.dumps(D, ensure_ascii=False).replace(u"</", u"<\\/")
+    # ■ テンプレートの中の閉じタグは「<@@/script>」と書いてある（2026-11-15）
+    #   この .py は掲示板の <script type="text/plain"> に貼られて本人に届く。
+    #   本物の閉じタグを書くと、そこで掲示板のブロックが切れてしまう
+    #   （sync_py.py が「閉じタグが入っています」で止めた）。書き出すときに戻す。
+    html = IREKAE_TEMPLATE.replace(u"<@@/script>", u"<" + u"/script>") \
+        .replace(u"@@TITLE@@", D[u"title"].replace(u"<", u"＜")) \
+        .replace(u"@@DATA@@", js)
+    out = os.path.join(fol, IREKAE_HTML)
+    io.open(out, "w", encoding="utf-8", newline="\n").write(html)
+    say(u"確認用/入れ替え表.html を書きました（字幕 %d か所・候補の作品 %d）。"
+        u"ブラウザで開くと、押すだけで絵を選び直せます" % (len(out_rows), len(fols)))
+    say(u"  保存したら はじめる.bat → 2 で入れ替わります（ダウンロードから自動で読み込みます）")
+    return out
+
+
 def load_sashikae(path, images, moji=None):
     u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}
 
@@ -16891,6 +17756,22 @@ def load_sashikae(path, images, moji=None):
         t = line.strip()
         if not t or t.startswith(u"#"):
             continue
+        # ■ タブで区切った行は、**2列目をまるごと**絵の名前として読む（2026-11-15）
+        #
+        #   入れ替え表が書く行は「番号<タブ>フォルダ/ファイル<タブ>字幕の文」。
+        #   おすすめ紹介のフォルダ名には空白が入る（「コードギアス 反逆のルルーシュ」）。
+        #   下の読み方は空白でも切るので、2列目が「コードギアス」になり、
+        #   **その名前を含む絵の1枚目**に当たっていた。
+        #   2列目がそのまま絵の名前になっているときだけ、こちらで読む
+        #   （それ以外は今までどおり。手で書いた行の読み方は変えない）。
+        if u"\t" in t:
+            c2 = [x.strip() for x in t.split(u"\t")]
+            c2 = [x for x in c2 if x and x not in (u"タブ", u"TAB", u"tab", u"\\t")]
+            if len(c2) >= 2 and c2[0].isdigit() and c2[1] in images:
+                out[int(c2[0])] = c2[1]
+                if len(c2) >= 3:
+                    moji[int(c2[0])] = u" ".join(c2[2:]).strip()
+                continue
         # 表計算から貼ると、タブの列に「タブ」という字がそのまま入ることがある。
         # 実際に9番と18番がそれで当たらなかったので、落としてから読む。
         c = [x for x in re.split(r"[\t\uFF09\u3000 ]{1,}", t)
@@ -17111,14 +17992,81 @@ def koushiki_e(fols, images):
 
     @@話数 に書いてあるフォルダを、左から順に探します。
     見つからなければ None（そのときは次の候補＝タグに任せる）。
+
+    ■ フォルダ名は**部分一致**で当てる（2026-11-11・出した翌日に気づいた）
+
+    @@話数 の当て方は `resolve_focus` の `w == f or w in f` ── 部分一致。
+    画面表示.txt の4列目は、だからわざと短く書いてある
+    （「Just Because」→ 本人のフォルダは「Just Because！」／
+      「魔王の俺が奴隷エルフを嫁にしたんだが」→ うしろに続きがある）。
+    ここだけ `==` で比べていたので、**名前を短く書いた作品では
+    公式画像が一生引けなかった。** 絵は当たるのに公式画像だけ無い、になる。
+    **同じ名前を当てる所が2か所あって、当て方が違っていた。**
+    ぴったり同じ名前を先に見て、無ければ部分一致で探す。
+    空の名前は何にでも含まれてしまうので、見ない。
     """
+    ichi = [k for k in images
+            if u"/" in k and os.path.splitext(_e_namae(k))[0] == u"1"]
     for fol in (fols or []):
-        atari = [k for k in images
-                 if u"/" in k and k.rsplit(u"/", 1)[0] == fol
-                 and os.path.splitext(_e_namae(k))[0] == u"1"]
+        if not fol:
+            continue
+        atari = [k for k in ichi if k.rsplit(u"/", 1)[0] == fol]
+        if not atari:
+            atari = [k for k in ichi if fol in k.rsplit(u"/", 1)[0]]
         if atari:
             return sorted(atari)[0]
     return None
+
+
+# ---------------------------------------------- 無地の絵（作品のフォルダが無い章）
+#
+# 作品フォルダの回で、その作品のフォルダが無い章に出す。
+# **別の作品の絵を出すくらいなら、何も出さない**（2026-11-11・本人のログ）。
+#
+# 名前は「_無地/無地.png」。画像フォルダには置かない（本人の絵の中に
+# 道具の作った物を混ぜない）。作業フォルダの その他/ に作り、
+# 「名前 → 置き場所」の表にだけ足す。絵の一覧には入れないので、
+# 札で選ばれることも、説明づけ（miru.py）に回ることもない。
+MUJI = u"_無地/無地.png"
+
+
+def muji_tsukuru(w, h, iro=u"141024"):
+    u"""無地の絵を その他/無地.png に作って、その道を返す。作れなければ None。"""
+    d = os.path.join(HERE, SONOTA_DIR)
+    out = os.path.join(d, u"無地.png")
+    try:
+        if not os.path.isdir(d):
+            os.makedirs(d)
+        iro = re.sub(u"[^0-9A-Fa-f]", u"", iro or u"")[:6] or u"141024"
+        run([need("ffmpeg"), "-y", "-loglevel", "error", "-f", "lavfi",
+             "-i", "color=c=0x%s:s=%dx%d" % (iro, w, h), "-frames:v", "1", out])
+    except Exception:
+        return None
+    return out if os.path.exists(out) else None
+
+
+def barakeru(lst):
+    u"""並びを、**どこで切っても全体にばらけている順**に入れ替える。
+
+    作品フォルダの絵は名前順＝ほぼ話の順に並んでいる。頭から14枚使うと
+    第1話の絵ばかりになるので、まんなか・4分の1・4分の3…の順に取る。
+    """
+    n = len(lst)
+    if n < 3:
+        return list(lst)
+    haba = 1
+    while haba < n:
+        haba *= 2
+
+    def gyaku(i):
+        r, b = 0, haba // 2
+        while b:
+            if i & 1:
+                r |= b
+            i >>= 1
+            b >>= 1
+        return r
+    return [lst[i] for i in sorted(range(n), key=gyaku)]
 
 
 def wa_koushiki(img):
@@ -17138,12 +18086,13 @@ def shou_no_wasuu(rows, chaps):
     if not chaps:
         return out
     kiri, tsukatta = {}, set()
+    hon = [r[2] for r in rows]
     for (key, _title, eps) in chaps:
         if not eps:
             continue
         for i, (_du, _img, tx) in enumerate(rows):
             if i not in tsukatta and key in tx:
-                kiri[i] = eps
+                kiri[shou_atama(hon, i, _title)] = eps
                 tsukatta.add(i)
                 break
     ima = []
@@ -17502,6 +18451,8 @@ def main():
         die(u"%s がありません。先に「音声を生成する.bat」を実行してください。" % a.audio)
 
     images, imgpath = list_images(a.images, a.figs)
+    # 無地の絵の置き場所を教えておく（絵の一覧には入れない。MUJI の所を参照）
+    imgpath[MUJI] = os.path.join(HERE, SONOTA_DIR, u"無地.png")
     io.open(IMGLIST, "w", encoding="utf-8-sig", newline="").write(
         u"# %s の中にある画像 %d 枚\r\n" % (a.images, len(images)) + u"\r\n".join(images) + u"\r\n")
 
@@ -18166,6 +19117,7 @@ def main():
     # 本人が読む番号は 確認用/一覧.txt と コマ一覧（章カードも1コマ）なので、
     # ここで同じ番号にそろえてから当てる。
     en = load_enshutsu(a.enshutsu)
+    DAIJI[0] = bool(en.get("daiji", True))
     _credit0, chaps0 = load_overlay(a.overlay) if os.path.exists(a.overlay) \
         else (u"", [])
     kaado = card_basho(rows, chaps0) \
@@ -18188,6 +19140,7 @@ def main():
 
     # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
     sashi_moji = {}
+    irekae_torikomu()
     if ZENBU_OMAKASE[0]:
         kae = {}
         if os.path.exists(os.path.join(HERE, SASHIKAE)):
@@ -18297,6 +19250,7 @@ def main():
             i = ban[no]
             du, _mae2, tx2 = rows[i]
             rows[i] = (du, img2, tx2)
+            TE_IDX.add(i)
             # 当たった先の人が合っているかを、その場で見せる。
             # 合っていなければ「番号がずれたまま」の合図になる。
             shirase = u""
@@ -18446,6 +19400,10 @@ def main():
     if ugokasu:
         nw = int(round(w * kakudai)); nw -= nw % 2
         nh = int(round(h * kakudai)); nh -= nh % 2
+    if MUJI in uniq:
+        # 作品のフォルダが無い章がある。無地の絵をここで作る（章タイトルと同じ色）
+        if not muji_tsukuru(w, h, en.get("card_iro")):
+            die(u"無地の絵（その他/無地.png）を作れませんでした。ffmpeg を確かめてください。")
     for img in uniq:
         src = img if os.path.isabs(img) else imgpath.get(img, os.path.join(a.images, img))
         if not os.path.exists(src):
@@ -18476,6 +19434,7 @@ def main():
         byou = en["card_byou"]
         atarashii, zure = [], 0
         ci, nuketa = 0, 0
+        te2 = set()
         for i, row in enumerate(rows):
             while ci < len(card_moto) and card_moto[ci][0] == i:
                 _, moto, title = card_moto[ci]
@@ -18492,12 +19451,68 @@ def main():
                 cards[len(atarashii)] = title
                 atarashii.append((byou, key, u""))
                 ci += 1
+            if i in TE_IDX:
+                te2.add(len(atarashii))     # カードを入れると番号がずれるので付けかえる
             atarashii.append(row)
         rows = atarashii
+        TE_IDX.clear()
+        TE_IDX.update(te2)
         say(u"章タイトルのカードを %d枚 はさみました (1枚 %.1f秒)"
             % (len(cards), byou))
         say(u"  うち %d枚は背景を消してキャラだけにしました（残り %d枚は"
             u"抜けなかったので絵のまま）" % (nuketa, len(cards) - nuketa))
+
+    # --- 作品の頭の1文を「題字の画面」にする（本人の指定・2026-11-15）---
+    #
+    #   ③「最初の作品は」等の作品が切り替わるシーンは、エフェクトで切り替える
+    #   ④ タイトルと制作会社を説明するところの字幕は、添付（暗殺教室の画面）の配置
+    #
+    # はじめは「左に公式画像・右に題名」のカードに組んで見せたら、本人から
+    #
+    #   > 右半分の文字は必要なく、各アニメの画像の1と名前のついた画像を
+    #   > そのまま貼るだけで、この時の字幕は中央下側のものを採用し、
+    #   > 右側のものは消してください
+    #
+    # だから**公式画像をそのまま全面に出す。** 組まない・切り抜かない・右に字を置かない。
+    # 字幕は下の帯（制作：○○／作品名）だけ。右上の章の名前もこのあいだは出さない。
+    #
+    # 前は声の無い1.5秒の章カードをはさんでから、題名の文をふつうの字幕で出していた。
+    # いまは**題名と制作を言う1文そのもの**がこの画面。尺は伸びない。
+    # 入るときのエフェクトは 演出.txt の「区切り 章」（ページめくり）。
+    daiji = []
+    if DAIJI[0] and chaps0:
+        kou_nashi = []
+        for (s0, e0, title, sakuhin, seisaku) in daiji_basho(rows, chaps0):
+            moto = None
+            # 本人が入れ替え表（差し替え.txt）でこの文の絵を選んでいたら、それが先
+            te3 = [rows[j][1] for j in range(s0, e0 + 1)
+                   if j in TE_IDX and not rows[j][1].startswith(u"@@")]
+            if te3:
+                moto = max(set(te3), key=te3.count)
+            for j in range(s0, e0 + 1):
+                if moto:
+                    break
+                if wa_koushiki(rows[j][1]):
+                    moto = rows[j][1]
+                    break
+            if moto is None:
+                # 公式画像が無い作品。その文のすぐあとに出る絵（その作品の絵）を出す
+                kou_nashi.append(sakuhin)
+                for j in list(range(e0 + 1, min(len(rows), e0 + 4))) + [e0]:
+                    if not rows[j][1].startswith(u"@@"):
+                        moto = rows[j][1]
+                        break
+            if not moto or moto not in cache:
+                continue
+            # 文のあいだは1枚の絵（「続いての作品は、」だけ別の絵、にしない）
+            for j in range(s0, e0 + 1):
+                rows[j] = (rows[j][0], moto, rows[j][2])
+            daiji.append((s0, e0, title, sakuhin, seisaku))
+        if daiji:
+            say(u"作品の頭の1文 %d か所を「題字の画面」にしました"
+                u"（公式画像をそのまま全面に・下の帯に 制作 と 作品名）" % len(daiji))
+        for nm in kou_nashi:
+            say(u"  ! %s は公式画像（1.jpg など）が無いので、その作品のほかの絵を出しています" % nm)
 
     # --- 切り替わりをフレームにそろえる(絵と字幕を1フレームも狂わせない) ---
     fps = a.fps
@@ -18545,19 +19560,54 @@ def main():
                                (shou_c[i] if i < len(shou_c) and shou_c[i]
                                 else credit))
                               for i, (st, en, _t) in enumerate(spans)]
+            # ■ 左上は**いま出ている絵の作品**の ©（本人の指定・2026-11-15）
+            #   著作権.txt に作品フォルダごとの表記がある。無い作品は、
+            #   今までどおり章の5列目 → 引用 の行に戻る（調べていない © は書かない）。
+            chosaku = load_chosaku(os.path.join(HERE, u"著作権.txt")) \
+                if a.credit is None else {}
+            if chosaku:
+                def moto_credit(t):
+                    if isinstance(credit, (list, tuple)):
+                        for (c0, c1, ctx) in credit:
+                            if c0 <= t < c1:
+                                return ctx
+                        return u""
+                    return credit or u""
+                ev, atatta, nashi_fol = [], 0, set()
+                for i, (_du, img, _tx) in enumerate(rows):
+                    fol = e_no(img)
+                    ctx = chosaku_hiku(chosaku, fol) if fol else u""
+                    if ctx:
+                        atatta += 1
+                    else:
+                        if fol and fol != MUJI.split(u"/")[0]:
+                            nashi_fol.add(fol)
+                        ctx = moto_credit(starts[i])
+                    if ev and ev[-1][2] == ctx and abs(ev[-1][1] - starts[i]) < 0.01:
+                        ev[-1] = (ev[-1][0], ends[i], ctx)
+                    else:
+                        ev.append((starts[i], ends[i], ctx))
+                credit = ev
+                say(u"  左上の引用: 絵の作品に合わせて出します（%d枚が 著作権.txt に当たり・"
+                    u"切り替わり %d 回）" % (atatta, len(ev)))
+                for f3 in sorted(nashi_fol)[:12]:
+                    say(u"    ! %s の ©表記が 著作権.txt にありません（共通の表記を出しています）" % f3)
             ass = os.path.join(work, "burn.ass")
             card_ev = [(starts[i], ends[i], cards[i]) for i in sorted(cards)]
+            daiji_ev = [(starts[s0], ends[e0], seisaku, sakuhin)
+                        for (s0, e0, _t, sakuhin, seisaku) in daiji]
             n = write_ass(cues, ass, w, h, font, size, sub_chars, sub_lines,
                           credit=credit, chapters=spans, total=total,
                           safe_bottom=a.safe_bottom, hook_until=a.hook_sec,
-                          mi=mi, cards=card_ev, hidari=en["card_hidari"])
+                          mi=mi, cards=card_ev, hidari=en["card_hidari"],
+                          daiji=daiji_ev, daiji_iro=en.get("daiji_iro", u"FFF36B"))
             dup = sum(1 for i in range(1, len(cues))
                       if cues[i][2] == cues[i - 1][2])
             say(u"字幕を焼き込みます (%d枚 / %s %dpx / 画像1枚につき字幕1つ)"
                 % (n, font, size))
             longest = max(len(c[2]) for c in cues)
             say(u"  いちばん長いセリフ %d文字 / 同じ字幕の連続 %d箇所" % (longest, dup))
-            if credit:
+            if credit and not isinstance(credit, (list, tuple)):
                 say(u"  左上の引用: " + credit)
             if spans:
                 say(u"  右上のチャプター: %d本" % len(spans))
@@ -19000,6 +20050,11 @@ def main():
         koma_ichiran(rows, starts, ends, cache)
     except Exception as e:
         say(u"確認用の書き出しはできませんでした: %s" % e)
+    try:
+        irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, a.images,
+                    daiji=daiji)
+    except Exception as e:
+        say(u"入れ替え表は作れませんでした: %s" % e)
     say(u"絵を差し替えたいときは 画像割り当て.tsv を直して、もう一度 batを実行してください。")
 
 

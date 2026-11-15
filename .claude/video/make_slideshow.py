@@ -8843,7 +8843,7 @@ $("save").onclick = () => {
   toast("保存しました（ダウンロードに「irekae.txt」）。はじめる.bat → 2 で入れ替わります");
 };
 render();
-</script>
+<@@/script>
 </body></html>
 """
 
@@ -9105,7 +9105,12 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
          u"chap": chap,
          u"rows": out_rows}
     js = json.dumps(D, ensure_ascii=False).replace(u"</", u"<\\/")
-    html = IREKAE_TEMPLATE.replace(u"@@TITLE@@", D[u"title"].replace(u"<", u"＜")) \
+    # ■ テンプレートの中の閉じタグは「<@@/script>」と書いてある（2026-11-15）
+    #   この .py は掲示板の <script type="text/plain"> に貼られて本人に届く。
+    #   本物の閉じタグを書くと、そこで掲示板のブロックが切れてしまう
+    #   （sync_py.py が「閉じタグが入っています」で止めた）。書き出すときに戻す。
+    html = IREKAE_TEMPLATE.replace(u"<@@/script>", u"<" + u"/script>") \
+        .replace(u"@@TITLE@@", D[u"title"].replace(u"<", u"＜")) \
         .replace(u"@@DATA@@", js)
     out = os.path.join(fol, IREKAE_HTML)
     io.open(out, "w", encoding="utf-8", newline="\n").write(html)
