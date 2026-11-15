@@ -148,19 +148,22 @@ def main():
     fol = [o.split(u"/")[0] if u"/" in o else o for o in out]
 
     # ── ① ② その作品の絵だけ
-    iu(all(f == u"ニセコイ" for f in fol[0:9]),
+    # 作品の章は、鍵（作品名）の当たった字幕ではなく**その文の頭**から始まる
+    # （2026-11-15・shou_atama）。「続いての作品は、」から次の作品。
+    iu(all(f == u"ニセコイ" for f in fol[0:8]),
        u"① はじめに〜ニセコイの章は、ニセコイの絵だけ（いまは %s）"
-       % u" ".join(sorted(set(fol[0:9]))))
-    iu(all(f == u"とらドラ！" for f in fol[14:19]),
-       u"① とらドラ！の章は、とらドラ！の絵だけ（いまは %s）"
-       % u" ".join(sorted(set(fol[14:19]))))
+       % u" ".join(sorted(set(fol[0:8]))))
+    iu(all(f == u"とらドラ！" for f in fol[13:19]),
+       u"① とらドラ！の章は「続く作品は、」から とらドラ！の絵だけ（いまは %s）"
+       % u" ".join(sorted(set(fol[13:19]))))
     iu(u"ゆびさきと恋々" not in fol,
        u"② 話数マップの言葉が合う別の作品から、1枚も借りない")
     iu(u"別の作品へ出ていた絵" in hon, u"② 戻した枚数を言う")
 
     # ── ③ ④ フォルダの無い作品
-    iu(all(o == ms.MUJI for o in out[9:14]),
-       u"③ フォルダの無い作品の章は、無地（いまは %s）" % u" ".join(sorted(set(fol[9:14]))))
+    iu(all(o == ms.MUJI for o in out[8:13]),
+       u"③ フォルダの無い作品の章は「続いての作品は、」から無地（いまは %s）"
+       % u" ".join(sorted(set(fol[8:13]))))
     iu(u"作品のフォルダが無い章が 1 つ" in hon and u"かぐや様は告らせたい" in hon,
        u"④ 無い作品を名前で言う")
 

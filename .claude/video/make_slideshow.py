@@ -683,7 +683,11 @@ def load_overlay(path):
         elif len(c) >= 3 and c[0] in (u"章", u"chapter"):
             # 4列目は「この章はアニメの何話の内容か」。カンマ区切りで複数可。
             # 絵をその話数から選ぶのと、章カードの絵を選ぶのに使います。
-            eps = [x.strip() for x in c[3].replace(u"、", u",").split(u",")
+            # ■ 区切りは半角の「,」だけ（2026-11-15）。全角の「、」は**題名の一部**。
+            #   「転生したら第七王子だったので、気ままに魔術を極めます」が2つに割れていた。
+            #   1作品の章では両方とも同じフォルダに部分一致して気づかなかったが、
+            #   ＊全作品 で並べたら「話数マップに無いフォルダ: 気ままに魔術を極めます」と出た。
+            eps = [x.strip() for x in c[3].split(u",")
                    if x.strip()] if len(c) >= 4 else []
             chaps.append((c[1], kaigyou_naosu(c[2]), eps))
     # ■ ＊全作品 ＝ その回で紹介する作品フォルダぜんぶ（2026-11-15・本人の指定）
@@ -4926,10 +4930,14 @@ def load_imageplan(path):
             if len(parts) < 2:
                 continue
             key, imgs = parts
-        files = [x.strip() for x in imgs.replace(u"、", u",").split(u",") if x.strip()]
+        k = key.strip()
+        if k in (u"@@話数", u"@@対象話数"):
+            # フォルダ名の並びは半角の「,」だけで区切る（全角の「、」は題名の一部）
+            files = [x.strip() for x in imgs.split(u",") if x.strip()]
+        else:
+            files = [x.strip() for x in imgs.replace(u"、", u",").split(u",") if x.strip()]
         if not files:
             continue
-        k = key.strip()
         if k == u"@@全部おまかせ":
             ZENBU_OMAKASE[0] = files[0] not in (u"いいえ", u"no", u"0")
         elif k in (u"@@話数", u"@@対象話数"):

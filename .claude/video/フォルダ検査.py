@@ -101,7 +101,7 @@ def overlay_fols(path):
             continue
         c = ln.split(u"\t")
         if len(c) >= 4 and c[3].strip():
-            for w in c[3].replace(u"、", u",").split(u","):
+            for w in c[3].split(u","):          # 全角の「、」は題名の一部（区切りは半角だけ）
                 w = w.strip()
                 # ＊全作品 ＝ その回で紹介する作品フォルダぜんぶ（フォルダの名前ではない）
                 if w and w != u"＊全作品":
