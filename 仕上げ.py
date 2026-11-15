@@ -956,6 +956,22 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"おすすめ紹介の回が最後まで作れません（題字の画面・©・はじめに）")
 
+# ── ㉙ 入れ替え表で選んだ絵が、本当に動画に出るか ─────────────────
+midashi(u"㉙", u"入れ替え表で選んだ絵が、本当に動画に出るか")
+# ■ 本人の指定（2026-11-15）「入れ替え表作って」
+#
+#   確認用/入れ替え表.html → 押して選んで保存（irekae.txt）→ はじめる.bat → 2
+#
+# 表を作る所・取り込む所・差し替え.txt を読む所・題字の画面が1つでも食いちがうと、
+# **本人が押した絵が黙って当たらない。** 小さな材料で3回作って、
+# 2回目に選んだ絵が一覧に出ること・3回目に二重に取り込まないことまで見る。
+r = subprocess.run([sys.executable, os.path.join(V, u"_入れ替えテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"入れ替え表で選んだ絵が、動画に出ません")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

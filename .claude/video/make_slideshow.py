@@ -8630,6 +8630,491 @@ def moji_de_sagasu(hoshii, rows, ban, moto_no):
     return None
 
 
+# ------------------------------------------------ 入れ替え表（本人の指定・2026-11-15）
+#
+# > 最終的に画像を指定して修正する工程が必要かと思っています。
+# > 画像のみを違うものに変更する工程を簡略化し楽にしたいので考えて提案してください。
+#   → 「入れ替え表作って」
+#
+# 前のやり方（N の紙・差し替え.txt に番号）は、**絵に説明がある**前提で候補を出す。
+# おすすめ紹介の絵には説明が無いので、候補が「0 か所」になっていた。
+#
+#   ① 動画を作ると 確認用/入れ替え表.html ができる（ブラウザで開く1枚）
+#   ② 字幕ごとに「いまの絵」と「その章の作品フォルダの絵ぜんぶ」が並ぶ。押すだけ
+#   ③ 保存 → ダウンロードに「入れ替え_<動画>.txt」
+#   ④ はじめる.bat → 2 で、それを 差し替え.txt に**自動で取り込む**（動かさなくてよい）
+#
+# 取り込み先は 差し替え.txt ただ1つ。採点も 直す.py も今までどおりそこを見る
+# （「手で選んだ絵」の置き場所を2か所にしない）。3列目に字幕の文を書くので、
+# 字幕の切り方が変わっても付いていく。
+TE_IDX = set()                  # 差し替え.txt で入れ替えた行（題字の画面が先に使う）
+IREKAE_HTML = u"入れ替え表.html"
+IREKAE_KIROKU = u"_取り込んだ入れ替え.txt"
+IREKAE_TEMPLATE = u"""<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>入れ替え表 ― @@TITLE@@</title>
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--ink:#161615;--ink2:#55554f;--ink3:#8b8b85;--line:#e2e2de;--acc:#1a5fd0;--pick:#e6efff;--te:#fff4d6;--ng:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#121211;--card:#1c1c1b;--ink:#f0f0ec;--ink2:#bdbdb7;--ink3:#8a8a84;--line:#2e2e2b;--acc:#7fb0ff;--pick:#1b2a44;--te:#3a3218;--ng:#ff8a80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 "Yu Gothic UI","Meiryo",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 22px 12px}
+h1{margin:0;font-size:20px}
+.sub{color:var(--ink3);font-size:12.5px}
+ol.how{margin:6px 0 8px;padding-left:20px;color:var(--ink2);font-size:13.5px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bar .sp{flex:1}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px}
+button:hover{border-color:var(--ink3)}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+button:disabled{opacity:.4;cursor:default}
+#cnt{font-weight:700}
+main{padding:10px 22px 80px;display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:64px 1fr 200px 22px 200px 150px;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.row.picked{background:var(--pick);border-color:var(--acc)}
+.row.hidden{display:none}
+.no{font-size:22px;font-weight:700;color:var(--ink2);text-align:right;font-variant-numeric:tabular-nums}
+.no small{display:block;font-size:11px;font-weight:400;color:var(--ink3)}
+.tx{margin:0;font-size:14.5px}
+.tag{display:inline-block;font-size:11px;border-radius:99px;padding:0 8px;margin-right:4px;border:1px solid var(--line);color:var(--ink2)}
+.tag.te{background:var(--te)}
+.tag.dj{border-color:var(--acc);color:var(--acc)}
+figure{margin:0;width:200px;aspect-ratio:16/9;background:#000;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;position:relative}
+figure img{width:100%;height:100%;object-fit:contain}
+figure .lb{position:absolute;left:4px;top:3px;font-size:10.5px;background:rgba(0,0,0,.6);color:#fff;padding:0 5px;border-radius:4px}
+.arrow{color:var(--ink3);text-align:center}
+.btns{display:flex;flex-direction:column;gap:6px}
+.note{font-size:12px;color:var(--ink3)}
+#modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:stretch;justify-content:center;padding:24px}
+#modal[hidden]{display:none}
+.sheet{background:var(--card);border-radius:12px;width:min(1400px,100%);display:flex;flex-direction:column;overflow:hidden}
+.mh{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.mh .t{flex:1;font-weight:700}
+.mh select{font:inherit;padding:4px 8px;border-radius:6px}
+.grid{flex:1;overflow:auto;padding:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;align-content:start}
+.th{cursor:pointer;border:2px solid transparent;border-radius:8px;padding:3px;background:var(--bg)}
+.th:hover{border-color:var(--ink3)}
+.th.cur{border-color:var(--ink2)}
+.th.sel{border-color:var(--acc);background:var(--pick)}
+.th figure{width:100%}
+.th .fn{font-size:11.5px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fh{grid-column:1/-1;font-weight:700;margin-top:6px;border-bottom:1px solid var(--line)}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;font-size:14px;max-width:90vw}
+#toast[hidden]{display:none}
+@media (max-width:900px){.row{grid-template-columns:48px 1fr;}.row figure,.row .arrow{grid-column:2}.btns{grid-column:2;flex-direction:row}}
+</style></head><body>
+<header>
+  <h1>入れ替え表</h1>
+  <div class="sub" id="sub"></div>
+  <ol class="how">
+    <li>替えたい字幕の <b>絵を選ぶ</b> を押して、使いたい絵を押します（その章の作品の絵が並びます）</li>
+    <li>終わったら <b>保存</b>。「irekae.txt」がダウンロードに入ります（動かさなくて大丈夫です）</li>
+    <li><b>はじめる.bat → 2</b>（動画だけ作る）。保存した選び方を読み込んで、その絵に入れ替えます</li>
+  </ol>
+  <div class="bar">
+    <span id="cnt"></span>
+    <label class="note"><input type="checkbox" id="only"> 選んだ所だけ見る</label>
+    <span class="sp"></span>
+    <button id="clear">全部取り消す</button>
+    <button id="save" class="pri">保存</button>
+  </div>
+</header>
+<main id="list"></main>
+<div id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="mh"><div class="t" id="mt"></div><select id="mf"></select><button id="mclose">閉じる（Esc）</button></div>
+    <div class="grid" id="mg"></div>
+  </div>
+</div>
+<div id="toast" hidden></div>
+<script>
+const D = @@DATA@@;
+const KEY = "irekae:" + D.title + ":" + D.made;
+let picks = {};
+try { picks = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { picks = {}; }
+const $ = (id) => document.getElementById(id);
+const src = (k) => D.root + "/" + k.split("/").map(encodeURIComponent).join("/");
+function keep(){ try { localStorage.setItem(KEY, JSON.stringify(picks)); } catch(e) {} }
+function toast(t){ const e=$("toast"); e.textContent=t; e.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>{e.hidden=true;},6000); }
+function el(tag, cls, txt){ const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+function fig(u, lb){ const f=el("figure"); if(u){ const i=el("img"); i.loading="lazy"; i.src=u; i.alt=""; f.appendChild(i); } else { f.textContent="（絵なし）"; } if(lb){ f.appendChild(el("span","lb",lb)); } return f; }
+
+$("sub").textContent = D.title + "　／　この表を作った時刻 " + D.made + "　／　字幕 " + D.rows.length + " 枚";
+
+function render(){
+  const L = $("list"); L.textContent = "";
+  for (const r of D.rows){
+    const box = el("div","row"); box.id = "r" + r.n[0];
+    const no = el("div","no", r.n.length>1 ? (r.n[0] + "〜") : String(r.n[0]));
+    no.appendChild(el("small",null,r.t)); box.appendChild(no);
+    const meta = el("div");
+    if (r.kind === "daiji") meta.appendChild(el("span","tag dj","作品の頭の画面"));
+    if (r.te) meta.appendChild(el("span","tag te","手で選んだ絵"));
+    meta.appendChild(el("p","tx", r.tx || (r.kind === "card" ? "（章のカード）" : "")));
+    if (r.kind === "card") meta.appendChild(el("div","note","章のカードは入れ替えられません"));
+    if (r.kind === "muji") meta.appendChild(el("div","note","この作品の絵のフォルダがありません。画像フォルダに作ると、ここに絵が並びます"));
+    box.appendChild(meta);
+    box.appendChild(fig(r.cur, "いま"));
+    box.appendChild(el("div","arrow","→"));
+    const p = picks[r.n[0]];
+    if (p && p !== "-") box.appendChild(fig(src(p), "選んだ絵"));
+    else if (p === "-") { const f = fig(null); f.textContent = "機械に任せる"; box.appendChild(f); }
+    else { const f = fig(null); f.textContent = "そのまま"; box.appendChild(f); }
+    const b = el("div","btns");
+    if (r.kind !== "card" && D.chap[r.c] && D.chap[r.c].length){
+      const bp = el("button","pri","絵を選ぶ"); bp.onclick = () => openPicker(r); b.appendChild(bp);
+    }
+    if (p){ const bu = el("button",null,"取り消す"); bu.onclick = () => { for (const n of r.n) delete picks[n]; keep(); render(); }; b.appendChild(bu); }
+    if (r.te && !p){ const ba = el("button",null,"機械に任せる"); ba.title = "手で選んだ絵を外して、道具に選ばせます"; ba.onclick = () => { for (const n of r.n) picks[n] = "-"; keep(); render(); }; b.appendChild(ba); }
+    box.appendChild(b);
+    if (p) box.classList.add("picked");
+    if ($("only").checked && !p) box.classList.add("hidden");
+    L.appendChild(box);
+  }
+  const n = D.rows.filter(r => picks[r.n[0]]).length;
+  $("cnt").textContent = "選んだ所 " + n + " か所";
+  $("save").disabled = n === 0;
+}
+
+let cur = null;
+function openPicker(r){
+  cur = r;
+  $("mt").textContent = (r.n.length>1 ? r.n[0]+"〜"+r.n[r.n.length-1] : r.n[0]) + "番　" + (r.tx || "");
+  const fs = D.chap[r.c];
+  const sel = $("mf"); sel.textContent = "";
+  if (fs.length > 1){ const o = el("option",null,"すべての作品（" + fs.length + "）"); o.value = "-1"; sel.appendChild(o); }
+  for (const fi of fs){ const o = el("option",null,D.fol[fi] + "（" + D.files[fi].length + "枚）"); o.value = String(fi); sel.appendChild(o); }
+  const mine = r.curKey ? D.fol.indexOf(r.curKey.split("/")[0]) : -1;
+  sel.value = (mine >= 0 && fs.includes(mine)) ? String(mine) : String(fs.length > 1 ? -1 : fs[0]);
+  sel.hidden = fs.length <= 1;
+  grid();
+  $("modal").hidden = false;
+  $("mg").scrollTop = 0;
+}
+function grid(){
+  const g = $("mg"); g.textContent = "";
+  const v = parseInt($("mf").value, 10);
+  const fs = v >= 0 ? [v] : D.chap[cur.c];
+  const p = picks[cur.n[0]];
+  for (const fi of fs){
+    if (fs.length > 1) g.appendChild(el("div","fh",D.fol[fi]));
+    for (const fn of D.files[fi]){
+      const k = D.fol[fi] + "/" + fn;
+      const t = el("div","th");
+      if (k === cur.curKey) t.classList.add("cur");
+      if (k === p) t.classList.add("sel");
+      t.appendChild(fig(src(k), k === cur.curKey ? "いま" : (fn.replace(/\\.[^.]+$/,"") === "1" ? "公式画像" : null)));
+      t.appendChild(el("div","fn",fn));
+      t.title = k;
+      t.onclick = () => {
+        for (const n of cur.n) { if (k === cur.curKey) delete picks[n]; else picks[n] = k; }
+        keep(); close(); render();
+        const b = $("r" + cur.n[0]); if (b) b.scrollIntoView({block:"center"});
+      };
+      g.appendChild(t);
+    }
+  }
+}
+function close(){ $("modal").hidden = true; }
+$("mf").onchange = grid;
+$("mclose").onclick = close;
+$("modal").onclick = (e) => { if (e.target.id === "modal") close(); };
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+$("only").onchange = render;
+$("clear").onclick = () => { if (confirm("選んだ絵を全部取り消しますか？")) { picks = {}; keep(); render(); } };
+$("save").onclick = () => {
+  const by = {}; for (const r of D.rows) for (const n of r.n) by[n] = r;
+  const ns = Object.keys(picks).map(Number).sort((a,b)=>a-b);
+  const lines = [
+    "# 入れ替え表で選んだ絵（" + D.title + "／表を作った時刻 " + D.made + "）",
+    "#@title\\t" + D.title,
+    "# 番号<タブ>絵<タブ>字幕の文。絵が「-」の行は「手で選んだ絵を外して、機械に任せる」",
+    "# このファイルは はじめる.bat → 2 のときに 差し替え.txt へ自動で取り込まれます",
+  ];
+  for (const n of ns){ const r = by[n]; if (!r) continue; lines.push(n + "\\t" + picks[n] + "\\t" + (r.txs[r.n.indexOf(n)] || "")); }
+  const blob = new Blob(["﻿" + lines.join("\\r\\n") + "\\r\\n"], {type:"text/plain"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  // ファイル名は**英数字だけ**にする。日本語の名前は、ブラウザや環境によって
+  // 「download」に置きかわることがある（こちらの確かめで実際にそうなった）。
+  // どの動画の選び方かは、ファイルの中の #@title の行で見分ける。
+  a.download = "irekae.txt"; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 3000);
+  toast("保存しました（ダウンロードに「irekae.txt」）。はじめる.bat → 2 で入れ替わります");
+};
+render();
+</script>
+</body></html>
+"""
+
+
+def irekae_basho():
+    u"""入れ替え_<動画>.txt を探す所。ダウンロード・確認用・その他・作業フォルダ。"""
+    out = []
+    home = os.path.expanduser(u"~")
+    for d in (os.path.join(home, u"Downloads"), os.path.join(home, u"ダウンロード"),
+              os.path.join(os.environ.get(u"USERPROFILE", home), u"Downloads"),
+              os.path.join(HERE, u"確認用"), os.path.join(HERE, SONOTA_DIR), HERE):
+        if d not in out and os.path.isdir(d):
+            out.append(d)
+    return out
+
+
+def irekae_dare(path):
+    u"""入れ替えファイルの #@title の行（どの動画の選び方か）。無ければ None。"""
+    try:
+        for line in io.open(path, encoding="utf-8-sig", errors="replace"):
+            if line.startswith(u"#@title\t"):
+                return line.split(u"\t", 1)[1].strip()
+    except Exception:
+        pass
+    return None
+
+
+def irekae_gyou(path):
+    u"""入れ替えファイルの行を読む。[(番号, 絵 または "-", 字幕の文)]"""
+    out = []
+    for line in io.open(path, encoding="utf-8-sig", errors="replace").read() \
+            .replace("\r\n", "\n").split("\n"):
+        if not line.strip() or line.lstrip().startswith(u"#"):
+            continue
+        c = [x.strip() for x in line.split(u"\t")]
+        if len(c) < 2 or not c[0].isdigit() or not c[1]:
+            continue
+        out.append((int(c[0]), c[1], c[2] if len(c) >= 3 else u""))
+    return out
+
+
+def irekae_maji(gyou_atarashii, path_sashi, hizuke=u""):
+    u"""差し替え.txt に取り込む。返すのは (入れた数, 外した数)。
+
+    同じ所を指している行は**新しいほうだけ残す**：
+      ・字幕の文（3列目）が同じ行
+      ・文の無い行は、番号が同じ行
+    絵が「-」の行は「手で選んだ絵を外す」＝消すだけで、足さない。
+    """
+    aru = []
+    if os.path.exists(path_sashi):
+        aru = io.open(path_sashi, encoding="utf-8-sig", errors="replace").read() \
+            .replace("\r\n", "\n").split("\n")
+    bun = set(tx for (_n, _e, tx) in gyou_atarashii if tx)
+    ban = set(n for (n, _e, _tx) in gyou_atarashii)
+    nokosu = []
+    for line in aru:
+        t = line.strip()
+        if not t or t.startswith(u"#"):
+            nokosu.append(line)
+            continue
+        c = [x.strip() for x in t.split(u"\t")] if u"\t" in t \
+            else re.split(r"[\u3000 ]+", t, maxsplit=1)
+        no = int(c[0]) if c and c[0].isdigit() else None
+        tx = c[2] if (u"\t" in t and len(c) >= 3) else u""
+        if (tx and tx in bun) or (not tx and no is not None and no in ban):
+            continue
+        nokosu.append(line)
+    while nokosu and not nokosu[-1].strip():
+        nokosu.pop()
+    ireta = [g for g in gyou_atarashii if g[1] != u"-"]
+    if ireta:
+        nokosu.append(u"")
+        nokosu.append(u"# 入れ替え表から（%s）" % hizuke)
+        for (n, e, tx) in ireta:
+            nokosu.append(u"%d\t%s\t%s" % (n, e, tx) if tx else u"%d\t%s" % (n, e))
+    io.open(path_sashi, "w", encoding="utf-8", newline="\r\n").write(
+        u"\n".join(nokosu) + u"\n")
+    return len(ireta), len(gyou_atarashii) - len(ireta)
+
+
+def irekae_torikomu():
+    u"""ダウンロードにある入れ替え表の保存（irekae.txt）を、差し替え.txt に取り込む。
+
+    ■ 名前は英数字（irekae.txt）。どの動画のものかは**中の #@title** で見分ける
+      日本語の名前（入れ替え_○○.txt）は、ブラウザや環境によって「download」に
+      置きかわることがあった（こちらの確かめで実際にそうなった）。
+      ブラウザは同じ名前だと「irekae (1).txt」にするので、頭の名前で探す。
+
+    一度取り込んだファイルは その他/_取り込んだ入れ替え.txt に控え、二度は入れない
+    （あとで本人が 差し替え.txt を手で直したのを、古い選び方で上書きしないため）。
+    """
+    na = os.path.basename(os.path.abspath(HERE))
+    atama = u"入れ替え_" + na
+    kiroku = os.path.join(HERE, SONOTA_DIR, IREKAE_KIROKU)
+    mita = set()
+    if os.path.exists(kiroku):
+        for line in io.open(kiroku, encoding="utf-8-sig", errors="replace"):
+            if line.strip() and not line.startswith(u"#"):
+                mita.add(line.rstrip(u"\r\n"))
+    kouho = []
+    for d in irekae_basho():
+        try:
+            names = os.listdir(d)
+        except Exception:
+            continue
+        for f in names:
+            if not f.lower().endswith(u".txt"):
+                continue
+            p = os.path.join(d, f)
+            if f.lower().startswith(u"irekae"):
+                if irekae_dare(p) != na:
+                    continue        # 別の動画の選び方
+            elif f.startswith(atama):
+                nokori = f[len(atama):-4].strip()
+                if nokori and not re.match(r"^\(\d+\)$", nokori):
+                    continue        # 別の動画（名前の頭が同じだけ）
+                dare = irekae_dare(p)
+                if dare is not None and dare != na:
+                    continue
+            else:
+                continue
+            sirushi = u"%s\t%d\t%d" % (os.path.abspath(p), int(os.path.getmtime(p)),
+                                        os.path.getsize(p))
+            if sirushi in mita:
+                continue
+            kouho.append((os.path.getmtime(p), p, sirushi))
+    if not kouho:
+        return 0
+    if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
+        os.makedirs(os.path.join(HERE, SONOTA_DIR))
+    sashi = os.path.join(HERE, SASHIKAE)
+    if os.path.exists(sashi):
+        shutil.copy2(sashi, os.path.join(HERE, SONOTA_DIR, u"_差し替え_取り込む前.txt"))
+    zen = 0
+    for (mt, p, sirushi) in sorted(kouho):
+        g = irekae_gyou(p)
+        ireta, hazushi = irekae_maji(
+            g, sashi, time.strftime(u"%Y-%m-%d %H:%M", time.localtime(mt)))
+        say(u"入れ替え表の選び方を 差し替え.txt に取り込みました: %d か所%s（%s）"
+            % (ireta, (u"・機械に任せる %d か所" % hazushi) if hazushi else u"", p))
+        zen += ireta + hazushi
+        with io.open(kiroku, "a", encoding="utf-8") as f:
+            f.write(sirushi + u"\n")
+    return zen
+
+
+def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
+                daiji=None, fol=u"確認用"):
+    u"""確認用/入れ替え表.html を書く。ブラウザで開いて、押すだけで絵を選び直せる。
+
+    番号は 確認用/一覧.txt と同じ（章カードも1コマ）。差し替え.txt の番号と同じ数え方。
+    候補は**その字幕の章の作品フォルダ**の絵だけ（別の作品は並べない）。
+    作品の頭の1文（題字の画面）は1行にまとめ、選ぶと文ぜんぶの絵が替わる。
+    """
+    import json
+    try:
+        from pathlib import Path
+    except Exception:
+        return None
+
+    def uri(p):
+        try:
+            return Path(os.path.abspath(p)).as_uri()
+        except Exception:
+            return u""
+
+    if not os.path.isdir(fol):
+        os.makedirs(fol)
+    fols = []
+    files = {}
+    for k in images:
+        if u"/" not in k:
+            continue
+        f = k.split(u"/", 1)[0]
+        if f == MUJI.split(u"/")[0]:
+            continue
+        if f not in files:
+            files[f] = []
+            fols.append(f)
+        files[f].append(k.split(u"/", 1)[1])
+    fols.sort(key=natkey)
+    fidx = dict((f, i) for i, f in enumerate(fols))
+
+    def tsukau(names):
+        out = []
+        for w in names:
+            w = w.strip()
+            if not w:
+                continue
+            hit = [f for f in fols if f == w] or [f for f in fols if w in f]
+            for f in hit:
+                if fidx[f] not in out:
+                    out.append(fidx[f])
+        return out
+
+    daihon = shou_no_wasuu(rows, chaps) if chaps else [u""] * len(rows)
+    zenbu = tsukau([e for (_k, _t, eps) in (chaps or []) for e in eps]) \
+        or list(range(len(fols)))
+    chap, ckey = [], {}
+
+    def chap_no(s):
+        fs = tsukau(s.split(u" / ")) if s else []
+        if not fs:
+            fs = zenbu
+        k = u",".join(str(x) for x in fs)
+        if k not in ckey:
+            ckey[k] = len(chap)
+            chap.append(fs)
+        return ckey[k]
+
+    te = set()
+    tp = os.path.join(HERE, TSUKATTA)
+    if os.path.exists(tp):
+        for line in io.open(tp, encoding="utf-8-sig", errors="replace"):
+            t = line.strip()
+            if t.isdigit():
+                te.add(int(t))
+    dj = {}
+    for (s0, e0, _t, _a, _b) in (daiji or []):
+        for j in range(s0, e0 + 1):
+            dj[j] = s0
+    out_rows = []
+    i = 0
+    while i < len(rows):
+        _du, img, tx = rows[i]
+        if i in dj:
+            s0 = dj[i]
+            mem = [j for j in range(i, len(rows)) if dj.get(j) == s0]
+            kind = u"daiji"
+        else:
+            mem = [i]
+            kind = u"card" if img.startswith(u"@@card") else \
+                (u"muji" if img == MUJI else u"e")
+        p = imgpath.get(img) or cache.get(img) or u""
+        out_rows.append({
+            u"n": [j + 1 for j in mem],
+            u"t": mmss(starts[i]),
+            u"tx": u"".join((rows[j][2] or u"").strip() for j in mem),
+            u"txs": [(rows[j][2] or u"").strip() for j in mem],
+            u"cur": uri(p) if p and os.path.exists(p) else u"",
+            u"curKey": img if (u"/" in img and not img.startswith(u"@@")
+                               and img != MUJI) else u"",
+            u"kind": kind,
+            u"te": any((j + 1) in te for j in mem),
+            u"c": chap_no(daihon[i]) if kind != u"muji" else -1,
+        })
+        i = mem[-1] + 1
+    # 無地の章は候補なし（その作品のフォルダが無い）
+    chap.append([])
+    for r in out_rows:
+        if r[u"c"] == -1:
+            r[u"c"] = len(chap) - 1
+    D = {u"title": os.path.basename(os.path.abspath(HERE)),
+         u"made": time.strftime(u"%Y-%m-%d %H:%M"),
+         u"root": uri(root).rstrip(u"/"),
+         u"fol": fols,
+         u"files": [sorted(files[f], key=natkey) for f in fols],
+         u"chap": chap,
+         u"rows": out_rows}
+    js = json.dumps(D, ensure_ascii=False).replace(u"</", u"<\\/")
+    html = IREKAE_TEMPLATE.replace(u"@@TITLE@@", D[u"title"].replace(u"<", u"＜")) \
+        .replace(u"@@DATA@@", js)
+    out = os.path.join(fol, IREKAE_HTML)
+    io.open(out, "w", encoding="utf-8", newline="\n").write(html)
+    say(u"確認用/入れ替え表.html を書きました（字幕 %d か所・候補の作品 %d）。"
+        u"ブラウザで開くと、押すだけで絵を選び直せます" % (len(out_rows), len(fols)))
+    say(u"  保存したら はじめる.bat → 2 で入れ替わります（ダウンロードから自動で読み込みます）")
+    return out
+
+
 def load_sashikae(path, images, moji=None):
     u"""差し替え.txt を読む。{番号(1から): 画像のファイル名}
 
@@ -8663,6 +9148,22 @@ def load_sashikae(path, images, moji=None):
         t = line.strip()
         if not t or t.startswith(u"#"):
             continue
+        # ■ タブで区切った行は、**2列目をまるごと**絵の名前として読む（2026-11-15）
+        #
+        #   入れ替え表が書く行は「番号<タブ>フォルダ/ファイル<タブ>字幕の文」。
+        #   おすすめ紹介のフォルダ名には空白が入る（「コードギアス 反逆のルルーシュ」）。
+        #   下の読み方は空白でも切るので、2列目が「コードギアス」になり、
+        #   **その名前を含む絵の1枚目**に当たっていた。
+        #   2列目がそのまま絵の名前になっているときだけ、こちらで読む
+        #   （それ以外は今までどおり。手で書いた行の読み方は変えない）。
+        if u"\t" in t:
+            c2 = [x.strip() for x in t.split(u"\t")]
+            c2 = [x for x in c2 if x and x not in (u"タブ", u"TAB", u"tab", u"\\t")]
+            if len(c2) >= 2 and c2[0].isdigit() and c2[1] in images:
+                out[int(c2[0])] = c2[1]
+                if len(c2) >= 3:
+                    moji[int(c2[0])] = u" ".join(c2[2:]).strip()
+                continue
         # 表計算から貼ると、タブの列に「タブ」という字がそのまま入ることがある。
         # 実際に9番と18番がそれで当たらなかったので、落としてから読む。
         c = [x for x in re.split(r"[\t\uFF09\u3000 ]{1,}", t)
@@ -10031,6 +10532,7 @@ def main():
 
     # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
     sashi_moji = {}
+    irekae_torikomu()
     if ZENBU_OMAKASE[0]:
         kae = {}
         if os.path.exists(os.path.join(HERE, SASHIKAE)):
@@ -10140,6 +10642,7 @@ def main():
             i = ban[no]
             du, _mae2, tx2 = rows[i]
             rows[i] = (du, img2, tx2)
+            TE_IDX.add(i)
             # 当たった先の人が合っているかを、その場で見せる。
             # 合っていなければ「番号がずれたまま」の合図になる。
             shirase = u""
@@ -10323,6 +10826,7 @@ def main():
         byou = en["card_byou"]
         atarashii, zure = [], 0
         ci, nuketa = 0, 0
+        te2 = set()
         for i, row in enumerate(rows):
             while ci < len(card_moto) and card_moto[ci][0] == i:
                 _, moto, title = card_moto[ci]
@@ -10339,8 +10843,12 @@ def main():
                 cards[len(atarashii)] = title
                 atarashii.append((byou, key, u""))
                 ci += 1
+            if i in TE_IDX:
+                te2.add(len(atarashii))     # カードを入れると番号がずれるので付けかえる
             atarashii.append(row)
         rows = atarashii
+        TE_IDX.clear()
+        TE_IDX.update(te2)
         say(u"章タイトルのカードを %d枚 はさみました (1枚 %.1f秒)"
             % (len(cards), byou))
         say(u"  うち %d枚は背景を消してキャラだけにしました（残り %d枚は"
@@ -10368,7 +10876,14 @@ def main():
         kou_nashi = []
         for (s0, e0, title, sakuhin, seisaku) in daiji_basho(rows, chaps0):
             moto = None
+            # 本人が入れ替え表（差し替え.txt）でこの文の絵を選んでいたら、それが先
+            te3 = [rows[j][1] for j in range(s0, e0 + 1)
+                   if j in TE_IDX and not rows[j][1].startswith(u"@@")]
+            if te3:
+                moto = max(set(te3), key=te3.count)
             for j in range(s0, e0 + 1):
+                if moto:
+                    break
                 if wa_koushiki(rows[j][1]):
                     moto = rows[j][1]
                     break
@@ -10927,6 +11442,11 @@ def main():
         koma_ichiran(rows, starts, ends, cache)
     except Exception as e:
         say(u"確認用の書き出しはできませんでした: %s" % e)
+    try:
+        irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, a.images,
+                    daiji=daiji)
+    except Exception as e:
+        say(u"入れ替え表は作れませんでした: %s" % e)
     say(u"絵を差し替えたいときは 画像割り当て.tsv を直して、もう一度 batを実行してください。")
 
 
