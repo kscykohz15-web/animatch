@@ -205,6 +205,26 @@ def main():
     iu(u"別の作品へ出ていた絵" not in hon7 and ms.MUJI not in out7,
        u"⑦ 説明のあるフォルダの回は、この段を素通りする")
 
+    # ── ⑨ 公式画像は作品の頭の1文だけ（2026-11-16・本人の指定）
+    #    > はじめにの章で「1」という名前で保存した画像が多く使われています。
+    #    > この画像は各アニメ紹介の最初のみしか使わないようにしてください。
+    #    話数マップの言葉がその作品に当たると、フォルダの中を名前順に取る。
+    #    「1.jpg」は「0002.jpg」より前なので、まだ使っていない先頭＝公式画像が出ていた。
+    emap9 = {u"ニセコイ": u"穏やか 室内 立ち姿 空 街 歩く 本 文字あり",
+             u"とらドラ！": u"穏やか 室内 立ち姿 空 街 歩く 本 文字あり"}
+    chaps9 = [(u"今回は", u"－", [u"ニセコイ", u"とらドラ！"])] + chaps[1:]
+    plan9 = plan.replace(u"# ══ はじめに ══\n@@話数\tニセコイ\n",
+                         u"# ══ はじめに ══\n@@話数\tニセコイ, とらドラ！\n")
+    out9, _h9 = hashiru(ms, images, plan9, slots, chaps9, {}, emap9, None)
+    hajime9 = [o for o in out9[0:2]]
+    iu(not any(ms.wa_koushiki(o) for o in hajime9),
+       u"⑨ はじめにの章に公式画像（1）を出さない（いまは %s）" % u" ".join(hajime9))
+    soto9 = [o for i, o in enumerate(out9) if i not in (2, 3, 14, 15)]
+    iu(not any(ms.wa_koushiki(o) for o in soto9),
+       u"⑨ 作品の頭の1文のほかに、公式画像を1枚も出さない")
+    iu(out9[2] == u"ニセコイ/1.jpg" and out9[14] == u"とらドラ！/1.png",
+       u"⑨ 作品の頭の1文は公式画像のまま")
+
     # ── ⑧ 無地の絵は「絵の一覧」に入らない
     iu(ms.MUJI not in images, u"⑧ 無地の絵は絵の一覧に入れない（札で選ばれない）")
     iu(ms.barakeru(list(range(10)))[:3] == [0, 8, 4],

@@ -810,6 +810,10 @@ MITAME_KITEI = {
     u"章の大きさ": 24.0, u"章の色": u"FFFFFF",
     # 絵をゆっくり横に動かす（はい/いいえ）と、そのための拡大率
     u"画像を動かす": u"はい", u"画像の拡大": 1.10, u"動きの速さ": 0.75,
+    # 速さを決める基準の尺（秒）。これより長く映る絵は、この秒数で端まで動いて止まる
+    u"動きの基準の秒数": 4.0,
+    # 字幕の下の余白（画面の高さに対する割合）。0.062 が前の位置
+    u"字幕の下の余白": 0.03,
 }
 
 
@@ -3846,6 +3850,31 @@ SUKUU_SON_UE = [0.25]
 # 残った所ごとに「前後の見える間までの秒数」と「その候補の釣り合い」を
 # ログに出し、本人のログだけで原因が分かるようにする。
 SUKUU_KOTOWARI = []
+# ■ 「。」のあとの切れ目は、**いちばん長い間**へ（2026-11-16・本人の画面）
+#
+#   本人のラブコメ20選（v193）で、字幕が声とずれた2つの場面はどちらも「。」のあと:
+#
+#     1:31 「…兵器、ISを扱う学園。」→「そこへ世界中の男性の中で…」
+#          近い間: 手前 -0.38秒（釣り合い 0.41）／ 先 無し      ← 動かせず、声の中に残った
+#     9:39 「本作の魅力は、兄妹の距離の動き方。」→「隠していた側と…」
+#          +1.50秒 先の間へ動かした                          ← 0.95秒 遅れて切り替わった
+#
+#   「。」では読み上げが必ず止まる（間が「、」よりずっと長い）。だから正しい行き先は
+#   **すぐ手前（または先）にある長い間**で、そこは文字数との釣り合いでは選べない
+#   （前の字幕が短いと「釣り合わない」と出て、歯止め 0.25 で弾かれる）。
+#   「。」のあとだけ、歯止めの代わりに**間の長さ**で選ぶ。「、」のあとは今までどおり。
+#   MS_KUTEN_MA=0 で前の動きに戻る（材料で比べるため）。
+KUTEN_MA = [os.environ.get(u"MS_KUTEN_MA", u"1") != u"0"]
+# 「。」の間とみなす長さ。**短い息継ぎは「。」の間ではない。**
+#   最初は長さを見ずに「いちばん長い間」にしていて、ずれ検査のきつい材料（乱数3）で
+#   0.13秒の息継ぎが2つしか無い所を選び、1.70 → 2.81秒 に悪化した
+#   （本物の間は窓の外 +1.82秒。どちらも釣り合い 0.60〜0.69 の当てずっぽう）。
+#   材料の「。」の間は 0.40〜0.55秒、息継ぎは 0.12〜0.18秒。あいだを取って 0.25秒。
+#   これより短い間しか無い所は、「、」と同じ今までの選び方に戻る。
+try:
+    KUTEN_SAITAN = [float(os.environ.get(u"MS_KUTEN_SAITAN", u"0.25"))]
+except Exception:
+    KUTEN_SAITAN = [0.25]
 # 窓。(d) の 2.00秒 では 1.6秒先の関係ない間へ飛んだ。ここは
 # 「いちばん近い」ではなく「釣り合いがいちばん良い」で選ぶので、
 # 遠くの関係ない間は釣り合いが悪く、選ばれない。A/B 用に env で動かせる。
@@ -3874,6 +3903,10 @@ def koe_no_naka_sukuu(slots, sils, danraku, mado=None):
     kouho = sorted(set(max(a + 0.02, b - LEAD) for (a, b) in ma12))
     if not kouho:
         return slots, 0, 0.0, []
+    ma_naga = {}
+    for (a, b) in ma12:
+        c = max(a + 0.02, b - LEAD)
+        ma_naga[c] = max(ma_naga.get(c, 0.0), b - a)
     muon = sorted((a, b) for (a, b) in sils if b > a)
     kugiri = [slots[0][0]] + [st + du for (st, du, _t) in slots]
     moji = [max(0.5, disp_len((tx or u"").strip())) for (_s, _d, tx) in slots]
@@ -3895,6 +3928,9 @@ def koe_no_naka_sukuu(slots, sils, danraku, mado=None):
             continue                   # 間に乗っている所には触らない
         a0, b0 = kugiri[i - 1], kugiri[i + 1]
         erabu, mita = None, []
+        kuten_ato = KUTEN_MA[0] and (slots[i - 1][2] or u"").strip().endswith(
+            (u"。", u"！", u"？", u"!", u"?"))
+        kuten_best = None
         for c in kouho:
             if abs(c - t) > mado or abs(c - t) < 0.01:
                 continue
@@ -3908,10 +3944,17 @@ def koe_no_naka_sukuu(slots, sils, danraku, mado=None):
             mita.append((c - t, son2 if son2 < 1e8 else None, min(w1, w2)))
             if min(w1, w2) < SUKUU_YUKA[0]:
                 continue               # 歯止め。前後どちらかが短すぎになる
+            if kuten_ato and ma_naga.get(c, 0.0) >= KUTEN_SAITAN[0]:
+                # 「。」のあと：いちばん長い間、同じなら近いほう
+                k2 = (-ma_naga.get(c, 0.0), abs(c - t))
+                if kuten_best is None or k2 < kuten_best[0]:
+                    kuten_best = (k2, c, son2 if son2 < 1e8 else 9.99)
             if son2 >= 1e8 or son2 > SUKUU_SON_UE[0]:
                 continue      # 行き先そのものが釣り合っていない（上の注記）
             if erabu is None or son2 < erabu[0]:
                 erabu = (son2, c)
+        if kuten_best is not None:
+            erabu = (kuten_best[2], kuten_best[1])
         if erabu is None:
             # **なぜ動かせなかったか**を残す（推測で直さないため）
             _m = [x for x in mita if x[0] < 0]
@@ -7899,8 +7942,10 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 ima3 = shou_kiri[idx][1]
                 nai3 = not ima3
             img = out[idx]
-            if img in tebiki:
-                continue          # 手で選んだ絵・公式画像・図表はそのまま
+            if img in tebiki and not wa_koushiki(img):
+                continue          # 手で選んだ絵・図表はそのまま
+            # （公式画像は #公式 を読みかえた名前なので tebiki に入っているが、
+            #   **別の作品の公式画像**がここへ流れてくることがある。手で選んだ絵ではない）
             if nai3:
                 if img != MUJI:
                     tsukai[img] = max(0, tsukai.get(img, 1) - 1)
@@ -7925,9 +7970,56 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         for k in [k for k, v in tsukai.items() if v <= 0]:
             del tsukai[k]
 
+    # ■ 公式画像（1）は、作品の頭の1文のためだけ（2026-11-16・本人の指定）
+    #
+    #   > はじめにの章ですが…その画像の中で「1」という名前で保存した画像が多く
+    #   > 使われています。この画像は各アニメ紹介の最初のみしか使わないようにしてください。
+    #
+    #   どのフォルダも名前順だと「1.jpg」が先頭に来る（0002.jpg より前）。
+    #   説明の無い絵をタグで探すと、**まだ使っていない先頭の1枚**＝公式画像が
+    #   はじめにの章で作品の数だけ出ていた。作品の頭の1文（daiji_basho）以外では
+    #   公式画像を使わず、同じフォルダの別の絵に替える。
+    #   本人が 差し替え.txt（入れ替え表）で選んだ公式画像は、このあとで当たるので消えない。
+    kou_kae = 0
+    if any(wa_koushiki(x) for x in out):
+        yurusu = {}
+        if chaps:
+            _rw = [(slots[j][1], out[j], slots[j][2]) for j in range(len(out))]
+            _ep = dict((t, eps) for (_k, t, eps) in chaps)
+            for _d in daiji_basho(_rw, chaps):
+                _fs = resolve_focus(_ep.get(_d[2]) or [])
+                for j in range(_d[0], _d[1] + 1):
+                    yurusu[j] = _fs
+        for idx in range(len(out)):
+            img = out[idx]
+            # 作品の頭の1文でも、**その作品の**公式画像のときだけ残す
+            # （フォルダの無い作品の頭に、となりの作品の公式画像が流れてきた）
+            if not wa_koushiki(img) or img.rsplit(u"/", 1)[0] in yurusu.get(idx, ()):
+                continue
+            fol3 = img.rsplit(u"/", 1)[0]
+            mae3 = out[idx - 1] if idx else None
+            ato3 = out[idx + 1] if idx + 1 < len(out) else None
+            hoka = [k for k in images if k.rsplit(u"/", 1)[0] == fol3
+                    and not wa_koushiki(k) and k not in (mae3, ato3)]
+            if idx in yurusu and not yurusu[idx]:
+                hoka = [MUJI]       # その作品のフォルダが無い。別の作品の絵は出さない
+            if not hoka:
+                continue
+            hoka = barakeru(sorted(hoka, key=natkey))
+            erabi4 = min(hoka, key=lambda k: (tsukai.get(k, 0), hoka.index(k)))
+            tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+            out[idx] = erabi4
+            tsukai[erabi4] = tsukai.get(erabi4, 0) + 1
+            kou_kae += 1
+        for k in [k for k, v in tsukai.items() if v <= 0]:
+            del tsukai[k]
+
     say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
         u"%d枚が同じ文から引き継ぎ / 全%d枚"
         % (hit, namae, carried, len(slots)))
+    if kou_kae:
+        say(u"公式画像（1）は作品の頭の1文だけにしました。ほかの所 %d枚を同じ作品の別の絵に"
+            u"替えています" % kou_kae)
     if sakuhin_modoshi:
         say(u"別の作品へ出ていた絵を %d枚 その章の作品の中へ戻しました"
             u"（その作品の絵に1枚ごとの説明が無いので、札は見ずに順に当てています。"
@@ -9824,7 +9916,16 @@ def main():
     tate = h > w
     if not a.safe_bottom:
         # 縦動画は下にアプリのボタンが重なるので、字幕を高めに置く
-        a.safe_bottom = 0.17 if tate else 0.062
+        # ■ 横動画は 見た目.txt の「字幕の下の余白」（2026-11-16・本人の指定）
+        #   > 全体的に音声の字幕をもう少し位置を下に下げてください。
+        #   > ただし文字が見切れないように注意をして。
+        #   0.062（67px）→ 0.03（32px）。ふち（文字の 11.5%）と影を足しても
+        #   画面の中に収まることを、1080p で1コマ書き出して確かめた（下に 26〜29px 残る）。
+        try:
+            _sb = float(mi.get(u"字幕の下の余白", 0.03))
+        except Exception:
+            _sb = 0.03
+        a.safe_bottom = 0.17 if tate else max(0.015, min(0.2, _sb))
 
     if a.scout:
         # 話数調べは音声が無くてもできる
@@ -10973,9 +11074,17 @@ def main():
                         return u""
                     return credit or u""
                 ev, atatta, nashi_fol = [], 0, set()
+                # ■ 絵から引けないとき（無地・章カード）は、その章の作品で引く
+                #   （2026-11-16・本人「ISの作品紹介では、左上が参照元に代わっていない」）
+                #   IS はフォルダが無く無地なので、絵からは作品が分からなかった。
+                shou_e = shou_no_wasuu(rows, chaps) if chaps else [u""] * len(rows)
                 for i, (_du, img, _tx) in enumerate(rows):
                     fol = e_no(img)
-                    ctx = chosaku_hiku(chosaku, fol) if fol else u""
+                    ctx = chosaku_hiku(chosaku, fol) \
+                        if (fol and fol != MUJI.split(u"/")[0]) else u""
+                    if not ctx and (img == MUJI or img.startswith(u"@@")) \
+                            and shou_e[i] and u" / " not in shou_e[i]:
+                        ctx = chosaku_hiku(chosaku, shou_e[i])
                     if ctx:
                         atatta += 1
                     else:
@@ -11112,8 +11221,8 @@ def main():
         # こうすると、最初の字幕から最後の字幕まで一定の速さで流れる。
         kumi = []            # [(頭の添字, [添字...])]
         for i in range(len(rows)):
-            if rows[i][1].startswith(u"@@"):
-                kumi.append(None)        # 章カードで必ず切れる
+            if rows[i][1].startswith(u"@@") or rows[i][1] == MUJI:
+                kumi.append(None)        # 章カード・無地で必ず切れる（無地は動かさない）
                 continue
             if kumi and kumi[-1] is not None \
                     and rows[kumi[-1][-1]][1] == rows[i][1]:
@@ -11125,6 +11234,22 @@ def main():
         # 1枚ずつで決めると、続いた所で途中で端に当たって止まってしまう。
         nagai = max((sum(frames[j] for j in k) / float(fps))
                     for k in hitotsuzuki) if hitotsuzuki else 0.0
+        # ■ 速さの基準は「いちばん長い絵」ではなく、上限で切る（2026-11-16・本人の指定）
+        #
+        #   > 画像をもう少し動かしてください。今のままでは動きが小さすぎます。
+        #
+        #   本人のラブコメ20選は「いちばん長い 49.93秒 で使い切る速さ（毎秒 1.6px）」
+        #   ＝ 2秒の絵で 3px しか動いていなかった。49.9秒は**作品のフォルダが無い章の
+        #   無地の絵**（13枚つづき）で、その1か所に全部の絵の速さが引きずられていた。
+        #   無地は動かさないことにし、基準の尺も 見た目.txt の「動きの基準の秒数」で切る。
+        #   それより長く映る絵は、その秒数で端まで動いて止まる。
+        nagai_moto = nagai
+        try:
+            _kj = float(mi.get(u"動きの基準の秒数", 4.0))
+        except Exception:
+            _kj = 4.0
+        if _kj > 0:
+            nagai = min(nagai, _kj)
         bai = max(0.05, min(1.0, float(mi.get(u"動きの速さ", 0.75))))
         kyori, hayasa, yoko, tate = pan_kesan(w, h, kakudai, nagai, bai)
         if kyori:
@@ -11141,10 +11266,12 @@ def main():
                 kazu[m] = kazu.get(m, 0) + 1
             say(u"絵を動かします: %.2f倍に広げ、余り 横%dpx 縦%dpx。"
                 u"小さいほうの %dpx を全方向の距離にそろえます" % (kakudai, yoko, tate, kyori))
-            say(u"  いちばん長い %.2f秒 で使い切る速さの %.2f倍（毎秒 %.1fpx）/ "
-                u"2秒の絵なら %.0fpx（画面の %.1f%%）"
+            say(u"  %.2f秒 で使い切る速さの %.2f倍（毎秒 %.1fpx）/ "
+                u"2秒の絵なら %.0fpx（画面の %.1f%%）%s"
                 % (nagai, bai, hayasa, min(kyori, hayasa * 2),
-                   100.0 * min(kyori, hayasa * 2) / w))
+                   100.0 * min(kyori, hayasa * 2) / w,
+                   (u"（いちばん長い絵は %.1f秒。それより長い絵は端で止まります）"
+                    % nagai_moto) if nagai_moto > nagai + 0.01 else u""))
             _K = max(1, min(4, int(round(float(mi.get(u"動きの細かさ", 3.0))))))
             say(u"  動きの細かさ: 動く向きだけ %d倍に広げて切り、縮めます"
                 u"（刻みが 1/%d。%.2fpx/コマ → %.2fpx/コマ相当）"

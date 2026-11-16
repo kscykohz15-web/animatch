@@ -47,6 +47,7 @@ def dan(path):
 
 def miru(path):
     warui = []
+    chui_shaku = []
     t, d = dan(path)
 
     # ■ 形を見分ける（2026-11-08）
@@ -142,9 +143,9 @@ def miru(path):
     #
     #   読み上げ 6.46字/秒 なので 30秒=194字 / 50秒=323字。
     #   5段落（つなぎ・情報・あらすじ・魅力・締め）を合わせて数える。
+    TS2 = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
+           u"続く作品は|続いては|次の作品は|最後にご紹介する作品は")
     if nijussen:
-        TS2 = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
-               u"続く作品は|続いては|次の作品は|最後にご紹介する作品は")
         nagai, mijikai = [], []
         for i, g in enumerate(d):
             m2 = re.search(u"(?:%s)、?(.+)$" % TS2, g)
@@ -164,6 +165,43 @@ def miru(path):
             warui.append(u"30秒に足りない作品が %d本: %s"
                          % (len(mijikai), u" / ".join(mijikai[:6])))
 
+    # ⑨⑩⑪ 本人の添削（2026-11-16・ラブコメ20選を見て）
+    #
+    #   ⑨ > 作品同士のつなぎ目で…「偽の～作品です」までの説明はいらないです。
+    #     > 逆に変なので、普通にそのまま「…かと思います。続いての作品は」のように。
+    #      → つなぎの段落は「続いての作品は、」などで**始まる**こと（前置きを書かない）
+    #   ⑩ > 「作品です。第二期まで放送されています。」の流れでは機械的すぎるため、
+    #     > もう少し全体的に話し言葉っぽくしてください。ここだと「作品で、第二期まで…」
+    #      → 情報の段落で「作品です。」のすぐあとに続編の文を置かない
+    #   ⑪ > 制作会社ならではの良さは一言程度で、あとは作品の雰囲気やキャラの関係性、
+    #     > 可愛さ等に触れてください
+    #      → 魅力の段落に制作会社の名前が出たら知らせる（落とさない。一言なら良いので）
+    if nijussen:
+        ZOKU2 = (u"放送", u"続編", u"劇場版", u"公開", u"期", u"完結", u"決まって",
+                 u"テレビスペシャル")
+        for i, g in enumerate(d):
+            m3 = re.search(u"(%s)、" % TS2, g)
+            if m3 and m3.start() > 0:
+                warui.append(u"つなぎの前に前置きがあります（本人の指定で書かない）: "
+                             + g[:m3.start()][:40])
+            if m3 and i + 1 < len(d) and d[i + 1].startswith(u"本作は"):
+                bun = [b for b in re.split(u"(?<=。)", d[i + 1]) if b]
+                # 「作品で、」が中にあるかは見ない。「本作はオリジナル作品で、…全12話の
+                # 作品です。続編も…」の14本が、それを理由に黙って通っていた（2026-11-16）
+                if len(bun) >= 2 and bun[0].endswith(u"作品です。") \
+                        and any(z in bun[1] for z in ZOKU2):
+                    warui.append(u"「作品です。%s」は「作品で、%s」に（話し言葉にする）"
+                                 % (bun[1][:12], bun[1][:12]))
+            if m3 and i + 3 < len(d) and d[i + 3].startswith(u"本作の魅力は"):
+                sha = re.search(u"制作は(.+?)。?$", g)
+                if sha:
+                    seisha = sha.group(1).strip(u"。")
+                    yomi = seisha.replace(u"・", u"")
+                    if seisha in d[i + 3] or (len(yomi) >= 3 and yomi in d[i + 3]):
+                        chui_shaku.append(u"魅力に制作会社（%s）が出ています。一言程度に"
+                                          u"して、作品の雰囲気・キャラの関係・可愛さを中心に"
+                                          % seisha)
+
     # ⑧ 混ざりもの
     if u"**" in t:
         warui.append(u"強調の星印が混ざっています")
@@ -171,7 +209,11 @@ def miru(path):
         warui.append(u"キリル文字が混ざっています")
 
     ji = len(t.replace(u"\n", u"").replace(u" ", u""))
+    CHUI[:] = chui_shaku
     return warui, len(d), ji
+
+
+CHUI = []      # 落とさない知らせ（⑪ 魅力に制作会社）
 
 
 def main():
@@ -202,6 +244,8 @@ def main():
                 say(u"  … ほか %d件" % (len(warui) - 40))
         else:
             say(u"  ○ 添削の4つ、立場、100字、段落、すべて通りました")
+        for c in CHUI[:20]:
+            say(u"  ! " + c)
     say(u"")
     say(u"落ちた台本 %d／%d本" % (dame, len(shu)))
     return 1 if dame else 0

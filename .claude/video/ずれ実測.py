@@ -147,6 +147,34 @@ def main():
         print(u"× 一覧.txt を読めませんでした。")
         return 0
 
+    # ■ 作品の頭の画面（題字）の中の切れ目は、画面に出ない（2026-11-16）
+    #
+    #   おすすめ紹介の回は「最初にご紹介する作品は、ニセコイ、制作はシャフト。」の
+    #   あいだ、公式画像1枚と下の帯だけを出し、ふつうの字幕を出さない。
+    #   その文の中の切れ目（行の境目）は**見えない**ので、ずれとして数えない。
+    #   数えると、見えない所を「声の途中で切り替わっている」と言ってしまう。
+    #   帯は burn.ass の Obi の行。そこから時刻の窓を取る。
+    obi = []
+    _ass = os.path.join(u"その他", u"_work", u"burn.ass")
+    if os.path.exists(_ass):
+        for line in io.open(_ass, encoding="utf-8", errors="replace").read().split(u"\n"):
+            c = line.split(u",", 9)
+            if len(c) >= 10 and line.startswith(u"Dialogue:") and c[3].strip() == u"Obi":
+                try:
+                    a_, b_ = [int(x.split(u":")[0]) * 3600 + int(x.split(u":")[1]) * 60
+                              + float(x.split(u":")[2]) for x in (c[1].strip(), c[2].strip())]
+                    obi.append((a_, b_))
+                except Exception:
+                    pass
+
+    def obi_naka(st):
+        u"""その行の頭が、題字の画面の**中**（頭ではない所）か。"""
+        return any(a_ + 0.02 < st < b_ - 0.02 for (a_, b_) in obi)
+
+    def obi_kakaru(st):
+        u"""その行が、題字の画面の中（頭も含む）か。ふつうの字幕は出ていない。"""
+        return any(a_ - 0.02 <= st < b_ - 0.02 for (a_, b_) in obi)
+
     # 章カードぶんの無音を引いて、merged.wav の中の時刻に戻す
     mato, card_byou = [], 0.0
     for (no, st, du, img, tx) in rows:
@@ -154,6 +182,8 @@ def main():
             card_byou += du
             continue
         if not tx:
+            continue
+        if obi_naka(st):
             continue
         # 字幕は声の LEAD 秒前に出る。4つめは**1枚前の字幕の文**。
         #
@@ -457,6 +487,8 @@ def main():
             c = line.split(u",", 9)
             if len(c) < 10:
                 continue
+            if c[3].strip() not in (u"Def", u"Hook"):
+                continue          # 題字の画面の帯（Obi）は本文の字幕ではない
             h, m2, sec = c[1].strip().split(u":")
             ev.append(int(h) * 3600 + int(m2) * 60 + float(sec))
         ev.sort()
@@ -466,7 +498,8 @@ def main():
         FPS = 30.0
         e_hon, f = [], 0
         for r in rows:
-            if not r[3].startswith(u"@@") and r[4].strip():
+            if not r[3].startswith(u"@@") and r[4].strip() \
+                    and not obi_kakaru(f / FPS):
                 e_hon.append(f / FPS)
             f += int(round(r[2] * FPS))
         if ev and len(ev) == len(e_hon):
