@@ -35,6 +35,8 @@ import re
 import sys
 
 V = os.path.join(os.path.dirname(os.path.abspath(__file__)), u"")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _betsumei   # noqa: E402  作品名の引き当て（インフィニット・ストラトス → IS）
 MEMO = V + u"作品メモ.txt"
 
 TSUNAGI = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
@@ -125,14 +127,18 @@ def main():
             if not m:
                 continue
             na = sakuhinmei(m.group(1))
-            # 作品の5段落（つなぎ・情報・あらすじ・魅力・締め）
-            waku = u"\n".join(p[i:i + 5])
+            # 作品の段落（つなぎから、次の作品の頭・締めの頭の手前まで）
+            # ■ 5段落の決め打ちをやめた（2026-11-17）。本人が書いたインフィニット・ストラトスは
+            #   6段落で、6段落目の禁句を見ていなかった。
+            made = len(p)
+            for j in range(i + 1, len(p)):
+                if re.search(u"(?:%s)、?(.+)$" % TSUNAGI, p[j]) or p[j].startswith(u"今回の動画は以上"):
+                    made = j
+                    break
+            waku = u"\n".join(p[i:made])
             mita += 1
 
-            key = na if na in memo else None
-            if key is None:
-                kouho = [k for k in memo if na.startswith(k) or k.startswith(na)]
-                key = kouho[0] if len(kouho) == 1 else None
+            key = _betsumei.hiku(na, memo)
             if key is None:
                 nai.append(na)
                 continue

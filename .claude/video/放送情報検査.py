@@ -19,6 +19,9 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+import sys as _sys_b
+_sys_b.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _betsumei   # noqa: E402  作品名の引き当て（インフィニット・ストラトス → IS）
 
 # 台本のカタカナ表記と、AniList の英字表記の対応。
 # **ここに無い制作会社を台本に書いたら落ちる。** 書く前にここへ足すこと。
@@ -158,7 +161,34 @@ def main():
         say(u"放送情報.txt がありません。先に 放送情報を引く.py を回してください。")
         return 1
 
-    p = dan(sys.argv[1])
+    # ■ 渡された台本を**全部**見る（2026-11-17）
+    #   前は sys.argv[1] の1本目しか見ていなかった。仕上げ.py ㉕ は 動画一覧.txt の
+    #   19本を渡すが、1本目が無職転生の台本なので「作品 0本を見ました」で通り、
+    #   **おすすめ紹介の台本はこの検査を一度も通っていなかった。**
+    zen_warui, zen_mita = [], 0
+    for path in sys.argv[1:]:
+        w1, m1 = miru(path, joho)
+        zen_mita += m1
+        if len(sys.argv) > 2 and m1:
+            say(u"── %s（作品 %d本）" % (os.path.basename(path).replace(u"_字幕用_最終版.txt", u""), m1))
+            for w in w1:
+                say(u"  × " + w)
+        zen_warui += w1
+    say(u"作品 %d本を見ました（放送情報.txt は %d本ぶん）" % (zen_mita, len(joho)))
+    if zen_warui:
+        if len(sys.argv) <= 2:
+            say(u"")
+            say(u"── 合っていません ──")
+            for w in zen_warui:
+                say(u"  × " + w)
+        return 1
+    say(u"○ 台本の年・季・話数は、調べたものと全部合っています。")
+    return 0
+
+
+def miru(path, joho):
+    u"""1本の台本を見る。戻り値 (落ちたもの, 見た作品の数)。"""
+    p = dan(path)
     warui, mita = [], 0
     for i, x in enumerate(p):
         m = re.search(u"(?:%s)、?(.+)$" % TSUNAGI, x)
@@ -173,10 +203,7 @@ def main():
         mita += 1
 
         # 放送情報.txt のどの行か（題名そのまま → 前方一致 の順）
-        key = na if na in joho else None
-        if key is None:
-            kouho = [k for k in joho if na.startswith(k) or k.startswith(na)]
-            key = kouho[0] if len(kouho) == 1 else None
+        key = _betsumei.hiku(na, joho)
         if key is None:
             warui.append(u"%s … 放送情報.txt にありません。**調べてから書くこと**" % na)
             continue
@@ -185,12 +212,16 @@ def main():
             warui.append(u"%s … 引けていません。**数字を書かないこと**" % na)
             continue
 
-        mt = re.search(u"(\\d{4})年", h)
+        # ■ 第一期の放送を言っている所だけを見る（2026-11-17・本人の型）
+        #   本人の型の情報の文は年・季・話数を言わず、続きの年だけが出る
+        #   （「アニメも2026年に公開された劇場版で完結」「2026年の秋から第二期が放送」）。
+        #   前は段落の最初の4桁を第一期の年と見て、青ブタとアオのハコを落としていた。
+        mt = re.search(u"(?:第一期は)?(\\d{4})年(?:の(春|夏|秋|冬))?(?:に|から)"
+                       u"[^、。]{0,14}?(?:放送が開始|放送された|2クール)", h)
         if mt and mt.group(1) != j[u"年"]:
             warui.append(u"%s … 年が台本 %s／調べ %s" % (na, mt.group(1), j[u"年"]))
-        ms = re.search(u"\\d{4}年の(春|夏|秋|冬)", h)
-        if ms and ms.group(1) != j[u"季"]:
-            warui.append(u"%s … 季が台本 %s／調べ %s" % (na, ms.group(1), j[u"季"]))
+        if mt and mt.group(2) and mt.group(2) != j[u"季"]:
+            warui.append(u"%s … 季が台本 %s／調べ %s" % (na, mt.group(2), j[u"季"]))
         mw = re.search(u"全(\\d+)話", h)
         if mw and j[u"話数"] != u"？" and mw.group(1) != j[u"話数"]:
             warui.append(u"%s … 話数が台本 %s／調べ %s" % (na, mw.group(1), j[u"話数"]))
@@ -253,9 +284,13 @@ def main():
         #   困らなかったが、いまは「本作は」がくっついて 9作品が落ちた。
         #   ※ 「^本作は」を**先に**書くこと。「^」を先に書くと、位置0で「^」が
         #      当たってしまい、捕まえる所が「本作は週刊少年マガジン」になる。
+        # ■ 「週刊少年ジャンプの漫画が原作」（本人の型・2026-11-17。「連載」が無い）も見る
         mk = (re.search(u"(?:^本作は|^|、|。)([^、。]+?)連載の(?:漫画|ライトノベル|小説)が原作", h)
-              or re.search(u"(?:^本作は|^|、|。)([^、。]+?)の(?:ライトノベル|小説)が原作", h))
-        if mk and u"なろう" not in mk.group(1):
+              or re.search(u"(?:^本作は|^|、|。)([^、。]+?)の(?:漫画|ライトノベル|小説)が原作", h))
+        if mk and (u"なろう" in mk.group(1)
+                   or mk.group(1).strip() in (u"Web", u"ウェブ", u"Web連載", u"ウェブ連載")):
+            mk = None          # 「Web連載の漫画」は掲載誌を名乗っていない
+        if mk:
             kaita = mk.group(1).strip()
             shirabe = j[u"掲載誌"].strip()
             if not shirabe or shirabe in (u"？", u"－"):
@@ -267,15 +302,7 @@ def main():
                 warui.append(u"%s … 掲載誌が台本 %s／調べ %s"
                              % (na, kaita, shirabe))
 
-    say(u"作品 %d本を見ました（放送情報.txt は %d本ぶん）" % (mita, len(joho)))
-    if warui:
-        say(u"")
-        say(u"── 合っていません ──")
-        for w in warui:
-            say(u"  × " + w)
-        return 1
-    say(u"○ 台本の年・季・話数は、調べたものと全部合っています。")
-    return 0
+    return warui, mita
 
 
 if __name__ == "__main__":

@@ -45,6 +45,9 @@ import re
 import sys
 
 V = os.path.join(os.path.dirname(os.path.abspath(__file__)), u"")
+import sys as _sys_b
+_sys_b.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _betsumei   # noqa: E402  作品名の引き当て（インフィニット・ストラトス → IS）
 ZOKU = V + u"続編情報.txt"
 HOSO = V + u"放送情報.txt"
 
@@ -173,10 +176,8 @@ def toshi(t):
 
 
 def hoso_hiku(hoso, na):
-    if na in hoso:
-        return hoso[na]
-    k = [x for x in hoso if na.startswith(x) or x.startswith(na)]
-    return hoso[k[0]] if len(k) == 1 else (u"？", u"？")
+    k = _betsumei.hiku(na, hoso)
+    return hoso[k] if k is not None else (u"？", u"？")
 
 
 def saidai_ki(h):
@@ -222,10 +223,7 @@ def main():
             mita += 1
             me.append(na)
 
-            key = na if na in zoku else None
-            if key is None:
-                kouho = [k for k in zoku if na.startswith(k) or k.startswith(na)]
-                key = kouho[0] if len(kouho) == 1 else None
+            key = _betsumei.hiku(na, zoku)
             if key is None:
                 chui.append(u"%s … 続編情報.txt に行がありません（引けていない）" % na)
                 continue

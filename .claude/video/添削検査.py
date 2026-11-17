@@ -130,14 +130,38 @@ def miru(path):
         #   **段落ごとに切る**（2026-11-05）。前は本文をまるごと繋いでから
         #   「。」で切っていたので、句点の無い作品名の行が次の段落と
         #   くっついて、ありもしない107字の文が出ていた。
+        #   ■ 本人の書いた文に 102字があった（2026-11-17・インフィニット・ストラトスの締め）。
+        #     本人の文が型なので、100字を超えたら知らせ（!）、110字を超えたら落とす。
         for g in d:
             for s in re.split(u"(?<=。)", g):
-                if len(s) > 100:
+                if len(s) > 110:
                     warui.append(u"%d字の文があります: %s" % (len(s), s[:40]))
+                elif len(s) > 100:
+                    chui_shaku.append(u"%d字の文があります（110字までは通します）: %s"
+                                      % (len(s), s[:40]))
 
     # ⑦ 段落（20選の形のときだけ）
-    if nijussen and len(d) != 109:
-        warui.append(u"段落が %d本（109本のはず：導入4＋20×5＋締め5）" % len(d))
+    #   ■ 作品は5段落か6段落（2026-11-17）。本人が書いたインフィニット・ストラトスは
+    #     締めを2段落に分けていた（「…最高の作品となっています。」「…特におすすめの作品です。」）。
+    #     全体の数（前は109本ぴったり）ではなく、導入4・作品20本（各5〜6）・締め5を見る。
+    TS0 = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
+           u"続く作品は|続いては|次の作品は|最後にご紹介する作品は")
+    if nijussen:
+        atama0 = [i for i, g in enumerate(d) if re.search(u"^(?:%s)、" % TS0, g)]
+        owari0 = [i for i, g in enumerate(d) if g.startswith(u"今回の動画は以上")]
+        if len(atama0) != 20 or not owari0:
+            warui.append(u"作品の頭が %d本・締めの頭が %d本（20本と1本のはず）"
+                         % (len(atama0), len(owari0)))
+        else:
+            if atama0[0] != 4:
+                warui.append(u"導入が %d段落（4段落のはず）" % atama0[0])
+            if len(d) - owari0[0] != 5:
+                warui.append(u"締めが %d段落（5段落のはず）" % (len(d) - owari0[0]))
+            kugiri0 = atama0 + [owari0[0]]
+            hen = [u"%d番目 %d段落" % (n + 1, kugiri0[n + 1] - kugiri0[n])
+                   for n in range(20) if not 5 <= kugiri0[n + 1] - kugiri0[n] <= 6]
+            if hen:
+                warui.append(u"作品の段落が5〜6でないもの: " + u" / ".join(hen[:6]))
 
     # ⑦-2 1作品の尺（本人の指定・2026-11-10）
     #
@@ -145,26 +169,35 @@ def miru(path):
     #   > 説明が淡々としているため、長すぎると見ていて飽きます。
     #
     #   読み上げ 6.46字/秒 なので 30秒=194字 / 50秒=323字。
-    #   5段落（つなぎ・情報・あらすじ・魅力・締め）を合わせて数える。
+    #   作品の頭から、次の作品の頭（最後は締めの頭）までを合わせて数える。
+    #   ■ 本人が書いた3作品は 50・59・52秒だった（2026-11-17）。本人の文が型なので、
+    #     50秒を超えたら知らせ（!）、60秒を超えたら落とす。前は5段落で決め打ちしていて、
+    #     6段落のインフィニット・ストラトスを 54秒と少なく数えていた（本当は 59秒）。
     TS2 = (u"最初にご紹介する作品は|一番最初にご紹介する作品は|続いての作品は|"
            u"続く作品は|続いては|次の作品は|最後にご紹介する作品は")
     if nijussen:
         nagai, mijikai = [], []
+        tsugi2 = [i for i, g in enumerate(d)
+                  if re.search(u"^(?:%s)、" % TS2, g) or g.startswith(u"今回の動画は以上")]
         for i, g in enumerate(d):
             m2 = re.search(u"(?:%s)、?(.+)$" % TS2, g)
             if not m2 or i + 4 >= len(d):
                 continue
-            ji2 = sum(len(re.sub(u"\\s", u"", d[i + k])) for k in range(5))
+            made = min([j for j in tsugi2 if j > i] or [min(len(d), i + 5)])
+            ji2 = sum(len(re.sub(u"\\s", u"", d[k])) for k in range(i, made))
             byou = ji2 / 6.46
             na2 = re.sub(u"、制作は.*$", u"", m2.group(1)).strip()
             # 秒は丸めて比べる（出す数字と同じ物差し）。本人のニセコイは 324字＝50.2秒で、
             # 「ニセコイ 50秒」が「50秒を超える」と出ていた（2026-11-17）
-            if round(byou) > 50:
+            if round(byou) > 60:
                 nagai.append(u"%s %.0f秒" % (na2[:16], byou))
+            elif round(byou) > 50:
+                chui_shaku.append(u"%s %.0f秒（50秒を超えています。60秒までは通します）"
+                                  % (na2[:16], byou))
             elif round(byou) < 30:
                 mijikai.append(u"%s %.0f秒" % (na2[:16], byou))
         if nagai:
-            warui.append(u"50秒を超える作品が %d本: %s"
+            warui.append(u"60秒を超える作品が %d本: %s"
                          % (len(nagai), u" / ".join(nagai[:6])))
         if mijikai:
             warui.append(u"30秒に足りない作品が %d本: %s"
