@@ -21030,7 +21030,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v195";
+  var PACK_VERSION = "v196";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -21303,11 +21303,20 @@ if __name__ == "__main__":
 "        $env:PYTHONIOENCODING = 'utf-8'",
 "        python 'ずれ実測.py'",
 "      }",
+"      # おすすめ紹介の回（make_slideshow.py が その他\\_おすすめ.txt を置く）は、",
+"      # 採点と 直す.py を回さない。どちらも絵の説明（無職転生の画像カタログ）を見る道具で、",
+"      # おすすめ紹介の絵には説明が無い。その作品の絵だけか は make_slideshow.py が数えて出す。",
+"      $osusume = Test-Path 'その他\\_おすすめ.txt'",
+"      if ($osusume) {",
+"        Write-Host ''",
+"        Write-Host '  おすすめ紹介の回なので、採点と絵の自動直し（無職転生の回のもの）は飛ばします。' -ForegroundColor DarkGray",
+"      }",
 "      if (-not (Test-Path 'miru_kekka.py')) {",
 "        $mk = Join-Path $here 'miru_kekka.py'",
 "        if (Test-Path $mk) { Copy-Item $mk $root -Force }",
 "      }",
-"      if (Test-Path 'miru_kekka.py') {",
+"      if ($osusume) {",
+"      } elseif (Test-Path 'miru_kekka.py') {",
 "        Write-Host ''",
 "        Write-Host '  絵とセリフが合っているか、採点しています...' -ForegroundColor Cyan",
 "        if (Test-Path '確認用\\採点.txt') { Remove-Item '確認用\\採点.txt' -Force }",
@@ -21325,7 +21334,7 @@ if __name__ == "__main__":
 "      }",
 "      # 絵の不安な所を見つけ、いちばん良い候補を自動で当てる。",
 "      # 本人がやるのは、気に入らない所に数字をひとつ書くことだけ。",
-"      if (Test-Path '直す.py') {",
+"      if ((-not $osusume) -and (Test-Path '直す.py')) {",
 "        Write-Host ''",
 "        Write-Host '  絵の直しどころを探して、良い候補を当てています...' -ForegroundColor Cyan",
 "        $env:PYTHONIOENCODING = 'utf-8'",

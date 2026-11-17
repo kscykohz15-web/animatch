@@ -638,6 +638,84 @@ SAKUHIN_SHOU_RE = re.compile(u"\\d{4}年(春|夏|秋|冬)")
 MUDAI = u"－"                 # 3列目がこれの章は、右上に何も出さない（章カードも出さない）
 ZEN_SAKUHIN = u"＊全作品"       # 4列目がこれの章は、その回で紹介する作品フォルダぜんぶ
 DAIJI = [True]                # 作品の頭の1文を「題字の画面」にするか（演出.txt）
+# ■ おすすめ紹介の回は、無職転生のための段を通らない（2026-11-17・本人の指定）
+#
+#   > 毎回無職転生を見る必要はないです。おすすめアニメ紹介の動画作成では前まで
+#   > 無職転生特化でやっていた作業の内、必要のないものは排除して、最低限のことだけを
+#   > 行ってください
+#
+#   本人のログ（v195）には、絵の説明（画像カタログ）・話数マップ・挨拶のロキシー・
+#   #アイシャ #ノルン（当て方.txt から写った言葉）が毎回出ていた。おすすめ紹介の絵には
+#   1枚ごとの説明が1枚も無いので、**どれも1枚も当たらない。** 出すのは知らせだけだった。
+#   作品の章（右上に「2014年冬」）がある回を「おすすめ紹介の回」とし、
+#     使わない … 画像カタログ・話数マップ・タグだけの行・当て方.txt・挨拶の絵・おまかせ.txt
+#     使う    … その作品のフォルダの絵・公式画像（#公式）・手で書いた絵・差し替え.txt
+#   採点（miru_kekka）と 直す.py も、説明を見る道具なので回さない（その他/_おすすめ.txt を見て
+#   メニューが飛ばす）。代わりに「どの章もその作品の絵だけか」をここで数えて出す。
+OSUSUME = [False]
+OSUSUME_JIRUSHI = u"_おすすめ.txt"     # その他/ に置く。メニューが採点と直す.py を飛ばす目印
+
+
+def fol_ate(want, folders):
+    u"""書かれた作品名・話数名を、実際のフォルダ名の並びに直す。
+
+    ■ ぴったり同じ名前があれば、**それだけ**を使う（2026-11-11）
+    本人のフォルダには「七つの大罪」と「sin 七つの大罪」が両方あり、部分一致で全部入れると
+    **別の作品の絵まで対象に入る。** ぴったりが無いときだけ部分一致で探す。
+    （assign_images の中と、おすすめ紹介の回の数え直しで、同じ当て方を使うために外へ出した）
+    """
+    out2 = []
+    for w in (want or []):
+        if not w:
+            continue
+        pittari = [f for f in folders if w == f]
+        for f in (pittari or [f for f in folders if w in f]):
+            if f not in out2:
+                out2.append(f)
+    return out2
+
+
+def osusume_matome(chaps, images):
+    u"""おすすめ紹介の回で、**この回で使う作品の絵だけ**を並べる。
+
+    前は 329フォルダ・13345枚をぜんぶ並べていた（本人のログの半分がそれだった）。
+    """
+    folders = sorted(set(k.split(u"/")[0] for k in images if u"/" in k))
+    say(u"おすすめ紹介の回です。無職転生のための段（画像カタログ・話数マップ・挨拶の絵・"
+        u"採点）は通りません。")
+    say(u"この回で使う作品の絵:")
+    mita = set()
+    for (_k, t, eps) in chaps:
+        if not wa_sakuhin_shou(t) or not eps:
+            continue
+        na = u" / ".join(eps)
+        if na in mita:
+            continue
+        mita.add(na)
+        fs = fol_ate(eps, folders)
+        if not fs:
+            say(u"    %-28s フォルダがありません" % na)
+            continue
+        n = sum(1 for k in images if u"/" in k and k.split(u"/")[0] in fs)
+        say(u"    %-28s %3d枚%s" % (na, n, u"（フォルダ %d個: %s）" % (len(fs), u" / ".join(fs))
+                                      if len(fs) > 1 or fs[0] != na else u""))
+
+
+def osusume_kakunin(rows, chaps, images):
+    u"""作品の章に、**その作品ではない絵**が入っていないか数える（採点の代わり）。
+
+    戻り値: [(行の番号, 絵, 字幕)]。無地・章カードは数えない。
+    """
+    folders = sorted(set(k.split(u"/")[0] for k in images if u"/" in k))
+    shou = shou_no_wasuu(rows, chaps)
+    soto = []
+    for i, (_du, img, tx) in enumerate(rows):
+        if not shou[i] or not img or img == MUJI or img.startswith(u"@@") or u"/" not in img:
+            continue
+        fs = fol_ate(shou[i].split(u" / "), folders)
+        if fs and img.split(u"/")[0] not in fs:
+            soto.append((i, img, tx))
+    return soto
 
 
 def wa_sakuhin_shou(title):
@@ -1211,7 +1289,7 @@ def _walk_images(root):
     return out
 
 
-def list_images(d, extra=None):
+def list_images(d, extra=None, kakusu=False):
     """画像フォルダ(話数フォルダを含む)と図表フォルダを見る。
 
     名前は「無職転生 第11話/0012.jpg」のようにフォルダ名つきで扱う。
@@ -1233,7 +1311,10 @@ def list_images(d, extra=None):
             where[bn] = where[ks[0]]
 
     subs = sorted(set(k.rsplit(u"/", 1)[0] for k in names if u"/" in k), key=natkey)
-    if subs:
+    if subs and kakusu:
+        # おすすめ紹介の回は、この回で使う作品だけをあとで並べる（osusume_matome）
+        say(u"画像 %d枚 (%d フォルダ) を数えました" % (len(names), len(subs)))
+    elif subs:
         say(u"画像 %d枚 (%d フォルダ)" % (len(names), len(subs)))
         for sb in subs:
             say(u"    %-30s %d枚" % (sb, sum(1 for k in names if k.startswith(sb + u"/"))))
@@ -6564,7 +6645,8 @@ def plan_code_naosu(rules, default, images):
     #   作品の頭の1文は本人の指定で公式画像なので、無いなら名前で言う。
     for fol in sorted(set(kou_nai)):
         say(u"  × %s に公式画像（1.jpg など）がありません"
-            u"（作品の頭はタグの絵になります）" % fol)
+            u"（%s）" % (fol, u"作品の頭はその作品の別の絵になります。公式画像は「1」という名前で"
+                           u"フォルダに入れてください" if OSUSUME[0] else u"作品の頭はタグの絵になります"))
     return rules, default
 
 
@@ -6860,28 +6942,21 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         （「マギ」は「魔法少女まどか☆マギカ」にも当たる）
         ぴったりが無いときだけ、今までどおり部分一致で探す。
         """
-        out2 = []
-        for w in (want or []):
-            if not w:
-                continue
-            pittari = [f for f in folders if w == f]
-            for f in (pittari or [f for f in folders if w in f]):
-                if f not in out2:
-                    out2.append(f)
-        return out2
+        return fol_ate(want, folders)
 
     missing_focus = set()
     for want in [focus] + [r[3] for r in rules if len(r) > 3]:
         if want and not resolve_focus(want):
             missing_focus.add(u", ".join(want))
     for w in sorted(missing_focus):
-        say(u"対象話数に書かれた話数が見つかりません: " + w)
+        if not OSUSUME[0]:        # おすすめ紹介の回は、あとの「フォルダが無い章」で名前を出す
+            say(u"対象話数に書かれた話数が見つかりません: " + w)
 
     base_fols = resolve_focus(focus)
     # base_fols は章ごとに差し替わるので、「もともとの既定」を別に取っておく。
     # 偏りの警告は、こちらと比べないと意味が変わってしまう。
     moto_base = list(base_fols)
-    if base_fols:
+    if base_fols and not OSUSUME[0]:
         say(u"対象話数(既定): " + u" / ".join(base_fols))
     used_focus = set()
 
@@ -7345,7 +7420,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if not hit_any:
             for f in bad:
                 missing.add(f)
-    if missing:
+    if missing and not OSUSUME[0]:     # おすすめ紹介の回はタグを使っていない
         # ■ **どの言葉で落ちたのかまで出す**（2026-10-22・本人「割り当てダメ」）
         #
         # 前は行を並べるだけだった。「#白髪 エルフ耳 が当たりません」と
@@ -7438,7 +7513,8 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         pool_default = usable(default)
     elif cur["rank"]:
         pool_default = _order([k for k in images if _in_focus(k)]) or images
-        say(u"どれにも当たらなかった場面は、対象話数の絵を順に使います。")
+        if not OSUSUME[0]:
+            say(u"どれにも当たらなかった場面は、対象話数の絵を順に使います。")
     else:
         pool_default = images
     for f in usable(default):
@@ -7719,7 +7795,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                             % (title.replace(u"\\N", u" "), u", ".join(eps)))
                     tsukatta.add(i)
                     break
-        if shou_kiri:
+        if shou_kiri and not OSUSUME[0]:
             say(u"章ごとの話数: %d章ぶんを使います（画面表示の4列目）"
                 % len(shou_kiri))
 
@@ -7818,7 +7894,11 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 pick = resolve(ok[prev_rule[2] % len(ok)])
                 prev_rule[2] += 1
                 carried += 1
-        if pick is None and not new_sentence and out:
+        # おすすめ紹介の回は、文の続きでも前の絵を引き継がない（2026-11-17）。
+        # タグの行を使わない回なので、ここで引き継ぐと1文ずっと同じ絵になる
+        # （本人の型は魅力も締めも1文。試しで 121枚が引き継ぎになり、絵の種類が 214→198 に減った）。
+        # 下の「対象話数の絵を順に」へ落として、字幕ごとにその作品の次の絵へ進める。
+        if pick is None and not new_sentence and out and not OSUSUME[0]:
             pick = out[-1]
             carried += 1
         if pick is None:
@@ -8014,13 +8094,14 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         for k in [k for k, v in tsukai.items() if v <= 0]:
             del tsukai[k]
 
-    say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
-        u"%d枚が同じ文から引き継ぎ / 全%d枚"
-        % (hit, namae, carried, len(slots)))
+    if not OSUSUME[0]:
+        say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
+            u"%d枚が同じ文から引き継ぎ / 全%d枚"
+            % (hit, namae, carried, len(slots)))
     if kou_kae:
         say(u"公式画像（1）は作品の頭の1文だけにしました。ほかの所 %d枚を同じ作品の別の絵に"
             u"替えています" % kou_kae)
-    if sakuhin_modoshi:
+    if sakuhin_modoshi and not OSUSUME[0]:   # おすすめ紹介の回は、ここが当て方そのもの
         say(u"別の作品へ出ていた絵を %d枚 その章の作品の中へ戻しました"
             u"（その作品の絵に1枚ごとの説明が無いので、札は見ずに順に当てています。"
             u"札まで合わせたいときは「8 画像をぜんぶ見てもらう」）" % sakuhin_modoshi)
@@ -8079,7 +8160,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         f = k.split(u"/")[0] if u"/" in k else u"(図表)"
         tally[f] = tally.get(f, 0) + 1
     order = sorted(tally.items(), key=lambda x: (-x[1], natkey(x[0])))
-    say(u"使った話数: %d種類" % len(order))
+    say(u"%s: %d種類" % (u"使った作品" if OSUSUME[0] else u"使った話数", len(order)))
     for f, n in order[:8]:
         say(u"    %-24s %3d枚  (%.0f%%)" % (f, n, 100.0 * n / max(1, len(out))))
     if len(order) > 8:
@@ -8091,8 +8172,10 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         if order[0][0] != atama:
             say(u"⚠ %s に %.0f%% が偏っています。画像プランの指定を見直してください。"
                 % (order[0][0], 100.0 * order[0][1] / len(out)))
-    if used_focus:
+    if used_focus and not OSUSUME[0]:
         say(u"段落ごとの対象話数: %d通り" % len(used_focus))
+    if OSUSUME[0]:
+        via_wide, via_ep = set(), set()     # タグは使っていない回。知らせることが無い
     if via_wide:
         say(u"次の指定は対象話数の中に見つからず、他の話数から選びました:")
         for k in sorted(via_wide):
@@ -9950,9 +10033,27 @@ def main():
     if not os.path.exists(a.audio):
         die(u"%s がありません。先に「音声を生成する.bat」を実行してください。" % a.audio)
 
-    images, imgpath = list_images(a.images, a.figs)
+    _cr_o, _ch_o = load_overlay(a.overlay) if os.path.exists(a.overlay) else (u"", [])
+    OSUSUME[0] = any(wa_sakuhin_shou(t) for (_k, t, _e) in _ch_o)
+    images, imgpath = list_images(a.images, a.figs, kakusu=OSUSUME[0])
     # 無地の絵の置き場所を教えておく（絵の一覧には入れない。MUJI の所を参照）
     imgpath[MUJI] = os.path.join(HERE, SONOTA_DIR, u"無地.png")
+    _jirushi = os.path.join(HERE, SONOTA_DIR, OSUSUME_JIRUSHI)
+    if OSUSUME[0]:
+        osusume_matome(_ch_o, images)
+        try:
+            if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
+                os.makedirs(os.path.join(HERE, SONOTA_DIR))
+            io.open(_jirushi, "w", encoding="utf-8").write(
+                u"おすすめ紹介の回の目印です（make_slideshow.py が置きます）。\n"
+                u"メニューはこれを見て、採点（miru_kekka.py）と 直す.py を飛ばします。\n")
+        except Exception:
+            pass
+    elif os.path.exists(_jirushi):
+        try:
+            os.remove(_jirushi)
+        except Exception:
+            pass
     io.open(IMGLIST, "w", encoding="utf-8-sig", newline="").write(
         u"# %s の中にある画像 %d 枚\r\n" % (a.images, len(images)) + u"\r\n".join(images) + u"\r\n")
 
@@ -10490,7 +10591,15 @@ def main():
             # 414行ある。1枚ずつの指定ではなく「この言葉にはこういう絵」
             # という規則なので、字幕の切り方が変わってもずれない。
             # プラン下書き.py がこれで画像プランを作っている。その元を直に使う。
-            if ZENBU_OMAKASE[0]:
+            if OSUSUME[0]:
+                # 当て方.txt は無職転生の言葉の規則。タグだけの行も、絵に説明が無いので
+                # 当たらない。残すのは #公式・手で書いた絵・@ の行だけ。
+                _mae = len(rules)
+                rules = [r for r in rules
+                         if any(f == KOUSHIKI or not f.startswith(u"#") for f in r[1])]
+                say(u"画像プランのうち %d行を使います（#公式・手で書いた絵）。タグだけの %d行は、"
+                    u"絵に説明が無い回なので使いません" % (len(rules), _mae - len(rules)))
+            elif ZENBU_OMAKASE[0]:
                 _ate = os.path.join(HERE, u"当て方.txt")
                 if os.path.exists(_ate):
                     _r2, _d2, _f2 = load_imageplan(_ate)
@@ -10510,16 +10619,21 @@ def main():
                     say(u"@@全部おまかせ: 当て方.txt が見つかりません。"
                         u"画像プランの指定をそのまま使います（%d行）" % len(rules))
             rules, default = plan_code_naosu(rules, default, images)
-            if rules or default:
-                cat = load_catalog(a.catalog, images)
-                emap = load_epmap(a.epmap, images)
+            if rules or default or OSUSUME[0]:
+                # おすすめ紹介の回は、画像カタログ・話数マップを読まない（どちらも無職転生の
+                # もので、この回の絵には1行も当たらない）
+                cat = {} if OSUSUME[0] else load_catalog(a.catalog, images)
+                emap = {} if OSUSUME[0] else load_epmap(a.epmap, images)
                 _c0, chaps_for_assign = load_overlay(a.overlay) \
                     if os.path.exists(a.overlay) else (u"", [])
                 picked = assign_images(slots, images, rules, default, cat,
                                        emap, focus, mitame=mi,
                                        chaps=chaps_for_assign)
-                picked, _an, _ak, _ame = aisatsu_pin(slots, picked, cat,
-                                                     images, focus)
+                if OSUSUME[0]:
+                    _an, _ak, _ame = 0, 0, None    # 挨拶のロキシーは無職転生の回だけ
+                else:
+                    picked, _an, _ak, _ame = aisatsu_pin(slots, picked, cat,
+                                                         images, focus)
                 if _ame:
                     say(u"⚠ 挨拶の絵: %s" % _ame)
                 elif _ak:
@@ -10624,7 +10738,9 @@ def main():
         if (en.get("card") and chaps0 and not a.no_fx) else []
     ban, card_ban = toshi_bangou(rows, kaado)
     # ① 機械のおまかせ（直す.py が当てたもの）を先に当てる
-    oma = {} if ZENBU_OMAKASE[0] \
+    # おすすめ紹介の回は 直す.py を回さないので、おまかせ.txt も読まない
+    # （前の回の番号で留めた絵を、字幕の切り方が変わった回に当ててしまう）
+    oma = {} if (ZENBU_OMAKASE[0] or OSUSUME[0]) \
         else load_sashikae(os.path.join(HERE, OMAKASE), images)
     if ZENBU_OMAKASE[0] and os.path.exists(os.path.join(HERE, OMAKASE)):
         say(u"@@全部おまかせ: おまかせ.txt を**使いません**（番号で留めてあるため）")
@@ -10637,6 +10753,16 @@ def main():
                 n2 += 1
         say(u"おまかせ.txt のとおり %d枚を当てました（機械が選んだもの）" % n2)
         say(u"  気に入らない所は 確認用/直す_01.png を見て、差し替え.txt に数字を。")
+
+    # おすすめ紹介の回は、採点の代わりに「その作品の絵だけか」をここで数える
+    if OSUSUME[0]:
+        _soto = osusume_kakunin(rows, chaps0, images)
+        if _soto:
+            say(u"⚠ 作品の章に、別の作品の絵が %d枚 入っています:" % len(_soto))
+            for (_i, _img, _tx) in _soto[:8]:
+                say(u"    %-40s ← %s" % ((_tx or u"").strip()[:20], _img))
+        else:
+            say(u"○ 作品の章は、どれもその作品の絵だけを使っています（採点の代わりに数えました）")
 
     # ② 本人の指定。こちらがいちばん上なので、おまかせを上書きする
     sashi_moji = {}
@@ -10810,7 +10936,7 @@ def main():
     # **差し替え.txt の 2番（3-12-044＝老デウス）が上書きしていた。**
     # 本人の一覧にそのまま出ていた（002 → Ⅲ12/044）。
     # 「必ず」なので、差し替えより後、ここに置く。
-    if any(any(x in (r3[2] or u"") for x in AISATSU) for r3 in rows):
+    if not OSUSUME[0] and any(any(x in (r3[2] or u"") for x in AISATSU) for r3 in rows):
         _hito = AISATSU_HITO[0]
         _cat = load_catalog(a.catalog, images) \
             if os.path.exists(a.catalog) else {}
@@ -10890,6 +11016,47 @@ def main():
     for (_, img, _t) in rows:
         if img not in uniq:
             uniq.append(img)
+
+    # ■ 作り始めたあとで消えた絵は、同じフォルダの別の絵に替える（2026-11-17・本人のログ）
+    #
+    #   本人の v195 は「画像が見つかりません: …\かぐや様は告らせたい\166_xef5ee808caa6_x2.png」
+    #   で止まった。この名前は、動画を作り始めたときに数えた絵の一覧に**あった**
+    #   （割り当ては数えた絵からしか選ばない）。絵をそろえる時点で無くなっていた ──
+    #   作っている間にフォルダの絵が消された（入れ替えた）と見るのが筋。
+    #   前の回の割り当て表を使い回したときも、消した絵の名前が残る。
+    #   1枚のために動画をまるごと止めない。同じフォルダの、まだ使っていない絵に替えて知らせる。
+    def _aru(k):
+        if k == MUJI:
+            return True
+        src0 = k if os.path.isabs(k) else imgpath.get(k, os.path.join(a.images, k))
+        return os.path.exists(src0)
+    kieta = [k for k in uniq if not _aru(k)]
+    if kieta:
+        kawari = {}
+        ima = set(uniq)
+        for k in kieta:
+            fol0 = k.rsplit(u"/", 1)[0] if u"/" in k else u""
+            kouho0 = [x for x in images
+                      if fol0 and x.rsplit(u"/", 1)[0] == fol0 and x not in ima
+                      and x not in kawari.values() and not wa_koushiki(x) and _aru(x)]
+            if not kouho0:
+                kouho0 = [x for x in images
+                          if fol0 and x.rsplit(u"/", 1)[0] == fol0 and x != k and _aru(x)]
+            if kouho0:
+                kawari[k] = barakeru(sorted(kouho0, key=natkey))[0]
+            elif OSUSUME[0]:
+                kawari[k] = MUJI          # そのフォルダに1枚も残っていない。別の作品の絵は出さない
+            else:
+                die(u"画像が見つかりません: " + k + u"  (割り当て表の名前を確認してください)")
+        rows = [(du0, kawari.get(img0, img0), tx0) for (du0, img0, tx0) in rows]
+        uniq = []
+        for (_, img, _t) in rows:
+            if img not in uniq:
+                uniq.append(img)
+        say(u"⚠ 動画を作り始めたあとで無くなった絵が %d枚ありました。同じ作品の別の絵に替えています"
+            u"（作っている間は、画像フォルダの絵を消したり入れ替えたりしないでください）:" % len(kieta))
+        for k in kieta[:8]:
+            say(u"    %s → %s" % (k, kawari[k]))
     say(u"画像を %dx%d にそろえています (%d枚)…" % (w, h, len(uniq)))
     cache = {}
     # 絵を横に動かすときは、あらかじめ大きめにそろえておく。
@@ -10924,7 +11091,7 @@ def main():
     if card_moto:
         # 章ごとに、カードに向いた絵をその章の中から選び直す
         cat_for_card = load_catalog(a.catalog, images) \
-            if os.path.exists(a.catalog) else {}
+            if (os.path.exists(a.catalog) and not OSUSUME[0]) else {}
         kugiri = [x[0] for x in card_moto] + [len(rows)]
         card_moto = [(ii, card_no_e(rows, ii, kugiri[n + 1], ti, cat_for_card), ti)
                      for n, (ii, ti) in enumerate(card_moto)]

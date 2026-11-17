@@ -972,6 +972,20 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"入れ替え表で選んだ絵が、動画に出ません")
 
+# ── ㉚ おすすめ紹介の回は、無職転生のための段を通らないか ─────────────
+midashi(u"㉚", u"おすすめ紹介の回は、無職転生のための段を通らないか")
+# ■ 本人の指定（2026-11-17）「毎回無職転生を見る必要はないです。…最低限のことだけを」
+#
+#   画像カタログ・話数マップ・挨拶のロキシー・当て方.txt の言葉・採点・直す.py は
+#   無職転生の絵の説明を見る段で、おすすめ紹介の絵には1枚も当たらない。
+#   あわせて、作っている間に消えた絵で「画像が見つかりません」と止まらないことも見る。
+r = subprocess.run([sys.executable, os.path.join(V, u"_おすすめ最低限テスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"おすすめ紹介の回が、無職転生のための段を通っています（または消えた絵で止まります）")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
