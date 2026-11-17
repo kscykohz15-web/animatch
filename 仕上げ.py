@@ -986,6 +986,18 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"おすすめ紹介の回が、無職転生のための段を通っています（または消えた絵で止まります）")
 
+# ── ㉛ おすすめ紹介の回は、作品ごとに別の曲が流れるか ─────────────
+midashi(u"㉛", u"おすすめ紹介の回は、作品ごとに別の曲が流れるか")
+# ■ 本人の指定（2026-11-17）「使用するBGMは C:\Youtube動画\おすすめアニメ\BGM から使用し、
+#   作品ごとに音楽は別のものを使うようにしてください」
+#   周波数の違うためしの曲で動画を作り、出来た bgm.wav を区切りごとに聞き分ける。
+r = subprocess.run([sys.executable, os.path.join(V, u"_BGMテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"おすすめ紹介の回で、作品ごとに別の曲が流れていません")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

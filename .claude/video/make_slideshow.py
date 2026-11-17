@@ -5479,34 +5479,40 @@ def bgm_tsunagu(src, total, out, kasane=2.0):
     return True
 
 
-def bgm_wav_ready(name, vol, total, owari, fade, work):
+def bgm_wav_ready(name, vol, total, owari, fade, work, src=None, out_name=u"bgm.wav",
+                  fade_in=None, fade_out=None, tag=u""):
     u"""BGM を、動画の長さちょうどの 44100Hz・モノラルの wav にする。
 
     足りなければ繰り返し、長すぎれば切る。頭と終わりはフェードする。
     total … この長さの wav を作る（動画と声の長い方）
     owari … フェードアウトが終わる時刻（動画と声の短い方＝実際の終わり）
     """
-    src = bgm_sagasu(name)
+    if src is None:
+        src = bgm_sagasu(name)
     if src is None:
         if name and name not in (u"なし", u"無し"):
             say(u"BGM のファイルが見つかりません: %s" % name)
             say(u"  BGM フォルダに入れて、演出.txt の BGM 行に名前を書いてください。")
         return None
     # いったん素の wav にしてから、前後の無音を削り、重ねてつなぐ
-    moto = os.path.join(work, "bgm_moto.wav")
+    moto = os.path.join(work, "bgm_moto%s.wav" % tag)
     run([need("ffmpeg"), "-y", "-loglevel", "error", "-i", src,
          "-ar", "44100", "-ac", "1", moto])
-    tane = os.path.join(work, "bgm_tane.wav")
+    tane = os.path.join(work, "bgm_tane%s.wav" % tag)
     tane = tane if bgm_mugon_kezuru(moto, tane) else moto
-    tsugi = os.path.join(work, "bgm_tsugi.wav")
+    tsugi = os.path.join(work, "bgm_tsugi%s.wav" % tag)
     tane = tsugi if bgm_tsunagu(tane, total, tsugi) else tane
 
-    fade = max(0.0, min(fade, owari / 3.0))
+    fi = fade if fade_in is None else fade_in
+    fo = fade if fade_out is None else fade_out
+    fi = max(0.0, min(fi, owari / 3.0))
+    fo = max(0.0, min(fo, owari / 3.0))
     af = [u"volume=%.3f" % vol]
-    if fade > 0.01:
-        af.append(u"afade=t=in:st=0:d=%.3f" % fade)
-        af.append(u"afade=t=out:st=%.3f:d=%.3f" % (max(0.0, owari - fade), fade))
-    out = os.path.join(work, "bgm.wav")
+    if fi > 0.01:
+        af.append(u"afade=t=in:st=0:d=%.3f" % fi)
+    if fo > 0.01:
+        af.append(u"afade=t=out:st=%.3f:d=%.3f" % (max(0.0, owari - fo), fo))
+    out = os.path.join(work, out_name)
     cmd = [need("ffmpeg"), "-y", "-loglevel", "error"]
     if tane != tsugi:
         cmd += ["-stream_loop", "-1"]      # つなぎに失敗したときの逃げ道
@@ -5526,6 +5532,120 @@ def wav_frames(path):
         return n
     except Exception:
         return 0
+
+
+# ■ おすすめ紹介の回は、作品ごとに曲を替える（2026-11-17・本人の指定）
+#
+#   > C:\Youtube動画\おすすめアニメ\BGM　あと、使用するBGMはこちらから使用し、
+#   > 作品ごとに音楽は別のものを使うようにしてください。
+#
+#   はじめに・作品の章ひとつずつ・おわりに を1区切りにして、BGM フォルダの曲を1曲ずつ当てる。
+#   区切りは右上の章タイトルと同じ時刻（chapter_spans）＝作品の頭の1文から。
+#   となりの曲とは BGM_KASANE 秒だけ重ねて入れかえる（前を下げながら次を上げる）。
+#   曲の並びは動画の名前で決まった混ぜ方にする（作り直しても同じ曲・動画ごとには違う並び）。
+#   曲ごとの大きさの差は、まんなかの大きさにそろえる（急に大きく・小さくならないように）。
+#   置き場所は 置き場所.txt の「BGM」→ 無ければ画像フォルダの隣の「BGM」。
+#   曲が1つも無ければ、今までどおり 演出.txt の1曲を流す。
+BGM_EXTS = (u".mp3", u".wav", u".m4a", u".ogg", u".flac")
+BGM_KASANE = 1.2
+
+
+def bgm_folder(images_dir, sitei=None):
+    u"""作品ごとの曲を探すフォルダと、その中の曲。戻り値 (フォルダ, [曲名])。"""
+    cands = []
+    if sitei:
+        cands.append(sitei)
+    try:
+        v = 置き場所.yomu().get(u"BGM")
+        if v:
+            cands.append(v)
+    except Exception:
+        pass
+    if images_dir:
+        cands.append(os.path.join(os.path.dirname(os.path.abspath(images_dir)), u"BGM"))
+    for d in cands:
+        if d and os.path.isdir(d):
+            fs = sorted([f for f in os.listdir(d)
+                         if os.path.splitext(f)[1].lower() in BGM_EXTS], key=natkey)
+            if fs:
+                return d, fs
+    return (cands[-1] if cands else None), []
+
+
+def bgm_wariate(spans, kyoku, tane_mojiretsu):
+    u"""区切りごとに曲を当てる。となりが同じ曲にならないようにする。
+
+    戻り値 [(始まり, 終わり, 章の名前, 曲名)]。
+    """
+    import random
+    narabi = list(kyoku)
+    random.Random(tane_mojiretsu).shuffle(narabi)
+    out = []
+    for i, (st, en, ti) in enumerate(spans):
+        k = narabi[i % len(narabi)]
+        if out and len(narabi) > 1 and k == out[-1][3]:
+            k = narabi[(i + 1) % len(narabi)]
+        out.append((st, en, ti, k))
+    return out
+
+
+def bgm_ookisa(path):
+    u"""曲の平均の大きさ（dB）。ffmpeg の volumedetect で測る。測れなければ None。"""
+    r = subprocess.run([need("ffmpeg"), "-hide_banner", "-nostats", "-i", path,
+                        "-af", "volumedetect", "-f", "null", "-"],
+                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    m = re.search(r"mean_volume:\s*(-?[0-9.]+) dB", r.stdout.decode("utf-8", "replace"))
+    return float(m.group(1)) if m else None
+
+
+def bgm_sakuhin_goto(spans, folder, kyoku, vol, total, owari, fade, work, tane_mojiretsu):
+    u"""作品ごとに曲を替えた BGM を、動画の長さちょうどの wav にする。
+
+    戻り値 (wav の道, [(始まり, 終わり, 章, 曲)])。作れなければ (None, [])。
+    """
+    if not spans or not kyoku:
+        return None, []
+    wari = bgm_wariate(spans, kyoku, tane_mojiretsu)
+    # 曲ごとの大きさをそろえる（まんなかに合わせる。0.5〜2倍の範囲で）
+    tsukau = sorted(set(k for (_s, _e, _t, k) in wari))
+    db = {}
+    for k in tsukau:
+        v = bgm_ookisa(os.path.join(folder, k))
+        if v is not None:
+            db[k] = v
+    naka = sorted(db.values())[len(db) // 2] if db else None
+    kumi = []
+    for n, (st, en, ti, k) in enumerate(wari):
+        saigo = (n == len(wari) - 1)
+        nagasa = (total - st) if saigo else (en - st + BGM_KASANE)
+        owari_k = (owari - st) if saigo else nagasa
+        if nagasa <= 0.2 or owari_k <= 0.2:
+            continue
+        bai = 1.0
+        if naka is not None and k in db:
+            bai = max(0.5, min(2.0, 10 ** ((naka - db[k]) / 20.0)))
+        w = bgm_wav_ready(k, vol * bai, nagasa, owari_k, fade, work,
+                          src=os.path.join(folder, k), out_name=u"bgm_k%02d.wav" % n,
+                          fade_in=(fade if n == 0 else BGM_KASANE),
+                          fade_out=(fade if saigo else BGM_KASANE), tag=u"_k%02d" % n)
+        if w:
+            kumi.append((st, w))
+    if not kumi:
+        return None, []
+    out = os.path.join(work, u"bgm.wav")
+    cmd = [need("ffmpeg"), "-y", "-loglevel", "error"]
+    for (_st, w) in kumi:
+        cmd += ["-i", w]
+    fil = []
+    for n, (st, _w) in enumerate(kumi):
+        ms = int(round(st * 1000))
+        fil.append(u"[%d:a]adelay=%d|%d,apad[b%d]" % (n, ms, ms, n))
+    fil.append(u"".join(u"[b%d]" % n for n in range(len(kumi)))
+               + u"amix=inputs=%d:normalize=0:duration=longest[o]" % len(kumi))
+    cmd += ["-filter_complex", u";".join(fil), "-map", "[o]", "-t", "%.3f" % total,
+            "-ar", "44100", "-ac", "1", out]
+    run(cmd)
+    return out, wari
 
 
 def bgm_hikaeme(bgm, koe, total, work):
@@ -9888,6 +10008,9 @@ def main():
                     help=u"演出(エフェクトと効果音)を入れない")
     ap.add_argument("--no-bgm", action="store_true",
                     help=u"BGM を入れない")
+    ap.add_argument("--bgm-dir", default=None,
+                    help=u"おすすめ紹介の回で、作品ごとに当てる曲のフォルダ"
+                         u"（無ければ 置き場所.txt の BGM → 画像フォルダの隣の BGM）")
     ap.add_argument("--cuts", action="store_true",
                     help=u"完成後、1枚ごとの短い動画を 確認用 に書き出す")
     ap.add_argument("--imageplan", default=IMGPLAN)
@@ -11648,19 +11771,56 @@ def main():
             say(u"  効果音: " + u" / ".join(u"%s %d回" % (n, c)
                                         for n, c in sorted(sekazu.items())))
 
-    if en.get("bgm") and not a.no_bgm:
+    if not a.no_bgm and (en.get("bgm") or OSUSUME[0]):
         eizou = sum(frames) / float(fps)
         koe = audio_duration(oto)
-        bgm = bgm_wav_ready(en["bgm"], en["bgmvol"],
-                            max(eizou, koe), min(eizou, koe),
-                            en["bgmfade"], work)
+        bgm, wari_b, bdir = None, [], None
+        if OSUSUME[0]:
+            # 作品ごとに曲を替える（本人の指定・2026-11-17）。上の注記を読むこと
+            bdir, kyoku = bgm_folder(a.images, a.bgm_dir)
+            sp_b = chapter_spans(cues, chaps, max(eizou, koe)) if chaps else []
+            if kyoku and sp_b:
+                bgm, wari_b = bgm_sakuhin_goto(
+                    sp_b, bdir, kyoku, en["bgmvol"], max(eizou, koe), min(eizou, koe),
+                    en["bgmfade"], work, os.path.basename(os.path.abspath(HERE)))
+            elif not kyoku:
+                say(u"  BGM: 作品ごとの曲が見つかりません（%s）。演出.txt の1曲を流します。"
+                    u"曲を入れると、作品ごとに替わります" % (bdir or u"BGM フォルダ"))
+        if bgm is None and en.get("bgm"):
+            bgm = bgm_wav_ready(en["bgm"], en["bgmvol"],
+                                max(eizou, koe), min(eizou, koe),
+                                en["bgmfade"], work)
         if bgm:
             if en.get("bgmduck"):
                 bgm = bgm_hikaeme(bgm, oto, max(eizou, koe), work)
             kasaneru.append(bgm)
-            say(u"  BGM: %s (音量 %.2f / フェード %.1f秒%s)"
-                % (en["bgm"], en["bgmvol"], en["bgmfade"],
-                   u" / 声の間は控えめ" if en.get("bgmduck") else u""))
+            if wari_b:
+                nkyoku = len(set(k for (_s, _e, _t, k) in wari_b))
+                say(u"  BGM: 作品ごとに曲を替えました（%s の %d曲から %d曲を使用・音量 %.2f・"
+                    u"切り替えは %.1f秒かけて重ねる）"
+                    % (bdir, len(bgm_folder(a.images, a.bgm_dir)[1]), nkyoku,
+                       en["bgmvol"], BGM_KASANE))
+                hyou = [u"# どの区切りに、どの曲を当てたか（make_slideshow.py が書きます）",
+                        u"# 曲の並びは動画の名前で決まります。作り直しても同じ曲になります。"]
+                for (st0, en0, ti0, k0) in wari_b:
+                    na0 = u"はじめに" if ti0 == MUDAI else ti0.split(u"\\N")[0]
+                    hyou.append(u"%s\t%s\t%s" % (mmss(st0), na0, k0))
+                    say(u"    %s  %-26s ← %s" % (mmss(st0), na0[:26], k0))
+                try:
+                    kd = os.path.join(HERE, KAKUNIN_DIR)
+                    if not os.path.isdir(kd):
+                        os.makedirs(kd)
+                    io.open(os.path.join(kd, u"BGMの割り当て.txt"), "w", encoding="utf-8-sig",
+                            newline=u"\r\n").write(u"\n".join(hyou) + u"\n")
+                except Exception:
+                    pass
+                if len(set(kyoku)) < len(wari_b):
+                    say(u"    （曲が %d曲で、区切りが %d あるので、同じ曲を2回以上使っています。"
+                        u"となり合う区切りは別の曲にしています）" % (len(set(kyoku)), len(wari_b)))
+            else:
+                say(u"  BGM: %s (音量 %.2f / フェード %.1f秒%s)"
+                    % (en["bgm"], en["bgmvol"], en["bgmfade"],
+                       u" / 声の間は控えめ" if en.get("bgmduck") else u""))
 
     if kasaneru:
         mixed = os.path.join(work, "mixed.wav")

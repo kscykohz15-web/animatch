@@ -23,3 +23,4 @@
 おおもと	C:\Youtube動画\おすすめアニメ
 画像	C:\Youtube動画\おすすめアニメ\画像
 録画	C:\Youtube動画\おすすめアニメ\録画
+BGM	C:\Youtube動画\おすすめアニメ\BGM
