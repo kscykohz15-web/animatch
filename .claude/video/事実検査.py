@@ -120,6 +120,22 @@ def yomu_hoso():
 #   **制作会社が作品名の行へ移った。** 作品名を取るときは、うしろの
 #   「、制作は◯◯。」を外す。外さないと作品名が
 #   「ニセコイ、制作はシャフト。」になって、どの表にも当たらない。
+GENSAKU = {}
+
+
+def yomu_gensaku():
+    u"""原作の状態.txt（作品名 → (原作, アニメ, 調べた日)）。無ければ空。"""
+    pth = V + u"原作の状態.txt"
+    if not os.path.isfile(pth):
+        return
+    for ln in io.open(pth, encoding="utf-8-sig"):
+        if ln.startswith(u"#") or not ln.strip():
+            continue
+        c = ln.rstrip(u"\r\n").split(u"\t")
+        if len(c) >= 4:
+            GENSAKU[c[0].strip()] = (c[1].strip(), c[2].strip(), c[3].strip())
+
+
 def sakuhinmei(t):
     u"""作品名の行から、作品名だけを取る。"""
     return re.sub(u"、制作は[^、。]*。?$", u"", t.strip()).strip()
@@ -183,6 +199,7 @@ def main():
         return 1
     zoku = yomu_zokuhen()
     hoso = yomu_hoso()
+    yomu_gensaku()
     if not zoku:
         say(u"続編情報.txt がありません。先に 続編を引く.py を回してください。")
         return 1
@@ -217,6 +234,10 @@ def main():
             tv = z[u"tv"]
 
             iu_eiga = bool(re.search(u"劇場版|映画", h))
+            # 「劇場版の制作も決まっています」は**決まっただけ**。公開済みとは言っていない
+            # （本人の型・2026-11-17 のかぐや様「完結編となる劇場版の制作も決まっています」）
+            h_kime = re.sub(u"[^、。]*(劇場版|映画)[^、。]*決まって[^、。]*", u"", h)
+            iu_eiga_deta = bool(re.search(u"劇場版|映画", h_kime))
 
             # ③ 劇場版を「放送」と書いていないか
             if re.search(u"(劇場版|映画)(も|まで|が|は)?[^。]{0,8}放送", h):
@@ -224,7 +245,7 @@ def main():
 
             # ② 劇場版があると書いているのに、公開済みのものが無い
             deta_eiga = [b for b in eiga if toshi(b[u"時"]) and toshi(b[u"時"]) <= KOTOSHI]
-            if iu_eiga and not deta_eiga:
+            if iu_eiga_deta and not deta_eiga:
                 mada = u"／".join(u"%s %s" % (b[u"形式"], b[u"時"]) for b in eiga)
                 naka = u"／".join(u"%s %s" % (b[u"形式"], b[u"時"]) for b in z[u"本"][1:]) or u"なし"
                 warui.append(u"%s … 「劇場版」と書いていますが、公開済みの劇場版はありません"
@@ -240,7 +261,14 @@ def main():
             honpen = [b for b in z[u"本"] if b[u"続柄"] == u"－"]
 
             # ④ 本編の続きがあるのに「完結済み」
-            if u"完結済み" in h and len(honpen) > 1:
+            #   ■ 本人の型（2026-11-17）では「完結済み」が2つの意味で出る。
+            #     「原作は完結済み」── 原作の話。アニメの続きとは関係ない（⑦で見る）
+            #     「アニメも第二期と劇場版で完結済み」── 続きを**名指ししたうえで**完結。
+            #   どちらも「続きが無い」とは言っていないので、ここでは数えない。
+            #   「全25話で完結済み」「全12話の完結済みの作品」は続きが無いと言っているので見る。
+            h_anime = re.sub(u"原作は(本編が)?(完結済み|連載中|刊行中|未完結)、?", u"", h)
+            nazashi = re.search(u"(期|劇場版|映画)で完結", h_anime)
+            if u"完結済み" in h_anime and not nazashi and len(honpen) > 1:
                 naka = u"／".join(u"%s %s %s" % (b[u"形式"], b[u"時"], b[u"題"][:22])
                                  for b in honpen[1:])
                 warui.append(u"%s … 「完結済み」と書いていますが本編の続きがあります（%s）"
@@ -275,6 +303,22 @@ def main():
                                 % (na, iu_made, tsugi,
                                    u"／".join(u"%s %s %s" % (b[u"形式"], b[u"時"], b[u"題"][:26])
                                              for b in deta[:3])))
+
+            # ⑦ 原作の状態（本人の型・2026-11-17）── 原作の状態.txt と突き合わせる
+            #   「原作は完結済み」「原作は連載中」は時間で変わる。調べた控えと違えば落とす。
+            m7 = re.search(u"原作は(本編が)?(完結済み|連載中|刊行中|未完結)", h)
+            if m7:
+                iu7 = m7.group(2)
+                gen = GENSAKU.get(na) or GENSAKU.get(key)
+                if gen is None:
+                    chui.append(u"%s … 「原作は%s」と書いていますが、原作の状態.txt に行がありません"
+                                u"（調べてから足す）" % (na, iu7))
+                else:
+                    hon7 = gen[0]
+                    owari_iu, owari_hon = iu7 == u"完結済み", hon7 == u"完結済み"
+                    if hon7 == u"－" or owari_iu != owari_hon:
+                        warui.append(u"%s … 「原作は%s」ですが、原作の状態.txt では「%s」（%s 調べ）"
+                                     % (na, iu7, hon7, gen[2]))
 
             # ⑥ 台本が劇場版と言っていて、それが総集編のとき
             if iu_eiga and u"総集編" not in h:
