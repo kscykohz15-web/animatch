@@ -20,8 +20,9 @@ u"""オープニングと、長く映る絵の動き（仕上げ.py ㉜）
   ③ 動画の長さ ＝ オープニング ＋ 本編（--no-opening で作ったもの）
   ④ その他/_オープニング秒.txt にオープニングの秒数を残す（説明文.py の目次が足す）
      一覧.txt の時刻は本編のまま
-  ⑤ 長く映る絵（約9秒）が、映っている間ずっと動いている
-     （終わり 1.2秒前 と 0.3秒前 のコマが違う。v196 は約5秒で端に着いて止まっていた）
+  ⑤ 長く映る絵（約14秒）が、映っている間ずっと動いている
+     （終わり 1.2秒前 と 0.3秒前 のコマが違う。同じ材料で v196 は差 0.01＝止まっている・
+      直したあとは 44.5＝頭と同じ速さ。v196 は約5秒で端に着いて止まっていた）
   ⑥ 動きの速さは今のまま（短い絵は前と同じ毎秒の距離）
 """
 from __future__ import print_function
@@ -182,12 +183,22 @@ def kansei(w, log=u""):
 
 
 def nagai_basho(w):
-    u"""確認用/一覧.txt から、長い字幕の（本編での）始まりと終わり。"""
+    u"""確認用/一覧.txt から、長い字幕の（本編での）始まりと終わり。
+
+    2列目の開始は「0:16」の形に丸めた表示なので使わず、3列目の尺（秒）を前から足す。
+    """
+    t = 0.0
     for line in io.open(os.path.join(w, u"確認用", u"一覧.txt"), encoding="utf-8-sig") \
             .read().replace(u"\r\n", u"\n").split(u"\n"):
         c = line.split(u"\t")
-        if len(c) >= 8 and c[0].isdigit() and c[7].startswith(u"本作の魅力はとても長い"):
-            return float(c[1]), float(c[2])
+        if len(c) >= 8 and c[0].isdigit():
+            try:
+                du = float(c[2])
+            except ValueError:
+                continue
+            if c[7].startswith(u"本作の魅力はとても長い"):
+                return t, t + du
+            t += du
     return None
 
 
