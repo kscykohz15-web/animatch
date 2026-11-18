@@ -21373,7 +21373,7 @@ if __name__ == "__main__":
 "  # v197 の Z は台本が同じなので声を飛ばし、声用の台本が一度も使われなかった（2026-11-18）。",
 "  if (-not (Test-Path (Join-Path $root 'make_slideshow.py'))) { return $false }",
 "  Set-Location $root",
-"  python 'make_slideshow.py' --no-folders --koe-daihon '台本_読み上げ用_声.txt' | Out-Null",
+"  $null = python 'make_slideshow.py' --no-folders --koe-daihon '台本_読み上げ用_声.txt'",
 "  $kf = Join-Path $root '台本_読み上げ用_声.txt'",
 "  if (-not (Test-Path $kf)) { return $false }",
 "  $mf = Join-Path $root '音声\\声のもと.txt'",
