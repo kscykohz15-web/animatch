@@ -1,0 +1,1078 @@
+[
+  {
+    "title": "ログ・ホライズン",
+    "found": true,
+    "seasons": 3,
+    "totalEpisodes": 62,
+    "firstYear": 2013,
+    "lastYear": 2021,
+    "studios": [
+      "Satelight",
+      "Studio DEEN"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "ファンタジー",
+      "コメディ"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "ログ・ホライズン",
+        "episodes": 25,
+        "year": 2013,
+        "season": "秋",
+        "studios": [
+          "Satelight"
+        ]
+      },
+      {
+        "name": "ログ・ホライズン 2",
+        "episodes": 25,
+        "year": 2014,
+        "season": "秋",
+        "studios": [
+          "Studio DEEN"
+        ]
+      },
+      {
+        "name": "ログ・ホライズン　円卓崩壊",
+        "episodes": 12,
+        "year": 2021,
+        "season": "冬",
+        "studios": [
+          "Studio DEEN"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "魔法科高校の劣等生",
+    "found": true,
+    "seasons": 4,
+    "totalEpisodes": 59,
+    "firstYear": 2014,
+    "lastYear": 2024,
+    "studios": [
+      "MADHOUSE",
+      "8-bit",
+      "Aniplex"
+    ],
+    "genres": [
+      "アクション",
+      "恋愛",
+      "SF",
+      "超常"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "魔法科高校の劣等生",
+        "episodes": 26,
+        "year": 2014,
+        "season": "春",
+        "studios": [
+          "MADHOUSE"
+        ]
+      },
+      {
+        "name": "魔法科高校の劣等生 第3シーズン",
+        "episodes": 13,
+        "year": 2024,
+        "season": "春",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "魔法科高校の劣等生 来訪者編",
+        "episodes": 13,
+        "year": 2020,
+        "season": "秋",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "魔法科高校の劣等生 よくわかる魔法科！",
+        "episodes": 7,
+        "year": 2014,
+        "season": "冬",
+        "studios": [
+          "Aniplex"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "この素晴らしい世界に祝福を！",
+    "found": true,
+    "seasons": 4,
+    "totalEpisodes": null,
+    "firstYear": 2016,
+    "lastYear": 2024,
+    "studios": [
+      "Studio DEEN",
+      "Drive",
+      "ENGI"
+    ],
+    "genres": [
+      "冒険",
+      "コメディ",
+      "お色気",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "この素晴らしい世界に祝福を！",
+        "episodes": 10,
+        "year": 2016,
+        "season": "冬",
+        "studios": [
+          "Studio DEEN"
+        ]
+      },
+      {
+        "name": "この素晴らしい世界に祝福を！2",
+        "episodes": 10,
+        "year": 2017,
+        "season": "冬",
+        "studios": [
+          "Studio DEEN"
+        ]
+      },
+      {
+        "name": "この素晴らしい世界に祝福を！３",
+        "episodes": 11,
+        "year": 2024,
+        "season": "春",
+        "studios": [
+          "Drive"
+        ]
+      },
+      {
+        "name": "この素晴らしい世界に祝福を！4",
+        "episodes": null,
+        "year": null,
+        "season": null,
+        "studios": [
+          "ENGI"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Re:ゼロから始める異世界生活",
+    "found": true,
+    "seasons": 6,
+    "totalEpisodes": null,
+    "firstYear": 2016,
+    "lastYear": 2026,
+    "studios": [
+      "WHITE FOX"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "ドラマ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "Re:ゼロから始める異世界生活",
+        "episodes": 25,
+        "year": 2016,
+        "season": "春",
+        "studios": [
+          "WHITE FOX"
+        ]
+      },
+      {
+        "name": "Re:ゼロから始める異世界生活 3rd season",
+        "episodes": 16,
+        "year": 2024,
+        "season": "秋",
+        "studios": [
+          "WHITE FOX"
+        ]
+      },
+      {
+        "name": "Re:ゼロから始める異世界生活 2nd Season",
+        "episodes": 13,
+        "year": 2020,
+        "season": "夏",
+        "studios": [
+          "WHITE FOX"
+        ]
+      },
+      {
+        "name": "Re:ゼロから始める異世界生活 4th season",
+        "episodes": 19,
+        "year": 2026,
+        "season": "春",
+        "studios": [
+          "WHITE FOX"
+        ]
+      },
+      {
+        "name": "Re:ゼロから始める異世界生活 5th season",
+        "episodes": null,
+        "year": null,
+        "season": null,
+        "studios": []
+      },
+      {
+        "name": "Re:ゼロから始める異世界生活 2nd Season Part 2",
+        "episodes": 12,
+        "year": 2021,
+        "season": "冬",
+        "studios": [
+          "WHITE FOX"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "乙女ゲー世界はモブに厳しい世界です",
+    "found": true,
+    "seasons": 2,
+    "totalEpisodes": 24,
+    "firstYear": 2022,
+    "lastYear": 2026,
+    "studios": [
+      "ENGI"
+    ],
+    "genres": [
+      "アクション",
+      "ファンタジー",
+      "Mecha",
+      "恋愛"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "乙女ゲー世界はモブに厳しい世界です",
+        "episodes": 12,
+        "year": 2022,
+        "season": "春",
+        "studios": [
+          "ENGI"
+        ]
+      },
+      {
+        "name": "乙女ゲー世界はモブに厳しい世界です2",
+        "episodes": 12,
+        "year": 2026,
+        "season": "夏",
+        "studios": [
+          "ENGI"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "オーバーロード",
+    "found": true,
+    "seasons": 7,
+    "totalEpisodes": 91,
+    "firstYear": 2015,
+    "lastYear": 2022,
+    "studios": [
+      "MADHOUSE",
+      "Studio PuYUKAI"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "ファンタジー",
+      "コメディ"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "オーバーロード",
+        "episodes": 13,
+        "year": 2015,
+        "season": "夏",
+        "studios": [
+          "MADHOUSE"
+        ]
+      },
+      {
+        "name": "オーバーロードⅡ",
+        "episodes": 13,
+        "year": 2018,
+        "season": "冬",
+        "studios": [
+          "MADHOUSE"
+        ]
+      },
+      {
+        "name": "オーバーロードⅢ",
+        "episodes": 13,
+        "year": 2018,
+        "season": "夏",
+        "studios": [
+          "MADHOUSE"
+        ]
+      },
+      {
+        "name": "オーバーロードⅣ",
+        "episodes": 13,
+        "year": 2022,
+        "season": "夏",
+        "studios": [
+          "MADHOUSE"
+        ]
+      },
+      {
+        "name": "オーバーロード ぷれぷれぷれあです3",
+        "episodes": 13,
+        "year": 2018,
+        "season": "夏",
+        "studios": [
+          "Studio PuYUKAI"
+        ]
+      },
+      {
+        "name": "オーバーロード ぷれぷれぷれあです4",
+        "episodes": 13,
+        "year": 2022,
+        "season": "夏",
+        "studios": [
+          "Studio PuYUKAI"
+        ]
+      },
+      {
+        "name": "オーバーロード ぷれぷれぷれあです2",
+        "episodes": 13,
+        "year": 2018,
+        "season": "冬",
+        "studios": [
+          "Studio PuYUKAI"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "異世界居酒屋",
+    "found": true,
+    "seasons": 1,
+    "totalEpisodes": 24,
+    "firstYear": 2018,
+    "lastYear": 2018,
+    "studios": [
+      "Sunrise"
+    ],
+    "genres": [
+      "コメディ",
+      "ファンタジー",
+      "日常"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "異世界居酒屋～古都アイテーリアの居酒屋のぶ～",
+        "episodes": 24,
+        "year": 2018,
+        "season": "春",
+        "studios": [
+          "Sunrise"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "転生したらスライムだった件",
+    "found": true,
+    "seasons": 9,
+    "totalEpisodes": null,
+    "firstYear": 2018,
+    "lastYear": 2027,
+    "studios": [
+      "8-bit"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "コメディ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "転生したらスライムだった件",
+        "episodes": 24,
+        "year": 2018,
+        "season": "秋",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 転スラ日記",
+        "episodes": 12,
+        "year": 2021,
+        "season": "春",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 クレイマンREVENGE",
+        "episodes": null,
+        "year": 2027,
+        "season": "春",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 第2期",
+        "episodes": 12,
+        "year": 2021,
+        "season": "冬",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 第3期",
+        "episodes": 24,
+        "year": 2024,
+        "season": "春",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 救われるラミリス",
+        "episodes": 2,
+        "year": 2022,
+        "season": "冬",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 第4期 第3クール",
+        "episodes": null,
+        "year": 2027,
+        "season": "夏",
+        "studios": []
+      },
+      {
+        "name": "転生したらスライムだった件 第2期 第2クール",
+        "episodes": 12,
+        "year": 2021,
+        "season": "夏",
+        "studios": [
+          "8-bit"
+        ]
+      },
+      {
+        "name": "転生したらスライムだった件 第4期 第1&2クール",
+        "episodes": 24,
+        "year": 2026,
+        "season": "春",
+        "studios": [
+          "8-bit"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "盾の勇者の成り上がり",
+    "found": true,
+    "seasons": 5,
+    "totalEpisodes": null,
+    "firstYear": 2019,
+    "lastYear": 2025,
+    "studios": [
+      "Kinema Citrus",
+      "DR Movie"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "盾の勇者の成り上がり",
+        "episodes": 25,
+        "year": 2019,
+        "season": "冬",
+        "studios": [
+          "Kinema Citrus"
+        ]
+      },
+      {
+        "name": "盾の勇者の成り上がり Season 5",
+        "episodes": null,
+        "year": null,
+        "season": null,
+        "studios": [
+          "Kinema Citrus"
+        ]
+      },
+      {
+        "name": "盾の勇者の成り上がり Season 2",
+        "episodes": 13,
+        "year": 2022,
+        "season": "春",
+        "studios": [
+          "Kinema Citrus",
+          "DR Movie"
+        ]
+      },
+      {
+        "name": "盾の勇者の成り上がり Season 4",
+        "episodes": 12,
+        "year": 2025,
+        "season": "夏",
+        "studios": [
+          "Kinema Citrus"
+        ]
+      },
+      {
+        "name": "盾の勇者の成り上がり Season 3",
+        "episodes": 12,
+        "year": 2023,
+        "season": "秋",
+        "studios": [
+          "Kinema Citrus"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "本好きの下剋上",
+    "found": true,
+    "seasons": 5,
+    "totalEpisodes": null,
+    "firstYear": 2019,
+    "lastYear": 2026,
+    "studios": [
+      "WIT STUDIO",
+      "Ajiado"
+    ],
+    "genres": [
+      "ドラマ",
+      "ファンタジー",
+      "日常"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "本好きの下剋上 領主の養女",
+        "episodes": 24,
+        "year": 2026,
+        "season": "春",
+        "studios": [
+          "WIT STUDIO"
+        ]
+      },
+      {
+        "name": "本好きの下剋上 貴族院の自称図書委員",
+        "episodes": null,
+        "year": null,
+        "season": null,
+        "studios": [
+          "WIT STUDIO"
+        ]
+      },
+      {
+        "name": "本好きの下剋上 司書になるためには手段を選んでいられません",
+        "episodes": 14,
+        "year": 2019,
+        "season": "秋",
+        "studios": [
+          "Ajiado"
+        ]
+      },
+      {
+        "name": "本好きの下剋上 司書になるためには手段を選んでいられません 第2期",
+        "episodes": 12,
+        "year": 2020,
+        "season": "春",
+        "studios": [
+          "Ajiado"
+        ]
+      },
+      {
+        "name": "本好きの下剋上 司書になるためには手段を選んでいられません 第3期",
+        "episodes": 10,
+        "year": 2022,
+        "season": "春",
+        "studios": [
+          "Ajiado"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "魔王学院の不適合者",
+    "found": true,
+    "seasons": 3,
+    "totalEpisodes": 37,
+    "firstYear": 2020,
+    "lastYear": 2024,
+    "studios": [
+      "SILVER LINK."
+    ],
+    "genres": [
+      "アクション",
+      "コメディ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～",
+        "episodes": 13,
+        "year": 2020,
+        "season": "夏",
+        "studios": [
+          "SILVER LINK."
+        ]
+      },
+      {
+        "name": "魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ Ⅱ",
+        "episodes": 12,
+        "year": 2023,
+        "season": "冬",
+        "studios": [
+          "SILVER LINK."
+        ]
+      },
+      {
+        "name": "魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ Ⅱ 2クール",
+        "episodes": 12,
+        "year": 2024,
+        "season": "春",
+        "studios": [
+          "SILVER LINK."
+        ]
+      }
+    ]
+  },
+  {
+    "title": "無職転生",
+    "found": true,
+    "seasons": 6,
+    "totalEpisodes": null,
+    "firstYear": 2021,
+    "lastYear": 2026,
+    "studios": [
+      "Studio Bind"
+    ],
+    "genres": [
+      "冒険",
+      "ドラマ",
+      "お色気",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "無職転生 ～異世界行ったら本気だす～",
+        "episodes": 11,
+        "year": 2021,
+        "season": "冬",
+        "studios": [
+          "Studio Bind"
+        ]
+      },
+      {
+        "name": "無職転生Ⅱ ～異世界行ったら本気だす～",
+        "episodes": 13,
+        "year": 2023,
+        "season": "夏",
+        "studios": [
+          "Studio Bind"
+        ]
+      },
+      {
+        "name": "無職転生Ⅲ ～異世界行ったら本気だす～",
+        "episodes": 14,
+        "year": 2026,
+        "season": "夏",
+        "studios": [
+          "Studio Bind"
+        ]
+      },
+      {
+        "name": "無職転生 ～異世界行ったら本気だす～ 第2クール",
+        "episodes": 12,
+        "year": 2021,
+        "season": "秋",
+        "studios": [
+          "Studio Bind"
+        ]
+      },
+      {
+        "name": "無職転生Ⅲ ～異世界行ったら本気だす～ 第2クール",
+        "episodes": null,
+        "year": null,
+        "season": null,
+        "studios": [
+          "Studio Bind"
+        ]
+      },
+      {
+        "name": "無職転生Ⅱ ～異世界行ったら本気だす～ 第2クール",
+        "episodes": 12,
+        "year": 2024,
+        "season": "春",
+        "studios": [
+          "Studio Bind"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "陰の実力者になりたくて！",
+    "found": true,
+    "seasons": 2,
+    "totalEpisodes": 32,
+    "firstYear": 2022,
+    "lastYear": 2023,
+    "studios": [
+      "Nexus"
+    ],
+    "genres": [
+      "アクション",
+      "コメディ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "陰の実力者になりたくて！",
+        "episodes": 20,
+        "year": 2022,
+        "season": "秋",
+        "studios": [
+          "Nexus"
+        ]
+      },
+      {
+        "name": "陰の実力者になりたくて！ 2nd season",
+        "episodes": 12,
+        "year": 2023,
+        "season": "秋",
+        "studios": [
+          "Nexus"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "とんでもスキルで異世界放浪メシ",
+    "found": true,
+    "seasons": 2,
+    "totalEpisodes": 24,
+    "firstYear": 2023,
+    "lastYear": 2025,
+    "studios": [
+      "MAPPA"
+    ],
+    "genres": [
+      "冒険",
+      "コメディ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "とんでもスキルで異世界放浪メシ",
+        "episodes": 12,
+        "year": 2023,
+        "season": "冬",
+        "studios": [
+          "MAPPA"
+        ]
+      },
+      {
+        "name": "とんでもスキルで異世界放浪メシ2",
+        "episodes": 12,
+        "year": 2025,
+        "season": "秋",
+        "studios": [
+          "MAPPA"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "シャングリラ・フロンティア",
+    "found": true,
+    "seasons": 4,
+    "totalEpisodes": null,
+    "firstYear": 2023,
+    "lastYear": 2027,
+    "studios": [
+      "C2C"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "コメディ",
+      "ファンタジー"
+    ],
+    "source": "漫画",
+    "detail": [
+      {
+        "name": "シャングリラ・フロンティア",
+        "episodes": 25,
+        "year": 2023,
+        "season": "秋",
+        "studios": [
+          "C2C"
+        ]
+      },
+      {
+        "name": "シャングリラ・フロンティア ミニアニメ",
+        "episodes": 9,
+        "year": 2023,
+        "season": "秋",
+        "studios": []
+      },
+      {
+        "name": "シャングリラ・フロンティア 3rd season",
+        "episodes": null,
+        "year": 2027,
+        "season": "冬",
+        "studios": [
+          "C2C"
+        ]
+      },
+      {
+        "name": "シャングリラ・フロンティア 2nd season",
+        "episodes": 25,
+        "year": 2024,
+        "season": "秋",
+        "studios": [
+          "C2C"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "薬屋のひとりごと",
+    "found": true,
+    "seasons": 7,
+    "totalEpisodes": null,
+    "firstYear": 2023,
+    "lastYear": 2027,
+    "studios": [
+      "OLM",
+      "TOHO animation STUDIO"
+    ],
+    "genres": [
+      "ドラマ",
+      "ミステリー",
+      "コメディ"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "薬屋のひとりごと",
+        "episodes": 24,
+        "year": 2023,
+        "season": "秋",
+        "studios": [
+          "OLM",
+          "TOHO animation STUDIO"
+        ]
+      },
+      {
+        "name": "猫猫のひとりごと",
+        "episodes": 24,
+        "year": 2023,
+        "season": "秋",
+        "studios": []
+      },
+      {
+        "name": "薬屋のひとりごと 第3期",
+        "episodes": 12,
+        "year": 2026,
+        "season": "秋",
+        "studios": [
+          "OLM"
+        ]
+      },
+      {
+        "name": "薬屋のひとりごと 第2期",
+        "episodes": 24,
+        "year": 2025,
+        "season": "冬",
+        "studios": [
+          "TOHO animation STUDIO",
+          "OLM"
+        ]
+      },
+      {
+        "name": "猫猫のひとりごと 第3期",
+        "episodes": null,
+        "year": 2026,
+        "season": "秋",
+        "studios": []
+      },
+      {
+        "name": "猫猫のひとりごと 第2期",
+        "episodes": 24,
+        "year": 2025,
+        "season": "冬",
+        "studios": []
+      },
+      {
+        "name": "薬屋のひとりごと 第3期 第2クール",
+        "episodes": 12,
+        "year": 2027,
+        "season": "春",
+        "studios": [
+          "OLM"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "転生したら第七王子だったので、気ままに魔術を極めます",
+    "found": true,
+    "seasons": 2,
+    "totalEpisodes": 24,
+    "firstYear": 2024,
+    "lastYear": 2025,
+    "studios": [
+      "Tsumugi Akita Anime Lab"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "ファンタジー",
+      "日常"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "転生したら第七王子だったので、気ままに魔術を極めます",
+        "episodes": 12,
+        "year": 2024,
+        "season": "春",
+        "studios": [
+          "Tsumugi Akita Anime Lab"
+        ]
+      },
+      {
+        "name": "転生したら第七王子だったので、気ままに魔術を極めます 第2期",
+        "episodes": 12,
+        "year": 2025,
+        "season": "夏",
+        "studios": [
+          "Tsumugi Akita Anime Lab"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "時々ボソッとロシア語でデレる隣のアーリャさん",
+    "found": true,
+    "seasons": 2,
+    "totalEpisodes": null,
+    "firstYear": 2024,
+    "lastYear": 2024,
+    "studios": [
+      "Doga Kobo"
+    ],
+    "genres": [
+      "コメディ",
+      "恋愛",
+      "日常"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "時々ボソッとロシア語でデレる隣のアーリャさん",
+        "episodes": 12,
+        "year": 2024,
+        "season": "夏",
+        "studios": [
+          "Doga Kobo"
+        ]
+      },
+      {
+        "name": "時々ボソッとロシア語でデレる隣のアーリャさん Season 2",
+        "episodes": null,
+        "year": null,
+        "season": null,
+        "studios": [
+          "Doga Kobo"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "最凶の支援職【話術士】である俺は世界最強クランを従える",
+    "found": true,
+    "seasons": 1,
+    "totalEpisodes": 12,
+    "firstYear": 2024,
+    "lastYear": 2024,
+    "studios": [
+      "Felix Film",
+      "GA-CREW"
+    ],
+    "genres": [
+      "アクション",
+      "冒険",
+      "コメディ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "最凶の支援職【話術士】である俺は世界最強クランを従える",
+        "episodes": 12,
+        "year": 2024,
+        "season": "秋",
+        "studios": [
+          "Felix Film",
+          "GA-CREW"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "サイレント・ウィッチ",
+    "found": true,
+    "seasons": 1,
+    "totalEpisodes": 13,
+    "firstYear": 2025,
+    "lastYear": 2025,
+    "studios": [
+      "Studio Gokumi"
+    ],
+    "genres": [
+      "ドラマ",
+      "ファンタジー"
+    ],
+    "source": "ライトノベル",
+    "detail": [
+      {
+        "name": "サイレント・ウィッチ 沈黙の魔女の隠しごと",
+        "episodes": 13,
+        "year": 2025,
+        "season": "夏",
+        "studios": [
+          "Studio Gokumi"
+        ]
+      }
+    ]
+  }
+]
