@@ -305,6 +305,17 @@ HONMONO = [False]
 # 6段目までの材料は srt が台本とぴったり同じなので、この落ち方を一度も見ていない。
 # srt の「、」を全部落とした材料で、**1段目と同じ線**を通す（同じ道を通るはずなので）。
 SRT_KUTOU = [False]
+# ■ 8段目（2026-11-18）。**声用の台本を読んだ形。** 本人の型は1文が長く、読み上げが「、」で
+#   止まらない所の切れ目が推測になっていた。字幕の切れ目の「、」を「。」として読ませる
+#   （本人が選んだ直し）と、切れ目には必ず間ができる。それで本当にずれが消えるかを見る段。
+KOE = [False]
+# 8段目の線（2026-11-18・材料で 3つの乱数とも 最大 0.07 / 平均 0.00 / 0.45秒超 0% / 声の途中 0枚）。
+#   0.07秒は動画の頭（字幕 0.00 と 声 0.19）だけ。余裕を持たせても、6段目（2.40秒）より
+#   はるかにきつい線にする ── 声用の台本の道が崩れたら、ここで必ず落ちる。
+KOE_OOKII = 0.30
+KOE_HEIKIN = 0.05
+KOE_WARIAI = 1.0
+KOE_NAKA = 0
 
 YOBI_OOKII = 2.60
 YOBI_HEIKIN = 0.15       # 実測 0.07・余裕 0.08
@@ -362,6 +373,7 @@ def hitotsu(tane):
     env[u"ZURE_TSUGIME_SEMAI"] = u"1" if SEMAI[0] else u"0"
     env[u"ZURE_HONBAN"] = u"1" if HONMONO[0] else u"0"
     env[u"ZURE_SRT_KUTOU"] = u"1" if SRT_KUTOU[0] else u"0"
+    env[u"ZURE_KOE_DAIHON"] = u"1" if KOE[0] else u"0"
     r = subprocess.run([sys.executable, u"_zure_tsukuru.py", str(tane)],
                        cwd=SAGYOU, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, env=env)
@@ -433,14 +445,21 @@ def main():
             # ■ 7段目（2026-11-11）。**subtitle.srt だけ句読点が違う。**上の注記を読むこと。
             (True, 1.0, u"srtの句読点が違う(20選の形)", GOUKAKU_OOKII,
              GOUKAKU_HEIKIN, GOUKAKU_WARIAI, False, GOUKAKU_NAKA,
+             False, None, None),
+            # ■ 8段目（2026-11-18）。**声用の台本を読んだ形。**上の KOE の注記を読むこと。
+            #   材料は6段目（本人の回と同じ形・切れはしの途中にも息継ぎ）のまま、
+            #   切れ目の「、」だけ「。」の長さで止まる。
+            (True, 1.0, u"声用の台本(切れ目の「、」を「。」で読む)", KOE_OOKII,
+             KOE_HEIKIN, KOE_WARIAI, False, KOE_NAKA,
              False, None, None)):
         print(u"── %s ──" % nm)
         dan_kazu += 1
         jissoku_kirikae(tsukau, wari)
         KITSUI[0] = kitsui
         SEMAI[0] = semai
-        HONMONO[0] = nm.startswith(u"本人の回と同じ形")
+        HONMONO[0] = nm.startswith((u"本人の回と同じ形", u"声用の台本"))
         SRT_KUTOU[0] = nm.startswith(u"srtの句読点が違う")
+        KOE[0] = nm.startswith(u"声用の台本")
         if shirabe(a.kai, nm, oo, he, wa, nk, anc_oo, anc_he):
             warui.append(nm)
     print(u"")

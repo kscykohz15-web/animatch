@@ -239,6 +239,30 @@ NAKA_IKI = [os.environ.get(u"ZURE_NAKA_IKI",
                            else u"0") == u"1"]
 
 
+# ■ 声用の台本（2026-11-18・本人の選択「切れ目で声も一息つく」）
+#   ZURE_KOE_DAIHON=1 で、字幕の切れ目になる「、」は「。」として読まれる（必ず長めに止まる）。
+#   切れ目は make_slideshow.koe_kiri_yotei と同じ決まりで決める（声を作る前に文字だけで決まる）。
+KOE_DAIHON = [os.environ.get(u"ZURE_KOE_DAIHON", u"0") == u"1"]
+
+
+def kiri_basho(bs):
+    u"""段落の切れはし bs のうち、声用の台本で「。」になる所の番号。"""
+    if not KOE_DAIHON[0]:
+        return set()
+    import make_slideshow as _M
+    hit = _M.koe_kiri_yotei(u"".join(bs), 8)
+    sakai, c = set(), 0
+    for pc in hit[:-1]:
+        c += len(pc)
+        sakai.add(c)
+    out, c = set(), 0
+    for i, t in enumerate(bs):
+        c += len(t)
+        if c in sakai:
+            out.add(i)
+    return out
+
+
 def main():
     for d in (u"output", u"確認用", u"その他"):
         if os.path.isdir(d):
@@ -265,6 +289,7 @@ def main():
             atama, oshiri = 0.07, 0.07
         oto = mu(atama)
         naka = []
+        kiri = kiri_basho(bs)
         for i, t in enumerate(bs):
             hayasa = 6.46 * random.uniform(0.75, 1.25)
             byou = len(t) / hayasa
@@ -290,7 +315,10 @@ def main():
                 # **p ≒ 0.73** ＝ 「、」の約4分の1は息を継がない。
                 # そこに合わせる。ここを本物に寄せないと、
                 # **検査が通っても本人の画面では直っていない。**
-                if t.endswith(u"、"):
+                if t.endswith(u"、") and i in kiri:
+                    # 声用の台本で「。」になった「、」。読み上げは文の終わりと同じだけ止まる
+                    oto += mu(random.choice([0.30, 0.40, 0.55, 0.70, 0.85]))
+                elif t.endswith(u"、"):
                     if random.random() < TEN_IKI_NASHI:
                         # 息を継がずに読み続けた。子音の途切れしか無い
                         oto += mu(random.uniform(0.02, 0.045) if HONBAN[0]
@@ -351,6 +379,12 @@ def main():
 
     io.open(u"台本_字幕用.txt", "w", encoding="utf-8").write(
         u"\n".join(u"".join(bs) for bs in dan) + u"\n")
+    # 声用の台本で作った形のときは、本番と同じく 台本_読み上げ用_声.txt を置く（道具はこれで見分ける）
+    if KOE_DAIHON[0]:
+        io.open(u"台本_読み上げ用_声.txt", "w", encoding="utf-8").write(
+            u"\n".join(u"".join(bs) for bs in dan) + u"\n")
+    elif os.path.exists(u"台本_読み上げ用_声.txt"):
+        os.remove(u"台本_読み上げ用_声.txt")
     io.open(u"台本_読み上げ用.txt", "w", encoding="utf-8").write(
         u"\n".join(u"".join(bs) for bs in dan) + u"\n")
 

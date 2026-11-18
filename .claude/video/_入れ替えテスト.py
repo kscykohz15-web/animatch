@@ -24,6 +24,11 @@ u"""入れ替え表が、**本当に絵を入れ替えるところまで**つな
   ⑤ 同じファイルを二度は取り込まない
   ⑥ フォルダ名に空白がある絵も、2列目まるごとで当たる（空白で切らない）
   ⑦ 取り込みは同じ所を指す古い行を消して、新しい行だけ残す。「-」は外すだけ
+  ⑧ 台本を書き直したあとに残った差し替えが、**別の作品の章に当たらない**（2026-11-18・本人の画面）
+     本人の動画で、IS の「本作の魅力は」にニセコイの絵が出た（右上 IS・左上ニセコイの ©）。
+     差し替え.txt の3列目の文が今の台本に無いと、番号のまま当てていた。
+     (A) 文が今の台本に無い行は使わない (B) 文は合っていても、その章の作品ではない絵は当てない
+     (C) 見張り（作品の章はその作品の絵だけか）は差し替えのあとで数え、フォルダの無い章も数える
 """
 from __future__ import print_function
 import io, json, os, re, shutil, subprocess, sys, tempfile
@@ -193,6 +198,37 @@ def main():
     ich3 = ichiran(d)
     iu(hit and ich3.get(hit[0], (u"",))[0] == erabu,
        u"⑤ 3回目も選んだ絵のまま（差し替え.txt に残っている）")
+
+    # ── ⑧ 書き直しのあとに残った差し替えが、フォルダの無い章（みどり組）に当たらない
+    mi_dai = [n for n, (img, tx) in ich3.items() if u"みどり組" in tx]
+    mi_hon = [n for n, (img, tx) in ich3.items() if tx.strip() == u"本作はオリジナル作品です。"]
+    if not (mi_dai and mi_hon):
+        iu(False, u"⑧ みどり組の字幕が一覧に見つかりません")
+        return 0
+    with io.open(os.path.join(d, u"その他", u"差し替え.txt"), "a", encoding="utf-8") as f:
+        f.write(u"\n%d\tあか組！/0003.jpg\t前の台本にあった、いまは無い字幕の文です。\n" % mi_dai[0])
+        f.write(u"%d\tあか組！/0002.jpg\t本作はオリジナル作品です。\n" % mi_hon[0])
+    rc, out4 = hashiru(d, e)
+    ich4 = ichiran(d)
+    iu(rc == 0 and ich4.get(mi_dai[0], (u"",))[0].endswith(u"無地.png"),
+       u"⑧(A) 文が今の台本に無い差し替えは、番号で当てない（%d番は %s）"
+       % (mi_dai[0], ich4.get(mi_dai[0], (u"-",))[0]))
+    iu(u"いまの台本にありません" in out4, u"⑧(A) 使わなかったことを名前で知らせる")
+    iu(ich4.get(mi_hon[0], (u"",))[0].endswith(u"無地.png"),
+       u"⑧(B) 別の作品の絵は、フォルダの無い作品の章に当てない（%d番は %s）"
+       % (mi_hon[0], ich4.get(mi_hon[0], (u"-",))[0]))
+    iu(u"その章の作品ではない絵" in out4, u"⑧(B) 当てなかったことを名前で知らせる")
+    iu(u"○ 作品の章は、どれもその作品の絵だけ" in out4, u"⑧ 見張りは ○ のまま")
+    # (C) 見張りそのもの: フォルダの無い章に絵があれば数える
+    chaps = [(u"あか組", u"あか組！\\N2014年冬", [u"あか組！"]),
+             (u"みどり組", u"みどり組\\N2025年夏", [u"みどり組"])]
+    rows = [(1.0, u"あか組！/0001.jpg", u"最初にご紹介する作品は、あか組！、制作はこうしゃ。"),
+            (1.0, u"あか組！/0002.jpg", u"最後にご紹介する作品は、みどり組、制作はへいしゃ。"),
+            (1.0, ms.MUJI, u"本作はオリジナル作品です。")]
+    soto = ms.osusume_kakunin(rows, chaps, [u"あか組！/0001.jpg", u"あか組！/0002.jpg"])
+    iu([i for (i, _im, _t) in soto] == [1],
+       u"⑧(C) 見張りは、フォルダの無い章（みどり組）に入った別の作品の絵を数える（%s）"
+       % [i for (i, _im, _t) in soto])
     return 0
 
 

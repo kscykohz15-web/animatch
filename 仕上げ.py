@@ -998,6 +998,19 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"おすすめ紹介の回で、作品ごとに別の曲が流れていません")
 
+# ── ㉜ オープニングと、長く映る絵の動き ─────────────
+midashi(u"㉜", u"オープニングの「1」が頭に付くか・長く映る絵が最後まで動くか")
+# ■ 本人の指定（2026-11-18）「04_オープニング に入った「1」という動画を、すべての動画の最初に」
+#   「しっかり最初から最後まで動かすように…動きが途中で終わってしまうものは拡大具合を調整」
+#   オープニングは本人のパソコンにしか無く、こちらで一度も通らない枝。動きもコマを比べないと
+#   分からない。本人の新しい並び（01_画像・02_BGM・04_オープニング）で完成.mp4 まで作って見る。
+r = subprocess.run([sys.executable, os.path.join(V, u"_オープニングテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"オープニングが付かないか、長く映る絵が途中で止まっています")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

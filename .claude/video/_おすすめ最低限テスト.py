@@ -58,6 +58,9 @@ DAIHON = u"""どうもこんにちわ、かさです。
 続いての作品は、あお組、制作はおつしゃ。
 本作はゲームが原作となっており、アニメは第二期まで放送済みとなります。
 物語は、青い所から始まります。
+次の作品は、きいろ組、制作はこうしゃ。
+本作は漫画が原作となっており、原作は連載中となります。
+物語は、黄色い所で主人公が友人と出会うところから始まります。
 最後にご紹介する作品は、みどり組、制作はへいしゃ。
 本作はオリジナルアニメで、全12話で物語が完結しています。
 今回の動画は以上となります。ご視聴ありがとうございました。
@@ -67,6 +70,7 @@ GAMEN_OSUSUME = u"""引用\t各作品の著作権は、それぞれの権利者�
 章\t今回の動画の内容は\t－\t＊全作品\t
 章\tあか組\tあか組！\\N2014年冬\tあか組！\t
 章\tあお組\tあお組\\N2010年夏\tあお組\t
+章\tきいろ組\tきいろ組\\N2019年秋\tきいろ組\t
 章\tみどり組\tみどり組\\N2025年夏\tみどり組\t
 章\t今回の動画は以上となります\tおわりに\t＊全作品\t
 """
@@ -86,6 +90,10 @@ PLAN = u"""@@話数\tあか組！
 人生相談\t#ノルン, #アイシャ, #茶髪 子供
 あお組\t#公式, #穏やか
 制作はおつしゃ\t#公式, #穏やか
+@@話数\tきいろ組
+きいろ組\t#公式, #穏やか
+制作はこうしゃ\t#公式, #穏やか
+@@話数\tみどり組
 みどり組\t#公式, #穏やか
 *\t#穏やか, #室内, #立ち姿
 """
@@ -100,12 +108,13 @@ def junbi():
         shutil.rmtree(SAGYOU)
     e = os.path.join(SAGYOU, u"絵")
     from PIL import Image
-    for n, fol in enumerate((u"あか組！", u"あお組", u"べつの作品", u"無職転生 第1話")):
+    for n, fol in enumerate((u"あか組！", u"あお組", u"きいろ組", u"べつの作品", u"無職転生 第1話")):
         os.makedirs(os.path.join(e, fol))
         for j in range(8):
             Image.new("RGB", (320, 180), (40 + n * 50, 60 + j * 20, 120)).save(
                 os.path.join(e, fol, u"%03d_x%04d_x2.png" % (100 + j * 7, n * 100 + j)))
     Image.new("RGB", (300, 400), (250, 250, 250)).save(os.path.join(e, u"あか組！", u"1.jpg"))
+    Image.new("RGB", (300, 400), (240, 240, 10)).save(os.path.join(e, u"きいろ組", u"1.jpg"))
     os.makedirs(os.path.join(SAGYOU, u"効果音"))
     for nm, body in ((u"台本_字幕用.txt", DAIHON), (u"画面表示.txt", GAMEN_OSUSUME),
                      (u"画像プラン.txt", PLAN),
@@ -164,8 +173,24 @@ def main():
     iu(os.path.exists(jirushi), u"① メニューが採点を飛ばす目印（その他/_おすすめ.txt）を置く")
     w = wariate()
     kou = [i for i, (img, tx) in enumerate(w) if img.endswith(u"/1.jpg")]
-    iu(bool(kou) and all(u"あか組" in w[i][1] or u"こうしゃ" in w[i][1] for i in kou),
+    atama = [i for i, (img, tx) in enumerate(w)
+             if re.search(u"^(最初にご紹介する作品は|続いての作品は|次の作品は|最後にご紹介する作品は)|制作は", tx)]
+    iu(bool(kou) and all(i in atama for i in kou),
        u"① 公式画像は作品の頭の1文だけ（%d枚）" % len(kou))
+    # ■ 同じ制作会社の2本目（2026-11-18・本人の画面「アマガミSSの頭が1ではない」）
+    #   画像プランの「制作はこうしゃ」が2回あり、前は1回目（あか組！）の行が当たっていた
+    ki = [img for (img, tx) in w if u"きいろ組" in tx]
+    iu(u"きいろ組/1.jpg" in ki,
+       u"① 同じ制作会社の2本目（きいろ組）の頭にも、その作品の「1」が入る（%s）"
+       % u" / ".join(sorted(set(ki))[:3]))
+    iu(u"あか組！/1.jpg" not in ki, u"① 2本目の頭に、1本目（あか組！）の「1」が入らない")
+    # ■ はじめに（＊全作品）は紹介する作品から順に。「1」は使わない
+    _a = [i for i, (img, tx) in enumerate(w) if tx.startswith(u"今回の動画の内容は")]
+    _b = [i for i, (img, tx) in enumerate(w) if tx.startswith(u"最初にご紹介する作品は")]
+    hj = [img for (img, tx) in w[_a[0]:_b[0]]] if (_a and _b) else []
+    iu(len(set(x.split(u"/")[0] for x in hj)) >= 2 and not any(x.endswith(u"/1.jpg") for x in hj),
+       u"① はじめには、紹介する作品から順に出て「1」を使わない（%s）"
+       % u" / ".join(x.split(u"/")[0] for x in hj))
     soto = [(img, tx) for (img, tx) in w if img.startswith((u"べつの作品/", u"無職転生"))]
     iu(not soto, u"① 紹介していない作品・無職転生の絵は出ない%s" % (u"（%s）" % soto[0][0] if soto else u""))
 

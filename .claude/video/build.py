@@ -202,8 +202,11 @@ def main():
                 .replace(u"/", u"\\")
         s = s.replace(u"@@BASHO@@", basho)
         # menu.ps1 はJSの文字列の中にあるので、円記号を2つにして入れる
+        # 録画は 置き場所 の「録画」の行（2026-11-18）。前は おおもと\録画 と決め打ちで、
+        # おおもとを 05_動画 に移したら録画まで 05_動画 の中を見に行くところだった。
         for shirushi, michi_ in ((u"@@OOMOTO@@", michi[u"おおもと"]),
                                  (u"@@IMGDIR@@", michi[u"画像"]),
+                                 (u"@@ROKUGA@@", michi[u"録画"]),
                                  (u"@@IMGROOT@@", imgroot)):
             s = s.replace(shirushi, michi_.replace(u"\\", u"\\\\"))
 

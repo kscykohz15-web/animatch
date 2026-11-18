@@ -94,11 +94,35 @@ def jikoku(path, chaps):
         c = line.split(u"\t")
         if len(c) >= 8 and re.match(r"^\d+$", c[0].strip()):
             gyou.append((c[1].strip(), c[7]))
+    # ■ オープニングの秒数を足す（2026-11-18・本人の指定でおすすめ紹介の回の頭に付いた）
+    #   一覧.txt の時刻は本編のもの。出来上がった動画はオープニングのぶん後ろにずれる。
+    #   make_slideshow.py が その他/_オープニング秒.txt に秒数を置く。
+    tasu = 0.0
+    try:
+        tasu = float(io.open(os.path.join(u"その他", u"_オープニング秒.txt"),
+                             encoding="utf-8").read().strip() or 0)
+    except Exception:
+        tasu = 0.0
+
+    def zurasu(toki):
+        if not tasu:
+            return toki
+        try:
+            kz = [int(x) for x in toki.split(u":")]
+            sec = 0
+            for x in kz:
+                sec = sec * 60 + x
+            sec = int(round(sec + tasu))
+            return (u"%d:%02d:%02d" % (sec // 3600, sec // 60 % 60, sec % 60)) if sec >= 3600 \
+                else (u"%d:%02d" % (sec // 60, sec % 60))
+        except Exception:
+            return toki
+
     out, tsukatta = {}, set()
     for (key, namae, _f, _c) in chaps:
         for i, (toki, serifu) in enumerate(gyou):
             if i not in tsukatta and key and key in serifu:
-                out[namae] = toki
+                out[namae] = zurasu(toki)
                 tsukatta.add(i)
                 break
     return out
