@@ -1,0 +1,288 @@
+# ネタ帳 — ゆるオタの部屋
+#
+# status: backlog | drafted | published | rejected | on_hold
+# source: youtube（自分の動画が元ネタ） | search（検索から発掘）
+# priority: 1 が最優先。動画の再生数を主な根拠にしている
+#
+# 重複する動画は1記事に統合してある（同テーマで複数動画があるものは videos に複数列挙）。
+# 統合しないと内容が薄い記事が量産され、互いに検索順位を食い合う。
+
+meta:
+  updated: 2026-11-18
+  channel: https://www.youtube.com/@kasa-yuruota
+  note: |
+    記事化済みのテーマは topics から除外してある:
+      - 一気見/時間が溶けるアニメ20選（既存記事あり・動画230万回）
+      - ガチで泣けるアニメ20選（既存記事あり）
+    この2本は既存記事のリライト対象であり、新規作成の対象ではない。
+
+topics:
+  - id: t0001
+    title_draft: "オールしてしまうほど面白いアニメ20選"
+    keyword: "徹夜 アニメ おすすめ"
+    source: youtube
+    videos: [6up1NvBmLMA]
+    video_views: 348000
+    template: list
+    category: おすすめアニメ
+    priority: 1
+    status: backlog
+
+  - id: t0002
+    title_draft: "本当に面白い異世界アニメ15選"
+    keyword: "異世界アニメ おすすめ"
+    source: youtube
+    videos: [VCm9tWDxlIE]
+    video_views: 334000
+    template: list
+    category: 異世界・ファンタジー
+    priority: 2
+    status: backlog
+
+  - id: t0003
+    title_draft: "記憶を消してもう一度見たいアニメ20選"
+    keyword: "記憶を消して もう一度見たい アニメ"
+    source: youtube
+    videos: [kqrlGOhoBI8]
+    video_views: 314000
+    template: list
+    category: おすすめアニメ
+    priority: 3
+    status: backlog
+
+  - id: t0004
+    title_draft: "満足感の高い1クール完結アニメ20選"
+    keyword: "1クール 完結 アニメ おすすめ"
+    source: youtube
+    videos: [ZcAMDbvtDqI, W1_BKmhN86g, 9u2L02UqsKM]
+    video_views: 357000   # 292000 + 43000 + 22000 を統合
+    template: list
+    category: おすすめアニメ
+    priority: 4
+    status: backlog
+    note: 1クール系の動画3本を1記事に統合する
+
+  - id: t0005
+    title_draft: "1話から面白すぎるアニメ20選"
+    keyword: "1話から面白い アニメ"
+    source: youtube
+    videos: [XbYPh06XjmQ, _tCuYZhjc-Q, HP6PaTbZ31g]
+    video_views: 226000
+    template: list
+    category: おすすめアニメ
+    priority: 5
+    status: backlog
+    note: 「第一話が衝撃」系の動画を統合する
+
+  - id: t0006
+    title_draft: "主人公最強アニメ50選"
+    keyword: "主人公最強 アニメ"
+    source: youtube
+    videos: [msUKwNX2hk4, StMbnWZGA-Y]
+    video_views: 196000
+    template: list
+    category: 主人公最強
+    priority: 6
+    status: backlog
+    note: 記事0件カテゴリではないが記事1件のみ。「実は最強」動画を統合
+
+  - id: t0007
+    title_draft: "人生で一度は見て欲しいアニメTOP20"
+    keyword: "人生で一度は見るべき アニメ"
+    source: youtube
+    videos: [qbwh7qud34g, 93O1tAlF07U]
+    video_views: 356000   # TOP10(183000) + TOP20(173000)
+    template: list
+    category: おすすめアニメ
+    priority: 7
+    status: backlog
+    note: TOP10 と TOP20 の2本を統合する
+
+  - id: t0008
+    title_draft: "大人向けアニメ20選"
+    keyword: "大人向け アニメ おすすめ"
+    source: youtube
+    videos: [7HfdvnMnyiA]
+    video_views: 165000
+    template: list
+    category: おすすめアニメ
+    priority: 8
+    status: backlog
+
+  - id: t0009
+    title_draft: "何周も見てしまうアニメ20選"
+    keyword: "何回も見たくなる アニメ"
+    source: youtube
+    videos: [6ncrDV9PiqQ]
+    video_views: 159000
+    template: list
+    category: おすすめアニメ
+    priority: 9
+    status: backlog
+
+  - id: t0010
+    title_draft: "学園ラブコメアニメランキングTOP30"
+    keyword: "学園ラブコメ アニメ おすすめ"
+    source: youtube
+    videos: [QyLpPrYBHHA]
+    video_views: 150000
+    template: list
+    category: 学園ラブコメ・恋愛もの
+    priority: 10
+    status: backlog
+    note: 記事0件カテゴリを埋める
+
+  - id: t0011
+    title_draft: "なろう系アニメ20選"
+    keyword: "なろう系 アニメ おすすめ"
+    source: youtube
+    videos: [5qtf0oxAteY]
+    video_views: 96000
+    template: list
+    category: 異世界・ファンタジー
+    priority: 11
+    status: backlog
+    note: 動画の説明欄に全20作品のリストあり（取得済み）
+
+  - id: t0012
+    title_draft: "どっぷりハマる2クール完結アニメ20選"
+    keyword: "2クール アニメ おすすめ"
+    source: youtube
+    videos: [Fux1W16_5tY]
+    video_views: 66000
+    template: list
+    category: おすすめアニメ
+    priority: 12
+    status: backlog
+
+  - id: t0013
+    title_draft: "私的おすすめのバトルアニメ60選"
+    keyword: "バトルアニメ おすすめ"
+    source: youtube
+    videos: [zJRQuZwAUAY]
+    video_views: 45000
+    template: list
+    category: バトルアクション
+    priority: 13
+    status: backlog
+    note: 記事0件カテゴリを埋める
+
+  - id: t0014
+    title_draft: "可愛すぎるアニメヒロイン20選"
+    keyword: "アニメ ヒロイン 可愛い"
+    source: youtube
+    videos: [DvTn8HucBVI]
+    video_views: 45000
+    template: list
+    category: おすすめアニメ
+    priority: 14
+    status: backlog
+
+  - id: t0015
+    title_draft: "続きが気になるミステリー・サスペンスアニメ20選"
+    keyword: "ミステリー アニメ おすすめ"
+    source: youtube
+    videos: [ygIVh9DsFmQ]
+    video_views: 32000
+    template: list
+    category: サスペンス・ミステリー
+    priority: 15
+    status: backlog
+
+  - id: t0016
+    title_draft: "世界観が神がかったアニメ30選"
+    keyword: "世界観 アニメ おすすめ"
+    source: youtube
+    videos: [exZqK-KtTwU, pQ-8eBN7hU4]
+    video_views: 46000
+    template: list
+    category: 異世界・ファンタジー
+    priority: 16
+    status: backlog
+    note: 30選と12選の2本を統合
+
+  - id: t0017
+    title_draft: "あの頃だけの青春アニメ20選"
+    keyword: "青春アニメ おすすめ"
+    source: youtube
+    videos: [bFpuiHlxIoc]
+    video_views: 22000
+    template: list
+    category: 青春・スポーツ
+    priority: 17
+    status: backlog
+
+  - id: t0018
+    title_draft: "回を重ねるごとに面白くなるアニメ10選"
+    keyword: "後半から面白くなる アニメ"
+    source: youtube
+    videos: [tV_olzQw9r8]
+    video_views: 18000
+    template: list
+    category: おすすめアニメ
+    priority: 18
+    status: backlog
+
+  - id: t0019
+    title_draft: "個人的に好きなアニメ映画5選"
+    keyword: "アニメ映画 おすすめ"
+    source: youtube
+    videos: [wKKbQDi9IVg]
+    video_views: 8900
+    template: list
+    category: おすすめアニメ
+    priority: 19
+    status: backlog
+
+  - id: t0020
+    title_draft: "愛すべきクソアニメ15選"
+    keyword: "クソアニメ おすすめ"
+    source: youtube
+    videos: [argB0rwaxzU]
+    video_views: 7100
+    template: list
+    category: おすすめアニメ
+    priority: 20
+    status: backlog
+
+# ------------------------------------------------------------------
+# 保留。運営者の判断が必要なもの
+# ------------------------------------------------------------------
+
+  - id: t0900
+    title_draft: "放送ギリギリのきわどいアニメ15選"
+    source: youtube
+    videos: [eHHk6_8VQLE, BRy4BTBSl7w]
+    video_views: 157000
+    status: on_hold
+    reason: |
+      再生数は大きいが、AdSense の性的コンテンツに関する規約に抵触する可能性が高い。
+      記事化するとサイト全体の広告配信が停止されるリスクがある。
+      記事化するなら AdSense を設置しない別ドメインを推奨。
+
+  - id: t0901
+    title_draft: "最高すぎるお姉さんキャラ20選"
+    source: youtube
+    videos: [kPiXzdP1kyI, cFUTuS9FUtE]
+    video_views: 11000
+    status: on_hold
+    reason: |
+      t0900 ほど明確ではないが、動画タイトルの表現（「いろんな意味で」「妄想が捗る」）を
+      そのまま記事に持ち込むと規約上の判断が微妙になる。
+      表現を健全側に寄せれば記事化できる。運営者の判断を待つ。
+
+  - id: t0902
+    title_draft: "2023年秋アニメ56作品ジャンル別紹介"
+    source: youtube
+    videos: [tux-cr_Apbs]
+    video_views: 1900
+    status: rejected
+    reason: 季節ものの情報が3年前で、現在価値がない。最新クールで作り直す方が有効。
+
+  - id: t0903
+    title_draft: "天使な可愛いアニメキャラ10人"
+    source: youtube
+    videos: [AbwbJif3PDM]
+    video_views: 1900
+    status: on_hold
+    reason: 再生数が低く、他のネタを優先する。手が空いたら着手する。
