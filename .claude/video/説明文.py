@@ -125,6 +125,18 @@ def jikoku(path, chaps):
                 out[namae] = zurasu(toki)
                 tsukatta.add(i)
                 break
+    # YouTube の目次は先頭が 0:00 でないと目次にならない。オープニングを付けたときは、
+    # いちばん早い章を 0:00 にする（オープニングと挨拶はその章に入れる）
+    if tasu and out:
+        def _byou(t):
+            try:
+                v = 0
+                for x in t.split(u":"):
+                    v = v * 60 + int(x)
+                return v
+            except Exception:
+                return 10 ** 9
+        out[min(out, key=lambda n: _byou(out[n]))] = u"0:00"
     return out
 
 

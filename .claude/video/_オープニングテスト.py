@@ -169,10 +169,16 @@ def sa(a, b):
     return sum(ImageStat.Stat(d).mean) / 3.0
 
 
-def kansei(w):
-    c = [f for f in os.listdir(w) if f.endswith(u".mp4")]
-    return os.path.join(w, sorted(c, key=lambda f: os.path.getmtime(os.path.join(w, f)))[-1]) \
-        if c else None
+def kansei(w, log=u""):
+    u"""出来た動画の道。ログの「完成しました: …」を先に信じる（置き場所は 動画/完成.mp4 など）。"""
+    m = re.findall(u"完成しました: (.+)", log or u"")
+    if m and os.path.exists(m[-1].strip()):
+        return m[-1].strip()
+    c = []
+    for d in (w, os.path.join(w, u"動画")):
+        if os.path.isdir(d):
+            c += [os.path.join(d, f) for f in os.listdir(d) if f.endswith(u".mp4")]
+    return sorted(c, key=os.path.getmtime)[-1] if c else None
 
 
 def nagai_basho(w):
@@ -203,7 +209,10 @@ def main():
         print(log0[-2500:])
         iu(False, u"本編だけの動画が最後まで作れる")
         return 1
-    p0 = kansei(w)
+    p0 = kansei(w, log0)
+    if not p0:
+        iu(False, u"本編だけの動画が見つかりません")
+        return 1
     hon = nagasa(p0)
     nb = nagai_basho(w)
     iu(nb is not None and nb[1] - nb[0] > 6.0,
@@ -225,7 +234,13 @@ def main():
                             encoding="utf-8-sig").read()
        if os.path.exists(os.path.join(w, u"確認用", u"BGMの割り当て.txt")) else False,
        u"① となりの 02_BGM の曲を当てる")
-    p1 = kansei(w)
+    p1 = kansei(w, log)
+    if not p1 or os.path.abspath(p1) == os.path.abspath(p0):
+        # 同じ名前で上書きされるので、本編だけのほうは先に写しておいたものを使う
+        p0 = os.path.join(SAGYOU, u"_本編だけ.mp4")
+    if not p1:
+        iu(False, u"オープニング付きの動画が見つかりません")
+        return 1
     zen = nagasa(p1)
     hik = os.path.join(w, u"その他", u"_オープニング秒.txt")
     op_byou = float(io.open(hik, encoding="utf-8").read().strip()) if os.path.exists(hik) else 0.0
