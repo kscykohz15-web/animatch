@@ -63,10 +63,11 @@ async function query(search, retries = 3) {
 /** シリーズ全体をまとめた事実を返す。確定できない項目は null のまま返す（推測で埋めない） */
 export async function facts(title) {
   const media = await query(title);
-  // ONA 配信作品（異世界居酒屋、最凶の支援職など）も対象に含める。
-  // TV だけに絞ると取りこぼす。
-  const FORMATS = new Set(['TV', 'TV_SHORT', 'ONA']);
-  const tv = media.filter((m) => FORMATS.has(m.format));
+  // 本編は TV を優先する。TV_SHORT や ONA を混ぜると、ショートアニメや特典映像まで
+  // 合算されて話数が実態より多くなる（オーバーロードが 91 話になる等）。
+  // TV が1つも無い作品（異世界居酒屋、最凶の支援職など ONA 配信）だけ ONA を見る。
+  let tv = media.filter((m) => m.format === 'TV');
+  if (!tv.length) tv = media.filter((m) => m.format === 'ONA' || m.format === 'TV_SHORT');
   if (!tv.length) return { title, found: false };
 
   const seasons = tv.map((m) => ({

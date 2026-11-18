@@ -50,14 +50,13 @@
   {
     "title": "魔法科高校の劣等生",
     "found": true,
-    "seasons": 4,
-    "totalEpisodes": 59,
+    "seasons": 3,
+    "totalEpisodes": 52,
     "firstYear": 2014,
     "lastYear": 2024,
     "studios": [
       "MADHOUSE",
-      "8-bit",
-      "Aniplex"
+      "8-bit"
     ],
     "genres": [
       "アクション",
@@ -92,15 +91,6 @@
         "season": "秋",
         "studios": [
           "8-bit"
-        ]
-      },
-      {
-        "name": "魔法科高校の劣等生 よくわかる魔法科！",
-        "episodes": 7,
-        "year": 2014,
-        "season": "冬",
-        "studios": [
-          "Aniplex"
         ]
       }
     ]
@@ -276,19 +266,17 @@
   {
     "title": "オーバーロード",
     "found": true,
-    "seasons": 7,
-    "totalEpisodes": 91,
+    "seasons": 4,
+    "totalEpisodes": 52,
     "firstYear": 2015,
     "lastYear": 2022,
     "studios": [
-      "MADHOUSE",
-      "Studio PuYUKAI"
+      "MADHOUSE"
     ],
     "genres": [
       "アクション",
       "冒険",
-      "ファンタジー",
-      "コメディ"
+      "ファンタジー"
     ],
     "source": "ライトノベル",
     "detail": [
@@ -327,33 +315,6 @@
         "studios": [
           "MADHOUSE"
         ]
-      },
-      {
-        "name": "オーバーロード ぷれぷれぷれあです3",
-        "episodes": 13,
-        "year": 2018,
-        "season": "夏",
-        "studios": [
-          "Studio PuYUKAI"
-        ]
-      },
-      {
-        "name": "オーバーロード ぷれぷれぷれあです4",
-        "episodes": 13,
-        "year": 2022,
-        "season": "夏",
-        "studios": [
-          "Studio PuYUKAI"
-        ]
-      },
-      {
-        "name": "オーバーロード ぷれぷれぷれあです2",
-        "episodes": 13,
-        "year": 2018,
-        "season": "冬",
-        "studios": [
-          "Studio PuYUKAI"
-        ]
       }
     ]
   },
@@ -388,7 +349,7 @@
   {
     "title": "転生したらスライムだった件",
     "found": true,
-    "seasons": 9,
+    "seasons": 8,
     "totalEpisodes": null,
     "firstYear": 2018,
     "lastYear": 2027,
@@ -444,15 +405,6 @@
         "episodes": 24,
         "year": 2024,
         "season": "春",
-        "studios": [
-          "8-bit"
-        ]
-      },
-      {
-        "name": "転生したらスライムだった件 救われるラミリス",
-        "episodes": 2,
-        "year": 2022,
-        "season": "冬",
         "studios": [
           "8-bit"
         ]
@@ -812,7 +764,7 @@
   {
     "title": "シャングリラ・フロンティア",
     "found": true,
-    "seasons": 4,
+    "seasons": 3,
     "totalEpisodes": null,
     "firstYear": 2023,
     "lastYear": 2027,
@@ -837,13 +789,6 @@
         ]
       },
       {
-        "name": "シャングリラ・フロンティア ミニアニメ",
-        "episodes": 9,
-        "year": 2023,
-        "season": "秋",
-        "studios": []
-      },
-      {
         "name": "シャングリラ・フロンティア 3rd season",
         "episodes": null,
         "year": 2027,
@@ -866,8 +811,8 @@
   {
     "title": "薬屋のひとりごと",
     "found": true,
-    "seasons": 7,
-    "totalEpisodes": null,
+    "seasons": 4,
+    "totalEpisodes": 72,
     "firstYear": 2023,
     "lastYear": 2027,
     "studios": [
@@ -876,8 +821,7 @@
     ],
     "genres": [
       "ドラマ",
-      "ミステリー",
-      "コメディ"
+      "ミステリー"
     ],
     "source": "ライトノベル",
     "detail": [
@@ -890,13 +834,6 @@
           "OLM",
           "TOHO animation STUDIO"
         ]
-      },
-      {
-        "name": "猫猫のひとりごと",
-        "episodes": 24,
-        "year": 2023,
-        "season": "秋",
-        "studios": []
       },
       {
         "name": "薬屋のひとりごと 第3期",
@@ -916,20 +853,6 @@
           "TOHO animation STUDIO",
           "OLM"
         ]
-      },
-      {
-        "name": "猫猫のひとりごと 第3期",
-        "episodes": null,
-        "year": 2026,
-        "season": "秋",
-        "studios": []
-      },
-      {
-        "name": "猫猫のひとりごと 第2期",
-        "episodes": 24,
-        "year": 2025,
-        "season": "冬",
-        "studios": []
       },
       {
         "name": "薬屋のひとりごと 第3期 第2クール",
