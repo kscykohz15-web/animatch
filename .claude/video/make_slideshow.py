@@ -8669,7 +8669,9 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 #   IS のフォルダに「1」の1枚だけが入り、頭の1文のほかは**前の行の絵（ニセコイ）**の
                 #   ままになっていた（「別の作品の絵が 14枚」）。使える絵が無いので無地にする。
                 #   作品の頭の1文の「1」は、このあとの段で入る。
-                if img != MUJI and not wa_koushiki(img):
+                #   素通りさせるのは**その章の作品の**「1」だけ。別の作品の「1」を残すと、あとの
+                #   「1 は頭だけ」の段がそれを**その絵の作品の**別の絵に替えてしまう（㉚ の ④ で見つけた）
+                if img != MUJI and not (wa_koushiki(img) and img.split(u"/")[0] in ima3):
                     tsukai[img] = max(0, tsukai.get(img, 1) - 1)
                     out[idx] = MUJI
                     muji_kazu += 1
