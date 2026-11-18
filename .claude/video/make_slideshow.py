@@ -12525,8 +12525,11 @@ def main():
     if kasaneru:
         mixed = os.path.join(work, "mixed.wav")
         cmd = [need("ffmpeg"), "-y", "-loglevel", "error", "-i", oto]
-        for w in kasaneru:
-            cmd += ["-i", w]
+        # ■ ここで w を使わない（2026-11-18・㉜ で見つけた）。w は画面の幅で、このあと
+        #   オープニングを本編の大きさに作り直すときに使う。音のファイル名で上書きしていて
+        #   「%d format: a real number is required, not str」で落ちた。
+        for _kw in kasaneru:
+            cmd += ["-i", _kw]
         n = len(kasaneru) + 1
         cmd += ["-filter_complex",
                 "%samix=inputs=%d:duration=first:normalize=0[a]"
