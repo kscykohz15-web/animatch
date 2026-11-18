@@ -21044,7 +21044,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v197";
+  var PACK_VERSION = "v198";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -21252,6 +21252,8 @@ if __name__ == "__main__":
 "  Write-Host '  音声/merged.wav ができました' -ForegroundColor Green",
 "  $sc0 = Join-Path $root '台本_字幕用.txt'",
 "  if (Test-Path $sc0) { Copy-Item $sc0 (Join-Path $root '音声\\音声のもと.txt') -Force }",
+"  # 何を読ませて作った声かを控える（make_slideshow.py は、これが声用の台本と同じときだけ声用の道に入る）",
+"  Copy-Item (Join-Path $root $koe) (Join-Path $root '音声\\声のもと.txt') -Force",
 "  $script:voiceOK = $true",
 "}",
 "",
@@ -21364,6 +21366,19 @@ if __name__ == "__main__":
 "      if ($cn -gt 0) { Start-Process explorer.exe $bun }",
 "  }",
 "  $script:videoOK = $true",
+"}",
+"",
+"function KoeZure {",
+"  # おすすめ紹介の回で、いまの声が「声用の台本」（字幕の切れ目で一息つく読み方）で作られていないか。",
+"  # v197 の Z は台本が同じなので声を飛ばし、声用の台本が一度も使われなかった（2026-11-18）。",
+"  if (-not (Test-Path (Join-Path $root 'make_slideshow.py'))) { return $false }",
+"  Set-Location $root",
+"  python 'make_slideshow.py' --no-folders --koe-daihon '台本_読み上げ用_声.txt' | Out-Null",
+"  $kf = Join-Path $root '台本_読み上げ用_声.txt'",
+"  if (-not (Test-Path $kf)) { return $false }",
+"  $mf = Join-Path $root '音声\\声のもと.txt'",
+"  if (-not (Test-Path $mf)) { return $true }",
+"  return ((Get-FileHash $kf -Algorithm MD5).Hash -ne (Get-FileHash $mf -Algorithm MD5).Hash)",
 "}",
 "",
 "function DaihonZure {",
@@ -21566,6 +21581,11 @@ if __name__ == "__main__":
 "      $yn = Read-Host '    それでも動画を作りますか (y/n)'",
 "      if ($yn -ne 'y') { Pause2; continue }",
 "    }",
+"    if (KoeZure) {",
+"      Write-Host ''",
+"      Write-Host '  ⚠ いまの声は「声用の台本」（字幕の切れ目で一息つく読み方）で作られていません。' -ForegroundColor Yellow",
+"      Write-Host '    このままでも作れますが、長い文の字幕が声とずれることがあります。Z か 1 で声を作り直すと直ります。' -ForegroundColor Yellow",
+"    }",
 "    Write-Host ''",
 "    Write-Host '  1  動画 + 採点            (おすすめ・はやい)' -ForegroundColor Cyan",
 "    Write-Host '  2  動画 + 採点 + 1枚ずつの確認用動画  (何分か余計にかかります)'",
@@ -21595,11 +21615,15 @@ if __name__ == "__main__":
 "    # 台本が前と同じで merged.wav もあるなら、作り直さない。",
 "    # 音声づくりがいちばん長いので、絵だけ直したいときはここが丸ごと浮く。",
 "    $wav = Join-Path $root '音声\\merged.wav'",
-"    if ((Test-Path $wav) -and (-not (DaihonZure))) {",
+"    $kz = KoeZure",
+"    if ((Test-Path $wav) -and (-not (DaihonZure)) -and (-not $kz)) {",
 "      Write-Host '  台本は前回と同じで、merged.wav もあります。' -ForegroundColor Green",
 "      Write-Host '  音声づくりはとばします（作り直したいときは 1 を押してください）。' -ForegroundColor DarkGray",
 "      $script:voiceOK = $true",
 "    } else {",
+"      if ($kz -and (Test-Path $wav)) {",
+"        Write-Host '  いまの声は「声用の台本」（字幕の切れ目で一息つく読み方）で作られていないので、作り直します。' -ForegroundColor Yellow",
+"      }",
 "      MakeVoice",
 "    }",
 "    if (-not $script:voiceOK) {",

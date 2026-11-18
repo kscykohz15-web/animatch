@@ -895,6 +895,10 @@ MITAME_KITEI = {
     u"動きの基準の秒数": 4.0,
     # 字幕の下の余白（画面の高さに対する割合）。0.062 が前の位置
     u"字幕の下の余白": 0.03,
+    # 長く映る絵の拡大の上限（2026-11-18）。ここに無いと見た目.txt に書いても落ちる
+    u"動きの拡大の上限": 1.45,
+    # オープニングから本編へのつなぎ（2026-11-18・本人の指定）。白 / 黒 / なし と片側の秒数
+    u"オープニングのつなぎ": u"白", u"オープニングのつなぎの秒数": 0.5,
 }
 
 
@@ -4844,6 +4848,32 @@ KUTOU_TEN = u"、。！？"
 KOE_MODE = [False]
 KOE_MIJIKA = [8]
 KOE_FILE = u"台本_読み上げ用_声.txt"
+# 声を作ったときに読ませた台本の控え（メニューが 音声\ に置く・2026-11-18）。
+# 声用の道は、声が本当に声用の台本から作られたときだけ通る（koe_onaji）。
+KOE_MOTO = u"声のもと.txt"
+
+
+def koe_onaji(koe_path, audio_path):
+    u"""声用の台本と、いまの声を作ったときの台本（音声\声のもと.txt）が同じか。
+
+    ■ なぜ（2026-11-18・本人の v197 のログ）
+      Z は「台本は前回と同じで、merged.wav もあります」と声づくりを飛ばした。
+      声用の台本の道は、**声が字幕の切れ目で一息ついている**ことが前提なので、
+      古い声（「、」で止まらない声）にこの道を当てると、止まっていない所を切れ目に選んでしまう。
+      声を作ったときの台本の控えと同じときだけ、声用の道に入る。
+    戻り値 (同じか, 控えの道)
+    """
+    moto = os.path.join(os.path.dirname(os.path.abspath(audio_path or u".")), KOE_MOTO)
+    if not (koe_path and os.path.exists(koe_path) and os.path.exists(moto)):
+        return False, moto
+
+    def yomu(p):
+        return u"\n".join(x.strip() for x in io.open(p, encoding="utf-8-sig").read()
+                          .replace(u"\r\n", u"\n").split(u"\n") if x.strip())
+    try:
+        return yomu(koe_path) == yomu(moto), moto
+    except Exception:
+        return False, moto
 try:
     KOE_SAITAN = [float(os.environ.get(u"MS_KOE_SAITAN", u"0.22"))]
 except Exception:
@@ -6058,15 +6088,38 @@ def douga_nagasa(path):
     return (int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3))) if m else 0.0
 
 
-def opening_tsukeru(honpen, op, w, h, fps, crf, preset, oto_wav, work):
-    u"""honpen（本編の mp4）の頭に op をつないだ mp4 を作る。戻り値 (道, オープニングの秒) か (None, 0)。"""
+def opening_tsunagi(mi):
+    u"""オープニングから本編へのつなぎ（見た目.txt）。(色, 片側の秒数) か None（なし）。"""
+    iro = (mi.get(u"オープニングのつなぎ", u"白") or u"").strip()
+    if iro in (u"なし", u"無し", u"0", u"いいえ"):
+        return None
+    try:
+        d = float(mi.get(u"オープニングのつなぎの秒数", 0.5))
+    except Exception:
+        d = 0.5
+    d = max(0.1, min(1.5, d))
+    return ((u"black" if iro in (u"黒", u"くろ", u"暗転") else u"white"), d)
+
+
+def opening_tsukeru(honpen, op, w, h, fps, crf, preset, oto_wav, work, tsunagi=None):
+    u"""honpen（本編の mp4）の頭に op をつないだ mp4 を作る。戻り値 (道, オープニングの秒) か (None, 0)。
+
+    tsunagi = (色, 秒数) なら、オープニングの終わりをその色へ消す（音も同じ秒数で小さく）。
+    本編の頭がその色から出てくるのは、本編の書き出しのほうで入れてある（白いフラッシュ）。
+    """
     ar, ac = wav_katachi(oto_wav)
     op_mp4 = os.path.join(work, u"op.mp4")
     vf = (u"scale=%d:%d:force_original_aspect_ratio=decrease,pad=%d:%d:(ow-iw)/2:(oh-ih)/2,"
           u"setsar=1,fps=%d,format=yuv420p" % (w, h, w, h, fps))
+    af = []
+    if tsunagi:
+        _dur = douga_nagasa(op)
+        if _dur > tsunagi[1] + 0.2:
+            vf += u",fade=t=out:st=%.3f:d=%.2f:color=%s" % (_dur - tsunagi[1], tsunagi[1], tsunagi[0])
+            af = ["-af", u"afade=t=out:st=%.3f:d=%.2f" % (_dur - tsunagi[1], tsunagi[1])]
     cmd = [need("ffmpeg"), "-y", "-loglevel", "error", "-i", op]
     if oto_aru(op):
-        amap = ["-map", "0:v:0", "-map", "0:a:0"]
+        amap = ["-map", "0:v:0", "-map", "0:a:0"] + af
     else:
         cmd += ["-f", "lavfi", "-i", "anullsrc=r=%d:cl=%s" % (ar, u"mono" if ac == 1 else u"stereo")]
         amap = ["-map", "0:v:0", "-map", "1:a:0", "-shortest"]
@@ -8576,6 +8629,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     #
     # 説明のあるフォルダ（無職転生）は、この段を素通りする。
     sakuhin_modoshi, muji_kazu = 0, 0
+    ichi_dake = set()       # フォルダに「1」しか無い作品（頭の1文のほかは無地）
     if shou_kiri:
         naka_cache = {}
 
@@ -8609,10 +8663,21 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 continue
             if not ima3 or not img or u"/" not in img:
                 continue
+            lst3, setsumei_ari = naka_no_e(ima3)
+            if not lst3 and not setsumei_ari:
+                # ■ フォルダはあるのに「1」しか無い（2026-11-18・本人の v197 のログ）
+                #   IS のフォルダに「1」の1枚だけが入り、頭の1文のほかは**前の行の絵（ニセコイ）**の
+                #   ままになっていた（「別の作品の絵が 14枚」）。使える絵が無いので無地にする。
+                #   作品の頭の1文の「1」は、このあとの段で入る。
+                if img != MUJI and not wa_koushiki(img):
+                    tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+                    out[idx] = MUJI
+                    muji_kazu += 1
+                    ichi_dake.add(u" / ".join(ima3))
+                continue
             if img.split(u"/")[0] in ima3:
                 continue          # もうその作品の絵
-            lst3, setsumei_ari = naka_no_e(ima3)
-            if setsumei_ari or not lst3:
+            if setsumei_ari:
                 continue          # 説明のあるフォルダは上の引き戻しの持ち場
             mae3 = out[idx - 1] if idx else None
             ato3 = out[idx + 1] if idx + 1 < len(out) else None
@@ -8721,6 +8786,8 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                     and not wa_koushiki(k) and k not in (mae3, ato3)]
             if idx in yurusu and not yurusu[idx]:
                 hoka = [MUJI]       # その作品のフォルダが無い。別の作品の絵は出さない
+            if not hoka and OSUSUME[0]:
+                hoka = [MUJI]       # フォルダに「1」しか無い（IS・2026-11-18）。「1」は頭の1文だけ
             if not hoka:
                 continue
             hoka = barakeru(sorted(hoka, key=natkey))
@@ -8748,6 +8815,13 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
         say(u"別の作品へ出ていた絵を %d枚 その章の作品の中へ戻しました"
             u"（その作品の絵に1枚ごとの説明が無いので、札は見ずに順に当てています。"
             u"札まで合わせたいときは「8 画像をぜんぶ見てもらう」）" % sakuhin_modoshi)
+    if ichi_dake:
+        say(u"")
+        say(u"⚠ **フォルダに「1」しか入っていない作品が %d つあります。** 作品の頭の1文には「1」を出し、"
+            u"そのほかは無地にしました（別の作品の絵は出しません）:" % len(ichi_dake))
+        for f3 in sorted(ichi_dake):
+            say(u"    %s  ← このフォルダに、「1」のほかの絵を入れてください" % f3)
+        say(u"")
     if sakuhin_nai:
         say(u"")
         say(u"⚠ **作品のフォルダが無い章が %d つあります。** 別の作品の絵は出さず、"
@@ -10286,11 +10360,125 @@ def barakeru(lst):
     return [lst[i] for i in sorted(range(n), key=gyaku)]
 
 
+# 「1」と中身が同じ絵（別の名前で保存したもの）。koushiki_onaji_sagasu が入れる。
+KOUSHIKI_ONAJI = set()
+E_SHIMON = u"_絵の指紋.txt"     # その他/ に置く。絵の指紋の控え（2回目からは読み直さない）
+
+
 def wa_koushiki(img):
-    u"""その絵が公式画像（作品フォルダ直下の「1」）か。"""
+    u"""その絵が公式画像（作品フォルダ直下の「1」・または「1」と中身が同じ絵）か。"""
     if not img or img.startswith(u"@@") or u"/" not in img:
         return False
-    return os.path.splitext(_e_namae(img))[0] == u"1"
+    return os.path.splitext(_e_namae(img))[0] == u"1" or img in KOUSHIKI_ONAJI
+
+
+def e_shimon(path):
+    u"""絵の指紋: (横÷縦, 9×8 の明るさの差の64ビット, 8×8 の明るさ64個)。読めなければ None。"""
+    from PIL import Image
+    im = Image.open(path)
+    try:
+        im.draft("L", (96, 96))
+    except Exception:
+        pass
+    w0, h0 = im.size
+    g = im.convert("L")
+    d = g.resize((9, 8)).tobytes()
+    bits = 0
+    for r in range(8):
+        for c in range(8):
+            bits = (bits << 1) | (1 if d[r * 9 + c] > d[r * 9 + c + 1] else 0)
+    return (w0 / float(max(1, h0)), bits, g.resize((8, 8)).tobytes())
+
+
+def koushiki_onaji_sagasu(chaps, images, imgpath):
+    u"""作品フォルダの中で、「1」と**中身が同じ絵**を探して KOUSHIKI_ONAJI に入れる（2026-11-18）。
+
+    ■ なぜ（本人の v197 の画面）
+      はじめにの章に、ニセコイの公式画像（キービジュアルと題字）が出た。本人は「1」と
+      保存した絵と言うが、道具の見張りは「1 は作品の頭の1文だけ」と言っていた ──
+      見分けはファイル名だけなので、**同じ絵が別の名前（91d7fdcb.jpg など）でも
+      入っている**と、それは「ふつうの絵」として、はじめにや本文に出る。
+      名前ではなく中身で見る: 縦横の比が 4% 以内・明るさの差の並び（64ビット）が 6 か所以内・
+      8×8 に縮めた明るさの差が平均 12 以内。大きさを変えて保存し直したものも当たる。
+    """
+    try:
+        from PIL import Image  # noqa: F401
+    except Exception:
+        return []
+    KOUSHIKI_ONAJI.clear()
+    folders = sorted(set(k.split(u"/")[0] for k in images if u"/" in k))
+    tsukau = set()
+    for (_k, t, eps) in (chaps or []):
+        if eps and not u"".join(eps).startswith(u"＊"):
+            tsukau.update(fol_ate(eps, folders))
+    ichi = {}
+    for k in images:
+        if u"/" in k and os.path.splitext(_e_namae(k))[0] == u"1":
+            f = k.rsplit(u"/", 1)[0]
+            if f.split(u"/")[0] in tsukau:
+                ichi.setdefault(f, []).append(k)
+    if not ichi:
+        return []
+    hikae_p = os.path.join(HERE, SONOTA_DIR, E_SHIMON)
+    hikae = {}
+    if os.path.exists(hikae_p):
+        for line in io.open(hikae_p, encoding="utf-8", errors="replace"):
+            c = line.rstrip(u"\r\n").split(u"\t")
+            if len(c) == 4:
+                try:
+                    hikae[c[0]] = (float(c[1]), int(c[2], 16), bytes.fromhex(c[3]))
+                except Exception:
+                    pass
+    atarashii = [0]
+
+    def shimon(k):
+        p = imgpath.get(k) or os.path.join(HERE, k)
+        try:
+            st = os.stat(p)
+        except OSError:
+            return None
+        kagi = u"%s|%d|%d" % (p, st.st_size, int(st.st_mtime))
+        if kagi in hikae:
+            return hikae[kagi]
+        try:
+            v = e_shimon(p)
+        except Exception:
+            return None
+        hikae[kagi] = v
+        atarashii[0] += 1
+        return v
+
+    deta = []
+    for f, ichis in sorted(ichi.items()):
+        moto = [v for v in (shimon(k) for k in ichis) if v]
+        if not moto:
+            continue
+        for k in images:
+            if u"/" not in k or k.rsplit(u"/", 1)[0] != f or k in ichis:
+                continue
+            v = shimon(k)
+            if not v:
+                continue
+            for m in moto:
+                if abs(v[0] - m[0]) > 0.04 * max(v[0], m[0]):
+                    continue
+                if bin(v[1] ^ m[1]).count(u"1") > 6:
+                    continue
+                if sum(abs(x - y) for x, y in zip(bytearray(v[2]), bytearray(m[2]))) / 64.0 > 12:
+                    continue
+                KOUSHIKI_ONAJI.add(k)
+                deta.append(k)
+                break
+    if atarashii[0]:
+        try:
+            if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
+                os.makedirs(os.path.join(HERE, SONOTA_DIR))
+            io.open(hikae_p, "w", encoding="utf-8", newline=u"\n").write(u"".join(
+                u"%s\t%.5f\t%016x\t%s\n" % (kk, vv[0], vv[1], vv[2].hex())
+                for kk, vv in sorted(hikae.items())))
+        except Exception:
+            pass
+    return deta
 
 
 def shou_no_wasuu(rows, chaps):
@@ -10637,9 +10825,16 @@ def main():
     mi, mi_aru = load_mitame(a.mitame)
     tsunagi = a.kuten_tsunagi or int(mi[u"字幕の最短"])
     KOE_MIJIKA[0] = tsunagi
-    KOE_MODE[0] = (not a.koe_daihon) and os.path.exists(os.path.join(HERE, KOE_FILE))
+    _koe_p = os.path.join(HERE, KOE_FILE)
+    _koe_ok, _koe_moto = koe_onaji(_koe_p, a.audio)
+    KOE_MODE[0] = (not a.koe_daihon) and _koe_ok
     if KOE_MODE[0]:
         say(u"声用の台本（%s）で作った音声です。字幕は、声が必ず止まる切れ目の所だけで切ります" % KOE_FILE)
+    elif not a.koe_daihon and os.path.exists(_koe_p):
+        say(u"⚠ 声用の台本（%s）はありますが、いまの音声はそれで作られていません"
+            u"（%s が%s）。" % (KOE_FILE, KOE_MOTO, u"違います" if os.path.exists(_koe_moto) else u"ありません"))
+        say(u"  メニューの Z（または 1）で声を作り直すと、字幕の切れ目で声も一息つき、字幕が声に合います。"
+            u"いまは前の作り方で字幕を置きます。")
     if a.koe_daihon:
         # 声を作る前に呼ぶ（メニューの 1・Z）。上の注記（koe_kiri_yotei）を読むこと
         # おすすめ紹介の回だけ（本人が選んだのはこの回の話。無職転生の回の読み方は変えない）
@@ -10720,6 +10915,12 @@ def main():
     _jirushi = os.path.join(HERE, SONOTA_DIR, OSUSUME_JIRUSHI)
     if OSUSUME[0]:
         osusume_matome(_ch_o, images)
+        _onaji = koushiki_onaji_sagasu(_ch_o, images, imgpath)
+        if _onaji:
+            say(u"「1」と中身が同じ絵が、別の名前で %d枚 ありました。「1」と同じに扱い、"
+                u"作品の頭の1文のほかでは使いません:" % len(_onaji))
+            for _k in _onaji[:8]:
+                say(u"    %s" % _k)
         try:
             if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
                 os.makedirs(os.path.join(HERE, SONOTA_DIR))
@@ -12538,6 +12739,13 @@ def main():
         run(cmd)
         oto = mixed
 
+    # オープニングを付けるなら、本編の頭をつなぎの色から出す（上の opening_tsunagi）
+    op_tsunagi = None
+    if OSUSUME[0] and not a.no_opening:
+        if opening_sagasu(a.images, a.opening)[1]:
+            op_tsunagi = opening_tsunagi(mi)
+            if op_tsunagi:
+                vf = vf + u",fade=t=in:st=0:d=%.2f:color=%s" % (op_tsunagi[1], op_tsunagi[0])
     say(u"動画を書き出しています (%s / crf %d)。長さ次第で数分かかります…"
         % ((a.preset or mi[u"書き出しの速さ"]), a.crf))
     tmp_out = os.path.join(work, "out.mp4")
@@ -12587,13 +12795,18 @@ def main():
         if op:
             say(u"オープニングを頭に付けています: %s" % op)
             op_out, op_byou = opening_tsukeru(final, op, w, h, a.fps, a.crf,
-                                              (a.preset or mi[u"書き出しの速さ"]), oto, work)
+                                              (a.preset or mi[u"書き出しの速さ"]), oto, work,
+                                              tsunagi=op_tsunagi)
             if op_out:
                 os.replace(op_out, final)
                 io.open(op_hikae, "w", encoding="utf-8").write(u"%.3f\n" % op_byou)
                 say(u"  オープニング %.1f秒 を付けました。動画の中の時刻は、本編より %.1f秒 後ろになります"
                     u"（確認用/一覧.txt の時刻は本編のまま。説明文.py の目次はこの秒数を足します）"
                     % (op_byou, op_byou))
+                if op_tsunagi:
+                    say(u"  つなぎ: オープニングの終わり %.1f秒 を%sへ消し、本編の頭 %.1f秒 をその色から出しました"
+                        u"（見た目.txt の「オープニングのつなぎ」で 白／黒／なし）"
+                        % (op_tsunagi[1], u"白" if op_tsunagi[0] == u"white" else u"黒", op_tsunagi[1]))
             else:
                 say(u"  ⚠ オープニングを付けられませんでした。本編だけで保存しています。")
         elif op_dir:

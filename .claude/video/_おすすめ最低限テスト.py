@@ -20,6 +20,9 @@ u"""おすすめ紹介の回は、無職転生のための段を通らないか�
   ② 割り当てたあとで絵を1枚消しても、最後まで作れる（同じ作品の別の絵に替わる）
      「どの章もその作品の絵だけ」を数えて出す
   ③ 無職転生の形（年と季の無い章）では今までどおり（全フォルダを並べる・目印を消す）
+  ④ 「1」と中身が同じ絵（別の名前・大きさを変えたもの）も「1」として扱い、頭の1文のほかで使わない
+     フォルダに「1」しか無い作品は、頭の1文のほかを無地にする（別の作品の絵を残さない）
+     （2026-11-18・本人の v197: はじめにのニセコイの公式画像／IS の章のニセコイの絵 14枚）
 """
 from __future__ import print_function
 import io, os, re, shutil, subprocess, sys
@@ -212,6 +215,40 @@ def main():
            % (u"（出た: " + u"・".join(deta2) + u"）" if deta2 else u""))
     else:
         iu(False, u"② あお組の絵が割り当てに無い（材料がおかしい）")
+
+    # ④ 「1」と中身が同じ絵・「1」しか無いフォルダ
+    from PIL import Image
+    ichi = Image.open(os.path.join(e, u"あか組！", u"1.jpg"))
+    shutil.copy(os.path.join(e, u"あか組！", u"1.jpg"), os.path.join(e, u"あか組！", u"91d7fdcb.jpg"))
+    ichi.resize((150, 200)).save(os.path.join(e, u"あか組！", u"0998_chiisai.png"))
+    for f in os.listdir(os.path.join(e, u"きいろ組")):
+        if f != u"1.jpg":
+            os.remove(os.path.join(e, u"きいろ組", f))
+    rc4, log4 = hashiru(e, "--plan")
+    io.open(os.path.join(SAGYOU, u"_log4.txt"), "w", encoding="utf-8").write(log4)
+    w4 = wariate()
+    atama4 = set(i for i, (img, tx) in enumerate(w4)
+                 if re.search(u"^(最初にご紹介する作品は|続いての作品は|次の作品は|最後にご紹介する作品は)|制作は", tx))
+    dup = [(i, img) for i, (img, tx) in enumerate(w4)
+           if img in (u"あか組！/91d7fdcb.jpg", u"あか組！/0998_chiisai.png")]
+    iu(rc4 == 0 and u"「1」と中身が同じ絵が、別の名前で 2枚" in log4,
+       u"④ 「1」と中身が同じ絵を、別の名前でも2枚とも見つける")
+    iu(not [i for (i, img) in dup if i not in atama4],
+       u"④ 「1」と同じ絵は、作品の頭の1文のほかで使わない（%s）" % (dup[:3] or u"使っていない"))
+    _k = [i for i, (img, tx) in enumerate(w4) if tx.startswith(u"次の作品は")]
+    _m = [i for i, (img, tx) in enumerate(w4) if tx.startswith(u"最後にご紹介する作品は")]
+    ki4 = w4[_k[0]:_m[0]] if (_k and _m) else []
+    _dai4 = 0                   # 頭の1文（「次の作品は」から「。」で終わる字幕まで）の枚数
+    for (img, tx) in ki4:
+        _dai4 += 1
+        if tx.strip().endswith(u"。"):
+            break
+    iu(ki4 and all(img.endswith(u"無地.png") for (img, tx) in ki4[_dai4:])
+       and all(img == u"きいろ組/1.jpg" for (img, tx) in ki4[:_dai4]),
+       u"④ 「1」しか無いフォルダ（きいろ組）は、頭の1文に「1」・ほかは無地（%s）"
+       % u" / ".join(img for (img, tx) in ki4))
+    iu(u"フォルダに「1」しか入っていない作品が 1 つ" in log4 and u"きいろ組" in log4,
+       u"④ 「1」しか無いフォルダを名前で知らせる")
 
     # ③ 無職転生の形は今までどおり
     io.open(os.path.join(SAGYOU, u"画面表示.txt"), "w", encoding="utf-8",

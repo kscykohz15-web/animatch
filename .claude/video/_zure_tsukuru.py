@@ -380,11 +380,16 @@ def main():
     io.open(u"台本_字幕用.txt", "w", encoding="utf-8").write(
         u"\n".join(u"".join(bs) for bs in dan) + u"\n")
     # 声用の台本で作った形のときは、本番と同じく 台本_読み上げ用_声.txt を置く（道具はこれで見分ける）
+    # 声を作ったときの台本の控え（声のもと.txt）も merged.wav の横に置く。道具は、声が本当に
+    # 声用の台本から作られたときだけ声用の道に入る（2026-11-18・本人の Z が声を作り直さなかった件）
     if KOE_DAIHON[0]:
-        io.open(u"台本_読み上げ用_声.txt", "w", encoding="utf-8").write(
-            u"\n".join(u"".join(bs) for bs in dan) + u"\n")
-    elif os.path.exists(u"台本_読み上げ用_声.txt"):
-        os.remove(u"台本_読み上げ用_声.txt")
+        for _nm in (u"台本_読み上げ用_声.txt", u"声のもと.txt"):
+            io.open(_nm, "w", encoding="utf-8").write(
+                u"\n".join(u"".join(bs) for bs in dan) + u"\n")
+    else:
+        for _nm in (u"台本_読み上げ用_声.txt", u"声のもと.txt"):
+            if os.path.exists(_nm):
+                os.remove(_nm)
     io.open(u"台本_読み上げ用.txt", "w", encoding="utf-8").write(
         u"\n".join(u"".join(bs) for bs in dan) + u"\n")
 

@@ -24,6 +24,9 @@ u"""オープニングと、長く映る絵の動き（仕上げ.py ㉜）
      （終わり 1.2秒前 と 0.3秒前 のコマが違う。同じ材料で v196 は差 0.01＝止まっている・
       直したあとは 44.5＝頭と同じ速さ。v196 は約5秒で端に着いて止まっていた）
   ⑥ 動きの速さは今のまま（短い絵は前と同じ毎秒の距離）
+  ⑦ オープニングから本編へのつなぎ（2026-11-18・本人の指定「シーンが切り替わるエフェクト」）
+     つなぎ目の 0.1秒 前と後は白に近く、1秒 前は赤（オープニング）・1秒 後は本編。
+     見た目.txt「オープニングのつなぎ」白・0.5秒
 """
 from __future__ import print_function
 import io, os, re, shutil, subprocess, sys
@@ -265,6 +268,15 @@ def main():
     k1 = koma(p1, op_byou + 1.0, os.path.join(SAGYOU, u"_k_hon.png"))
     r, g, b = [sum(x) / float(len(x)) for x in zip(*list(k1.getdata())[::97])]
     iu(not (r > 150 and g < 80 and b < 80), u"② そのあとは本編（赤くない）")
+    def heikin(k):
+        px = list(k.convert("RGB").resize((32, 18)).tobytes())
+        return [sum(px[i::3]) / float(len(px) // 3) for i in range(3)]
+    mae_ = heikin(koma(p1, max(0.0, op_byou - 0.1), os.path.join(SAGYOU, u"_k_t1.png")))
+    ato_ = heikin(koma(p1, op_byou + 0.1, os.path.join(SAGYOU, u"_k_t2.png")))
+    iu(min(mae_) > 200 and min(ato_) > 170,
+       u"⑦ つなぎ目の前後は白いフラッシュ（前 %s / 後 %s）"
+       % (u"/".join(u"%.0f" % x for x in mae_), u"/".join(u"%.0f" % x for x in ato_)))
+    iu(u"つなぎ: オープニングの終わり" in log, u"⑦ つなぎを入れたことを知らせる")
     nb1 = nagai_basho(w)
     iu(nb1 is not None and nb is not None and abs(nb1[0] - nb[0]) < 0.05,
        u"④ 一覧.txt の時刻は本編のまま（%s）" % (u"%.2f" % nb1[0] if nb1 else u"-"))
