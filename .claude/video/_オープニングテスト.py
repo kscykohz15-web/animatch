@@ -241,10 +241,11 @@ def main():
         return 1
     iu(u"オープニングを頭に付けています" in log and u"04_オープニング" in log,
        u"① 置き場所.txt が無くても、となりの 04_オープニング から「1」を見つける")
-    iu(u"02_BGM" in io.open(os.path.join(w, u"確認用", u"BGMの割り当て.txt"),
-                            encoding="utf-8-sig").read()
-       if os.path.exists(os.path.join(w, u"確認用", u"BGMの割り当て.txt")) else False,
-       u"① となりの 02_BGM の曲を当てる")
+    _bw = os.path.join(w, u"確認用", u"BGMの割り当て.txt")
+    _bk = io.open(_bw, encoding="utf-8-sig").read() if os.path.exists(_bw) else u""
+    iu(re.search(u"02_BGM の \\d+曲から", log) is not None
+       and len(set(re.findall(u"曲\\d\\.wav", _bk))) >= 2,
+       u"① となりの 02_BGM の曲を当てる（%s）" % u" / ".join(sorted(set(re.findall(u"曲\\d\\.wav", _bk)))))
     p1 = kansei(w, log)
     if not p1 or os.path.abspath(p1) == os.path.abspath(p0):
         # 同じ名前で上書きされるので、本編だけのほうは先に写しておいたものを使う
