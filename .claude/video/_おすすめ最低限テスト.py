@@ -221,6 +221,9 @@ def main():
     ichi = Image.open(os.path.join(e, u"あか組！", u"1.jpg"))
     shutil.copy(os.path.join(e, u"あか組！", u"1.jpg"), os.path.join(e, u"あか組！", u"91d7fdcb.jpg"))
     ichi.resize((150, 200)).save(os.path.join(e, u"あか組！", u"0998_chiisai.png"))
+    # 下のフォルダに入った、1バイトまで同じ写し（2026-11-19）
+    os.makedirs(os.path.join(e, u"あか組！", u"公式"))
+    shutil.copy(os.path.join(e, u"あか組！", u"1.jpg"), os.path.join(e, u"あか組！", u"公式", u"0997.jpg"))
     for f in os.listdir(os.path.join(e, u"きいろ組")):
         if f != u"1.jpg":
             os.remove(os.path.join(e, u"きいろ組", f))
@@ -230,9 +233,9 @@ def main():
     atama4 = set(i for i, (img, tx) in enumerate(w4)
                  if re.search(u"^(最初にご紹介する作品は|続いての作品は|次の作品は|最後にご紹介する作品は)|制作は", tx))
     dup = [(i, img) for i, (img, tx) in enumerate(w4)
-           if img in (u"あか組！/91d7fdcb.jpg", u"あか組！/0998_chiisai.png")]
-    iu(rc4 == 0 and u"「1」と中身が同じ絵が、別の名前で 2枚" in log4,
-       u"④ 「1」と中身が同じ絵を、別の名前でも2枚とも見つける")
+           if img in (u"あか組！/91d7fdcb.jpg", u"あか組！/0998_chiisai.png", u"あか組！/公式/0997.jpg")]
+    iu(rc4 == 0 and u"「1」と中身が同じ絵が、別の名前で 3枚" in log4,
+       u"④ 「1」と中身が同じ絵を、別の名前・大きさ違い・下のフォルダでも3枚とも見つける")
     iu(not [i for (i, img) in dup if i not in atama4],
        u"④ 「1」と同じ絵は、作品の頭の1文のほかで使わない（%s）" % (dup[:3] or u"使っていない"))
     _k = [i for i, (img, tx) in enumerate(w4) if tx.startswith(u"次の作品は")]

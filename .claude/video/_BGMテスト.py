@@ -10,7 +10,8 @@ u"""おすすめ紹介の回は、作品ごとに別の曲が流れるか（仕�
 
   ① 区切り（はじめに・作品ひとつずつ・おわりに）ごとに、当てたとおりの曲が鳴っている
   ② となり合う区切りは別の曲
-  ③ 元の大きさが2倍ちがう曲でも、流れる大きさはそろっている
+  ③ 元の大きさが15倍（約 -23dB）ちがう曲でも、流れる大きさはそろっている（1.2dB 以内）
+     （2026-11-19・本人の指定「作品全てのBGMの音の大きさを同じ基準で同列に」。前は ±6dB で止めていた）
   ④ 切り替わりに音の穴が無い（前を下げながら次を上げて重ねる）
   ⑤ 長さが動画ちょうど
   ⑥ 曲の並びは動画の名前で決まる（作り直しても同じ）
@@ -80,9 +81,9 @@ def junbi():
         Image.new("RGB", (300, 400), (250, 250, 250)).save(os.path.join(e, fol, u"1.jpg"))
     os.makedirs(b)
     for nm, hz in HZ.items():
-        # 曲B だけ元の大きさを半分にする（③ そろえているかを見る）
+        # 曲B だけ元の大きさを 1/15 にする（③ そろえているかを見る。前の ±6dB 止めでは差が残る）
         ff(["-f", "lavfi", "-i", "sine=frequency=%d:duration=7" % hz,
-            "-af", "volume=%s" % ("0.3" if hz == 550 else "0.6"),
+            "-af", "volume=%s" % ("0.04" if hz == 550 else "0.6"),
             "-ar", "44100", "-ac", "1", os.path.join(b, nm)])
     for nm, body in ((u"台本_字幕用.txt", DAIHON), (u"画面表示.txt", GAMEN),
                      (u"画像プラン.txt", u"*\t#穏やか\n")):
@@ -185,9 +186,11 @@ def main():
         iu(not zure, u"① 区切りごとに、当てたとおりの曲が鳴っている%s"
            % (u"（ちがう: %s）" % u" / ".join(u"%s は %s のはずが %s" % z for z in zure) if zure else u""))
         if ook:
-            iu(max(ook) / max(1.0, min(ook)) < 1.35,
-               u"③ 曲Bは元の大きさが半分でも、作品の区切りの大きさがそろっている（%s）"
+            iu(max(ook) / max(1.0, min(ook)) < 1.15,
+               u"③ 曲Bは元の大きさが 1/15 でも、作品の区切りの大きさがそろっている（%s）"
                % u" / ".join(u"%.0f" % x for x in ook))
+            iu(u"BGM の大きさ: どの区切りも" in log and u"LUFS →" in log,
+               u"③ そろえた大きさ（LUFS）と直した幅を、区切りごとに知らせる")
         ana = []
         for (st, na, k) in wari[1:]:
             mae, ato = ookisa(a, sr, st - 2.5, st - 1.5), ookisa(a, sr, st + 1.5, st + 2.5)

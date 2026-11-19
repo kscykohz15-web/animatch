@@ -5911,6 +5911,7 @@ def wav_frames(path):
 #   曲が1つも無ければ、今までどおり 演出.txt の1曲を流す。
 BGM_EXTS = (u".mp3", u".wav", u".m4a", u".ogg", u".flac")
 BGM_KASANE = 1.2
+BGM_OOKISA = []     # 区切りごとの (章, 曲, 測った耳の大きさ LUFS, かけた倍率)
 
 
 def bgm_folder(images_dir, sitei=None):
@@ -5960,6 +5961,37 @@ def bgm_wariate(spans, kyoku, tane_mojiretsu):
     return out
 
 
+# ■ 作品ごとの曲の大きさは、**耳の大きさ（LUFS）**で、**実際に流れる部分**を、**同じ基準**にそろえる
+#   （2026-11-19・本人の指定「作品全てのBGMの音の大きさを同じ基準で同列になるように調整して」）
+#
+#   前は ①曲まるごとの**音の平均の強さ（volumedetect の dB）**を測り ②**まんなかの曲**に合わせ
+#   ③直す幅を **0.5〜2倍（±6dB）で止めて**いた。①は耳の大きさと違う（低い音・高い音で聞こえ方が違う）、
+#   ③は 6dB より差のある曲が差のまま残る。しかも実際に流れるのは曲の頭の 40〜50秒なので、
+#   前奏が静かな曲は、まるごとで測ると合っていても、流れる所は小さく聞こえる。
+#   いまは区切りごとに流れる部分（無音を削り・つなぎ・長さを切った wav）を作ってから、
+#   EBU R128 の耳の大きさ（ffmpeg の ebur128）で測り、全部を BGM_LUFS にそろえてから音量をかける。
+#   基準は -14 LUFS（配信でよく使う大きさ。BGM の曲はだいたいこの近くで作られているので、
+#   全体の大きさは前とあまり変わらない）。全体を上げ下げするのは 演出.txt の BGM の音量のほう。
+BGM_LUFS = -14.0
+
+
+def bgm_lufs(path):
+    u"""wav の (耳の大きさ LUFS, いちばん高い山 dBFS)。EBU R128（ffmpeg の ebur128）。
+    測れなければ (None, None)。山が読めなければ (LUFS, None)。"""
+    for af in (u"ebur128=framelog=quiet:peak=sample", u"ebur128=peak=sample", u"ebur128"):
+        r = subprocess.run([need("ffmpeg"), "-hide_banner", "-nostats", "-i", path,
+                            "-af", af, "-f", "null", "-"],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        t = r.stdout.decode("utf-8", "replace")
+        i = t.rfind(u"Integrated loudness")
+        m = re.search(r"I:\s*(-?[0-9.]+) LUFS", t[i:]) if i >= 0 else None
+        if m:
+            p = re.search(r"Peak:\s*(-?[0-9.]+|-inf) dBFS", t[i:])
+            pk = float(p.group(1)) if (p and p.group(1) != u"-inf") else None
+            return float(m.group(1)), pk
+    return None, None
+
+
 def bgm_ookisa(path):
     u"""曲の平均の大きさ（dB）。ffmpeg の volumedetect で測る。測れなければ None。"""
     r = subprocess.run([need("ffmpeg"), "-hide_banner", "-nostats", "-i", path,
@@ -5977,40 +6009,42 @@ def bgm_sakuhin_goto(spans, folder, kyoku, vol, total, owari, fade, work, tane_m
     if not spans or not kyoku:
         return None, []
     wari = bgm_wariate(spans, kyoku, tane_mojiretsu)
-    # 曲ごとの大きさをそろえる（まんなかに合わせる。0.5〜2倍の範囲で）
-    tsukau = sorted(set(k for (_s, _e, _t, k) in wari))
-    db = {}
-    for k in tsukau:
-        v = bgm_ookisa(os.path.join(folder, k))
-        if v is not None:
-            db[k] = v
-    naka = sorted(db.values())[len(db) // 2] if db else None
+    # 曲ごとの大きさは、流れる部分を作ってから耳の大きさで測ってそろえる（上の BGM_LUFS の注記）
     kumi = []
+    del BGM_OOKISA[:]
     for n, (st, en, ti, k) in enumerate(wari):
         saigo = (n == len(wari) - 1)
         nagasa = (total - st) if saigo else (en - st + BGM_KASANE)
         owari_k = (owari - st) if saigo else nagasa
         if nagasa <= 0.2 or owari_k <= 0.2:
             continue
-        bai = 1.0
-        if naka is not None and k in db:
-            bai = max(0.5, min(2.0, 10 ** ((naka - db[k]) / 20.0)))
-        w = bgm_wav_ready(k, vol * bai, nagasa, owari_k, fade, work,
+        # 音量 1.0 で流れる部分を作り、耳の大きさを測ってから、重ねるときに倍率をかける
+        w = bgm_wav_ready(k, 1.0, nagasa, owari_k, fade, work,
                           src=os.path.join(folder, k), out_name=u"bgm_k%02d.wav" % n,
                           fade_in=(fade if n == 0 else BGM_KASANE),
                           fade_out=(fade if saigo else BGM_KASANE), tag=u"_k%02d" % n)
-        if w:
-            kumi.append((st, w))
+        if not w:
+            continue
+        L, pk = bgm_lufs(w)
+        bai = 1.0
+        if L is not None and L > -70.0:
+            bai = 10 ** ((BGM_LUFS - L) / 20.0)
+            # 音が割れない所まで（いちばん高い山 × 倍率 × 音量 が 0.98 を超えない）。
+            # 山が読めないときは、山が 1 まであるものとして止める
+            yama = 10 ** (pk / 20.0) if pk is not None else 1.0
+            bai = max(0.05, min(bai, 0.98 / max(1e-4, yama * vol)))
+        kumi.append((st, w, vol * bai))
+        BGM_OOKISA.append((ti, k, L, bai))
     if not kumi:
         return None, []
     out = os.path.join(work, u"bgm.wav")
     cmd = [need("ffmpeg"), "-y", "-loglevel", "error"]
-    for (_st, w) in kumi:
+    for (_st, w, _v) in kumi:
         cmd += ["-i", w]
     fil = []
-    for n, (st, _w) in enumerate(kumi):
+    for n, (st, _w, v) in enumerate(kumi):
         ms = int(round(st * 1000))
-        fil.append(u"[%d:a]adelay=%d|%d,apad[b%d]" % (n, ms, ms, n))
+        fil.append(u"[%d:a]volume=%.5f,adelay=%d|%d,apad[b%d]" % (n, v, ms, ms, n))
     fil.append(u"".join(u"[b%d]" % n for n in range(len(kumi)))
                + u"amix=inputs=%d:normalize=0:duration=longest[o]" % len(kumi))
     cmd += ["-filter_complex", u";".join(fil), "-map", "[o]", "-t", "%.3f" % total,
@@ -10364,6 +10398,7 @@ def barakeru(lst):
 
 # 「1」と中身が同じ絵（別の名前で保存したもの）。koushiki_onaji_sagasu が入れる。
 KOUSHIKI_ONAJI = set()
+KOUSHIKI_PIL_NAI = [False]      # Pillow が無くて、中身（指紋）で比べられなかった
 E_SHIMON = u"_絵の指紋.txt"     # その他/ に置く。絵の指紋の控え（2回目からは読み直さない）
 
 
@@ -10400,14 +10435,22 @@ def koushiki_onaji_sagasu(chaps, images, imgpath):
       保存した絵と言うが、道具の見張りは「1 は作品の頭の1文だけ」と言っていた ──
       見分けはファイル名だけなので、**同じ絵が別の名前（91d7fdcb.jpg など）でも
       入っている**と、それは「ふつうの絵」として、はじめにや本文に出る。
-      名前ではなく中身で見る: 縦横の比が 4% 以内・明るさの差の並び（64ビット）が 6 か所以内・
-      8×8 に縮めた明るさの差が平均 12 以内。大きさを変えて保存し直したものも当たる。
+      名前ではなく中身で見る: 縦横の比が 4% 以内・明るさの差の並び（64ビット）が 8 か所以内・
+      8×8 に縮めた明るさの差が平均 14 以内。大きさを変えて保存し直したものも当たる。
+
+    ■ 強めた所（2026-11-19・本人の画面: はじめにの「それでは早速紹介にうつります。」にアーリャさんの公式画像）
+      ・**1バイトまで同じ写し**は、Pillow が無くても確実に当てる（大きさが同じものだけ中身を比べる）
+      ・作品フォルダの**中の下のフォルダ**にあっても比べる（前は同じフォルダの中だけ）
+      ・Pillow が無くて中身を比べられないときは、黙らずに知らせる（KOUSHIKI_PIL_NAI）
     """
+    KOUSHIKI_ONAJI.clear()
+    KOUSHIKI_PIL_NAI[0] = False
     try:
         from PIL import Image  # noqa: F401
+        pil = True
     except Exception:
-        return []
-    KOUSHIKI_ONAJI.clear()
+        pil = False
+        KOUSHIKI_PIL_NAI[0] = True
     folders = sorted(set(k.split(u"/")[0] for k in images if u"/" in k))
     tsukau = set()
     for (_k, t, eps) in (chaps or []):
@@ -10416,8 +10459,8 @@ def koushiki_onaji_sagasu(chaps, images, imgpath):
     ichi = {}
     for k in images:
         if u"/" in k and os.path.splitext(_e_namae(k))[0] == u"1":
-            f = k.rsplit(u"/", 1)[0]
-            if f.split(u"/")[0] in tsukau:
+            f = k.split(u"/")[0]          # 作品フォルダ（下のフォルダの「1」も、その作品の「1」）
+            if f in tsukau:
                 ichi.setdefault(f, []).append(k)
     if not ichi:
         return []
@@ -10450,13 +10493,38 @@ def koushiki_onaji_sagasu(chaps, images, imgpath):
         atarashii[0] += 1
         return v
 
+    def michi(k):
+        return imgpath.get(k) or os.path.join(HERE, k)
+
+    def md5(p):
+        try:
+            return hashlib.md5(open(p, "rb").read()).hexdigest()
+        except Exception:
+            return None
+
     deta = []
     for f, ichis in sorted(ichi.items()):
-        moto = [v for v in (shimon(k) for k in ichis) if v]
-        if not moto:
-            continue
+        # ① 1バイトまで同じ写し（大きさが同じものだけ中身を比べる）
+        ookisa = {}
+        for k in ichis:
+            try:
+                ookisa.setdefault(os.path.getsize(michi(k)), []).append(md5(michi(k)))
+            except OSError:
+                pass
+        moto = [v for v in (shimon(k) for k in ichis) if v] if pil else []
         for k in images:
-            if u"/" not in k or k.rsplit(u"/", 1)[0] != f or k in ichis:
+            if u"/" not in k or k.split(u"/")[0] != f or k in ichis:
+                continue
+            try:
+                sz = os.path.getsize(michi(k))
+            except OSError:
+                continue
+            if sz in ookisa and md5(michi(k)) in ookisa[sz]:
+                KOUSHIKI_ONAJI.add(k)
+                deta.append(k)
+                continue
+            # ② 大きさを変えて保存し直したもの（指紋で比べる）
+            if not moto:
                 continue
             v = shimon(k)
             if not v:
@@ -10464,9 +10532,9 @@ def koushiki_onaji_sagasu(chaps, images, imgpath):
             for m in moto:
                 if abs(v[0] - m[0]) > 0.04 * max(v[0], m[0]):
                     continue
-                if bin(v[1] ^ m[1]).count(u"1") > 6:
+                if bin(v[1] ^ m[1]).count(u"1") > 8:
                     continue
-                if sum(abs(x - y) for x, y in zip(bytearray(v[2]), bytearray(m[2]))) / 64.0 > 12:
+                if sum(abs(x - y) for x, y in zip(bytearray(v[2]), bytearray(m[2]))) / 64.0 > 14:
                     continue
                 KOUSHIKI_ONAJI.add(k)
                 deta.append(k)
@@ -10918,6 +10986,9 @@ def main():
     if OSUSUME[0]:
         osusume_matome(_ch_o, images)
         _onaji = koushiki_onaji_sagasu(_ch_o, images, imgpath)
+        if KOUSHIKI_PIL_NAI[0]:
+            say(u"⚠ Pillow が無いので、「1」と同じ絵を**大きさを変えたもの**までは見分けられません"
+                u"（1バイトまで同じ写しだけ見分けます。pip install pillow で入ります）")
         if _onaji:
             say(u"「1」と中身が同じ絵が、別の名前で %d枚 ありました。「1」と同じに扱い、"
                 u"作品の頭の1文のほかでは使いません:" % len(_onaji))
@@ -12705,10 +12776,21 @@ def main():
                        en["bgmvol"], BGM_KASANE))
                 hyou = [u"# どの区切りに、どの曲を当てたか（make_slideshow.py が書きます）",
                         u"# 曲の並びは動画の名前で決まります。作り直しても同じ曲になります。"]
+                _ok = list(BGM_OOKISA)
+                _hk = [o for o in _ok if o[2] is not None]
+                if _hk:
+                    _db = [20.0 * math.log10(max(1e-6, o[3])) for o in _hk]
+                    say(u"  BGM の大きさ: どの区切りも、流れる部分の耳の大きさを %.0f LUFS にそろえてから"
+                        u"音量 %.2f をかけました（曲ごとに %+.1f〜%+.1f dB 直しています）"
+                        % (BGM_LUFS, en["bgmvol"], min(_db), max(_db)))
                 for (st0, en0, ti0, k0) in wari_b:
                     na0 = u"はじめに" if ti0 == MUDAI else ti0.split(u"\\N")[0]
                     hyou.append(u"%s\t%s\t%s" % (mmss(st0), na0, k0))
-                    say(u"    %s  %-26s ← %s" % (mmss(st0), na0[:26], k0))
+                    _o = _ok.pop(0) if (_ok and _ok[0][0] == ti0 and _ok[0][1] == k0) else None
+                    say(u"    %s  %-26s ← %s%s" % (mmss(st0), na0[:26], k0,
+                                                 (u"（%.1f LUFS → %+.1f dB）"
+                                                  % (_o[2], 20.0 * math.log10(max(1e-6, _o[3]))))
+                                                 if (_o and _o[2] is not None) else u""))
                 try:
                     kd = os.path.join(HERE, KAKUNIN_DIR)
                     if not os.path.isdir(kd):
