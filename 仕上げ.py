@@ -1011,6 +1011,19 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"オープニングが付かないか、長く映る絵が途中で止まっています")
 
+# ── ㉝ スマホで見る・絵を選ぶ ─────────────
+midashi(u"㉝", u"スマホで動画と作品の絵を見て、絵を選べるか（ボードの本物の JS で）")
+# ■ 本人の指定（2026-11-19）「スマホからでも画像の変更依頼ができるように、制作ボード側から、
+#   説明に登場する作品の画像一覧と、生成した動画が見えるようにしたい」
+#   確認用/スマホ用 を作る → パソコンで上げる → スマホで見て選ぶ → irekae.txt → メニューが取り込む、を
+#   偽の置き場と控えで通す（ブラウザは node の Playwright）。
+r = subprocess.run([sys.executable, os.path.join(V, u"_スマホテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"スマホで見る・絵を選ぶ が、どこかでつながっていません")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:

@@ -10044,10 +10044,163 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
         .replace(u"@@データ@@", js)
     out = os.path.join(fol, IREKAE_HTML)
     io.open(out, "w", encoding="utf-8", newline="\n").write(html)
+    IREKAE_D[0] = D             # スマホ用（sumaho_tsukuru）が同じ材料を使う
     say(u"確認用/入れ替え表.html を書きました（字幕 %d か所・候補の作品 %d）。"
         u"ブラウザで開くと、押すだけで絵を選び直せます" % (len(out_rows), len(fols)))
     say(u"  保存したら はじめる.bat → 2 で入れ替わります（ダウンロードから自動で読み込みます）")
     return out
+
+
+# ------------------------------------------------ スマホ用（本人の指定・2026-11-19）
+#
+# > スマホからでも画像の変更依頼ができるように、制作ボード側から、説明に登場する作品の
+# > 画像一覧と、生成した動画が見えるようにしたいです。
+#
+# 絵と動画は本人のパソコンの中にしか無い。ボード（おすすめ側）はパソコンで開いたときに
+# 「スマホ用を上げる」でこのフォルダを受け取り、ボードの置き場（assets）に預ける。スマホでは
+# 章ごとの動画を見て、字幕ごとに絵を選ぶ（ボードの db に控える）。パソコンでボードを開いて
+# 「irekae.txt を保存」→ メニューの 2 が今までどおり 差し替え.txt に取り込む（入れ替え表と同じ形）。
+#
+#   確認用/スマホ用/一覧.json   … 入れ替え表と同じ材料（字幕・章・作品の絵の名前）＋絵の位置＋動画
+#                  e_000.jpg …   … 作品ごとの小さい絵（240×135）を1枚の紙にまとめたもの。
+#                                   ボードの置き場は**ファイルの数**に上限があるので、1枚ずつにしない
+#                  u_000.jpg …   … この動画で**いま使っている絵**だけの紙（字幕の一覧はこれだけ読む。
+#                                   作品の紙を20作品ぶん同時に開くと、スマホが落ちる大きさになる）
+#                  d_000.mp4 …   … 章（右上の作品の区切り）ごとの 360p の軽い動画（1つ 20MiB 未満）
+#
+# 小さい絵は その他/_スマホ用の小さい絵/ に控え、2回目からは元の大きい絵を読み直さない。
+IREKAE_D = [None]
+SUMAHO_DIR = u"スマホ用"
+SUMAHO_CELL = (240, 135)
+SUMAHO_COLS = 10
+SUMAHO_MAI = 100            # 1枚の紙に入れる数（10×10＝2400×1350。スマホが一度に開ける大きさに抑える）
+SUMAHO_JOUGEN = 19 * 1024 * 1024
+
+
+def sumaho_tsukuru(D, imgpath, final, op_byou, spans):
+    u"""確認用/スマホ用/ を作る。戻り値 (絵の数, 紙の数, 動画の数, 合計の大きさ) か None。"""
+    import json
+    try:
+        from PIL import Image
+    except Exception:
+        say(u"スマホ用: Pillow が無いので作れません（pip install pillow）")
+        return None
+    out = os.path.join(HERE, KAKUNIN_DIR, SUMAHO_DIR)
+    if os.path.isdir(out):
+        shutil.rmtree(out, ignore_errors=True)
+    os.makedirs(out)
+    kd = os.path.join(HERE, SONOTA_DIR, u"_スマホ用の小さい絵")
+    if not os.path.isdir(kd):
+        os.makedirs(kd)
+    cw, ch = SUMAHO_CELL
+
+    def chiisai(k):
+        p = imgpath.get(k)
+        if not p or not os.path.exists(p):
+            return None
+        st = os.stat(p)
+        h = hashlib.md5((u"%s|%d|%d|%dx%d" % (p, st.st_size, int(st.st_mtime), cw, ch))
+                        .encode("utf-8")).hexdigest()[:20]
+        c = os.path.join(kd, h + u".jpg")
+        if os.path.exists(c):
+            try:
+                return Image.open(c).convert("RGB")
+            except Exception:
+                pass
+        try:
+            im = Image.open(p)
+            try:
+                im.draft("RGB", (cw * 2, ch * 2))
+            except Exception:
+                pass
+            im = im.convert("RGB")
+            im.thumbnail((cw, ch))
+            th = Image.new("RGB", (cw, ch), (17, 17, 17))
+            th.paste(im, ((cw - im.size[0]) // 2, (ch - im.size[1]) // 2))
+            th.save(c, quality=80)
+            return th
+        except Exception:
+            return None
+
+    # 候補になる作品だけ（章が指している作品フォルダ）
+    kouho_f = sorted(set(fi for c in D[u"chap"] for fi in c))
+    atarashii = dict((fi, j) for j, fi in enumerate(kouho_f))
+    fol = [D[u"fol"][fi] for fi in kouho_f]
+    files = [D[u"files"][fi] for fi in kouho_f]
+    chap = [[atarashii[fi] for fi in c if fi in atarashii] for c in D[u"chap"]]
+    def kami_ni(keys, atama, sheets, pos):
+        u"""keys を SUMAHO_MAI 枚ずつの紙にして、sheets と pos（絵 → [紙, 何番目]）に足す。"""
+        n = 0
+        for s0 in range(0, len(keys), SUMAHO_MAI):
+            kumi = keys[s0:s0 + SUMAHO_MAI]
+            gyou = (len(kumi) + SUMAHO_COLS - 1) // SUMAHO_COLS
+            kami = Image.new("RGB", (cw * SUMAHO_COLS, ch * gyou), (17, 17, 17))
+            for i, k in enumerate(kumi):
+                th = chiisai(k)
+                if th is not None:
+                    kami.paste(th, ((i % SUMAHO_COLS) * cw, (i // SUMAHO_COLS) * ch))
+                    n += 1
+                pos[k] = [len(sheets), i]
+            fn = u"%s_%03d.jpg" % (atama, len(sheets))
+            kami.save(os.path.join(out, fn), quality=72, optimize=True)
+            sheets.append({u"file": fn, u"n": len(kumi), u"rows": gyou})
+        return n
+
+    sheets, pos, kazu = [], {}, 0
+    for j, f in enumerate(fol):
+        kazu += kami_ni([f + u"/" + n for n in files[j]], u"e", sheets, pos)
+        if (j + 1) % 5 == 0:
+            say(u"  スマホ用の小さい絵: %d / %d 作品" % (j + 1, len(fol)))
+    # いま使っている絵だけの紙
+    tsukatte = []
+    for r in D[u"rows"]:
+        k = r.get(u"curKey") or u""
+        if k and k not in tsukatte:
+            tsukatte.append(k)
+    u_sheets, u_pos = [], {}
+    kami_ni(tsukatte, u"u", u_sheets, u_pos)
+
+    # 章ごとの軽い動画（オープニングは最初の章に入る）
+    clips = []
+    if final and os.path.exists(final) and spans:
+        zen = douga_nagasa(final)
+        for i, (st, en, ti) in enumerate(spans):
+            a0 = 0.0 if i == 0 else st + op_byou
+            b0 = zen if i == len(spans) - 1 else en + op_byou
+            if b0 - a0 < 0.3:
+                continue
+            fn = u"d_%03d.mp4" % len(clips)
+            dst = os.path.join(out, fn)
+            for crf in (30, 35):
+                r = subprocess.run([need("ffmpeg"), "-y", "-loglevel", "error", "-ss", "%.3f" % a0,
+                                    "-i", final, "-t", "%.3f" % (b0 - a0),
+                                    "-vf", "scale=-2:360,fps=24", "-c:v", "libx264", "-preset", "veryfast",
+                                    "-crf", str(crf), "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "64k",
+                                    "-ac", "1", "-movflags", "+faststart", dst],
+                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                if r.returncode == 0 and os.path.exists(dst) and os.path.getsize(dst) <= SUMAHO_JOUGEN:
+                    break
+            if not os.path.exists(dst) or os.path.getsize(dst) > SUMAHO_JOUGEN:
+                say(u"  ⚠ スマホ用の動画 %s が作れないか大きすぎました（とばします）" % fn)
+                if os.path.exists(dst):
+                    os.remove(dst)
+                continue
+            na = u"はじめに" if ti == MUDAI else (ti or u"").split(u"\\N")[0]
+            clips.append({u"file": fn, u"title": na, u"st": round(a0, 2), u"en": round(b0, 2)})
+
+    rows = []
+    for r in D[u"rows"]:
+        rr = dict((k, v) for k, v in r.items() if k != u"cur")
+        rows.append(rr)
+    J = {u"v": 1, u"title": D[u"title"], u"made": D[u"made"], u"op": round(op_byou, 2),
+         u"fol": fol, u"files": files, u"chap": chap, u"rows": rows,
+         u"sheets": sheets, u"cell": [cw, ch], u"cols": SUMAHO_COLS, u"pos": pos,
+         u"u_sheets": u_sheets, u"u_pos": u_pos,
+         u"kou": sorted(k for k in pos if wa_koushiki(k)), u"clips": clips}
+    io.open(os.path.join(out, u"ichiran.json"), "w", encoding="utf-8").write(
+        json.dumps(J, ensure_ascii=False))
+    ookisa = sum(os.path.getsize(os.path.join(out, f)) for f in os.listdir(out))
+    return kazu, len(sheets) + len(u_sheets), len(clips), ookisa
 
 
 def load_sashikae(path, images, moji=None):
@@ -10793,6 +10946,7 @@ def main():
                     help=u"おすすめ紹介の回で、頭に付けるオープニングのフォルダ"
                          u"（無ければ 置き場所.txt の オープニング → 画像フォルダの隣の〜オープニング）")
     ap.add_argument("--no-opening", action="store_true", help=u"オープニングを付けない")
+    ap.add_argument("--no-sumaho", action="store_true", help=u"スマホ用（確認用/スマホ用）を作らない")
     ap.add_argument("--bgm-dir", default=None,
                     help=u"おすすめ紹介の回で、作品ごとに当てる曲のフォルダ"
                          u"（無ければ 置き場所.txt の BGM → 画像フォルダの隣の BGM）")
@@ -12934,6 +13088,20 @@ def main():
                     daiji=daiji)
     except Exception as e:
         say(u"入れ替え表は作れませんでした: %s" % e)
+    # おすすめ紹介の回は、スマホで見る・選ぶための材料も作る（上の SUMAHO_DIR の注記）
+    if OSUSUME[0] and IREKAE_D[0] and not a.no_sumaho:
+        try:
+            _opb = 0.0
+            if os.path.exists(op_hikae):
+                _opb = float(io.open(op_hikae, encoding="utf-8").read().strip() or 0)
+            _sp = chapter_spans(cues, chaps, sum(frames) / float(fps)) if chaps else []
+            _sm = sumaho_tsukuru(IREKAE_D[0], imgpath, final, _opb, _sp)
+            if _sm:
+                say(u"確認用/%s/ を作りました（作品の絵 %d枚を %d枚の紙に・章ごとの動画 %d本・%.0fMB）。"
+                    % (SUMAHO_DIR, _sm[0], _sm[1], _sm[2], _sm[3] / 1048576.0))
+                say(u"  スマホで見るには、パソコンで制作ボードを開き「スマホ用を上げる」でこのフォルダを選んでください")
+        except Exception as e:
+            say(u"スマホ用は作れませんでした: %s" % e)
     say(u"絵を差し替えたいときは 画像割り当て.tsv を直して、もう一度 batを実行してください。")
 
 

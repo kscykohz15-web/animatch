@@ -149,6 +149,56 @@
   .askbtn2:disabled{opacity:.4; cursor:default;}
   .askbtn2:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
 
+  /* ---- スマホで見る・絵を選ぶ（おすすめ側） ---- */
+  /* .btnrow などの display が hidden より強く効いて、隠したボタンが出ていた（㉝で見つけた） */
+  #sumaho [hidden]{display:none !important;}
+  .smlist{display:flex; flex-direction:column; gap:10px; margin-top:12px;}
+  .smcard{border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:var(--surface);
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+  .smcard .smct{flex:1 1 220px; min-width:0;}
+  .smcard .smcn{font-size:13.5px; font-weight:700; color:var(--ink); overflow-wrap:anywhere;}
+  .smcard .smcm{font-size:11.5px; color:var(--ink-3); margin-top:3px;}
+  .smview{margin-top:14px; border:1px solid var(--line); border-radius:12px; background:var(--surface);
+    padding:12px;}
+  .smvtop{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px;}
+  .smvtitle{flex:1 1 200px; font-size:14px; font-weight:700; color:var(--ink); overflow-wrap:anywhere;}
+  .smtabs{display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; -webkit-overflow-scrolling:touch;}
+  .smtabs button{flex:0 0 auto; font-family:inherit; font-size:12px; cursor:pointer; border-radius:999px;
+    padding:5px 12px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2);}
+  .smtabs button.on{background:var(--ink); border-color:var(--ink); color:var(--ground);}
+  .smvideo{width:100%; aspect-ratio:16/9; background:#000; border-radius:8px; display:block; margin:6px 0 10px;}
+  .smrows{display:flex; flex-direction:column; gap:6px;}
+  .smrow{display:flex; gap:10px; align-items:flex-start; padding:6px; border-radius:9px;
+    border:1px solid var(--line); background:var(--surface); cursor:pointer; text-align:left;
+    font-family:inherit; color:var(--ink); width:100%;}
+  .smrow:hover{border-color:var(--line-2);}
+  .smrow.picked{border-color:var(--ink);}
+  .smrow.fixed{cursor:default; opacity:.7;}
+  .smrow .smrt{flex:1; min-width:0; font-size:13px; line-height:1.7;}
+  .smrow .smrn{font-size:11px; color:var(--ink-3);}
+  .smrow .smbadge{display:inline-block; font-size:10.5px; font-weight:700; border-radius:999px;
+    padding:1px 8px; margin-left:6px; background:var(--ink); color:var(--ground);}
+  .smth{flex:0 0 auto; width:128px; aspect-ratio:16/9; border-radius:6px; background-color:#111;
+    background-repeat:no-repeat; position:relative; overflow:hidden;}
+  .smth.none{display:flex; align-items:center; justify-content:center; font-size:11px; color:#bbb;}
+  .smth .smlab{position:absolute; left:4px; top:4px; font-size:10px; font-weight:700; padding:1px 6px;
+    border-radius:999px; background:rgba(0,0,0,.72); color:#fff;}
+  .smfoot{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px;}
+  .smmodal{position:fixed; inset:0; z-index:50; background:rgba(0,0,0,.55); display:flex;
+    align-items:flex-end; justify-content:center;}
+  .smmodal[hidden]{display:none;}
+  .smbox{background:var(--ground); width:100%; max-width:980px; max-height:88vh; border-radius:14px 14px 0 0;
+    display:flex; flex-direction:column;}
+  .smmtop{display:flex; gap:8px; align-items:flex-start; padding:12px 14px; border-bottom:1px solid var(--line);}
+  .smmhead{flex:1; font-size:13px; line-height:1.7; color:var(--ink); min-width:0; overflow-wrap:anywhere;}
+  .smmbody{overflow-y:auto; padding:10px 14px 18px; -webkit-overflow-scrolling:touch;}
+  .smgrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(104px, 1fr)); gap:6px;}
+  .smgrid .smth{width:100%; cursor:pointer;}
+  .smgrid .smth.cur{outline:2px solid var(--ink-3); outline-offset:-2px;}
+  .smgrid .smth.sel{outline:3px solid var(--ink); outline-offset:-3px;}
+  .smfh{font-size:12px; font-weight:700; color:var(--ink-2); margin:12px 0 6px;}
+  .ihint.ng{color:var(--ink); font-weight:700;}
+
   /* ---- 依頼フォーム ---- */
   .iform{margin-top:12px; border:1px solid var(--line); border-radius:12px; padding:14px;
     background:var(--surface);}
@@ -444,6 +494,27 @@
     <p class="lede">タイトルを開くと、軸・構成・尺・ファイル名が出ます。工程のチェックはこのページに保存されます。</p>
     <div class="inv" id="inv"></div>
     <div class="savenote" id="savenote" style="margin-top:10px;">工程チェックの保存を準備中…</div>
+  </section>
+
+  <section data-board="osusume" id="sumaho">
+    <h2>スマホで見る・絵を選ぶ</h2>
+    <p class="lede">動画を作ると <code>確認用\スマホ用\</code> ができます。<b>パソコンで</b>このボードを開いて
+      「スマホ用を上げる」でそのフォルダを選んでおくと、<b>スマホから</b>出来た動画と作品ごとの絵の一覧を見て、
+      字幕ごとに絵を選べます。選んだ絵は、パソコンで「irekae.txt を保存」→ はじめる.bat → 2 で入れ替わります。</p>
+    <div class="btnrow" id="smup" hidden>
+      <button type="button" class="askbtn2 pri" id="smupbtn">スマホ用を上げる（パソコンで）</button>
+      <input type="file" id="smupin" webkitdirectory multiple hidden>
+    </div>
+    <div class="ihint" id="smnote">読み込み中…</div>
+    <div class="smlist" id="smlist"></div>
+    <div class="smview" id="smview" hidden></div>
+    <div class="smmodal" id="smmodal" hidden>
+      <div class="smbox" role="dialog" aria-modal="true" aria-labelledby="smmhead">
+        <div class="smmtop"><div class="smmhead" id="smmhead"></div>
+          <button type="button" class="askbtn2" id="smmclose">閉じる</button></div>
+        <div class="smmbody" id="smmbody"></div>
+      </div>
+    </div>
   </section>
 
   <!-- 紹介する作品の一覧。表と直す口は「台本インベントリ」のカードの中にあります。
@@ -21044,7 +21115,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v199";
+  var PACK_VERSION = "v200";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -22949,6 +23020,341 @@ if __name__ == "__main__":
       }
     }).catch(function(){});
   }
+
+  /* ---------- スマホで見る・絵を選ぶ（おすすめ側だけ・2026-11-19 本人の指定） ---------- */
+  // > スマホからでも画像の変更依頼ができるように、制作ボード側から、説明に登場する作品の
+  // > 画像一覧と、生成した動画が見えるようにしたいです。
+  // パソコン: 確認用\スマホ用 を選ぶ → ボードの置き場（assets）に上げ、sumaho/<id> に控える。
+  // スマホ: 章ごとの動画を見て、字幕ごとに絵を選ぶ → sumaho_erabi/<id> に控える。
+  // パソコン: irekae.txt を保存（入れ替え表と同じ形）→ はじめる.bat → 2 が取り込む。
+  /*@@ONLY:osusume@@*/
+  (function(){
+    var sec = $("sumaho");
+    if(!sec || !(window.claude && window.claude.use)) return;
+    var SM = {db:null, as:null, dl:null, docs:[], d:null, J:null, picks:{}, clip:0, sid:null, timer:null};
+    // スマホ（指で触る画面）ではフォルダを選べず、irekae.txt も取り込めないので、その2つは出さない
+    var PC = !(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+    function blobUrl(id){ return "/_blob/" + id; }
+    function note(t, ng){ var n = $("smnote"); n.textContent = t; n.className = "ihint" + (ng ? " ng" : ""); }
+    function sidOf(title){
+      var ids = Object.keys(SCRIPTS);
+      for(var i=0;i<ids.length;i++){ if(fileName(bangouName(ids[i])) === title) return ids[i]; }
+      var h = 0;
+      for(var j=0;j<title.length;j++){ h = (h * 31 + title.charCodeAt(j)) | 0; }
+      return "x" + (h >>> 0).toString(36);
+    }
+    function sec2(t){
+      var p = String(t || "0").split(":"), v = 0;
+      for(var i=0;i<p.length;i++){ v = v * 60 + (parseFloat(p[i]) || 0); }
+      return v;
+    }
+    function mbStr(b){ return (b / 1048576).toFixed(1) + "MB"; }
+
+    // ── 小さい絵（紙の中の1マス）
+    function thumb(key, useU){
+      var J = SM.J, d = el("div", "smth");
+      var P = (useU && J.u_pos && J.u_pos[key]) ? J.u_pos[key] : J.pos[key];
+      var S = (useU && J.u_pos && J.u_pos[key]) ? J.u_sheets : J.sheets;
+      var sh = P ? S[P[0]] : null, id = sh ? SM.d.files[sh.file] : null;
+      if(!id){ d.classList.add("none"); d.textContent = key ? "絵が見つかりません" : "無地"; return d; }
+      var cols = J.cols, rn = sh.rows, c = P[1] % cols, r = Math.floor(P[1] / cols);
+      d.style.backgroundImage = "url(" + blobUrl(id) + ")";
+      d.style.backgroundSize = (cols * 100) + "% " + (rn * 100) + "%";
+      d.style.backgroundPosition = (cols > 1 ? c / (cols - 1) * 100 : 0) + "% " + (rn > 1 ? r / (rn - 1) * 100 : 0) + "%";
+      return d;
+    }
+    function lab(d, t){ d.appendChild(el("span", "smlab", t)); return d; }
+
+    // ── 上がっている動画の一覧
+    function renderList(){
+      var box = $("smlist");
+      box.textContent = "";
+      if(!SM.docs.length){
+        box.appendChild(el("div", "ihint", "まだ上がっていません。動画を作ったあと、パソコンで「スマホ用を上げる」を押してください。"));
+        return;
+      }
+      SM.docs.forEach(function(d){
+        var c = el("div", "smcard"), t = el("div", "smct");
+        t.appendChild(el("div", "smcn", d.title));
+        t.appendChild(el("div", "smcm", "動画を作った時刻 " + (d.made || "?") + " ／ 章 " + (d.n_d || 0) + " ／ " + mbStr(d.bytes || 0)));
+        c.appendChild(t);
+        var b = el("button", "askbtn2 pri", "開く");
+        b.type = "button";
+        b.onclick = function(){ openView(d); };
+        c.appendChild(b);
+        if(SM.as && PC){
+          var x = el("button", "askbtn2", "消す");
+          x.type = "button";
+          x.onclick = function(){ removeDoc(d); };
+          c.appendChild(x);
+        }
+        box.appendChild(c);
+      });
+    }
+    function loadDocs(){
+      return SM.db.collection("sumaho").get().then(dbodies).then(function(a){
+        SM.docs = a.filter(function(d){ return d && d.json && d.files; })
+          .sort(function(x, y){ return String(y.at || "").localeCompare(String(x.at || "")); });
+        renderList();
+      });
+    }
+
+    // ── パソコン: 確認用\スマホ用 を上げる
+    function upCode(e){ return (e && e.code) || "不明"; }
+    function upload(files){
+      var arr = Array.prototype.slice.call(files || []);
+      var byName = {};
+      arr.forEach(function(f){ byName[f.name] = f; });
+      var jf = byName["ichiran.json"];
+      if(!jf){ note("ichiran.json が見つかりません。動画のフォルダの 確認用\\スマホ用 を選んでください。", true); return; }
+      jf.text().then(function(text){
+        var J = JSON.parse(text);
+        var need = [];
+        (J.sheets || []).concat(J.u_sheets || []).concat(J.clips || []).forEach(function(x){ need.push(x.file); });
+        var miss = need.filter(function(n){ return !byName[n]; });
+        if(miss.length){ note("フォルダの中が足りません（" + miss.slice(0, 3).join("・") + " など " + miss.length + "個）。動画を作り直してから選んでください。", true); return; }
+        var sid = sidOf(J.title), ids = {}, i = 0, bytes = 0;
+        $("smupbtn").disabled = true;
+        function next(){
+          if(i >= need.length) return Promise.resolve();
+          var n = need[i], f = byName[n];
+          note("上げています… " + (i + 1) + " / " + (need.length + 1) + "（" + n + "）");
+          return SM.as.upload(f, {type: /\.mp4$/i.test(n) ? "video/mp4" : "image/jpeg"}).then(function(r){
+            ids[n] = r.id; bytes += r.sizeBytes || 0; i++;
+            return next();
+          });
+        }
+        var old = null;
+        next().then(function(){
+          note("上げています… " + (need.length + 1) + " / " + (need.length + 1) + "（ichiran.json）");
+          return SM.as.upload(new Blob([text], {type: "application/json"}), {type: "application/json"});
+        }).then(function(r){
+          bytes += r.sizeBytes || 0;
+          return SM.db.doc("sumaho/" + sid).get().then(dbody).then(function(o){ old = o; return r; });
+        }).then(function(r){
+          return SM.db.doc("sumaho/" + sid).set({
+            sid: sid, title: J.title, made: J.made, at: new Date().toISOString(),
+            json: r.id, files: ids, bytes: bytes, n_d: (J.clips || []).length, n_e: (J.sheets || []).length
+          });
+        }).then(function(){
+          // 前に上げた同じ動画のぶんは、新しいほうに置きかえたので消す（本人が上げ直した操作の一部）
+          var keep = {}; Object.keys(ids).forEach(function(k){ keep[ids[k]] = 1; });
+          var gomi = [];
+          if(old){
+            if(old.json && !keep[old.json]) gomi.push(old.json);
+            Object.keys(old.files || {}).forEach(function(k){ var v = old.files[k]; if(v && !keep[v]) gomi.push(v); });
+          }
+          return gomi.reduce(function(p, id){ return p.then(function(){ return SM.as.delete(id).catch(function(){}); }); }, Promise.resolve());
+        }).then(function(){
+          note("上げました: " + J.title + "（" + mbStr(bytes) + "）。スマホでこのボードを開くと見られます。");
+          return loadDocs();
+        }).catch(function(e){
+          var c = upCode(e);
+          if(c === "quota_or_state"){
+            SM.as.list().then(function(l){
+              var u = l.usage || {};
+              note("ボードの置き場がいっぱいです（" + (u.files || "?") + "/" + (u.maxFiles || "?") + "個・" + mbStr(u.bytes || 0) + "/" + mbStr(u.maxBytes || 0) + "）。古い動画を「消す」で空けてから、もう一度押してください。", true);
+            }).catch(function(){ note("ボードの置き場がいっぱいです。古い動画を「消す」で空けてから、もう一度押してください。", true); });
+          } else if(c === "rate_limited"){
+            note("続けて上げすぎました。少し待ってから、もう一度押してください（" + i + "個まで上がっています）。", true);
+          } else if(c === "too_large"){
+            note("大きすぎるファイルがありました（" + (need[i] || "") + "）。", true);
+          } else {
+            note("上げられませんでした（" + c + "）。もう一度押してください。", true);
+          }
+        }).then(function(){ $("smupbtn").disabled = false; });
+      }).catch(function(){ note("ichiran.json が読めませんでした。", true); });
+    }
+    function removeDoc(d){
+      if(!window.confirm(d.title + " のスマホ用を消しますか？（パソコンの動画は消えません）")) return;
+      var ids = [d.json].concat(Object.keys(d.files || {}).map(function(k){ return d.files[k]; }));
+      note("消しています…");
+      ids.reduce(function(p, id){ return p.then(function(){ return SM.as.delete(id).catch(function(){}); }); }, Promise.resolve())
+        .then(function(){ return SM.db.doc("sumaho/" + d.sid).delete(); })
+        .then(function(){ note("消しました。"); if(SM.d && SM.d.sid === d.sid) closeView(); return loadDocs(); })
+        .catch(function(e){ note("消せませんでした（" + upCode(e) + "）。", true); });
+    }
+
+    // ── 動画を開く
+    function closeView(){ $("smview").hidden = true; $("smview").textContent = ""; SM.d = null; SM.J = null; }
+    function openView(d){
+      note("開いています…");
+      fetch(blobUrl(d.json)).then(function(r){ return r.json(); }).then(function(J){
+        SM.d = d; SM.J = J; SM.sid = d.sid; SM.clip = 0; SM.picks = {};
+        return SM.db.doc("sumaho_erabi/" + d.sid).get().then(dbody).catch(function(){ return null; });
+      }).then(function(p){
+        SM.picks = (p && p.picks && p.title === SM.J.title) ? p.picks : {};
+        note("");
+        renderView();
+        $("smview").scrollIntoView({block: "start"});
+      }).catch(function(){ note("開けませんでした。もう一度押してください。", true); });
+    }
+    function rowsOfClip(ci){
+      var J = SM.J, c = J.clips[ci];
+      if(!c) return J.rows;
+      return J.rows.filter(function(r){
+        var x = sec2(r.t) + (J.op || 0);
+        return x >= c.st - 0.5 && (x < c.en - 0.5 || ci === J.clips.length - 1);
+      });
+    }
+    function pickOf(r){ return SM.picks[String(r.n[0])] || ""; }
+    function nPicks(){
+      var J = SM.J, nn = {};
+      J.rows.forEach(function(r){ r.n.forEach(function(n){ nn[n] = 1; }); });
+      return Object.keys(SM.picks).filter(function(n){ return nn[n]; }).length;
+    }
+    function renderView(){
+      var J = SM.J, v = $("smview");
+      v.hidden = false;
+      v.textContent = "";
+      var top = el("div", "smvtop");
+      top.appendChild(el("div", "smvtitle", J.title));
+      var cl = el("button", "askbtn2", "閉じる"); cl.type = "button"; cl.onclick = closeView;
+      top.appendChild(cl);
+      v.appendChild(top);
+      var tabs = el("div", "smtabs");
+      (J.clips || []).forEach(function(c, i){
+        var b = el("button", i === SM.clip ? "on" : "", c.title);
+        b.type = "button";
+        b.onclick = function(){ SM.clip = i; renderView(); var vd = $("smvid"); if(vd){ vd.play().catch(function(){}); } };
+        tabs.appendChild(b);
+      });
+      v.appendChild(tabs);
+      var c = (J.clips || [])[SM.clip];
+      if(c && SM.d.files[c.file]){
+        var vd = document.createElement("video");
+        vd.id = "smvid"; vd.className = "smvideo"; vd.controls = true; vd.preload = "metadata";
+        vd.setAttribute("playsinline", ""); vd.src = blobUrl(SM.d.files[c.file]);
+        vd.onended = function(){ if(SM.clip + 1 < J.clips.length){ SM.clip++; renderView(); var n2 = $("smvid"); if(n2) n2.play().catch(function(){}); } };
+        v.appendChild(vd);
+      }
+      v.appendChild(el("div", "ihint", "字幕を押すと、その作品の絵の一覧から選べます。時刻を押すと、動画がそこへ飛びます。"));
+      var list = el("div", "smrows");
+      rowsOfClip(SM.clip).forEach(function(r){ list.appendChild(rowEl(r, c)); });
+      v.appendChild(list);
+      var foot = el("div", "smfoot");
+      var k = nPicks();
+      foot.appendChild(el("div", "ihint", "選んだ所: " + k + " か所（どの章のぶんも、まとめて残ります）"));
+      if(SM.dl && PC){
+        var sv = el("button", "askbtn2 pri", "irekae.txt を保存（パソコンで）"); sv.type = "button";
+        sv.disabled = !k; sv.onclick = saveIrekae;
+        foot.appendChild(sv);
+      }
+      var clr = el("button", "askbtn2", "選んだのを全部取り消す"); clr.type = "button";
+      clr.disabled = !k;
+      clr.onclick = function(){ if(window.confirm("選んだ絵を全部取り消しますか？")){ SM.picks = {}; keepPicks(); renderView(); } };
+      foot.appendChild(clr);
+      v.appendChild(foot);
+    }
+    function rowEl(r, c){
+      var J = SM.J, p = pickOf(r);
+      var fixed = (r.kind === "card");
+      var b = el(fixed ? "div" : "button", "smrow" + (p ? " picked" : "") + (fixed ? " fixed" : ""));
+      if(!fixed) b.type = "button";
+      var th = p ? thumb(p, false) : (r.kind === "muji" ? thumb("", true) : thumb(r.curKey, true));
+      if(r.kind === "daiji") lab(th, "題字");
+      if(p) lab(th, "選んだ絵");
+      b.appendChild(th);
+      var t = el("div", "smrt");
+      var meta = el("div", "smrn", "No." + r.n.join("・") + " ／ ");
+      var tm = el("span", "", r.t);
+      tm.style.textDecoration = "underline";
+      tm.onclick = function(ev){
+        ev.stopPropagation();
+        var vd = $("smvid");
+        if(vd && c){ vd.currentTime = Math.max(0, sec2(r.t) + (J.op || 0) - c.st); vd.play().catch(function(){}); }
+      };
+      meta.appendChild(tm);
+      if(p){ meta.appendChild(el("span", "smbadge", "選んだ")); }
+      t.appendChild(meta);
+      t.appendChild(el("div", "", r.tx || (fixed ? "（章タイトルのカード）" : "")));
+      b.appendChild(t);
+      if(!fixed) b.onclick = function(){ picker(r); };
+      return b;
+    }
+
+    // ── 絵を選ぶ
+    function picker(r){
+      var J = SM.J, m = $("smmodal"), body = $("smmbody");
+      $("smmhead").textContent = "No." + r.n.join("・") + "　" + (r.tx || "");
+      body.textContent = "";
+      var p = pickOf(r);
+      var row = el("div", "btnrow");
+      var mo = el("button", "askbtn2", p ? "選んだのを取り消す（機械に任せる）" : "いまの絵のまま");
+      mo.type = "button";
+      mo.onclick = function(){ r.n.forEach(function(n){ delete SM.picks[String(n)]; }); keepPicks(); close2(); renderView(); };
+      row.appendChild(mo);
+      body.appendChild(row);
+      var fs = J.chap[r.c] || [];
+      if(!fs.length) body.appendChild(el("div", "ihint", "この字幕の作品の絵がありません（無地の章です）。"));
+      var kou = {};
+      (J.kou || []).forEach(function(k){ kou[k] = 1; });
+      fs.forEach(function(fi){
+        if(fs.length > 1) body.appendChild(el("div", "smfh", J.fol[fi]));
+        var g = el("div", "smgrid");
+        (J.files[fi] || []).forEach(function(fn){
+          var k = J.fol[fi] + "/" + fn, d = thumb(k, false);
+          if(k === r.curKey){ d.classList.add("cur"); lab(d, "いま"); }
+          else if(k === p){ d.classList.add("sel"); lab(d, "選んだ"); }
+          else if(kou[k]){ lab(d, "公式画像"); }
+          d.title = k;
+          d.setAttribute("role", "button");
+          d.onclick = function(){
+            r.n.forEach(function(n){ if(k === r.curKey) delete SM.picks[String(n)]; else SM.picks[String(n)] = k; });
+            keepPicks(); close2(); renderView();
+          };
+          g.appendChild(d);
+        });
+        body.appendChild(g);
+      });
+      m.hidden = false;
+    }
+    function close2(){ $("smmodal").hidden = true; }
+    $("smmclose").onclick = close2;
+    $("smmodal").onclick = function(e){ if(e.target.id === "smmodal") close2(); };
+    function keepPicks(){
+      if(!SM.db || !SM.sid) return;
+      clearTimeout(SM.timer);
+      var sid = SM.sid, title = SM.J.title, picks = JSON.parse(JSON.stringify(SM.picks));
+      SM.timer = setTimeout(function(){
+        SM.db.doc("sumaho_erabi/" + sid).set({title: title, picks: picks, at: new Date().toISOString()})
+          .catch(function(e){ note("選んだ絵を残せませんでした（" + upCode(e) + "）。", true); });
+      }, 600);
+    }
+    function saveIrekae(){
+      var J = SM.J, by = {};
+      J.rows.forEach(function(r){ r.n.forEach(function(n){ by[n] = r; }); });
+      var ns = Object.keys(SM.picks).map(Number).filter(function(n){ return by[n]; }).sort(function(a, b){ return a - b; });
+      var lines = [
+        "# スマホで選んだ絵（" + J.title + "／動画を作った時刻 " + J.made + "）",
+        "#@title\t" + J.title,
+        "# 番号<タブ>絵<タブ>字幕の文。このファイルは はじめる.bat → 2 のときに 差し替え.txt へ自動で取り込まれます"
+      ];
+      ns.forEach(function(n){ var r = by[n]; lines.push(n + "\t" + SM.picks[String(n)] + "\t" + (r.txs[r.n.indexOf(n)] || "")); });
+      SM.dl.save({filename: "irekae.txt", data: "﻿" + lines.join("\r\n") + "\r\n"}).then(function(){
+        note("保存しました（ダウンロードに irekae.txt）。はじめる.bat → 2 で入れ替わります。");
+      }).catch(function(e){ note("保存できませんでした（" + upCode(e) + "）。", true); });
+    }
+
+    // ── はじまり
+    Promise.all([
+      window.claude.use("db"),
+      window.claude.use("assets").catch(function(){ return null; }),
+      window.claude.use("downloads").catch(function(){ return null; })
+    ]).then(function(res){
+      SM.db = res[0]; SM.as = res[1]; SM.dl = res[2];
+      if(!SM.db){ note("このビューでは使えません（保存が使えない表示です）。", true); return; }
+      if(SM.as && PC){
+        $("smup").hidden = false;
+        $("smupbtn").onclick = function(){ $("smupin").value = ""; $("smupin").click(); };
+        $("smupin").onchange = function(){ upload(this.files); };
+      }
+      note((SM.as && PC) ? "「スマホ用を上げる」から、動画のフォルダの 確認用\\スマホ用 を選びます。上げたあとは、スマホでこのボードを開くと見られます。"
+        : "上がっている動画を開くと、章ごとの動画と、字幕ごとの絵を選ぶ一覧が出ます。選んだ絵は、パソコンでこのボードを開いて irekae.txt に保存します。");
+      return loadDocs();
+    }).catch(function(){ note("読み込めませんでした。開き直してください。", true); });
+  })();
+  /*@@END@@*/
 
   /* ---------- sample: 別の切り口を聞く ---------- */
   // ここは無職転生の掲示板だけに入ります（build.py が印で切り出します）。
