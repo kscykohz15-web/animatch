@@ -382,6 +382,10 @@
   footer{font-size:11.5px; color:var(--ink-3); text-align:center;
          border-top:1px solid var(--line); padding-top:26px; letter-spacing:.06em;}
 
+  /* どの pre も、長い行は枠の中で横に動かす（ページごと横に動かさない・2026-11-20 本人のスマホの画面） */
+  pre{max-width:100%; overflow-x:auto;}
+  .lede.narabi{margin-top:10px; line-height:2;}
+
   /* ---- 手順などの黒い囲み（前は紺色の直書きでした） ---- */
   #saiten pre.cmd, #iphone pre.cmd{background:var(--surface-2);
     border:1px solid var(--line); border-radius:10px;
@@ -511,11 +515,14 @@
       同じ名前がぶつかった古いほうは 99_確認不要\_前の並び に残ります）。
       制作パック（zip）の中も、いちばん上は <b>はじめる.bat だけ</b>です。台本は はじめる.bat を動かすと 01_台本 に入ります
       （同じ台本のパックをもう一度動かしても、01_台本 で直した台本は上書きしません）。</p>
-    <pre class="cmd">01_台本\      台本_字幕用.txt・台本_読み上げ用.txt（直すのはここ）
-02_音声\      merged.wav・subtitle.srt
-03_動画\      できあがった動画
-04_確認用\    入れ替え表.html・スマホ用・一覧.txt・ずれ.txt・説明文.txt・分割版
-99_確認不要\  道具・設定・その他（差し替え.txt など）・output・図表・効果音・BGM</pre>
+    <!-- 等幅の枠（pre）で表のように並べると、スマホでは折り返せずにページごと横に動く（v201・本人の画面）。
+         行ごとの文にする -->
+    <p class="lede narabi">
+      <b>01_台本</b> … 台本_字幕用.txt・台本_読み上げ用.txt（直すのはここ）<br>
+      <b>02_音声</b> … merged.wav・subtitle.srt<br>
+      <b>03_動画</b> … できあがった動画<br>
+      <b>04_確認用</b> … 入れ替え表.html・スマホ用・一覧.txt・ずれ.txt・説明文.txt・分割版<br>
+      <b>99_確認不要</b> … 道具・設定・その他（差し替え.txt など）・output・図表・効果音・BGM</p>
   </section>
 
   <section>
@@ -25606,15 +25613,20 @@ if __name__ == "__main__":
         body.appendChild(g);
       });
       markGrid(r);
-      // 上に貼りついた動画は隠さない。その下から出す
+      // 上に動画・下に候補（本人の指定 2026-11-20「画面上半分で動画を表示、下半分に候補の画像」）。
+      // 動画を画面のいちばん上に寄せてから、その下から画面の下までを候補の欄にする
       var st = $("smstick"), tp = 0;
       if(st){
-        var bt = st.getBoundingClientRect().bottom;
-        if(bt > 40 && bt < window.innerHeight * 0.62) tp = Math.round(bt);
+        var r0 = st.getBoundingClientRect();
+        if(r0.top > 1){ window.scrollBy(0, r0.top); r0 = st.getBoundingClientRect(); }
+        if(r0.bottom > 40 && r0.bottom < window.innerHeight * 0.62) tp = Math.round(r0.bottom);
       }
       m.style.top = tp + "px";
       var bx = m.querySelector(".smbox");
-      if(bx) bx.style.maxHeight = tp ? (window.innerHeight - tp) + "px" : "";
+      if(bx){
+        bx.style.maxHeight = tp ? (window.innerHeight - tp) + "px" : "";
+        bx.style.height = tp ? (window.innerHeight - tp) + "px" : "";
+      }
       m.hidden = false;
       showPrev(pickOf(r));
     }

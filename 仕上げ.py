@@ -1134,6 +1134,23 @@ for step in ("sync_py.py", "build.py"):
     if r.returncode != 0:
         print(out)
         sys.exit(1)
+# ── ㉟ スマホの幅で横に動かないか（出来上がった掲示板を見る）──────────
+# 本人の画面（2026-11-20・v201）: 指でなぞるとページごと右へ動いた。v201 で足した「作業フォルダの並び」の
+# 等幅の枠（pre）が折り返さず 651px まで伸びていた。作った掲示板そのもの（台本・節を流し込んだもの）でしか
+# 分からないので、作った直後に iPhone 13・SE の幅で開いて測る。落ちたら出せない名前に替えて止める。
+if DAIHON:
+    print(u"\n── ㉟ スマホの幅で横に動かないか ─────────────────────────")
+    _ban = [os.path.join(HERE, f) for f in (u"board.html", u"board_osusume.html")
+            if os.path.exists(os.path.join(HERE, f))]
+    r = subprocess.run([sys.executable, os.path.join(_repo_v, u"_はみ出しテスト.py")] + _ban,
+                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                       env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+    print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+    if r.returncode != 0:
+        for f in _ban:
+            os.replace(f, f + u".はみ出し")
+        print(u"\n落ちました。掲示板は出せない名前（.はみ出し）に替えました。直してからもう一度。")
+        sys.exit(1)
 if SHUKUDAI:
     print(u"")
     print(u"⚠ 作りかけのまま残っていること（出すのは止めません）:")

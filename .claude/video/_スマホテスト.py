@@ -24,6 +24,8 @@ u"""スマホで見る・絵を選ぶ（仕上げ.py ㉝）
      止まって、その字幕の作品の絵が**動画の下に**並ぶ（動画を隠さない）／押すと選ばれ、動画の所に大きく
      重なる・一覧は閉じない（選び直せる）／選んでも動画を作り直さない（頭に戻らない）／
      「閉じて続きを見る」で止めた所から再生
+     上に動画・その下から画面の下までが候補（本人の指定「画面上半分で動画を表示、下半分に候補の画像」。
+     下にずらした所から字幕を押しても、動画をいちばん上に寄せてから分ける）／開いてもページが横に動かない
 """
 from __future__ import print_function
 import io, json, os, re, shutil, subprocess, sys, threading, uuid
@@ -306,8 +308,9 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     ok(await pp.evaluate(() => document.getElementById("smvid").paused), "⑧ 「この字幕の絵を替える」で動画が止まる");
     ok((await pp.textContent("#smmhead")).indexOf("本作は漫画") >= 0, "⑧ 並ぶのは、いまの字幕（本作は漫画…）の作品の絵");
     const geo = await pp.evaluate(() => { const a = document.getElementById("smvwrap").getBoundingClientRect();
-      const b = document.querySelector("#smmodal .smbox").getBoundingClientRect(); return {vt: a.top, vb: a.bottom, bt: b.top, bb: b.bottom, h: window.innerHeight}; });
-    ok(geo.vt >= -1 && geo.vb > 100 && geo.bt >= geo.vb - 1 && geo.bb <= geo.h + 1,
+      const s = document.getElementById("smstick").getBoundingClientRect();
+      const b = document.querySelector("#smmodal .smbox").getBoundingClientRect(); return {vt: a.top, vb: a.bottom, sb: s.bottom, bt: b.top, bb: b.bottom, h: window.innerHeight}; });
+    ok(geo.vt >= -1 && geo.vb > 100 && geo.bt >= geo.vb - 1 && Math.abs(geo.bt - geo.sb) <= 2 && Math.abs(geo.bb - geo.h) <= 2,
        "⑧ 絵の一覧は動画の下に出て、動画を隠さない（動画 " + Math.round(geo.vt) + "〜" + Math.round(geo.vb) + " ／ 一覧 " + Math.round(geo.bt) + "〜" + Math.round(geo.bb) + "）");
     const nTh = await pp.locator("#smmbody .smgrid .smth").count();
     ok(nTh === parseInt(nAka, 10), "③ その作品（あか組！）の絵が全部並ぶ（" + nTh + "枚）");
@@ -328,14 +331,26 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const tt = await pp.evaluate(() => ({m: document.getElementById("smvid").__shirushi, t: document.getElementById("smvid").currentTime}));
     ok(tt.m === 1 && tt.t > 3.5, "⑧ 選んでも動画を作り直さない・止めた所のまま（" + tt.t.toFixed(1) + "秒。頭に戻らない）");
     await pp.screenshot({path: outDir + "/_スマホ_見ながら選ぶ.png"});
+    const yoko = await pp.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
+    ok(yoko[0] <= yoko[1] + 1, "⑧ 動画と候補を開いても、ページが横に動かない（" + yoko[0] + " ／ " + yoko[1] + "px）");
     await pp.click("#smmgo");
     await pp.waitForSelector("#smmodal", {state: "hidden"});
     await pp.waitForFunction(() => !document.getElementById("smvid").paused, null, {timeout: 5000});
     ok(!(await pp.isVisible("#smprev")) && (await pp.evaluate(() => document.getElementById("smvid").currentTime)) > 3.5,
        "⑧ 「閉じて続きを見る」で一覧と重ねた絵が消え、止めた所から再生する");
     await pp.evaluate(() => document.getElementById("smvid").pause());
-    await pp.click(".smrow:has-text('最初にご紹介')");
+    // 下にずらした所（動画が画面のまんなか）から字幕を押しても、上に動画・下に候補に分かれる
+    await pp.evaluate(() => { const v = document.getElementById("smview");
+      window.scrollTo(0, Math.max(0, v.getBoundingClientRect().top + window.scrollY - 300)); });
+    const mae = await pp.evaluate(() => Math.round(document.getElementById("smstick").getBoundingClientRect().top));
+    // Playwright の click は押す前に自分で画面を動かすので、ここは画面を動かさずに押す
+    await pp.evaluate(() => Array.from(document.querySelectorAll(".smrow")).find(e => e.textContent.indexOf("最初にご紹介") >= 0).click());
     await pp.waitForSelector("#smmodal:not([hidden])");
+    const geo2 = await pp.evaluate(() => { const a = document.getElementById("smstick").getBoundingClientRect();
+      const b = document.querySelector("#smmodal .smbox").getBoundingClientRect(); return {st: a.top, sb: a.bottom, bt: b.top, bb: b.bottom, h: window.innerHeight}; });
+    ok(mae > 100 && Math.abs(geo2.st) <= 2 && Math.abs(geo2.bt - geo2.sb) <= 2 && Math.abs(geo2.bb - geo2.h) <= 2,
+       "⑧ 動画が画面のまんなか（" + mae + "px）にあっても、字幕を押すと動画が上・その下から画面の下まで候補（動画 " +
+       Math.round(geo2.st) + "〜" + Math.round(geo2.sb) + " ／ 候補 " + Math.round(geo2.bt) + "〜" + Math.round(geo2.bb) + "）");
     await pp.click("#smmbody .smth[title='あか組！/0004.png']");
     await pp.waitForSelector(".smrow.picked:has-text('最初にご紹介')");
     await pp.click("#smmclose");
