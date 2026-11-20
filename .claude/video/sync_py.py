@@ -59,6 +59,7 @@ PAIRS = [
     ("py-zure",      u"ずれ実測.py"),
     ("py-naosu",     u"直す.py"),
     ("py-setsumei",  u"説明文.py"),
+    ("py-narabi",    u"並び替え.py"),
 ]
 
 

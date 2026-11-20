@@ -1024,6 +1024,18 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"スマホで見る・絵を選ぶ が、どこかでつながっていません")
 
+# ── ㉞ 作業フォルダの新しい並び ─────────────
+midashi(u"㉞", u"作業フォルダの新しい並び（01_台本・02_音声・03_動画・04_確認用・99_確認不要）")
+# 本人の指定（2026-11-20）。前の並びの作業フォルダを 並び替え.py が引っ越し（何も消さない・2回目は何もしない）、
+# 99_確認不要 から道具を動かすと 02/03/04 に書く（動画まで本当に作る）。メニューとパック（bat・zip の並び）は
+# ボードの本物の文字から取り出して、名前と道が道具とそろっているかを見る（PowerShell はこちらで動かせない）。
+r = subprocess.run([sys.executable, os.path.join(V, u"_並びテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"作業フォルダの新しい並びが、どこかでそろっていません")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
