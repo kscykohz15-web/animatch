@@ -333,7 +333,8 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const g = await pp.evaluate(() => { const r = id => document.getElementById(id).getBoundingClientRect();
       const top = document.querySelector(".smhktop").getBoundingClientRect(), bar = document.querySelector(".smhkbar").getBoundingClientRect();
       return {h: window.innerHeight, st: r("smhkstage").top, sb: r("smhkstage").bottom, tb: top.bottom, bt: r("smhkbody").top, bb: r("smhkbody").bottom, bar: bar.top, barb: bar.bottom}; });
-    ok(g.st >= 0 && g.tb >= g.h * 0.35 && g.tb <= g.h * 0.6 && Math.abs(g.bt - g.tb) <= 2 && Math.abs(g.bb - g.bar) <= 2 && Math.abs(g.barb - g.h) <= 2,
+    // 下のボタンは画面の下に貼りつく（候補の終わりはその裏に入り、ページを下へ動かすと出てくる）
+    ok(g.st >= 0 && g.tb >= g.h * 0.35 && g.tb <= g.h * 0.6 && Math.abs(g.bt - g.tb) <= 2 && g.bar >= g.tb && g.bb >= g.bar - 2 && Math.abs(g.barb - g.h) <= 2,
        "⑨ 上半分に動画の絵・下半分に候補・いちばん下に一時保存と修正を決定（上 0〜" + Math.round(g.tb) + " ／ 候補 " + Math.round(g.bt) + "〜" + Math.round(g.bb) + " ／ ボタン " + Math.round(g.bar) + "〜" + Math.round(g.barb) + "）");
     ok(await vt(5.0), "⑨ 上半分は、その字幕（No.5）の所で止めた動画（5.0秒）");
     const nTh = await pp.locator("#smhkbody .smgrid .smth").count();
@@ -345,6 +346,11 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
        "⑨ 候補の絵はどれもボタン（iPhone で押せる形）・押すのは指（tap）で確かめる");
     ok(await pp.evaluate(() => getComputedStyle(document.documentElement).overflow !== "hidden" && getComputedStyle(document.body).overflow !== "hidden"),
        "⑨ 絵を変える画面を開いても、ページ全体を固定しない（iPhone で押した位置がずれないように）");
+    // v204 でも iPhone で押せなかった（2026-11-20・本人）。かぶせる窓（fixed）の中の、中だけスクロールする欄に候補があった。
+    // ページの中にふつうに置き、上半分と下のボタンは貼りつく形（sticky）にした
+    ok(await pp.evaluate(() => { const p = getComputedStyle(document.getElementById("smhk")), b = getComputedStyle(document.getElementById("smhkbody"));
+      return p.position !== "fixed" && b.overflowY !== "auto" && b.overflowY !== "scroll" && document.getElementById("smview").hidden; }),
+       "⑨ 絵を変える画面は、かぶせる窓でも中だけスクロールする欄でもなく、ページの中に置く（見る画面は隠す）");
     await pp.screenshot({path: outDir + "/_スマホ_絵を変える.png"});
     await slide(-220);
     await no("No.6");
@@ -354,6 +360,8 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     ok(true, "⑨ 右へスライドすると前の字幕（No.5）に戻る");
     await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
     await pp.waitForSelector("#smhkover");
+    const ue = await pp.evaluate(() => { window.scrollBy(0, 150); return Math.round(document.querySelector(".smhktop").getBoundingClientRect().top); });
+    ok(Math.abs(ue) <= 2, "⑨ 候補をページごと下へ動かしても、上の動画の絵は貼りついたまま（" + ue + "px）");
     await pp.tap("#smhkbody .smth[title='あか組！/0005.png']");
     await pp.waitForFunction(() => { const s = document.querySelector("#smhkbody .smth.sel"); return s && s.title === "あか組！/0005.png"; }, null, {timeout: 3000});
     const kasane = await pp.evaluate(() => { const a = document.getElementById("smhkover"), b = document.querySelector("#smhkbody .smth.sel");

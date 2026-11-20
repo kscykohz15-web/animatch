@@ -195,13 +195,18 @@
     border-radius:999px; background:rgba(0,0,0,.72); color:#fff;}
   .smfoot{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px;}
   /* 絵を変える画面（2026-11-20 本人の指定: 上半分にその所の動画の絵・横にスライドで前後の字幕・下半分に候補） */
-  .smhk{position:fixed; inset:0; z-index:60; background:var(--ground); display:flex; flex-direction:column;}
+  /* かぶせる窓（position:fixed）にしない（2026-11-20・本人の iPhone で、かぶせる窓の中のスクロール欄の候補が押せなかった）。
+     ページの中にふつうに置き、上半分（動画の絵）と下のボタンは貼りつく形（sticky）。候補はページごとスクロールする */
+  .smhk{margin-top:14px; border:1px solid var(--line); border-radius:12px; background:var(--ground);
+    display:flex; flex-direction:column; min-height:100vh;}
   .smhk[hidden]{display:none;}
   /* 押せる絵（候補）はボタンにする。iPhone では、押す処理を付けただけの箱が押せないことがあった
      （2026-11-20・本人の画面「下の画像を選択することができない」）。ダブルタップの拡大も止める */
   .smgrid button.smth{border:0; padding:0; margin:0; display:block; font:inherit; color:inherit;
     -webkit-appearance:none; appearance:none; touch-action:manipulation; -webkit-tap-highlight-color:rgba(0,0,0,.15);}
-  .smhktop{flex:0 0 auto; padding:8px 12px 6px; background:var(--surface); border-bottom:1px solid var(--line);}
+  .smhktop{position:sticky; top:0; z-index:6; flex:0 0 auto; padding:8px 12px 6px; background:var(--surface);
+    border-bottom:1px solid var(--line); border-radius:12px 12px 0 0;}
+  .smhkban{font-size:10.5px; color:var(--ink-3);}
   .smhkhead{display:flex; gap:8px; align-items:center; max-width:640px; margin:0 auto 6px; font-size:12px; color:var(--ink-2);}
   .smhkhead .sp{flex:1;}
   .smhkno{font-weight:700; color:var(--ink);}
@@ -219,10 +224,10 @@
   .smhktx{max-width:640px; margin:6px auto 0; font-size:13px; line-height:1.6; color:var(--ink); min-height:2.6em;
     overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
   .smhkhint{max-width:640px; margin:2px auto 0; font-size:11px; color:var(--ink-3); text-align:center;}
-  .smhkbody{flex:1 1 auto; min-height:0; overflow-y:auto; padding:10px 12px 14px; -webkit-overflow-scrolling:touch;
-    overscroll-behavior:contain;}
+  .smhkbody{flex:1 0 auto; padding:10px 12px 14px;}
   .smhkbody > *{max-width:980px; margin-left:auto; margin-right:auto;}
-  .smhkbar{flex:0 0 auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; background:var(--surface);
+  .smhkbar{position:sticky; bottom:0; z-index:6; flex:0 0 auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    background:var(--surface); border-radius:0 0 12px 12px;
     border-top:1px solid var(--line); padding:8px 12px calc(8px + env(safe-area-inset-bottom));}
   .smhkbar .smhkst{flex:1 1 150px; min-width:0; margin:0;}
   .smhkbar #smhkmsg{flex:1 1 100%; margin:0;}
@@ -571,7 +576,7 @@
     <div class="ihint" id="smnote">読み込み中…</div>
     <div class="smlist" id="smlist"></div>
     <div class="smview" id="smview" hidden></div>
-    <div class="smhk" id="smhk" role="dialog" aria-modal="true" aria-label="絵を変える" hidden></div>
+    <div class="smhk" id="smhk" aria-label="絵を変える" hidden></div>
   </section>
 
   <!-- 紹介する作品の一覧。表と直す口は「台本インベントリ」のカードの中にあります。
@@ -23327,7 +23332,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v204";
+  var PACK_VERSION = "v205";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -25708,7 +25713,8 @@ if __name__ == "__main__":
       var pos = el("span", ""); pos.id = "smhkpos";
       var cl = el("button", "askbtn2", "閉じる"); cl.type = "button"; cl.id = "smhkclose";
       cl.onclick = function(){ closeHenkou(false); };
-      head.appendChild(no); head.appendChild(el("span", "sp")); head.appendChild(pos); head.appendChild(cl);
+      var ban = el("span", "smhkban", (typeof PACK_VERSION !== "undefined") ? PACK_VERSION : ""); ban.id = "smhkban";
+      head.appendChild(no); head.appendChild(ban); head.appendChild(el("span", "sp")); head.appendChild(pos); head.appendChild(cl);
       var stage = el("div", "smhkstage"); stage.id = "smhkstage";
       var v = document.createElement("video");
       v.id = "smhkvid"; v.muted = true; v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.preload = "auto";
@@ -25758,9 +25764,12 @@ if __name__ == "__main__":
       SM.hkRows = J.rows.filter(function(x){ return x.kind !== "card"; });
       var i = SM.hkRows.indexOf(r);
       var p = hkBuild();
+      $("smview").hidden = true;
       p.hidden = false;
       kakuNote("");
+      SM.hkC = null;
       hkShow(i < 0 ? 0 : i);
+      p.scrollIntoView({block: "start"});
     }
     function closeHenkou(dake){
       var p = $("smhk");
@@ -25768,6 +25777,7 @@ if __name__ == "__main__":
       p.hidden = true;
       var hv = $("smhkvid"); if(hv) hv.pause();
       if(dake || !SM.J) return;
+      $("smview").hidden = false;
       // 見ていた字幕の所へ、見る画面を合わせる（章が違えばその章を開く）
       var r = SM.hkRows[SM.hk];
       if(!r) return;
@@ -25851,7 +25861,11 @@ if __name__ == "__main__":
       }
       body.appendChild(g);
       markGrid(r);
-      body.scrollTop = 0;
+      if(SM.hkC !== r.c){
+        SM.hkC = r.c;
+        var p = $("smhk"), tb = p.getBoundingClientRect().top;
+        if(tb < 0) window.scrollBy(0, tb);
+      }
     }
     // 選んだ絵を、上の動画の絵に大きく重ねる
     function hkOver(k){
