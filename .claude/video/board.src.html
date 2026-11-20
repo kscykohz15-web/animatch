@@ -9151,6 +9151,11 @@ if NARABI_SHIN:
     KAKUNIN_DIR = os.path.join(u"..", u"04_確認用")
     BUNKATSU_DIR = os.path.join(KAKUNIN_DIR, u"分割版")
 KAKUNIN_NA = os.path.basename(KAKUNIN_DIR)      # 知らせに出す名前（04_確認用 / 確認用）
+# 動画の名前 ＝ 作業フォルダの名前。新しい並びでは道具は 99_確認不要 にいるので、その1つ上。
+# 入れ替え表・スマホ用の #@title と、作品ごとの BGM の割り当ての種に使う。
+# **HERE の名前をそのまま使うと、どの動画も「99_確認不要」になる**（スマホ用がほかの動画を上書きし、
+# irekae.txt の見分けも効かない。v201 を出す前に見つけた）。
+DOUGA_NA = os.path.basename(os.path.dirname(os.path.abspath(HERE)) if NARABI_SHIN else os.path.abspath(HERE))
 
 
 def ass_path(p):
@@ -17850,7 +17855,22 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
     #   ② はじめに・おわりに（＊全作品）は、紹介する作品から1枚ずつ順に出す。
     #      画像プランのはじめにの区切りが「@@話数 ニセコイ」だったので、ニセコイの絵だけで
     #      埋まっていた（「1」も入りやすかった）。「1」は使わない。
-    kou_ire, maze = 0, 0
+    # ■ 挨拶も はじめに の順番に入れる・となりの字幕に同じ絵を続けない（2026-11-20・本人のスマホの画面）
+    #
+    #   > 最初の紹介にて、二つの字幕が連続して同じ画像が使われているので、ここを別々の画像を
+    #   > 使うようにしてください。
+    #
+    #   No.1「どうもこんにちわ、かさです。」と No.2「今回の動画の内容は、」が同じニセコイの絵だった。
+    #   はじめにの章は「今回の動画の内容は」から始まる（画面表示.txt）ので、その前の挨拶は**どの章にも
+    #   入らず**ふつうの当て方でニセコイの先頭の絵になり、はじめにの順番もニセコイの先頭から数え始めて
+    #   同じ絵が2回続いた。③ 最初の章より前（挨拶）は、最初の章が ＊全作品 なら はじめに と同じに数える
+    #   （挨拶に「1」が当たっていても数える。「1」は手で書いた絵と同じ扱い＝tebiki なので、前は飛ばしていた）。
+    #   ④ そのうえで、となり合う字幕が同じ絵・**同じ場面の絵**なら、うしろをその作品の別の絵に替える。
+    #   本人の絵は録画から切り出したコマで、**名前の並びが隣のコマは同じ場面＝見た目が同じ**。本人の回と同じ
+    #   台本・画像プランで再現すると、挨拶はニセコイ/113・はじめにの1行目はニセコイ/100（別のファイルで
+    #   名前が隣）だった。だから「同じフォルダで名前の並びが2つ以内」も同じ絵と数える。
+    #   （作品の頭の1文の公式画像と、画像プランに手で書いた絵はそのまま。替えられる絵が無ければそのまま）
+    kou_ire, maze, tonari = 0, 0, 0
     if OSUSUME[0] and chaps:
         _rw0 = [(slots[j][1], out[j], slots[j][2]) for j in range(len(out))]
         _ep0 = dict((t, eps) for (_k, t, eps) in chaps)
@@ -17868,6 +17888,12 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                     tsukai[_k] = tsukai.get(_k, 0) + 1
                     kou_ire += 1
         _shou0 = shou_no_wasuu(_rw0, chaps)
+        _hajime = next((x for x in _shou0 if x), u"")
+        if u" / " in _hajime:
+            for j in range(len(_shou0)):
+                if _shou0[j]:
+                    break
+                _shou0[j] = _hajime          # ③ 挨拶は はじめに と同じに数える
         _pools, _ichi = {}, {}
         _mae_sh, _jun = None, 0
         for j in range(len(out)):
@@ -17877,7 +17903,7 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
                 continue
             if sh != _mae_sh:
                 _mae_sh, _jun = sh, 0
-            if out[j] in tebiki or not (slots[j][2] or u"").strip():
+            if (out[j] in tebiki and not wa_koushiki(out[j])) or not (slots[j][2] or u"").strip():
                 continue
             sakuhin_l = sh.split(u" / ")
             for _n in range(len(sakuhin_l)):
@@ -17933,6 +17959,52 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             kou_kae += 1
         for k in [k for k, v in tsukai.items() if v <= 0]:
             del tsukai[k]
+    if OSUSUME[0] and len(out) > 1:
+        # ④ となり合う字幕に同じ絵・同じ場面の絵を続けない（上の注記）
+        _rw4 = [(slots[j][1], out[j], slots[j][2]) for j in range(len(out))]
+        _dj4 = set()
+        for _d in (daiji_basho(_rw4, chaps) if chaps else []):
+            _dj4.update(range(_d[0], _d[1] + 1))
+        _nr4 = {}
+
+        def _ichi4(k):
+            f = k.rsplit(u"/", 1)[0]
+            if f not in _nr4:
+                _nr4[f] = dict((x, i) for i, x in enumerate(
+                    sorted([x for x in images if x.rsplit(u"/", 1)[0] == f], key=natkey)))
+            return _nr4[f].get(k)
+
+        def _onaji4(a, b):
+            u"""同じ絵か、同じフォルダで名前の並びが2つ以内（続きのコマ＝同じ場面）。公式画像は同じ絵だけ。"""
+            if not a or not b:
+                return False
+            if a == b:
+                return True
+            if (u"/" not in a or u"/" not in b or wa_koushiki(a) or wa_koushiki(b)
+                    or a.rsplit(u"/", 1)[0] != b.rsplit(u"/", 1)[0]):
+                return False
+            ia, ib = _ichi4(a), _ichi4(b)
+            return ia is not None and ib is not None and abs(ia - ib) <= 2
+
+        for j in range(1, len(out)):
+            img = out[j]
+            if (img == MUJI or u"/" not in img or img.startswith(u"@@")
+                    or j in _dj4 or img in tebiki or not _onaji4(img, out[j - 1])):
+                continue
+            fol4 = img.rsplit(u"/", 1)[0]
+            ato4 = out[j + 1] if j + 1 < len(out) else None
+            hoka = [k for k in images if k.rsplit(u"/", 1)[0] == fol4
+                    and not wa_koushiki(k) and not _onaji4(k, out[j - 1]) and not _onaji4(k, ato4)]
+            if not hoka:
+                continue
+            hoka = barakeru(sorted(hoka, key=natkey))
+            e4 = min(hoka, key=lambda k: (tsukai.get(k, 0), hoka.index(k)))
+            tsukai[img] = max(0, tsukai.get(img, 1) - 1)
+            out[j] = e4
+            tsukai[e4] = tsukai.get(e4, 0) + 1
+            tonari += 1
+        for k in [k for k, v in tsukai.items() if v <= 0]:
+            del tsukai[k]
 
     if not OSUSUME[0]:
         say(u"画像プランを使いました: %d枚が直接一致 / %d枚がセリフの人名から / "
@@ -17946,6 +18018,9 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             u"（同じ制作会社の作品で、別の作品の「1」を引いていた所を含みます）" % kou_ire)
     if maze:
         say(u"はじめに・おわりに の %d枚は、紹介する作品から1枚ずつ順に出しています" % maze)
+    if tonari:
+        say(u"となり合う字幕が同じ絵・同じ場面の絵（名前が隣のコマ）だった %d か所を、"
+            u"その作品の別の場面の絵に替えました" % tonari)
     if sakuhin_modoshi and not OSUSUME[0]:   # おすすめ紹介の回は、ここが当て方そのもの
         say(u"別の作品へ出ていた絵を %d枚 その章の作品の中へ戻しました"
             u"（その作品の絵に1枚ごとの説明が無いので、札は見ずに順に当てています。"
@@ -18963,7 +19038,7 @@ def irekae_torikomu():
     一度取り込んだファイルは その他/_取り込んだ入れ替え.txt に控え、二度は入れない
     （あとで本人が 差し替え.txt を手で直したのを、古い選び方で上書きしないため）。
     """
-    na = os.path.basename(os.path.abspath(HERE))
+    na = DOUGA_NA
     atama = u"入れ替え_" + na
     kiroku = os.path.join(HERE, SONOTA_DIR, IREKAE_KIROKU)
     mita = set()
@@ -19124,7 +19199,7 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
     for r in out_rows:
         if r[u"c"] == -1:
             r[u"c"] = len(chap) - 1
-    D = {u"title": os.path.basename(os.path.abspath(HERE)),
+    D = {u"title": DOUGA_NA,
          u"made": time.strftime(u"%Y-%m-%d %H:%M"),
          u"root": uri(root).rstrip(u"/"),
          u"fol": fols,
@@ -22009,7 +22084,7 @@ def main():
             if kyoku and sp_b:
                 bgm, wari_b = bgm_sakuhin_goto(
                     sp_b, bdir, kyoku, en["bgmvol"], max(eizou, koe), min(eizou, koe),
-                    en["bgmfade"], work, os.path.basename(os.path.abspath(HERE)))
+                    en["bgmfade"], work, DOUGA_NA)
             elif not kyoku:
                 say(u"  BGM: 作品ごとの曲が見つかりません（%s）。演出.txt の1曲を流します。"
                     u"曲を入れると、作品ごとに替わります" % (bdir or u"BGM フォルダ"))

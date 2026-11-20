@@ -23,6 +23,9 @@ u"""おすすめ紹介の回は、無職転生のための段を通らないか�
   ④ 「1」と中身が同じ絵（別の名前・大きさを変えたもの）も「1」として扱い、頭の1文のほかで使わない
      フォルダに「1」しか無い作品は、頭の1文のほかを無地にする（別の作品の絵を残さない）
      （2026-11-18・本人の v197: はじめにのニセコイの公式画像／IS の章のニセコイの絵 14枚）
+  ⑤ 挨拶（最初の章より前）も はじめに の順番に入れ、となり合う字幕に同じ絵を続けない
+     （2026-11-20・本人のスマホの画面: No.1「どうもこんにちわ、かさです。」と No.2「今回の動画の内容は、」が
+      同じニセコイの絵。挨拶はどの章にも入らず、はじめにの順番もニセコイの先頭から数え始めていた）
 """
 from __future__ import print_function
 import io, os, re, shutil, subprocess, sys
@@ -85,9 +88,11 @@ GAMEN_MUSHOKU = u"""引用\t©理不尽な孫の手/MFブックス/「無職転�
 """
 
 # 画像プランは本番と同じく 当て方.txt の言葉が写っている形にする（挨拶のロキシー・妹のノルン）
-PLAN = u"""@@話数\tあか組！
-どうもこんにちわ\t#ロキシー アップ, #ロキシー, #青髪 帽子
+# 挨拶の行は本人の画像プランと同じく「@@話数」より上（どの作品にも絞られない）。
+# 下に置くと挨拶があか組！の別の絵になり、本人の「No.1 と No.2 が同じ絵」が材料で起きない（2026-11-20）
+PLAN = u"""どうもこんにちわ\t#ロキシー アップ, #ロキシー, #青髪 帽子
 かさです\t#ロキシー アップ, #ロキシー
+@@話数\tあか組！
 あか組！\t#公式, #穏やか, #室内
 制作はこうしゃ\t#公式, #穏やか, #室内
 人生相談\t#ノルン, #アイシャ, #茶髪 子供
@@ -194,6 +199,37 @@ def main():
     iu(len(set(x.split(u"/")[0] for x in hj)) >= 2 and not any(x.endswith(u"/1.jpg") for x in hj),
        u"① はじめには、紹介する作品から順に出て「1」を使わない（%s）"
        % u" / ".join(x.split(u"/")[0] for x in hj))
+    # ⑤ 挨拶も はじめに の順番に・となり合う字幕に同じ絵（同じ場面の絵）を続けない
+    _g = [i for i, (img, tx) in enumerate(w) if tx.startswith(u"どうもこんにちわ")]
+    saku = lambda i: w[i][0].split(u"/")[0]
+    iu(bool(_g and _a) and saku(_g[0]) == u"あか組！" and saku(_a[0]) == u"あお組",
+       u"⑤ 挨拶は はじめにの順番の1つ目（あか組！）、「今回の動画の内容は」は2つ目（あお組）（%s ／ %s）"
+       % ((w[_g[0]][0] if _g else u"挨拶なし"), (w[_a[0]][0] if _a else u"はじめになし")))
+    iu(bool(_g) and not any(w[i][0].startswith((u"べつの作品/", u"無職転生")) or w[i][0].endswith(u"/1.jpg")
+                            for i in _g),
+       u"⑤ 挨拶の絵も紹介する作品から（「1」は使わない）（%s）" % u" / ".join(w[i][0] for i in _g))
+    # 同じ場面 ＝ 同じフォルダで名前の並びが2つ以内（本人の絵は録画から切り出したコマ）
+    def _nk(x):
+        return [int(t) if t.isdigit() else t for t in re.split(u"(\\d+)", x)]
+    narabi = {}
+    for (img, tx) in w:
+        f = img.split(u"/")[0]
+        if f not in narabi and os.path.isdir(os.path.join(e, f)):
+            narabi[f] = dict((f + u"/" + x, i) for i, x in enumerate(sorted(os.listdir(os.path.join(e, f)), key=_nk)))
+
+    def _onaji(a, b):
+        if a == b:
+            return True
+        fa, fb = a.split(u"/")[0], b.split(u"/")[0]
+        if fa != fb or fa not in narabi or a.endswith(u"/1.jpg") or b.endswith(u"/1.jpg"):
+            return False
+        ia, ib = narabi[fa].get(a), narabi[fa].get(b)
+        return ia is not None and ib is not None and abs(ia - ib) <= 2
+    tsuzuku = [u"%d %s" % (i + 1, w[i][0]) for i in range(1, len(w))
+               if _onaji(w[i][0], w[i - 1][0]) and not w[i][0].endswith(u"/1.jpg")
+               and u"無地" not in w[i][0] and not w[i][0].startswith(u"@@")]
+    iu(not tsuzuku, u"⑤ となり合う字幕に同じ絵・同じ場面の絵（名前が隣のコマ）が続かない"
+       u"（作品の頭の1文の公式画像のほか）%s" % ((u"（" + u"、".join(tsuzuku[:3]) + u"）") if tsuzuku else u""))
     soto = [(img, tx) for (img, tx) in w if img.startswith((u"べつの作品/", u"無職転生"))]
     iu(not soto, u"① 紹介していない作品・無職転生の絵は出ない%s" % (u"（%s）" % soto[0][0] if soto else u""))
 

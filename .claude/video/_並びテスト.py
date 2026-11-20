@@ -239,6 +239,18 @@ def dougu(tmp):
         iu(aru(w, KAK + u"/" + rel), u"⑤ 04_確認用\\%s ができる" % rel)
     iu(os.path.isdir(os.path.join(w, KAK, u"スマホ用")), u"⑤ 04_確認用\\スマホ用 ができる")
     iu(os.path.isdir(os.path.join(work, u"その他")), u"⑤ その他（作業ファイル）は 99_確認不要 の中")
+    # 動画の名前（入れ替え表・スマホ用の #@title・BGM の種）は作業フォルダの名前。
+    # 道具のいるフォルダの名前を使うと、どの動画も「99_確認不要」になる（v201 を出す前に見つけた）
+    ij = os.path.join(w, KAK, u"スマホ用", u"ichiran.json")
+    try:
+        t = json.load(io.open(ij, encoding="utf-8")).get(u"title")
+    except Exception:
+        t = None
+    iu(t == u"01_ためし", u"⑤ スマホ用の動画の名前は作業フォルダの名前（%s）── 99_確認不要 にしない" % t)
+    ih = io.open(os.path.join(w, KAK, u"入れ替え表.html"), encoding="utf-8").read() \
+        if aru(w, KAK + u"/入れ替え表.html") else u""
+    iu(bool(re.search(u'"title":\\s*"01_ためし"', ih)) and not re.search(u'"title":\\s*"99_', ih),
+       u"⑤ 入れ替え表の動画の名前も作業フォルダの名前")
     mae_na = [d for d in (u"音声", u"動画", u"確認用", u"その他") if os.path.isdir(os.path.join(w, d))]
     mae_na += [FUY + u"\\" + d for d in (u"音声", u"動画", u"確認用") if os.path.isdir(os.path.join(work, d))]
     iu(not mae_na, u"⑤ 前の名前のフォルダ（音声・動画・確認用）をどこにも作らない%s"
