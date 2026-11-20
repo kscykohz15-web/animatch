@@ -318,8 +318,13 @@ def menu_to_pack(tmp):
 var names = ["はじめる.bat","menu.ps1","パック版.txt","台本_字幕用.txt","台本_読み上げ用.txt","README.txt",
              "make_slideshow.py","並び替え.py","画像プラン.txt","図表/年表.png","効果音/ぽん.wav","BGM/ここに曲を入れてください.txt"];
 var es = names.map(function(n){ return {name:n}; });
+// スマホで決めた絵（掲示板の「修正を決定」）。動画の名前が合うものだけ入る
+var kf = sumahoKetteiFile({title: "01_ためし", n: 2, text: "#@title\\t01_ためし\\r\\n5\\tあか組！/0005.png\\t本作は\\r\\n"}, "01_ためし");
+if (kf) es.push(kf);
+var betsu = sumahoKetteiFile({title: "02_ほか", n: 1, text: "#@title\\t02_ほか\\r\\n"}, "01_ためし");
 narabiPack(es);
-process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e){ return e.name; })}));
+process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e){ return e.name; }),
+  kettei: kf ? kf.text : null, betsu: betsu}));
 """
     jf = os.path.join(tmp, u"pack.js")
     io.open(jf, "w", encoding="utf-8").write(js)
@@ -350,6 +355,13 @@ process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e
        u"⑧ menu.ps1 は はじめる.bat を 99 の1つ上に探す（台本は探さない）")
     iu(u"python $nb $root --daihon (Join-Path $here 'パックの台本')" in pre,
        u"⑧ Prepare は パックの台本 を 並び替え.py --daihon に渡す")
+    # スマホで決めた絵（2026-11-20 本人の指定: 決定ボタンを押せば制作パックにその内容が更新される）
+    iu(u"99_確認不要/その他/irekae_sumaho.txt" in o["names"] and (o.get("kettei") or u"").startswith(u"\ufeff#@title\t01_ためし")
+       and o.get("betsu") is None,
+       u"⑧ スマホで決めた絵はパックの 99_確認不要\\その他\\irekae_sumaho.txt に入る（別の動画の決定は入れない）")
+    iu(u"Join-Path $here 'その他\\irekae_sumaho.txt'" in pre and u"Copy-Item $ks $kd -Force" in pre
+       and pre.index(u"irekae_sumaho") < pre.index(u"SyncDaihon\n}") if u"SyncDaihon\n}" in pre else False,
+       u"⑧ Prepare は パックの その他\\irekae_sumaho.txt を作業フォルダの 99_確認不要\\その他 へ写す")
 
 
 # ── ⑨ パックの台本を 01_台本 へ ──────────────────

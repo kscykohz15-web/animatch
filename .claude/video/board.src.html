@@ -172,15 +172,11 @@
     padding:6px 12px 10px; border-bottom:1px solid var(--line);}
   .smvwrap{position:relative; max-width:640px; margin:0 auto;}   /* 広い画面でも一覧の場所を残す */
   .smvwrap .smvideo{margin:0;}
-  .smvwrap .smprev{position:absolute; left:0; top:0; width:100%; height:100%; aspect-ratio:auto;
-    border-radius:8px; z-index:2; cursor:pointer; box-shadow:0 0 0 3px var(--ink);}
-  .smvwrap .smprev .smlab{left:8px; top:8px; font-size:11px; padding:2px 9px;}
   .smnow{display:flex; gap:8px; align-items:center; max-width:640px; margin:8px auto 0;}
   .smnowt{flex:1; min-width:0; font-size:12.5px; line-height:1.6; color:var(--ink); overflow:hidden;
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
   .smnow button{flex:0 0 auto;}
   .smrow.now{border-color:var(--ink); box-shadow:inset 4px 0 0 var(--ink);}
-  .smmact{position:sticky; top:-10px; z-index:2; background:var(--ground); margin:-10px 0 6px; padding:10px 0 6px;}
   .smrows{display:flex; flex-direction:column; gap:6px;}
   .smrow{display:flex; gap:10px; align-items:flex-start; padding:6px; border-radius:9px;
     border:1px solid var(--line); background:var(--surface); cursor:pointer; text-align:left;
@@ -198,14 +194,37 @@
   .smth .smlab{position:absolute; left:4px; top:4px; font-size:10px; font-weight:700; padding:1px 6px;
     border-radius:999px; background:rgba(0,0,0,.72); color:#fff;}
   .smfoot{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px;}
-  .smmodal{position:fixed; inset:0; z-index:50; background:rgba(0,0,0,.55); display:flex;
-    align-items:flex-end; justify-content:center;}
-  .smmodal[hidden]{display:none;}
-  .smbox{background:var(--ground); width:100%; max-width:980px; max-height:88vh; border-radius:14px 14px 0 0;
-    display:flex; flex-direction:column;}
-  .smmtop{display:flex; gap:8px; align-items:flex-start; padding:12px 14px; border-bottom:1px solid var(--line);}
-  .smmhead{flex:1; font-size:13px; line-height:1.7; color:var(--ink); min-width:0; overflow-wrap:anywhere;}
-  .smmbody{overflow-y:auto; padding:10px 14px 18px; -webkit-overflow-scrolling:touch;}
+  /* 絵を変える画面（2026-11-20 本人の指定: 上半分にその所の動画の絵・横にスライドで前後の字幕・下半分に候補） */
+  .smhk{position:fixed; inset:0; z-index:60; background:var(--ground); display:flex; flex-direction:column;}
+  .smhk[hidden]{display:none;}
+  html.smhk-on, html.smhk-on body{overflow:hidden;}
+  .smhktop{flex:0 0 auto; padding:8px 12px 6px; background:var(--surface); border-bottom:1px solid var(--line);}
+  .smhkhead{display:flex; gap:8px; align-items:center; max-width:640px; margin:0 auto 6px; font-size:12px; color:var(--ink-2);}
+  .smhkhead .sp{flex:1;}
+  .smhkno{font-weight:700; color:var(--ink);}
+  .smhkstage{position:relative; width:100%; max-width:640px; margin:0 auto; aspect-ratio:16/9; max-height:38vh;
+    background:#000; border-radius:8px; overflow:hidden; touch-action:pan-y; user-select:none; -webkit-user-select:none;}
+  .smhkstage video{width:100%; height:100%; object-fit:contain; display:block; pointer-events:none;}
+  .smhkstage .smhkover{position:absolute; left:0; top:0; width:100%; height:100%; aspect-ratio:auto; border-radius:0;
+    z-index:2; box-shadow:inset 0 0 0 3px var(--ink);}
+  .smhkstage .smhkover .smlab{left:8px; top:8px; font-size:11px; padding:2px 9px;}
+  .smhknav{position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:38px; height:58px; border:0;
+    border-radius:8px; background:rgba(0,0,0,.45); color:#fff; font-size:28px; line-height:1; cursor:pointer;
+    font-family:inherit; padding:0;}
+  .smhknav:disabled{opacity:.25; cursor:default;}
+  .smhknav.mae{left:6px;} .smhknav.tsugi{right:6px;}
+  .smhktx{max-width:640px; margin:6px auto 0; font-size:13px; line-height:1.6; color:var(--ink); min-height:2.6em;
+    overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
+  .smhkhint{max-width:640px; margin:2px auto 0; font-size:11px; color:var(--ink-3); text-align:center;}
+  .smhkbody{flex:1 1 auto; min-height:0; overflow-y:auto; padding:10px 12px 14px; -webkit-overflow-scrolling:touch;}
+  .smhkbody > *{max-width:980px; margin-left:auto; margin-right:auto;}
+  .smhkbar{flex:0 0 auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; background:var(--surface);
+    border-top:1px solid var(--line); padding:8px 12px calc(8px + env(safe-area-inset-bottom));}
+  .smhkbar .smhkst{flex:1 1 150px; min-width:0; margin:0;}
+  .smhkbar #smhkmsg{flex:1 1 100%; margin:0;}
+  .smhkbar #smhkmsg:empty{display:none;}
+  .smfoot #smmsg{flex:1 1 100%; margin:0;}
+  .smfoot #smmsg:empty{display:none;}
   .smgrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(104px, 1fr)); gap:6px;}
   .smgrid .smth{width:100%; cursor:pointer;}
   .smgrid .smth.cur{outline:2px solid var(--ink-3); outline-offset:-2px;}
@@ -536,9 +555,11 @@
     <h2>スマホで見る・絵を選ぶ</h2>
     <p class="lede">動画を作ると <code>04_確認用\スマホ用\</code> ができます。<b>パソコンで</b>このボードを開いて
       「スマホ用を上げる」でそのフォルダを選んでおくと、<b>スマホから</b>出来た動画と作品ごとの絵の一覧を見て、
-      字幕ごとに絵を選べます。<b>動画は上に出たまま</b>で、替えたい所で「この字幕の絵を替える」を押すと動画が止まり、
-      その作品の絵が下に並びます。押した絵は動画の所に大きく重なるので、見比べて選び直せます。
-      選んだ絵は、パソコンで「irekae.txt を保存」→ はじめる.bat → 2 で入れ替わります。</p>
+      字幕ごとに絵を選べます。動画は動画のまま見て、替えたい所で「この字幕の絵を替える」（か字幕）を押すと
+      <b>絵を変える画面</b>になります。上半分にその所の動画の絵（<b>横にスライドすると前後の字幕</b>）、
+      下半分にその作品の候補が並び、押した絵は上に大きく重なります。「<b>一時保存</b>」で途中まで残せます。
+      選び終わったら「<b>修正を決定</b>」。次にパソコンで<b>制作パックを落とす</b>とその内容が入り、
+      はじめる.bat → 2（または Z）で作った動画に反映されます。</p>
     <div class="btnrow" id="smup" hidden>
       <button type="button" class="askbtn2 pri" id="smupbtn">スマホ用を上げる（パソコンで）</button>
       <input type="file" id="smupin" webkitdirectory multiple hidden>
@@ -546,13 +567,7 @@
     <div class="ihint" id="smnote">読み込み中…</div>
     <div class="smlist" id="smlist"></div>
     <div class="smview" id="smview" hidden></div>
-    <div class="smmodal" id="smmodal" hidden>
-      <div class="smbox" role="dialog" aria-modal="true" aria-labelledby="smmhead">
-        <div class="smmtop"><div class="smmhead" id="smmhead"></div>
-          <button type="button" class="askbtn2" id="smmclose">閉じる</button></div>
-        <div class="smmbody" id="smmbody"></div>
-      </div>
-    </div>
+    <div class="smhk" id="smhk" role="dialog" aria-modal="true" aria-label="絵を変える" hidden></div>
   </section>
 
   <!-- 紹介する作品の一覧。表と直す口は「台本インベントリ」のカードの中にあります。
@@ -19060,6 +19075,12 @@ def irekae_torikomu():
 
     一度取り込んだファイルは その他/_取り込んだ入れ替え.txt に控え、二度は入れない
     （あとで本人が 差し替え.txt を手で直したのを、古い選び方で上書きしないため）。
+
+    ■ スマホで決めた絵（2026-11-20・本人の指定）
+      掲示板の「修正を決定」で決めた絵は、制作パックの 99_確認不要/その他/irekae_sumaho.txt に入って届く
+      （メニューの Prepare が作業フォルダの その他 へ写す）。パックを落とし直すたびに、同じ中身のファイルが
+      新しい日時で届くので、**中身（md5）が同じものも二度は入れない**（入れると、そのあと入れ替え表で
+      選び直した所を古い決定で上書きする）。
     """
     na = DOUGA_NA
     atama = u"入れ替え_" + na
@@ -19093,9 +19114,17 @@ def irekae_torikomu():
                 continue
             sirushi = u"%s\t%d\t%d" % (os.path.abspath(p), int(os.path.getmtime(p)),
                                         os.path.getsize(p))
+            # 前の控え（場所・日時・大きさの3つ）に当たれば取り込み済み。これからの控えは中身（md5）で書く
+            # （同じ秒に同じ大きさで決め直すと、3つでは別の中身を「取り込み済み」と見なしていた）
             if sirushi in mita:
                 continue
-            kouho.append((os.path.getmtime(p), p, sirushi))
+            try:
+                nakami = u"md5\t" + hashlib.md5(io.open(p, "rb").read()).hexdigest()
+            except Exception:
+                nakami = u""
+            if nakami and nakami in mita:
+                continue            # 中身が同じものは取り込み済み（パックを落とし直しても二度は入れない）
+            kouho.append((os.path.getmtime(p), p, sirushi, nakami))
     if not kouho:
         return 0
     if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
@@ -19104,15 +19133,21 @@ def irekae_torikomu():
     if os.path.exists(sashi):
         shutil.copy2(sashi, os.path.join(HERE, SONOTA_DIR, u"_差し替え_取り込む前.txt"))
     zen = 0
-    for (mt, p, sirushi) in sorted(kouho):
+    for (mt, p, sirushi, nakami) in sorted(kouho):
         g = irekae_gyou(p)
         ireta, hazushi = irekae_maji(
             g, sashi, time.strftime(u"%Y-%m-%d %H:%M", time.localtime(mt)))
-        say(u"入れ替え表の選び方を 差し替え.txt に取り込みました: %d か所%s（%s）"
-            % (ireta, (u"・機械に任せる %d か所" % hazushi) if hazushi else u"", p))
+        dare = u"スマホで決めた絵" if os.path.basename(p).lower().startswith(u"irekae_sumaho") \
+            else u"入れ替え表の選び方"
+        say(u"%sを 差し替え.txt に取り込みました: %d か所%s（%s）"
+            % (dare, ireta, (u"・機械に任せる %d か所" % hazushi) if hazushi else u"", p))
         zen += ireta + hazushi
         with io.open(kiroku, "a", encoding="utf-8") as f:
-            f.write(sirushi + u"\n")
+            if nakami:
+                f.write(nakami + u"\n")
+                f.write(u"# " + sirushi + u"\n")      # 人が読むため（見分けには使わない）
+            else:
+                f.write(sirushi + u"\n")
     return zen
 
 
@@ -23288,7 +23323,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v202";
+  var PACK_VERSION = "v203";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -23396,6 +23431,15 @@ if __name__ == "__main__":
 "    if (Test-Path $mp) { Copy-Item $mp $work -Force }",
 "    $bt = Join-Path $packTop 'はじめる.bat'",
 "    if (Test-Path $bt) { Copy-Item $bt $root -Force }",
+"    # スマホで決めた絵（掲示板の「修正を決定」）。99_確認不要\\その他 に置くと、2 のときに 差し替え.txt へ取り込まれる",
+"    # （中身が同じものは二度取り込まない。パックを作業フォルダに解いたときは、もうそこにある）",
+"    $ks = Join-Path $here 'その他\\irekae_sumaho.txt'",
+"    if (Test-Path $ks) {",
+"      $kd = Join-Path $work 'その他'",
+"      if (-not (Test-Path $kd)) { New-Item -ItemType Directory -Path $kd -Force | Out-Null }",
+"      Copy-Item $ks $kd -Force",
+"      Write-Host '  スマホで決めた絵をパックから受け取りました（2 で動画を作ると入れ替わります）' -ForegroundColor Green",
+"    }",
 "  }",
 "  # 設定ファイルは「新しいものを必ず入れる」。",
 "  # 手直しを消さないよう、中身が違うときだけ _前の設定 に退避してから差し替える。",
@@ -24377,6 +24421,14 @@ if __name__ == "__main__":
     return entries;
   }
 
+  // スマホで決めた絵（掲示板の「修正を決定」・db の sumaho_kettei/<印>）を、パックに入れるファイルにする。
+  // 名前は irekae_ で始める（make_slideshow の取り込みが、その他 の irekae*.txt を #@title で見分けて取り込む）。
+  // 動画の名前（作業フォルダの名前）が違う決定は入れない。
+  function sumahoKetteiFile(k, na){
+    if(!k || typeof k.text !== "string" || !k.text || k.title !== na) return null;
+    return {name: "その他/irekae_sumaho.txt", text: "\ufeff" + k.text};
+  }
+
   function exportAllPack(id, title, btn){
     if(!dlns){ alert("このビューではファイル書き出しが使えません。"); return; }
     var sub = docText(id, "sub"), tts = docText(id, "tts");
@@ -24434,10 +24486,19 @@ if __name__ == "__main__":
       entries.push({name:"BGM/" + bgs[bi].dataset.bgm, bytes: b64bytes(bgs[bi].textContent)});
     }
 
-    narabiPack(entries);
-    dlns.save({filename: fileName(title) + "_制作パック.zip", data: makeZip(entries)}).then(function(){
-      btn.textContent = "書き出しました";
-      setTimeout(function(){ btn.textContent = label; btn.disabled = false; }, 2600);
+    // スマホで「修正を決定」した絵を入れる（本人の指定 2026-11-20: 決定ボタンを押せば制作パックにその内容が
+    // 更新され、次に制作パックを落として はじめる.bat で動画を作ると、変更が反映されるように）
+    var ketteiP = (dbns && dbns.doc) ? dbns.doc("sumaho_kettei/" + id).get().then(dbody).catch(function(){ return null; })
+      : Promise.resolve(null);
+    var kettei = 0;
+    ketteiP.then(function(k){
+      var kf = sumahoKetteiFile(k, fileName(title));
+      if(kf){ entries.push(kf); kettei = k.n || 0; }
+      narabiPack(entries);
+      return dlns.save({filename: fileName(title) + "_制作パック.zip", data: makeZip(entries)});
+    }).then(function(){
+      btn.textContent = kettei ? "書き出しました（スマホで決めた絵 " + kettei + " か所入り）" : "書き出しました";
+      setTimeout(function(){ btn.textContent = label; btn.disabled = false; }, kettei ? 4200 : 2600);
     }).catch(function(err){
       var code = err && err.code;
       btn.textContent = (code === "declined") ? "キャンセルされました" : "書き出せませんでした";
@@ -25418,14 +25479,21 @@ if __name__ == "__main__":
     }
 
     // ── 動画を開く
-    function closeView(){ $("smview").hidden = true; $("smview").textContent = ""; SM.d = null; SM.J = null; }
+    function closeView(){ closeHenkou(true); $("smview").hidden = true; $("smview").textContent = ""; SM.d = null; SM.J = null; }
     function openView(d){
       note("開いています…");
       fetch(blobUrl(d.json)).then(function(r){ return r.json(); }).then(function(J){
-        SM.d = d; SM.J = J; SM.sid = d.sid; SM.clip = 0; SM.picks = {};
-        return SM.db.doc("sumaho_erabi/" + d.sid).get().then(dbody).catch(function(){ return null; });
-      }).then(function(p){
+        SM.d = d; SM.J = J; SM.sid = d.sid; SM.clip = 0; SM.picks = {}; SM.kettei = null; SM.hozon = "";
+        SM.hkGrids = {}; SM.hkSrc = "";
+        return Promise.all([
+          SM.db.doc("sumaho_erabi/" + d.sid).get().then(dbody).catch(function(){ return null; }),
+          SM.db.doc("sumaho_kettei/" + d.sid).get().then(dbody).catch(function(){ return null; })
+        ]);
+      }).then(function(res){
+        var p = res[0], k = res[1];
         SM.picks = (p && p.picks && p.title === SM.J.title) ? p.picks : {};
+        SM.hozon = (p && p.picks && p.title === SM.J.title && p.at) ? p.at : "";
+        SM.kettei = (k && k.title === SM.J.title) ? k : null;
         note("");
         renderView();
         $("smview").scrollIntoView({block: "start"});
@@ -25439,6 +25507,13 @@ if __name__ == "__main__":
         return x >= c.st - 0.5 && (x < c.en - 0.5 || ci === J.clips.length - 1);
       });
     }
+    function clipIndexOf(r){
+      var cs = SM.J.clips || [], x = rowStart(r);
+      for(var i = 0; i < cs.length; i++){
+        if(x >= cs[i].st - 0.5 && (x < cs[i].en - 0.5 || i === cs.length - 1)) return i;
+      }
+      return 0;
+    }
     function pickOf(r){ return SM.picks[String(r.n[0])] || ""; }
     function nPicks(){
       var J = SM.J, nn = {};
@@ -25447,6 +25522,34 @@ if __name__ == "__main__":
     }
     function rowStart(r){ return (typeof r.s === "number" ? r.s : sec2(r.t)) + (SM.J.op || 0); }
     function clipOf(){ return (SM.J.clips || [])[SM.clip]; }
+    function hhmm(iso){
+      var d = new Date(iso || "");
+      if(isNaN(d.getTime())) return "";
+      return (d.getMonth() + 1) + "/" + d.getDate() + " " + d.getHours() + ":" + ("0" + d.getMinutes()).slice(-2);
+    }
+    function onajiPicks(a, b){
+      var ka = Object.keys(a || {}).sort(), kb = Object.keys(b || {}).sort();
+      if(ka.join(",") !== kb.join(",")) return false;
+      return ka.every(function(k){ return a[k] === b[k]; });
+    }
+    // いまの状態の1行（見る画面の下と、絵を変える画面の下に同じものを出す）
+    function jotai(){
+      var k = nPicks(), t = "選び直し " + k + " か所";
+      if(SM.hozon) t += "・一時保存 " + hhmm(SM.hozon);
+      if(SM.kettei){
+        t += onajiPicks(SM.kettei.picks, SM.picks) ? "・決定済み（" + hhmm(SM.kettei.at) + "）"
+          : "・決定のあとに選び直した所があります（もう一度「修正を決定」）";
+      } else if(k){
+        t += "・まだ決定していません";
+      }
+      return t;
+    }
+    function kakuNote(t, ng){
+      ["smmsg", "smhkmsg"].forEach(function(id){
+        var e = $(id);
+        if(e){ e.textContent = t || ""; e.className = "ihint" + (ng ? " ng" : ""); }
+      });
+    }
     function renderView(){
       var J = SM.J, v = $("smview");
       v.hidden = false;
@@ -25466,8 +25569,7 @@ if __name__ == "__main__":
       });
       v.appendChild(tabs);
       var c = clipOf();
-      // 動画と「いまの字幕」は上に貼りつける。選ぶときも隠さない（2026-11-20 本人の指定:
-      // 動画を見ながら、入れ替え候補の画像を見て選択できるように）
+      // 動画は動画として見る（上に貼りつき、再生中の字幕を追いかける）。絵を変えるのは別の画面
       var st = el("div", "smstick"); st.id = "smstick";
       if(c && SM.d.files[c.file]){
         var wrap = el("div", "smvwrap"); wrap.id = "smvwrap";
@@ -25476,7 +25578,6 @@ if __name__ == "__main__":
         vd.setAttribute("playsinline", ""); vd.src = blobUrl(SM.d.files[c.file]);
         vd.ontimeupdate = function(){ follow(false); };
         vd.onseeked = function(){ follow(true); };
-        vd.onplay = function(){ hidePrev(); };
         vd.onended = function(){ if(SM.clip + 1 < J.clips.length){ SM.clip++; renderView(); var n2 = $("smvid"); if(n2) n2.play().catch(function(){}); } };
         wrap.appendChild(vd);
         st.appendChild(wrap);
@@ -25484,36 +25585,45 @@ if __name__ == "__main__":
         var nt = el("div", "smnowt", "再生すると、いまの字幕がここに出ます。"); nt.id = "smnowt";
         var kb = el("button", "askbtn2 pri", "この字幕の絵を替える"); kb.type = "button"; kb.id = "smnowbtn";
         kb.disabled = true;
-        kb.onclick = function(){ if(SM.now){ var v2 = $("smvid"); if(v2) v2.pause(); picker(SM.now); } };
+        kb.onclick = function(){ if(SM.now) openHenkou(SM.now); };
         nb.appendChild(nt); nb.appendChild(kb);
         st.appendChild(nb);
       }
       v.appendChild(st);
-      v.appendChild(el("div", "ihint", "動画を見ながら、替えたい所で「この字幕の絵を替える」を押すと、動画が止まって、その作品の絵が下に並びます。字幕を押しても選べます。時刻を押すと、動画がそこへ飛びます。"));
+      v.appendChild(el("div", "ihint", "替えたい所で「この字幕の絵を替える」を押すと、絵を変える画面になります（上にその所の動画の絵・横にスライドで前後の字幕・下に候補）。字幕を押しても開きます。時刻を押すと、動画がそこへ飛びます。"));
       var list = el("div", "smrows");
       rowsOfClip(SM.clip).forEach(function(r){ var e = rowEl(r, c); SM.rowEls[r.n[0]] = e; list.appendChild(e); });
       v.appendChild(list);
       var foot = el("div", "smfoot");
       var cnt = el("div", "ihint"); cnt.id = "smcount";
       foot.appendChild(cnt);
+      var hz = el("button", "askbtn2", "一時保存"); hz.type = "button"; hz.id = "smhozon";
+      hz.onclick = hozonNow;
+      foot.appendChild(hz);
+      var kt = el("button", "askbtn2 pri", "修正を決定"); kt.type = "button"; kt.id = "smkettei";
+      kt.onclick = function(){ ketteiOsu(this); };
+      foot.appendChild(kt);
       if(SM.dl && PC){
-        var sv = el("button", "askbtn2 pri", "irekae.txt を保存（パソコンで）"); sv.type = "button"; sv.id = "smsave";
+        var sv = el("button", "askbtn2", "irekae.txt を保存（パソコンで）"); sv.type = "button"; sv.id = "smsave";
         sv.onclick = saveIrekae;
         foot.appendChild(sv);
       }
       var clr = el("button", "askbtn2", "選んだのを全部取り消す"); clr.type = "button"; clr.id = "smclr";
       clr.onclick = function(){ if(window.confirm("選んだ絵を全部取り消しますか？")){ SM.picks = {}; keepPicks(); refreshRows(); updateFoot(); } };
       foot.appendChild(clr);
+      var msg = el("div", "ihint"); msg.id = "smmsg";
+      foot.appendChild(msg);
       v.appendChild(foot);
       updateFoot();
     }
     function updateFoot(){
-      var k = nPicks(), cnt = $("smcount"), sv = $("smsave"), clr = $("smclr");
-      if(cnt) cnt.textContent = "選んだ所: " + k + " か所（どの章のぶんも、まとめて残ります）";
-      if(sv) sv.disabled = !k;
-      if(clr) clr.disabled = !k;
+      var k = nPicks(), t = jotai();
+      var mae = !!(SM.kettei && SM.kettei.zenbu && SM.kettei.zenbu.length);
+      ["smcount", "smhkst"].forEach(function(id){ var e = $(id); if(e) e.textContent = t; });
+      ["smsave", "smclr"].forEach(function(id){ var e = $(id); if(e) e.disabled = !k; });
+      ["smkettei", "smhkkettei"].forEach(function(id){ var e = $(id); if(e && !e.dataset.kakunin) e.disabled = !(k || mae); });
     }
-    // 選んでも画面を作り直さない（作り直すと動画が頭に戻る）。その行だけ替える
+    // 選んでも見る画面を作り直さない（作り直すと動画が頭に戻る）。その行だけ替える
     function refreshRow(r){
       var o = SM.rowEls && SM.rowEls[r.n[0]];
       if(!o || !o.parentNode) return;
@@ -25575,70 +25685,190 @@ if __name__ == "__main__":
       t.appendChild(meta);
       t.appendChild(el("div", "", r.tx || (fixed ? "（章タイトルのカード）" : "")));
       b.appendChild(t);
-      if(!fixed) b.onclick = function(){
-        // その字幕の所で止めてから選ぶ（いまの絵が動画に映る）
-        var vd = $("smvid");
-        if(vd && c){ vd.pause(); try { vd.currentTime = Math.max(0, rowStart(r) - c.st + 0.05); } catch (e) {} }
-        picker(r);
-      };
+      if(!fixed) b.onclick = function(){ openHenkou(r); };
       return b;
     }
 
-    // ── 絵を選ぶ（動画の下に並べる。押すと選ばれ、動画の所に大きく重ねて見せる）
-    function picker(r){
-      var J = SM.J, m = $("smmodal"), body = $("smmbody");
-      SM.pk = r;
-      $("smmhead").textContent = "No." + r.n.join("・") + "　" + (r.tx || "");
-      body.textContent = "";
-      var row = el("div", "btnrow smmact");
-      var go = el("button", "askbtn2 pri", "閉じて続きを見る"); go.type = "button"; go.id = "smmgo";
-      go.onclick = function(){ close2(); var vd = $("smvid"); if(vd) vd.play().catch(function(){}); };
-      var mo = el("button", "askbtn2", "いまの絵に戻す（機械に任せる）"); mo.type = "button"; mo.id = "smmmodo";
-      mo.onclick = function(){ setPick(r, ""); };
-      row.appendChild(go); row.appendChild(mo);
-      body.appendChild(row);
-      body.appendChild(el("div", "ihint", "絵を押すと選ばれ、上の動画の所に大きく出ます。ほかの絵を押せば選び直せます。"));
-      var fs = J.chap[r.c] || [];
-      if(!fs.length) body.appendChild(el("div", "ihint", "この字幕の作品の絵がありません（無地の章です）。"));
-      fs.forEach(function(fi){
-        if(fs.length > 1) body.appendChild(el("div", "smfh", J.fol[fi]));
-        var g = el("div", "smgrid");
-        (J.files[fi] || []).forEach(function(fn){
-          var k = J.fol[fi] + "/" + fn, d = thumb(k, false);
-          d.title = k;
-          d.setAttribute("role", "button");
-          d.onclick = function(){ setPick(r, k === r.curKey ? "" : k); };
-          g.appendChild(d);
-        });
-        body.appendChild(g);
+    // ── 絵を変える画面（本人の指定 2026-11-20）
+    //   > 画像の変更のときは、上半分は動画の画像を見えるようにし、横にスライドすることで次の画像と
+    //   > 前の画像が見えるようにし、それを見て、下半分には候補の画像が選択できるようにして、
+    //   > 一時保存できるボタンも欲しいです。また最終的に修正するボタンを設け…
+    //   上半分: その字幕の所で止めた動画（章をまたいでも続く）。下半分: その字幕の作品の候補。いちばん下: 一時保存・修正を決定
+    function hkBuild(){
+      var p = $("smhk");
+      if(p.dataset.dekita) return p;
+      p.dataset.dekita = "1";
+      var top = el("div", "smhktop");
+      var head = el("div", "smhkhead");
+      var no = el("span", "smhkno"); no.id = "smhkno";
+      var pos = el("span", ""); pos.id = "smhkpos";
+      var cl = el("button", "askbtn2", "閉じる"); cl.type = "button"; cl.id = "smhkclose";
+      cl.onclick = function(){ closeHenkou(false); };
+      head.appendChild(no); head.appendChild(el("span", "sp")); head.appendChild(pos); head.appendChild(cl);
+      var stage = el("div", "smhkstage"); stage.id = "smhkstage";
+      var v = document.createElement("video");
+      v.id = "smhkvid"; v.muted = true; v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.preload = "auto";
+      stage.appendChild(v);
+      var mae = el("button", "smhknav mae", "‹"); mae.type = "button"; mae.id = "smhkmae"; mae.setAttribute("aria-label", "前の字幕");
+      mae.onclick = function(){ hkGo(-1); };
+      var tsugi = el("button", "smhknav tsugi", "›"); tsugi.type = "button"; tsugi.id = "smhktsugi"; tsugi.setAttribute("aria-label", "次の字幕");
+      tsugi.onclick = function(){ hkGo(1); };
+      stage.appendChild(mae); stage.appendChild(tsugi);
+      // 横にスライドで前後の字幕（指でもマウスでも）
+      function fin(x, y){
+        if(!SM.sw) return;
+        var dx = x - SM.sw.x, dy = y - SM.sw.y;
+        SM.sw = null;
+        if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) hkGo(dx < 0 ? 1 : -1);
+      }
+      stage.addEventListener("touchstart", function(e){ var t = e.changedTouches[0]; SM.sw = {x: t.clientX, y: t.clientY}; }, {passive: true});
+      stage.addEventListener("touchend", function(e){ var t = e.changedTouches[0]; fin(t.clientX, t.clientY); }, {passive: true});
+      stage.addEventListener("pointerdown", function(e){ if(e.pointerType === "mouse") SM.sw = {x: e.clientX, y: e.clientY}; });
+      stage.addEventListener("pointerup", function(e){ if(e.pointerType === "mouse") fin(e.clientX, e.clientY); });
+      top.appendChild(head); top.appendChild(stage);
+      var tx = el("div", "smhktx"); tx.id = "smhktx";
+      top.appendChild(tx);
+      top.appendChild(el("div", "smhkhint", "← 横にスライドすると、前後の字幕の絵 →"));
+      var body = el("div", "smhkbody"); body.id = "smhkbody";
+      var bar = el("div", "smhkbar");
+      var hst = el("div", "ihint smhkst"); hst.id = "smhkst";
+      var hz = el("button", "askbtn2", "一時保存"); hz.type = "button"; hz.id = "smhkhozon";
+      hz.onclick = hozonNow;
+      var kt = el("button", "askbtn2 pri", "修正を決定"); kt.type = "button"; kt.id = "smhkkettei";
+      kt.onclick = function(){ ketteiOsu(this); };
+      var msg = el("div", "ihint"); msg.id = "smhkmsg";
+      bar.appendChild(hst); bar.appendChild(hz); bar.appendChild(kt); bar.appendChild(msg);
+      p.appendChild(top); p.appendChild(body); p.appendChild(bar);
+      document.addEventListener("keydown", function(e){
+        if(p.hidden) return;
+        if(e.key === "ArrowLeft") hkGo(-1);
+        else if(e.key === "ArrowRight") hkGo(1);
+        else if(e.key === "Escape") closeHenkou(false);
       });
+      return p;
+    }
+    function openHenkou(r){
+      var J = SM.J;
+      if(!r || !J) return;
+      var vd = $("smvid"); if(vd) vd.pause();
+      SM.hkRows = J.rows.filter(function(x){ return x.kind !== "card"; });
+      var i = SM.hkRows.indexOf(r);
+      var p = hkBuild();
+      p.hidden = false;
+      document.documentElement.classList.add("smhk-on");
+      kakuNote("");
+      hkShow(i < 0 ? 0 : i);
+    }
+    function closeHenkou(dake){
+      var p = $("smhk");
+      if(!p || p.hidden) return;
+      p.hidden = true;
+      document.documentElement.classList.remove("smhk-on");
+      var hv = $("smhkvid"); if(hv) hv.pause();
+      if(dake || !SM.J) return;
+      // 見ていた字幕の所へ、見る画面を合わせる（章が違えばその章を開く）
+      var r = SM.hkRows[SM.hk];
+      if(!r) return;
+      var ci = clipIndexOf(r);
+      if(ci !== SM.clip){ SM.clip = ci; renderView(); } else { refreshRows(); updateFoot(); }
+      var vd = $("smvid"), c = clipOf();
+      if(vd && c){
+        var go = function(){ try { vd.currentTime = Math.max(0, rowStart(r) - c.st + 0.05); } catch (e) {} };
+        if(vd.readyState >= 1) go(); else vd.addEventListener("loadedmetadata", go, {once: true});
+      }
+      var e = SM.rowEls && SM.rowEls[r.n[0]];
+      if(e) mieru(e);
+    }
+    function hkGo(d){ if(SM.hkRows && SM.hkRows.length) hkShow(SM.hk + d); }
+    function hkShow(i){
+      var J = SM.J, rows = SM.hkRows;
+      if(!rows.length) return;
+      i = Math.max(0, Math.min(rows.length - 1, i));
+      SM.hk = i;
+      var r = rows[i], ci = clipIndexOf(r), c = (J.clips || [])[ci];
+      $("smhkno").textContent = "No." + r.n.join("・") + " ／ " + r.t;
+      $("smhkpos").textContent = (i + 1) + " / " + rows.length;
+      $("smhktx").textContent = r.tx || "";
+      $("smhkmae").disabled = (i === 0);
+      $("smhktsugi").disabled = (i === rows.length - 1);
+      // 上半分: その字幕の所で止めた動画（切り替わりの暗転を避けて、少し入った所）
+      if(c && SM.d.files[c.file]){
+        var v = $("smhkvid"), src = blobUrl(SM.d.files[c.file]);
+        if(SM.hkSrc !== src){ SM.hkSrc = src; v.src = src; v.__kidou = false; }
+        var nx = rows[i + 1], s0 = rowStart(r), du = nx ? rowStart(nx) - s0 : 1.2;
+        hkSeek(s0 + Math.min(0.6, Math.max(0.05, du * 0.5)) - c.st);
+      }
+      hkGrid(r);
+      hkOver(pickOf(r));
+      updateFoot();
+    }
+    function hkSeek(t){
+      var v = $("smhkvid");
+      SM.hkT = Math.max(0, t);
+      function go(){ try { v.currentTime = SM.hkT; } catch (e) {} }
+      if(v.readyState >= 1) go(); else v.addEventListener("loadedmetadata", go, {once: true});
+      // iPhone は、一度も再生していない動画を止めたまま動かすと絵が出ないことがある。音なしで一瞬だけ再生して止める
+      if(!v.__kidou){
+        v.__kidou = true;
+        var pr = v.play();
+        if(pr && pr.then) pr.then(function(){ v.pause(); go(); }).catch(function(){});
+      }
+    }
+    // 下半分: その字幕の作品の候補（作品ごとに1回だけ作って使い回す）
+    function hkGrid(r){
+      var J = SM.J, body = $("smhkbody");
+      body.textContent = "";
+      var row = el("div", "btnrow");
+      var mo = el("button", "askbtn2", "いまの絵に戻す（機械に任せる）"); mo.type = "button"; mo.id = "smhkmodo";
+      mo.disabled = !pickOf(r);
+      mo.onclick = function(){ var rr = SM.hkRows[SM.hk]; setPick(rr, ""); };
+      row.appendChild(mo);
+      body.appendChild(row);
+      var fs = J.chap[r.c] || [];
+      if(!fs.length){ body.appendChild(el("div", "ihint", "この字幕の作品の絵がありません（無地の章です）。")); return; }
+      body.appendChild(el("div", "ihint", "押すと選ばれ、上に大きく出ます。ほかの絵を押せば選び直せます。"));
+      SM.hkGrids = SM.hkGrids || {};
+      var g = SM.hkGrids[String(r.c)];
+      if(!g){
+        g = el("div", "");
+        fs.forEach(function(fi){
+          if(fs.length > 1) g.appendChild(el("div", "smfh", J.fol[fi]));
+          var gg = el("div", "smgrid");
+          (J.files[fi] || []).forEach(function(fn){
+            var k = J.fol[fi] + "/" + fn, d = thumb(k, false);
+            d.title = k;
+            d.setAttribute("role", "button");
+            d.onclick = function(){ var rr = SM.hkRows[SM.hk]; setPick(rr, k === rr.curKey ? "" : k); };
+            gg.appendChild(d);
+          });
+          g.appendChild(gg);
+        });
+        SM.hkGrids[String(r.c)] = g;
+      }
+      body.appendChild(g);
       markGrid(r);
-      // 上に動画・下に候補（本人の指定 2026-11-20「画面上半分で動画を表示、下半分に候補の画像」）。
-      // 動画を画面のいちばん上に寄せてから、その下から画面の下までを候補の欄にする
-      var st = $("smstick"), tp = 0;
-      if(st){
-        var r0 = st.getBoundingClientRect();
-        if(r0.top > 1){ window.scrollBy(0, r0.top); r0 = st.getBoundingClientRect(); }
-        if(r0.bottom > 40 && r0.bottom < window.innerHeight * 0.62) tp = Math.round(r0.bottom);
-      }
-      m.style.top = tp + "px";
-      var bx = m.querySelector(".smbox");
-      if(bx){
-        bx.style.maxHeight = tp ? (window.innerHeight - tp) + "px" : "";
-        bx.style.height = tp ? (window.innerHeight - tp) + "px" : "";
-      }
-      m.hidden = false;
-      showPrev(pickOf(r));
+      body.scrollTop = 0;
+    }
+    // 選んだ絵を、上の動画の絵に大きく重ねる
+    function hkOver(k){
+      var o = $("smhkover");
+      if(o && o.parentNode) o.parentNode.removeChild(o);
+      if(!k) return;
+      var d = thumb(k, false);
+      d.id = "smhkover"; d.classList.add("smhkover");
+      lab(d, "選んだ絵（いまの絵と入れ替わります）");
+      $("smhkstage").insertBefore(d, $("smhkmae"));
     }
     function setPick(r, k){
       r.n.forEach(function(n){ if(k) SM.picks[String(n)] = k; else delete SM.picks[String(n)]; });
-      keepPicks(); refreshRow(r); updateFoot(); markGrid(r); showPrev(k);
+      keepPicks(); refreshRow(r); markGrid(r); hkOver(k); updateFoot();
+      var mo = $("smhkmodo"); if(mo) mo.disabled = !k;
     }
     // 一覧の印（いま・選んだ・公式画像）を付け直す
     function markGrid(r){
       var J = SM.J, p = pickOf(r), kou = {};
       (J.kou || []).forEach(function(k){ kou[k] = 1; });
-      var ds = $("smmbody").querySelectorAll(".smgrid .smth");
+      var ds = $("smhkbody").querySelectorAll(".smgrid .smth");
       for(var i = 0; i < ds.length; i++){
         var d = ds[i], k = d.title, ol = d.querySelectorAll(".smlab");
         for(var j = 0; j < ol.length; j++) d.removeChild(ol[j]);
@@ -25648,43 +25878,81 @@ if __name__ == "__main__":
         else if(kou[k]){ lab(d, "公式画像"); }
       }
     }
-    // 選んだ絵を動画の所に大きく重ねる（押すか、再生すると消える）
-    function showPrev(k){
-      hidePrev();
-      var w = $("smvwrap");
-      if(!w || !k) return;
-      var d = thumb(k, false);
-      d.id = "smprev"; d.classList.add("smprev");
-      lab(d, "選んだ絵（いまの絵と入れ替わります）");
-      d.onclick = hidePrev;
-      w.appendChild(d);
+
+    // ── 残す（一時保存）・決める（修正を決定）
+    function erabiSet(){
+      var at = new Date().toISOString();
+      return SM.db.doc("sumaho_erabi/" + SM.sid).set({title: SM.J.title, picks: JSON.parse(JSON.stringify(SM.picks)), at: at})
+        .then(function(){ SM.hozon = at; updateFoot(); });
     }
-    function hidePrev(){ var o = $("smprev"); if(o && o.parentNode) o.parentNode.removeChild(o); }
-    function close2(){ $("smmodal").hidden = true; hidePrev(); }
-    $("smmclose").onclick = close2;
-    $("smmodal").onclick = function(e){ if(e.target.id === "smmodal") close2(); };
+    // 選ぶたびにも残す（閉じても消えない）。「一時保存」はすぐ残して、残した時刻を出す
     function keepPicks(){
       if(!SM.db || !SM.sid) return;
       clearTimeout(SM.timer);
-      var sid = SM.sid, title = SM.J.title, picks = JSON.parse(JSON.stringify(SM.picks));
       SM.timer = setTimeout(function(){
-        SM.db.doc("sumaho_erabi/" + sid).set({title: title, picks: picks, at: new Date().toISOString()})
-          .catch(function(e){ note("選んだ絵を残せませんでした（" + upCode(e) + "）。", true); });
+        erabiSet().catch(function(e){ kakuNote("選んだ絵を残せませんでした（" + upCode(e) + "）。「一時保存」を押してください。", true); });
       }, 600);
     }
-    function saveIrekae(){
+    function hozonNow(){
+      if(!SM.db || !SM.sid) return;
+      clearTimeout(SM.timer);
+      kakuNote("一時保存しています…");
+      erabiSet().then(function(){
+        kakuNote("一時保存しました（" + nPicks() + " か所・" + hhmm(SM.hozon) + "）。閉じても、パソコンからでも続きができます。");
+      }).catch(function(e){ kakuNote("一時保存できませんでした（" + upCode(e) + "）。もう一度押してください。", true); });
+    }
+    // 入れ替えの形（irekae.txt と同じ）。zenbu を渡すと、前に決めたのにいまは選んでいない所を「-」（機械に戻す）で入れる
+    function irekaeText(ketteiAt, zenbu){
       var J = SM.J, by = {};
       J.rows.forEach(function(r){ r.n.forEach(function(n){ by[n] = r; }); });
+      function tx(n){ var r = by[n]; return r ? (r.txs[r.n.indexOf(n)] || "") : ""; }
       var ns = Object.keys(SM.picks).map(Number).filter(function(n){ return by[n]; }).sort(function(a, b){ return a - b; });
       var lines = [
-        "# スマホで選んだ絵（" + J.title + "／動画を作った時刻 " + J.made + "）",
+        ketteiAt ? "# スマホで決めた絵（" + J.title + "／決定 " + hhmm(ketteiAt) + "／動画を作った時刻 " + J.made + "）"
+                 : "# スマホで選んだ絵（" + J.title + "／動画を作った時刻 " + J.made + "）",
         "#@title\t" + J.title,
         "# 番号<タブ>絵<タブ>字幕の文。このファイルは はじめる.bat → 2 のときに 差し替え.txt へ自動で取り込まれます"
       ];
-      ns.forEach(function(n){ var r = by[n]; lines.push(n + "\t" + SM.picks[String(n)] + "\t" + (r.txs[r.n.indexOf(n)] || "")); });
-      SM.dl.save({filename: "irekae.txt", data: "﻿" + lines.join("\r\n") + "\r\n"}).then(function(){
-        note("保存しました（ダウンロードに irekae.txt）。はじめる.bat → 2 で入れ替わります。");
-      }).catch(function(e){ note("保存できませんでした（" + upCode(e) + "）。", true); });
+      ns.forEach(function(n){ lines.push(n + "\t" + SM.picks[String(n)] + "\t" + tx(n)); });
+      (zenbu || []).filter(function(n){ return by[n] && !SM.picks[String(n)]; })
+        .sort(function(a, b){ return a - b; }).forEach(function(n){ lines.push(n + "\t-\t" + tx(n)); });
+      return lines.join("\r\n") + "\r\n";
+    }
+    // 修正を決定: 決めた内容を sumaho_kettei/<印> に残す。パソコンで制作パックを落とすと、
+    // パックの 99_確認不要\その他\irekae_sumaho.txt に入る（exportAllPack）。押し間違えないよう2回押し
+    function ketteiOsu(btn){
+      var k = nPicks();
+      var mae = (SM.kettei && SM.kettei.zenbu) || [];
+      if(!k && !mae.length){ kakuNote("まだ絵を選んでいません。", true); return; }
+      if(!btn.dataset.kakunin){
+        btn.dataset.kakunin = "1";
+        btn.dataset.moto = btn.textContent;
+        btn.textContent = "もう一度押すと決定（" + k + " か所）";
+        setTimeout(function(){
+          if(btn.dataset.kakunin){ delete btn.dataset.kakunin; btn.textContent = btn.dataset.moto; updateFoot(); }
+        }, 5000);
+        return;
+      }
+      delete btn.dataset.kakunin;
+      btn.textContent = btn.dataset.moto || "修正を決定";
+      var at = new Date().toISOString(), zen = {};
+      mae.forEach(function(n){ zen[n] = 1; });
+      Object.keys(SM.picks).forEach(function(n){ zen[n] = 1; });
+      var zenbu = Object.keys(zen).map(Number).sort(function(a, b){ return a - b; });
+      var doc = {title: SM.J.title, made: SM.J.made, at: at, n: k,
+                 picks: JSON.parse(JSON.stringify(SM.picks)), zenbu: zenbu, text: irekaeText(at, zenbu)};
+      clearTimeout(SM.timer);
+      kakuNote("決定しています…");
+      Promise.all([SM.db.doc("sumaho_kettei/" + SM.sid).set(doc), erabiSet()]).then(function(){
+        SM.kettei = doc;
+        updateFoot();
+        kakuNote("決定しました（" + k + " か所）。パソコンでこのボードの「制作パック」を落とし直し、はじめる.bat → 2（または Z）で動画を作ると入れ替わります。");
+      }).catch(function(e){ kakuNote("決定できませんでした（" + upCode(e) + "）。もう一度押してください。", true); });
+    }
+    function saveIrekae(){
+      SM.dl.save({filename: "irekae.txt", data: "﻿" + irekaeText("", (SM.kettei && SM.kettei.zenbu) || [])}).then(function(){
+        kakuNote("保存しました（ダウンロードに irekae.txt）。はじめる.bat → 2 で入れ替わります。");
+      }).catch(function(e){ kakuNote("保存できませんでした（" + upCode(e) + "）。", true); });
     }
 
     // ── はじまり
@@ -25701,7 +25969,7 @@ if __name__ == "__main__":
         $("smupin").onchange = function(){ upload(this.files); };
       }
       note((SM.as && PC) ? "「スマホ用を上げる」から、動画のフォルダの 04_確認用\\スマホ用 を選びます。上げたあとは、スマホでこのボードを開くと見られます。"
-        : "上がっている動画を開くと、章ごとの動画と、字幕ごとの絵を選ぶ一覧が出ます。選んだ絵は、パソコンでこのボードを開いて irekae.txt に保存します。");
+        : "上がっている動画を開くと、章ごとの動画と字幕の一覧が出ます。字幕か「この字幕の絵を替える」を押すと、絵を変える画面になります。選び終わったら「修正を決定」。");
       return loadDocs();
     }).catch(function(){ note("読み込めませんでした。開き直してください。", true); });
   })();

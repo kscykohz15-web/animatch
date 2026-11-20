@@ -9960,6 +9960,12 @@ def irekae_torikomu():
 
     一度取り込んだファイルは その他/_取り込んだ入れ替え.txt に控え、二度は入れない
     （あとで本人が 差し替え.txt を手で直したのを、古い選び方で上書きしないため）。
+
+    ■ スマホで決めた絵（2026-11-20・本人の指定）
+      掲示板の「修正を決定」で決めた絵は、制作パックの 99_確認不要/その他/irekae_sumaho.txt に入って届く
+      （メニューの Prepare が作業フォルダの その他 へ写す）。パックを落とし直すたびに、同じ中身のファイルが
+      新しい日時で届くので、**中身（md5）が同じものも二度は入れない**（入れると、そのあと入れ替え表で
+      選び直した所を古い決定で上書きする）。
     """
     na = DOUGA_NA
     atama = u"入れ替え_" + na
@@ -9993,9 +9999,17 @@ def irekae_torikomu():
                 continue
             sirushi = u"%s\t%d\t%d" % (os.path.abspath(p), int(os.path.getmtime(p)),
                                         os.path.getsize(p))
+            # 前の控え（場所・日時・大きさの3つ）に当たれば取り込み済み。これからの控えは中身（md5）で書く
+            # （同じ秒に同じ大きさで決め直すと、3つでは別の中身を「取り込み済み」と見なしていた）
             if sirushi in mita:
                 continue
-            kouho.append((os.path.getmtime(p), p, sirushi))
+            try:
+                nakami = u"md5\t" + hashlib.md5(io.open(p, "rb").read()).hexdigest()
+            except Exception:
+                nakami = u""
+            if nakami and nakami in mita:
+                continue            # 中身が同じものは取り込み済み（パックを落とし直しても二度は入れない）
+            kouho.append((os.path.getmtime(p), p, sirushi, nakami))
     if not kouho:
         return 0
     if not os.path.isdir(os.path.join(HERE, SONOTA_DIR)):
@@ -10004,15 +10018,21 @@ def irekae_torikomu():
     if os.path.exists(sashi):
         shutil.copy2(sashi, os.path.join(HERE, SONOTA_DIR, u"_差し替え_取り込む前.txt"))
     zen = 0
-    for (mt, p, sirushi) in sorted(kouho):
+    for (mt, p, sirushi, nakami) in sorted(kouho):
         g = irekae_gyou(p)
         ireta, hazushi = irekae_maji(
             g, sashi, time.strftime(u"%Y-%m-%d %H:%M", time.localtime(mt)))
-        say(u"入れ替え表の選び方を 差し替え.txt に取り込みました: %d か所%s（%s）"
-            % (ireta, (u"・機械に任せる %d か所" % hazushi) if hazushi else u"", p))
+        dare = u"スマホで決めた絵" if os.path.basename(p).lower().startswith(u"irekae_sumaho") \
+            else u"入れ替え表の選び方"
+        say(u"%sを 差し替え.txt に取り込みました: %d か所%s（%s）"
+            % (dare, ireta, (u"・機械に任せる %d か所" % hazushi) if hazushi else u"", p))
         zen += ireta + hazushi
         with io.open(kiroku, "a", encoding="utf-8") as f:
-            f.write(sirushi + u"\n")
+            if nakami:
+                f.write(nakami + u"\n")
+                f.write(u"# " + sirushi + u"\n")      # 人が読むため（見分けには使わない）
+            else:
+                f.write(sirushi + u"\n")
     return zen
 
 

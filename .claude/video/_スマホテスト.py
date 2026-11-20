@@ -24,8 +24,15 @@ u"""スマホで見る・絵を選ぶ（仕上げ.py ㉝）
      止まって、その字幕の作品の絵が**動画の下に**並ぶ（動画を隠さない）／押すと選ばれ、動画の所に大きく
      重なる・一覧は閉じない（選び直せる）／選んでも動画を作り直さない（頭に戻らない）／
      「閉じて続きを見る」で止めた所から再生
-     上に動画・その下から画面の下までが候補（本人の指定「画面上半分で動画を表示、下半分に候補の画像」。
-     下にずらした所から字幕を押しても、動画をいちばん上に寄せてから分ける）／開いてもページが横に動かない
+     ／開いてもページが横に動かない
+  ⑨ 絵を変える画面（2026-11-20 本人の指定「画像の変更のときは、上半分は動画の画像を見えるようにし、横に
+     スライドすることで次の画像と前の画像が見えるようにし、下半分には候補の画像…一時保存できるボタン…
+     最終的に修正するボタン…制作パックにその内容が更新され」）
+     上半分＝その字幕の所で止めた動画・下半分＝候補・いちばん下＝一時保存と修正を決定／スライドで前後の字幕
+     （動画もその所へ）・章をまたいでも続く／押した絵が上に重なる・選び直し／一時保存はその場で残る／
+     修正を決定は2回押しで sumaho_kettei に残る／決定のあと「いまの絵に戻す」にした所は次の決定で「-」
+  ⑩ 決定した中身を、make_slideshow の取り込みがそのまま 差し替え.txt に入れる。同じ中身は二度入れない
+     （パックを落とし直すと新しい日時で届くため）
 """
 from __future__ import print_function
 import io, json, os, re, shutil, subprocess, sys, threading, uuid
@@ -288,7 +295,7 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const bg = await pp.locator(".smrow:has-text('本作は漫画') .smth").evaluate(e => getComputedStyle(e).backgroundImage);
     const okImg = await pp.evaluate(u => fetch(u.replace(/^url\("?|"?\)$/g, "")).then(r => r.ok), bg);
     ok(okImg, "③ 字幕のいまの絵（いまの絵の紙）が読める");
-    // ── ⑧ 動画を見ながら選ぶ
+    // ── ⑧ 動画を見ながら（見る画面）
     await pp.evaluate(() => { document.getElementById("smvid").__shirushi = 1; document.body.style.paddingBottom = "1600px"; });
     await pp.waitForFunction(() => document.getElementById("smvid").readyState >= 1, null, {timeout: 15000});
     await pp.evaluate(() => { document.getElementById("smvid").currentTime = 8.6; });
@@ -303,58 +310,101 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
       return document.getElementById("smstick").getBoundingClientRect().top;
     });
     ok(Math.abs(kuttsuki) < 2, "⑧ 下へ動かしても、動画と帯は上に貼りついたまま（" + Math.round(kuttsuki) + "px）");
+
+    // ── ⑨ 絵を変える画面
+    async function sumaho(){ return pp.evaluate(() => fetch("/_db/doc?p=" + encodeURIComponent("sumaho_erabi/test01")).then(r => r.json())); }
+    async function kettei(){ return pp.evaluate(() => fetch("/_db/doc?p=" + encodeURIComponent("sumaho_kettei/test01")).then(r => r.json())); }
+    async function no(t){ await pp.waitForFunction(x => (document.getElementById("smhkno").textContent || "").indexOf(x) >= 0, t, {timeout: 6000}); }
+    async function vt(t){ return pp.waitForFunction(x => Math.abs(document.getElementById("smhkvid").currentTime - x) < 0.35, t, {timeout: 8000}).then(() => true).catch(() => false); }
+    async function slide(dx){
+      await pp.evaluate(d => {
+        const s = document.getElementById("smhkstage"), b = s.getBoundingClientRect();
+        const y = b.top + b.height / 2, x0 = b.left + b.width / 2 - d / 2;
+        const t0 = new Touch({identifier: 7, target: s, clientX: x0, clientY: y});
+        const t1 = new Touch({identifier: 7, target: s, clientX: x0 + d, clientY: y + 4});
+        s.dispatchEvent(new TouchEvent("touchstart", {touches: [t0], changedTouches: [t0], bubbles: true}));
+        s.dispatchEvent(new TouchEvent("touchend", {touches: [], changedTouches: [t1], bubbles: true}));
+      }, dx);
+    }
     await pp.click("#smnowbtn");
-    await pp.waitForSelector("#smmodal:not([hidden])");
-    ok(await pp.evaluate(() => document.getElementById("smvid").paused), "⑧ 「この字幕の絵を替える」で動画が止まる");
-    ok((await pp.textContent("#smmhead")).indexOf("本作は漫画") >= 0, "⑧ 並ぶのは、いまの字幕（本作は漫画…）の作品の絵");
-    const geo = await pp.evaluate(() => { const a = document.getElementById("smvwrap").getBoundingClientRect();
-      const s = document.getElementById("smstick").getBoundingClientRect();
-      const b = document.querySelector("#smmodal .smbox").getBoundingClientRect(); return {vt: a.top, vb: a.bottom, sb: s.bottom, bt: b.top, bb: b.bottom, h: window.innerHeight}; });
-    ok(geo.vt >= -1 && geo.vb > 100 && geo.bt >= geo.vb - 1 && Math.abs(geo.bt - geo.sb) <= 2 && Math.abs(geo.bb - geo.h) <= 2,
-       "⑧ 絵の一覧は動画の下に出て、動画を隠さない（動画 " + Math.round(geo.vt) + "〜" + Math.round(geo.vb) + " ／ 一覧 " + Math.round(geo.bt) + "〜" + Math.round(geo.bb) + "）");
-    const nTh = await pp.locator("#smmbody .smgrid .smth").count();
+    await pp.waitForSelector("#smhk:not([hidden])");
+    ok(await pp.evaluate(() => document.getElementById("smvid").paused), "⑨ 「この字幕の絵を替える」で、見る動画は止まり、絵を変える画面が開く");
+    await no("No.5");
+    const g = await pp.evaluate(() => { const r = id => document.getElementById(id).getBoundingClientRect();
+      const top = document.querySelector(".smhktop").getBoundingClientRect(), bar = document.querySelector(".smhkbar").getBoundingClientRect();
+      return {h: window.innerHeight, st: r("smhkstage").top, sb: r("smhkstage").bottom, tb: top.bottom, bt: r("smhkbody").top, bb: r("smhkbody").bottom, bar: bar.top, barb: bar.bottom}; });
+    ok(g.st >= 0 && g.tb >= g.h * 0.35 && g.tb <= g.h * 0.6 && Math.abs(g.bt - g.tb) <= 2 && Math.abs(g.bb - g.bar) <= 2 && Math.abs(g.barb - g.h) <= 2,
+       "⑨ 上半分に動画の絵・下半分に候補・いちばん下に一時保存と修正を決定（上 0〜" + Math.round(g.tb) + " ／ 候補 " + Math.round(g.bt) + "〜" + Math.round(g.bb) + " ／ ボタン " + Math.round(g.bar) + "〜" + Math.round(g.barb) + "）");
+    ok(await vt(5.0), "⑨ 上半分は、その字幕（No.5）の所で止めた動画（5.0秒）");
+    const nTh = await pp.locator("#smhkbody .smgrid .smth").count();
     ok(nTh === parseInt(nAka, 10), "③ その作品（あか組！）の絵が全部並ぶ（" + nTh + "枚）");
-    ok((await pp.locator("#smmbody .smth .smlab:has-text('公式画像')").count()) === 1, "③ 「1」には「公式画像」の印");
-    ok((await pp.locator("#smmbody .smth.cur .smlab:has-text('いま')").count()) === 1, "③ いまの絵に「いま」の印");
-    await pp.screenshot({path: outDir + "/_スマホ_絵を選ぶ.png"});
-    await pp.click("#smmbody .smth[title='あか組！/0006.png']");
-    await pp.waitForSelector(".smrow.picked:has-text('本作は漫画')");
-    ok(await pp.isVisible("#smmodal"), "⑧ 絵を押しても一覧は閉じない（選び直せる）");
-    ok(await pp.isVisible("#smprev"), "⑧ 選んだ絵が動画の所に大きく重なる");
-    await pp.click("#smmbody .smth[title='あか組！/0005.png']");
-    await pp.waitForFunction(() => { const s = document.querySelector("#smmbody .smth.sel"); return s && s.title === "あか組！/0005.png"; }, null, {timeout: 3000});
-    const kasane = await pp.evaluate(() => { const a = document.getElementById("smprev"), b = document.querySelector("#smmbody .smth.sel");
-      return a && b && getComputedStyle(a).backgroundImage === getComputedStyle(b).backgroundImage
+    ok((await pp.locator("#smhkbody .smth .smlab:has-text('公式画像')").count()) === 1, "③ 「1」には「公式画像」の印");
+    ok((await pp.locator("#smhkbody .smth.cur .smlab:has-text('いま')").count()) === 1, "③ いまの絵に「いま」の印");
+    await pp.screenshot({path: outDir + "/_スマホ_絵を変える.png"});
+    await slide(-220);
+    await no("No.6");
+    ok(await vt(9.0), "⑨ 左へスライドすると次の字幕（No.6）・動画もその所（9.0秒）");
+    await slide(220);
+    await no("No.5");
+    ok(true, "⑨ 右へスライドすると前の字幕（No.5）に戻る");
+    await pp.click("#smhkbody .smth[title='あか組！/0006.png']");
+    await pp.waitForSelector("#smhkover");
+    await pp.click("#smhkbody .smth[title='あか組！/0005.png']");
+    await pp.waitForFunction(() => { const s = document.querySelector("#smhkbody .smth.sel"); return s && s.title === "あか組！/0005.png"; }, null, {timeout: 3000});
+    const kasane = await pp.evaluate(() => { const a = document.getElementById("smhkover"), b = document.querySelector("#smhkbody .smth.sel");
+      return !!(a && b) && getComputedStyle(a).backgroundImage === getComputedStyle(b).backgroundImage
         && getComputedStyle(a).backgroundPosition === getComputedStyle(b).backgroundPosition; });
-    ok(kasane, "⑧ 選び直すと、重なる絵も選び直した絵（0005）になる");
-    ok((await pp.locator("#smmbody .smth.sel").count()) === 1, "⑧ 「選んだ」の印は1枚だけ");
-    const tt = await pp.evaluate(() => ({m: document.getElementById("smvid").__shirushi, t: document.getElementById("smvid").currentTime}));
-    ok(tt.m === 1 && tt.t > 3.5, "⑧ 選んでも動画を作り直さない・止めた所のまま（" + tt.t.toFixed(1) + "秒。頭に戻らない）");
-    await pp.screenshot({path: outDir + "/_スマホ_見ながら選ぶ.png"});
+    ok(kasane && (await pp.locator("#smhkbody .smth.sel").count()) === 1, "⑨ 押した絵が上に大きく重なり、選び直せる（「選んだ」は1枚だけ）");
+    await pp.screenshot({path: outDir + "/_スマホ_絵を変える_選んだ.png"});
+    await pp.click("#smhktsugi");
+    await no("No.6");
+    ok((await pp.locator("#smhkover").count()) === 0, "⑨ 次の字幕（まだ選んでいない）では、重ねた絵が消えて動画の絵になる");
+    const src1 = await pp.evaluate(() => document.getElementById("smhkvid").src);
+    await pp.click("#smhktsugi");
+    await no("No.7");
+    const ao = await pp.locator("#smhkbody .smgrid .smth").count();
+    const src2 = await pp.evaluate(() => document.getElementById("smhkvid").src);
+    // あお組の章の動画は 19.0秒（本編 17.0＋オープニング 2.0）から。No.7 は 18.4＋2.0＋0.6 → 2.0秒
+    ok(ao === 5 && src2 !== src1 && (await vt(2.0)), "⑨ 章をまたいでも続けて見られる（No.7・候補は あお組 の " + ao + "枚・動画も あお組 の章の所）");
+    for (const x of [1, 2, 3]) await pp.click("#smhkmae");
+    await no("No.3・4");
+    await pp.click("#smhkbody .smth[title='あか組！/0004.png']");
+    await pp.click("#smhkhozon");
+    await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("一時保存しました") >= 0, null, {timeout: 5000});
+    const e1 = await sumaho();
+    ok(e1 && e1.picks && e1.picks["5"] === "あか組！/0005.png" && e1.picks["3"] === "あか組！/0004.png" && e1.picks["4"] === "あか組！/0004.png",
+       "⑨ 一時保存で、その場で残る（5・3・4番）");
+    ok((await pp.textContent("#smhkst")).indexOf("一時保存") >= 0, "⑨ 下の帯に一時保存の時刻が出る");
+    await pp.click("#smhkkettei");
+    ok((await pp.textContent("#smhkkettei")).indexOf("もう一度押すと決定") >= 0 && !(await kettei()), "⑨ 修正を決定は1回目では決めない（もう一度押すと決定）");
+    await pp.click("#smhkkettei");
+    await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました") >= 0, null, {timeout: 5000});
+    const k1 = await kettei();
+    ok(k1 && k1.n === 3 && k1.text.indexOf("#@title\t01_ためし") >= 0 && k1.text.indexOf("5\tあか組！/0005.png\t") >= 0,
+       "⑨ 2回押すと決定し、sumaho_kettei に入れ替えの形で残る（" + (k1 && k1.n) + " か所）");
+    ok((await pp.textContent("#smhkst")).indexOf("決定済み") >= 0, "⑨ 下の帯に「決定済み」");
     const yoko = await pp.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
-    ok(yoko[0] <= yoko[1] + 1, "⑧ 動画と候補を開いても、ページが横に動かない（" + yoko[0] + " ／ " + yoko[1] + "px）");
-    await pp.click("#smmgo");
-    await pp.waitForSelector("#smmodal", {state: "hidden"});
-    await pp.waitForFunction(() => !document.getElementById("smvid").paused, null, {timeout: 5000});
-    ok(!(await pp.isVisible("#smprev")) && (await pp.evaluate(() => document.getElementById("smvid").currentTime)) > 3.5,
-       "⑧ 「閉じて続きを見る」で一覧と重ねた絵が消え、止めた所から再生する");
-    await pp.evaluate(() => document.getElementById("smvid").pause());
-    // 下にずらした所（動画が画面のまんなか）から字幕を押しても、上に動画・下に候補に分かれる
-    await pp.evaluate(() => { const v = document.getElementById("smview");
-      window.scrollTo(0, Math.max(0, v.getBoundingClientRect().top + window.scrollY - 300)); });
-    const mae = await pp.evaluate(() => Math.round(document.getElementById("smstick").getBoundingClientRect().top));
-    // Playwright の click は押す前に自分で画面を動かすので、ここは画面を動かさずに押す
-    await pp.evaluate(() => Array.from(document.querySelectorAll(".smrow")).find(e => e.textContent.indexOf("最初にご紹介") >= 0).click());
-    await pp.waitForSelector("#smmodal:not([hidden])");
-    const geo2 = await pp.evaluate(() => { const a = document.getElementById("smstick").getBoundingClientRect();
-      const b = document.querySelector("#smmodal .smbox").getBoundingClientRect(); return {st: a.top, sb: a.bottom, bt: b.top, bb: b.bottom, h: window.innerHeight}; });
-    ok(mae > 100 && Math.abs(geo2.st) <= 2 && Math.abs(geo2.bt - geo2.sb) <= 2 && Math.abs(geo2.bb - geo2.h) <= 2,
-       "⑧ 動画が画面のまんなか（" + mae + "px）にあっても、字幕を押すと動画が上・その下から画面の下まで候補（動画 " +
-       Math.round(geo2.st) + "〜" + Math.round(geo2.sb) + " ／ 候補 " + Math.round(geo2.bt) + "〜" + Math.round(geo2.bb) + "）");
-    await pp.click("#smmbody .smth[title='あか組！/0004.png']");
+    ok(yoko[0] <= yoko[1] + 1, "⑨ 絵を変える画面でも、ページが横に動かない（" + yoko[0] + " ／ " + yoko[1] + "px）");
+    await pp.click("#smhkclose");
+    await pp.waitForSelector("#smhk", {state: "hidden"});
+    await pp.waitForSelector(".smrow.picked:has-text('本作は漫画')");
     await pp.waitForSelector(".smrow.picked:has-text('最初にご紹介')");
-    await pp.click("#smmclose");
-    await pp.waitForSelector("#smmodal", {state: "hidden"});
+    ok(await pp.evaluate(() => document.getElementById("smvid").__shirushi === 1), "⑨ 閉じると見る画面に戻り（動画は作り直さない）、選んだ所に印");
+    // 決定のあとで「いまの絵に戻す」→ 次の決定で「-」が入る
+    await pp.evaluate(() => Array.from(document.querySelectorAll(".smrow")).find(e => e.textContent.indexOf("本作は漫画") >= 0).click());
+    await no("No.5");
+    await pp.click("#smhkmodo");
+    ok((await pp.textContent("#smhkst")).indexOf("決定のあとに選び直した所") >= 0, "⑨ 決定のあとで変えると「もう一度「修正を決定」」と出る");
+    await pp.click("#smhkkettei"); await pp.click("#smhkkettei");
+    await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました") >= 0, null, {timeout: 5000});
+    const k2 = await kettei();
+    ok(k2 && k2.text.indexOf("5\t-\t") >= 0 && k2.n === 2, "⑨ 決定のあと「いまの絵に戻す」にした所は、次の決定で「-」（機械に戻す）が入る");
+    await pp.click("#smhkbody .smth[title='あか組！/0005.png']");
+    await pp.click("#smhkkettei"); await pp.click("#smhkkettei");
+    await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました（3") >= 0, null, {timeout: 5000});
+    console.log("KETTEI|" + JSON.stringify(await kettei()));
+    await pp.click("#smhkclose");
+    await pp.waitForSelector("#smhk", {state: "hidden"});
     await pp.waitForTimeout(1200);
     ok(!(await pp.isVisible("button:has-text('irekae.txt を保存')")), "③ スマホでは「irekae.txt を保存」は出ない");
     await pp.screenshot({path: outDir + "/_スマホ_選んだあと.png", fullPage: true});
@@ -437,12 +487,14 @@ def main():
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                        env=dict(os.environ, NODE_PATH=os.environ.get("NODE_PATH", "")))
     out = r.stdout.decode("utf-8", "replace")
-    sav = None
+    sav, kettei = None, None
     for line in out.split(u"\n"):
         if line.startswith(u"OK|") or line.startswith(u"NG|"):
             iu(line.startswith(u"OK|"), line[3:])
         elif line.startswith(u"SAVED|"):
             sav = json.loads(line[6:])
+        elif line.startswith(u"KETTEI|"):
+            kettei = json.loads(line[7:])
     if r.returncode != 0 or sav is None:
         print(out[-3000:])
         iu(False, u"ブラウザの確かめが最後まで走る")
@@ -466,6 +518,30 @@ def main():
                      (4, u"あか組！/0004.png", u"、制作はこうしゃ。"),
                      (5, u"あか組！/0005.png", u"本作は漫画が原作となっています。")],
        u"⑤ メニューの取り込みが、番号・絵・字幕の文をそのまま読める（%s）" % g)
+    # ⑩ 決めた中身（パックの 99_確認不要/その他/irekae_sumaho.txt で届く）を取り込みに通す
+    iu(bool(kettei) and kettei.get(u"title") == u"01_ためし" and kettei.get(u"n") == 3,
+       u"⑩ 最後の決定が残っている（%s か所）" % (kettei or {}).get(u"n"))
+    if kettei:
+        w = os.path.join(SAGYOU, u"_取り込み")
+        os.makedirs(os.path.join(w, u"その他"))
+        kp = os.path.join(w, u"その他", u"irekae_sumaho.txt")
+        io.open(kp, "w", encoding="utf-8-sig", newline=u"").write(kettei[u"text"])
+        ms.HERE, ms.DOUGA_NA = w, u"01_ためし"
+        n1 = ms.irekae_torikomu()
+        sa = io.open(os.path.join(w, ms.SASHIKAE), encoding="utf-8-sig").read()
+        iu(n1 == 3 and u"5\tあか組！/0005.png\t本作は漫画が原作となっています。" in sa
+           and u"3\tあか組！/0004.png\t最初にご紹介する作品は、あか組！" in sa,
+           u"⑩ スマホで決めた絵を、はじめる.bat → 2 の取り込みが 差し替え.txt に入れる（%d か所）" % n1)
+        n2 = ms.irekae_torikomu()
+        os.utime(kp, (os.path.getatime(kp), os.path.getmtime(kp) + 120))
+        n3 = ms.irekae_torikomu()
+        iu(n2 == 0 and n3 == 0, u"⑩ もう一度動かしても・同じ中身が新しい日時で届いても、二度は入れない（%d・%d）" % (n2, n3))
+        io.open(kp, "w", encoding="utf-8-sig", newline=u"").write(
+            kettei[u"text"].replace(u"あか組！/0005.png", u"あか組！/0006.png"))
+        n4 = ms.irekae_torikomu()
+        sa2 = io.open(os.path.join(w, ms.SASHIKAE), encoding="utf-8-sig").read()
+        iu(n4 >= 1 and u"5\tあか組！/0006.png" in sa2 and u"5\tあか組！/0005.png" not in sa2,
+           u"⑩ 決め直した中身は入り、同じ字幕の前の決定は消える")
     return 0
 
 
