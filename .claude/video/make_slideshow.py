@@ -10283,13 +10283,17 @@ def sumaho_tsukuru(D, imgpath, final, op_byou, spans):
     clips = []
     if final and os.path.exists(final) and spans:
         zen = douga_nagasa(final)
+        shigoto = []
         for i, (st, en, ti) in enumerate(spans):
             a0 = 0.0 if i == 0 else st + op_byou
             b0 = zen if i == len(spans) - 1 else en + op_byou
             if b0 - a0 < 0.3:
                 continue
-            fn = u"d_%03d.mp4" % len(clips)
-            dst = os.path.join(out, fn)
+            shigoto.append((len(shigoto), a0, b0, ti))
+
+        def kiri(job):
+            k, a0, b0, ti = job
+            dst = os.path.join(out, u"_d_%03d.mp4" % k)
             for crf in (30, 35):
                 r = subprocess.run([need("ffmpeg"), "-y", "-loglevel", "error", "-ss", "%.3f" % a0,
                                     "-i", final, "-t", "%.3f" % (b0 - a0),
@@ -10298,12 +10302,21 @@ def sumaho_tsukuru(D, imgpath, final, op_byou, spans):
                                     "-ac", "1", "-movflags", "+faststart", dst],
                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 if r.returncode == 0 and os.path.exists(dst) and os.path.getsize(dst) <= SUMAHO_JOUGEN:
-                    break
-            if not os.path.exists(dst) or os.path.getsize(dst) > SUMAHO_JOUGEN:
-                say(u"  ⚠ スマホ用の動画 %s が作れないか大きすぎました（とばします）" % fn)
-                if os.path.exists(dst):
-                    os.remove(dst)
+                    return dst
+            if os.path.exists(dst):
+                os.remove(dst)
+            return None
+        # 章ごとに独立した仕事なので、並べて作る（2026-11-20・本人「時間がかかりすぎる」）。1本ごとの作り方は前と同じ
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=max(1, min(4, os.cpu_count() or 2))) as ex:
+            dekita = list(ex.map(kiri, shigoto))
+        for (k, a0, b0, ti), dst in zip(shigoto, dekita):
+            if not dst:
+                say(u"  ⚠ スマホ用の章の動画（%s）が作れないか大きすぎました（とばします）"
+                    % ((ti or u"").split(u"\\N")[0] or u"はじめに"))
                 continue
+            fn = u"d_%03d.mp4" % len(clips)
+            os.replace(dst, os.path.join(out, fn))
             na = u"はじめに" if ti == MUDAI else (ti or u"").split(u"\\N")[0]
             clips.append({u"file": fn, u"title": na, u"st": round(a0, 2), u"en": round(b0, 2)})
 
@@ -12386,6 +12399,7 @@ def main():
         # 作品のフォルダが無い章がある。無地の絵をここで作る（章タイトルと同じ色）
         if not muji_tsukuru(w, h, en.get("card_iro")):
             die(u"無地の絵（その他/無地.png）を作れませんでした。ffmpeg を確かめてください。")
+    soroe = []          # まだそろえていない絵（そろえた絵は その他/_work/norm に残り、次の回は読むだけ）
     for img in uniq:
         src = img if os.path.isabs(img) else imgpath.get(img, os.path.join(a.images, img))
         if not os.path.exists(src):
@@ -12393,9 +12407,22 @@ def main():
         key = u"%s|%d|%d|%dx%d|%s" % (os.path.abspath(src), os.path.getsize(src),
                                       int(os.path.getmtime(src)), nw, nh, a.fit)
         dst = os.path.join(norm, hashlib.md5(key.encode("utf-8")).hexdigest()[:16] + ".png")
-        if not os.path.exists(dst):
-            normalize(src, dst, nw, nh, a.fit)
+        if not os.path.exists(dst) and dst not in [x[1] for x in soroe]:
+            soroe.append((src, dst))
         cache[img] = dst
+    # 1枚ずつは独立した仕事なので、断片づくりと同じく並べて走らせる（2026-11-20・本人「時間がかかりすぎる」。
+    # 本人の回と同じ大きさで 224枚を1枚ずつ順番に 65秒かかっていた）。1枚ごとの中身は前と同じ
+    if soroe:
+        t_so = time.time()
+        nin_so = a.jobs if a.jobs > 0 else max(2, min(8, int((os.cpu_count() or 2) * 1.5)))
+        if nin_so <= 1 or len(soroe) == 1:
+            for (src, dst) in soroe:
+                normalize(src, dst, nw, nh, a.fit)
+        else:
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=nin_so) as ex:
+                list(ex.map(lambda sd: normalize(sd[0], sd[1], nw, nh, a.fit), soroe))
+        say(u"  そろえた絵 %d枚（%d個ずつ並べて %.1f秒）" % (len(soroe), nin_so, time.time() - t_so))
 
     # --- 章タイトルのカードを、章の頭にはさむ ---
     # 1.5秒ぶん尺が増えるので、あとで音声にも同じだけ無音を入れる。
@@ -12814,6 +12841,15 @@ def main():
         else:
             ugokasu = False
 
+    # ■ 絵は1回だけ読み、決まった拡大も1回だけする（2026-11-20・本人「時間がかかりすぎる」）
+    #
+    #   前は「-loop 1」で絵を入れていたので、**1コマごとに PNG（2112×1188）を読み直し**、
+    #   滑らかに動かすための「動く向きだけ3倍に広げる」拡大（6336×1188）も**1コマごとにやり直していた**。
+    #   本人の回と同じ長さ（19分・3万4千コマ）で断片づくりが 1064.7秒＝全体のほとんど。
+    #   いまは絵を1枚として読み、決まった拡大のあとで同じコマを繰り返す（loop）。時刻は
+    #   setpts=N/(fps*TB) で前と同じ n/fps にするので、切り出す位置（t の式）も、出来るコマも前と同じ。
+    kuri = u"loop=loop=-1:size=1:start=0,setpts=N/(%d*TB)" % fps
+
     def pan_chain(label_in, label_out, m, zure=0.0, s_k=1.0, hy_k=None):
         u"""大きい絵から画面ぶんを切り出す。m が向き（None なら動かさない）。
 
@@ -12863,11 +12899,11 @@ def main():
             x, y = u"%.1f" % (yoko_ / 2.0), u"'%.1f-%s'" % (y0 + kyori_, susumu)
         else:
             x, y = u"(iw-%d)/2" % w, u"(ih-%d)/2" % h
-            return u"[%s]crop=%d:%d:x=%s:y=%s[%s];" \
-                % (label_in, w, h, x, y, label_out)
+            return u"[%s]crop=%d:%d:x=%s:y=%s,%s[%s];" \
+                % (label_in, w, h, x, y, kuri, label_out)
         if K <= 1:
-            return u"[%s]%scrop=%d:%d:x=%s:y=%s[%s];" \
-                % (label_in, pre, w, h, x, y, label_out)
+            return u"[%s]%s%s,crop=%d:%d:x=%s:y=%s[%s];" \
+                % (label_in, pre, kuri, w, h, x, y, label_out)
         # ■ **広げるのは「動く向きだけ」。** 縦横とも広げる必要はない。
         #
         # 動きは横か縦のどちらか一方なので、その向きだけ K倍にすれば
@@ -12895,8 +12931,8 @@ def main():
             xK = u"%.1f" % (yoko_ / 2.0)
             yK = (u"'%.1f+%s'" % (y0 * K, susumuK) if m == u"上へ"
                   else u"'%.1f-%s'" % ((y0 + kyori_) * K, susumuK))
-        return (u"[%s]%s%s,crop=%s:x=%s:y=%s,scale=%d:%d:flags=bicubic[%s];"
-                % (label_in, pre, hiro, kir, xK, yK, w, h, label_out))
+        return (u"[%s]%s%s,%s,crop=%s:x=%s:y=%s,scale=%d:%d:flags=bicubic[%s];"
+                % (label_in, pre, hiro, kuri, kir, xK, yK, w, h, label_out))
 
     shigoto = []          # あとでまとめて作る断片
     for i, (_du, img, _t) in enumerate(rows):
@@ -12926,15 +12962,22 @@ def main():
         seg = segcache.get(key)
         if seg is None:
             seg = os.path.join(segdir, "s%05d.mp4" % len(segcache))
+            # 絵は1枚として読む（-loop 1 にしない）。繰り返すのはフィルタの中の kuri（上の注記）
             cmd = [need("ffmpeg"), "-y", "-loglevel", "error",
-                   "-loop", "1", "-framerate", str(fps), "-i", cache[img]]
+                   "-framerate", str(fps), "-i", cache[img]]
             if fil:
                 if mae:
-                    cmd += ["-loop", "1", "-framerate", str(fps), "-i", mae]
+                    cmd += ["-framerate", str(fps), "-i", mae]
+                if not ugokasu:
+                    # 動かさないときは pan が無いので、入れたところで繰り返す
+                    fil = (u"[0:v]%s[r0];" % kuri + (u"[1:v]%s[r1];" % kuri if mae else u"")
+                           + fil.replace(u"[0:v]", u"[r0]").replace(u"[1:v]", u"[r1]"))
                 cmd += ["-filter_complex", fil, "-map", "[v]"]
             elif ugokasu:
                 cmd += ["-vf", pan_chain(u"0:v", u"v", kore, zure, s_k, hy_k)
                         .replace(u"[0:v]", u"").rstrip(u";").replace(u"[v]", u"")]
+            else:
+                cmd += ["-vf", kuri]
             cmd += ["-frames:v", str(frames[i]),
                     "-c:v", "libx264", "-preset", a.seg_preset,
                     "-crf", str(max(12, a.crf - 6)),
