@@ -544,14 +544,14 @@ def daicho_kaku(a, rows, shou_no):
         except Exception:
             return u""
     try:
-        p = os.path.join(u"確認用", u"字幕の台帳.txt")
+        p = os.path.join(_KAKUNIN, u"字幕の台帳.txt")
         n = jimaku_daicho(M, S, rows2, shou2, p, bamen=S.load_bamen())
         print(u"   字幕の台帳: %s （%d枚）" % (p, n))
     except Exception as e:
         print(u"   字幕の台帳は作れませんでした（%s）" % e)
     try:
         imgs = sorted(set(r[u"img"] for r in rows2 if r.get(u"img")))
-        for cand in (os.path.join(u"確認用", u"画像一覧.txt"), u"画像一覧.txt"):
+        for cand in (os.path.join(_KAKUNIN, u"画像一覧.txt"), u"画像一覧.txt"):
             if os.path.exists(cand):
                 imgs = [x.strip() for x in yomu(cand).split(u"\n")
                         if x.strip() and not x.strip().startswith(u"#")]
@@ -564,9 +564,12 @@ def daicho_kaku(a, rows, shou_no):
         print(u"   絵の台帳は作れませんでした（%s）" % e)
 
 
+# 作業フォルダの新しい並び（2026-11-20）: いまいる所が「99_」で始まれば、確認用は ..\04_確認用
+_KAKUNIN = os.path.join(u"..", u"04_確認用") \
+    if os.path.basename(os.path.abspath(u".")).startswith(u"99_") else u"確認用"
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(u"確認用", u"一覧.txt"))
+    ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(_KAKUNIN, u"一覧.txt"))
     ap.add_argument(u"--差し替え", dest="sashi", default=os.path.join(u"その他", u"差し替え.txt"))
     ap.add_argument(u"--画面表示", dest="overlay", default=u"画面表示.txt")
     ap.add_argument(u"--カタログ", dest="cat", default=u"画像カタログ.txt")

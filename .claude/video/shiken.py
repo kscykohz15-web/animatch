@@ -22,7 +22,7 @@ ap.add_argument("--out", default=u"一覧_試作.txt")
 a = ap.parse_args()
 
 if not a.ichiran:
-    for c in [os.path.join(u"確認用", u"一覧.txt"), u"一覧.txt"]:
+    for c in [os.path.join(MS.KAKUNIN_DIR, u"一覧.txt"), os.path.join(u"確認用", u"一覧.txt"), u"一覧.txt"]:
         if os.path.exists(c):
             a.ichiran = c
             break

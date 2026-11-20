@@ -56,6 +56,24 @@ DOUGA_DIR = u"動画"
 BUNKATSU_DIR = os.path.join(u"動画", u"分割版")
 KAKUNIN_DIR = u"確認用"
 SONOTA_DIR = u"その他"
+# ■ 作業フォルダの新しい並び（本人の指定・2026-11-20）
+#
+#   > 自動で生成されるファイルやフォルダがぐちゃぐちゃで見にくいです。…01_画像、02_動画のように、
+#   > 分けてください。ここで、動画、音声、はそれぞれ分け、あとの勝手に生成されるフォルダたち
+#   > （基本的に私の方で確認不要）なものは、99_確認不要 フォルダを生成し保存してください。
+#
+#   <作業フォルダ>\01_台本  02_音声  03_動画  04_確認用  99_確認不要（道具・設定・その他・output）
+#   道具は 99_確認不要 の中で動く。**道具が「99_」で始まるフォルダにいれば新しい並び**とし、
+#   音声・動画・確認用を1つ上の番号付きのフォルダに向ける（その他・output は 99 の中のまま）。
+#   台本はメニューが 01_台本 から 99 の中へ写してから道具を動かす（VOICEPEAK など本人の道具が
+#   ファイル名だけで呼べるように）。そうでなければ今までの並び（テストの材料もこちら）。
+NARABI_SHIN = os.path.basename(HERE).startswith(u"99_")
+if NARABI_SHIN:
+    OTO_DIR = os.path.join(u"..", u"02_音声")
+    DOUGA_DIR = os.path.join(u"..", u"03_動画")
+    KAKUNIN_DIR = os.path.join(u"..", u"04_確認用")
+    BUNKATSU_DIR = os.path.join(KAKUNIN_DIR, u"分割版")
+KAKUNIN_NA = os.path.basename(KAKUNIN_DIR)      # 知らせに出す名前（04_確認用 / 確認用）
 
 
 def ass_path(p):
@@ -4864,6 +4882,10 @@ def koe_onaji(koe_path, audio_path):
     戻り値 (同じか, 控えの道)
     """
     moto = os.path.join(os.path.dirname(os.path.abspath(audio_path or u".")), KOE_MOTO)
+    # 新しい並びでは、声のもと（確認不要の控え）は 99_確認不要\その他 に置く（2026-11-20）
+    moto2 = os.path.join(HERE, SONOTA_DIR, KOE_MOTO)
+    if not os.path.exists(moto) and os.path.exists(moto2):
+        moto = moto2
     if not (koe_path and os.path.exists(koe_path) and os.path.exists(moto)):
         return False, moto
 
@@ -9782,7 +9804,7 @@ def irekae_basho():
     home = os.path.expanduser(u"~")
     for d in (os.path.join(home, u"Downloads"), os.path.join(home, u"ダウンロード"),
               os.path.join(os.environ.get(u"USERPROFILE", home), u"Downloads"),
-              os.path.join(HERE, u"確認用"), os.path.join(HERE, SONOTA_DIR), HERE):
+              os.path.join(HERE, KAKUNIN_DIR), os.path.join(HERE, SONOTA_DIR), HERE):
         if d not in out and os.path.isdir(d):
             out.append(d)
     return out
@@ -9920,7 +9942,7 @@ def irekae_torikomu():
 
 
 def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
-                daiji=None, fol=u"確認用"):
+                daiji=None, fol=KAKUNIN_DIR):
     u"""確認用/入れ替え表.html を書く。ブラウザで開いて、押すだけで絵を選び直せる。
 
     番号は 確認用/一覧.txt と同じ（章カードも1コマ）。差し替え.txt の番号と同じ数え方。
@@ -10045,8 +10067,8 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
     out = os.path.join(fol, IREKAE_HTML)
     io.open(out, "w", encoding="utf-8", newline="\n").write(html)
     IREKAE_D[0] = D             # スマホ用（sumaho_tsukuru）が同じ材料を使う
-    say(u"確認用/入れ替え表.html を書きました（字幕 %d か所・候補の作品 %d）。"
-        u"ブラウザで開くと、押すだけで絵を選び直せます" % (len(out_rows), len(fols)))
+    say(u"%s/入れ替え表.html を書きました（字幕 %d か所・候補の作品 %d）。"
+        u"ブラウザで開くと、押すだけで絵を選び直せます" % (KAKUNIN_NA, len(out_rows), len(fols)))
     say(u"  保存したら はじめる.bat → 2 で入れ替わります（ダウンロードから自動で読み込みます）")
     return out
 
@@ -10749,7 +10771,7 @@ def hyou_gyou(i, start, du, img, tx, daihon):
 ATAMA_GYOU = u"番号\t開始\t尺\t画像\t絵の話数\t台本の話数\tちがい\tセリフ"
 
 
-def koma_ichiran(rows, starts, ends, cache, fol=u"確認用", retsu=4, gyou=5):
+def koma_ichiran(rows, starts, ends, cache, fol=KAKUNIN_DIR, retsu=4, gyou=5):
     u"""番号つきの「どの字幕にどの絵か」の表を、画像にして出す。
 
     本人の指定：
@@ -10828,12 +10850,12 @@ def koma_ichiran(rows, starts, ends, cache, fol=u"確認用", retsu=4, gyou=5):
         out = os.path.join(fol, u"コマ一覧_%02d.png" % (pg + 1))
         sheet.save(out)
         dekita += 1
-    say(u"確認用/コマ一覧_01.png … %dページ を作りました（%dコマ）" % (dekita, len(rows)))
+    say(u"%s/コマ一覧_01.png … %dページ を作りました（%dコマ）" % (KAKUNIN_NA, dekita, len(rows)))
     say(u"  気に入らないコマの番号を その他/差し替え.txt に書けば、そこだけ入れ替わります。")
     return dekita
 
 
-def write_ichiran(rows, starts, ends, fol=u"確認用", chaps=None):
+def write_ichiran(rows, starts, ends, fol=KAKUNIN_DIR, chaps=None):
     u"""一覧.txt だけ書く（動画は切らない）。
 
     採点(miru_kekka.py)が見るのはこの表だけで、短い動画は1本も見ていない。
@@ -10852,10 +10874,10 @@ def write_ichiran(rows, starts, ends, fol=u"確認用", chaps=None):
     io.open(os.path.join(fol, u"一覧.txt"), "w",
             encoding="utf-8-sig", newline="").write(
             u"\r\n".join(atama + hyo) + u"\r\n")
-    say(u"確認用/一覧.txt を書きました (%d行)。採点はこれだけで足ります。" % len(rows))
+    say(u"%s/一覧.txt を書きました (%d行)。採点はこれだけで足ります。" % (KAKUNIN_NA, len(rows)))
 
 
-def write_cuts(final, rows, starts, ends, fol=u"確認用", chaps=None):
+def write_cuts(final, rows, starts, ends, fol=KAKUNIN_DIR, chaps=None):
     """完成した動画を、1枚ずつの短い動画に切り分ける。
 
     直したい場所を「7番」のように番号で指せるようにするためのもの。
@@ -13097,8 +13119,8 @@ def main():
             _sp = chapter_spans(cues, chaps, sum(frames) / float(fps)) if chaps else []
             _sm = sumaho_tsukuru(IREKAE_D[0], imgpath, final, _opb, _sp)
             if _sm:
-                say(u"確認用/%s/ を作りました（作品の絵 %d枚を %d枚の紙に・章ごとの動画 %d本・%.0fMB）。"
-                    % (SUMAHO_DIR, _sm[0], _sm[1], _sm[2], _sm[3] / 1048576.0))
+                say(u"%s/%s/ を作りました（作品の絵 %d枚を %d枚の紙に・章ごとの動画 %d本・%.0fMB）。"
+                    % (KAKUNIN_NA, SUMAHO_DIR, _sm[0], _sm[1], _sm[2], _sm[3] / 1048576.0))
                 say(u"  スマホで見るには、パソコンで制作ボードを開き「スマホ用を上げる」でこのフォルダを選んでください")
         except Exception as e:
             say(u"スマホ用は作れませんでした: %s" % e)

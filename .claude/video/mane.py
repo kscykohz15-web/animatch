@@ -295,6 +295,10 @@ def youi(path):
 
 
 def main():
+    # 作業フォルダの新しい並び（2026-11-20）: いまいる所が「99_」で始まれば、
+    # 確認用は ..\04_確認用・このフォルダの動画は ..\03_動画
+    shin = os.path.basename(os.path.abspath(u".")).startswith(u"99_")
+    kakunin = os.path.join(u"..", u"04_確認用") if shin else u"確認用"
     ap = argparse.ArgumentParser()
     ap.add_argument("video", nargs="?", default=None, help=u"動画(省略すると全部)")
     ap.add_argument("--folder", default=None, help=u"このフォルダの動画を全部")
@@ -302,7 +306,7 @@ def main():
     ap.add_argument("--to", dest="to", default=None, help=u"ここまで")
     ap.add_argument("--max", type=float, default=None,
                     help=u"1本につきこの秒数だけ測る(真ん中から)。本数が多いとき用")
-    ap.add_argument("--out", default=os.path.join(u"確認用", u"編集のクセ.txt"))
+    ap.add_argument("--out", default=os.path.join(kakunin, u"編集のクセ.txt"))
     a = ap.parse_args()
 
     ff = need_ffmpeg()
@@ -311,7 +315,7 @@ def main():
     if a.video:
         mono = [a.video]
     else:
-        fol = a.folder or u"."
+        fol = a.folder or (os.path.join(u"..", u"03_動画") if shin else u".")
         if not os.path.isdir(fol):
             say(u"× フォルダが見つかりません: %s" % fol)
             return 1

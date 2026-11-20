@@ -335,7 +335,10 @@ def kouho_erabu(r, rows, i, tags, zenbu, tsukai, kazu=KOUHO, sakeru=None):
 
 
 # ------------------------------------------------------------------ 紙を作る
-def sheet(mato, imgpath, tags, fol=u"確認用", gyou=5, omakase=False):
+# 作業フォルダの新しい並び（2026-11-20）: いまいる所が「99_」で始まれば、確認用は ..\04_確認用
+_KAKUNIN = os.path.join(u"..", u"04_確認用") \
+    if os.path.basename(os.path.abspath(u".")).startswith(u"99_") else u"確認用"
+def sheet(mato, imgpath, tags, fol=_KAKUNIN, gyou=5, omakase=False):
     u"""1行 = いまの絵 + 候補6枚。番号を大きく出す。"""
     from PIL import Image, ImageDraw
     tw, th = 236, 133
@@ -470,7 +473,7 @@ def sashikae_kaku(path, mato, furui=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(u"確認用", u"一覧.txt"))
+    ap.add_argument(u"--一覧", dest="ichiran", default=os.path.join(_KAKUNIN, u"一覧.txt"))
     ap.add_argument(u"--カタログ", dest="catalog", default=u"画像カタログ.txt")
     ap.add_argument(u"--画像", dest="images", default=GAZOU_KITEI)
     ap.add_argument(u"--数", dest="kazu", type=int, default=30)

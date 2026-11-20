@@ -32,6 +32,21 @@ SCRIPT = u"台本_字幕用.txt"
 FIGDIR = u"図表"
 
 
+def _ari(*kouho):
+    for k in kouho:
+        if os.path.exists(k):
+            return k
+    return kouho[0]
+
+
+# 割り当て表は その他\、声は 音声\（前の「4つに分ける」整理）。新しい並び（2026-11-20）では、
+# いまいる所が「99_」で始まり、声は ..\02_音声。どの並びでも見つかるように探す。
+_SHIN = os.path.basename(os.path.abspath(u".")).startswith(u"99_")
+PLAN_YOMU = _ari(os.path.join(u"その他", PLAN), PLAN)
+AUDIO_YOMU = _ari(os.path.join(u"..", u"02_音声", AUDIO) if _SHIN else os.path.join(u"音声", AUDIO),
+                  os.path.join(u"音声", AUDIO), AUDIO)
+
+
 def say(t):
     try:
         print(t)
@@ -142,11 +157,11 @@ def main():
     a = ap.parse_args()
 
     os.chdir(HERE)
-    for f in (PLAN, AUDIO):
+    for f in (PLAN_YOMU, AUDIO_YOMU):
         if not os.path.exists(f):
             die(u"%s がありません。先に本編を作ってください。" % f)
 
-    rows = read_plan(PLAN)
+    rows = read_plan(PLAN_YOMU)
     credit, chaps = load_chapters(OVERLAY)
     spans = chapter_ranges(rows, chaps)
 
@@ -203,7 +218,7 @@ def main():
     # 音声を、絵の境目ちょうどで切る
     ff = need("ffmpeg")
     cut = os.path.join(out, "_cut.wav")
-    run([ff, "-y", "-loglevel", "error", "-i", AUDIO,
+    run([ff, "-y", "-loglevel", "error", "-i", AUDIO_YOMU,
          "-ss", "%.4f" % starts[i], "-t", "%.4f" % sec, cut])
 
     if a.hook:

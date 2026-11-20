@@ -30,8 +30,11 @@ except Exception:
 HERE = os.path.dirname(os.path.abspath(__file__))
 OVERLAY = u"画面表示.txt"
 SCRIPT = u"台本_字幕用.txt"
-ICHIRAN = os.path.join(u"確認用", u"一覧.txt")
-OUT = os.path.join(u"確認用", u"説明文.txt")
+# 作業フォルダの新しい並び（2026-11-20）: いまいる所が「99_」で始まれば、確認用は ..\04_確認用
+_KAKUNIN = os.path.join(u"..", u"04_確認用") \
+    if os.path.basename(os.path.abspath(u".")).startswith(u"99_") else u"確認用"
+ICHIRAN = os.path.join(_KAKUNIN, u"一覧.txt")
+OUT = os.path.join(_KAKUNIN, u"説明文.txt")
 
 # 章の名前の頭に付く通し番号。目次では外す。
 MARU = u"①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳"

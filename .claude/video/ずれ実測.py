@@ -48,6 +48,13 @@ def ff(args):
     return r.stdout.decode("utf-8", "replace")
 
 
+# ■ 作業フォルダの新しい並び（2026-11-20）。いまいる所（メニューが動かす所）が「99_」で始まる
+#   フォルダなら、音声と確認用は1つ上の番号付きのフォルダ。make_slideshow.py と同じ見分け方。
+_SHIN = os.path.basename(os.path.abspath(u".")).startswith(u"99_")
+OTO = os.path.join(u"..", u"02_音声") if _SHIN else u"音声"
+KAKUNIN = os.path.join(u"..", u"04_確認用") if _SHIN else u"確認用"
+
+
 def sagasu(*na):
     for n in na:
         if os.path.exists(n):
@@ -67,8 +74,8 @@ def mmss(t):
 
 
 def main():
-    koe = sagasu(os.path.join(u"音声", u"merged.wav"), u"merged.wav")
-    ich = sagasu(os.path.join(u"確認用", u"一覧.txt"))
+    koe = sagasu(os.path.join(OTO, u"merged.wav"), u"merged.wav")
+    ich = sagasu(os.path.join(KAKUNIN, u"一覧.txt"))
     if not koe or not ich:
         print(u"× merged.wav か 確認用/一覧.txt が見つかりません。測れません。")
         return 0
@@ -464,9 +471,9 @@ def main():
         for (_a, z2, t2, a2, b2) in tsuri[:30]:
             gyou.append(u"%s\t%+.2f秒\t%s\t%s" % (mmss(t2), z2, a2, b2))
     try:
-        if not os.path.isdir(u"確認用"):
-            os.makedirs(u"確認用")
-        io.open(os.path.join(u"確認用", u"ずれ.txt"), "w",
+        if not os.path.isdir(KAKUNIN):
+            os.makedirs(KAKUNIN)
+        io.open(os.path.join(KAKUNIN, u"ずれ.txt"), "w",
                 encoding="utf-8", newline="\r\n").write(u"\r\n".join(gyou) + u"\r\n")
     except Exception:
         pass

@@ -712,20 +712,23 @@ def youi(path):
     return path
 
 
+# 作業フォルダの新しい並び（2026-11-20）: いまいる所が「99_」で始まれば、確認用は ..\04_確認用
+_KAKUNIN = os.path.join(u"..", u"04_確認用") \
+    if os.path.basename(os.path.abspath(u".")).startswith(u"99_") else u"確認用"
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ichiran", default=None, help=u"確認用/一覧.txt")
     ap.add_argument("--catalog", default=u"画像カタログ.txt")
     ap.add_argument("--plan", default=None, help=u"画像プラン_*.txt")
-    ap.add_argument("--out", default=os.path.join(u"確認用", u"採点.txt"))
+    ap.add_argument("--out", default=os.path.join(_KAKUNIN, u"採点.txt"))
     ap.add_argument("--kurikaeshi", type=int, default=3, help=u"何回以上で使いすぎとするか")
     a = ap.parse_args()
 
     # ---- 一覧.txt を探す
     ich = a.ichiran
     if not ich:
-        for c in [os.path.join(u"確認用", u"一覧.txt"), u"一覧.txt",
-                  os.path.join(u"動画", u"分割版", u"一覧.txt"),
+        for c in [os.path.join(_KAKUNIN, u"一覧.txt"), u"一覧.txt",
+                  os.path.join(_KAKUNIN, u"分割版", u"一覧.txt"), os.path.join(u"動画", u"分割版", u"一覧.txt"),
                   os.path.join(u"出力", u"確認用", u"一覧.txt")]:
             if os.path.exists(c):
                 ich = c

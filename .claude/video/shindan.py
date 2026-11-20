@@ -37,10 +37,21 @@ def dur(path):
         return None
 
 
+def _koe_no_basho(name):
+    u"""merged.wav・subtitle.srt の場所。いちばん上 → 音声 → 1つ上の 02_音声（新しい並び・2026-11-20）。"""
+    for k in (name, os.path.join(u"音声", name), os.path.join(u"..", u"02_音声", name)):
+        if os.path.exists(k):
+            return k
+    return name
+
+
 def pick_folder():
     """merged.wav のあるフォルダを自力で探す。"""
     here = os.path.dirname(os.path.abspath(__file__))
     tried = [here]
+    # 作業フォルダ（道具と台本がある所）なら、そこを調べる。新しい並びの 99_確認不要 もここで当たる
+    if os.path.exists(os.path.join(here, u"画面表示.txt")) or os.path.exists(os.path.join(here, u"台本_字幕用.txt")):
+        return here, tried
     d = here
     for _ in range(3):
         if os.path.exists(os.path.join(d, "merged.wav")):
@@ -68,7 +79,9 @@ def main():
     os.chdir(folder)
     w(u"===== 場所 =====")
     w(u"調べたフォルダ: " + folder)
-    w(u"merged.wav: " + (u"あり" if os.path.exists("merged.wav") else u"なし"))
+    MW = _koe_no_basho(u"merged.wav")
+    SRT = _koe_no_basho(u"subtitle.srt")
+    w(u"merged.wav: " + (MW if os.path.exists(MW) else u"なし"))
     w(u"(探した場所: " + u" / ".join(tried) + u")")
     par = os.path.dirname(folder)
     if os.path.isdir(par):
@@ -98,7 +111,7 @@ def main():
     wavs = sorted([n for n in os.listdir(".")
                    if n.lower().endswith((".wav", ".mp3", ".flac")) and n != "merged.wav"])
     w(u"===== 音声 =====")
-    d = dur("merged.wav") if os.path.exists("merged.wav") else None
+    d = dur(MW) if os.path.exists(MW) else None
     w(u"merged.wav: %s" % (u"%.3f秒 (%d:%02d)" % (d, int(d // 60), int(d % 60)) if d else u"ありません"))
     if wavs:
         w(u"merged.wav 以外の音声が %d個 あります(これが1行ずつの音声なら、ズレは完全に無くせます):" % len(wavs))
@@ -137,8 +150,8 @@ def main():
 
     # 字幕ファイル
     w(u"===== subtitle.srt =====")
-    if os.path.exists("subtitle.srt"):
-        raw = io.open("subtitle.srt", encoding="utf-8-sig", errors="replace").read()
+    if os.path.exists(SRT):
+        raw = io.open(SRT, encoding="utf-8-sig", errors="replace").read()
         blocks = [b for b in re.split(r"\n\s*\n", raw.replace("\r\n", "\n")) if b.strip()]
         w(u"キュー数: %d" % len(blocks))
         w(u"--- 最初の2つ ---")
@@ -157,7 +170,7 @@ def main():
     w(u"===== 無音の検出 (merged.wav) =====")
     if d:
         for db in (-25, -30, -35, -40, -45, -50):
-            log = ff(["ffmpeg", "-hide_banner", "-nostats", "-i", "merged.wav",
+            log = ff(["ffmpeg", "-hide_banner", "-nostats", "-i", MW,
                       "-af", "silencedetect=noise=%ddB:d=0.05" % db, "-f", "null", "-"])
             sil, st = [], None
             for m in re.finditer(r"silence_(start|end):\s*(-?[0-9.]+)", log):
