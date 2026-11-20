@@ -19,6 +19,11 @@ u"""スマホで見る・絵を選ぶ（仕上げ.py ㉝）
   ⑤ パソコン: irekae.txt を保存すると、メニューの取り込み（irekae_gyou / irekae_dare）がそのまま読める
   ⑥ 小さい絵の位置（紙の中のマス）が正しい
   ⑦ 上げ直すと、前に上げた同じ動画のファイルは消える
+  ⑧ 動画を見ながら選ぶ（2026-11-20 本人の指定「動画を見ながら入れ替え候補の画像を見て選択できる」）
+     再生している所の字幕に印・上の帯に「いま No.○」／動画は上に貼りつく／「この字幕の絵を替える」で
+     止まって、その字幕の作品の絵が**動画の下に**並ぶ（動画を隠さない）／押すと選ばれ、動画の所に大きく
+     重なる・一覧は閉じない（選び直せる）／選んでも動画を作り直さない（頭に戻らない）／
+     「閉じて続きを見る」で止めた所から再生
 """
 from __future__ import print_function
 import io, json, os, re, shutil, subprocess, sys, threading, uuid
@@ -91,6 +96,9 @@ def zairyou(ms):
              {u"n": [9], u"t": u"0:26", u"tx": u"今回の動画は以上となります。", u"txs": [u"今回の動画は以上となります。"],
               u"curKey": u"あお組/0003.png", u"kind": u"e", u"te": False, u"c": 0},
          ]}
+    for r in D[u"rows"]:
+        m_, s_ = r[u"t"].split(u":")
+        r[u"s"] = int(m_) * 60 + int(s_) + 0.4
     final = os.path.join(SAGYOU, u"完成.mp4")
     subprocess.run([FF, "-y", "-loglevel", "error", "-f", "lavfi", "-i", "testsrc=size=1280x720:rate=30:duration=32",
                     "-f", "lavfi", "-i", "sine=frequency=440:duration=32", "-c:v", "libx264", "-pix_fmt", "yuv420p",
@@ -278,18 +286,59 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const bg = await pp.locator(".smrow:has-text('本作は漫画') .smth").evaluate(e => getComputedStyle(e).backgroundImage);
     const okImg = await pp.evaluate(u => fetch(u.replace(/^url\("?|"?\)$/g, "")).then(r => r.ok), bg);
     ok(okImg, "③ 字幕のいまの絵（いまの絵の紙）が読める");
-    await pp.click(".smrow:has-text('本作は漫画')");
+    // ── ⑧ 動画を見ながら選ぶ
+    await pp.evaluate(() => { document.getElementById("smvid").__shirushi = 1; document.body.style.paddingBottom = "1600px"; });
+    await pp.waitForFunction(() => document.getElementById("smvid").readyState >= 1, null, {timeout: 15000});
+    await pp.evaluate(() => { document.getElementById("smvid").currentTime = 8.6; });
+    await pp.waitForFunction(() => { const e = document.querySelector(".smrow.now"); return e && e.textContent.indexOf("物語は") >= 0; }, null, {timeout: 8000});
+    ok((await pp.textContent("#smnowt")).indexOf("物語は") >= 0, "⑧ 動画の位置に合わせて、いまの字幕（物語は…）に印が付き、上の帯にも出る");
+    await pp.evaluate(() => { document.getElementById("smvid").currentTime = 4.6; });
+    await pp.waitForFunction(() => { const e = document.querySelector(".smrow.now"); return e && e.textContent.indexOf("本作は漫画") >= 0; }, null, {timeout: 8000});
+    ok((await pp.locator(".smrow.now").count()) === 1, "⑧ 戻すと、印も戻る（本作は漫画…・印は1つだけ）");
+    const kuttsuki = await pp.evaluate(() => {
+      const v = document.getElementById("smview");
+      window.scrollTo(0, v.getBoundingClientRect().top + window.scrollY + 260);
+      return document.getElementById("smstick").getBoundingClientRect().top;
+    });
+    ok(Math.abs(kuttsuki) < 2, "⑧ 下へ動かしても、動画と帯は上に貼りついたまま（" + Math.round(kuttsuki) + "px）");
+    await pp.click("#smnowbtn");
     await pp.waitForSelector("#smmodal:not([hidden])");
+    ok(await pp.evaluate(() => document.getElementById("smvid").paused), "⑧ 「この字幕の絵を替える」で動画が止まる");
+    ok((await pp.textContent("#smmhead")).indexOf("本作は漫画") >= 0, "⑧ 並ぶのは、いまの字幕（本作は漫画…）の作品の絵");
+    const geo = await pp.evaluate(() => { const a = document.getElementById("smvwrap").getBoundingClientRect();
+      const b = document.querySelector("#smmodal .smbox").getBoundingClientRect(); return {vt: a.top, vb: a.bottom, bt: b.top, bb: b.bottom, h: window.innerHeight}; });
+    ok(geo.vt >= -1 && geo.vb > 100 && geo.bt >= geo.vb - 1 && geo.bb <= geo.h + 1,
+       "⑧ 絵の一覧は動画の下に出て、動画を隠さない（動画 " + Math.round(geo.vt) + "〜" + Math.round(geo.vb) + " ／ 一覧 " + Math.round(geo.bt) + "〜" + Math.round(geo.bb) + "）");
     const nTh = await pp.locator("#smmbody .smgrid .smth").count();
     ok(nTh === parseInt(nAka, 10), "③ その作品（あか組！）の絵が全部並ぶ（" + nTh + "枚）");
     ok((await pp.locator("#smmbody .smth .smlab:has-text('公式画像')").count()) === 1, "③ 「1」には「公式画像」の印");
+    ok((await pp.locator("#smmbody .smth.cur .smlab:has-text('いま')").count()) === 1, "③ いまの絵に「いま」の印");
     await pp.screenshot({path: outDir + "/_スマホ_絵を選ぶ.png"});
-    await pp.click("#smmbody .smth[title='あか組！/0005.png']");
-    await pp.waitForSelector("#smmodal", {state: "hidden"});
+    await pp.click("#smmbody .smth[title='あか組！/0006.png']");
     await pp.waitForSelector(".smrow.picked:has-text('本作は漫画')");
+    ok(await pp.isVisible("#smmodal"), "⑧ 絵を押しても一覧は閉じない（選び直せる）");
+    ok(await pp.isVisible("#smprev"), "⑧ 選んだ絵が動画の所に大きく重なる");
+    await pp.click("#smmbody .smth[title='あか組！/0005.png']");
+    await pp.waitForFunction(() => { const s = document.querySelector("#smmbody .smth.sel"); return s && s.title === "あか組！/0005.png"; }, null, {timeout: 3000});
+    const kasane = await pp.evaluate(() => { const a = document.getElementById("smprev"), b = document.querySelector("#smmbody .smth.sel");
+      return a && b && getComputedStyle(a).backgroundImage === getComputedStyle(b).backgroundImage
+        && getComputedStyle(a).backgroundPosition === getComputedStyle(b).backgroundPosition; });
+    ok(kasane, "⑧ 選び直すと、重なる絵も選び直した絵（0005）になる");
+    ok((await pp.locator("#smmbody .smth.sel").count()) === 1, "⑧ 「選んだ」の印は1枚だけ");
+    const tt = await pp.evaluate(() => ({m: document.getElementById("smvid").__shirushi, t: document.getElementById("smvid").currentTime}));
+    ok(tt.m === 1 && tt.t > 3.5, "⑧ 選んでも動画を作り直さない・止めた所のまま（" + tt.t.toFixed(1) + "秒。頭に戻らない）");
+    await pp.screenshot({path: outDir + "/_スマホ_見ながら選ぶ.png"});
+    await pp.click("#smmgo");
+    await pp.waitForSelector("#smmodal", {state: "hidden"});
+    await pp.waitForFunction(() => !document.getElementById("smvid").paused, null, {timeout: 5000});
+    ok(!(await pp.isVisible("#smprev")) && (await pp.evaluate(() => document.getElementById("smvid").currentTime)) > 3.5,
+       "⑧ 「閉じて続きを見る」で一覧と重ねた絵が消え、止めた所から再生する");
+    await pp.evaluate(() => document.getElementById("smvid").pause());
     await pp.click(".smrow:has-text('最初にご紹介')");
     await pp.waitForSelector("#smmodal:not([hidden])");
     await pp.click("#smmbody .smth[title='あか組！/0004.png']");
+    await pp.waitForSelector(".smrow.picked:has-text('最初にご紹介')");
+    await pp.click("#smmclose");
     await pp.waitForSelector("#smmodal", {state: "hidden"});
     await pp.waitForTimeout(1200);
     ok(!(await pp.isVisible("button:has-text('irekae.txt を保存')")), "③ スマホでは「irekae.txt を保存」は出ない");

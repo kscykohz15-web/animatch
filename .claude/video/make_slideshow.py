@@ -10107,6 +10107,8 @@ def irekae_hyou(rows, starts, ends, chaps, images, imgpath, cache, root,
         out_rows.append({
             u"n": [j + 1 for j in mem],
             u"t": mmss(starts[i]),
+            # 本編での始まり（秒）。スマホで再生している字幕を追いかけるのに使う（t は1秒刻みの表示用）
+            u"s": round(starts[i], 2),
             u"tx": u"".join((rows[j][2] or u"").strip() for j in mem),
             u"txs": [(rows[j][2] or u"").strip() for j in mem],
             u"cur": uri(p) if p and os.path.exists(p) else u"",
