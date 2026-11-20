@@ -30,8 +30,13 @@ u"""作業フォルダの新しい並び（仕上げ.py ㉞）
   ⑥ ずれ実測.py・説明文.py も 04_確認用 に書く
   ⑦ メニュー: 並びの名前が道具と同じ／Prepare が先に 並び替え.py を呼ぶ／
      道具を動かす所は 99_確認不要／前の道（$root の下の 音声・動画・確認用）が残っていない
-  ⑧ パック: いちばん上は はじめる.bat・01_台本・99_確認不要 だけ。はじめる.bat は日本語なしで
+  ⑧ パック: いちばん上は はじめる.bat だけ（本人の指定 2026-11-20「はじめるbatだけは、直下、
+     それ以外は99_確認不要フォルダへ」）。台本は 99_確認不要/パックの台本。はじめる.bat は日本語なしで
      99_ の menu.ps1 を探し、無ければ隣の menu.ps1
+  ⑨ パックの台本を 01_台本 へ入れる（並び替え.py --daihon。Prepare が呼ぶ）
+     はじめて → 入る／同じパックをもう一度 → 01_台本 で直した台本を上書きしない／
+     新しい台本のパック → 入り、前の台本は 99_確認不要\\_前の台本 へ／01_台本 から消えていたら入れ直す／
+     パックを作業フォルダに解いたとき（99_確認不要\\パックの台本）も同じ
 """
 from __future__ import print_function
 import hashlib
@@ -130,8 +135,8 @@ def hikkoshi(tmp):
     # 本人が自分で置いたかもしれない物（触らない）
     kaku(os.path.join(r, u"メモ.docx"), b=b"docx")
     kaku(os.path.join(r, u"自分のフォルダ", u"x.txt"), u"自分の\n")
-    # 新しいパックを作業フォルダに解いた（先に 01・99 がある）。ぶつかる所
-    kaku(os.path.join(r, DAI, u"台本_字幕用.txt"), u"新しいパックの台本です。\n")
+    # 先に 01・99 がある（新しいパックを作業フォルダに解いた・前のメニューと行き来した）。ぶつかる所
+    kaku(os.path.join(r, DAI, u"台本_字幕用.txt"), u"01_台本 の台本です。\n")
     kaku(os.path.join(r, FUY, u"画像カタログ.txt"), u"a\t1\nb\t2\n")          # 少ない → 前のほうを残す
     kaku(os.path.join(r, FUY, u"画面表示.txt"), u"章\tい\n")                   # 学んでいない → 前のほうを残す
     kaku(os.path.join(r, FUY, u"演出.txt"), u"新しい演出\n")                    # 新しいほうを残す
@@ -172,8 +177,8 @@ def hikkoshi(tmp):
     iu(not kieta, u"② 何も消さない（中身 %d 種類がぜんぶ残る）%s"
        % (len(mae), (u" ── 消えた: " + u"、".join(kieta)) if kieta else u""))
     yomu = lambda k: io.open(os.path.join(r, *k.split(u"/")), encoding="utf-8").read()
-    iu(yomu(DAI + u"/台本_字幕用.txt") == u"新しいパックの台本です。\n",
-       u"② 台本がぶつかったら 01_台本 のほう（新しいパック）を残し、前のほうは _前の並び へ")
+    iu(yomu(DAI + u"/台本_字幕用.txt") == u"01_台本 の台本です。\n",
+       u"② 台本がぶつかったら 01_台本 のほうを残し、いちばん上にあった前のほうは _前の並び へ")
     iu(yomu(FUY + u"/画像カタログ.txt").count(u"\t") == 5, u"② 画像カタログ.txt は中身の多いほうを残す")
     iu(u"学んだ話数が入っています" in yomu(FUY + u"/画面表示.txt"), u"② 学んだ話数の入った 画面表示.txt を残す")
     iu(yomu(FUY + u"/演出.txt") == u"新しい演出\n" and yomu(FUY + u"/make_slideshow.py") == u"# 新しい道具\n",
@@ -313,10 +318,11 @@ process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e
         iu(False, u"⑧ パックの並びの JS が動きません: " + p.stdout.decode("utf-8", "replace")[-400:])
         return
     top = sorted(set(n.split(u"/")[0] for n in o["names"]))
-    iu(top == sorted([u"はじめる.bat", DAI, FUY]),
-       u"⑧ パックのいちばん上は はじめる.bat・01_台本・99_確認不要 だけ（%s）" % u" ".join(top))
-    iu(u"01_台本/台本_字幕用.txt" in o["names"] and u"01_台本/台本_読み上げ用.txt" in o["names"],
-       u"⑧ 台本は 01_台本 に入る")
+    iu(top == sorted([u"はじめる.bat", FUY]),
+       u"⑧ パックのいちばん上は はじめる.bat と 99_確認不要 だけ（%s）" % u" ".join(top))
+    iu(u"99_確認不要/パックの台本/台本_字幕用.txt" in o["names"]
+       and u"99_確認不要/パックの台本/台本_読み上げ用.txt" in o["names"],
+       u"⑧ 台本は 99_確認不要\\パックの台本 に入る（作業フォルダの 99 にある台本の写しと別の名前）")
     iu(u"99_確認不要/menu.ps1" in o["names"] and u"99_確認不要/並び替え.py" in o["names"]
        and u"99_確認不要/図表/年表.png" in o["names"],
        u"⑧ menu.ps1・道具・図表は 99_確認不要 に入る（menu.ps1 の Prepare が $here を 99 と見るのと合う）")
@@ -327,15 +333,73 @@ process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e
     last = [l for l in bat.split(u"\r\n") if l.strip()][-1]
     iu(u'"%~dp0menu.ps1"' in last, u"⑧ 見つからなければ前の形（隣の menu.ps1）で動く")
     iu(u"\r\n" in bat and u"\n" not in bat.replace(u"\r\n", u""), u"⑧ はじめる.bat の改行は CRLF")
-    iu(u"$packTop = Split-Path -Parent $here" in m and u"Join-Path $packTop '01_台本'" in m
-       and u"Join-Path $packTop 'はじめる.bat'" in m,
-       u"⑧ menu.ps1 はパックのいちばん上（01_台本・はじめる.bat）を 99 の1つ上に探す")
+    iu(u"$packTop = Split-Path -Parent $here" in m and u"Join-Path $packTop 'はじめる.bat'" in m
+       and u"Join-Path $packTop '01_台本'" not in m,
+       u"⑧ menu.ps1 は はじめる.bat を 99 の1つ上に探す（台本は探さない）")
+    iu(u"python $nb $root --daihon (Join-Path $here 'パックの台本')" in pre,
+       u"⑧ Prepare は パックの台本 を 並び替え.py --daihon に渡す")
+
+
+# ── ⑨ パックの台本を 01_台本 へ ──────────────────
+def daihon(tmp):
+    w = os.path.join(tmp, u"05_動画", u"02_台本を入れる")
+    pk = os.path.join(tmp, u"Downloads", u"02_台本を入れる_制作パック", FUY, u"パックの台本")
+    S, Y = u"台本_字幕用.txt", u"台本_読み上げ用.txt"
+
+    def pack(sub, yomi):
+        kaku(os.path.join(pk, S), sub)
+        kaku(os.path.join(pk, Y), yomi)
+
+    def hashiru(src):
+        p = subprocess.run([sys.executable, os.path.join(HERE, u"並び替え.py"), w, u"--daihon", src],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=ENV)
+        return p.returncode, p.stdout.decode("utf-8", "replace")
+
+    def dai(n=S):
+        q = os.path.join(w, DAI, n)
+        return io.open(q, encoding="utf-8").read() if os.path.exists(q) else None
+
+    def mae():
+        q = os.path.join(w, FUY, u"_前の台本")
+        return sorted(os.listdir(q)) if os.path.isdir(q) else []
+
+    pack(u"一つ目のパックの台本です。\n", u"ヒトツメ。\n")
+    rc, log = hashiru(pk)
+    iu(rc == 0 and dai() == u"一つ目のパックの台本です。\n" and dai(Y) == u"ヒトツメ。\n"
+       and u"01_台本 に入れました" in log,
+       u"⑨ はじめて → パックの台本が 01_台本 に入る")
+    kaku(os.path.join(w, DAI, S), u"本人が直した台本です。\n")
+    rc, log = hashiru(pk)
+    iu(rc == 0 and dai() == u"本人が直した台本です。\n" and not mae(),
+       u"⑨ 同じパックをもう一度 → 01_台本 で直した台本を上書きしない")
+    pack(u"二つ目のパックの台本です。\n", u"ヒトツメ。\n")
+    rc, log = hashiru(pk)
+    bk = mae()
+    iu(rc == 0 and dai() == u"二つ目のパックの台本です。\n" and len(bk) == 1
+       and io.open(os.path.join(w, FUY, u"_前の台本", bk[0]), encoding="utf-8").read() == u"本人が直した台本です。\n",
+       u"⑨ 新しい台本のパック → 入り、直していた前の台本は 99_確認不要\\_前の台本 に残る（%s）" % u"・".join(bk))
+    iu(dai(Y) == u"ヒトツメ。\n" and len(bk) == 1, u"⑨ 変わっていない読み上げ用は触らない")
+    os.remove(os.path.join(w, DAI, S))
+    rc, log = hashiru(pk)
+    iu(rc == 0 and dai() == u"二つ目のパックの台本です。\n", u"⑨ 01_台本 から消えていたら、同じパックでも入れ直す")
+    # パックを作業フォルダに解いた（パックの台本が 作業フォルダ\99_確認不要\パックの台本）
+    nk = os.path.join(w, FUY, u"パックの台本")
+    kaku(os.path.join(nk, S), u"三つ目のパックの台本です。\n")
+    kaku(os.path.join(nk, Y), u"ミッツメ。\n")
+    rc, log = hashiru(nk)
+    iu(rc == 0 and dai() == u"三つ目のパックの台本です。\n" and dai(Y) == u"ミッツメ。\n",
+       u"⑨ パックを作業フォルダに解いたときも入る")
+    kaku(os.path.join(w, DAI, S), u"また直した台本です。\n")
+    rc, log = hashiru(nk)
+    iu(rc == 0 and dai() == u"また直した台本です。\n", u"⑨ そのあと作業フォルダの はじめる.bat を動かしても、直した台本を残す")
+    iu(sorted(os.listdir(w)) == sorted([DAI, OTO, DOU, KAK, FUY]), u"⑨ 作業フォルダのいちばん上は番号のフォルダだけ")
 
 
 def main():
     tmp = tempfile.mkdtemp(prefix=u"narabi_")
     try:
         hikkoshi(tmp)
+        daihon(tmp)
         dougu(tmp)
         menu_to_pack(tmp)
     finally:

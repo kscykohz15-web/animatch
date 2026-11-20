@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 u"""作業フォルダを新しい並びへ引っ越す（はじめる.bat が毎回呼ぶ。2回目からは何もしない）。
 
-    python 並び替え.py <作業フォルダ>
+    python 並び替え.py <作業フォルダ> [--daihon <パックの台本のフォルダ>]
 
 ■ 本人の指定（2026-11-20）
 
@@ -24,6 +24,20 @@ u"""作業フォルダを新しい並びへ引っ越す（はじめる.bat が�
   ・画像カタログ.txt / 話数マップ.txt は中身（タブのある行）の多いほうを残す。学んだ話数の入った
     画面表示.txt も残す（今までのメニューの Prepare と同じ決まり）
   ・開いていて動かせない物は、名前を出して次へ進む（止めない）
+
+■ パックの台本を 01_台本 に入れる（--daihon・本人の指定 2026-11-20）
+
+  > 制作パックの同様で はじめるbatだけは、直下、それ以外は99_確認不要フォルダへ入れて
+
+  パック（zip）のいちばん上は はじめる.bat だけ。台本も 99_確認不要\パックの台本\ に入っている。
+  メニューの Prepare がここを呼び、パックの台本を作業フォルダの 01_台本 へ入れる。
+
+  ・**前に入れたのと同じ台本のパックなら入れない**（99_確認不要\その他\_入れたパックの台本 と比べる）。
+    同じパックの はじめる.bat を何度動かしても、本人が 01_台本 で直した台本を上書きしない
+    （前のメニューは毎回上書きしていた）
+  ・新しい台本のパックなら入れる。01_台本 の台本が違えば、先に 99_確認不要\_前の台本\<日時>_… へ退避
+  ・01_台本 に台本が無ければ、同じパックでも入れる
+  ・パックを作業フォルダに解いたとき（パックの台本が 作業フォルダ\99_確認不要\パックの台本）も同じ
 """
 from __future__ import print_function
 import io
@@ -46,6 +60,9 @@ FUYOU_DIRS = (u"その他", u"output", u"図表", u"効果音", u"BGM", u"_前�
 FUYOU_EXT = (u".py", u".txt", u".tsv", u".ps1", u".png", u".json", u".ass", u".log", u".bat", u".wav")
 NOKOSU = (u"はじめる.bat",)
 SODATERU = (u"画像カタログ.txt", u"話数マップ.txt")     # 中身の多いほうを残す
+PACK_DAIHON = u"パックの台本"                               # パックの中の台本の置き場（99_確認不要 の下）
+IRETA = os.path.join(u"その他", u"_入れたパックの台本")     # 前に 01_台本 へ入れたパックの台本の控え
+MAE_DAIHON = u"_前の台本"                                   # 上書きした 01_台本 の台本の退避先
 
 
 class Hikkoshi(object):
@@ -54,6 +71,7 @@ class Hikkoshi(object):
         self.fuyou = os.path.join(self.root, FUYOU)
         self.bk = os.path.join(self.fuyou, u"_前の並び", time.strftime(u"%Y%m%d_%H%M%S"))
         self.ugoita, self.taihi, self.dame = [], [], []
+        self.ireta, self.mae_daihon = [], []
 
     # ── 小さな道具
     def _taihi(self, p, rel, tsuke=u""):
@@ -170,7 +188,50 @@ class Hikkoshi(object):
                 self._ugokasu(p, os.path.join(f, n))
         return self
 
+    @staticmethod
+    def _bytes(p):
+        with io.open(p, "rb") as f:
+            return f.read()
+
+    def daihon_ireru(self, src_dir):
+        u"""パックの台本（src_dir の 台本_字幕用.txt・台本_読み上げ用.txt）を 01_台本 へ入れる。"""
+        if not src_dir or not os.path.isdir(src_dir):
+            return self
+        for n in DAIHON_FILES:
+            s = os.path.join(src_dir, n)
+            if not os.path.isfile(s):
+                continue
+            d = os.path.join(self.root, DAIHON, n)
+            rec = os.path.join(self.fuyou, IRETA, n)
+            try:
+                sb = self._bytes(s)
+                if os.path.isfile(d) and os.path.isfile(rec) and self._bytes(rec) == sb:
+                    continue            # 前に入れたのと同じパック。本人の直しを残す
+                for q in (os.path.dirname(d), os.path.dirname(rec)):
+                    if not os.path.isdir(q):
+                        os.makedirs(q)
+                if not (os.path.isfile(d) and self._bytes(d) == sb):
+                    if os.path.isfile(d):
+                        bk = os.path.join(self.fuyou, MAE_DAIHON)
+                        if not os.path.isdir(bk):
+                            os.makedirs(bk)
+                        nm = u"%s_%s" % (time.strftime(u"%Y%m%d_%H%M%S"), n)
+                        if os.path.exists(os.path.join(bk, nm)):
+                            nm = u"%s_%d_%s" % (time.strftime(u"%Y%m%d_%H%M%S"), int(time.time() * 1000) % 1000, n)
+                        shutil.copyfile(d, os.path.join(bk, nm))
+                        self.mae_daihon.append(nm)
+                    shutil.copyfile(s, d)
+                    self.ireta.append(n)
+                shutil.copyfile(s, rec)
+            except (OSError, IOError, shutil.Error) as e:
+                self.dame.append(u"%s（%s）" % (n, e))
+        return self
+
     def hokoku(self):
+        if self.ireta:
+            print(u"  パックの台本を 01_台本 に入れました: %s" % u"・".join(self.ireta))
+        if self.mae_daihon:
+            print(u"  01_台本 にあった前の台本は 99_確認不要\\%s に残しました（消していません）" % MAE_DAIHON)
         if self.ugoita:
             print(u"  作業フォルダを新しい並び（01_台本・02_音声・03_動画・04_確認用・99_確認不要）に"
                   u"しました: %d か所を引っ越し" % len(self.ugoita))
@@ -182,13 +243,19 @@ class Hikkoshi(object):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print(u"使い方: python 並び替え.py <作業フォルダ>")
+    a = sys.argv[1:]
+    daihon = None
+    if u"--daihon" in a:
+        i = a.index(u"--daihon")
+        daihon = a[i + 1] if i + 1 < len(a) else None
+        a = a[:i] + a[i + 2:]
+    if not a:
+        print(u"使い方: python 並び替え.py <作業フォルダ> [--daihon <パックの台本のフォルダ>]")
         return 2
-    root = sys.argv[1]
+    root = a[0]
     if not os.path.isdir(root):
         os.makedirs(root)
-    h = Hikkoshi(root).hashiru()
+    h = Hikkoshi(root).hashiru().daihon_ireru(daihon)
     h.hokoku()
     return 0 if not h.dame else 1
 

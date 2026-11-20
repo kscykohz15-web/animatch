@@ -494,7 +494,9 @@
     <p class="lede">はじめる.bat を動かすと、作業フォルダがこの並びになります。<b>ふだん見るのは 01〜04 だけ</b>で、
       99_確認不要 は道具と途中のファイルの置き場です（触らなくて大丈夫です）。
       前の並びのフォルダは、はじめる.bat を動かしたときに自動で引っ越します（<b>何も消しません</b>。
-      同じ名前がぶつかった古いほうは 99_確認不要\_前の並び に残ります）。</p>
+      同じ名前がぶつかった古いほうは 99_確認不要\_前の並び に残ります）。
+      制作パック（zip）の中も、いちばん上は <b>はじめる.bat だけ</b>です。台本は はじめる.bat を動かすと 01_台本 に入ります
+      （同じ台本のパックをもう一度動かしても、01_台本 で直した台本は上書きしません）。</p>
     <pre class="cmd">01_台本\      台本_字幕用.txt・台本_読み上げ用.txt（直すのはここ）
 02_音声\      merged.wav・subtitle.srt
 03_動画\      できあがった動画
@@ -6415,7 +6417,7 @@ if __name__ == "__main__":
 # -*- coding: utf-8 -*-
 u"""作業フォルダを新しい並びへ引っ越す（はじめる.bat が毎回呼ぶ。2回目からは何もしない）。
 
-    python 並び替え.py <作業フォルダ>
+    python 並び替え.py <作業フォルダ> [--daihon <パックの台本のフォルダ>]
 
 ■ 本人の指定（2026-11-20）
 
@@ -6438,6 +6440,20 @@ u"""作業フォルダを新しい並びへ引っ越す（はじめる.bat が�
   ・画像カタログ.txt / 話数マップ.txt は中身（タブのある行）の多いほうを残す。学んだ話数の入った
     画面表示.txt も残す（今までのメニューの Prepare と同じ決まり）
   ・開いていて動かせない物は、名前を出して次へ進む（止めない）
+
+■ パックの台本を 01_台本 に入れる（--daihon・本人の指定 2026-11-20）
+
+  > 制作パックの同様で はじめるbatだけは、直下、それ以外は99_確認不要フォルダへ入れて
+
+  パック（zip）のいちばん上は はじめる.bat だけ。台本も 99_確認不要\パックの台本\ に入っている。
+  メニューの Prepare がここを呼び、パックの台本を作業フォルダの 01_台本 へ入れる。
+
+  ・**前に入れたのと同じ台本のパックなら入れない**（99_確認不要\その他\_入れたパックの台本 と比べる）。
+    同じパックの はじめる.bat を何度動かしても、本人が 01_台本 で直した台本を上書きしない
+    （前のメニューは毎回上書きしていた）
+  ・新しい台本のパックなら入れる。01_台本 の台本が違えば、先に 99_確認不要\_前の台本\<日時>_… へ退避
+  ・01_台本 に台本が無ければ、同じパックでも入れる
+  ・パックを作業フォルダに解いたとき（パックの台本が 作業フォルダ\99_確認不要\パックの台本）も同じ
 """
 from __future__ import print_function
 import io
@@ -6460,6 +6476,9 @@ FUYOU_DIRS = (u"その他", u"output", u"図表", u"効果音", u"BGM", u"_前�
 FUYOU_EXT = (u".py", u".txt", u".tsv", u".ps1", u".png", u".json", u".ass", u".log", u".bat", u".wav")
 NOKOSU = (u"はじめる.bat",)
 SODATERU = (u"画像カタログ.txt", u"話数マップ.txt")     # 中身の多いほうを残す
+PACK_DAIHON = u"パックの台本"                               # パックの中の台本の置き場（99_確認不要 の下）
+IRETA = os.path.join(u"その他", u"_入れたパックの台本")     # 前に 01_台本 へ入れたパックの台本の控え
+MAE_DAIHON = u"_前の台本"                                   # 上書きした 01_台本 の台本の退避先
 
 
 class Hikkoshi(object):
@@ -6468,6 +6487,7 @@ class Hikkoshi(object):
         self.fuyou = os.path.join(self.root, FUYOU)
         self.bk = os.path.join(self.fuyou, u"_前の並び", time.strftime(u"%Y%m%d_%H%M%S"))
         self.ugoita, self.taihi, self.dame = [], [], []
+        self.ireta, self.mae_daihon = [], []
 
     # ── 小さな道具
     def _taihi(self, p, rel, tsuke=u""):
@@ -6584,7 +6604,50 @@ class Hikkoshi(object):
                 self._ugokasu(p, os.path.join(f, n))
         return self
 
+    @staticmethod
+    def _bytes(p):
+        with io.open(p, "rb") as f:
+            return f.read()
+
+    def daihon_ireru(self, src_dir):
+        u"""パックの台本（src_dir の 台本_字幕用.txt・台本_読み上げ用.txt）を 01_台本 へ入れる。"""
+        if not src_dir or not os.path.isdir(src_dir):
+            return self
+        for n in DAIHON_FILES:
+            s = os.path.join(src_dir, n)
+            if not os.path.isfile(s):
+                continue
+            d = os.path.join(self.root, DAIHON, n)
+            rec = os.path.join(self.fuyou, IRETA, n)
+            try:
+                sb = self._bytes(s)
+                if os.path.isfile(d) and os.path.isfile(rec) and self._bytes(rec) == sb:
+                    continue            # 前に入れたのと同じパック。本人の直しを残す
+                for q in (os.path.dirname(d), os.path.dirname(rec)):
+                    if not os.path.isdir(q):
+                        os.makedirs(q)
+                if not (os.path.isfile(d) and self._bytes(d) == sb):
+                    if os.path.isfile(d):
+                        bk = os.path.join(self.fuyou, MAE_DAIHON)
+                        if not os.path.isdir(bk):
+                            os.makedirs(bk)
+                        nm = u"%s_%s" % (time.strftime(u"%Y%m%d_%H%M%S"), n)
+                        if os.path.exists(os.path.join(bk, nm)):
+                            nm = u"%s_%d_%s" % (time.strftime(u"%Y%m%d_%H%M%S"), int(time.time() * 1000) % 1000, n)
+                        shutil.copyfile(d, os.path.join(bk, nm))
+                        self.mae_daihon.append(nm)
+                    shutil.copyfile(s, d)
+                    self.ireta.append(n)
+                shutil.copyfile(s, rec)
+            except (OSError, IOError, shutil.Error) as e:
+                self.dame.append(u"%s（%s）" % (n, e))
+        return self
+
     def hokoku(self):
+        if self.ireta:
+            print(u"  パックの台本を 01_台本 に入れました: %s" % u"・".join(self.ireta))
+        if self.mae_daihon:
+            print(u"  01_台本 にあった前の台本は 99_確認不要\\%s に残しました（消していません）" % MAE_DAIHON)
         if self.ugoita:
             print(u"  作業フォルダを新しい並び（01_台本・02_音声・03_動画・04_確認用・99_確認不要）に"
                   u"しました: %d か所を引っ越し" % len(self.ugoita))
@@ -6596,13 +6659,19 @@ class Hikkoshi(object):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print(u"使い方: python 並び替え.py <作業フォルダ>")
+    a = sys.argv[1:]
+    daihon = None
+    if u"--daihon" in a:
+        i = a.index(u"--daihon")
+        daihon = a[i + 1] if i + 1 < len(a) else None
+        a = a[:i] + a[i + 2:]
+    if not a:
+        print(u"使い方: python 並び替え.py <作業フォルダ> [--daihon <パックの台本のフォルダ>]")
         return 2
-    root = sys.argv[1]
+    root = a[0]
     if not os.path.isdir(root):
         os.makedirs(root)
-    h = Hikkoshi(root).hashiru()
+    h = Hikkoshi(root).hashiru().daihon_ireru(daihon)
     h.hokoku()
     return 0 if not h.dame else 1
 
@@ -23173,7 +23242,8 @@ if __name__ == "__main__":
 "# ■ 作業フォルダの並び（本人の指定・2026-11-20）",
 "#   01_台本 / 02_音声 / 03_動画 / 04_確認用 は本人が見るもの。道具・設定・作業ファイルは 99_確認不要。",
 "#   道具は 99_確認不要 の中で動かす（道具は、自分のいる所が 99_ で始まれば、音声・動画・確認用を",
-"#   1つ上の 02_ 03_ 04_ に向ける）。パックの中も同じ並びで、この menu.ps1 は 99_確認不要 の中にある。",
+"#   1つ上の 02_ 03_ 04_ に向ける）。パックのいちばん上は はじめる.bat だけで、この menu.ps1 も台本も",
+"#   99_確認不要 の中にある（台本は 99_確認不要\\パックの台本。Prepare が 01_台本 へ入れる）。",
 "$work    = Join-Path $root '99_確認不要'",
 "$daiDir  = Join-Path $root '01_台本'",
 "$otoDir  = Join-Path $root '02_音声'",
@@ -23207,8 +23277,11 @@ if __name__ == "__main__":
 "  if (-not (Test-Path $root)) { New-Item -ItemType Directory -Path $root -Force | Out-Null }",
 "  # 前の並び（全部いちばん上・音声/動画/確認用/その他）から新しい並びへ引っ越す（本人の指定・2026-11-20）。",
 "  # 消さずに移すだけ。ぶつかった古いほうは 99_確認不要\\_前の並び へ。2回目からは何もしない。",
+"  # つづけて、パックの台本（99_確認不要\\パックの台本）を 01_台本 へ入れる。前に入れたのと同じ台本の",
+"  # パックなら入れない（同じパックを何度動かしても、01_台本 で直した台本を上書きしない）。",
+"  # 新しい台本なら、01_台本 の前の台本を 99_確認不要\\_前の台本 へ退避してから入れる。",
 "  $nb = Join-Path $here '並び替え.py'",
-"  if ((Have 'python') -and (Test-Path $nb)) { python $nb $root }",
+"  if ((Have 'python') -and (Test-Path $nb)) { python $nb $root --daihon (Join-Path $here 'パックの台本') }",
 "  foreach ($d in @($daiDir,$otoDir,$dogDir,$kakDir,$work)) {",
 "    if (-not (Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force | Out-Null }",
 "  }",
@@ -23223,14 +23296,6 @@ if __name__ == "__main__":
 "    if (Test-Path $mp) { Copy-Item $mp $work -Force }",
 "    $bt = Join-Path $packTop 'はじめる.bat'",
 "    if (Test-Path $bt) { Copy-Item $bt $root -Force }",
-"  }",
-"  # 台本はパックの 01_台本 から（前と同じく、パックを入れ直したら入れ直す）",
-"  $pd = Join-Path $packTop '01_台本'",
-"  if ((Test-Path $pd) -and (-not (SamePath $pd $daiDir))) {",
-"    foreach ($f in @('台本_字幕用.txt','台本_読み上げ用.txt')) {",
-"      $src = Join-Path $pd $f",
-"      if (Test-Path $src) { Copy-Item $src $daiDir -Force }",
-"    }",
 "  }",
 "  # 設定ファイルは「新しいものを必ず入れる」。",
 "  # 手直しを消さないよう、中身が違うときだけ _前の設定 に退避してから差し替える。",
@@ -24200,12 +24265,14 @@ if __name__ == "__main__":
     "powershell -NoProfile -ExecutionPolicy Bypass -File \"%~dp0menu.ps1\"",
     ""].join("\r\n");
 
-  // パックの中も作業フォルダと同じ並びにする。いちばん上は はじめる.bat と 01_台本 と 99_確認不要 だけ。
+  // パックの中の並び（本人の指定・2026-11-20「はじめるbatだけは、直下、それ以外は99_確認不要フォルダへ」）。
+  // いちばん上は はじめる.bat だけ。台本は 99_確認不要/パックの台本/（menu.ps1 の Prepare が 01_台本 へ入れる。
+  // 作業フォルダの 99_確認不要 にある台本の写しとは別の名前にしておかないと、写しとパックの台本が見分けられない）。
   function narabiPack(entries){
     for(var ni=0; ni<entries.length; ni++){
       var nm = entries[ni].name;
       if(nm === "はじめる.bat"){ continue; }
-      entries[ni].name = (/^台本_[^\/]*\.txt$/.test(nm) ? "01_台本/" : "99_確認不要/") + nm;
+      entries[ni].name = "99_確認不要/" + (/^台本_[^\/]*\.txt$/.test(nm) ? "パックの台本/" : "") + nm;
     }
     return entries;
   }
@@ -24309,6 +24376,8 @@ if __name__ == "__main__":
       "  99_確認不要\\  道具・設定・途中のファイル（触らなくて大丈夫です）",
       "                 画像プラン.txt・画面表示.txt・その他\\差し替え.txt もここにあります",
       "  前の並びの作業フォルダは、はじめる.bat を動かしたときに自動で引っ越します（何も消しません）。",
+      "  このパックの中も、いちばん上は はじめる.bat だけです。台本は 99_確認不要\\パックの台本 に入っていて、",
+      "  はじめる.bat を動かすと 01_台本 に入ります（同じ台本のパックをもう一度動かしても、01_台本 で直した台本は上書きしません）。",
       "",
       "■ VOICEPEAKの場所が違うとき",
       "menu.ps1 をメモ帳で開き、上のほうの $tools を書き換えてください。"
