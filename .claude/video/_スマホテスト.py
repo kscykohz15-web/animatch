@@ -358,6 +358,8 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await slide(220);
     await no("No.5");
     ok(true, "⑨ 右へスライドすると前の字幕（No.5）に戻る");
+    ok((await pp.textContent("#smhkima")) === "いま" && (await pp.locator("#smhkover").count()) === 0,
+       "⑨ 選ぶ前は、上の動画の絵に「いま」の印");
     await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
     await pp.waitForSelector("#smhkover");
     const ue = await pp.evaluate(() => { window.scrollBy(0, 150); return Math.round(document.querySelector(".smhktop").getBoundingClientRect().top); });
@@ -367,7 +369,11 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const kasane = await pp.evaluate(() => { const a = document.getElementById("smhkover"), b = document.querySelector("#smhkbody .smth.sel");
       return !!(a && b) && getComputedStyle(a).backgroundImage === getComputedStyle(b).backgroundImage
         && getComputedStyle(a).backgroundPosition === getComputedStyle(b).backgroundPosition; });
-    ok(kasane && (await pp.locator("#smhkbody .smth.sel").count()) === 1, "⑨ 押した絵が上に大きく重なり、選び直せる（「選んだ」は1枚だけ）");
+    ok(kasane && (await pp.locator("#smhkbody .smth.sel").count()) === 1, "⑨ 押した絵が上に大きく重なり、選び直せる（「変更後」は1枚だけ）");
+    // 本人の指定（2026-11-20）:「いま」に対して「変更後」のように選んだ画像が表示されて欲しい
+    ok((await pp.textContent("#smhkbody .smth.sel .smlab")) === "変更後" && (await pp.textContent("#smhkover .smlab")) === "変更後"
+       && (await pp.locator("#smhkima").count()) === 0 && (await pp.locator("#smhkbody .smth.cur .smlab:has-text('いま')").count()) === 1,
+       "⑨ 選んだ絵は候補でも上の絵でも「変更後」、いまの絵は「いま」のまま");
     await pp.screenshot({path: outDir + "/_スマホ_絵を変える_選んだ.png"});
     await pp.click("#smhktsugi");
     await no("No.6");

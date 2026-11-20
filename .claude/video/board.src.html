@@ -216,6 +216,9 @@
   .smhkstage .smhkover{position:absolute; left:0; top:0; width:100%; height:100%; aspect-ratio:auto; border-radius:0;
     z-index:2; box-shadow:inset 0 0 0 3px var(--ink);}
   .smhkstage .smhkover .smlab{left:8px; top:8px; font-size:11px; padding:2px 9px;}
+  /* 上の絵の印: 選ぶ前は「いま」、選んだら選んだ絵を重ねて「変更後」（2026-11-20 本人の指定） */
+  .smhkstage .smhkima{position:absolute; left:8px; top:8px; z-index:2; font-size:11px; font-weight:700;
+    padding:2px 9px; border-radius:999px; background:rgba(0,0,0,.72); color:#fff; pointer-events:none;}
   .smhknav{position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:38px; height:58px; border:0;
     border-radius:8px; background:rgba(0,0,0,.45); color:#fff; font-size:28px; line-height:1; cursor:pointer;
     font-family:inherit; padding:0;}
@@ -23332,7 +23335,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v205";
+  var PACK_VERSION = "v206";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -25678,7 +25681,7 @@ if __name__ == "__main__":
       if(!fixed) b.type = "button";
       var th = p ? thumb(p, false) : (r.kind === "muji" ? thumb("", true) : thumb(r.curKey, true));
       if(r.kind === "daiji") lab(th, "題字");
-      if(p) lab(th, "選んだ絵");
+      if(p) lab(th, "変更後");
       b.appendChild(th);
       var t = el("div", "smrt");
       var meta = el("div", "smrn", "No." + r.n.join("・") + " ／ ");
@@ -25690,7 +25693,7 @@ if __name__ == "__main__":
         if(vd && c){ vd.currentTime = Math.max(0, rowStart(r) - c.st + 0.05); vd.play().catch(function(){}); }
       };
       meta.appendChild(tm);
-      if(p){ meta.appendChild(el("span", "smbadge", "選んだ")); }
+      if(p){ meta.appendChild(el("span", "smbadge", "変更後")); }
       t.appendChild(meta);
       t.appendChild(el("div", "", r.tx || (fixed ? "（章タイトルのカード）" : "")));
       b.appendChild(t);
@@ -25838,7 +25841,7 @@ if __name__ == "__main__":
       body.appendChild(row);
       var fs = J.chap[r.c] || [];
       if(!fs.length){ body.appendChild(el("div", "ihint", "この字幕の作品の絵がありません（無地の章です）。")); return; }
-      body.appendChild(el("div", "ihint", "押すと選ばれ、上に大きく出ます。ほかの絵を押せば選び直せます。"));
+      body.appendChild(el("div", "ihint", "押すと「変更後」になり、上に大きく出ます。ほかの絵を押せば選び直せます。"));
       SM.hkGrids = SM.hkGrids || {};
       var g = SM.hkGrids[String(r.c)];
       if(!g){
@@ -25867,14 +25870,18 @@ if __name__ == "__main__":
         if(tb < 0) window.scrollBy(0, tb);
       }
     }
-    // 選んだ絵を、上の動画の絵に大きく重ねる
+    // 上の動画の絵の印。選ぶ前は「いま」、選んだら選んだ絵を大きく重ねて「変更後」（2026-11-20 本人の指定:
+    // 「いま」に対して「変更後」のように選んだ画像が表示されて欲しい）
     function hkOver(k){
-      var o = $("smhkover");
-      if(o && o.parentNode) o.parentNode.removeChild(o);
-      if(!k) return;
+      ["smhkover", "smhkima"].forEach(function(id){ var o = $(id); if(o && o.parentNode) o.parentNode.removeChild(o); });
+      if(!k){
+        var t = el("span", "smhkima", "いま"); t.id = "smhkima";
+        $("smhkstage").insertBefore(t, $("smhkmae"));
+        return;
+      }
       var d = thumb(k, false);
       d.id = "smhkover"; d.classList.add("smhkover");
-      lab(d, "選んだ絵（いまの絵と入れ替わります）");
+      lab(d, "変更後");
       $("smhkstage").insertBefore(d, $("smhkmae"));
     }
     function setPick(r, k){
@@ -25891,7 +25898,7 @@ if __name__ == "__main__":
         var d = ds[i], k = d.dataset.k || d.title, ol = d.querySelectorAll(".smlab");
         for(var j = 0; j < ol.length; j++) d.removeChild(ol[j]);
         d.classList.remove("cur"); d.classList.remove("sel");
-        if(k === p){ d.classList.add("sel"); lab(d, "選んだ"); }
+        if(k === p){ d.classList.add("sel"); lab(d, "変更後"); }
         else if(k === r.curKey){ d.classList.add("cur"); lab(d, "いま"); }
         else if(kou[k]){ lab(d, "公式画像"); }
       }
