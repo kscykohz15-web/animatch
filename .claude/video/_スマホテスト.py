@@ -340,6 +340,11 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     ok(nTh === parseInt(nAka, 10), "③ その作品（あか組！）の絵が全部並ぶ（" + nTh + "枚）");
     ok((await pp.locator("#smhkbody .smth .smlab:has-text('公式画像')").count()) === 1, "③ 「1」には「公式画像」の印");
     ok((await pp.locator("#smhkbody .smth.cur .smlab:has-text('いま')").count()) === 1, "③ いまの絵に「いま」の印");
+    // 候補はボタン（2026-11-20・本人の iPhone で、押す処理を付けただけの箱が押せなかった）。開いてもページを固定しない
+    ok(await pp.evaluate(() => Array.from(document.querySelectorAll("#smhkbody .smgrid .smth")).every(e => e.tagName === "BUTTON" && e.type === "button")),
+       "⑨ 候補の絵はどれもボタン（iPhone で押せる形）・押すのは指（tap）で確かめる");
+    ok(await pp.evaluate(() => getComputedStyle(document.documentElement).overflow !== "hidden" && getComputedStyle(document.body).overflow !== "hidden"),
+       "⑨ 絵を変える画面を開いても、ページ全体を固定しない（iPhone で押した位置がずれないように）");
     await pp.screenshot({path: outDir + "/_スマホ_絵を変える.png"});
     await slide(-220);
     await no("No.6");
@@ -347,9 +352,9 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await slide(220);
     await no("No.5");
     ok(true, "⑨ 右へスライドすると前の字幕（No.5）に戻る");
-    await pp.click("#smhkbody .smth[title='あか組！/0006.png']");
+    await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
     await pp.waitForSelector("#smhkover");
-    await pp.click("#smhkbody .smth[title='あか組！/0005.png']");
+    await pp.tap("#smhkbody .smth[title='あか組！/0005.png']");
     await pp.waitForFunction(() => { const s = document.querySelector("#smhkbody .smth.sel"); return s && s.title === "あか組！/0005.png"; }, null, {timeout: 3000});
     const kasane = await pp.evaluate(() => { const a = document.getElementById("smhkover"), b = document.querySelector("#smhkbody .smth.sel");
       return !!(a && b) && getComputedStyle(a).backgroundImage === getComputedStyle(b).backgroundImage
@@ -368,7 +373,7 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     ok(ao === 5 && src2 !== src1 && (await vt(2.0)), "⑨ 章をまたいでも続けて見られる（No.7・候補は あお組 の " + ao + "枚・動画も あお組 の章の所）");
     for (const x of [1, 2, 3]) await pp.click("#smhkmae");
     await no("No.3・4");
-    await pp.click("#smhkbody .smth[title='あか組！/0004.png']");
+    await pp.tap("#smhkbody .smth[title='あか組！/0004.png']");
     await pp.click("#smhkhozon");
     await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("一時保存しました") >= 0, null, {timeout: 5000});
     const e1 = await sumaho();
@@ -399,7 +404,7 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました") >= 0, null, {timeout: 5000});
     const k2 = await kettei();
     ok(k2 && k2.text.indexOf("5\t-\t") >= 0 && k2.n === 2, "⑨ 決定のあと「いまの絵に戻す」にした所は、次の決定で「-」（機械に戻す）が入る");
-    await pp.click("#smhkbody .smth[title='あか組！/0005.png']");
+    await pp.tap("#smhkbody .smth[title='あか組！/0005.png']");
     await pp.click("#smhkkettei"); await pp.click("#smhkkettei");
     await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました（3") >= 0, null, {timeout: 5000});
     console.log("KETTEI|" + JSON.stringify(await kettei()));
