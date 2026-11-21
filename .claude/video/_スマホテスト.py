@@ -33,6 +33,12 @@ u"""スマホで見る・絵を選ぶ（仕上げ.py ㉝）
      修正を決定は2回押しで sumaho_kettei に残る／決定のあと「いまの絵に戻す」にした所は次の決定で「-」
   ⑩ 決定した中身を、make_slideshow の取り込みがそのまま 差し替え.txt に入れる。同じ中身は二度入れない
      （パックを落とし直すと新しい日時で届くため）
+  ⑪ 変更後の絵にも字幕を前に重ねる（2026-11-21 本人の指定「変更後も、画像の前に字幕があるとより分かりやすい」）
+     白・黒いふち・大きさは絵の高さの 1/11・下の余白 0.03（見た目.txt と同じ）。作品の頭の画面は動画でも字幕が無いので重ねない
+  ⑫ 動画の別の所ですでに使っている絵に「使用中 No.○」（2026-11-21 本人の指定「選択している画像が現在動画内で
+     使われているかがわかると、被りが出るかわかる」）。選び直した所は選んだ絵で数え、替えられた前の絵は数えない。
+     選んだ絵がかぶると、候補の印が黄色・上の絵に「No.○ でも使用中」・帯に「かぶります」
+  ⑬ 絵を変える機能は、おすすめのボードのいちばん上（2026-11-21 本人の指定「おすすめアニメボードの1番上に置いておいて」）
 """
 from __future__ import print_function
 import io, json, os, re, shutil, subprocess, sys, threading, uuid
@@ -380,6 +386,12 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const y1 = await yubi("あか組！/0003.png", 0);
     ok(y1.sel === "あか組！/0003.png" && y1.msg.indexOf("押しました") >= 0 && (await pp.locator("#smhkover").count()) === 1,
        "⑨ click が来なくても、指を離した瞬間に選ばれ、帯に「押しました」と出る（" + y1.msg + "）");
+    const kb1 = await pp.evaluate(() => ({msg: document.getElementById("smhkmsg").textContent,
+      use: (document.querySelector("#smhkbody .smth.sel .smuse.kabu") || {}).textContent || "",
+      st: (document.getElementById("smhkkabu") || {}).textContent || ""}));
+    ok(kb1.msg.indexOf("No.6 でも使っています") >= 0 && kb1.msg.indexOf("押しました") >= 0 && kb1.use === "使用中 No.6"
+       && kb1.st === "No.6 でも使用中",
+       "⑫ 選んだ絵が動画の別の所（No.6）でも使われていれば、候補に黄色の「使用中 No.6」・上の絵に「No.6 でも使用中」・帯に「かぶります」（" + kb1.msg + "）");
     const y2 = await yubi("あか組！/0004.png", 30);
     ok(y2.sel === "あか組！/0003.png", "⑨ 指が動いたとき（スクロール）は選ばない");
     await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
@@ -400,10 +412,36 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     ok((await pp.textContent("#smhkbody .smth.sel .smlab")) === "変更後" && (await pp.textContent("#smhkover .smlab")) === "変更後"
        && (await pp.locator("#smhkima").count()) === 0 && (await pp.locator("#smhkbody .smth.cur .smlab:has-text('いま')").count()) === 1,
        "⑨ 選んだ絵は候補でも上の絵でも「変更後」、いまの絵は「いま」のまま");
+    // ⑪ 変更後の絵にも、動画と同じ字幕を前に重ねる
+    const ji = await pp.evaluate(() => {
+      const o = document.getElementById("smhkover"), j = document.getElementById("smhkji");
+      if (!o || !j || j.parentElement !== o) return null;
+      const a = o.getBoundingClientRect(), b = j.getBoundingClientRect(), cs = getComputedStyle(j);
+      return {tx: j.textContent, color: cs.color, sh: cs.textShadow, fs: parseFloat(cs.fontSize), h: a.height,
+              shita: (a.bottom - b.bottom) / a.height, mannaka: Math.abs((b.left + b.right) / 2 - (a.left + a.right) / 2),
+              mieru: b.top >= a.top - 1 && b.bottom <= a.bottom + 1 && b.width > 0};
+    });
+    ok(!!ji && ji.tx === "本作は漫画が原作となっています。" && ji.color === "rgb(255, 255, 255)" && ji.sh.indexOf("rgb(0, 0, 0)") >= 0
+       && Math.abs(ji.fs - ji.h / 11) <= 1.5 && ji.shita > 0.015 && ji.shita < 0.06 && ji.mannaka <= 2 && ji.mieru,
+       "⑪ 変更後の絵の前に、その字幕（白・黒いふち・絵の高さの 1/11・下の余白 0.03・まんなか）" + JSON.stringify(ji));
+    // ⑫ ほかの所で使っている絵に「使用中 No.○」。この字幕（No.5）の絵は数えない。選んだ 0005 はどこにも無いのでかぶらない
+    const us = await pp.evaluate(() => { const o = {};
+      for (const e of document.querySelectorAll("#smhkbody .smgrid .smth")) { const u = e.querySelector(".smuse");
+        o[e.dataset.k.split("/").pop()] = u ? u.textContent + (u.classList.contains("kabu") ? "（黄）" : "") : ""; }
+      return {o, st: (document.getElementById("smhkkabu") || {}).textContent || ""}; });
+    ok(us.o["0003.png"] === "使用中 No.6" && us.o["0001.png"] === "使用中 No.1" && us.o["1.jpg"] === "使用中 No.3"
+       && us.o["0005.png"] === "" && us.o["0002.png"] === "" && us.o["0004.png"] === "" && us.st === "",
+       "⑫ 候補のうち、動画の別の所で使っている絵だけに「使用中 No.○」（選んだ 0005 はかぶらないので印も上の知らせも無い）" + JSON.stringify(us));
     await pp.screenshot({path: outDir + "/_スマホ_絵を変える_選んだ.png"});
     await pp.click("#smhktsugi");
     await no("No.6");
     ok((await pp.locator("#smhkover").count()) === 0, "⑨ 次の字幕（まだ選んでいない）では、重ねた絵が消えて動画の絵になる");
+    const us6 = await pp.evaluate(() => { const o = {};
+      for (const e of document.querySelectorAll("#smhkbody .smgrid .smth")) { const u = e.querySelector(".smuse");
+        o[e.dataset.k.split("/").pop()] = u ? u.textContent : ""; }
+      return {o, st: (document.getElementById("smhkkabu") || {}).textContent || ""}; });
+    ok(us6.o["0005.png"] === "使用中 No.5" && us6.o["0002.png"] === "" && us6.o["0003.png"] === "" && us6.st === "",
+       "⑫ 選び直した所は選んだ絵で数える（No.5 の 0005 は使用中・替えられた前の 0002 は使っていない）" + JSON.stringify(us6));
     const src1 = await pp.evaluate(() => document.getElementById("smhkvid").src);
     await pp.click("#smhktsugi");
     await no("No.7");
@@ -414,6 +452,8 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     for (const x of [1, 2, 3]) await pp.click("#smhkmae");
     await no("No.3・4");
     await pp.tap("#smhkbody .smth[title='あか組！/0004.png']");
+    ok((await pp.locator("#smhkover").count()) === 1 && (await pp.locator("#smhkji").count()) === 0,
+       "⑪ 作品の頭の画面（No.3・4）は、動画でもふつうの字幕を出さないので、重ねた絵にも字幕を重ねない");
     await pp.click("#smhkhozon");
     await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("一時保存しました") >= 0, null, {timeout: 5000});
     const e1 = await sumaho();
@@ -547,6 +587,13 @@ def main():
     sa = sum(abs(a - b) for a, b in zip(bytearray(masu.tobytes()), bytearray(moto.tobytes()))) / 192.0
     iu(sa < 25, u"⑥ 紙の中のマスに、その絵が入っている（差 %.1f）" % sa)
 
+    # ⑬ 絵を変える機能は、おすすめのボードのいちばん上（題の下・数字の並びより上）
+    src = io.open(os.path.join(HERE, u"board.src.html"), encoding="utf-8").read()
+    body = src[src.index(u'<div class="wrap">'):]
+    secs = re.findall(u'<section([^>]*)>', body)
+    mie = [a for a in secs if u'data-board="mushoku"' not in a and u"hidden" not in a]
+    iu(bool(mie) and u'id="sumaho"' in mie[0] and body.index(u'id="sumaho"') < body.index(u'<div class="stats">'),
+       u"⑬ 「スマホで見る・絵を選ぶ」は、おすすめのボードのいちばん上（題のすぐ下・%s）" % (mie[0].strip() if mie else u"節が無い"))
     sv, BLOB, DB = server(kumitate())
     url = "http://127.0.0.1:%d/" % sv.server_address[1]
     paths = [os.path.join(sm, n) for n in names]
