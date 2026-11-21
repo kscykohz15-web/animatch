@@ -23335,7 +23335,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v206";
+  var PACK_VERSION = "v207";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -25706,6 +25706,42 @@ if __name__ == "__main__":
     //   > 前の画像が見えるようにし、それを見て、下半分には候補の画像が選択できるようにして、
     //   > 一時保存できるボタンも欲しいです。また最終的に修正するボタンを設け…
     //   上半分: その字幕の所で止めた動画（章をまたいでも続く）。下半分: その字幕の作品の候補。いちばん下: 一時保存・修正を決定
+    // ■ 指を離した瞬間に動く（2026-11-21・本人の iPhone「タップの反応はありますが、選択できているような表記は出ません」）
+    //   掲示板の控え（sumaho_erabi）に、押した字幕（No.15）が一度も入っていなかった ＝ 押す処理が一度も動いていない。
+    //   本物の材料で組んだ同じ画面は Chrome では選べた ＝ データではなく、iPhone（Claude アプリの中の WebKit）が
+    //   光らせたあとで click を出していない。指を離した瞬間（touchend）に動かし、そのあとの click は捨てる。
+    //   指が 10px 以上動いたらスクロールとみなして動かさない。パソコンは今までどおり click。
+    //   押したら下の帯に「押しました」をすぐ出し、途中で止まったら理由も帯に出す（画面で分かるように）
+    function yobu(fn, el, e){
+      try { fn.call(el, e); }
+      catch (err) { kakuNote("止まりました: " + ((err && err.message) || err) + "（この画面をそのまま送ってください）", true); }
+    }
+    function oseru(el, fn){
+      var s0 = null;
+      el.addEventListener("touchstart", function(e){
+        var t = e.changedTouches[0]; s0 = {x: t.clientX, y: t.clientY, at: Date.now()};
+      }, {passive: true});
+      el.addEventListener("touchmove", function(e){
+        if(!s0) return;
+        var t = e.changedTouches[0];
+        if(Math.abs(t.clientX - s0.x) > 10 || Math.abs(t.clientY - s0.y) > 10) s0 = null;
+      }, {passive: true});
+      el.addEventListener("touchcancel", function(){ s0 = null; }, {passive: true});
+      el.addEventListener("touchend", function(e){
+        if(!s0) return;
+        var t = e.changedTouches[0];
+        var ok = Math.abs(t.clientX - s0.x) <= 10 && Math.abs(t.clientY - s0.y) <= 10 && Date.now() - s0.at < 900;
+        s0 = null;
+        if(!ok) return;
+        if(e.cancelable) e.preventDefault();      // このあとの click（とダブルタップの拡大）を出させない
+        el.__osuT = Date.now();
+        yobu(fn, el, e);
+      }, {passive: false});
+      el.addEventListener("click", function(e){
+        if(Date.now() - (el.__osuT || 0) < 800) return;   // 同じ物を指で動かした直後の click は二重なので捨てる（物ごとに覚える）
+        yobu(fn, el, e);
+      });
+    }
     function hkBuild(){
       var p = $("smhk");
       if(p.dataset.dekita) return p;
@@ -25715,7 +25751,7 @@ if __name__ == "__main__":
       var no = el("span", "smhkno"); no.id = "smhkno";
       var pos = el("span", ""); pos.id = "smhkpos";
       var cl = el("button", "askbtn2", "閉じる"); cl.type = "button"; cl.id = "smhkclose";
-      cl.onclick = function(){ closeHenkou(false); };
+      oseru(cl, function(){ closeHenkou(false); });
       var ban = el("span", "smhkban", (typeof PACK_VERSION !== "undefined") ? PACK_VERSION : ""); ban.id = "smhkban";
       head.appendChild(no); head.appendChild(ban); head.appendChild(el("span", "sp")); head.appendChild(pos); head.appendChild(cl);
       var stage = el("div", "smhkstage"); stage.id = "smhkstage";
@@ -25723,9 +25759,9 @@ if __name__ == "__main__":
       v.id = "smhkvid"; v.muted = true; v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.preload = "auto";
       stage.appendChild(v);
       var mae = el("button", "smhknav mae", "‹"); mae.type = "button"; mae.id = "smhkmae"; mae.setAttribute("aria-label", "前の字幕");
-      mae.onclick = function(){ hkGo(-1); };
+      oseru(mae, function(){ hkGo(-1); });
       var tsugi = el("button", "smhknav tsugi", "›"); tsugi.type = "button"; tsugi.id = "smhktsugi"; tsugi.setAttribute("aria-label", "次の字幕");
-      tsugi.onclick = function(){ hkGo(1); };
+      oseru(tsugi, function(){ hkGo(1); });
       stage.appendChild(mae); stage.appendChild(tsugi);
       // 横にスライドで前後の字幕（指でもマウスでも）
       function fin(x, y){
@@ -25743,12 +25779,23 @@ if __name__ == "__main__":
       top.appendChild(tx);
       top.appendChild(el("div", "smhkhint", "← 横にスライドすると、前後の字幕の絵 →"));
       var body = el("div", "smhkbody"); body.id = "smhkbody";
+      oseru(body, function(e){
+        var b = (e.target && e.target.closest) ? e.target.closest("[data-k]") : null;
+        if(!b) return;
+        var rr = SM.hkRows[SM.hk], k = b.dataset.k;
+        kakuNote("押しました（No." + rr.n.join("・") + " → " + k.split("/").pop() + "）");
+        setPick(rr, k === rr.curKey ? "" : k);
+      });
+      // 絵を変える画面を開いている間に止まったら、帯に理由を出す
+      window.addEventListener("error", function(ev){
+        if(!p.hidden) kakuNote("止まりました: " + (ev.message || "") + "（この画面をそのまま送ってください）", true);
+      });
       var bar = el("div", "smhkbar");
       var hst = el("div", "ihint smhkst"); hst.id = "smhkst";
       var hz = el("button", "askbtn2", "一時保存"); hz.type = "button"; hz.id = "smhkhozon";
-      hz.onclick = hozonNow;
+      oseru(hz, hozonNow);
       var kt = el("button", "askbtn2 pri", "修正を決定"); kt.type = "button"; kt.id = "smhkkettei";
-      kt.onclick = function(){ ketteiOsu(this); };
+      oseru(kt, function(){ ketteiOsu(this); });
       var msg = el("div", "ihint"); msg.id = "smhkmsg";
       bar.appendChild(hst); bar.appendChild(hz); bar.appendChild(kt); bar.appendChild(msg);
       p.appendChild(top); p.appendChild(body); p.appendChild(bar);
@@ -25836,7 +25883,7 @@ if __name__ == "__main__":
       var row = el("div", "btnrow");
       var mo = el("button", "askbtn2", "いまの絵に戻す（機械に任せる）"); mo.type = "button"; mo.id = "smhkmodo";
       mo.disabled = !pickOf(r);
-      mo.onclick = function(){ var rr = SM.hkRows[SM.hk]; setPick(rr, ""); };
+      oseru(mo, function(){ var rr = SM.hkRows[SM.hk]; setPick(rr, ""); });
       row.appendChild(mo);
       body.appendChild(row);
       var fs = J.chap[r.c] || [];
@@ -25854,8 +25901,7 @@ if __name__ == "__main__":
             d.type = "button";
             d.title = k;
             d.dataset.k = k;
-            d.setAttribute("aria-label", fn);
-            d.onclick = function(){ var rr = SM.hkRows[SM.hk]; setPick(rr, k === rr.curKey ? "" : k); };
+            d.setAttribute("aria-label", fn);      // 押したときは下の欄がまとめて受ける（oseru）
             gg.appendChild(d);
           });
           g.appendChild(gg);

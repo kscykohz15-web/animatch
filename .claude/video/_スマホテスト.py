@@ -360,6 +360,26 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     ok(true, "⑨ 右へスライドすると前の字幕（No.5）に戻る");
     ok((await pp.textContent("#smhkima")) === "いま" && (await pp.locator("#smhkover").count()) === 0,
        "⑨ 選ぶ前は、上の動画の絵に「いま」の印");
+    // iPhone（Claude アプリの中の WebKit）は、光らせても click を出さないことがある（2026-11-21・本人）。
+    // 指の合図（触れる・離す）だけを送り、click は送らない
+    async function yubi(k, ugoku){
+      return pp.evaluate(([k, ugoku]) => {
+        const b = Array.from(document.querySelectorAll("#smhkbody .smth")).find(e => e.dataset.k === k), r = b.getBoundingClientRect();
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const t0 = new Touch({identifier: 9, target: b, clientX: x, clientY: y});
+        const t1 = new Touch({identifier: 9, target: b, clientX: x, clientY: y + ugoku});
+        b.dispatchEvent(new TouchEvent("touchstart", {touches: [t0], changedTouches: [t0], bubbles: true, cancelable: true}));
+        if (ugoku) b.dispatchEvent(new TouchEvent("touchmove", {touches: [t1], changedTouches: [t1], bubbles: true, cancelable: true}));
+        b.dispatchEvent(new TouchEvent("touchend", {touches: [], changedTouches: [t1], bubbles: true, cancelable: true}));
+        return {sel: (document.querySelector("#smhkbody .smth.sel") || {dataset: {}}).dataset.k || null,
+                msg: document.getElementById("smhkmsg").textContent};
+      }, [k, ugoku]);
+    }
+    const y1 = await yubi("あか組！/0003.png", 0);
+    ok(y1.sel === "あか組！/0003.png" && y1.msg.indexOf("押しました") >= 0 && (await pp.locator("#smhkover").count()) === 1,
+       "⑨ click が来なくても、指を離した瞬間に選ばれ、帯に「押しました」と出る（" + y1.msg + "）");
+    const y2 = await yubi("あか組！/0004.png", 30);
+    ok(y2.sel === "あか組！/0003.png", "⑨ 指が動いたとき（スクロール）は選ばない");
     await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
     await pp.waitForSelector("#smhkover");
     const ue = await pp.evaluate(() => { window.scrollBy(0, 150); return Math.round(document.querySelector(".smhktop").getBoundingClientRect().top); });
@@ -441,6 +461,18 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pg.waitForSelector(".smcard button");
     await pg.click(".smcard button:has-text('開く')");
     await pg.waitForSelector("button:has-text('irekae.txt を保存')");
+    // パソコンのクリックでも選べる（指の合図の仕組みを入れても、click の道は残す）
+    await pg.click(".smtabs button:has-text('あか組！')");
+    await pg.click(".smrow:has-text('物語は')");
+    await pg.waitForSelector("#smhk:not([hidden])");
+    await pg.click("#smhkbody .smth[title='あか組！/0006.png']");
+    const pcs = await pg.evaluate(() => (document.querySelector("#smhkbody .smth.sel") || {dataset: {}}).dataset.k || null);
+    await pg.click("#smhkmodo");
+    const pcm = await pg.evaluate(() => document.querySelectorAll("#smhkbody .smth.sel").length);
+    ok(pcs === "あか組！/0006.png" && pcm === 0, "⑨ パソコンのクリックでも選べて、「いまの絵に戻す」で外せる");
+    await pg.click("#smhkclose");
+    await pg.waitForSelector("#smhk", {state: "hidden"});
+    await pg.waitForTimeout(1200);
     await pg.click("button:has-text('irekae.txt を保存')");
     await pg.waitForFunction(() => window.__saved !== null, null, {timeout: 5000});
     console.log("SAVED|" + JSON.stringify(await pg.evaluate(() => window.__saved)));
