@@ -235,6 +235,7 @@
   .smhkbar .smhkst{flex:1 1 150px; min-width:0; margin:0;}
   .smhkbar #smhkmsg{flex:1 1 100%; margin:0;}
   .smhkbar #smhkmsg:empty{display:none;}
+  .smhkbar .smhkgo{flex:1 1 100%; margin:0; font-size:10.5px; color:var(--ink-3);}
   .smfoot #smmsg{flex:1 1 100%; margin:0;}
   .smfoot #smmsg:empty{display:none;}
   .smgrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(104px, 1fr)); gap:6px;}
@@ -23335,7 +23336,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v207";
+  var PACK_VERSION = "v208";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -25569,6 +25570,7 @@ if __name__ == "__main__":
       SM.rowEls = {}; SM.now = null;
       var top = el("div", "smvtop");
       top.appendChild(el("div", "smvtitle", J.title));
+      top.appendChild(el("span", "smhkban", (typeof PACK_VERSION !== "undefined") ? PACK_VERSION : ""));
       var cl = el("button", "askbtn2", "閉じる"); cl.type = "button"; cl.onclick = closeView;
       top.appendChild(cl);
       v.appendChild(top);
@@ -25797,7 +25799,23 @@ if __name__ == "__main__":
       var kt = el("button", "askbtn2 pri", "修正を決定"); kt.type = "button"; kt.id = "smhkkettei";
       oseru(kt, function(){ ketteiOsu(this); });
       var msg = el("div", "ihint"); msg.id = "smhkmsg";
-      bar.appendChild(hst); bar.appendChild(hz); bar.appendChild(kt); bar.appendChild(msg);
+      // ページに届いた指の合図を、届いた順に出す（2026-11-21・v207 でも本人の iPhone で選べたか分からなかった。
+      // 「触れた→離した」が出ない＝合図がページに届いていない／出る＝届いたあとで止まっている、が画面で分かる）
+      var go = el("div", "ihint smhkgo", "届いた合図: （まだ何も押していません）"); go.id = "smhkgo";
+      bar.appendChild(hst); bar.appendChild(hz); bar.appendChild(kt); bar.appendChild(msg); bar.appendChild(go);
+      var AIZU = {touchstart: "触れた", touchend: "離した", touchcancel: "取り消された", click: "click"}, gk = [];
+      ["touchstart", "touchend", "touchcancel", "click"].forEach(function(ty){
+        document.addEventListener(ty, function(e){
+          if(p.hidden) return;
+          var t = e.target, b = (t && t.closest) ? t.closest("[data-k]") : null;
+          var bt = (!b && t && t.closest) ? t.closest("button") : null;
+          var na = b ? b.dataset.k.split("/").pop() : (bt ? (bt.id || bt.textContent.trim().slice(0, 10)) : "そのほか");
+          gk.push(AIZU[ty]);
+          if(gk.length > 5) gk.shift();
+          var g = $("smhkgo");
+          if(g) g.textContent = "届いた合図: " + gk.join("→") + "（" + na + "）";
+        }, {capture: true, passive: true});
+      });
       p.appendChild(top); p.appendChild(body); p.appendChild(bar);
       document.addEventListener("keydown", function(e){
         if(p.hidden) return;

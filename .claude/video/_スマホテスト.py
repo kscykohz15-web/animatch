@@ -381,6 +381,10 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     const y2 = await yubi("あか組！/0004.png", 30);
     ok(y2.sel === "あか組！/0003.png", "⑨ 指が動いたとき（スクロール）は選ばない");
     await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
+    const gok = await pp.textContent("#smhkgo");
+    ok(gok.indexOf("触れた→離した") >= 0 && gok.indexOf("0006.png") >= 0,
+       "⑨ 帯に、ページに届いた指の合図をそのまま出す（" + gok + "）");
+    await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
     await pp.waitForSelector("#smhkover");
     const ue = await pp.evaluate(() => { window.scrollBy(0, 150); return Math.round(document.querySelector(".smhktop").getBoundingClientRect().top); });
     ok(Math.abs(ue) <= 2, "⑨ 候補をページごと下へ動かしても、上の動画の絵は貼りついたまま（" + ue + "px）");
