@@ -23336,7 +23336,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v208";
+  var PACK_VERSION = "v209";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -24950,8 +24950,14 @@ if __name__ == "__main__":
   // 直に doc.stages と書くと必ず undefined になる(実際そうなっていた)。
   function dbody(doc){
     if(!doc) return null;
-    if(typeof doc.data === "function") return doc.exists ? (doc.data() || null) : null;
-    return doc;   // 素のオブジェクトで来たときの保険
+    var b = (typeof doc.data === "function") ? (doc.exists ? (doc.data() || null) : null)
+      : doc;      // 素のオブジェクトで来たときの保険
+    // ■ 控え（db）から来た物は読み取り専用。**書きかえられる写しにして返す**（2026-11-21・本人の iPhone）
+    //   スマホで選んだ絵（sumaho_erabi）を読んだ入れ物にそのまま書き足していて、iPhone の Claude アプリでは
+    //   「Attempted to assign to readonly property.」で止まっていた（このファイルは use strict）。最初の1か所だけ
+    //   選べたのは、控えが空でこちらが作った入れ物に書いていたから。テストの偽の控えは書きかえられる形で返していて、
+    //   こちらでは出なかった（いまは ㉝ の偽の控えも読み取り専用で返す）
+    return b ? JSON.parse(JSON.stringify(b)) : null;
   }
   function dbodies(snap){
     var arr = (snap && snap.docs) ? snap.docs : (snap || []);

@@ -135,10 +135,12 @@ def kumitate():
 window.__saved = null;
 (function(){
   function enc(p){ return encodeURIComponent(p); }
+  // 本物の控え（db）は読み取り専用で返る（iPhone で「Attempted to assign to readonly property.」になった）。同じにする
+  function kooru(o){ if(o && typeof o === "object"){ Object.freeze(o); Object.keys(o).forEach(function(k){ kooru(o[k]); }); } return o; }
   function docRef(p){
     return {
       get: function(){ return fetch("/_db/doc?p=" + enc(p)).then(function(r){ return r.json(); }).then(function(j){
-        return {id: p.split("/").pop(), exists: j !== null, data: function(){ return j; }}; }); },
+        return {id: p.split("/").pop(), exists: j !== null, data: function(){ return kooru(j); }}; }); },
       set: function(d){ return fetch("/_db/doc?p=" + enc(p), {method: "POST", body: JSON.stringify(d)}).then(function(){}); },
       delete: function(){ return fetch("/_db/doc?p=" + enc(p), {method: "DELETE"}).then(function(){}); }
     };
@@ -146,7 +148,7 @@ window.__saved = null;
   var M = {
     db: {doc: docRef, collection: function(p){ return {get: function(){
       return fetch("/_db/col?p=" + enc(p)).then(function(r){ return r.json(); }).then(function(a){
-        return {docs: a.map(function(o){ return {id: o.id, exists: true, data: function(){ return o.data; }}; })}; }); }}; }},
+        return {docs: a.map(function(o){ return {id: o.id, exists: true, data: function(){ return kooru(o.data); }}; })}; }); }}; }},
     assets: {
       upload: function(b, o){ return fetch("/_up?type=" + enc((o && o.type) || b.type), {method: "POST", body: b}).then(function(r){ return r.json(); }); },
       delete: function(id){ return fetch("/_blob/" + id, {method: "DELETE"}).then(function(){ return {deleted: true}; }); },
@@ -459,6 +461,18 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pp.click(".smtabs button:has-text('あか組！')");
     await pp.waitForSelector(".smrow.picked:has-text('本作は漫画')", {timeout: 5000});
     ok(true, "④ 開き直しても、選んだ絵が残っている");
+    // 開き直したあと（選んだ絵を控えから読んだあと）も選べる。控えは読み取り専用で返る（v208 まで iPhone で止まっていた）
+    await pp.evaluate(() => Array.from(document.querySelectorAll(".smrow")).find(e => e.textContent.indexOf("物語は") >= 0).click());
+    await pp.waitForSelector("#smhk:not([hidden])");
+    await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
+    const ag = await pp.evaluate(() => ({sel: (document.querySelector("#smhkbody .smth.sel") || {dataset: {}}).dataset.k || null,
+      msg: document.getElementById("smhkmsg").textContent}));
+    ok(ag.sel === "あか組！/0006.png" && ag.msg.indexOf("止まりました") < 0,
+       "④ 開き直して控えから選んだ絵を読んだあとも、選び直せる（控えは読み取り専用で返る・" + ag.msg + "）");
+    await pp.tap("#smhkmodo");
+    await pp.tap("#smhkclose");
+    await pp.waitForSelector("#smhk", {state: "hidden"});
+    await pp.waitForTimeout(1200);
 
     // ── ⑤ パソコンで保存
     await pg.reload();
