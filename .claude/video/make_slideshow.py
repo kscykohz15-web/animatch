@@ -9652,6 +9652,15 @@ def moji_de_sagasu(hoshii, rows, ban, moto_no):
         atari = [no for no in nos if shiken(naka(no))]
         if atari:
             return min(atari, key=lambda no: (abs(no - moto_no), no))
+    # ■ 語順だけ直した字幕（2026-11-21・本人「主人公の高校生」→「高校生の主人公」）
+    #
+    #   台本の言い回しを直すと、差し替え.txt の3列目（前の字幕の文）がいまの字幕と一致しなくなり、
+    #   本人がスマホで選んだ絵（ラブコメ20選で7か所）が外れる。使っている字がまったく同じで
+    #   並びだけが違う字幕は、同じ字幕と見る（句読点は見ない。8文字以上のときだけ）
+    narabi = sorted(_norm_k(h))
+    atari = [no for no in nos if naka(no) and sorted(_norm_k(naka(no))) == narabi]
+    if atari:
+        return min(atari, key=lambda no: (abs(no - moto_no), no))
     return None
 
 
