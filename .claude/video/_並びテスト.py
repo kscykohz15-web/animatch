@@ -355,6 +355,15 @@ process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e
        u"⑧ menu.ps1 は はじめる.bat を 99 の1つ上に探す（台本は探さない）")
     iu(u"python $nb $root --daihon (Join-Path $here 'パックの台本')" in pre,
        u"⑧ Prepare は パックの台本 を 並び替え.py --daihon に渡す")
+    # 保存名は、どの動画でも 00_制作パック.zip（本人の指定 2026-11-21「どの動画でも00_制作パックという名前に」）。
+    # 作業フォルダは menu.ps1 が 05_動画\<番号つきの題名> に決めるので、zip の名前は動画の名前に関わらない。
+    # 片づけ（9）は「*_制作パック.zip」「*_制作パック」で古いパックを拾うので、00_ もそのまま拾える
+    ex = s[s.index(u"  function exportAllPack(id, title, btn){"):]
+    ex = ex[:ex.index(u"\n  }\n") + 4]
+    iu(u'filename: "00_制作パック.zip"' in ex and u'"_制作パック.zip"' not in ex,
+       u"⑧ 制作パックの保存名は、どの動画でも 00_制作パック.zip")
+    iu(u"'*_制作パック.zip'" in s and u"-like '*_制作パック'" in s,
+       u"⑧ 片づけ（9）は 00_制作パック.zip とそれを解いたフォルダも拾える（*_制作パック）")
     # スマホで決めた絵（2026-11-20 本人の指定: 決定ボタンを押せば制作パックにその内容が更新される）
     iu(u"99_確認不要/その他/irekae_sumaho.txt" in o["names"] and (o.get("kettei") or u"").startswith(u"\ufeff#@title\t01_ためし")
        and o.get("betsu") is None,

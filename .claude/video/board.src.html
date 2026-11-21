@@ -22716,8 +22716,10 @@ if __name__ == "__main__":
   //   > フォルダへ私が保存して管理しやすくしたいので。
   //   番号は SCRIPTS の no（並びから数えると、1本足しただけで以降の番号がずれて
   //   本人のフォルダ名と合わなくなるので、1本ずつ書いておく）。
-  //   番号は 表示・作業フォルダ名・制作パックの名前 にだけ付ける。題名そのものには入れない
+  //   番号は 表示・作業フォルダ名 にだけ付ける。題名そのものには入れない
   //   （題名は説明文などにも使うので、YouTube 側に「07_」が出てしまう）。
+  //   制作パックの保存名は、どの動画でも 00_制作パック.zip（本人の指定 2026-11-21）。作業フォルダ
+  //   （05_動画\07_題名）の中で 01_台本・02_音声… の上に並ぶ。
   function bangouName(id){
     var s = SCRIPTS[id];
     if(!s){ return ""; }
@@ -23369,7 +23371,7 @@ if __name__ == "__main__":
     return out;
   }
 
-  var PACK_VERSION = "v211";
+  var PACK_VERSION = "v212";
   // build.py が掲示板ごとに書きかえます（mushoku / osusume）
   var BOARD = "@@BOARD@@";
   function packVersion(){
@@ -24541,7 +24543,9 @@ if __name__ == "__main__":
       var kf = sumahoKetteiFile(k, fileName(title));
       if(kf){ entries.push(kf); kettei = k.n || 0; }
       narabiPack(entries);
-      return dlns.save({filename: fileName(title) + "_制作パック.zip", data: makeZip(entries)});
+      // 保存名は、どの動画でも 00_制作パック.zip（本人の指定 2026-11-21）。作業フォルダは menu.ps1 が
+      // 05_動画\<番号つきの題名> に決めるので、zip の名前は動画の名前（DOUGA_NA）に関わらない
+      return dlns.save({filename: "00_制作パック.zip", data: makeZip(entries)});
     }).then(function(){
       btn.textContent = kettei ? "書き出しました（スマホで決めた絵 " + kettei + " か所入り）" : "書き出しました";
       setTimeout(function(){ btn.textContent = label; btn.disabled = false; }, kettei ? 4200 : 2600);
