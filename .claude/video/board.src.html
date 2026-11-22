@@ -237,6 +237,12 @@
     font-size:10px; font-weight:700; padding:1px 6px; border-radius:999px; background:rgba(0,0,0,.72); color:#fff;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none;}
   .smth .smuse.kabu{background:#ffd54a; color:#111;}
+  /* 選び直しを学ぶ（2026-11-21）: その字幕に出てくる人を、前の選び直しで覚えた絵。候補の先頭に並び、右上に印 */
+  .smth .smoboe{position:absolute; right:4px; top:4px; width:max-content; max-width:calc(100% - 8px); box-sizing:border-box;
+    font-size:10px; font-weight:700; padding:1px 6px; border-radius:999px; background:rgba(20,90,170,.88); color:#fff;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none;}
+  .smatari{margin-top:10px; font-size:12.5px; color:var(--ink-2); line-height:1.8;}
+  .smatari b{color:var(--ink);}
   .smhkstage .smhkkabu{position:absolute; right:8px; top:8px; z-index:3; max-width:calc(100% - 96px); box-sizing:border-box;
     font-size:11px; font-weight:700; padding:2px 9px; border-radius:999px; background:#ffd54a; color:#111;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none;}
@@ -25483,9 +25489,35 @@ if __name__ == "__main__":
         }
         box.appendChild(c);
       });
+      renderAtari(box);
+    }
+    // 当たり率（選び直さずに済んだ字幕の割合）。決定のたびに manabi/<印>.kiroku に残る（2026-11-21・学ぶ仕組みの物差し）
+    function atariStr(k){
+      var nji = k.n_ji || 0, nok = Math.max(0, nji - (k.n_kae || 0));
+      return nji ? (Math.round(100 * nok / nji) + "%（" + nji + "字幕中" + nok + "）") : "-";
+    }
+    function renderAtari(box){
+      var ms = (SM.manabi || []).filter(function(m){ return m && m.kiroku && m.kiroku.length; });
+      if(!ms.length) return;
+      var a = el("div", "smatari"); a.id = "smatari";
+      a.appendChild(el("div", "", "当たり率（機械が当てた絵のまま、選び直さずに済んだ字幕の割合。選び直しを覚えて上げていきます）"));
+      ms.sort(function(x, y){ return String(x.title || "").localeCompare(String(y.title || "")); });
+      ms.forEach(function(m){
+        var ks = m.kiroku.slice().sort(function(x, y){ return String(x.made || "").localeCompare(String(y.made || "")); });
+        var last = ks[ks.length - 1], row = el("div", "");
+        row.appendChild(el("b", "", (m.title || "?") + " "));
+        row.appendChild(document.createTextNode(atariStr(last) + (ks.length > 1 ? "　← 前の動画 " + atariStr(ks[ks.length - 2]) : "")));
+        a.appendChild(row);
+      });
+      box.appendChild(a);
     }
     function loadDocs(){
-      return SM.db.collection("sumaho").get().then(dbodies).then(function(a){
+      return Promise.all([
+        SM.db.collection("sumaho").get().then(dbodies),
+        SM.db.collection("manabi").get().then(dbodies).catch(function(){ return []; })
+      ]).then(function(res){
+        var a = res[0];
+        SM.manabi = res[1] || [];
         SM.docs = a.filter(function(d){ return d && d.json && d.files; })
           .sort(function(x, y){ return String(y.at || "").localeCompare(String(x.at || "")); });
         renderList();
@@ -25574,6 +25606,7 @@ if __name__ == "__main__":
       note("開いています…");
       fetch(blobUrl(d.json)).then(function(r){ return r.json(); }).then(function(J){
         SM.d = d; SM.J = J; SM.sid = d.sid; SM.clip = 0; SM.picks = {}; SM.kettei = null; SM.hozon = "";
+        SM.oboe = JSON.parse(JSON.stringify(J.manabi || {}));     // 覚えた絵 → 写っている人（その場で選んだ絵も足す）
         SM.hkGrids = {}; SM.hkSrc = "";
         return Promise.all([
           SM.db.doc("sumaho_erabi/" + d.sid).get().then(dbody).catch(function(){ return null; }),
@@ -25996,6 +26029,7 @@ if __name__ == "__main__":
             d.type = "button";
             d.title = k;
             d.dataset.k = k;
+            d.dataset.i = String(gg.children.length);
             d.setAttribute("aria-label", fn);      // 押したときは下の欄がまとめて受ける（oseru）
             gg.appendChild(d);
           });
@@ -26004,6 +26038,7 @@ if __name__ == "__main__":
         SM.hkGrids[String(r.c)] = g;
       }
       body.appendChild(g);
+      narabeOboe(r, g);
       markGrid(r);
       if(SM.hkC !== r.c){
         SM.hkC = r.c;
@@ -26049,7 +26084,32 @@ if __name__ == "__main__":
     function bangouStr(ns, oku){
       return "No." + ns.slice(0, oku).join("・") + (ns.length > oku ? " ほか" + (ns.length - oku) : "");
     }
+    // その字幕に出てくる人を、何人まで覚えている絵か（2 = 全員・1 = 一部・0 = いない）と、その名前
+    function oboeTen(k, r){
+      var h = r.hito || [], lab = (SM.oboe && SM.oboe[k]) || [];
+      var m = h.filter(function(x){ return lab.indexOf(x) >= 0; });
+      return {ten: !h.length ? 0 : (m.length === h.length ? 2 : (m.length ? 1 : 0)), na: m};
+    }
+    // 候補を、その字幕の人を覚えた絵から先に並べる（字幕ごと・作品ごとの一覧は使い回して順だけ替える）
+    function narabeOboe(r, g){
+      var gs = g.querySelectorAll(".smgrid");
+      for(var i = 0; i < gs.length; i++){
+        var bs = Array.prototype.slice.call(gs[i].querySelectorAll(".smth"));
+        bs.sort(function(a, b){
+          var ta = oboeTen(a.dataset.k, r).ten, tb = oboeTen(b.dataset.k, r).ten;
+          return (tb - ta) || (Number(a.dataset.i) - Number(b.dataset.i));
+        });
+        bs.forEach(function(b){ gs[i].appendChild(b); });
+      }
+    }
     function setPick(r, k){
+      // その場で選んだ絵も、その字幕に出てくる人として覚える（並びは替えない。押した絵が動くと選びにくい）
+      if(k && r.hito && r.hito.length){
+        SM.oboe = SM.oboe || {};
+        var o = SM.oboe[k] || [];
+        r.hito.forEach(function(x){ if(o.indexOf(x) < 0) o.push(x); });
+        SM.oboe[k] = o;
+      }
       r.n.forEach(function(n){ if(k) SM.picks[String(n)] = k; else delete SM.picks[String(n)]; });
       keepPicks(); refreshRow(r); markGrid(r); hkOver(k); updateFoot();
       var mo = $("smhkmodo"); if(mo) mo.disabled = !k;
@@ -26064,7 +26124,7 @@ if __name__ == "__main__":
       (J.kou || []).forEach(function(k){ kou[k] = 1; });
       var ds = $("smhkbody").querySelectorAll(".smgrid .smth");
       for(var i = 0; i < ds.length; i++){
-        var d = ds[i], k = d.dataset.k || d.title, ol = d.querySelectorAll(".smlab, .smuse");
+        var d = ds[i], k = d.dataset.k || d.title, ol = d.querySelectorAll(".smlab, .smuse, .smoboe");
         for(var j = 0; j < ol.length; j++) d.removeChild(ol[j]);
         d.classList.remove("cur"); d.classList.remove("sel");
         if(k === p){ d.classList.add("sel"); lab(d, "変更後"); }
@@ -26072,6 +26132,8 @@ if __name__ == "__main__":
         else if(kou[k]){ lab(d, "公式画像"); }
         // 動画の別の所ですでに使っている絵（選んだ絵がそれなら黄色＝かぶり）
         if(m[k]) d.appendChild(el("span", "smuse" + (k === p ? " kabu" : ""), "使用中 " + bangouStr(m[k], 2)));
+        var ob = oboeTen(k, r);
+        if(ob.ten) d.appendChild(el("span", "smoboe", "覚えた: " + ob.na.join("・")));
       }
     }
 

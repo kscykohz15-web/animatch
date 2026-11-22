@@ -128,6 +128,10 @@ def junbi():
                      (u"画像プラン.txt", PLAN),
                      (u"著作権.txt", u"あか組！\t©あか/あか製作委員会\n")):
         io.open(os.path.join(SAGYOU, nm), "w", encoding="utf-8", newline="\n").write(body)
+    # 選び直しを学ぶ（2026-11-21）: パックから その他 に届く本人の選び直し（全部の動画ぶん）
+    os.makedirs(os.path.join(SAGYOU, u"その他"))
+    io.open(os.path.join(SAGYOU, u"その他", u"本人の選び.txt"), "w", encoding="utf-8-sig", newline=u"\r\n").write(
+        u"# 本人がスマホで選び直した絵\nあか組！\tあか組！/107_x0001_x2.png\tあか組！/100_x0000_x2.png\t本作は漫画が原作です。\t01_前\t2026-11-21\n")
     # 無職転生のファイルも置く（本人のパックにも入っている）。読まれたら知らせが出る
     for f in (u"見た目.txt", u"演出.txt", u"画像カタログ.txt", u"話数マップ.txt", u"人物ルール.txt",
               u"当て方.txt", u"make_slideshow.py", u"置き場所.py"):
@@ -178,6 +182,8 @@ def main():
     iu(u"べつの作品" not in log.split(u"この回で使う作品の絵")[-1].split(u"\n\n")[0],
        u"① 使わないフォルダ（べつの作品）は並べない")
     iu(u"みどり組" in log and u"フォルダがありません" in log, u"① フォルダの無い作品を名前で言う")
+    iu(u"本人の選びから:" in log and u"本人の選び直し 1 行" in log,
+       u"⑥ その他/本人の選び.txt（パックから届く選び直し）を読んで当て方に使う（選び直しを学ぶ・2026-11-21）")
     iu(os.path.exists(jirushi), u"① メニューが採点を飛ばす目印（その他/_おすすめ.txt）を置く")
     w = wariate()
     kou = [i for i, (img, tx) in enumerate(w) if img.endswith(u"/1.jpg")]

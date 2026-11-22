@@ -39,6 +39,8 @@ u"""スマホで見る・絵を選ぶ（仕上げ.py ㉝）
      使われているかがわかると、被りが出るかわかる」）。選び直した所は選んだ絵で数え、替えられた前の絵は数えない。
      選んだ絵がかぶると、候補の印が黄色・上の絵に「No.○ でも使用中」・帯に「かぶります」
   ⑬ 絵を変える機能は、おすすめのボードのいちばん上（2026-11-21 本人の指定「おすすめアニメボードの1番上に置いておいて」）
+  ⑮ スマホの候補は、その字幕に出てくる人を覚えた絵から先に並べ、「覚えた: 名前」の印。その場で選んだ絵も覚える。
+     動画ごとの当たり率（選び直さずに済んだ字幕の割合）を出す
   ⑭ 選び直しを学ぶ（2026-11-21 本人「変更した内容を蓄積して、データとして解析し…精度を高めて欲しい」）
      「修正を決定」のたびに manabi/<印> へ足す（上書きしない）。1行 = 作品フォルダ・選んだ絵・機械の絵・字幕の文。
      「いまの絵に戻す」で決めた字幕は消す。決定ごとに 字幕の数・選び直した数 を kiroku に残す
@@ -105,7 +107,8 @@ def zairyou(ms):
               u"curKey": u"あか組！/1.jpg", u"kind": u"daiji", u"te": False, u"c": 1},
              {u"n": [5], u"t": u"0:10", u"tx": u"本作は漫画が原作となっています。", u"txs": [u"本作は漫画が原作となっています。"],
               u"curKey": u"あか組！/0002.png", u"kind": u"e", u"te": False, u"c": 1},
-             {u"n": [6], u"t": u"0:14", u"tx": u"物語は、赤い所から始まります。", u"txs": [u"物語は、赤い所から始まります。"],
+             {u"n": [6], u"t": u"0:14", u"tx": u"物語は、主人公の赤井太郎が、赤い所へ行くところから始まります。",
+              u"txs": [u"物語は、主人公の赤井太郎が、赤い所へ行くところから始まります。"],
               u"curKey": u"あか組！/0003.png", u"kind": u"e", u"te": False, u"c": 1},
              {u"n": [7], u"t": u"0:18", u"tx": u"続いての作品は、あお組、制作はおつしゃ。", u"txs": [u"続いての作品は、あお組、制作はおつしゃ。"],
               u"curKey": u"あお組/0002.png", u"kind": u"e", u"te": False, u"c": 2},
@@ -124,7 +127,10 @@ def zairyou(ms):
     spans = [(0.0, 6.0, u"－"), (6.0, 17.0, u"あか組！\\N2014年冬"), (17.0, 25.0, u"あお組\\N2010年夏"),
              (25.0, 30.0, u"おわりに")]
     ms.HERE = SAGYOU
+    # ⑮ 選び直しを学ぶ: 前の動画で「赤井太郎が走る。」の字幕に 0004 を選んでいた（本人の選び.txt）
+    ms.MANABI[0] = [{u"fol": u"あか組！", u"e": u"あか組！/0004.png", u"mae": u"あか組！/0002.png", u"tx": u"赤井太郎が走る。"}]
     r = ms.sumaho_tsukuru(D, imgpath, final, 2.0, spans)
+    ms.MANABI[0] = None
     return D, r
 
 
@@ -516,9 +522,20 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pp.waitForSelector(".smrow.picked:has-text('本作は漫画')", {timeout: 5000});
     ok(true, "④ 開き直しても、選んだ絵が残っている");
     // 開き直したあと（選んだ絵を控えから読んだあと）も選べる。控えは読み取り専用で返る（v208 まで iPhone で止まっていた）
+    // ⑮ 当たり率（最後の決定: 選び直せる字幕 8・選び直し 3 → 62%）
+    const atari = await pp.evaluate(() => (document.getElementById("smatari") || {}).textContent || "");
+    ok(atari.indexOf("01_ためし") >= 0 && atari.indexOf("62%") >= 0 && atari.indexOf("8字幕中5") >= 0,
+       "⑮ 動画ごとの当たり率（選び直さずに済んだ字幕の割合）が出る（" + atari.replace(/\s+/g, " ").slice(0, 80) + "）");
     await pp.evaluate(() => Array.from(document.querySelectorAll(".smrow")).find(e => e.textContent.indexOf("物語は") >= 0).click());
     await pp.waitForSelector("#smhk:not([hidden])");
+    const nr = await pp.evaluate(() => { const a = Array.from(document.querySelectorAll("#smhkbody .smgrid .smth"));
+      return {first: a[0] && a[0].dataset.k, oboe: (a[0] && a[0].querySelector(".smoboe") || {}).textContent || "",
+              hoka: a.slice(1).filter(e => e.querySelector(".smoboe")).length}; });
+    ok(nr.first === "あか組！/0004.png" && nr.oboe === "覚えた: 赤井太郎" && nr.hoka === 0,
+       "⑮ 「物語は、主人公の赤井太郎が、」の候補は、赤井太郎を覚えた絵（0004）が先頭で「覚えた: 赤井太郎」" + JSON.stringify(nr));
     await pp.tap("#smhkbody .smth[title='あか組！/0006.png']");
+    const no6 = await pp.evaluate(() => (document.querySelector("#smhkbody .smth[title='あか組！/0006.png'] .smoboe") || {}).textContent || "");
+    ok(no6 === "覚えた: 赤井太郎", "⑮ その場で選んだ絵（0006）も、その字幕の人（赤井太郎）として覚える（" + no6 + "）");
     const ag = await pp.evaluate(() => ({sel: (document.querySelector("#smhkbody .smth.sel") || {dataset: {}}).dataset.k || null,
       msg: document.getElementById("smhkmsg").textContent}));
     ok(ag.sel === "あか組！/0006.png" && ag.msg.indexOf("止まりました") < 0,
@@ -587,6 +604,10 @@ def main():
        u"① 1本目は「はじめに」（オープニング込み）、2本目はオープニングのぶん後ろから（8.0秒）")
     iu(len(J.get(u"fol", [])) == 2 and u"べつの作品" not in J.get(u"fol", []),
        u"① 紙にするのは章が指している作品だけ（べつの作品は入れない）")
+    r6 = [x for x in J.get(u"rows", []) if x.get(u"n") == [6]]
+    iu(bool(r6) and r6[0].get(u"hito") == [u"赤井太郎"] and J.get(u"manabi", {}).get(u"あか組！/0004.png") == [u"赤井太郎"]
+       and not (J.get(u"manabi", {}).get(u"あか組！/0003.png")),
+       u"⑮ スマホ用の目録に、字幕に出てくる人（No.6 赤井太郎）と、覚えた絵の人（0004 → 赤井太郎）を書く")
     iu(J.get(u"u_pos", {}).get(u"あか組！/0002.png") is not None and u"あか組！/1.jpg" in J.get(u"kou", []),
        u"① いまの絵だけの紙がある・「1」は公式画像として印が付く")
     # ⑥ 紙の中のマスが正しい（あお組/0003.png は あお組の紙の3番目＝0から数えて2）

@@ -677,6 +677,9 @@ DAIJI = [True]                # 作品の頭の1文を「題字の画面」に�
 #   採点（miru_kekka）と 直す.py も、説明を見る道具なので回さない（その他/_おすすめ.txt を見て
 #   メニューが飛ばす）。代わりに「どの章もその作品の絵だけか」をここで数えて出す。
 OSUSUME = [False]
+# 本人の選び.txt の行（選び直しを学ぶ・2026-11-21）。main が読み、assign_images が使う。None なら学ばない
+MANABI = [None]
+MANABI_NA = u"本人の選び.txt"          # 置き場所は その他（99_確認不要/その他）。Prepare がパックから写す
 OSUSUME_JIRUSHI = u"_おすすめ.txt"     # その他/ に置く。メニューが採点と直す.py を飛ばす目印
 
 
@@ -8884,6 +8887,109 @@ def assign_images(slots, images, rules, default, catalog=None, epmap=None,
             kou_kae += 1
         for k in [k for k, v in tsukai.items() if v <= 0]:
             del tsukai[k]
+    # ■ 本人の選び直しから学んだ当て方（2026-11-21・本人「変更した内容を蓄積して…精度を高めて欲しい」）
+    #
+    #   本人がスマホで選び直した絵は、ほぼ「その字幕に出てくる人が写っている絵」だった。本人の選び.txt から
+    #   「この絵には誰が写っているか」を覚え（manabi_shiru）、1作品の章の字幕ごとに
+    #     ① 出てくる人が全員写っている絵 ② 一部が写っている絵（どちらもまだ使っていない絵）を先に当てる
+    #     ③ 人の出ない字幕で、いまの絵が「外されて一度も選ばれていない絵」なら、ほかの絵（選ばれたことのある絵が先）に替える
+    #   作品の頭の公式画像・画像プランに手で書いた絵・はじめに/おわりに・別の作品には触らない。
+    #   差し替え.txt（本人が手で選んだ絵）はこのあとで当たるので、そちらが勝つ。
+    manabi_kae, manabi_oboe = 0, 0
+    if OSUSUME[0] and MANABI[0] and shou_kiri:
+        fol_of = [None] * len(out)
+        _cur = None
+        for idx in range(len(out)):
+            if idx in shou_kiri:
+                _cur = shou_kiri[idx][1]
+            fol_of[idx] = _cur[0] if (_cur and len(_cur) == 1) else None
+        _buf = {}
+        for idx in range(len(out)):
+            if fol_of[idx]:
+                _buf.setdefault(fol_of[idx], []).append(slots[idx][2] or u"")
+        _paras, _pfol = [], []
+        for _f, _txs in _buf.items():
+            for _b in re.split(u"(?<=。)", u"".join(_txs)):
+                if _b.strip():
+                    _paras.append(_b.strip())
+                    _pfol.append(_f)
+        _jisho = hito_jisho(_paras, _pfol)
+        _utsuru, _yoi, _dame = manabi_shiru(MANABI[0], _jisho)
+        manabi_oboe = len(_utsuru)
+        _rwm = [(slots[j][1], out[j], slots[j][2]) for j in range(len(out))]
+        _djm = set()
+        for _d in (daiji_basho(_rwm, chaps) if chaps else []):
+            _djm.update(range(_d[0], _d[1] + 1))
+        _fimg = {}
+        for k in images:
+            if u"/" in k and not wa_koushiki(k):
+                _fimg.setdefault(k.split(u"/")[0], []).append(k)
+
+        def _te(idx, img):
+            u"""その字幕に、画像プランの行（言葉が字幕に入っている行）で手で書いた絵か。
+            名前だけ見ると、手で書いた絵が機械で別の所にも入ったとき、そこまで触れなくなる"""
+            t = slots[idx][2] or u""
+            return any(img in r[1] and any(w in t for w in r[0]) for r in rules)
+
+        def _kaeru(idx, k):
+            tsukai[out[idx]] = max(0, tsukai.get(out[idx], 1) - 1)
+            out[idx] = k
+            tsukai[k] = tsukai.get(k, 0) + 1
+
+        def _taisho(idx):
+            u"""当て直してよい字幕なら (作品フォルダ, 出てくる人)。だめなら None"""
+            f, img = fol_of[idx], out[idx]
+            if not f or idx in _djm or img == MUJI or u"/" not in img or _te(idx, img):
+                return None
+            return f, hito_no_ji(slots[idx][2], _jisho.get(f, {}))
+
+        # 0回目: 人の出ない字幕にいる「人を覚えた絵」は、いったん外す（人の出る字幕に先に回す。
+        #        残れば 2回目でその字幕に戻す）
+        _modosu = {}
+        for idx in range(len(out)):
+            ta = _taisho(idx)
+            if ta and not ta[1] and out[idx] in _utsuru:
+                _modosu[idx] = out[idx]
+                tsukai[out[idx]] = max(0, tsukai.get(out[idx], 1) - 1)
+        for _nen in (1, 2):        # 1回目: 人の出る字幕 / 2回目: 人の出ない字幕
+            for idx in range(len(out)):
+                ta = _taisho(idx)
+                if not ta or bool(ta[1]) != (_nen == 1):
+                    continue
+                f, hito = ta
+                img = out[idx]
+                if idx in _modosu:
+                    if tsukai.get(img, 0) == 0:
+                        tsukai[img] = 1          # 人の出る字幕に取られなかったので、そのまま戻す
+                        if img not in _dame:
+                            continue
+                    else:
+                        tsukai[img] = tsukai.get(img, 0) + 1    # 取られた（_kaeru で 1 減らすぶん）
+                aki = [k for k in _fimg.get(f, []) if tsukai.get(k, 0) == 0 and k != img]
+                if hito:
+                    def _ten(k):
+                        u = _utsuru.get(k, set())
+                        return (2 if hito <= u else (1 if hito & u else 0))
+                    ima = (_ten(img), img not in _dame)
+                    if not aki:
+                        continue
+                    best = max(aki, key=lambda k: (_ten(k), k not in _dame,
+                                                   -len(_utsuru.get(k, set()) - hito), -_fimg[f].index(k)))
+                    if (_ten(best), best not in _dame) > ima:
+                        _kaeru(idx, best)
+                        manabi_kae += 1
+                elif img in _dame or (idx in _modosu and tsukai.get(img, 0) > 1):
+                    yoi2 = [k for k in aki if k not in _dame and k not in _utsuru] or \
+                        [k for k in aki if k not in _dame]
+                    if yoi2:
+                        best = max(yoi2, key=lambda k: (k in _yoi, -_fimg[f].index(k)))
+                        _kaeru(idx, best)
+                        manabi_kae += 1
+        for k in [k for k, v in tsukai.items() if v <= 0]:
+            del tsukai[k]
+        say(u"本人の選びから: %d か所を名前の合う絵・使える絵に替えました（覚えた絵 %d枚・本人の選び直し %d 行）"
+            % (manabi_kae, manabi_oboe, len(MANABI[0])))
+
     if OSUSUME[0] and len(out) > 1:
         # ④ となり合う字幕に同じ絵・同じ場面の絵を続けない（上の注記）
         _rw4 = [(slots[j][1], out[j], slots[j][2]) for j in range(len(out))]
@@ -9619,8 +9725,12 @@ def load_kouho(path):
 #   おすすめ紹介の絵には説明が無いので、誰が写っているかは本人の選び直しから覚える。
 #   その前に「字幕に誰が出てくるか」を台本から読む。本人の型のあらすじは
 #   「物語は、…主人公、高須竜児と、…ヒロイン、逢坂大河が、…」の形（ラブコメ20選は20作品とも取れた）。
-HITO_PAT = re.compile(u"(主人公|ヒロイン)(?:である|の|、)(?:[^、。]{0,6}?の)?"
-                      u"([一-龥々ァ-ヶー・゠-ヿ]{2,14}?)(?=が|と|を|に|から|の|、|たち|は|。)")
+#   本人の決定の字幕は直す前の言い方「主人公の高校生、高須竜児と」なので、名前の前の「高校生、」も飛ばす。
+#   名前は漢字かカタカナで始まり、ひらがなも入る（「四宮かぐや」）。立場の言葉（高校生・妹など）は名前にしない。
+HITO_DE_NAI = set(u"高校生 中学生 小学生 大学生 少年 少女 青年 男子 女子 妹 兄 姉 弟 先輩 後輩 同級生 幼なじみ 彼女 彼 二人".split())
+HITO_PAT = re.compile(u"(主人公|ヒロイン)(?:である|の|、)(?:(?:%s)(?:の|、))?"
+                      u"([一-龥々ァ-ヶー][一-龥々ァ-ヶー・゠-ヿぁ-ん]{1,13}?)(?=が|と|を|に|から|の|、|たち|は|。)"
+                      % u"|".join(sorted(HITO_DE_NAI, key=len, reverse=True)))
 
 
 def hito_jisho(daihon_paras, shou_fol):
@@ -9639,7 +9749,7 @@ def hito_jisho(daihon_paras, shou_fol):
         if not (t or u"").startswith(u"物語は"):
             continue
         for m in HITO_PAT.finditer(t):
-            if m.group(2) not in d[m.group(1)]:
+            if m.group(2) not in d[m.group(1)] and m.group(2) not in HITO_DE_NAI:
                 d[m.group(1)].append(m.group(2))
     for f, d in out.items():
         zen = u"\n".join(naka.get(f, []))
@@ -9650,6 +9760,9 @@ def hito_jisho(daihon_paras, shou_fol):
             else:
                 kouho = ([nm[:k] for k in range(2, len(nm))] + [nm[-k:] for k in range(2, len(nm))])
             for c in kouho:
+                # ひらがなで始まる呼び名は3文字以上だけ（「しろ」は「おもしろい」、「ぐや」も言葉の中に入る）
+                if u"ぁ" <= c[0] <= u"ん" and len(c) < 3:
+                    continue
                 if c in soto and c not in d[u"yobi"]:
                     d[u"yobi"][c] = nm
     return out
@@ -9682,6 +9795,43 @@ def hito_no_ji(tx, ji):
     if u"ヒロイン" in tx:
         na.update(yaku(u"ヒロイン"))
     return frozenset(na)
+
+
+def manabi_yomu(path):
+    u"""本人の選び.txt（掲示板の「修正を決定」がためた選び直し・全部の動画ぶん）を読む。
+
+    1行 = 作品フォルダ<TAB>選んだ絵<TAB>機械の絵<TAB>字幕の文<TAB>動画<TAB>日時。
+    無い・空・列が足りない行は飛ばす。戻り値は [{fol, e, mae, tx}]。
+    """
+    out = []
+    try:
+        lines = io.open(path, encoding="utf-8-sig").read().splitlines()
+    except Exception:
+        return out
+    for ln in lines:
+        if not ln.strip() or ln.startswith(u"#"):
+            continue
+        c = ln.split(u"\t")
+        if len(c) < 4 or not c[0].strip() or not c[1].strip() or not c[3].strip():
+            continue
+        out.append({u"fol": c[0].strip(), u"e": c[1].strip(), u"mae": c[2].strip(), u"tx": c[3].strip()})
+    return out
+
+
+def manabi_shiru(recs, jisho):
+    u"""選び直しから覚える。戻り値 (utsuru {絵: 写っている人}, yoi {選ばれたことのある絵}, dame {外されて一度も選ばれていない絵})。
+
+    写っている人は、その絵を選んだ字幕に出てくる人（hito_no_ji。作品フォルダの中だけ）。
+    """
+    utsuru, yoi, mae = {}, set(), set()
+    for r in recs or []:
+        h = hito_no_ji(r[u"tx"], (jisho or {}).get(r[u"fol"], {}))
+        if h:
+            utsuru.setdefault(r[u"e"], set()).update(h)
+        yoi.add(r[u"e"])
+        if r.get(u"mae"):
+            mae.add(r[u"mae"])
+    return utsuru, yoi, mae - yoi
 
 
 def moji_de_sagasu(hoshii, rows, ban, moto_no):
@@ -10402,11 +10552,32 @@ def sumaho_tsukuru(D, imgpath, final, op_byou, spans):
             na = u"はじめに" if ti == MUDAI else (ti or u"").split(u"\\N")[0]
             clips.append({u"file": fn, u"title": na, u"st": round(a0, 2), u"en": round(b0, 2)})
 
+    # 選び直しを学ぶ（2026-11-21）: 字幕ごとに出てくる人（hito）と、覚えた絵の人（manabi）。
+    # 掲示板が、候補をその字幕の人を覚えた絵から先に並べ、「覚えた: 名前」の印を付けるのに使う
+    def _fol1(r):
+        c = r.get(u"c", -1)
+        cs = D[u"chap"][c] if (isinstance(c, int) and 0 <= c < len(D[u"chap"])) else []
+        return D[u"fol"][cs[0]] if len(cs) == 1 else None
+    _buf = {}
+    for r in D[u"rows"]:
+        if _fol1(r):
+            _buf.setdefault(_fol1(r), []).extend(r.get(u"txs") or [r.get(u"tx") or u""])
+    _paras, _pf = [], []
+    for _f, _t in _buf.items():
+        for _b in re.split(u"(?<=。)", u"".join(_t)):
+            if _b.strip():
+                _paras.append(_b.strip())
+                _pf.append(_f)
+    _ji = hito_jisho(_paras, _pf)
+    _utsuru = manabi_shiru(MANABI[0], _ji)[0] if MANABI[0] else {}
     rows = []
     for r in D[u"rows"]:
         rr = dict((k, v) for k, v in r.items() if k != u"cur")
+        _f = _fol1(r)
+        rr[u"hito"] = sorted(hito_no_ji(r.get(u"tx") or u"", _ji.get(_f, {}))) if _f else []
         rows.append(rr)
     J = {u"v": 1, u"title": D[u"title"], u"made": D[u"made"], u"op": round(op_byou, 2),
+         u"manabi": dict((k, sorted(v)) for k, v in _utsuru.items() if k in pos),
          u"fol": fol, u"files": files, u"chap": chap, u"rows": rows,
          u"sheets": sheets, u"cell": [cw, ch], u"cols": SUMAHO_COLS, u"pos": pos,
          u"u_sheets": u_sheets, u"u_pos": u_pos,
@@ -11979,6 +12150,8 @@ def main():
                 emap = {} if OSUSUME[0] else load_epmap(a.epmap, images)
                 _c0, chaps_for_assign = load_overlay(a.overlay) \
                     if os.path.exists(a.overlay) else (u"", [])
+                # 本人の選び直し（掲示板の「修正を決定」がためた物・パックから その他 に届く）。おすすめ紹介の回だけ
+                MANABI[0] = (manabi_yomu(os.path.join(HERE, SONOTA_DIR, MANABI_NA)) or None) if OSUSUME[0] else None
                 picked = assign_images(slots, images, rules, default, cat,
                                        emap, focus, mitame=mi,
                                        chaps=chaps_for_assign)

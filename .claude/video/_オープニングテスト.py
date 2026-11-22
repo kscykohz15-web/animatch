@@ -277,6 +277,17 @@ def main():
        u"⑦ つなぎ目の前後は白いフラッシュ（前 %s / 後 %s）"
        % (u"/".join(u"%.0f" % x for x in mae_), u"/".join(u"%.0f" % x for x in ato_)))
     iu(u"つなぎ: オープニングの終わり" in log, u"⑦ つなぎを入れたことを知らせる")
+    # ⑧ 書き出しは1回だけ（2026-11-22・本人「一時間半…半減ぐらいにはしたい」）。字幕は断片を作るときに焼き、
+    #    最後はつないで音を付けるだけ。白いフラッシュ（色つきの fade）のあとも yuv420p（前は完成が High 4:4:4 だった）
+    pr = subprocess.run([FF.replace(u"ffmpeg", u"ffprobe") if FF.endswith(u"ffmpeg") else u"ffprobe", "-v", "error",
+                         "-select_streams", "v", "-show_entries", "stream=profile,pix_fmt", "-of", "csv=p=0", p1],
+                        stdout=subprocess.PIPE).stdout.decode("utf-8", "replace").strip()
+    iu(pr == u"High,yuv420p", u"⑧ 完成の動画は High・yuv420p（オープニングと白いフラッシュ付きでも 4:4:4 にしない・%s）" % pr)
+    iu(u"もう一度書き出しはしません" in log and u"動画を書き出しています (" not in log,
+       u"⑧ 字幕は断片で焼いてあるので、動画ぜんぶをもう一度書き出さない")
+    rr = subprocess.run([FF, "-v", "error", "-i", p1, "-f", "null", "-"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    ng = [l for l in rr.stdout.decode("utf-8", "replace").splitlines() if l.strip() and u"non monotonically" not in l]
+    iu(not ng, u"⑧ つないだ動画を最後まで読める（%s）" % (ng[:2] or u"エラーなし"))
     nb1 = nagai_basho(w)
     iu(nb1 is not None and nb is not None and abs(nb1[0] - nb[0]) < 0.05,
        u"④ 一覧.txt の時刻は本編のまま（%s）" % (u"%.2f" % nb1[0] if nb1 else u"-"))
