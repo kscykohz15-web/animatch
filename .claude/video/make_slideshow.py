@@ -12780,6 +12780,34 @@ def main():
         for nm in kou_nashi:
             say(u"  ! %s は公式画像（1.jpg など）が無いので、その作品のほかの絵を出しています" % nm)
 
+    # ■ 作品の頭の1文の公式画像（「1」）は、動かさず、画面の大きさに合わせる（2026-11-22・本人の指定）
+    #
+    #   > おすすめアニメ紹介における最初部分、つまり画像「1」のものを使う部分だけは、画像は動かさず、
+    #   > 拡大も画面サイズに合わせたものにしてください。
+    #
+    #   ほかの絵は動かすために 1.10倍（見た目.txt「画像の拡大」）で揃えて切り出している。公式画像だけは
+    #   画面ちょうど（1.0倍）で揃えた絵を別に作り（揃え方は同じ blur）、向きを付けない（動かない）。
+    #   となりの断片の切り替えエフェクトでも、前の絵としてこちらを使う（切り替えで大きさが跳ねない）
+    seishi_e = {}           # 行の番号 → 画面ちょうどに揃えた公式画像
+    if daiji and ugokasu and (nw, nh) != (w, h):
+        _sz = {}
+        for (s0, e0, _t, _s, _p) in daiji:
+            moto = rows[s0][1]
+            if not wa_koushiki(moto):
+                continue
+            if moto not in _sz:
+                src = moto if os.path.isabs(moto) else imgpath.get(moto, os.path.join(a.images, moto))
+                key = u"%s|%d|%d|%dx%d|%s|seishi" % (os.path.abspath(src), os.path.getsize(src),
+                                                     int(os.path.getmtime(src)), w, h, a.fit)
+                dst = os.path.join(norm, hashlib.md5(key.encode("utf-8")).hexdigest()[:16] + ".png")
+                if not os.path.exists(dst):
+                    normalize(src, dst, w, h, a.fit)
+                _sz[moto] = dst
+            for j in range(s0, e0 + 1):
+                seishi_e[j] = _sz[moto]
+        if seishi_e:
+            say(u"  作品の頭の公式画像 %d枚は、動かさずに画面の大きさに合わせて映します" % len(_sz))
+
     # --- 切り替わりをフレームにそろえる(絵と字幕を1フレームも狂わせない) ---
     fps = a.fps
     ends, cum = [], 0.0
@@ -13232,11 +13260,11 @@ def main():
             # 尺より長いエフェクトはかけられない
             d = min(spec["dur"], (frames[i] / float(fps)) * 0.6)
             need_mae, fil = fx_filter(spec["fx"], d)
-        mae = cache[rows[i - 1][1]] if (need_mae and i > 0) else None
+        mae = (seishi_e.get(i - 1) or cache[rows[i - 1][1]]) if (need_mae and i > 0) else None
         if need_mae and mae is None:
             fil = None
         # 章カードは元から画面ぴったりの大きさなので、切り出しも動きもしない
-        kore = muki.get(i) if ugokasu else None
+        kore = muki.get(i) if (ugokasu and i not in seishi_e) else None     # 作品の頭の公式画像は動かさない
         zure = keika.get(i, 0.0) if ugokasu else 0.0
         s_k, hy_k = grp_s.get(i, 1.0), grp_hy.get(i)
         if ugokasu:
@@ -13247,14 +13275,15 @@ def main():
                 fil = pan + fil.replace(u"[0:v]", u"[c0]").replace(u"[1:v]", u"[c1]")
         # **経過も鍵に入れること。** 入れないと、同じ絵・同じ尺の断片を
         # 使い回してしまい、つないだ意味が無くなる。
-        key = (cache[img], frames[i], mae, fil, kore, round(zure, 3), round(s_k, 4),
+        e_i = seishi_e.get(i) or cache[img]
+        key = (e_i, frames[i], mae, fil, kore, round(zure, 3), round(s_k, 4),
                round(hy_k or 0.0, 3), sf[i] if yaki else None)
         seg = segcache.get(key)
         if seg is None:
             seg = os.path.join(segdir, "s%05d.mp4" % len(segcache))
             # 絵は1枚として読む（-loop 1 にしない）。繰り返すのはフィルタの中の kuri（上の注記）
             cmd = [need("ffmpeg"), "-y", "-loglevel", "error",
-                   "-framerate", str(fps), "-i", cache[img]]
+                   "-framerate", str(fps), "-i", e_i]
             if fil:
                 if mae:
                     cmd += ["-framerate", str(fps), "-i", mae]

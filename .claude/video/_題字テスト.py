@@ -8,6 +8,8 @@ u"""おすすめ紹介の回を、小さな材料で**本当に最後まで作�
   ③ 作品が切り替わるシーンは、エフェクトで切り替える
   ④ タイトルと制作会社を言うところは、公式画像（1）をそのまま全面に＋下の帯に
      「制作：○○」「作品名」。右半分に題名は出さない（本人の直し）
+  ⑤ その公式画像は動かさず、拡大も画面の大きさに合わせる（2026-11-22・本人の指定「画像「1」のものを使う部分だけは、
+     画像は動かさず、拡大も画面サイズに合わせたものにしてください」）
 
 ■ なぜ本当に作るのか
 
@@ -187,6 +189,31 @@ def main():
        u"③ 作品の切り替わりに「章」のエフェクト（ページめくり）が入る")
     m = re.search(u"演出: (.+)", out)
     print(u"   " + (m.group(0) if m else u"（演出の行なし）"))
+
+    # ⑤ 公式画像は動かさない・画面の大きさに合わせる（1.0倍。ほかの絵は動かすために 1.10倍で揃えている）
+    m5 = re.search(u"Dialogue: 1,(\\d+):(\\d+):([\\d.]+),(\\d+):(\\d+):([\\d.]+),Daiji", ass)
+    if m5:
+        from PIL import Image, ImageChops
+        t0 = int(m5.group(1)) * 3600 + int(m5.group(2)) * 60 + float(m5.group(3))
+        t1 = int(m5.group(4)) * 3600 + int(m5.group(5)) * 60 + float(m5.group(6))
+        pa, pb = os.path.join(SAGYOU, u"_d_a.png"), os.path.join(SAGYOU, u"_d_b.png")
+        koma(mp4, t0 + (t1 - t0) * 0.55, pa)
+        koma(mp4, t1 - 0.25, pb)
+        A, B = Image.open(pa).convert("L"), Image.open(pb).convert("L")
+        W5, H5 = A.size
+        box = (int(W5 * 0.25), int(H5 * 0.1), int(W5 * 0.75), int(H5 * 0.65))   # 帯と左上の引用を外した所
+        dab = sum(ImageChops.difference(A.crop(box), B.crop(box)).getdata()) / float((box[2] - box[0]) * (box[3] - box[1]))
+        iu(dab < 1.5, u"⑤ 作品の頭の公式画像は動かない（文の中ほどと終わりのコマの差 %.2f）" % dab)
+        ref = os.path.join(SAGYOU, u"_d_ref.png")
+        ff(["-i", os.path.join(e, u"あか組！", u"1.jpg"), "-filter_complex",
+            "[0:v]scale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d,boxblur=26:2,eq=brightness=-0.09[bg];"
+            "[0:v]scale=%d:%d:force_original_aspect_ratio=decrease[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2"
+            % (W5, H5, W5, H5, W5, H5), "-frames:v", "1", ref])
+        R = Image.open(ref).convert("L")
+        dref = sum(ImageChops.difference(A.crop(box), R.crop(box)).getdata()) / float((box[2] - box[0]) * (box[3] - box[1]))
+        iu(dref < 8.0, u"⑤ 公式画像は画面の大きさに合わせて丸ごと映る（画面ちょうどに収めた絵との差 %.1f）" % dref)
+    else:
+        iu(False, u"⑤ 題字の字幕（Daiji）が見つからない")
 
     # 目で見るためのコマ（検査はしない。本人に見せる・こちらが見る用）
     m2 = re.search(u"Dialogue: 1,(\\d+):(\\d+):([\\d.]+),[^,]+,Daiji", ass)
