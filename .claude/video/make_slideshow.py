@@ -13272,7 +13272,7 @@ def main():
                 cmd += ["-vf", vf1 + (u"," + yaki_tail(i) if yaki else u"")]
             else:
                 cmd += ["-vf", kuri + (u"," + yaki_tail(i) if yaki else u"")]
-            cmd += ["-frames:v", str(frames[i]),
+            cmd += ["-frames:v", str(frames[i])] + (["-threads", "1"] if yaki else []) + [
                     "-c:v", "libx264", "-preset", kaki_preset if yaki else a.seg_preset,
                     "-crf", str(a.crf if yaki else max(12, a.crf - 6)),
                     "-pix_fmt", "yuv420p", "-g", str(fps * 2), "-an", seg]
@@ -13280,14 +13280,147 @@ def main():
             segcache[key] = seg
         seglist.append(seg)
 
+    # ■ 音（声・章カードの無音・効果音・BGM）は、断片と関係が無いので、断片を作っている間に別の手で作る
+    #   （2026-11-22・本人「半減ぐらいにはしたい」。同じ大きさで測ると、音を重ねて AAC にするだけで約80秒・
+    #   そのうち AAC の書き出しが50秒。断片と並べれば待たずに済む）。字幕を断片で焼くときは AAC までここで作る
+    def _oto_tsukuru():
+        # 効果音と BGM を、それぞれ1本のwavにして声に重ねる。
+        # amix は normalize=0 にしないと声の音量が下がってしまう。
+        # duration=first なので、声の長さは1サンプルも変わらない。
+        oto = a.audio
+        # カードぶんの無音を、声にも入れる。
+        # 入れる位置は「そのカードより前の、カード以外の尺の合計」。
+        if cards:
+            basho, moto_t = [], 0.0
+            for i in range(len(rows)):
+                if i in cards:
+                    basho.append((moto_t, (ends[i] - starts[i])))
+                else:
+                    moto_t += ends[i] - starts[i]
+            shizuka = insert_silence(a.audio, os.path.join(work, "koe_card.wav"), basho)
+            if shizuka:
+                oto = shizuka
+                say(u"  章タイトルのぶん、声に無音を %.1f秒 入れました (%d か所)"
+                    % (sum(b for _a, b in basho), len(basho)))
+            else:
+                say(u"  ⚠ 声に無音を入れられませんでした。カードのぶんだけずれます。")
+        kasaneru = []          # 声に重ねるもの
+        uchikomi, secache, sekazu = [], {}, {}
+        for i, k in kinds.items():
+            spec = en["kubun"].get(k)
+            if not spec:
+                continue
+            wav, atk = se_wav_ready(spec["se"], en["sevol"], work, secache)
+            if wav:
+                uchikomi.append((starts[i], wav, atk))
+                sekazu[spec["se"]] = sekazu.get(spec["se"], 0) + 1
+        if uchikomi:
+            trk = build_se_track(uchikomi, sum(frames) / float(fps),
+                                 os.path.join(work, "se_track.wav"),
+                                 zure=en.get("sezure", 0.0))
+            if trk:
+                kasaneru.append(trk)
+                say(u"  効果音: " + u" / ".join(u"%s %d回" % (n, c)
+                                            for n, c in sorted(sekazu.items())))
+
+        if not a.no_bgm and (en.get("bgm") or OSUSUME[0]):
+            eizou = sum(frames) / float(fps)
+            koe = audio_duration(oto)
+            bgm, wari_b, bdir = None, [], None
+            if OSUSUME[0]:
+                # 作品ごとに曲を替える（本人の指定・2026-11-17）。上の注記を読むこと
+                bdir, kyoku = bgm_folder(a.images, a.bgm_dir)
+                sp_b = chapter_spans(cues, chaps, max(eizou, koe)) if chaps else []
+                if kyoku and sp_b:
+                    bgm, wari_b = bgm_sakuhin_goto(
+                        sp_b, bdir, kyoku, en["bgmvol"], max(eizou, koe), min(eizou, koe),
+                        en["bgmfade"], work, DOUGA_NA)
+                elif not kyoku:
+                    say(u"  BGM: 作品ごとの曲が見つかりません（%s）。演出.txt の1曲を流します。"
+                        u"曲を入れると、作品ごとに替わります" % (bdir or u"BGM フォルダ"))
+            if bgm is None and en.get("bgm"):
+                bgm = bgm_wav_ready(en["bgm"], en["bgmvol"],
+                                    max(eizou, koe), min(eizou, koe),
+                                    en["bgmfade"], work)
+            if bgm:
+                if en.get("bgmduck"):
+                    bgm = bgm_hikaeme(bgm, oto, max(eizou, koe), work)
+                kasaneru.append(bgm)
+                if wari_b:
+                    nkyoku = len(set(k for (_s, _e, _t, k) in wari_b))
+                    say(u"  BGM: 作品ごとに曲を替えました（%s の %d曲から %d曲を使用・音量 %.2f・"
+                        u"切り替えは %.1f秒かけて重ねる）"
+                        % (bdir, len(bgm_folder(a.images, a.bgm_dir)[1]), nkyoku,
+                           en["bgmvol"], BGM_KASANE))
+                    hyou = [u"# どの区切りに、どの曲を当てたか（make_slideshow.py が書きます）",
+                            u"# 曲の並びは動画の名前で決まります。作り直しても同じ曲になります。"]
+                    _ok = list(BGM_OOKISA)
+                    _hk = [o for o in _ok if o[2] is not None]
+                    if _hk:
+                        _db = [20.0 * math.log10(max(1e-6, o[3])) for o in _hk]
+                        say(u"  BGM の大きさ: どの区切りも、流れる部分の耳の大きさを %.0f LUFS にそろえてから"
+                            u"音量 %.2f をかけました（曲ごとに %+.1f〜%+.1f dB 直しています）"
+                            % (BGM_LUFS, en["bgmvol"], min(_db), max(_db)))
+                    for (st0, en0, ti0, k0) in wari_b:
+                        na0 = u"はじめに" if ti0 == MUDAI else ti0.split(u"\\N")[0]
+                        hyou.append(u"%s\t%s\t%s" % (mmss(st0), na0, k0))
+                        _o = _ok.pop(0) if (_ok and _ok[0][0] == ti0 and _ok[0][1] == k0) else None
+                        say(u"    %s  %-26s ← %s%s" % (mmss(st0), na0[:26], k0,
+                                                     (u"（%.1f LUFS → %+.1f dB）"
+                                                      % (_o[2], 20.0 * math.log10(max(1e-6, _o[3]))))
+                                                     if (_o and _o[2] is not None) else u""))
+                    try:
+                        kd = os.path.join(HERE, KAKUNIN_DIR)
+                        if not os.path.isdir(kd):
+                            os.makedirs(kd)
+                        io.open(os.path.join(kd, u"BGMの割り当て.txt"), "w", encoding="utf-8-sig",
+                                newline=u"\r\n").write(u"\n".join(hyou) + u"\n")
+                    except Exception:
+                        pass
+                    if len(set(kyoku)) < len(wari_b):
+                        say(u"    （曲が %d曲で、区切りが %d あるので、同じ曲を2回以上使っています。"
+                            u"となり合う区切りは別の曲にしています）" % (len(set(kyoku)), len(wari_b)))
+                else:
+                    say(u"  BGM: %s (音量 %.2f / フェード %.1f秒%s)"
+                        % (en["bgm"], en["bgmvol"], en["bgmfade"],
+                           u" / 声の間は控えめ" if en.get("bgmduck") else u""))
+
+        if kasaneru:
+            mixed = os.path.join(work, "mixed.wav")
+            cmd = [need("ffmpeg"), "-y", "-loglevel", "error", "-i", oto]
+            # ■ ここで w を使わない（2026-11-18・㉜ で見つけた）。w は画面の幅で、このあと
+            #   オープニングを本編の大きさに作り直すときに使う。音のファイル名で上書きしていて
+            #   「%d format: a real number is required, not str」で落ちた。
+            for _kw in kasaneru:
+                cmd += ["-i", _kw]
+            n = len(kasaneru) + 1
+            cmd += ["-filter_complex",
+                    "%samix=inputs=%d:duration=first:normalize=0[a]"
+                    % ("".join("[%d:a]" % i for i in range(n)), n),
+                    "-map", "[a]", mixed]
+            run(cmd)
+            oto = mixed
+        oto_aac = None
+        if yaki:
+            oto_aac = os.path.join(work, "oto.m4a")
+            run([need("ffmpeg"), "-y", "-loglevel", "error", "-i", oto,
+                 "-c:a", "aac", "-b:a", "192k", oto_aac])
+        return oto, oto_aac
+
+    from concurrent.futures import ThreadPoolExecutor as _TPE
+    _oto_pool = _TPE(max_workers=1)
+    _oto_fut = _oto_pool.submit(_oto_tsukuru)
+
     # 断片づくりは1本ずつが短いので、並べて走らせるとそのぶん速くなる。
     # 絵も長さも違う独立した仕事なので、順番は結果に関係しない。
     if shigoto:
         # 実測：4コアで 4本同時=1.57倍 / 6本同時=1.96倍。
         # ffmpeg 自体がスレッドを使うので、コア数ちょうどより
         # 少し多めに走らせたほうが速かった。
-        nin = a.jobs if a.jobs > 0 else \
-            max(2, min(8, int((os.cpu_count() or 2) * 1.5)))
+        # 字幕を断片で焼くとき（書き出しの設定で書く）は、コアの数だけ並べ、x264 は1本1スレッド（2026-11-22・
+        # 同じ断片48本で 6本×自動 81.5秒 / 4本×1 72.1秒 / 6本×1 74.1秒 / 8本×1 76.9秒・4コア）
+        nin = a.jobs if a.jobs > 0 else (
+            max(2, min(8, os.cpu_count() or 2)) if yaki else max(2, min(8, int((os.cpu_count() or 2) * 1.5))))
         say(u"  %d本を %d個ずつ並べて作ります" % (len(shigoto), nin))
         t_seg = time.time()
         if nin <= 1:
@@ -13316,122 +13449,8 @@ def main():
     say(u"  合計 %d フレーム = %.3f秒" % (sum(frames), sum(frames) / float(fps)))
 
 
-    # 効果音と BGM を、それぞれ1本のwavにして声に重ねる。
-    # amix は normalize=0 にしないと声の音量が下がってしまう。
-    # duration=first なので、声の長さは1サンプルも変わらない。
-    oto = a.audio
-    # カードぶんの無音を、声にも入れる。
-    # 入れる位置は「そのカードより前の、カード以外の尺の合計」。
-    if cards:
-        basho, moto_t = [], 0.0
-        for i in range(len(rows)):
-            if i in cards:
-                basho.append((moto_t, (ends[i] - starts[i])))
-            else:
-                moto_t += ends[i] - starts[i]
-        shizuka = insert_silence(a.audio, os.path.join(work, "koe_card.wav"), basho)
-        if shizuka:
-            oto = shizuka
-            say(u"  章タイトルのぶん、声に無音を %.1f秒 入れました (%d か所)"
-                % (sum(b for _a, b in basho), len(basho)))
-        else:
-            say(u"  ⚠ 声に無音を入れられませんでした。カードのぶんだけずれます。")
-    kasaneru = []          # 声に重ねるもの
-    uchikomi, secache, sekazu = [], {}, {}
-    for i, k in kinds.items():
-        spec = en["kubun"].get(k)
-        if not spec:
-            continue
-        wav, atk = se_wav_ready(spec["se"], en["sevol"], work, secache)
-        if wav:
-            uchikomi.append((starts[i], wav, atk))
-            sekazu[spec["se"]] = sekazu.get(spec["se"], 0) + 1
-    if uchikomi:
-        trk = build_se_track(uchikomi, sum(frames) / float(fps),
-                             os.path.join(work, "se_track.wav"),
-                             zure=en.get("sezure", 0.0))
-        if trk:
-            kasaneru.append(trk)
-            say(u"  効果音: " + u" / ".join(u"%s %d回" % (n, c)
-                                        for n, c in sorted(sekazu.items())))
-
-    if not a.no_bgm and (en.get("bgm") or OSUSUME[0]):
-        eizou = sum(frames) / float(fps)
-        koe = audio_duration(oto)
-        bgm, wari_b, bdir = None, [], None
-        if OSUSUME[0]:
-            # 作品ごとに曲を替える（本人の指定・2026-11-17）。上の注記を読むこと
-            bdir, kyoku = bgm_folder(a.images, a.bgm_dir)
-            sp_b = chapter_spans(cues, chaps, max(eizou, koe)) if chaps else []
-            if kyoku and sp_b:
-                bgm, wari_b = bgm_sakuhin_goto(
-                    sp_b, bdir, kyoku, en["bgmvol"], max(eizou, koe), min(eizou, koe),
-                    en["bgmfade"], work, DOUGA_NA)
-            elif not kyoku:
-                say(u"  BGM: 作品ごとの曲が見つかりません（%s）。演出.txt の1曲を流します。"
-                    u"曲を入れると、作品ごとに替わります" % (bdir or u"BGM フォルダ"))
-        if bgm is None and en.get("bgm"):
-            bgm = bgm_wav_ready(en["bgm"], en["bgmvol"],
-                                max(eizou, koe), min(eizou, koe),
-                                en["bgmfade"], work)
-        if bgm:
-            if en.get("bgmduck"):
-                bgm = bgm_hikaeme(bgm, oto, max(eizou, koe), work)
-            kasaneru.append(bgm)
-            if wari_b:
-                nkyoku = len(set(k for (_s, _e, _t, k) in wari_b))
-                say(u"  BGM: 作品ごとに曲を替えました（%s の %d曲から %d曲を使用・音量 %.2f・"
-                    u"切り替えは %.1f秒かけて重ねる）"
-                    % (bdir, len(bgm_folder(a.images, a.bgm_dir)[1]), nkyoku,
-                       en["bgmvol"], BGM_KASANE))
-                hyou = [u"# どの区切りに、どの曲を当てたか（make_slideshow.py が書きます）",
-                        u"# 曲の並びは動画の名前で決まります。作り直しても同じ曲になります。"]
-                _ok = list(BGM_OOKISA)
-                _hk = [o for o in _ok if o[2] is not None]
-                if _hk:
-                    _db = [20.0 * math.log10(max(1e-6, o[3])) for o in _hk]
-                    say(u"  BGM の大きさ: どの区切りも、流れる部分の耳の大きさを %.0f LUFS にそろえてから"
-                        u"音量 %.2f をかけました（曲ごとに %+.1f〜%+.1f dB 直しています）"
-                        % (BGM_LUFS, en["bgmvol"], min(_db), max(_db)))
-                for (st0, en0, ti0, k0) in wari_b:
-                    na0 = u"はじめに" if ti0 == MUDAI else ti0.split(u"\\N")[0]
-                    hyou.append(u"%s\t%s\t%s" % (mmss(st0), na0, k0))
-                    _o = _ok.pop(0) if (_ok and _ok[0][0] == ti0 and _ok[0][1] == k0) else None
-                    say(u"    %s  %-26s ← %s%s" % (mmss(st0), na0[:26], k0,
-                                                 (u"（%.1f LUFS → %+.1f dB）"
-                                                  % (_o[2], 20.0 * math.log10(max(1e-6, _o[3]))))
-                                                 if (_o and _o[2] is not None) else u""))
-                try:
-                    kd = os.path.join(HERE, KAKUNIN_DIR)
-                    if not os.path.isdir(kd):
-                        os.makedirs(kd)
-                    io.open(os.path.join(kd, u"BGMの割り当て.txt"), "w", encoding="utf-8-sig",
-                            newline=u"\r\n").write(u"\n".join(hyou) + u"\n")
-                except Exception:
-                    pass
-                if len(set(kyoku)) < len(wari_b):
-                    say(u"    （曲が %d曲で、区切りが %d あるので、同じ曲を2回以上使っています。"
-                        u"となり合う区切りは別の曲にしています）" % (len(set(kyoku)), len(wari_b)))
-            else:
-                say(u"  BGM: %s (音量 %.2f / フェード %.1f秒%s)"
-                    % (en["bgm"], en["bgmvol"], en["bgmfade"],
-                       u" / 声の間は控えめ" if en.get("bgmduck") else u""))
-
-    if kasaneru:
-        mixed = os.path.join(work, "mixed.wav")
-        cmd = [need("ffmpeg"), "-y", "-loglevel", "error", "-i", oto]
-        # ■ ここで w を使わない（2026-11-18・㉜ で見つけた）。w は画面の幅で、このあと
-        #   オープニングを本編の大きさに作り直すときに使う。音のファイル名で上書きしていて
-        #   「%d format: a real number is required, not str」で落ちた。
-        for _kw in kasaneru:
-            cmd += ["-i", _kw]
-        n = len(kasaneru) + 1
-        cmd += ["-filter_complex",
-                "%samix=inputs=%d:duration=first:normalize=0[a]"
-                % ("".join("[%d:a]" % i for i in range(n)), n),
-                "-map", "[a]", mixed]
-        run(cmd)
-        oto = mixed
+    oto, oto_aac = _oto_fut.result()
+    _oto_pool.shutdown()
 
     # オープニングを付けるなら、本編の頭をつなぎの色から出す（上の opening_tsunagi。断片で焼くときはもう入っている）
     if op_tsunagi and not yaki:
@@ -13442,11 +13461,10 @@ def main():
     if yaki:
         say(u"字幕は断片を作るときに焼いてあるので、つないで音を付けます（もう一度書き出しはしません）…")
         run([need("ffmpeg"), "-y", "-loglevel", "error",
-             "-i", silent, "-i", oto,
+             "-i", silent, "-i", oto_aac or oto,
              "-map", "0:v:0", "-map", "1:a:0",
-             "-c:v", "copy",
-             "-c:a", "aac", "-b:a", "192k",
-             "-movflags", "+faststart", tmp_out])
+             "-c:v", "copy"] + (["-c:a", "copy"] if oto_aac else ["-c:a", "aac", "-b:a", "192k"]) +
+            ["-movflags", "+faststart", tmp_out])
     else:
         say(u"動画を書き出しています (%s / crf %d)。長さ次第で数分かかります…"
             % ((a.preset or mi[u"書き出しの速さ"]), a.crf))
