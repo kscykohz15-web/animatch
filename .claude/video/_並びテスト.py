@@ -322,9 +322,16 @@ var es = names.map(function(n){ return {name:n}; });
 var kf = sumahoKetteiFile({title: "01_ためし", n: 2, text: "#@title\\t01_ためし\\r\\n5\\tあか組！/0005.png\\t本作は\\r\\n"}, "01_ためし");
 if (kf) es.push(kf);
 var betsu = sumahoKetteiFile({title: "02_ほか", n: 1, text: "#@title\\t02_ほか\\r\\n"}, "01_ためし");
+// 選び直しを学ぶ（掲示板の manabi/<印>）。全部の動画ぶんを1つのファイルに
+var mf = manabiFile([
+  {title: "02_ほか", rows: {"あお組\\tあお組の字幕です。": {fol: "あお組", e: "あお組/0003.png", mae: "あお組/0001.png", tx: "あお組の字幕です。", at: "2026-11-21T12:00:00Z"}}},
+  {title: "01_ためし", rows: {"あか組！\\t本作は漫画です。": {fol: "あか組！", e: "あか組！/0005.png", mae: "あか組！/0002.png", tx: "本作は漫画です。", at: "2026-11-21T13:00:00Z"}}},
+  {title: "03_から", rows: {}}]);
+if (mf) es.push(mf);
+var mfNull = manabiFile([{title: "03_から", rows: {}}]);
 narabiPack(es);
 process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e){ return e.name; }),
-  kettei: kf ? kf.text : null, betsu: betsu}));
+  kettei: kf ? kf.text : null, betsu: betsu, manabi: mf ? mf.text : null, mfNull: mfNull}));
 """
     jf = os.path.join(tmp, u"pack.js")
     io.open(jf, "w", encoding="utf-8").write(js)
@@ -364,6 +371,15 @@ process.stdout.write(JSON.stringify({bat: HAJIMERU_BAT, names: es.map(function(e
        u"⑧ 制作パックの保存名は、どの動画でも 00_制作パック.zip")
     iu(u"'*_制作パック.zip'" in s and u"-like '*_制作パック'" in s,
        u"⑧ 片づけ（9）は 00_制作パック.zip とそれを解いたフォルダも拾える（*_制作パック）")
+    # 選び直しを学ぶ（2026-11-21）: 全部の動画ぶんの選び直しが 99_確認不要\その他\本人の選び.txt に入る
+    mtx = (o.get("manabi") or u"").lstrip(u"\ufeff").split(u"\r\n")
+    mgyo = [l.split(u"\t") for l in mtx if l and not l.startswith(u"#")]
+    iu(u"99_確認不要/その他/本人の選び.txt" in o["names"] and len(mgyo) == 2
+       and mgyo[0][:5] == [u"あか組！", u"あか組！/0005.png", u"あか組！/0002.png", u"本作は漫画です。", u"01_ためし"]
+       and mgyo[1][0] == u"あお組" and o.get("mfNull") is None,
+       u"⑧ 選び直しはパックの 99_確認不要\\その他\\本人の選び.txt に入る（全部の動画ぶん・1行 = 作品・選んだ絵・機械の絵・字幕・動画・日時。無ければ入れない）")
+    iu(u"Join-Path $here 'その他\\本人の選び.txt'" in pre and pre.index(u"本人の選び") < pre.index(u"SyncDaihon\n}") if u"SyncDaihon\n}" in pre else False,
+       u"⑧ Prepare は パックの その他\\本人の選び.txt を作業フォルダの 99_確認不要\\その他 へ写す（毎回上書き）")
     # スマホで決めた絵（2026-11-20 本人の指定: 決定ボタンを押せば制作パックにその内容が更新される）
     iu(u"99_確認不要/その他/irekae_sumaho.txt" in o["names"] and (o.get("kettei") or u"").startswith(u"\ufeff#@title\t01_ためし")
        and o.get("betsu") is None,

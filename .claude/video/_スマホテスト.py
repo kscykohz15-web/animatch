@@ -39,6 +39,9 @@ u"""スマホで見る・絵を選ぶ（仕上げ.py ㉝）
      使われているかがわかると、被りが出るかわかる」）。選び直した所は選んだ絵で数え、替えられた前の絵は数えない。
      選んだ絵がかぶると、候補の印が黄色・上の絵に「No.○ でも使用中」・帯に「かぶります」
   ⑬ 絵を変える機能は、おすすめのボードのいちばん上（2026-11-21 本人の指定「おすすめアニメボードの1番上に置いておいて」）
+  ⑭ 選び直しを学ぶ（2026-11-21 本人「変更した内容を蓄積して、データとして解析し…精度を高めて欲しい」）
+     「修正を決定」のたびに manabi/<印> へ足す（上書きしない）。1行 = 作品フォルダ・選んだ絵・機械の絵・字幕の文。
+     「いまの絵に戻す」で決めた字幕は消す。決定ごとに 字幕の数・選び直した数 を kiroku に残す
 """
 from __future__ import print_function
 import io, json, os, re, shutil, subprocess, sys, threading, uuid
@@ -465,6 +468,13 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pp.click("#smhkkettei");
     await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました") >= 0, null, {timeout: 5000});
     const k1 = await kettei();
+    const m1 = await pp.evaluate(() => fetch("/_db/doc?p=" + encodeURIComponent("manabi/test01")).then(r => r.json()));
+    const r5 = m1 && m1.rows && m1.rows["あか組！\t本作は漫画が原作となっています。"];
+    ok(!!r5 && r5.e === "あか組！/0005.png" && r5.mae === "あか組！/0002.png" && r5.fol === "あか組！"
+       && !!(m1.rows["あか組！\t最初にご紹介する作品は、あか組！"]) && m1.title === "01_ためし",
+       "⑭ 修正を決定で、選び直しが manabi/test01 にたまる（作品フォルダ・選んだ絵・機械の絵・字幕の文）" + JSON.stringify(r5 || null));
+    ok(m1 && Array.isArray(m1.kiroku) && m1.kiroku.length === 1 && m1.kiroku[0].n_kae === 3 && m1.kiroku[0].n_ji === 8,
+       "⑭ 決定ごとに 字幕の数（選び直せる字幕 8・章カードと無地は数えない）・選び直した数（3）を残す" + JSON.stringify(m1 && m1.kiroku));
     ok(k1 && k1.n === 3 && k1.text.indexOf("#@title\t01_ためし") >= 0 && k1.text.indexOf("5\tあか組！/0005.png\t") >= 0,
        "⑨ 2回押すと決定し、sumaho_kettei に入れ替えの形で残る（" + (k1 && k1.n) + " か所）");
     ok((await pp.textContent("#smhkst")).indexOf("決定済み") >= 0, "⑨ 下の帯に「決定済み」");
@@ -483,6 +493,10 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pp.click("#smhkkettei"); await pp.click("#smhkkettei");
     await pp.waitForFunction(() => (document.getElementById("smhkmsg").textContent || "").indexOf("決定しました") >= 0, null, {timeout: 5000});
     const k2 = await kettei();
+    const m2 = await pp.evaluate(() => fetch("/_db/doc?p=" + encodeURIComponent("manabi/test01")).then(r => r.json()));
+    ok(m2 && !m2.rows["あか組！\t本作は漫画が原作となっています。"] && !!m2.rows["あか組！\t最初にご紹介する作品は、あか組！"]
+       && m2.kiroku.length === 1 && m2.kiroku[0].n_kae === 2,
+       "⑭ 「いまの絵に戻す」で決めた字幕は消える・ほかは残る・同じ動画の記録は1つ（選び直した数 2）" + JSON.stringify(m2 && m2.kiroku));
     ok(k2 && k2.text.indexOf("5\t-\t") >= 0 && k2.n === 2, "⑨ 決定のあと「いまの絵に戻す」にした所は、次の決定で「-」（機械に戻す）が入る");
     await pp.tap("#smhkbody .smth[title='あか組！/0005.png']");
     await pp.click("#smhkkettei"); await pp.click("#smhkkettei");

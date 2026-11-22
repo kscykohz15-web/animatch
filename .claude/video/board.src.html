@@ -23488,6 +23488,14 @@ if __name__ == "__main__":
 "      Copy-Item $ks $kd -Force",
 "      Write-Host '  スマホで決めた絵をパックから受け取りました（2 で動画を作ると入れ替わります）' -ForegroundColor Green",
 "    }",
+"    # 選び直しを学ぶ（2026-11-21）: 全部の動画ぶんの選び直し。毎回上書き（掲示板にたまっている物がいちばん新しい）",
+"    $ms = Join-Path $here 'その他\\本人の選び.txt'",
+"    if (Test-Path $ms) {",
+"      $md = Join-Path $work 'その他'",
+"      if (-not (Test-Path $md)) { New-Item -ItemType Directory -Path $md -Force | Out-Null }",
+"      Copy-Item $ms $md -Force",
+"      Write-Host '  本人の選び直し（覚えて次の動画の絵に使います）をパックから受け取りました' -ForegroundColor Green",
+"    }",
 "  }",
 "  # 設定ファイルは「新しいものを必ず入れる」。",
 "  # 手直しを消さないよう、中身が違うときだけ _前の設定 に退避してから差し替える。",
@@ -24477,6 +24485,26 @@ if __name__ == "__main__":
     return {name: "その他/irekae_sumaho.txt", text: "\ufeff" + k.text};
   }
 
+  // 選び直しを学ぶ（掲示板の manabi/<印>）を、全部の動画ぶん1つのファイルにする（2026-11-21）。
+  // 1行 = 作品フォルダ<TAB>選んだ絵<TAB>機械の絵<TAB>字幕の文<TAB>動画<TAB>日時。make_slideshow の manabi_yomu が読む
+  function manabiFile(docs){
+    var gyo = [];
+    (docs || []).forEach(function(d){
+      if(!d || !d.rows) return;
+      Object.keys(d.rows).forEach(function(k){
+        var r = d.rows[k];
+        if(!r || !r.fol || !r.e || !r.tx) return;
+        gyo.push([r.fol, r.e, r.mae || "", r.tx, d.title || "", r.at || ""]);
+      });
+    });
+    if(!gyo.length) return null;
+    gyo.sort(function(a, b){ return (a[4] + a[0] + a[3]) < (b[4] + b[0] + b[3]) ? -1 : 1; });
+    var t = ["# 本人がスマホで選び直した絵（掲示板の「修正を決定」から・全部の動画ぶん）。道具が「誰が写っている絵か」を覚えるのに使います",
+             "# 作品フォルダ\t選んだ絵\t機械の絵\t字幕の文\t動画\t日時"];
+    gyo.forEach(function(g){ t.push(g.map(function(x){ return String(x).replace(/[\t\r\n]/g, " "); }).join("\t")); });
+    return {name: "その他/本人の選び.txt", text: "\ufeff" + t.join("\r\n") + "\r\n"};
+  }
+
   function exportAllPack(id, title, btn){
     if(!dlns){ alert("このビューではファイル書き出しが使えません。"); return; }
     var sub = docText(id, "sub"), tts = docText(id, "tts");
@@ -24539,9 +24567,15 @@ if __name__ == "__main__":
     var ketteiP = (dbns && dbns.doc) ? dbns.doc("sumaho_kettei/" + id).get().then(dbody).catch(function(){ return null; })
       : Promise.resolve(null);
     var kettei = 0;
-    ketteiP.then(function(k){
+    var manabiP = (dbns && dbns.collection) ? dbns.collection("manabi").get().then(function(q){
+        return (q && q.docs || []).map(dbody);
+      }).catch(function(){ return []; }) : Promise.resolve([]);
+    Promise.all([ketteiP, manabiP]).then(function(res){
+      var k = res[0];
       var kf = sumahoKetteiFile(k, fileName(title));
       if(kf){ entries.push(kf); kettei = k.n || 0; }
+      var mf = manabiFile(res[1]);
+      if(mf){ entries.push(mf); }
       narabiPack(entries);
       // 保存名は、どの動画でも 00_制作パック.zip（本人の指定 2026-11-21）。作業フォルダは menu.ps1 が
       // 05_動画\<番号つきの題名> に決めるので、zip の名前は動画の名前（DOUGA_NA）に関わらない
@@ -26106,10 +26140,41 @@ if __name__ == "__main__":
       clearTimeout(SM.timer);
       kakuNote("決定しています…");
       Promise.all([SM.db.doc("sumaho_kettei/" + SM.sid).set(doc), erabiSet()]).then(function(){
+        return manabiTameru(at, zenbu).catch(function(){ return null; });
+      }).then(function(){
         SM.kettei = doc;
         updateFoot();
         kakuNote("決定しました（" + k + " か所）。パソコンでこのボードの「制作パック」を落とし直し、はじめる.bat → 2（または Z）で動画を作ると入れ替わります。");
       }).catch(function(e){ kakuNote("決定できませんでした（" + upCode(e) + "）。もう一度押してください。", true); });
+    }
+    // ── 選び直しを学ぶ（2026-11-21 本人「変更した内容を蓄積して、データとして解析し…精度を高めて欲しい」）
+    //   決定のたびに manabi/<印> へ足す（上書きしない・動画をまたいでためる）。鍵は「作品フォルダ<TAB>字幕の文」。
+    //   「いまの絵に戻す」で決めた字幕（zenbu にあって picks に無い）は消す（機械の絵で良いと決めた）。
+    //   制作パックに全部の動画ぶんが その他/本人の選び.txt として入り、道具が「誰が写っている絵か」を覚える
+    function manabiTameru(at, zenbu){
+      var J = SM.J, by = {};
+      J.rows.forEach(function(r){ r.n.forEach(function(n){ by[n] = r; }); });
+      return SM.db.doc("manabi/" + SM.sid).get().then(dbody).catch(function(){ return null; }).then(function(m){
+        m = m || {};
+        m.title = J.title; m.made = J.made;
+        m.rows = m.rows || {}; m.kiroku = m.kiroku || [];
+        (zenbu || []).forEach(function(n){
+          var r = by[n];
+          if(!r || r.kind === "card") return;
+          var tx = (r.txs && r.txs[r.n.indexOf(n)]) || r.tx || "";
+          var e = SM.picks[String(n)] || "";
+          var fol = (e || r.curKey || "").split("/")[0];
+          if(!fol || !tx) return;
+          var kagi = fol + "\t" + tx;
+          if(e) m.rows[kagi] = {fol: fol, e: e, mae: r.curKey || "", tx: tx, at: at};
+          else delete m.rows[kagi];
+        });
+        var nji = 0;
+        J.rows.forEach(function(r){ if(r.kind !== "card" && r.kind !== "muji") nji += r.n.length; });
+        m.kiroku = m.kiroku.filter(function(x){ return x.made !== J.made; });
+        m.kiroku.push({made: J.made, at: at, n_ji: nji, n_kae: nPicks()});
+        return SM.db.doc("manabi/" + SM.sid).set(m);
+      });
     }
     function saveIrekae(){
       SM.dl.save({filename: "irekae.txt", data: "﻿" + irekaeText("", (SM.kettei && SM.kettei.zenbu) || [])}).then(function(){
