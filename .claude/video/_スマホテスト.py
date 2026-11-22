@@ -522,9 +522,9 @@ async function db(page, p){ return page.evaluate(q => fetch("/_db/doc?p=" + enco
     await pp.waitForSelector(".smrow.picked:has-text('本作は漫画')", {timeout: 5000});
     ok(true, "④ 開き直しても、選んだ絵が残っている");
     // 開き直したあと（選んだ絵を控えから読んだあと）も選べる。控えは読み取り専用で返る（v208 まで iPhone で止まっていた）
-    // ⑮ 当たり率（最後の決定: 選び直せる字幕 8・選び直し 3 → 62%）
+    // ⑮ 当たり率（最後の決定: 選び直せる字幕 8・選び直し 3 → 5/8 = 62.5% → 63%）
     const atari = await pp.evaluate(() => (document.getElementById("smatari") || {}).textContent || "");
-    ok(atari.indexOf("01_ためし") >= 0 && atari.indexOf("62%") >= 0 && atari.indexOf("8字幕中5") >= 0,
+    ok(atari.indexOf("01_ためし") >= 0 && atari.indexOf("63%") >= 0 && atari.indexOf("8字幕中5") >= 0,
        "⑮ 動画ごとの当たり率（選び直さずに済んだ字幕の割合）が出る（" + atari.replace(/\s+/g, " ").slice(0, 80) + "）");
     await pp.evaluate(() => Array.from(document.querySelectorAll(".smrow")).find(e => e.textContent.indexOf("物語は") >= 0).click());
     await pp.waitForSelector("#smhk:not([hidden])");
