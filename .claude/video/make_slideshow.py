@@ -909,7 +909,7 @@ MITAME_KITEI = {
     u"字幕の横つぶし": 92.0,
     u"動きの細かさ": 3.0,
     u"字幕の色": u"FFFFFF", u"字幕のふち色": u"000000", u"字幕のふち": 0.115,
-    u"字幕の最短": 0.0, u"同じ絵の上限": 3.0, u"書き出しの速さ": u"faster",
+    u"字幕の最短": 0.0, u"同じ絵の上限": 3.0, u"書き出しの速さ": u"veryfast",
     u"引用の大きさ": 38.0, u"引用の色": u"FFFFFF",
     u"章の大きさ": 24.0, u"章の色": u"FFFFFF",
     # 絵をゆっくり横に動かす（はい/いいえ）と、そのための拡大率
@@ -6176,7 +6176,9 @@ def opening_tsukeru(honpen, op, w, h, fps, crf, preset, oto_wav, work, tsunagi=N
     if tsunagi:
         _dur = douga_nagasa(op)
         if _dur > tsunagi[1] + 0.2:
-            vf += u",fade=t=out:st=%.3f:d=%.2f:color=%s" % (_dur - tsunagi[1], tsunagi[1], tsunagi[0])
+            # 色つきの fade は yuv444p で出てくる。本編（yuv420p）とそのままつなげるよう yuv420p に戻す
+            vf += (u",fade=t=out:st=%.3f:d=%.2f:color=%s,format=yuv420p"
+                   % (_dur - tsunagi[1], tsunagi[1], tsunagi[0]))
             af = ["-af", u"afade=t=out:st=%.3f:d=%.2f" % (_dur - tsunagi[1], tsunagi[1])]
     cmd = [need("ffmpeg"), "-y", "-loglevel", "error", "-i", op]
     if oto_aru(op):
@@ -9611,6 +9613,77 @@ def load_kouho(path):
     return out
 
 
+# ■ 字幕に出てくる人（2026-11-21・選び直しを学ぶ。docs/superpowers/specs/2026-11-21-選び直しを学ぶ-design.md）
+#
+#   本人がスマホで選び直した絵は、ほぼ「その字幕に出てくる人が写っている絵」だった。
+#   おすすめ紹介の絵には説明が無いので、誰が写っているかは本人の選び直しから覚える。
+#   その前に「字幕に誰が出てくるか」を台本から読む。本人の型のあらすじは
+#   「物語は、…主人公、高須竜児と、…ヒロイン、逢坂大河が、…」の形（ラブコメ20選は20作品とも取れた）。
+HITO_PAT = re.compile(u"(主人公|ヒロイン)(?:である|の|、)(?:[^、。]{0,6}?の)?"
+                      u"([一-龥々ァ-ヶー・゠-ヿ]{2,14}?)(?=が|と|を|に|から|の|、|たち|は|。)")
+
+
+def hito_jisho(daihon_paras, shou_fol):
+    u"""作品フォルダ → {"主人公": [正式名], "ヒロイン": [正式名], "yobi": {呼び名: 正式名}}。
+
+    shou_fol[i] は段落 i の作品フォルダ（無ければ ""）。名前はあらすじ（「物語は」で始まる段落）から読み、
+    呼び名は正式名の前後2文字以上のうち、**その章の台本に正式名の外で出てくるもの**だけ（1文字は使わない。
+    「加藤恵」の「恵」は「恵まれた」に入る）。
+    """
+    out, naka = {}, {}
+    for t, f in zip(daihon_paras, shou_fol):
+        if not f:
+            continue
+        naka.setdefault(f, []).append(t or u"")
+        d = out.setdefault(f, {u"主人公": [], u"ヒロイン": [], u"yobi": {}})
+        if not (t or u"").startswith(u"物語は"):
+            continue
+        for m in HITO_PAT.finditer(t):
+            if m.group(2) not in d[m.group(1)]:
+                d[m.group(1)].append(m.group(2))
+    for f, d in out.items():
+        zen = u"\n".join(naka.get(f, []))
+        for nm in d[u"主人公"] + d[u"ヒロイン"]:
+            soto = zen.replace(nm, u"")
+            if u"・" in nm:
+                kouho = [p for p in nm.split(u"・") if len(p) >= 2]
+            else:
+                kouho = ([nm[:k] for k in range(2, len(nm))] + [nm[-k:] for k in range(2, len(nm))])
+            for c in kouho:
+                if c in soto and c not in d[u"yobi"]:
+                    d[u"yobi"][c] = nm
+    return out
+
+
+def hito_no_ji(tx, ji):
+    u"""字幕に出てくる人（正式名）。名前が1つでもあれば名前だけ。
+
+    名前が無ければ「主人公」「ヒロイン」「二人」を ji の正式名に読みかえる（正式名が無いときは言葉のまま）。
+    「高須竜児と、小さくて気の強いヒロイン、」の「ヒロイン」は次の字幕の人の説明なので、名前があるときは数えない。
+    """
+    tx = tx or u""
+    ji = ji or {}
+    na = set()
+    for nm in (ji.get(u"主人公") or []) + (ji.get(u"ヒロイン") or []):
+        if nm in tx:
+            na.add(nm)
+    for c, nm in (ji.get(u"yobi") or {}).items():
+        if c in tx:
+            na.add(nm)
+    if na:
+        return frozenset(na)
+
+    def yaku(w):
+        return (ji.get(w) or [w])[:1]
+    if u"二人" in tx or u"ふたり" in tx:
+        na.update(yaku(u"主人公") + yaku(u"ヒロイン"))
+    if u"主人公" in tx:
+        na.update(yaku(u"主人公"))
+    if u"ヒロイン" in tx:
+        na.update(yaku(u"ヒロイン"))
+    return frozenset(na)
+
+
 def moji_de_sagasu(hoshii, rows, ban, moto_no):
     u"""字幕の文から、いまそれがどの番号にいるかを探す。
 
@@ -11126,7 +11199,9 @@ def main():
     ap.add_argument("--jobs", type=int, default=0,
                     help=u"断片をいくつ並べて作るか(0=CPUの数)")
     ap.add_argument("--seg-preset", default="ultrafast",
-                    help=u"断片のx264プリセット。断片は途中の入れもの")
+                    help=u"断片のx264プリセット（--ato-de-yaku のときだけ。断片は途中の入れもの）")
+    ap.add_argument("--ato-de-yaku", action="store_true",
+                    help=u"前の作り方: 断片を作ったあとで、動画ぜんぶをもう一度書き出して字幕を焼く（比べる用）")
     ap.add_argument("--preset", default=None,
                     help=u"書き出しのx264プリセット(既定は 見た目.txt)")
     ap.add_argument("--out", default=u"完成.mp4")
@@ -12943,6 +13018,39 @@ def main():
         return (u"[%s]%s%s,%s,crop=%s:x=%s:y=%s,scale=%d:%d:flags=bicubic[%s];"
                 % (label_in, pre, hiro, kuri, kir, xK, yK, w, h, label_out))
 
+    # ■ 字幕は断片を作るときに焼く（2026-11-22・本人「完了するのにおよそ一時間半…半減ぐらいにはしたい」）
+    #
+    #   前は「断片（ultrafast）を作る → つなぐ → 動画ぜんぶをもう一度書き出して字幕を焼く（faster）」で、
+    #   **同じ動画を2回書き出していた。** 本人の回と同じ大きさで測ると 1080秒のうち 断片 260秒・最後の書き出し
+    #   615秒（57%）。断片ごとに、その断片の時刻ぶん進めてから字幕を焼き（setpts で本編の時刻に合わせ、焼いたら
+    #   0 に戻す）、書き出しの設定（見た目.txt の速さ・crf）で1回だけ書く。最後は つなぐ＋音を付けるだけ（コピー）。
+    #   白いフラッシュ（オープニングのつなぎ）も本編の時刻で入れるので、頭の断片にそのまま入る。
+    #   前の作り方は --ato-de-yaku（比べる用）
+    yaki = not a.ato_de_yaku
+    op_tsunagi = None
+    if OSUSUME[0] and not a.no_opening:
+        if opening_sagasu(a.images, a.opening)[1]:
+            op_tsunagi = opening_tsunagi(mi)
+    sf = [0] * len(frames)          # 断片の頭が本編の何フレーム目か
+    for i in range(1, len(frames)):
+        sf[i] = sf[i - 1] + frames[i - 1]
+    kaki_preset = (a.preset or mi[u"書き出しの速さ"])
+
+    def yaki_tail(i):
+        u"""断片 i の最後に付ける「本編の時刻で字幕を焼く」フィルタ。"""
+        t0 = sf[i] / float(fps)
+        # 前の作り方と同じ順に: いったん yuv420p にしてから字幕を重ねる（前は断片を yuv420p で書いて、
+        # それを読んで字幕を重ねていた。順を変えると色の変換がずれて、コマが変わる）
+        f = [u"setpts=PTS+%.6f/TB" % t0, u"format=yuv420p"]
+        if ass:
+            f.append(u"subtitles=" + ass_path(ass))
+        f.append(u"format=yuv420p")
+        if op_tsunagi and t0 < op_tsunagi[1]:
+            # 色つきの fade は yuv444p で出てくる。断片で形が混ざると、つないだときに読めなくなるので戻す
+            f.append(u"fade=t=in:st=0:d=%.2f:color=%s,format=yuv420p" % (op_tsunagi[1], op_tsunagi[0]))
+        f.append(u"setpts=PTS-STARTPTS")
+        return u",".join(f)
+
     shigoto = []          # あとでまとめて作る断片
     for i, (_du, img, _t) in enumerate(rows):
         spec = en["kubun"].get(kinds.get(i)) if i in kinds else None
@@ -12967,7 +13075,7 @@ def main():
         # **経過も鍵に入れること。** 入れないと、同じ絵・同じ尺の断片を
         # 使い回してしまい、つないだ意味が無くなる。
         key = (cache[img], frames[i], mae, fil, kore, round(zure, 3), round(s_k, 4),
-               round(hy_k or 0.0, 3))
+               round(hy_k or 0.0, 3), sf[i] if yaki else None)
         seg = segcache.get(key)
         if seg is None:
             seg = os.path.join(segdir, "s%05d.mp4" % len(segcache))
@@ -12981,15 +13089,19 @@ def main():
                     # 動かさないときは pan が無いので、入れたところで繰り返す
                     fil = (u"[0:v]%s[r0];" % kuri + (u"[1:v]%s[r1];" % kuri if mae else u"")
                            + fil.replace(u"[0:v]", u"[r0]").replace(u"[1:v]", u"[r1]"))
-                cmd += ["-filter_complex", fil, "-map", "[v]"]
+                if yaki:
+                    cmd += ["-filter_complex", fil + u";[v]" + yaki_tail(i) + u"[vy]", "-map", "[vy]"]
+                else:
+                    cmd += ["-filter_complex", fil, "-map", "[v]"]
             elif ugokasu:
-                cmd += ["-vf", pan_chain(u"0:v", u"v", kore, zure, s_k, hy_k)
-                        .replace(u"[0:v]", u"").rstrip(u";").replace(u"[v]", u"")]
+                vf1 = (pan_chain(u"0:v", u"v", kore, zure, s_k, hy_k)
+                       .replace(u"[0:v]", u"").rstrip(u";").replace(u"[v]", u""))
+                cmd += ["-vf", vf1 + (u"," + yaki_tail(i) if yaki else u"")]
             else:
-                cmd += ["-vf", kuri]
+                cmd += ["-vf", kuri + (u"," + yaki_tail(i) if yaki else u"")]
             cmd += ["-frames:v", str(frames[i]),
-                    "-c:v", "libx264", "-preset", a.seg_preset,
-                    "-crf", str(max(12, a.crf - 6)),
+                    "-c:v", "libx264", "-preset", kaki_preset if yaki else a.seg_preset,
+                    "-crf", str(a.crf if yaki else max(12, a.crf - 6)),
                     "-pix_fmt", "yuv420p", "-g", str(fps * 2), "-an", seg]
             shigoto.append(cmd)
             segcache[key] = seg
@@ -13148,25 +13260,33 @@ def main():
         run(cmd)
         oto = mixed
 
-    # オープニングを付けるなら、本編の頭をつなぎの色から出す（上の opening_tsunagi）
-    op_tsunagi = None
-    if OSUSUME[0] and not a.no_opening:
-        if opening_sagasu(a.images, a.opening)[1]:
-            op_tsunagi = opening_tsunagi(mi)
-            if op_tsunagi:
-                vf = vf + u",fade=t=in:st=0:d=%.2f:color=%s" % (op_tsunagi[1], op_tsunagi[0])
-    say(u"動画を書き出しています (%s / crf %d)。長さ次第で数分かかります…"
-        % ((a.preset or mi[u"書き出しの速さ"]), a.crf))
+    # オープニングを付けるなら、本編の頭をつなぎの色から出す（上の opening_tsunagi。断片で焼くときはもう入っている）
+    if op_tsunagi and not yaki:
+        # 色つきの fade は yuv444p で出てくるので、yuv420p に戻す（戻さないと動画ぜんぶが High 4:4:4 になっていた）
+        vf = vf + u",fade=t=in:st=0:d=%.2f:color=%s,format=yuv420p" % (op_tsunagi[1], op_tsunagi[0])
     tmp_out = os.path.join(work, "out.mp4")
-    run_live([need("ffmpeg"), "-y", "-loglevel", "error", "-stats",
-         "-i", silent,
-         "-i", oto,
-         "-map", "0:v:0", "-map", "1:a:0",
-         "-vf", vf,
-         "-c:v", "libx264", "-preset", (a.preset or mi[u"書き出しの速さ"]),
-         "-crf", str(a.crf),
-         "-c:a", "aac", "-b:a", "192k",
-         "-movflags", "+faststart", tmp_out])
+    t_kaki = time.time()
+    if yaki:
+        say(u"字幕は断片を作るときに焼いてあるので、つないで音を付けます（もう一度書き出しはしません）…")
+        run([need("ffmpeg"), "-y", "-loglevel", "error",
+             "-i", silent, "-i", oto,
+             "-map", "0:v:0", "-map", "1:a:0",
+             "-c:v", "copy",
+             "-c:a", "aac", "-b:a", "192k",
+             "-movflags", "+faststart", tmp_out])
+    else:
+        say(u"動画を書き出しています (%s / crf %d)。長さ次第で数分かかります…"
+            % ((a.preset or mi[u"書き出しの速さ"]), a.crf))
+        run_live([need("ffmpeg"), "-y", "-loglevel", "error", "-stats",
+             "-i", silent,
+             "-i", oto,
+             "-map", "0:v:0", "-map", "1:a:0",
+             "-vf", vf,
+             "-c:v", "libx264", "-preset", (a.preset or mi[u"書き出しの速さ"]),
+             "-crf", str(a.crf),
+             "-c:a", "aac", "-b:a", "192k",
+             "-movflags", "+faststart", tmp_out])
+    say(u"  書き出し %.1f秒" % (time.time() - t_kaki))
 
     # 完成.mp4 がプレイヤーで開かれていても、書き出しを捨てずに済ませる
     final = a.out
