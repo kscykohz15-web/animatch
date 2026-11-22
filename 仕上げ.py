@@ -1036,6 +1036,17 @@ print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
 if r.returncode != 0:
     warui.append(u"作業フォルダの新しい並びが、どこかでそろっていません")
 
+# ── ㊱ 選び直しを学ぶ ─────────────
+midashi(u"㊱", u"選び直しを学ぶ（台本から名前を読む・本人の選び直しから覚えて当てる）")
+# 本人の指定（2026-11-21）「変更した内容を蓄積して、データとして解析しどんどん…精度を高めて欲しい」。
+# 掲示板にためる・パックに入れる・スマホの並びは ㉝ ⑭⑮ と ㉞ ⑧、道具が読むのは ㉚ ⑥ が見る
+r = subprocess.run([sys.executable, os.path.join(V, u"_学びテスト.py")],
+                   cwd=V, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                   env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+print(r.stdout.decode("utf-8", "replace").rstrip()[-2600:])
+if r.returncode != 0:
+    warui.append(u"選び直しを学ぶ仕組みが、どこかで合っていません")
+
 # ── まとめ ──────────────────────────────────────────
 print(u"\n" + u"=" * 58)
 if warui:
